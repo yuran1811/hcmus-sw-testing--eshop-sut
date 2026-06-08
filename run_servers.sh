@@ -1,5 +1,5 @@
 #!/bin/bash
 killall node
-cd ./backend && pnpm dev &
-cd ./frontend-web && pnpm dev &
-cd ./frontend-admin && pnpm dev &
+cd ./backend && pnpm i && pnpm dev &
+cd ./frontend-web && pnpm i && pnpm dev &
+cd ./frontend-admin && pnpm i && pnpm dev
