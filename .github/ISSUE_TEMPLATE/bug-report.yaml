@@ -1,0 +1,89 @@
+name: Báo cáo lỗi (Bug Report)
+description: Form báo cáo lỗi chi tiết dựa trên Test Case và Requirement.
+title: "[BUG][<Feature>] <Mô tả ngắn gọn lỗi>"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Cảm ơn bạn đã báo cáo lỗi! Vui lòng điền đầy đủ các thông tin dưới đây để giúp team dễ dàng tái hiện và xử lý.
+
+  - type: input
+    id: testcase
+    attributes:
+      label: Found by Test Case
+      description: Nhập mã Test Case phát hiện ra lỗi (nếu có).
+      placeholder: TC-LOGIN-003
+    validations:
+      required: false
+
+  - type: input
+    id: requirement
+    attributes:
+      label: Requirement liên quan
+      description: Nhập mã Requirement/Feature liên quan.
+      placeholder: FR-LOGIN-02
+    validations:
+      required: false
+
+  - type: dropdown
+    id: severity_priority
+    attributes:
+      label: Severity / Priority
+      description: Chọn mức độ nghiêm trọng và ưu tiên của lỗi này.
+      options:
+        - Critical / P0
+        - Major / P1
+        - Medium / P2
+        - Minor / P3
+        - Trivial / P4
+      default: 1
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Thông tin về môi trường xảy ra lỗi.
+      value: |
+        - **Browser:** - **OS:** - **URL:** - **Build/Commit:** validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Các bước chi tiết để tái hiện lỗi.
+      placeholder: |
+        1. Mở trang...
+        2. Nhập...
+        3. Bấm...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+      description: Kết quả mong đợi theo Requirement là gì?
+      placeholder: Không cho đăng nhập và hiển thị lỗi.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+      description: Kết quả thực tế bạn đang gặp phải.
+      placeholder: Hệ thống vẫn đăng nhập thành công.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Kéo thả Screenshot, Video hoặc dán Console log / Network log vào đây để làm bằng chứng.
+    validations:
+      required: true
