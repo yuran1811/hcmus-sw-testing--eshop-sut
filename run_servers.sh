@@ -1,5 +1,5 @@
 #!/bin/bash
 killall node
-cd /Users/hanhtran/Downloads/EShop/backend && node server.js &
-cd /Users/hanhtran/Downloads/EShop/frontend-web && npm run dev &
-cd /Users/hanhtran/Downloads/EShop/frontend-admin && npm run dev &
+cd ./backend && pnpm dev &
+cd ./frontend-web && pnpm dev &
+cd ./frontend-admin && pnpm dev &
