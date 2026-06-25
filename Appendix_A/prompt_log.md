@@ -69,3 +69,73 @@
 - **Output**:
   - **Files Modified**: `.agents/skills/test-writer/SKILL.md`
   - **Summary**: Replaced Section 3.3 "Bug Reports" with "Ambiguity Notes (if applicable)". Updated the skill guidelines to instruct the agent to document specification ambiguities, contradictions, and incomplete details as structured notes detailing the ambiguous statement, potential interpretations, and assumptions made for the test design.
+
+## Entry 3 – Test Runner Agent Skill Definition
+
+### AI Audit Log
+
+- **Name of AI tool**: Antigravity (Gemini 3.5 Flash)
+- **Date and time**: 2026-06-25 16:23:00 +07:00
+- **Prompt**:
+
+  ```text
+  I am working on my Software Testing homework (HW02). I need to build, refine, and finalize the "test-runner" Agent Skill exactly as taught in our class lectures.
+
+  Please help me build and I will refine this skill step-by-step. 
+
+  ### Step 1: Read My Class Notes & Slide PDF Contents
+  Please read my class notes in `KCPM-Week03.txt` and the course presentations:
+  - `03 - github_testcase_management.pptx.pdf`
+  - `03 - github_bug_management.pptx.pdf`
+
+  Pay special attention to:
+  - Standard folder structure (`tests/test-cases/`, `tests/test-runs/`, `tests/test-summary/`).
+  - Bug report template guidelines (title format, evidence section, required labels).
+  - Two-way traceability requirements between test runs and bug issues.
+  - The homework requirement for AI Gap Analysis and AI Audit Log.
+
+  ### Step 2: Write the Skill Definition
+  Write the content for the agent skill file named `SKILL.md`. 
+
+  The skill must contain the following structured sections:
+  1.  **Input Schema**: Defines what details the user must provide about a test execution run.
+  2.  **Execution Workflow**:
+      - Step 1: Pre-Execution Verification
+      - Step 2: Step-by-Step Execution
+      - Step 3: Determine Test Status (Passed/Failed/Blocked/Not Run)
+      - Step 4: Automatic Bug Reporting (For Failures): Directs bugs to GitHub Issues, defines local draft paths as `tests/bug-reports/DRAFT-BUG-[FEATURE]-[NUMBER].md`, and embeds the exact bug report template inline:
+        - Title: `[BUG][Module] Short description`
+        - Found by Test Case, Requirement liên quan, Severity / Priority, Environment, Steps to reproduce, Expected result, Actual result, and Evidence.
+        - Exact labels to attach: `type: bug`, `module: [x]`, `severity: [x]`, `priority: [x]`, `status: new`, `found-by: test-case`.
+  3.  **Output Artifacts**:
+      - **Test Run Record**: Saved under `tests/test-runs/test-run-[feature-name].md` containing the execution overview and log table.
+      - **Traceability Matrix**: Saved under `tests/test-summary/traceability-matrix.md` mapping Requirement, Test Case, Result, Bug Issue, and Status.
+  4.  **AI Gap Analysis**: Instructs the agent to output a gap analysis table answering Missed Test Cases, Missed Bugs, and Lesson Learned.
+  5.  **AI Audit Log Auto-Extraction**: A template at the end of the session to extract the tool name, date/time, user prompt, and execution stats.
+
+  Let's start by generating this `SKILL.md` for the test-runner!
+  ```
+
+- **Output**:
+  - **Files Written**: `.agents/skills/test-runner/SKILL.md`
+  - **Summary**: Read class notes and slide PDFs (`KCPM-Week03.txt`, `03 - github_testcase_management.pptx.pdf`, `03 - github_bug_management.pptx.pdf`). Identified requirements and designed the initial `test-runner` skill containing input schema, execution workflow, output artifacts templates, AI gap analysis, and AI audit log format.
+
+## Entry 4 – Refinement of Test Runner Skill Definition (consistent AI Audit Log, Root Cause, File Renaming)
+
+### AI Audit Log
+
+- **Name of AI tool**: Antigravity (Gemini 3.5 Flash)
+- **Date and time**: 2026-06-25 16:28:00 +07:00
+- **Prompt**:
+
+  ```text
+  I have 3 feedbacks for you
+  + Incorporate a consistent AI Audit Log format using test-writer skills
+  + Add root cause column to Gap Analysis
+  + Rename the file to sprint-1-test-run.md
+  ```
+
+- **Output**:
+  - **Files Modified**: `.agents/skills/test-runner/SKILL.md`
+  - **Summary**: Renamed the test run record file to `sprint-1-test-run.md`, added a `Root Cause` column to the AI Gap Analysis table, and updated the AI Audit Log format to match the consistent format of the `test-writer` skill.
+
