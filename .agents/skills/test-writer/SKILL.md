@@ -117,8 +117,8 @@ Use the following template:
 Not Run / None
 ```
 
-### 3. Bug Reports (if applicable)
-If any ambiguities, inconsistencies, or defects are found in the specification during analysis, document them as bug reports.
+### 3. Ambiguity Notes (if applicable)
+If any ambiguities, contradictions, or incomplete details are discovered in the feature specification during analysis, document them as a structured list of Ambiguity Notes. Each note should contain the ambiguous statement, the potential interpretations, and the chosen assumption made for the test design.
 
 ---
 

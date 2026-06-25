@@ -52,3 +52,20 @@
     - Skill definition: `.agents/skills/test-writer/SKILL.md`
     - Design report: `hotel_design_report.md`
     - Test case files: 19 files saved under `tests/test-cases/hotel/TC-HOTEL-001.md` to `TC-HOTEL-019.md` containing full metadata, test data, steps, and expected results.
+
+## Entry 2 – Refinement of Skill Definition (Bug Reports to Ambiguity Notes)
+
+### AI Audit Log
+
+- **Name of AI tool**: Antigravity (Gemini 3.5 Flash)
+- **Date and time**: 2026-06-25 16:18:00 +07:00
+- **Prompt**:
+
+  ```text
+  I have a feedback for you:
+  + Replace Section 3.3 "Bug Reports" with Ambiguity Notes
+  ```
+
+- **Output**:
+  - **Files Modified**: `.agents/skills/test-writer/SKILL.md`
+  - **Summary**: Replaced Section 3.3 "Bug Reports" with "Ambiguity Notes (if applicable)". Updated the skill guidelines to instruct the agent to document specification ambiguities, contradictions, and incomplete details as structured notes detailing the ambiguous statement, potential interpretations, and assumptions made for the test design.
