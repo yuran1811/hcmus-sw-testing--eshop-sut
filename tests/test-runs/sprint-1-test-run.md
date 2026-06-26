@@ -7,11 +7,13 @@
 ## 1. Tóm tắt kết quả (Summary)
 
 - **Tổng số ca kiểm thử**: 105
-- **Đạt (Passed)**: 5
-- **Lỗi (Failed)**: 24
-- **Bị chặn (Blocked)**: 2
-- **Chưa chạy (Not Run)**: 74 (Các module khác)
+- **Đạt (Passed)**: 18 (5 từ forgot-password, 13 từ order-history)
+- **Lỗi (Failed)**: 38 (24 từ forgot-password, 14 từ order-history)
+- **Bị chặn (Blocked)**: 2 (từ forgot-password)
+- **Chưa chạy (Not Run)**: 47 (Các module khác)
 - **Tỷ lệ đạt của module Quên mật khẩu**: 16.13% (5/31)
+- **Tỷ lệ đạt của module Lịch sử đơn hàng**: 48.15% (13/27)
+- **Tỷ lệ đạt tổng thể của Sprint 1 (đã chạy)**: 31.03% (18/58)
 
 ## 2. Nhật ký thực thi chi tiết (Execution Log)
 
@@ -48,3 +50,30 @@
 | TC-FORGOT-PASSWORD-029 | forgot-password | Antigravity | Passed | None | Hai lần yêu cầu liên tiếp sinh ra 2 mã OTP hoàn toàn ngẫu nhiên |
 | TC-FORGOT-PASSWORD-030 | forgot-password | Antigravity | Failed | [BUG-009](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-FORGOT-PASSWORD-009.md) | Nhập sai OTP quá 5 lần liên tiếp tài khoản vẫn không bị khóa |
 | TC-FORGOT-PASSWORD-031 | forgot-password | Antigravity | Passed | None | Token được xóa trong DB sau khi đặt lại mật khẩu, Back trình duyệt không thể submit lại |
+| TC-ORDER-HISTORY-001 | order-history | Antigravity | Failed | [BUG-003](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-003.md), [BUG-004](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-004.md), [BUG-006](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-006.md) | Thiếu bộ lọc; thiếu phân trang; thiếu tiêu đề H1 |
+| TC-ORDER-HISTORY-002 | order-history | Antigravity | Failed | [BUG-005](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-005.md) | Không tự động chuyển hướng người dùng chưa đăng nhập về trang Login |
+| TC-ORDER-HISTORY-003 | order-history | Antigravity | Failed | [BUG-001](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-001.md) | Lỗ hổng bảo mật IDOR cho phép xem đơn hàng người khác qua API |
+| TC-ORDER-HISTORY-004 | order-history | Antigravity | Failed | [BUG-007](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-007.md) | Trang lịch sử trống hiển thị văn bản thô sơ, thiếu Empty State chuẩn FR-24 |
+| TC-ORDER-HISTORY-005 | order-history | Antigravity | Failed | [BUG-003](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-003.md), [BUG-004](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-004.md), [BUG-006](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-006.md) | Thiếu bộ lọc; thiếu phân trang; thiếu tiêu đề H1; đơn hàng không nhấp được |
+| TC-ORDER-HISTORY-006 | order-history | Antigravity | Passed | None | Hiển thị nhãn trạng thái "Chờ xác nhận" màu vàng chính xác |
+| TC-ORDER-HISTORY-007 | order-history | Antigravity | Passed | None | Hiển thị nhãn trạng thái "Đã xác nhận" màu indigo chính xác |
+| TC-ORDER-HISTORY-008 | order-history | Antigravity | Passed | None | Hiển thị nhãn trạng thái "Đang giao" màu xanh dương chính xác |
+| TC-ORDER-HISTORY-009 | order-history | Antigravity | Passed | None | Hiển thị nhãn trạng thái "Đã giao" màu xanh lá chính xác |
+| TC-ORDER-HISTORY-010 | order-history | Antigravity | Passed | None | Hiển thị nhãn trạng thái "Đã hủy" màu đỏ chính xác |
+| TC-ORDER-HISTORY-011 | order-history | Antigravity | Passed | None | Số tiền tối thiểu hiển thị chính xác định dạng VND: `1 ₫` |
+| TC-ORDER-HISTORY-012 | order-history | Antigravity | Passed | None | Số tiền 999 hiển thị đúng dạng `999 ₫` (không dấu chấm phân cách) |
+| TC-ORDER-HISTORY-013 | order-history | Antigravity | Passed | None | Số tiền 1.000 hiển thị đúng dạng `1.000 ₫` (có dấu chấm phân cách) |
+| TC-ORDER-HISTORY-014 | order-history | Antigravity | Passed | None | Số tiền 1.001 hiển thị đúng dạng `1.001 ₫` (có dấu chấm phân cách) |
+| TC-ORDER-HISTORY-015 | order-history | Antigravity | Passed | None | Số tiền lớn hiển thị đúng định dạng dấu chấm phân cách hàng triệu/nghìn |
+| TC-ORDER-HISTORY-016 | order-history | Antigravity | Failed | [BUG-006](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-006.md) | Giao diện hoàn toàn thiếu thẻ tiêu đề <h1> (H1 count = 0) |
+| TC-ORDER-HISTORY-017 | order-history | Antigravity | Failed | [BUG-006](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-006.md) | Giao diện hoàn toàn thiếu thẻ tiêu đề <h1> (H1 count = 0) |
+| TC-ORDER-HISTORY-018 | order-history | Antigravity | Passed | None | Hệ thống không có lỗi thừa thẻ H1 (H1 count = 0 chứ không phải 2) |
+| TC-ORDER-HISTORY-019 | order-history | Antigravity | Passed | None | Toàn bộ giao diện lịch sử đơn hàng nhất quán tiếng Việt 100% |
+| TC-ORDER-HISTORY-020 | order-history | Antigravity | Failed | [BUG-003](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-003.md) | Không thể thực hiện vì thiếu bộ lọc trạng thái trên giao diện |
+| TC-ORDER-HISTORY-021 | order-history | Antigravity | Failed | [BUG-004](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-004.md) | Không có logic phân trang, toàn bộ đơn hàng đều render ra bảng |
+| TC-ORDER-HISTORY-022 | order-history | Antigravity | Failed | [BUG-004](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-004.md) | Thiếu phân trang, không thể nhấp chuyển sang trang thứ 2 |
+| TC-ORDER-HISTORY-023 | order-history | Antigravity | Passed | None | Định dạng hiển thị Ngày đặt (created_at) dạng thân thiện tiếng Việt thành công |
+| TC-ORDER-HISTORY-024 | order-history | Antigravity | Failed | [BUG-002](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-002.md) | Mã đơn hàng chỉ là văn bản thô, thiếu nút và trang Chi tiết đơn hàng |
+| TC-ORDER-HISTORY-025 | order-history | Antigravity | Failed | [BUG-002](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-002.md) | Thiếu trang Chi tiết đơn hàng để hiển thị các chi tiết phí ship và giảm giá |
+| TC-ORDER-HISTORY-026 | order-history | Antigravity | Failed | [BUG-001](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-001.md) | Lỗ hổng bảo mật IDOR cho phép xem đơn hàng người khác qua API |
+| TC-ORDER-HISTORY-027 | order-history | Antigravity | Failed | [BUG-003](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-003.md), [BUG-004](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-004.md), [BUG-008](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-008.md) | Focus bàn phím bị thiếu/lộn xộn do thiếu bộ lọc, phân trang và dialog hủy |

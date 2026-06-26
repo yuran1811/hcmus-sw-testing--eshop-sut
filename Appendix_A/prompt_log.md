@@ -1530,7 +1530,127 @@ Các tài liệu kiểm thử cốt lõi trong repository đã được cập nh
 ---
 ```
 
+## Entry 18 – Order History (FR-11) Automated Test Execution
 
+### AI Audit Log
 
+- **Name of AI tool**: Antigravity (Gemini 3.5 Flash)
+- **Date and time**: 2026-06-26 17:25:00 +07:00
+- **Prompt**:
 
+  ```text
+  Please act as an automated QA test runner agent to execute the entire EShop "order-history" (FR-11) test suite (all 27 test cases from `tests/test-cases/order-history/`) by strictly applying the `test-runner` skill.
+
+  Here is the SUT execution environment and workspace specifications:
+  - SUT Local URL: http://localhost:5173
+  - Browser: Google Chrome on Windows 11
+  - Backend API Port: http://localhost:3000 (currently running)
+
+  Please execute the following automated testing workflow:
+
+  1. **Hybrid Execution**:
+     - **UI & Browser Test Cases**: Launch the `browser_subagent` to automate all UI and functional test cases (including checking the order list table, order status filters, pagination navigation, transitions from the history table to the Order Details page, and keyboard Tab focus flow). The browser session must be recorded as a WebP video.
+     - **API & Security Test Cases**: For backend-level security checks, execute HTTP requests or cURL commands directly in the workspace terminal to verify API status codes and responses. Specifically, verify IDOR (Insecure Direct Object Reference) vulnerabilities by attempting to access another user's order details directly via URL or API (e.g., `GET /api/orders/<order_id_of_other_user>`), and verify that the backend returns correct HTTP status codes (e.g., `403 Forbidden` or `404 Not Found`).
+
+  2. **Bug Reporting (Markdown Drafts)**:
+     - If any test case fails (e.g., missing financial breakdowns in Order Details, failed IDOR blocks, or incorrect Tab Order navigation), you must draft a local bug report file under the directory `tests/bug-reports/` using the exact naming convention: `DRAFT-BUG-ORDER-HISTORY-[NUMBER].md` (e.g., `DRAFT-BUG-ORDER-HISTORY-001.md`).
+     - **Portability & Evidence Rules**:
+       - All supporting visual evidence (screenshots `.png`, browser session recording `.webp` video) must be copied or saved into a dedicated directory: `tests/bug-reports/evidence/`.
+       - Inside the markdown bug reports, all evidence files **must be linked using relative paths** (e.g., `evidence/filename.png` or `evidence/filename.webp`) instead of absolute local file paths (e.g., `file:///C:/Users/USER/...`). This ensures the reports are fully portable and viewable by other team members when committed.
+     - The bug report must strictly follow this template:
+       ```markdown
+       # [BUG][Order History] <Short description>
+
+       ## Found by Test Case
+       TC-ORDER-HISTORY-[NUMBER]
+
+       ## Requirement liên quan
+       FR-11, FR-21 (or appropriate FR-ID)
+
+       ## Severity / Priority
+       [Severity (Blocker/Critical/Major/Minor/Trivial)] / [Priority (P0/P1/P2/P3)]
+
+       ## Environment
+       - Browser: Google Chrome
+       - OS: Windows 11
+       - URL: http://localhost:5173/profile or http://localhost:5173/orders
+       - Build/Commit: [Mã commit hiện tại hoặc baseline]
+
+       ## Steps to reproduce
+       1. [Step 1]
+       2. [Step 2]
+       ...
+
+       ## Expected result
+       [Expected behavior according to the test case]
+
+       ## Actual result
+       [Observed behavior showing the defect]
+
+       ## Evidence
+       [Specify relative path to WebP video or screenshots in the evidence/ folder]
+       ```
+
+  3. **Output Synchronization & Traceability**:
+     - **Test Run Log**: Record the results (Passed, Failed, Blocked) of all 27 test cases in the execution log table at `tests/test-runs/sprint-1-test-run.md`. For any failed cases, include the file link to the local draft bug report in the `Related Bug` column.
+     - **Traceability Matrix**: Immediately upon completing the order-history feature, update the master traceability matrix at `tests/test-summary/traceability-matrix.md` mapping requirements (FR-11, FR-21) to their respective test cases, execution results, and local bug draft references, ensuring the status is updated to `Done`, `Open`, or `Blocked`.
+
+  Once the run is complete, provide a concise summary report showing the final statistics (Total, Passed, Failed, Blocked), the file paths of the generated draft bugs in `tests/bug-reports/`, and the relative path to the recorded browser session video.
+  ```
+
+- **Output**:
+
+  ```text
+  The automated QA test execution for the EShop "order-history" (FR-11) test suite has been completed by applying the `test-runner` skill. Below is the comprehensive execution report and summary of findings.
+
+  ---
+
+  ## 1. Môi trường thực thi (Execution Environment)
+  - **SUT Local URL**: http://localhost:5173
+  - **Backend API Port**: http://localhost:3000
+  - **Browser**: Google Chrome on Windows 11
+  - **Build/Commit**: `a6352864919d5523bbaa295fe7f68f40d59def82`
+  - **Tester**: Antigravity (Gemini 3.5 Flash)
+
+  ---
+
+  ## 2. Thống kê kết quả thực thi (Execution Statistics)
+
+  | Chỉ số (Metric) | Số lượng (Count) | Tỷ lệ (Percentage) |
+  | :--- | :--- | :--- |
+  | **Tổng số ca kiểm thử (Total Cases)** | 27 | 100% |
+  | **Đạt (Passed)** | 13 | 48.15% |
+  | **Lỗi (Failed)** | 14 | 51.85% |
+  | **Bị chặn (Blocked)** | 0 | 0% |
+
+  ---
+
+  ## 3. Danh sách các lỗi phát hiện & Bug Drafts
+  Tổng cộng **8 báo cáo lỗi chi tiết** đã được tạo dưới thư mục `tests/bug-reports/` tương ứng với các lỗi hệ thống tìm thấy trong quá trình chạy:
+
+  1. **[DRAFT-BUG-ORDER-HISTORY-001.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-001.md)** (Critical / P0): Lỗ hổng bảo mật nghiêm trọng IDOR tại API lấy chi tiết đơn hàng (GET /api/orders/:id) do thiếu cơ chế xác thực và phân quyền.
+  2. **[DRAFT-BUG-ORDER-HISTORY-002.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-002.md)** (Critical / P0): Thiếu giao diện Chi tiết đơn hàng và các liên kết Mã đơn hàng hiển thị dạng văn bản thô không thể tương tác điều hướng.
+  3. **[DRAFT-BUG-ORDER-HISTORY-003.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-003.md)** (Major / P1): Thiếu hoàn toàn bộ lọc đơn hàng theo Trạng thái (Filter UI) trên trang lịch sử.
+  4. **[DRAFT-BUG-ORDER-HISTORY-004.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-004.md)** (Major / P1): Thiếu chức năng và giao diện Phân trang đơn hàng (Pagination) để giới hạn tối đa 5 đơn hàng mỗi trang.
+  5. **[DRAFT-BUG-ORDER-HISTORY-005.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-005.md)** (Major / P1): Trang Hồ sơ không tự động điều hướng người dùng chưa đăng nhập về trang Login.
+  6. **[DRAFT-BUG-ORDER-HISTORY-006.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-006.md)** (Minor / P2): Trang Hồ sơ & Lịch sử đơn hàng hoàn toàn thiếu thẻ tiêu đề trang H1 cấp cao (H1 count = 0).
+  7. **[DRAFT-BUG-ORDER-HISTORY-007.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-007.md)** (Minor / P2): Giao diện Lịch sử đơn hàng trống (0 đơn hàng) hiển thị dạng văn bản thô sơ thay vì Empty State đạt chuẩn thiết kế FR-24.
+  8. **[DRAFT-BUG-ORDER-HISTORY-008.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-008.md)** (Minor / P2): Thao tác "Hủy đơn" ngay lập tức gửi yêu cầu thực hiện mà không hiển thị hộp thoại xác nhận (Confirmation Dialog) bảo vệ người dùng.
+
+  ---
+
+  ## 4. Minh chứng thực tế (Evidence)
+  Toàn bộ quá trình thực thi và kiểm thử đã được lưu trữ cục bộ dưới dạng các tệp minh chứng có tính di động cao:
+  - **Browser Video Record**: [order_history_ui_exploration_1782469485421.webp](evidence/order_history_ui_exploration_1782469485421.webp)
+  - **Screenshot Profile Empty**: [profile_page_empty_1782469522045.png](evidence/profile_page_empty_1782469522045.png)
+  - **Screenshot Profile With Orders**: [profile_page_with_order_1782469582409.png](evidence/profile_page_with_order_1782469582409.png)
+
+  ---
+
+  ## 5. Đồng bộ hóa dữ liệu (Artifact Synchronization)
+  Các tài liệu kiểm thử cốt lõi trong repository đã được cập nhật đầy đủ và đồng bộ:
+  - **Nhật ký thực thi**: [sprint-1-test-run.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-runs/sprint-1-test-run.md) đã được cập nhật kết quả và liên kết đến các file Bug Draft tương ứng cho cả 27 test case mới.
+  - **Ma trận truy vết**: [traceability-matrix.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-summary/traceability-matrix.md) đã ánh xạ hoàn chỉnh các yêu cầu FR-11, FR-21 và FR-24 đến từng ca kiểm thử, kết quả chạy và trạng thái vòng đời lỗi (`Done`, `Open`, `Blocked`).
+  - **Phân tích khoảng trống**: [gap-analysis.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-summary/gap-analysis.md) đã được mở rộng để phân tích sâu các khoảng trống về bảo mật hệ thống, IDOR, phân trang, và đồng bộ trạng thái cho cả hai module.
+  ```
 ````
