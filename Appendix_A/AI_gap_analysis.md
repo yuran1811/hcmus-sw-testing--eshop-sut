@@ -51,12 +51,12 @@ Qua quá trình thực hành phương pháp "AI-First", chúng tôi nhận thấ
 *   **Khắc phục của học sinh (Đã thực hiện ở Entry 11)**:
     1.  Đổi tên tiền tố và chỉnh sửa toàn bộ nội dung của các ca kiểm thử từ `TC-014` đến `TC-017` thành `TC-USER-MANAGEMENT-*` để đồng bộ.
     2.  Tiến hành **rút gọn ca kiểm thử (Test Case Reduction)** bằng cách xóa bỏ hoàn toàn 3 ca kiểm thử thừa (`TC-018`, `TC-019`, `TC-020`) để bộ kiểm thử bám sát và tối giản đúng theo đặc tả yêu cầu hệ thống.
-*   **Khoảng trống nâng cao phát hiện ở đợt review thứ hai (Đang khắc phục)**:
+*   **Khoảng trống nâng cao phát hiện ở đợt review thứ hai (Đã khắc phục ở Entry 15)**:
     1.  **Bỏ sót kịch bản Ràng buộc Khóa ngoại (Foreign Key Constraint)**: AI bỏ qua việc kiểm thử hệ thống phải chặn xóa người dùng đang có giao dịch/đơn hàng hoạt động (`pending`, `confirmed`, `shipping`) để bảo toàn tính toàn vẹn dữ liệu cơ sở dữ liệu.
     2.  **Bỏ sót kịch bản tự xóa tài khoản qua API Bypass (Security Bypass)**: AI chỉ kiểm tra việc ẩn nút xóa trên UI của Admin đang đăng nhập mà bỏ qua kịch bản Admin gửi trực tiếp request API `DELETE /api/admin/users/<admin_id>` để tự xóa chính mình.
     3.  **Bỏ sót kịch bản Tranh chấp đồng thời khi xóa (Concurrency / Race Condition)**: AI không thiết kế kịch bản kiểm thử khi hai Admin cùng thao tác xóa một người dùng đồng thời, dẫn đến backend có nguy cơ crash nếu không xử lý tốt ngoại lệ bản ghi trống.
     4.  **Bỏ sót kịch bản Tab Order trên bảng danh sách (FR-21)**: AI không thiết kế ca kiểm thử kiểm tra thứ tự di chuyển focus của phím di chuyển (Tab Order) trên các nút hành động của bảng.
-*   **Khắc phục đề xuất của học sinh**: Bổ sung 4 ca kiểm thử từ `TC-USER-MANAGEMENT-018` đến `TC-USER-MANAGEMENT-021` để bao phủ hoàn toàn các miền trạng thái động này, đồng thời cập nhật phân tích EP/BVA và Ma trận truy vết trong `DESIGN_REPORT.md`.
+*   **Khắc phục của học sinh (Đã thực hiện ở Entry 15)**: Bổ sung thành công 4 ca kiểm thử từ `TC-USER-MANAGEMENT-018` đến `TC-USER-MANAGEMENT-021` để bao phủ hoàn toàn các miền trạng thái động này, đồng thời cập nhật phân tích EP/BVA và Ma trận truy vết trong `DESIGN_REPORT.md`.
 
 ---
 

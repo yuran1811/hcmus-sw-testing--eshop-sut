@@ -8,15 +8,17 @@ Báo cáo thiết kế ca kiểm thử này áp dụng kỹ thuật Phân vùng 
 
 ### 1. Phân tích các tham số đầu vào và Phân vùng tương đương (EP)
 
-Chúng ta phân tích các tham số đầu vào, trạng thái phiên làm việc (`userSession`), danh sách người dùng (`userList`), tài khoản mục tiêu cần xóa (`targetUserToDelete`), hành động xóa (`deleteAction`) và các tiêu chuẩn tuân thủ giao diện thành các phân vùng tương đương hợp lệ (Valid Partitions) và không hợp lệ (Invalid Partitions):
+Chúng ta phân tích các tham số đầu vào, trạng thái phiên làm việc (`userSession`), danh sách người dùng (`userList`), tài khoản mục tiêu cần xóa (`targetUserToDelete`), trạng thái đơn hàng liên kết (`targetUserOrders`), trạng thái tranh chấp đồng thời (`concurrencyState`), hành động xóa (`deleteAction`) và các tiêu chuẩn tuân thủ giao diện thành các phân vùng tương đương hợp lệ (Valid Partitions) và không hợp lệ (Invalid Partitions):
 
 | Tham số nhập liệu / Trạng thái | Phân vùng hợp lệ (Valid Partitions) | Phân vùng không hợp lệ (Invalid Partitions) |
 | --- | --- | --- |
 | **Phiên đăng nhập** (`userSession`) | **EP-IN-USER-MGT-SESSION-1**: Phiên đăng nhập hợp lệ của Admin.<br>*Giá trị đại diện: admin@eshop.com (role = admin)* | **EP-IN-USER-MGT-SESSION-2-INV**: Đăng nhập tài khoản thường nhưng cố truy cập danh sách hoặc gọi API xóa.<br>*Giá trị đại diện: test@eshop.com (role = user)*<br><br>**EP-IN-USER-MGT-SESSION-3-INV**: Chưa đăng nhập (khách vãng lai).<br>*Giá trị đại diện: anonymous* |
 | **Danh sách người dùng** (`userList`) | **EP-IN-USER-MGT-COUNT-1**: Chỉ có tài khoản Admin đang hoạt động (0 người dùng khác -> trang trống).<br>*Giá trị đại diện: 0 other users*<br><br>**EP-IN-USER-MGT-COUNT-2**: Có từ 1 người dùng khác trở lên đăng ký trên hệ thống.<br>*Giá trị đại diện: 1 other user, 4 other users* | N/A |
-| **Tài khoản mục tiêu xóa** (`targetUserToDelete`) | **EP-IN-USER-MGT-TARGET-1**: Một tài khoản người dùng thường khác hoặc admin khác (không phải chính mình).<br>*Giá trị đại diện: test@eshop.com* | **EP-IN-USER-MGT-TARGET-2-INV**: Chính tài khoản admin đang đăng nhập hiện tại.<br>*Giá trị đại diện: admin@eshop.com (chính mình)* |
+| **Tài khoản mục tiêu xóa** (`targetUserToDelete`) | **EP-IN-USER-MGT-TARGET-1**: Một tài khoản người dùng thường khác hoặc admin khác (không phải chính mình).<br>*Giá trị đại diện: test@eshop.com* | **EP-IN-USER-MGT-TARGET-2-INV**: Chính tài khoản admin đang đăng nhập hiện tại (cả trên UI và API bypass).<br>*Giá trị đại diện: admin@eshop.com (chính mình)* |
+| **Đơn hàng liên kết** (`targetUserOrders`) | **EP-IN-USER-MGT-ORDER-1**: Người dùng bị xóa không có đơn hàng hoạt động nào trong hệ thống.<br>*Giá trị đại diện: 0 đơn hàng hoạt động* | **EP-IN-USER-MGT-ORDER-2-INV**: Người dùng bị xóa đang có ít nhất một đơn hàng hoạt động (`pending`, `confirmed`, `shipping`).<br>*Giá trị đại diện: 1 đơn hàng hoạt động* |
+| **Tranh chấp đồng thời** (`concurrencyState`) | **EP-IN-USER-MGT-CONC-1**: Yêu cầu xóa được gửi tuần tự và độc lập.<br>*Giá trị đại diện: Xóa đơn lẻ* | **EP-IN-USER-MGT-CONC-2-INV**: Hai Admin cùng gửi yêu cầu xóa một người dùng tại cùng một thời điểm.<br>*Giá trị đại diện: Xóa đồng thời* |
 | **Hành động xóa** (`deleteAction`) | **EP-IN-USER-MGT-ACTION-1**: Nhấn xác nhận xóa trong dialog.<br>*Giá trị đại diện: Click Confirm*<br><br>**EP-IN-USER-MGT-ACTION-2**: Nhấn hủy xóa trong dialog.<br>*Giá trị đại diện: Click Cancel* | N/A |
-| **Tiêu chuẩn giao diện** (`guiCompliance`) | **EP-IN-USER-MGT-GUI-1**: Đầy đủ 1 thẻ H1, tiếng Việt nhất quán, nút xóa màu đỏ, password che giấu hoàn toàn, hiển thị an toàn chống XSS.<br>*Giá trị đại diện: Giao diện chuẩn* | **EP-IN-USER-MGT-GUI-2-INV**: 0 hoặc nhiều hơn 1 thẻ H1.<br>*Giá trị đại diện: 0 thẻ H1, 2 thẻ H1*<br><br>**EP-IN-USER-MGT-GUI-3-INV**: Ngôn ngữ pha trộn tiếng Anh chưa dịch.<br>*Giá trị đại diện: Hiển thị chữ "Delete", "Actions"*<br><br>**EP-IN-USER-MGT-GUI-4-INV**: Nút xóa không màu đỏ.<br>*Giá trị đại diện: Nút xóa màu xám hoặc xanh dương*<br><br>**EP-IN-USER-MGT-GUI-5-INV**: Mật khẩu hiển thị hoặc xuất hiện trong cây DOM dưới dạng văn bản thô.<br>*Giá trị đại diện: password hash hoặc plain text bị lộ ở client* |
+| **Tiêu chuẩn giao diện** (`guiCompliance`) | **EP-IN-USER-MGT-GUI-1**: Đầy đủ 1 thẻ H1, tiếng Việt nhất quán, nút xóa màu đỏ, password che giấu hoàn toàn, hiển thị an toàn chống XSS, Tab Order phím di chuyển chuẩn (FR-21).<br>*Giá trị đại diện: Giao diện chuẩn* | **EP-IN-USER-MGT-GUI-2-INV**: 0 hoặc nhiều hơn 1 thẻ H1.<br>*Giá trị đại diện: 0 thẻ H1, 2 thẻ H1*<br><br>**EP-IN-USER-MGT-GUI-3-INV**: Ngôn ngữ pha trộn tiếng Anh chưa dịch.<br>*Giá trị đại diện: Hiển thị chữ "Delete", "Actions"*<br><br>**EP-IN-USER-MGT-GUI-4-INV**: Nút xóa không màu đỏ.<br>*Giá trị đại diện: Nút xóa màu xám hoặc xanh dương*<br><br>**EP-IN-USER-MGT-GUI-5-INV**: Mật khẩu hiển thị hoặc xuất hiện trong cây DOM dưới dạng văn bản thô.<br>*Giá trị đại diện: password hash hoặc plain text bị lộ ở client* |
 
 ---
 
@@ -30,6 +32,12 @@ Chúng ta áp dụng kỹ thuật BVA tại các điểm chuyển đổi ranh gi
     *   **Giá trị biên**:
         *   `BVA-USER-COUNT-1` (Trang trống): 0 người dùng khác -> Kết quả mong đợi: Hiển thị giao diện Empty State (icon minh họa, message thân thiện).
         *   `BVA-USER-COUNT-2` (Bắt đầu hiển thị danh sách): 1 người dùng khác -> Kết quả mong đợi: Ẩn Empty State, hiển thị bảng danh sách người dùng có 2 dòng dữ liệu (gồm admin và người dùng này).
+*   **Số lượng đơn hàng hoạt động của người dùng bị xóa (Ràng buộc Khóa ngoại)**:
+    *   **Kỹ thuật áp dụng**: **2-Point BVA** (mốc ranh giới 0 đơn hàng hoạt động và 1 đơn hàng hoạt động).
+    *   **Biện minh**: Để bảo toàn tính toàn vẹn cơ sở dữ liệu và tránh đơn hàng mồ côi (orphaned), hệ thống phải từ chối xóa tài khoản nếu họ có từ 1 đơn hàng hoạt động trở lên. Biên kiểm thử tại mốc 0 đơn hàng hoạt động (cho phép xóa) và 1 đơn hàng hoạt động (bị chặn và báo lỗi) giúp kiểm tra tính chính xác của luật kiểm soát khóa ngoại.
+    *   **Giá trị biên**:
+        *   `BVA-USER-ORDER-1` (Cho phép xóa): 0 đơn hàng hoạt động -> Kết quả mong đợi: Xóa người dùng thành công.
+        *   `BVA-USER-ORDER-2` (Chặn xóa): 1 đơn hàng hoạt động -> Kết quả mong đợi: Hệ thống từ chối xóa, hiển thị lỗi tiếng Việt "Không thể xóa người dùng đang có giao dịch hoặc đơn hàng hoạt động!".
 *   **Số lượng thẻ tiêu đề trang `<h1>` (Chuẩn giao diện FR-21)**:
     *   **Kỹ thuật áp dụng**: **3-Point BVA** tại ranh giới số lượng thẻ H1 bằng đúng 1.
     *   **Biện minh**: Đây là yêu cầu nghiêm ngặt về SEO và cấu trúc trang web (mỗi trang có *đúng 1 thẻ <h1>*). Sử dụng 3-Point BVA giúp cô lập hành vi kiểm soát cấu trúc:
@@ -56,15 +64,16 @@ Mọi ca kiểm thử biên hoặc ca kiểm thử lỗi sẽ được phát tri
 *   **Cấu hình Baseline hợp lệ**:
     *   `userSession = logged in as admin@eshop.com (role = admin)` (Đã đăng nhập Admin)
     *   `usersInDB = 5 users` (1 active admin, 4 other users)
-    *   `targetUserToDelete = test@eshop.com` (Một người dùng thường khác)
+    *   `targetUserToDelete = test@eshop.com` (Một người dùng thường khác, không có đơn hàng hoạt động)
     *   `deleteAction = Confirmed` (Xác nhận xóa qua dialog)
-    *   `guiCompliance = Valid` (1 tiêu đề H1, ngôn ngữ tiếng Việt hoàn toàn, nút xóa màu đỏ, password che giấu hoàn toàn, hiển thị an toàn chống XSS).
+    *   `concurrencyState = Sequence` (Không tranh chấp đồng thời)
+    *   `guiCompliance = Valid` (1 tiêu đề H1, ngôn ngữ tiếng Việt hoàn toàn, nút xóa màu đỏ, password che giấu hoàn toàn, hiển thị an toàn chống XSS, Tab Order chuẩn).
 
 ---
 
 ## PHẦN 2: MA TRẬN TRUY VẾT (TRACEABILITY MATRIX)
 
-Ma trận dưới đây chứng minh độ bao phủ toán học đầy đủ của **17 ca kiểm thử** đã được sinh ra đối với toàn bộ các Phân vùng tương đương (EP ID) và Giá trị biên (BVA ID) của module `user-management`:
+Ma trận dưới đây chứng minh độ bao phủ toán học đầy đủ của **21 ca kiểm thử** đã được sinh ra đối với toàn bộ các Phân vùng tương đương (EP ID) và Giá trị biên (BVA ID) của module `user-management`:
 
 | Test Case ID | Tên Ca Kiểm Thử | EP ID đã bao phủ | BVA ID đã bao phủ | Kết quả mong đợi |
 | --- | --- | --- | --- | --- |
@@ -75,7 +84,7 @@ Ma trận dưới đây chứng minh độ bao phủ toán học đầy đủ c�
 | **TC-USER-MANAGEMENT-005** | Hiển thị bảng danh sách khi có đúng 1 người dùng khác | EP-IN-USER-MGT-COUNT-2 | BVA-USER-COUNT-2 | Bảng hiển thị chính xác 2 dòng (admin + user) |
 | **TC-USER-MANAGEMENT-006** | Xóa thành công người dùng khác sau khi xác nhận qua Dialog | EP-IN-USER-MGT-TARGET-1, EP-IN-USER-MGT-ACTION-1 | BVA-USER-CONFIRM-2 | Thực hiện xóa, cập nhật bảng, báo toast thành công |
 | **TC-USER-MANAGEMENT-007** | Hủy thao tác xóa người dùng khi chọn Hủy trên Dialog | EP-IN-USER-MGT-TARGET-1, EP-IN-USER-MGT-ACTION-2 | BVA-USER-CONFIRM-1 | Đóng dialog, giữ nguyên người dùng trong bảng |
-| **TC-USER-MANAGEMENT-008** | Ngăn chặn Admin tự xóa chính tài khoản đang đăng nhập | EP-IN-USER-MGT-TARGET-2-INV | N/A | Nút Xóa bị ẩn/disabled; API chặn request tự xóa |
+| **TC-USER-MANAGEMENT-008** | Ngăn chặn Admin tự xóa chính tài khoản đang đăng nhập | EP-IN-USER-MGT-TARGET-2-INV | N/A | Nút Xóa bị ẩn/disabled trên giao diện |
 | **TC-USER-MANAGEMENT-009** | Chặn API xóa người dùng từ tài khoản thường | EP-IN-USER-MGT-SESSION-2-INV | N/A | API trả về 403 Forbidden, người dùng không bị xóa |
 | **TC-USER-MANAGEMENT-010** | Chặn API xóa người dùng từ khách vãng lai | EP-IN-USER-MGT-SESSION-3-INV | N/A | API trả về 401 Unauthorized, người dùng không bị xóa |
 | **TC-USER-MANAGEMENT-011** | Đảm bảo mật khẩu không bao giờ bị lộ trên giao diện | EP-IN-USER-MGT-GUI-5-INV | N/A | Mật khẩu không hiển thị và không được tải về client |
@@ -83,9 +92,12 @@ Ma trận dưới đây chứng minh độ bao phủ toán học đầy đủ c�
 | **TC-USER-MANAGEMENT-013** | Xác thực thẻ tiêu đề H1 đạt chuẩn (H1 count = 1) | EP-IN-USER-MGT-GUI-1 | BVA-USER-H1-2 | Trả về duy nhất 1 thẻ <h1> |
 | **TC-USER-MANAGEMENT-014** | Biên thẻ tiêu đề H1 - Không có thẻ H1 nào | EP-IN-USER-MGT-GUI-2-INV | BVA-USER-H1-1 (3-point BVA) | Trả về 0 thẻ <h1> -> Lỗi cấu trúc |
 | **TC-USER-MANAGEMENT-015** | Biên thẻ tiêu đề H1 - Có nhiều hơn 1 thẻ H1 | EP-IN-USER-MGT-GUI-2-INV | BVA-USER-H1-3 (3-point BVA) | Trả về 2 thẻ <h1> -> Lỗi cấu trúc |
-| **TC-USER-MANAGEMENT-016** | Nhất quan màu sắc nút hành động nguy hiểm - Nút Xóa màu đỏ | EP-IN-USER-MGT-GUI-4-INV | N/A | Nút Xóa hiển thị màu đỏ đặc trưng |
+| **TC-USER-MANAGEMENT-016** | Nhất quán màu sắc nút hành động nguy hiểm - Nút Xóa màu đỏ | EP-IN-USER-MGT-GUI-4-INV | N/A | Nút Xóa hiển thị màu đỏ đặc trưng |
 | **TC-USER-MANAGEMENT-017** | Đảm bảo hiển thị an toàn thông tin người dùng, tránh XSS | EP-IN-USER-MGT-GUI-1 | N/A | Dữ liệu được escape an toàn, không thực thi mã script |
-
+| **TC-USER-MANAGEMENT-018** | Chặn xóa người dùng đang có giao dịch hoặc đơn hàng hoạt động | EP-IN-USER-MGT-ORDER-2-INV | BVA-USER-ORDER-2 | Hệ thống từ chối xóa, báo lỗi tiếng Việt bảo toàn khóa ngoại |
+| **TC-USER-MANAGEMENT-019** | Chặn API gửi yêu cầu tự xóa chính tài khoản Admin đang đăng nhập | EP-IN-USER-MGT-TARGET-2-INV | N/A | API trả về 400/403, báo lỗi tự xóa không được phép |
+| **TC-USER-MANAGEMENT-020** | Xử lý tranh chấp đồng thời khi hai Admin cùng xóa một người dùng | EP-IN-USER-MGT-CONC-2-INV | N/A | Admin gửi sau nhận lỗi 404 thân thiện, không crash server |
+| **TC-USER-MANAGEMENT-021** | Kiểm tra thứ tự chuyển tiêu điểm bàn phím (Tab Order) trên bảng | EP-IN-USER-MGT-GUI-1 | N/A | Tiêu điểm di chuyển tuần tự từ trên xuống dưới, trái sang phải |
 
 ---
 
@@ -99,6 +111,9 @@ Khung phân tích này định hướng kiểm thử viên con người rà soá
 | **Tranh chấp Đồng thời (Concurrency)** | - Hai Admin cùng mở trang quản lý người dùng. Admin A thực hiện xóa Người dùng X, cùng lúc đó Admin B cũng nhấn nút xóa Người dùng X. Hệ thống xử lý tranh chấp thế nào? | AI thiết kế các luồng kiểm thử tuần tự đơn luồng (single-thread), bỏ qua các vấn đề bất đồng bộ và tranh chấp tài nguyên đồng thời của hệ thống đa người dùng. |
 | **Hành vi Xóa tài khoản Admin khác** | - Một Admin có thể xóa một Admin khác không? Hệ thống có phân cấp Admin (Super Admin vs. Regular Admin) không? | AI dựa hoàn toàn vào phát biểu mô tả chung "Admin có thể xóa người dùng", bỏ qua việc phân tích sâu các vai trò con (Sub-roles) và các quy định chính sách bảo mật nội bộ. |
 | **Bypass qua Token JWT cũ (Token Revocation)** | - Sau khi Admin xóa Người dùng X, nhưng Người dùng X vẫn đang giữ một JWT Token hợp lệ còn hạn sử dụng. Token đó có bị thu hồi (revoke) ngay lập tức để chặn người dùng X truy cập API không? | AI giả định việc xóa tài khoản ở Database là kết thúc chu kỳ, bỏ qua cơ chế kiểm soát phiên làm việc (Session Management) và bộ nhớ đệm phân tán (như Redis cache của JWT). |
+
+> [!NOTE]
+> **Đánh giá đợt review thứ hai**: Các khoảng trống về Ràng buộc Khóa ngoại, API Bypass tự xóa tài khoản, Tranh chấp đồng thời (Concurrency) và Tiêu chuẩn tiếp cận giao diện di động/phím di chuyển (Tab Order) đã được bổ sung đầy đủ vào bộ kiểm thử thông qua các ca kiểm thử từ `TC-USER-MANAGEMENT-018` đến `TC-USER-MANAGEMENT-021`.
 
 ---
 

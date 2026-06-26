@@ -1273,3 +1273,60 @@ Dưới đây là chi tiết các công việc đã hoàn thành trong bộ ki�
 Bộ ca kiểm thử Quên mật khẩu đã được hoàn thiện đầy đủ, đạt chất lượng tối đa theo các quy tắc và tiêu chuẩn thiết kế kiểm thử nâng cao.
 ```
 
+## Entry 15 – User Management (FR-19) Review & Refinement
+
+### AI Audit Log
+
+- **Name of AI tool**: Antigravity (Gemini 3.5 Flash)
+- **Date and time**: 2026-06-26 16:15:00 +07:00
+- **Prompt**:
+
+  ```text
+  Please refine the EShop "user-management" test suite in `tests/test-cases/user-management/` and update `DESIGN_REPORT.md` to expand the suite to exactly 21 test cases, addressing the following human review findings:
+
+  1. **Clean & Reduce Unnecessary Test Cases**:
+     - Ensure that the 3 unnecessary test cases (pagination cases TC-018/019 and search case TC-020) are completely removed from the suite and the Traceability Matrix, leaving 17 active base test cases.
+     - Verify that all active test cases from TC-001 to TC-017 are properly named using the `TC-USER-MANAGEMENT-[NUMBER]` prefix.
+
+  2. **Generate 4 New Test Cases** (TC-USER-MANAGEMENT-018 to 021):
+     - **TC-018 (Foreign Key Constraint)**: Verify that attempting to delete a user who has active orders (pending/confirmed/shipping) in the database is blocked. The system must display a Vietnamese error message: "Không thể xóa người dùng đang có giao dịch hoặc đơn hàng hoạt động!".
+     - **TC-019 (API Self-Deletion Bypass)**: Verify that sending a direct DELETE request to `/api/admin/users/<admin_id>` using the logged-in Admin's own ID is blocked by the backend API, returning a `400 Bad Request` or `403 Forbidden` with the error: "Không được phép tự xóa tài khoản đang đăng nhập!".
+     - **TC-020 (Concurrency)**: Verify that if two Admins attempt to delete the same User X simultaneously, the second request is handled gracefully by the backend, returning a `404 Not Found` or `400 Bad Request` with a friendly Vietnamese error instead of crashing.
+     - **TC-021 (Tab Order)**: Verify keyboard focus flow on the User Management screen moves sequentially through the table rows and action buttons from top-to-bottom, left-to-right (FR-21).
+
+  3. **Synchronize Master Report (`DESIGN_REPORT.md`)**:
+     - Define the new partitions (orderCancelStatus/foreignKey, selfDelete, concurrency) and BVA boundaries.
+     - Update the Traceability Matrix to map exactly 21 test cases (TC-001 to TC-021) correctly.
+     - Append a brief note in the AI Gap Analysis explaining the human review findings.
+
+  Follow the standard `test-writer` skill format for all outputs.
+  ```
+
+- **Output**:
+
+  ```text
+  Tôi đã thực hiện thành công yêu cầu chỉnh sửa và bổ sung bộ ca kiểm thử **Quản lý người dùng (user-management)** theo đúng nội dung Prompt bạn đã cung cấp.
+
+  Dưới đây là chi tiết các công việc đã hoàn thành trong bộ kiểm thử:
+
+  ### 1. Dọn dẹp và chuẩn hóa các ca kiểm thử hiện có
+  - Bộ ca kiểm thử đã được dọn dẹp để đảm bảo 3 ca kiểm thử không cần thiết (phân trang và tìm kiếm) đã được loại bỏ hoàn toàn, để lại 17 ca kiểm thử cơ sở hoạt động ổn định.
+  - Kiểm tra và đảm bảo tất cả các ca kiểm thử từ `TC-USER-MANAGEMENT-001` đến `TC-USER-MANAGEMENT-017` đều tuân thủ quy ước đặt tên và nội dung nhất quán.
+
+  ### 2. Tạo mới 4 ca kiểm thử bổ sung
+  - [TC-USER-MANAGEMENT-018.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/user-management/TC-USER-MANAGEMENT-018.md): Xác thực việc chặn xóa tài khoản người dùng đang có đơn hàng hoạt động (`pending`, `confirmed`, `shipping`) để bảo toàn tính toàn vẹn cơ sở dữ liệu, hiển thị lỗi tiếng Việt rõ ràng: "Không thể xóa người dùng đang có giao dịch hoặc đơn hàng hoạt động!".
+  - [TC-USER-MANAGEMENT-019.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/user-management/TC-USER-MANAGEMENT-019.md): Xác thực việc chặn API bypass khi admin cố tình gửi request trực tiếp `DELETE /api/admin/users/<chính_id>` để tự xóa tài khoản của mình, backend trả về lỗi `400`/`403` kèm thông báo: "Không được phép tự xóa tài khoản đang đăng nhập!".
+  - [TC-USER-MANAGEMENT-020.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/user-management/TC-USER-MANAGEMENT-020.md): Xác thực cơ chế xử lý tranh chấp đồng thời (Concurrency / Race Condition) khi hai Admin cùng gửi yêu cầu xóa một người dùng tại một thời điểm, backend trả về mã lỗi `404` hoặc `400` với thông báo thân thiện: "Người dùng không tồn tại hoặc đã bị xóa trước đó!" thay vì crash server.
+  - [TC-USER-MANAGEMENT-021.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/user-management/TC-USER-MANAGEMENT-021.md): Xác thực thứ tự chuyển tiêu điểm tiêu điểm phím di chuyển (Tab Order) trên bảng danh sách người dùng, di chuyển tuần tự đúng quy chuẩn từ trên xuống dưới, trái sang phải (FR-21).
+
+  ### 3. Cập nhật Báo cáo Thiết kế (`DESIGN_REPORT.md`)
+  - [DESIGN_REPORT.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/user-management/DESIGN_REPORT.md):
+    - Cập nhật bảng Phân vùng tương đương (EP) bổ sung các biến trạng thái mới: `targetUserOrders` (đơn hàng liên kết) và `concurrencyState` (tranh chấp đồng thời), cùng với các phân vùng hợp lệ/không hợp lệ tương ứng.
+    - Cập nhật Phân tích giá trị biên (BVA) bổ sung biên cho số lượng đơn hàng hoạt động và tranh chấp bản ghi cơ sở dữ liệu.
+    - Cập nhật lại **Ma trận truy vết (Traceability Matrix)** hiển thị chính xác và ánh xạ đầy đủ thông tin cho toàn bộ **21 ca kiểm thử** của module.
+    - Bổ sung ghi chú đánh giá thực tế từ con người (Human Review Findings) vào phần Phân tích Khoảng trống AI (Phần 3) để thuyết minh cho lý do bổ sung 4 ca kiểm thử này.
+
+  Bộ ca kiểm thử Quản lý người dùng đã được hoàn thiện đạt độ bao phủ nghiệp vụ và tính toàn vẹn tối đa.
+  ```
+
+
