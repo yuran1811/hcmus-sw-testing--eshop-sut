@@ -1654,3 +1654,138 @@ Các tài liệu kiểm thử cốt lõi trong repository đã được cập nh
   - **Phân tích khoảng trống**: [gap-analysis.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-summary/gap-analysis.md) đã được mở rộng để phân tích sâu các khoảng trống về bảo mật hệ thống, IDOR, phân trang, và đồng bộ trạng thái cho cả hai module.
   ```
 ````
+
+---
+
+## Entry 19 – User Management (FR-12) Automated Test Execution
+
+- **Date & Time**: 2026-06-26 17:55:00+07:00
+- **Feature**: Quản lý Người dùng (FR-12, FR-19, FR-21, FR-24)
+- **Role**: Automated QA Test Runner Agent
+- **Description**: Thực thi toàn bộ 21 test case trong bộ ca kiểm thử quản lý người dùng bằng phương pháp Hybrid (Browser Subagent tự động hóa UI và chạy script Node.js kiểm thử API bảo mật/ràng buộc backend).
+
+## 1. Prompt của người dùng
+```text
+Please act as an automated QA test runner agent to execute the entire EShop "user-management" (FR-12) test suite (all 21 test cases from `tests/test-cases/user-management/`) by strictly applying the `test-runner` skill.
+
+Here is the SUT execution environment and workspace specifications:
+- SUT Local URL: http://localhost:5173
+- Browser: Google Chrome on Windows 11
+- Backend API Port: http://localhost:3000 (currently running)
+
+Please execute the following automated testing workflow:
+
+1. **Hybrid Execution**:
+   - **UI & Browser Test Cases**: Launch the `browser_subagent` to automate all UI and functional test cases (including logging in as Admin, checking the user list table, adding/updating users, deleting users, verifying Admin role protections, and checking the keyboard Tab focus flow). The browser session must be recorded as a WebP video.
+   - **API & Security Test Cases**: For backend-level security and constraint checks, execute HTTP requests or cURL commands directly in the workspace terminal to verify API status codes and responses. Specifically, verify:
+     1. *Foreign Key Constraints*: Verify that attempting to delete a user who has active orders (pending, confirmed, or shipping) in the database is blocked, returning a friendly Vietnamese error: "Không thể xóa người dùng đang có giao dịch hoặc đơn hàng hoạt động!".
+     2. *API Self-Deletion Bypass*: Verify that sending a direct DELETE request to `/api/admin/users/<admin_id>` using the logged-in Admin's own ID is blocked by the backend API, returning a `400 Bad Request` or `403 Forbidden` with the error: "Không được phép tự xóa tài khoản đang đăng nhập!".
+     3. *Concurrency (Race Conditions)*: Verify that if two Admins attempt to delete the same User X simultaneously, the second request is handled gracefully by the backend, returning a `404 Not Found` or `400 Bad Request` with a friendly Vietnamese error instead of crashing.
+
+2. **Bug Reporting (Markdown Drafts)**:
+   - If any test case fails (e.g., failed self-deletion block, database constraint bypass, concurrency crash, or incorrect Tab Order navigation), you must draft a local bug report file under the directory `tests/bug-reports/` using the exact naming convention: `DRAFT-BUG-USER-MANAGEMENT-[NUMBER].md` (e.g., `DRAFT-BUG-USER-MANAGEMENT-001.md`).
+   - **Portability & Evidence Rules**:
+     - All supporting visual evidence (screenshots `.png`, browser session recording `.webp` video) must be copied or saved into a dedicated directory: `tests/bug-reports/evidence/`.
+     - Inside the markdown bug reports, all evidence files **must be linked using relative paths** (e.g., `evidence/filename.png` or `evidence/filename.webp`) instead of absolute local file paths (e.g., `file:///C:/Users/USER/...`). This ensures the reports are fully portable and viewable by other team members when committed.
+   - The bug report must strictly follow this template...
+```
+
+## 2. Kết quả thực thi (Execution Results)
+Tóm tắt kết quả chạy bộ 21 ca kiểm thử cho module Quản lý người dùng:
+- **Tổng số ca kiểm thử**: 21
+- **Đạt (Passed)**: 11
+- **Lỗi (Failed)**: 10
+- **Bị chặn (Blocked)**: 0
+- **Tỷ lệ đạt**: 52.38% (11/21)
+
+## 3. Các lỗi phát hiện & Dự thảo báo cáo (Bug Reports Drafted)
+Đã sinh ra 9 báo cáo lỗi dự thảo tại thư mục `tests/bug-reports/`:
+1. **[DRAFT-BUG-USER-MANAGEMENT-001.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-USER-MANAGEMENT-001.md)** (Minor / P2): Thiếu giao diện Empty State khi không có người dùng nào khác ngoài Admin trên trang Quản lý người dùng.
+2. **[DRAFT-BUG-USER-MANAGEMENT-002.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-USER-MANAGEMENT-002.md)** (Major / P1): Thiếu hộp thoại xác nhận (Confirmation Dialog) trước khi thực hiện hành động xóa tài khoản người dùng, xóa ngay lập tức khi nhấn.
+3. **[DRAFT-BUG-USER-MANAGEMENT-003.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-USER-MANAGEMENT-003.md)** (Major / P1): Nút xóa chính tài khoản Admin đang đăng nhập vẫn hiển thị và có thể bấm được trên UI (UI Self-Deletion).
+4. **[DRAFT-BUG-USER-MANAGEMENT-004.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-USER-MANAGEMENT-004.md)** (Critical / P0): Lỗ hổng bảo mật phân quyền nghiêm trọng - Tài khoản người dùng thường có thể gửi API DELETE để xóa bất kỳ tài khoản người dùng nào khác thành công.
+5. **[DRAFT-BUG-USER-MANAGEMENT-005.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-USER-MANAGEMENT-005.md)** (Minor / P2): Ngôn ngữ hiển thị không nhất quán, pha trộn các từ khóa tiếng Anh ở trang Login, Sidebar và Bảng danh sách người dùng.
+6. **[DRAFT-BUG-USER-MANAGEMENT-006.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-USER-MANAGEMENT-006.md)** (Critical / P1): Bỏ qua ràng buộc khóa ngoại - Cho phép xóa người dùng có đơn hàng ở trạng thái hoạt động, gây ra hiện tượng mồ côi (orphaned) bản ghi đơn hàng.
+7. **[DRAFT-BUG-USER-MANAGEMENT-007.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-USER-MANAGEMENT-007.md)** (Critical / P1): Lỗ hổng bảo mật - API backend cho phép Admin tự gửi request DELETE để xóa chính tài khoản admin đang đăng nhập.
+8. **[DRAFT-BUG-USER-MANAGEMENT-008.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-USER-MANAGEMENT-008.md)** (Major / P2): Lỗi tranh chấp đồng thời - Hai request xóa cùng một người dùng gửi song song đều trả về trạng thái 200 OK thay vì báo lỗi 404 cho request thứ hai.
+9. **[DRAFT-BUG-USER-MANAGEMENT-009.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-USER-MANAGEMENT-009.md)** (Minor / P2): Lỗi khả năng tiếp cận bằng bàn phím - Các menu điều hướng ở sidebar bị bỏ qua hoàn toàn trong Tab Order do sử dụng thẻ <li> không có thuộc tính tabindex.
+
+## 4. Minh chứng thực tế (Evidence)
+- **Browser Video Record**: [user_mgt_test_run.webp](evidence/user_mgt_test_run.webp)
+- **Screenshot Login Page**: [login_page.png](evidence/login_page.png)
+- **Screenshot User List Page**: [user_list_page.png](evidence/user_list_page.png)
+- **Screenshot After Delete Click**: [after_delete_click.png](evidence/after_delete_click.png)
+- **Screenshot Tab Focus Out**: [tab_focus_1.png](evidence/tab_focus_1.png)
+
+## 5. Đồng bộ hóa dữ liệu (Artifact Synchronization)
+- **Nhật ký thực thi**: [sprint-1-test-run.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-runs/sprint-1-test-run.md) đã được cập nhật kết quả và liên kết đến các file Bug Draft tương ứng cho cả 21 test case mới.
+- **Ma trận truy vết**: [traceability-matrix.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-summary/traceability-matrix.md) đã ánh xạ hoàn chỉnh các yêu cầu đến từng ca kiểm thử và trạng thái vòng đời lỗi (`Done`, `Open`).
+- **Phân tích khoảng trống**: [gap-analysis.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-summary/gap-analysis.md) đã được mở rộng để phân tích sâu các khoảng trống về phân quyền, khóa ngoại, accessibility và race conditions cho module quản lý người dùng.
+
+---
+
+## Entry 20 – Mobile Checkout (FR-20) Automated Test Execution
+
+- **Date & Time**: 2026-06-26 18:25:00+07:00
+- **Feature**: Thanh toán trên thiết bị di động (FR-20, FR-08, FR-09, FR-21, FR-22, FR-23, FR-24)
+- **Role**: Automated QA Test Runner Agent
+- **Description**: Thực thi toàn bộ 26 test case trong bộ ca kiểm thử thanh toán di động bằng phương pháp Hybrid (Browser Subagent tự động hóa UI trên web build của Metro server cổng 8081 và chạy script Node.js kiểm thử API bảo mật/ràng buộc backend).
+
+## 1. Prompt của người dùng
+```text
+Please act as an automated QA test runner agent to execute the entire EShop "mobile-checkout" (FR-20) test suite (all 26 test cases from `tests/test-cases/mobile-checkout/`) by strictly applying the `test-runner` skill.
+
+Here is the SUT execution environment and workspace specifications:
+- SUT Local URL: http://localhost:8081
+- Browser: Google Chrome on Windows 11
+- Backend API Port: http://localhost:3000 (currently running)
+
+Please execute the following automated testing workflow:
+
+1. **Hybrid Execution**:
+   - **UI & Browser Test Cases**: Launch the `browser_subagent` to automate all UI and functional test cases of the mobile application on http://localhost:8081. This includes adding/removing products from the cart, verifying empty cart states (Empty State), applying valid coupons (SAVE10, VIP100), checking checkout flows, confirming dialog cancellations, testing order cancellation states (BVA confirmed vs shipping), checking VND currency format display (dots separating thousands, e.g. "1.000 ₫"), and verification of disabled checkout amounts.
+   - **API & Security Test Cases**: Verify:
+     1. *Coupon Expiration*: Applying "EXPIRED" returns a 400 Bad Request with "Mã giảm giá đã hết hạn".
+     2. *Coupon Minimum Order Threshold*: Test boundaries for SAVE10 (299,999 ₫ vs 300,000 ₫).
+     3. *Coupon Usage Limit*: Test applying VIP100 for the 3rd time (max uses = 2).
+     4. *Client-side Total Amount Tampering*: Test sending manipulated total to backend.
+```
+
+## 2. Kết quả thực thi (Execution Results)
+Tóm tắt kết quả chạy bộ 26 ca kiểm thử cho module Thanh toán di động:
+- **Tổng số ca kiểm thử**: 26
+- **Đạt (Passed)**: 16
+- **Lỗi (Failed)**: 10
+- **Bị chặn (Blocked)**: 0
+- **Tỷ lệ đạt**: 61.54% (16/26)
+
+## 3. Các lỗi phát hiện & Dự thảo báo cáo (Bug Reports Drafted)
+Đã sinh ra 10 báo cáo lỗi dự thảo tại thư mục `tests/bug-reports/`:
+1. **[DRAFT-BUG-MOBILE-CHECKOUT-001.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-MOBILE-CHECKOUT-001.md)** (Major / P1): Mã giảm giá SAVE10 từ chối đơn hàng có giá trị đúng bằng ngưỡng tối thiểu 300.000 ₫.
+2. **[DRAFT-BUG-MOBILE-CHECKOUT-002.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-MOBILE-CHECKOUT-002.md)** (Critical / P0): Lỗ hổng bảo mật thay đổi tham số giá (Price Parameter Tampering) tại endpoint checkout.
+3. **[DRAFT-BUG-MOBILE-CHECKOUT-003.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-MOBILE-CHECKOUT-003.md)** (Critical / P0): Hệ thống tự động loại bỏ sản phẩm cuối cùng trong giỏ hàng (`slice(0, -1)`) khi nhấn xác nhận thanh toán.
+4. **[DRAFT-BUG-MOBILE-CHECKOUT-004.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-MOBILE-CHECKOUT-004.md)** (Minor / P2): Không hiển thị dialog xác nhận khi nhấn xóa sản phẩm khỏi giỏ hàng.
+5. **[DRAFT-BUG-MOBILE-CHECKOUT-005.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-MOBILE-CHECKOUT-005.md)** (Trivial / P3): Không nhất quan ngôn ngữ tiếng Việt (hiển thị Username và Sign In bằng tiếng Anh) trên màn hình đăng nhập.
+6. **[DRAFT-BUG-MOBILE-CHECKOUT-006.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-MOBILE-CHECKOUT-006.md)** (Minor / P2): Màn hình Checkout thiếu hoàn toàn các trường thông tin giao hàng và không hỗ trợ di chuyển tiêu điểm Tab.
+7. **[DRAFT-BUG-MOBILE-CHECKOUT-007.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-MOBILE-CHECKOUT-007.md)** (Critical / P0): Lỗi tính toán sai lệch giá trị mã giảm giá dạng phần trăm (%) làm tăng giá trị đơn hàng gấp 10 lần (và gây tiết kiệm âm).
+8. **[DRAFT-BUG-MOBILE-CHECKOUT-008.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-MOBILE-CHECKOUT-008.md)** (Major / P1): Mã giảm giá có giá trị giảm cố định lớn hơn giá trị đơn hàng dẫn đến tổng tiền thanh toán bị âm.
+9. **[DRAFT-BUG-MOBILE-CHECKOUT-009.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-MOBILE-CHECKOUT-009.md)** (Minor / P2): Không hiển thị dialog xác nhận khi khách hàng nhấn nút hủy đơn hàng trong lịch sử đơn hàng.
+10. **[DRAFT-BUG-MOBILE-CHECKOUT-010.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-MOBILE-CHECKOUT-010.md)** (Minor / P2): Hiển thị thông báo lỗi bằng alert() thay vì nhãn văn bản ở phía trên nút đặt hàng khi xảy ra lỗi kết nối mạng.
+
+## 4. Minh chứng thực tế (Evidence)
+- **Browser Video Record**: [mobile_checkout_run.webp](evidence/mobile_checkout_run.webp)
+- **Screenshot Mobile Homepage**: [mobile_homepage.png](evidence/mobile_homepage.png)
+- **Screenshot Mobile Login**: [mobile_login_before_typing.png](evidence/mobile_login_before_typing.png)
+- **Screenshot Mobile Cart**: [mobile_cart_3_items.png](evidence/mobile_cart_3_items.png)
+- **Screenshot Immediate Deletion**: [mobile_deleted_immediately.png](evidence/mobile_deleted_immediately.png)
+- **Screenshot Checkout Page**: [mobile_checkout_initial.png](evidence/mobile_checkout_initial.png)
+- **Screenshot Coupon applied error**: [mobile_coupon_applied_error.png](evidence/mobile_coupon_applied_error.png)
+- **Screenshot Order History**: [mobile_order_history_active.png](evidence/mobile_order_history_active.png)
+- **Screenshot Order Cancelled immediately**: [mobile_order_cancelled_immediately.png](evidence/mobile_order_cancelled_immediately.png)
+
+## 5. Đồng bộ hóa dữ liệu (Artifact Synchronization)
+- **Nhật ký thực thi**: [sprint-1-test-run.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-runs/sprint-1-test-run.md) đã được cập nhật kết quả và liên kết đến các file Bug Draft tương ứng cho cả 26 test case mới.
+- **Ma trận truy vết**: [traceability-matrix.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-summary/traceability-matrix.md) đã ánh xạ hoàn chỉnh các yêu cầu FR-20, FR-08, FR-09, FR-21, FR-22, FR-23, FR-24 đến từng ca kiểm thử và trạng thái vòng đời lỗi (`Done`, `Open`).
+- **Phân tích khoảng trống**: [gap-analysis.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-summary/gap-analysis.md) đã được mở rộng để phân tích sâu các khoảng trống về tính bảo mật thanh toán, lỗi tính toán mã phần trăm, giỏ hàng mồ côi và thiếu dialog xác nhận cho module thanh toán di động.
+
+
