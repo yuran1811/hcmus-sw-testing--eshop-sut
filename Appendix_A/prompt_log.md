@@ -390,6 +390,192 @@ The comprehensive report has been loaded as an interactive user-facing artifact.
   - Synchronized the brain artifact [forgot_password_test_design.md](file:///C:/Users/USER/.gemini/antigravity-ide/brain/42f7ca08-9690-47b0-aa07-81df6ea990d5/forgot_password_test_design.md).
   ```
 
-- ```
+  ## Entry 7 – Order History (FR-11) EP & BVA Test Case Design
 
+### AI Audit Log
+
+- **Name of AI tool**: Antigravity (Gemini 3.5 Flash)
+- **Date and time**: 2026-06-25 22:50:00 +07:00
+- **Prompt**:
+
+  ```text
+  I want to complete the 4 core homework requirements for the EShop "Xem lịch sử đơn hàng" (FR-11) feature using an AI-First strategy.
   ```
+
+Please apply the `test-writer` skill to generate a comprehensive report that addresses all of the following requirements.
+
+Do NOT limit the suite to a fixed number of test cases (e.g., 20). Instead, dynamically determine the optimal number of test cases based on your EP and BVA analysis to achieve mathematically complete coverage.
+
+---
+
+### Task 1 & 2: Domain Testing (EP) & Boundary Value Analysis (BVA)
+
+Here is the exact System Requirements Specification (SRS) extracted from README.md:
+
+#### 1. Đặc tả FR-11: Xem lịch sử đơn hàng (User)
+
+- Người dùng chỉ xem được đơn hàng của chính mình.
+- Hiển thị: Mã đơn, Ngày đặt, Tổng tiền, Trạng thái hiện tại.
+- Trạng thái phải được dịch sang tiếng Việt rõ ràng và phân biệt màu sắc.
+  - Các trạng thái đơn hàng (tương ứng FR-10): chờ xác nhận (pending), đã xác nhận (confirmed), đang giao (shipping), đã giao (delivered), đã hủy (canceled).
+
+#### 2. Đặc tả FR-21: Tiêu chuẩn Giao diện Chung
+
+- Nhất quán ngôn ngữ: Toàn bộ giao diện dùng tiếng Việt (trừ thuật ngữ kỹ thuật chuẩn).
+- Nhất quán đơn vị tiền: Luôn dùng ký hiệu `₫` với định dạng phân cách hàng nghìn.
+- Tiêu đề trang: Mỗi trang có đúng 1 thẻ `<h1>` mô tả nội dung trang.
+
+#### 3. Đặc tả FR-24: Feedback & State Requirements
+
+- Trang trống (Empty State): Trang trống phải có icon/hình minh họa và message thân thiện.
+
+---
+
+### Instructions for the Agent Skill:
+
+Please execute the following steps exactly as defined in the `test-writer` skill, incorporating our established refinements:
+
+1. **Domain Testing (EP) Step-by-Step Analysis**:
+   - Divide inputs/parameters (`userSession`, `orderList`, `filterStatus`, `orderDataDisplay`, `guiCompliance`) into Valid and Invalid partitions.
+   - Assign unique Partition IDs (e.g., `EP-IN-HISTORY-1`, `EP-IN-HISTORY-2-INV`) and provide representative values.
+2. **Boundary Value Analysis (BVA) Step-by-Step Analysis**:
+   - Justify the choice of BVA points. Use 2-Point BVA for empty state verification (0 orders vs. 1 order) to test the transition from empty state to list view. Use 3-Point BVA for the strict single `<h1>` tag requirement (0, 1, 2 tags) and for currency formatting boundary values (e.g., formatted vs. unformatted large values).
+   - List the boundary values with unique BVA IDs.
+3. **Test Case Naming & Module Convention**:
+   - All test cases must be named following the format: `TC-ORDER-HISTORY-[NUMBER]` (starting from `TC-ORDER-HISTORY-001`).
+   - Standardize the `Module` field in all test cases to exactly `order-history`.
+4. **Test Case Derivation (Error Isolation & Detailed Navigation)**:
+   - Establish a valid baseline: `userSession = logged in as test@eshop.com`, `orders = 5 orders in DB`, `orderList = non-empty`.
+   - Derive the test cases using the Error Isolation Principle (changing one variable at a time while holding all others constant at baseline values).
+   - **CRITICAL REFINEMENTS**:
+     - All test cases must have **detailed navigation steps** starting from the EShop home page (`http://localhost:5173`) through the login page to the Order History page.
+     - Include explicit verification of the "Trạng thái trống" (Empty State) when the user has no orders.
+     - Include verification of language consistency (Tiếng Việt), currency formatting (`₫` with thousands separators), header hierarchy (exactly one `<h1>` per page), and color-coding of Vietnamese order statuses.
+     - Keep the `Requirement ID` fields clean: map only `FR-11` for functional test cases, and reserve `FR-21/24` for specialized GUI validation test cases.
+5. **Test Case Reduction & Traceability Matrix**:
+   - Merge duplicates and map the final set of test cases to their respective EP and BVA IDs in a Traceability Matrix.
+
+---
+
+### Task 3: AI Gap Analysis Framework
+
+Provide a structured **AI Gap Analysis Template** for FR-11. This template must guide me (the human reviewer) to document:
+
+- Any edge cases or logical flows that the AI might have missed (e.g., pagination, handling of hundreds of orders, access control bypass attempts, order state transition sync lag).
+- The technical root causes of why these test cases or bugs might be missed during design vs. execution.
+
+---
+
+### Task 4: Bug Reporting Workflow & Templates
+
+Provide a detailed **Bug Reporting Guide** for FR-11. This must include:
+
+1. The exact **GitHub Issue Title and Body Markdown template** that follows the class standards:
+   - Issue Title format: `[BUG][order-history] <Short description>`
+   - Required sections: Found by Test Case, Related Requirement, Severity/Priority, Environment, Steps to reproduce, Expected vs. Actual, and Evidence.
+   - Use priority levels `P0 / P1 / P2 / P3` and severity levels `Block / Critical / Major / Minor`.
+2. The specific **GitHub labels** to apply (`type: bug`, `module: order-history`, severity, priority, `status: new`, `found-by: test-case`).
+3. The **Retest and Closure checklist** (confirming PR merge, retest comment, and tester-only closure).
+
+`````
+
+
+- **Output**:
+
+
+````text
+I have designed, reduced, and generated the complete suite of 22 unique test cases and the master design report for the EShop **Order History** feature (FR-11, FR-21, FR-24) using the `test-writer` skill under the unconstrained guidelines.
+
+
+All assets have been successfully created and written directly to the workspace and brain directories.
+
+
+### 1. Generated Assets in the Workspace
+
+
+The files are located in the project repository:
+*   **Master Report**: [DESIGN_REPORT.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/order-history/DESIGN_REPORT.md)
+*   **Individual Test Cases**: 19 distinct markdown files from [TC-ORDER-HISTORY-001.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/order-history/TC-ORDER-HISTORY-001.md) to [TC-ORDER-HISTORY-022.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/order-history/TC-ORDER-HISTORY-022.md) under the directory `tests/test-cases/order-history/`.
+
+
+### 2. Refined Design & Methodology Highlights
+
+
+The unconstrained test suite incorporates all of your refined requirements:
+*   **Equivalence Partitioning (EP)**: Divided input parameters (`userSession`, `orderList`, `filterStatus`, `orderDataDisplay`, `guiCompliance`) into 5 valid and 6 invalid partitions to establish clear test coverage boundaries.
+*   **Boundary Value Analysis (BVA)**: Applied 2-Point BVA for empty state verification (0 orders vs. 1 order) to test the transition from empty state to list view. Applied 3-Point BVA for H1 tag counts (0, 1, 2 tags) and for currency formatting boundary values (999 ₫, 1.000 ₫, 1.001 ₫).
+*   **Error Isolation**: Derived exactly 22 test cases, ensuring each case modifies only a single parameter from the valid baseline scenario to pinpoint failure sources.
+*   **GUI Compliance**: Isolated the functional logic (FR-11) from the presentation rules (FR-21/24). Test cases `TC-ORDER-HISTORY-011` to `TC-ORDER-HISTORY-019` verify specific GUI criteria: currency formatting (`₫` with thousands separators), language consistency (fully Vietnamese), header hierarchy (exactly one `<h1>` per page), and empty state illustration.
+*   **Detailed Navigation**: Every test case contains complete navigation steps starting from the home page (`http://localhost:5173`) to ensure realistic user journey verification.
+*   **AI Gap Analysis & Bug Templates**: Included a structured gap analysis framework (addressing pagination, real-time status syncing, and offline resiliency) and the standardized bug reporting guide with `P0/P1/P2/P3` priority classifications and severity levels.
+
+
+***
+
+
+### Interactive Design Report
+
+
+The comprehensive report has been loaded as an interactive user-facing artifact. You can review the complete EP/BVA tables, the Traceability Matrix, the AI Gap Analysis, and the Bug Reporting Guide in the viewer:
+
+
+*   [order_history_test_design.md](file:///C:/Users/USER/.gemini/antigravity-ide/brain/42f7ca08-9690-47b0-aa07-81df6ea990d5/order_history_test_design.md)
+`````
+## Entry 8 – Order History (FR-11) Review & Refinement
+
+### AI Audit Log
+
+- **Name of AI tool**: Antigravity (Gemini 3.5 Flash)
+- **Date and time**: 2026-06-26 14:39:00 +07:00
+- **Prompt**:
+
+  ```text
+  I have review FR-11 and have some findings — agree or disagree with brief reason:
+
+  1. TC-021/022 reference BVA-PAGE-COUNT which is undefined in BVA section → broken traceability
+  2. TC-011 tests 0₫ order → impossible state since FR-15 requires price > 0
+  3. No TC verifies orderDate display format despite FR-11 requiring "Ngày đặt"
+
+  Answer: AGREE/DISAGREE for each + one-line reason.
+  ```
+
+- **Output**:
+
+  ```text
+  Here is the review of your findings:
+
+  1. **AGREE**: `BVA-PAGE-COUNT-1` and `BVA-PAGE-COUNT-2` are referenced in the traceability matrix but are completely missing from the BVA analysis section, which breaks traceability.
+  2. **AGREE**: Since FR-15 enforces that order prices must be greater than zero, a `0 ₫` order represents an impossible business state that cannot exist in the database.
+  3. **AGREE**: The test suite validates status translation, currency formatting, and IDs, but lacks any test case or validation step verifying the display format of the `orderDate` ("Ngày đặt") field.
+  ```
+
+## Entry 9 – Order History (FR-11) Test Suite Refinement & Fixes
+
+### AI Audit Log
+
+- **Name of AI tool**: Antigravity (Gemini 3.5 Flash)
+- **Date and time**: 2026-06-26 14:41:00 +07:00
+- **Prompt**:
+
+  ```text
+  So you totally agree all of 3. Right now, fix 3 findings of my review
+  ```
+
+- **Output**:
+
+  ```text
+  I have successfully fixed the 3 findings in the **Order History (FR-11)** test suite.
+
+  ### 1. Defined BVA-PAGE-COUNT Boundaries
+  - Defined `BVA-PAGE-COUNT-1` (5 orders - exactly 1 page) and `BVA-PAGE-COUNT-2` (6 orders - page size + 1, activating page 2) in the BVA section of [DESIGN_REPORT.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/order-history/DESIGN_REPORT.md) to fix the broken traceability of `TC-ORDER-HISTORY-021` and `TC-ORDER-HISTORY-022`.
+
+  ### 2. Fixed TC-ORDER-HISTORY-011 (Impossible 0 ₫ Order)
+  - Overwrote [TC-ORDER-HISTORY-011.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/order-history/TC-ORDER-HISTORY-011.md) to test a valid minimum order total of `1 ₫` instead of `0 ₫` to avoid impossible business states (complying with FR-15).
+  - Updated its description and expected results in [DESIGN_REPORT.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/order-history/DESIGN_REPORT.md).
+
+  ### 3. Added orderDate Format Verification
+  - Created [TC-ORDER-HISTORY-023.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/order-history/TC-ORDER-HISTORY-023.md) to verify that the "Ngày đặt" field displays dates in a friendly localized format (DD/MM/YYYY or DD-MM-YYYY) instead of raw DB ISO strings.
+  - Added the corresponding `EP-IN-DATE-1` and `EP-IN-DATE-2-INV` partitions and mapped the new test case in the traceability matrix of [DESIGN_REPORT.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/order-history/DESIGN_REPORT.md).
+  - Synchronized the brain artifact [order_history_test_design.md](file:///C:/Users/USER/.gemini/antigravity-ide/brain/42f7ca08-9690-47b0-aa07-81df6ea990d5/order_history_test_design.md).
+  ```
+
