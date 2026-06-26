@@ -33,7 +33,7 @@ Qua quá trình thực hành phương pháp "AI-First", chúng tôi nhận thấ
 ---
 
 ### 2.2. Tính năng: Xem lịch sử đơn hàng (FR-11)
-*   **Khoảng trống của AI phát hiện qua Human Review (Entry 8)**:
+*   **Khoảng trống của AI phát hiện ở bản thảo đầu tiên**:
     1.  **Lỗi đứt gãy truy vết (Broken Traceability)**: AI tự ý tham chiếu đến biên phân trang `BVA-PAGE-COUNT-1` và `BVA-PAGE-COUNT-2` trong ma trận truy vết nhưng hoàn toàn không định nghĩa các biên này trong phần phân tích BVA của tài liệu thiết kế.
     2.  **Tạo trạng thái nghiệp vụ bất khả thi**: Thiết kế ca kiểm thử `TC-011` để kiểm tra đơn hàng có tổng trị giá `0 ₫`. Tuy nhiên, đặc tả sản phẩm (FR-15) quy định giá sản phẩm bắt buộc phải là số dương (> 0), dẫn đến việc đơn hàng `0 ₫` là một trạng thái không thể tồn tại trong hệ thống.
     3.  **Thiếu sót yêu cầu hiển thị**: AI hoàn toàn bỏ sót việc kiểm tra định dạng hiển thị của trường ngày đặt hàng (`orderDate`), dù FR-11 yêu cầu hiển thị rõ ràng "Ngày đặt".
@@ -41,6 +41,15 @@ Qua quá trình thực hành phương pháp "AI-First", chúng tôi nhận thấ
     1.  Bổ sung định nghĩa chi tiết cho các biên phân trang: `BVA-PAGE-COUNT-1` (5 đơn hàng - vừa đủ 1 trang) và `BVA-PAGE-COUNT-2` (6 đơn hàng - bắt đầu kích hoạt trang thứ 2) vào phần BVA của `DESIGN_REPORT.md`.
     2.  Sửa đổi dữ liệu kiểm thử của `TC-011` thành giá trị biên tối thiểu hợp lệ là `1 ₫` để đảm bảo tính khả thi về mặt nghiệp vụ.
     3.  Tạo mới **TC-ORDER-HISTORY-023** để kiểm tra định dạng ngày đặt hàng hiển thị đúng chuẩn tiếng Việt thân thiện (DD/MM/YYYY) thay vì hiển thị chuỗi ISO nguyên bản từ database.
+*   **Khoảng trống nâng cao phát hiện ở đợt review thứ hai (Đã khắc phục ở Entry 16)**:
+    1.  **Bỏ sót kịch bản điều hướng mở Chi tiết Đơn hàng (Order Detail Transition)**: AI bỏ qua việc kiểm thử liên kết mã đơn hàng hoặc nút "Xem chi tiết" để chuyển hướng người dùng sang đúng trang Chi tiết đơn hàng tương ứng.
+    2.  **Bỏ sót kịch bản hiển thị Phí vận chuyển và Coupon trong Chi tiết Đơn hàng**: AI không thiết kế kịch bản xác thực các thông tin tài chính chi tiết (giá gốc sản phẩm, phí ship, coupon giảm giá và số tiền thanh toán cuối cùng) trên giao diện chi tiết đơn hàng.
+    3.  **Bỏ sót kịch bản bảo mật API/URL chống IDOR (Access Control)**: AI chỉ kiểm tra việc chặn xem đơn hàng của người khác trên giao diện danh sách chung mà bỏ qua kịch bản người dùng gửi request API trực tiếp hoặc truy cập URL trực tiếp để xem chi tiết đơn hàng của người dùng khác.
+    4.  **Bỏ sót kịch bản Tab Order trên trang Lịch sử (FR-21)**: AI không thiết kế ca kiểm thử xác thực thứ tự di chuyển tiêu điểm phím di chuyển (Tab Order) trên trang danh sách lịch sử đơn hàng.
+*   **Khắc phục của học sinh (Đã thực hiện ở Entry 16)**: Bổ sung thành công 4 ca kiểm thử từ `TC-ORDER-HISTORY-024` đến `TC-ORDER-HISTORY-027` để bao phủ hoàn toàn các miền trạng thái động này, đồng thời cập nhật phân tích EP/BVA và Ma trận truy vết trong `DESIGN_REPORT.md`.
+
+
+---
 
 ---
 

@@ -8,13 +8,16 @@ Báo cáo thiết kế ca kiểm thử này áp dụng kỹ thuật Phân vùng 
 
 ### 1. Phân tích các tham số đầu vào và Phân vùng tương đương (EP)
 
-Chúng ta phân tích các tham số đầu vào, trạng thái phiên làm việc (`userSession`), số lượng đơn hàng (`ordersInDB`), các trạng thái đơn hàng (`orderStatus`) và các tiêu chuẩn tuân thủ giao diện thành các phân vùng tương đương hợp lệ (Valid Partitions) và không hợp lệ (Invalid Partitions):
+Chúng ta phân tích các tham số đầu vào, trạng thái phiên làm việc (`userSession`), số lượng đơn hàng (`ordersInDB`), các trạng thái đơn hàng (`orderStatus`), quyền sở hữu đơn hàng (`orderOwnership`), thông tin tài chính chi tiết (`financialDetails`), thứ tự focus bàn phím (`tabFocusOrder`) và các tiêu chuẩn tuân thủ giao diện thành các phân vùng tương đương hợp lệ (Valid Partitions) và không hợp lệ (Invalid Partitions):
 
 | Tham số nhập liệu / Trạng thái | Phân vùng hợp lệ (Valid Partitions) | Phân vùng không hợp lệ (Invalid Partitions) |
 | --- | --- | --- |
 | **Phiên đăng nhập** (`userSession`) | **EP-IN-SESSION-1**: Phiên đăng nhập hợp lệ của chính chủ.<br>*Giá trị đại diện: test@eshop.com* | **EP-IN-SESSION-2-INV**: Chưa đăng nhập (khách vãng lai).<br>*Giá trị đại diện: anonymous*<br><br>**EP-IN-SESSION-3-INV**: Đăng nhập tài khoản A nhưng cố truy cập đơn hàng tài khoản B.<br>*Giá trị đại diện: test@eshop.com xem ORD999 của other@eshop.com* |
 | **Số lượng đơn hàng** (`ordersInDB`) | **EP-IN-COUNT-1**: Có 0 đơn hàng (trạng thái trang trống).<br>*Giá trị đại diện: 0*<br><br>**EP-IN-COUNT-2**: Có từ 1 đơn hàng trở lên (hiển thị danh sách).<br>*Giá trị đại diện: 1, 5, 100* | N/A |
 | **Trạng thái đơn hàng** (`orderStatus`) | **EP-IN-STATUS-1**: Chờ xác nhận (pending)<br>**EP-IN-STATUS-2**: Đã xác nhận (confirmed)<br>**EP-IN-STATUS-3**: Đang giao (shipping)<br>**EP-IN-STATUS-4**: Đã giao (delivered)<br>**EP-IN-STATUS-5**: Đã hủy (canceled) | **EP-IN-STATUS-6-INV**: Trạng thái không hợp lệ / không được hỗ trợ bởi hệ thống.<br>*Giá trị đại diện: unknown, processing* |
+| **Quyền sở hữu đơn hàng** (`orderOwnership`) | **EP-IN-OWNERSHIP-1**: Đơn hàng thuộc sở hữu của chính tài khoản đang đăng nhập hiện tại.<br>*Giá trị đại diện: test@eshop.com xem đơn hàng của test@eshop.com* | **EP-IN-OWNERSHIP-2-INV**: Đơn hàng thuộc sở hữu của tài khoản khác (tấn công IDOR qua URL hoặc API).<br>*Giá trị đại diện: user_a@eshop.com xem đơn hàng của user_b@eshop.com* |
+| **Thông tin tài chính chi tiết** (`financialDetails`) | **EP-IN-FINANCIAL-1**: Trang chi tiết hiển thị đầy đủ: Giá gốc, Phí vận chuyển, Coupon giảm giá, Tổng thanh toán, và Phương thức thanh toán.<br>*Giá trị đại diện: Có đủ phí ship 30k và coupon 50k* | N/A (Thiếu một hoặc nhiều trường tài chính là lỗi hiển thị) |
+| **Thứ tự focus bàn phím** (`tabFocusOrder`) | **EP-IN-FOCUS-1**: Tiêu điểm di chuyển tuần tự đúng quy chuẩn di động/web (Sidebar -> Bộ lọc -> Bảng -> Phân trang -> Footer).<br>*Giá trị đại diện: Focus tuần tự* | **EP-IN-FOCUS-2-INV**: Tiêu điểm di chuyển lộn xộn hoặc bỏ qua các liên kết, nút bấm hành động.<br>*Giá trị đại diện: Focus lộn xộn* |
 | **Đơn vị tiền tệ** (`totalAmount`) | **EP-IN-CURR-1**: Số tiền đơn hàng hợp lệ hiển thị bằng VND.<br>*Giá trị đại diện: 150.000 ₫* | **EP-IN-CURR-2-INV**: Số tiền hiển thị dạng số thô hoặc sai đơn vị.<br>*Giá trị đại diện: 150000, $150, 150.000 VND* |
 | **Tiêu đề trang** (`h1Tags`) | **EP-IN-H1-1**: Có chính xác duy nhất 1 tiêu đề trang thẻ H1.<br>*Giá trị đại diện: 1 thẻ <h1>* | **EP-IN-H1-2-INV**: Không có thẻ H1 nào hoặc có nhiều hơn 1 thẻ H1 trên trang.<br>*Giá trị đại diện: 0 thẻ, 2 thẻ H1* |
 | **Ngôn ngữ** (`language`) | **EP-IN-LANG-1**: Giao diện hiển thị nhất quán 100% bằng tiếng Việt.<br>*Giá trị đại diện: Toàn bộ tiếng Việt* | **EP-IN-LANG-2-INV**: Giao diện hiển thị lẫn lộn tiếng Anh chưa dịch.<br>*Giá trị đại diện: "Order Date", "Status", "Total"* |
@@ -32,6 +35,12 @@ Chúng ta áp dụng kỹ thuật BVA tại các điểm chuyển đổi ranh gi
     *   **Giá trị biên**:
         *   `BVA-HISTORY-COUNT-1` (Trang trống): 0 đơn hàng -> Kết quả mong đợi: Hiển thị giao diện Empty State (icon minh họa, message thân thiện, nút CTA).
         *   `BVA-HISTORY-COUNT-2` (Bắt đầu hiển thị danh sách): 1 đơn hàng -> Kết quả mong đợi: Ẩn Empty State, hiển thị bảng danh sách đơn hàng có 1 dòng dữ liệu.
+*   **Quyền sở hữu đơn hàng (Quyền sở hữu hợp pháp vs IDOR)**:
+    *   **Kỹ thuật áp dụng**: **2-Point BVA** (so sánh ID người dùng đăng nhập trong token và ID chủ đơn hàng trong DB).
+    *   **Biện minh**: Để chống rò rỉ dữ liệu, hệ thống phải chặn người dùng A xem đơn hàng của người dùng B kể cả khi họ cố tình truy cập trực tiếp bằng URL hay request API.
+    *   **Giá trị biên**:
+        *   `BVA-HISTORY-OWNERSHIP-1` (Hợp lệ): ID người dùng đăng nhập khớp với ID chủ sở hữu đơn hàng -> Kết quả mong đợi: Cho phép xem chi tiết đơn hàng thành công.
+        *   `BVA-HISTORY-OWNERSHIP-2` (Không hợp lệ): ID người dùng đăng nhập không khớp với ID chủ sở hữu đơn hàng -> Kết quả mong đợi: Chặn truy cập, backend trả về lỗi `403 Forbidden` hoặc `404 Not Found`.
 *   **Số lượng thẻ tiêu đề trang `<h1>` (Chuẩn giao diện FR-21)**:
     *   **Kỹ thuật áp dụng**: **3-Point BVA** tại ranh giới số lượng thẻ H1 bằng đúng 1.
     *   **Biện minh**: Đây là yêu cầu nghiêm ngặt về SEO và cấu trúc trang web (mỗi trang có *đúng 1 thẻ <h1>*). Sử dụng 3-Point BVA giúp cô lập hành vi kiểm soát cấu trúc:
@@ -69,13 +78,16 @@ Mọi ca kiểm thử biên hoặc ca kiểm thử lỗi sẽ được phát tri
     *   `userSession = logged in as test@eshop.com` (Đã đăng nhập)
     *   `ordersInDB = 5 orders` (Có 5 đơn hàng, hiển thị danh sách bình thường)
     *   `filterStatus = None` (Hiển thị tất cả đơn hàng)
+    *   `orderOwnership = EP-IN-OWNERSHIP-1` (Xem đơn hàng của chính mình)
+    *   `financialDetails = EP-IN-FINANCIAL-1` (Chi tiết tài chính đầy đủ)
+    *   `tabFocusOrder = EP-IN-FOCUS-1` (Focus tuần tự)
     *   `guiCompliance = Valid` (1 tiêu đề H1, ngôn ngữ tiếng Việt hoàn toàn, hiển thị đúng ký hiệu `₫` và dấu chấm phân cách hàng nghìn).
 
 ---
 
 ## PHẦN 2: MA TRẬN TRUY VẾT (TRACEABILITY MATRIX)
 
-Ma trận dưới đây chứng minh độ bao phủ toán học đầy đủ của **23 ca kiểm thử** đã được sinh ra đối với toàn bộ các Phân vùng tương đương (EP ID) và Giá trị biên (BVA ID) của module `order-history`:
+Ma trận dưới đây chứng minh độ bao phủ toán học đầy đủ của **27 ca kiểm thử** đã được sinh ra đối với toàn bộ các Phân vùng tương đương (EP ID) và Giá trị biên (BVA ID) của module `order-history`:
 
 | Test Case ID | Tên Ca Kiểm Thử | EP ID đã bao phủ | BVA ID đã bao phủ | Kết quả mong đợi |
 | --- | --- | --- | --- | --- |
@@ -102,6 +114,10 @@ Ma trận dưới đây chứng minh độ bao phủ toán học đầy đủ c�
 | **TC-ORDER-HISTORY-021** | Kiểm tra phân trang lịch sử đơn hàng - Số lượng đơn hàng đúng bằng kích thước trang | EP-IN-COUNT-2 | BVA-PAGE-COUNT-1 | Bảng hiển thị đúng 5 dòng, không hiển thị phân trang |
 | **TC-ORDER-HISTORY-022** | Kiểm tra phân trang lịch sử đơn hàng - Số lượng đơn hàng vượt kích thước trang 1 đơn vị | EP-IN-COUNT-2 | BVA-PAGE-COUNT-2 | Xuất hiện phân trang hoạt động bình thường |
 | **TC-ORDER-HISTORY-023** | Xác thực định dạng hiển thị trường Ngày đặt (orderDate) | EP-IN-DATE-1 | N/A | Hiển thị ngày dạng DD/MM/YYYY hoặc thân thiện Việt Nam |
+| **TC-ORDER-HISTORY-024** | Điều hướng thành công đến trang Chi tiết Đơn hàng từ danh sách Lịch sử | EP-IN-COUNT-2 | BVA-HISTORY-COUNT-2 | Nhấp Mã đơn hàng / Xem chi tiết, điều hướng thành công |
+| **TC-ORDER-HISTORY-025** | Hiển thị đầy đủ thông tin Phí vận chuyển và Coupon giảm giá trên trang Chi tiết Đơn hàng | EP-IN-FINANCIAL-1 | N/A | Hiển thị đúng phí ship, coupon, và tổng tiền tiếng Việt |
+| **TC-ORDER-HISTORY-026** | Chặn truy cập trực tiếp chi tiết đơn hàng của người dùng khác qua URL hoặc API | EP-IN-OWNERSHIP-2-INV | BVA-HISTORY-OWNERSHIP-2 | Chặn IDOR bảo mật, API trả về 403/404, báo lỗi tiếng Việt |
+| **TC-ORDER-HISTORY-027** | Kiểm tra thứ tự chuyển tiêu điểm bàn phím (Tab Order) trên trang Lịch sử Đơn hàng | EP-IN-FOCUS-1 | N/A | Tiêu điểm di chuyển tuần tự đúng quy chuẩn di động/web |
 
 ---
 
@@ -116,6 +132,9 @@ Khung phân tích này định hướng kiểm thử viên con người rà soá
 | **Xác thực API & Lỗ hổng IDOR** | - Tấn công thay đổi mã đơn hàng trực tiếp qua request API (Insecure Direct Object Reference) để đọc hoặc cập nhật trạng thái đơn hàng của người khác mà không thông qua giao diện. | AI phân tích luồng điều hướng UI tuyến tính (tiến/lùi) của người dùng cuối, không giả định hành vi gửi request API tự do phá vỡ kiểm soát quyền của Backend. |
 | **Khả năng hoạt động ngoại tuyến (Offline Resiliency)** | - Đang xem danh sách đơn hàng thì mất kết nối mạng (hoặc server sập). Hệ thống xử lý thế nào? Có hiển thị thông báo lỗi thân thiện hay bị crash màn hình trắng? | AI giả lập hệ thống hoạt động trong điều kiện lý tưởng (Happy Network State), bỏ qua các trạng thái biên của hạ tầng truyền tải dữ liệu. |
 
+> [!NOTE]
+> **Đánh giá đợt review thứ hai**: Các khoảng trống nghiệp vụ động về Điều hướng Chi tiết đơn hàng, Hiển thị chi tiết tài chính (Phí vận chuyển & Coupon), Lỗ hổng bảo mật IDOR qua URL/API và Tiêu chuẩn tiếp cận bàn phím (Tab Order - FR-21) đã được bổ sung đầy đủ thông qua các ca kiểm thử từ `TC-ORDER-HISTORY-024` đến `TC-ORDER-HISTORY-027`.
+
 ---
 
 ## PHẦN 4: QUY TRÌNH BÁO CÁO LỖI & BIỂU MẪU
@@ -123,7 +142,7 @@ Khung phân tích này định hướng kiểm thử viên con người rà soá
 ### 1. Phân loại Mức độ Nghiêm trọng (Severity) và Độ ưu tiên (Priority)
 *   **Severity**:
     *   `Block`: Màn hình lịch sử đơn hàng bị crash trắng trang không thể truy cập.
-    *   `Critical`: Người dùng A đọc được đơn hàng của người dùng B (Lỗ hổng bảo mật rò rỉ dữ liệu).
+    *   `Critical`: Người dùng A đọc được đơn hàng của người dùng B (Lỗ hổng bảo mật rò rỉ dữ liệu - IDOR).
     *   `Major`: Định dạng tiền tệ hiển thị sai (ví dụ: `150000 ₫` không có dấu chấm, hoặc ký hiệu tiền tệ không đúng); trạng thái đơn hiển thị tiếng Anh.
     *   `Minor`: Lỗi hiển thị sai màu nhãn trạng thái; sai số lượng thẻ tiêu đề H1; lỗi căn lề giao diện.
 *   **Priority**:

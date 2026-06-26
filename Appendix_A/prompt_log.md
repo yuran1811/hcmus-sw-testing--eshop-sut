@@ -1329,4 +1329,60 @@ Bộ ca kiểm thử Quên mật khẩu đã được hoàn thiện đầy đủ
   Bộ ca kiểm thử Quản lý người dùng đã được hoàn thiện đạt độ bao phủ nghiệp vụ và tính toàn vẹn tối đa.
   ```
 
+## Entry 16 – Order History (FR-11) Review & Refinement
+
+### AI Audit Log
+
+- **Name of AI tool**: Antigravity (Gemini 3.5 Flash)
+- **Date and time**: 2026-06-26 16:20:00 +07:00
+- **Prompt**:
+
+  ```text
+  Please refine the EShop "order-history" test suite in `tests/test-cases/order-history/` and update `DESIGN_REPORT.md` to expand the suite from 23 to 27 test cases, addressing the following human review findings:
+
+  1. **Update Existing Design Report & Test Cases**:
+     - Keep the 23 active test cases from TC-001 to TC-023.
+     - Ensure all steps and expected results use standard Vietnamese UI labels and currency format.
+
+  2. **Generate 4 New Test Cases** (TC-ORDER-HISTORY-024 to 027):
+     - **TC-024 (Order Detail Transition)**: Verify that clicking on an Order ID or a "Xem chi tiết" (View Details) button on the order history page redirects the user to the correct Order Details page (URL structure like `/orders/<order_id>` or `/order-detail?id=<order_id>`).
+     - **TC-025 (Shipping Fee & Coupon in Details)**: Verify that the Order Details page displays the full financial breakdown: Original Subtotal, Shipping Fee (e.g. `30.000 ₫`), Applied Coupon Discount (e.g. `-50.000 ₫` or `-10%`), Final Total (e.g. `480.000 ₫`), and the payment method used.
+     - **TC-026 (IDOR Security Bypass)**: Verify that attempting to access another user's order details directly via URL (e.g. `/orders/ORD_OF_USER_B`) or API request (`GET /api/orders/ORD_OF_USER_B`) is blocked by the backend, returning a `403 Forbidden` or `404 Not Found` with a friendly error: "Bạn không có quyền xem đơn hàng này!".
+     - **TC-027 (Tab Order)**: Verify keyboard focus flow on the Order History page moves sequentially from top-to-bottom, left-to-right (Filters -> Order Table links/buttons -> Pagination buttons -> Footer) (FR-21).
+
+  3. **Synchronize Master Report (`DESIGN_REPORT.md`)**:
+     - Define the new partitions (orderOwnership/IDOR, financialDetails, keyboardFocus) and BVA boundaries.
+     - Update the Traceability Matrix to map all 27 test cases (TC-001 to TC-027) correctly.
+     - Append a brief note in the AI Gap Analysis explaining the human review findings.
+
+  Follow the standard `test-writer` skill format for all outputs.
+  ```
+
+- **Output**:
+
+  ```text
+  Tôi đã thực hiện thành công yêu cầu chỉnh sửa và bổ sung bộ ca kiểm thử **Xem lịch sử đơn hàng (order-history)** theo đúng nội dung Prompt bạn đã cung cấp.
+
+  Dưới đây là chi tiết các công việc đã hoàn thành trong bộ kiểm thử:
+
+  ### 1. Duy trì và chuẩn hóa các ca kiểm thử hiện có
+  - Bộ ca kiểm thử cơ sở gồm 23 ca kiểm thử (từ `TC-ORDER-HISTORY-001` đến `TC-ORDER-HISTORY-023`) được duy trì đầy đủ, rà soát tính nhất quán ngôn ngữ tiếng Việt và định dạng tiền tệ/ngày tháng hiển thị.
+
+  ### 2. Tạo mới 4 ca kiểm thử bổ sung
+  - [TC-ORDER-HISTORY-024.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/order-history/TC-ORDER-HISTORY-024.md): Xác thực luồng điều hướng chuyển tiếp từ bảng lịch sử danh sách sang trang Chi tiết đơn hàng khi nhấp Mã đơn hàng hoặc nút "Xem chi tiết".
+  - [TC-ORDER-HISTORY-025.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/order-history/TC-ORDER-HISTORY-025.md): Xác thực việc hiển thị đầy đủ, chính xác các trường tài chính chi tiết bao gồm Giá gốc, Phí vận chuyển (`30.000 ₫`), Coupon giảm giá (`-50.000 ₫`), Số tiền thanh toán cuối cùng (`480.000 ₫`) và phương thức thanh toán.
+  - [TC-ORDER-HISTORY-026.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/order-history/TC-ORDER-HISTORY-026.md): Chặn truy cập trực tiếp IDOR xem chi tiết đơn hàng của người dùng khác qua URL hoặc request API trực tiếp, backend trả về lỗi `403`/`404` và thông báo lỗi tiếng Việt bảo mật: "Bạn không có quyền xem đơn hàng này!".
+  - [TC-ORDER-HISTORY-027.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/order-history/TC-ORDER-HISTORY-027.md): Xác thực thứ tự chuyển tiêu điểm bàn phím (Tab Order) đi tuần tự từ trên xuống dưới, trái sang phải qua các phần tử tương tác của trang Lịch sử đơn hàng (FR-21).
+
+  ### 3. Cập nhật Báo cáo Thiết kế (`DESIGN_REPORT.md`)
+  - [DESIGN_REPORT.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/order-history/DESIGN_REPORT.md):
+    - Cập nhật Phân vùng tương đương (EP) bổ sung các tham số trạng thái: `orderOwnership` (quyền sở hữu đơn hàng), `financialDetails` (chi tiết tài chính), và `tabFocusOrder` (focus bàn phím).
+    - Bổ sung Giá trị biên BVA cho quyền sở hữu đơn hàng (ID so khớp) và chi tiết dòng tài chính.
+    - Cập nhật lại **Ma trận truy vết (Traceability Matrix)** hiển thị chính xác và ánh xạ đầy đủ thông tin cho toàn bộ **27 ca kiểm thử** mới của module.
+    - Bổ sung ghi chú đánh giá thực tế từ con người (Human Review Findings) vào phần Phân tích Khoảng trống AI (Phần 3) để làm rõ lý do thêm các ca kiểm thử trên.
+
+  Bộ ca kiểm thử Lịch sử đơn hàng đã được hoàn thiện đạt chất lượng tối đa theo các yêu cầu kỹ thuật trong SRS.
+  ```
+
+
 
