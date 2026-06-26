@@ -221,3 +221,100 @@
 - **Suy luận:** Output chèn thuật ngữ triển khai cụ thể của React Native (secureTextEntry, "bàn phím kiểu email"/keyboardType) — những thứ này không xuất hiện trong README. Skill yêu cầu phân tích dựa trên mô tả được cung cấp, không phải suy đoán giải pháp kỹ thuật của framework.
 
 - **Sửa:** Bỏ các tên thuộc tính/API framework, chỉ giữ yêu cầu nghiệp vụ trung lập nền tảng — ví dụ đổi Notes của trường Mật khẩu thành "Phải ẩn ký tự khi nhập (tương đương type="password" trên Web — theo FR-22)" và bỏ câu liên quan secureTextEntry; trường Email bỏ gợi ý "bàn phím kiểu email", chỉ giữ "cần validate đúng định dạng email tương đương yêu cầu HTML5 trên Web".
+
+---
+
+**AI Audit Report Item**
+
+- **Công cụ AI:** Claude Code (Opus 4.8)
+- **Thời gian:** 2026-06-27
+- **Nội dung prompt:**
+  > Sử dụng skill @.agents/skills/domain-testing/SKILL.md để thiết kế test case cho tính năng FR-01: Đăng ký tài khoản
+  >
+  > Sử dụng phân tích yêu cầu từ @docs/anh-khoa/feature-specs/FR-01 Đăng ký tài khoản.md
+  >
+  > Sau khi hoàn thành, dùng skill @.agents/skills/ai-audit-logger/SKILL.md để lưu lại lịch sử nhé
+- **AI output:**
+
+  > ## 1. Giải thích cách áp dụng kỹ thuật
+  >
+  > Áp dụng Domain Testing cho FR-01 với 4 biến: Họ Tên, Email, Mật khẩu, Xác nhận mật khẩu. Mỗi biến được chia thành Valid Equivalence Classes (VEC) và Invalid Equivalence Classes (IEC), xét đồng thời giới hạn kiểu dữ liệu (rỗng/null, độ dài cực biên, loại ký tự) lẫn ràng buộc nghiệp vụ (định dạng email, tính duy nhất, 4 điều kiện độ phức tạp mật khẩu, ràng buộc tập ký tự đặc biệt).
+  >
+  > Biến Mật khẩu là phức tạp nhất: ngoài 4 điều kiện độ phức tạp phải thỏa đồng thời, đặc tả còn giới hạn ký tự đặc biệt hợp lệ trong đúng tập `@ $ ! % * ? &`. Do đó tôi tách thêm một IEC riêng cho "có ký tự đặc biệt nhưng nằm ngoài tập cho phép" (vd `#`) — về mặt logic đây là trường hợp không có ký tự đặc biệt hợp lệ, là một biên dễ bị implementation làm sai (regex nới lỏng nhận mọi ký tự đặc biệt). Áp dụng Single Fault Assumption, mỗi IEC của Mật khẩu được kiểm riêng lẻ trong khi mọi điều kiện còn lại giữ hợp lệ, để tránh một lỗi che lấp lỗi khác.
+  >
+  > Về ràng buộc liên biến: Xác nhận mật khẩu không có miền giá trị độc lập — VEC của nó là "khớp chính xác giá trị hiện tại của Mật khẩu", IEC là "khác giá trị Mật khẩu" hoặc rỗng. Vì vậy khi kiểm tra một IEC của Mật khẩu, tôi luôn đặt Xác nhận mật khẩu bằng đúng giá trị Mật khẩu để cô lập đúng lỗi cần kiểm. Email cũng ràng buộc với trạng thái hệ thống: IEC "đã tồn tại" được kiểm bằng tài khoản mặc định `test@eshop.com` có sẵn theo README. Các VEC được gộp vào một test case dương duy nhất (TC-REGISTER-001, dùng mật khẩu đúng 8 ký tự để đồng thời chạm biên dưới hợp lệ của độ dài); mỗi IEC kiểm riêng từ TC-REGISTER-002 đến 014.
+  >
+  > ## 2. Bảng phân lớp tương đương (Partition)
+  >
+  > | Variable          | Valid Classes                                                                             | Invalid Classes                                                                                                                                                           |
+  > | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  > | Họ Tên            | V1: Chuỗi không rỗng                                                                      | I1: Rỗng                                                                                                                                                                  |
+  > | Email             | V2: Đúng định dạng `user@domain.com` và chưa tồn tại                                      | I2: Sai định dạng · I3: Đúng định dạng nhưng đã tồn tại (trùng) · I4: Rỗng                                                                                                |
+  > | Mật khẩu          | V3: ≥8 ký tự, đủ ≥1 hoa + ≥1 thường + ≥1 số + ≥1 ký tự đặc biệt thuộc tập `@ $ ! % * ? &` | I5: <8 ký tự · I6: Thiếu chữ hoa · I7: Thiếu chữ thường · I8: Thiếu chữ số · I9: Không có ký tự đặc biệt · I10: Có ký tự đặc biệt ngoài tập cho phép (vd `#`) · I11: Rỗng |
+  > | Xác nhận mật khẩu | V4: Khớp chính xác với Mật khẩu                                                           | I12: Không khớp · I13: Rỗng                                                                                                                                               |
+  >
+  > **File:** `tests/test-cases/register/TC-REGISTER-001.md`
+  >
+  > ```markdown
+  > # TC-REGISTER-001: Đăng ký thành công với dữ liệu hợp lệ (mật khẩu chạm biên dưới 8 ký tự)
+  >
+  > **Requirement ID:** FR-01
+  > **Test Type:** Domain Testing
+  >
+  > ### 1. Preconditions
+  >
+  > - Người dùng đang ở trang Đăng ký (Register), chưa đăng nhập.
+  > - Email `nguyenvana01@gmail.com` chưa tồn tại trong hệ thống.
+  >
+  > ### 2. Test Data (Inputs)
+  >
+  > - Họ Tên: `Nguyễn Văn A`
+  > - Email: `nguyenvana01@gmail.com`
+  > - Mật khẩu: `Abcd123!` (đúng 8 ký tự — biên dưới hợp lệ; đủ hoa/thường/số/ký tự đặc biệt thuộc tập cho phép)
+  > - Xác nhận mật khẩu: `Abcd123!`
+  >
+  > ### 3. Test Steps
+  >
+  > 1. Mở trang Đăng ký.
+  > 2. Nhập đầy đủ 4 trường theo Test Data ở trên.
+  > 3. Bấm nút "Đăng ký".
+  >
+  > ### 4. Expected Result
+  >
+  > - Hệ thống tạo tài khoản mới thành công.
+  > - Hệ thống chuyển hướng người dùng sang trang Đăng nhập.
+  > ```
+  >
+  > **File:** `tests/test-cases/register/TC-REGISTER-002.md` — Họ Tên để trống → lỗi "Họ Tên là trường bắt buộc", không tạo tài khoản.
+  >
+  > **File:** `tests/test-cases/register/TC-REGISTER-003.md` — Email sai định dạng (`nguyenvana03@`) → lỗi định dạng email, không tạo tài khoản.
+  >
+  > **File:** `tests/test-cases/register/TC-REGISTER-004.md` — Email trùng (`test@eshop.com` đã tồn tại) → lỗi "Email đã tồn tại", không tạo tài khoản trùng.
+  >
+  > **File:** `tests/test-cases/register/TC-REGISTER-005.md` — Email để trống → lỗi "Email là trường bắt buộc", không tạo tài khoản.
+  >
+  > **File:** `tests/test-cases/register/TC-REGISTER-006.md` — Mật khẩu 7 ký tự (`Aa1!aa2`, chỉ vi phạm độ dài) → lỗi định dạng mật khẩu (tối thiểu 8 ký tự).
+  >
+  > **File:** `tests/test-cases/register/TC-REGISTER-007.md` — Mật khẩu thiếu chữ hoa (`abcd123!`) → lỗi định dạng mật khẩu.
+  >
+  > **File:** `tests/test-cases/register/TC-REGISTER-008.md` — Mật khẩu thiếu chữ thường (`ABCD123!`) → lỗi định dạng mật khẩu.
+  >
+  > **File:** `tests/test-cases/register/TC-REGISTER-009.md` — Mật khẩu thiếu chữ số (`Abcdefg!`) → lỗi định dạng mật khẩu.
+  >
+  > **File:** `tests/test-cases/register/TC-REGISTER-010.md` — Mật khẩu không có ký tự đặc biệt (`Abcd1234`) → lỗi định dạng mật khẩu.
+  >
+  > **File:** `tests/test-cases/register/TC-REGISTER-011.md` — Mật khẩu có ký tự đặc biệt ngoài tập cho phép (`Abcd1234#`, `#` không thuộc `@ $ ! % * ? &`) → theo đặc tả phải bị coi là không có ký tự đặc biệt hợp lệ → lỗi định dạng mật khẩu; nếu hệ thống chấp nhận thì đó là điểm không tuân thủ đặc tả.
+  >
+  > **File:** `tests/test-cases/register/TC-REGISTER-012.md` — Mật khẩu để trống → lỗi "Mật khẩu là trường bắt buộc", không tạo tài khoản.
+  >
+  > **File:** `tests/test-cases/register/TC-REGISTER-013.md` — Xác nhận mật khẩu không khớp (`Abcd123!` vs `Abcd123@`) → lỗi "Mật khẩu xác nhận không khớp", không tạo tài khoản.
+  >
+  > **File:** `tests/test-cases/register/TC-REGISTER-014.md` — Xác nhận mật khẩu để trống → lỗi "Xác nhận mật khẩu là trường bắt buộc", không tạo tài khoản.
+  >
+  > _(Mỗi file 002–014 tuân theo đúng template Preconditions / Test Data / Test Steps / Expected Result như TC-REGISTER-001; ở đây tóm tắt phần khác biệt cốt lõi để tránh lặp.)_
+
+- **Đánh giá:** VALID
+
+- **Suy luận:** AI suy luận tốt, bao phủ các trường hợp trong ràng buộc, có giải thích rõ cách áp dụng domain testing trong tính năng này
+
+- **Sửa:** Không cần sửa
