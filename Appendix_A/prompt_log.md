@@ -579,3 +579,49 @@ The comprehensive report has been loaded as an interactive user-facing artifact.
   - Synchronized the brain artifact [order_history_test_design.md](file:///C:/Users/USER/.gemini/antigravity-ide/brain/42f7ca08-9690-47b0-aa07-81df6ea990d5/order_history_test_design.md).
   ```
 
+## Entry 10 – User Management (FR-19) Review & Refinement
+
+### AI Audit Log
+
+- **Name of AI tool**: Antigravity (Gemini 3.5 Flash)
+- **Date and time**: 2026-06-26 15:35:00 +07:00
+- **Prompt**:
+
+  ```text
+  I reviewed the FR-19 test suite and found 3 issues to fix:
+
+  1. TC-014 to TC-017 have wrong prefix "TC-ORDER-HISTORY" — 
+     rename them to "TC-USER-MANAGEMENT-014/015/016/017"
+
+  2. TC-018 and TC-019 reference BVA-USER-PAGE-1 and BVA-USER-PAGE-2 
+     but these are not defined anywhere in the BVA section. 
+     Check FR-19 spec — if pagination is not required, just remove these 2 TCs.
+
+  3. TC-020 tests a search feature but FR-19 README only mentions 
+     "view list" and "delete user" — no search requirement exists. 
+     Remove TC-020.
+
+  Please update the Traceability Matrix and final TC count after applying fixes.
+  ```
+
+- **Output**:
+
+  ```text
+  I have successfully refined the **User Management (FR-19)** test suite based on your review findings.
+
+  ### 1. Corrected Prefix Conventions
+  - Renamed the test case prefixes in the traceability matrix of [DESIGN_REPORT.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/user-management/DESIGN_REPORT.md) from `TC-ORDER-HISTORY-014/015/016/017` to `TC-USER-MANAGEMENT-014/015/016/017` to ensure naming consistency across the suite.
+
+  ### 2. Removed Pagination Test Cases
+  - Deleted the unnecessary pagination files `TC-USER-MANAGEMENT-018.md` and `TC-USER-MANAGEMENT-019.md` because the FR-19 specifications do not require pagination.
+  - Removed these entries from the traceability matrix of [DESIGN_REPORT.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/user-management/DESIGN_REPORT.md).
+
+  ### 3. Removed Search Test Case
+  - Deleted the search-based test case `TC-USER-MANAGEMENT-020.md` since no search requirement exists in the FR-19 specifications.
+  - Removed this entry from the traceability matrix of [DESIGN_REPORT.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/user-management/DESIGN_REPORT.md).
+
+  ### 4. Final Count and Synchronization
+  - The final suite has been reduced to exactly **17 unique test cases**, aligning perfectly with the BVA/EP analysis.
+  - Synchronized the brain artifact [user_management_test_design.md](file:///C:/Users/USER/.gemini/antigravity-ide/brain/42f7ca08-9690-47b0-aa07-81df6ea990d5/user_management_test_design.md).
+  ```
+
