@@ -1,0 +1,39 @@
+# [BUG][Forgot Password] Hệ thống sinh mã OTP 4 chữ số thay vì 6 chữ số theo đặc tả yêu cầu
+
+## Found by Test Case
+- TC-FORGOT-PASSWORD-001
+- TC-FORGOT-PASSWORD-002
+- TC-FORGOT-PASSWORD-008
+- TC-FORGOT-PASSWORD-009
+
+## Requirement liên quan
+- FR-03 (Forgot & Reset Password)
+
+## Severity / Priority
+- **Severity**: Major
+- **Priority**: P1
+
+## Environment
+- Browser: Google Chrome
+- OS: Windows 11
+- URL: http://localhost:5173/forgot-password
+- Build/Commit: a6352864919d5523bbaa295fe7f68f40d59def82
+
+## Steps to reproduce
+1. Truy cập trang Quên mật khẩu tại `http://localhost:5173/forgot-password`.
+2. Nhập email hợp lệ `test@eshop.com` và nhấp "Lấy mã OTP".
+3. Nhìn vào mã OTP hiển thị trên thông báo màu xanh lá cây của môi trường demo.
+
+## Expected result
+- Hệ thống phải sinh ra và hiển thị mã OTP ngẫu nhiên gồm đúng 6 chữ số (ví dụ: `123456`).
+
+## Actual result
+- Hệ thống chỉ sinh ra mã OTP gồm 4 chữ số (ví dụ: `7268` hoặc `4064`).
+- **Nguyên nhân gốc rễ**: Tại file `backend/server.js:72`, hàm sinh mã OTP được định nghĩa là:
+  `const resetToken = Math.floor(1000 + Math.random() * 9000).toString();`
+  Công thức này chỉ sinh ra các số nguyên ngẫu nhiên trong khoảng từ 1000 đến 9999, tức là luôn luôn có độ dài là 4 chữ số.
+
+## Evidence
+- Code file: [server.js:L72](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/backend/server.js#L72)
+- Frontend label: Trường nhập liệu ghi rõ "Mã OTP (4 số)" tại [ForgotPassword.jsx:L69](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/frontend-web/src/pages/ForgotPassword.jsx#L69)
+- Browser recording session showing 4-digit OTP: [forgot_password_ui_exploration_1782468458161.webp](evidence/forgot_password_ui_exploration_1782468458161.webp)
