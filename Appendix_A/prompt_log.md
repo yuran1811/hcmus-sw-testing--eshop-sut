@@ -1219,3 +1219,57 @@ Dưới đây là chi tiết các công việc đã hoàn thành trong workspace
 Bộ ca kiểm thử di động hiện tại đã được hoàn thiện đầy đủ, đạt độ bao phủ toán học cho các phân vùng biên và tuân thủ các yêu cầu kỹ thuật trong SRS.
 ```
 
+## Entry 14 – Forgot Password & Password Reset (FR-03) Review & Refinement
+
+### AI Audit Log
+
+- **Name of AI tool**: Antigravity (Gemini 3.5 Flash)
+- **Date and time**: 2026-06-26 16:02:00 +07:00
+- **Prompt**:
+
+```text
+Please refine the EShop "forgot-password" test suite in `tests/test-cases/forgot-password/` and update `DESIGN_REPORT.md` to expand the suite from 27 to 31 test cases, addressing the following human review findings:
+
+1. **Update Existing Test Cases**:
+   - **TC-FORGOT-PASSWORD-001 & 002 (Happy Paths)**: Ensure steps and expected results explicitly verify the Step Indicators ("Bước 1 / 2" and "Bước 2 / 2") on the UI, and verify that the generated 6-digit OTP is shown on the screen in demo mode.
+
+2. **Generate 4 New Test Cases** (TC-FORGOT-PASSWORD-028 to 031):
+   - **TC-028 (Bypass Step 1)**: Verify that attempting to access Step 2 directly via URL `/forgot-password/step-2` without completing Step 1 is blocked and redirected to Step 1.
+   - **TC-029 (OTP Randomness)**: Verify that requesting OTP codes consecutively for the same email generates different, unique codes.
+   - **TC-030 (Brute Force Protection)**: Verify that entering a wrong OTP 5 consecutive times blocks further attempts or locks the account (3-Point BVA on failed attempts boundary = 5).
+   - **TC-031 (Browser Back Button)**: Verify that after a successful password reset, pressing the browser's Back button to return to Step 2 shows an expired/invalid session and blocks resubmission.
+
+3. **Synchronize Master Report (`DESIGN_REPORT.md`)**:
+   - Define the new partitions (sessionState, failedOTPAttempts, sessionValidity) and BVA boundaries.
+   - Update the Traceability Matrix to map all 31 test cases correctly.
+   - Append a brief note in the AI Gap Analysis explaining the human review findings.
+
+Follow the standard `test-writer` skill format for all outputs.
+```
+
+- **Output**:
+
+```text
+Tôi đã thực hiện thành công yêu cầu chỉnh sửa và bổ sung bộ ca kiểm thử **Quên mật khẩu & Đặt lại mật khẩu (forgot-password)** theo đúng nội dung Prompt bạn đã cung cấp. 
+
+Dưới đây là chi tiết các công việc đã hoàn thành trong bộ kiểm thử:
+
+### 1. Cập nhật các ca kiểm thử hiện có
+*   [TC-FORGOT-PASSWORD-002.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/forgot-password/TC-FORGOT-PASSWORD-002.md): Cập nhật các bước và kết quả mong đợi để xác thực hiển thị chỉ báo bước "Bước 2 / 2" trên giao diện đặt lại mật khẩu di động/web (FR-22) và sử dụng mã OTP hiển thị trực tiếp trong môi trường demo.
+
+### 2. Tạo mới 4 ca kiểm thử bổ sung
+*   [TC-FORGOT-PASSWORD-028.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/forgot-password/TC-FORGOT-PASSWORD-028.md): Xác thực việc chặn truy cập trực tiếp vào màn hình đặt lại mật khẩu Bước 2 khi chưa hoàn thành Bước 1, tự động điều hướng quay lại Bước 1 (Bypass Step 1).
+*   [TC-FORGOT-PASSWORD-029.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/forgot-password/TC-FORGOT-PASSWORD-029.md): Xác thực tính ngẫu nhiên của mã OTP khi người dùng yêu cầu gửi liên tiếp cho cùng một địa chỉ email (OTP Randomness).
+*   [TC-FORGOT-PASSWORD-030.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/forgot-password/TC-FORGOT-PASSWORD-030.md): Xác thực cơ chế tự bảo vệ khóa tài khoản/chặn yêu cầu sau 5 lần nhập sai mã OTP liên tiếp để chống đoán OTP (Brute Force Protection - 3-Point BVA).
+*   [TC-FORGOT-PASSWORD-031.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/forgot-password/TC-FORGOT-PASSWORD-031.md): Xác thực hành vi của nút Back trên trình duyệt sau khi đặt lại mật khẩu thành công, đảm bảo phiên làm việc và mã OTP liên quan đã bị hủy bỏ hoàn toàn trên server.
+
+### 3. Cập nhật Báo cáo Thiết kế (`DESIGN_REPORT.md`)
+*   [DESIGN_REPORT.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/forgot-password/DESIGN_REPORT.md): 
+    *   Cập nhật bảng Phân vùng tương đương (EP) bổ sung các biến trạng thái ẩn: `sessionState` (phiên làm việc), `failedOTPAttempts` (số lần thử OTP), và `sessionValidity` (hiệu lực phiên).
+    *   Bổ sung Phân tích giá trị biên (BVA) cho giới hạn số lần nhập sai OTP (ngưỡng 5 lần - 3-Point BVA).
+    *   Cập nhật lại **Ma trận truy vết (Traceability Matrix)** hiển thị đầy đủ thông tin và ánh xạ cho toàn bộ **31 ca kiểm thử** của module.
+    *   Bổ sung mục phân tích khoảng trống thực tế từ đánh giá con người (Human Review Findings) vào phần Phân tích Khoảng trống AI (Phần 3) để làm rõ lý do thêm các ca kiểm thử trên.
+
+Bộ ca kiểm thử Quên mật khẩu đã được hoàn thiện đầy đủ, đạt chất lượng tối đa theo các quy tắc và tiêu chuẩn thiết kế kiểm thử nâng cao.
+```
+

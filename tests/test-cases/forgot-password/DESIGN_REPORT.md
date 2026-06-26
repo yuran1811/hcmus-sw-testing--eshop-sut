@@ -16,6 +16,9 @@ Chúng ta chia các tham số đầu vào (`email`, `otp`, `newPassword`, `confi
 | **OTP** (Bước 2) | **EP-IN-OTP-1**: Mã OTP đúng 6 chữ số sinh ra cho email hiện tại.<br>*Giá trị đại diện: 123456* | **EP-IN-OTP-2-INV**: Để trống trường OTP.<br>*Giá trị đại diện: ""*<br><br>**EP-IN-OTP-3-INV**: Độ dài OTP không đúng 6 chữ số.<br>*Giá trị đại diện: 12345, 1234567*<br><br>**EP-IN-OTP-4-INV**: OTP chứa ký tự phi số.<br>*Giá trị đại diện: 123a56*<br><br>**EP-IN-OTP-5-INV**: OTP 6 chữ số nhưng sai giá trị.<br>*Giá trị đại diện: 999999*<br><br>**EP-IN-OTP-6-INV**: OTP hợp lệ của email khác.<br>*Giá trị đại diện: 123456 (cho other@eshop.com)*<br><br>**EP-IN-OTP-7-INV**: Mã OTP đã hết hạn.<br>*Giá trị đại diện: 123456 (hết hạn)*<br><br>**EP-IN-OTP-8-INV**: Mã OTP đã được sử dụng trước đó (Replay Attack).<br>*Giá trị đại diện: 123456 (đã sử dụng)* |
 | **Mật khẩu mới** (Bước 2) | **EP-IN-PASS-1**: Mật khẩu mạnh từ 8 ký tự trở lên, chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 chữ số, 1 ký tự đặc biệt cho phép.<br>*Giá trị đại diện: Reset123!* | **EP-IN-PASS-2-INV**: Để trống trường mật khẩu mới.<br>*Giá trị đại diện: ""*<br><br>**EP-IN-PASS-3-INV**: Độ dài mật khẩu quá ngắn (< 8 ký tự).<br>*Giá trị đại diện: Res123!*<br><br>**EP-IN-PASS-4-INV**: Mật khẩu thiếu chữ hoa.<br>*Giá trị đại diện: reset123!*<br><br>**EP-IN-PASS-5-INV**: Mật khẩu thiếu chữ thường.<br>*Giá trị đại diện: RESET123!*<br><br>**EP-IN-PASS-6-INV**: Mật khẩu thiếu chữ số.<br>*Giá trị đại diện: Resetxyz!*<br><br>**EP-IN-PASS-7-INV**: Mật khẩu thiếu ký tự đặc biệt.<br>*Giá trị đại diện: Reset1234*<br><br>**EP-IN-PASS-8-INV**: Mật khẩu chứa ký tự đặc biệt không được phép.<br>*Giá trị đại diện: Reset123#* |
 | **Xác nhận mật khẩu** (Bước 2) | **EP-IN-CONFIRM-1**: Trùng khớp hoàn toàn với mật khẩu mới.<br>*Giá trị đại diện: Reset123!* | **EP-IN-CONFIRM-2-INV**: Để trống trường xác nhận.<br>*Giá trị đại diện: ""*<br><br>**EP-IN-CONFIRM-3-INV**: Không trùng khớp mật khẩu mới.<br>*Giá trị đại diện: Different123!* |
+| **Phiên làm việc** (`sessionState`) | **EP-IN-SESSION-1**: Đã hoàn thành Bước 1 (Có phiên làm việc hợp lệ).<br>*Giá trị đại diện: session active* | **EP-IN-SESSION-2-INV**: Chưa hoàn thành Bước 1 (Truy cập trực tiếp URL Bước 2).<br>*Giá trị đại diện: session empty* |
+| **Số lần thử OTP** (`failedOTPAttempts`) | **EP-IN-ATTEMPTS-1**: Số lần nhập sai mã OTP dưới giới hạn (< 5 lần).<br>*Giá trị đại diện: 4 lần* | **EP-IN-ATTEMPTS-2-INV**: Số lần nhập sai mã OTP đạt hoặc vượt giới hạn (>= 5 lần).<br>*Giá trị đại diện: 5 lần* |
+| **Hiệu lực phiên sau reset** (`sessionValidity`) | **EP-IN-VALIDITY-1**: Phiên làm việc còn hiệu lực trước khi reset.<br>*Giá trị đại diện: active* | **EP-IN-VALIDITY-2-INV**: Phiên làm việc bị hủy bỏ sau khi reset thành công (nhấn Back trình duyệt).<br>*Giá trị đại diện: invalidated* |
 
 ---
 
@@ -46,6 +49,13 @@ Chúng ta áp dụng kỹ thuật BVA tại các ranh giới chuyển đổi log
         *   `BVA-OTP-EMPTY` (Để trống): `""` -> Lỗi.
         *   `BVA-PASS-EMPTY` (Để trống): `""` -> Lỗi.
         *   `BVA-CONFIRM-EMPTY` (Để trống): `""` -> Lỗi.
+*   **Giới hạn số lần nhập sai mã OTP (Brute Force Protection)**:
+    *   **Kỹ thuật áp dụng**: **3-Point BVA** tại ranh giới số lần nhập sai liên tiếp tối đa bằng 5 lần.
+    *   **Biện minh**: Đây là điều kiện biên kỹ thuật nhằm chống lại các cuộc tấn công Brute Force đoán OTP. 3-Point BVA kiểm chứng rằng ở lần thứ 4 hệ thống vẫn mở, nhưng ngay khi chạm mốc 5 lần sẽ khóa lại, và ở lần thứ 6 vẫn duy trì trạng thái khóa.
+    *   **Giá trị biên**:
+        *   `BVA-OTP-ATTEMPTS-1`: 4 lần nhập sai -> Cho phép tiếp tục thực hiện.
+        *   `BVA-OTP-ATTEMPTS-2`: 5 lần nhập sai -> Kích hoạt khóa/chặn yêu cầu.
+        *   `BVA-OTP-ATTEMPTS-3`: 6 lần nhập sai -> Tiếp tục khóa/chặn yêu cầu.
 
 ---
 
@@ -63,37 +73,41 @@ Chúng ta áp dụng kỹ thuật BVA tại các ranh giới chuyển đổi log
 
 ## PHẦN 2: MA TRẬN TRUY VẾT (TRACEABILITY MATRIX)
 
-Ma trận dưới đây chứng minh độ bao phủ toán học đầy đủ của **27 ca kiểm thử** đã được sinh ra đối với toàn bộ các Phân vùng tương đương (EP ID) và Giá trị biên (BVA ID):
+Ma trận dưới đây chứng minh độ bao phủ toán học đầy đủ của **31 ca kiểm thử** đã được sinh ra đối với toàn bộ các Phân vùng tương đương (EP ID) và Giá trị biên (BVA ID):
 
 | Test Case ID | Tên Ca Kiểm Thử | EP ID đã bao phủ | BVA ID đã bao phủ | Kết quả mong đợi |
 | --- | --- | --- | --- | --- |
-| **TC-FORGOT-PASSWORD-001** | Happy Path Step 1 - Gửi OTP thành công | EP-IN-EMAIL-1 | BVA-EMAIL-NOT-EMPTY | Chuyển sang Bước 2 |
-| **TC-FORGOT-PASSWORD-002** | Happy Path Step 2 - Đặt lại mật khẩu thành công | EP-IN-OTP-1, EP-IN-PASS-1, EP-IN-CONFIRM-1 | BVA-OTP-LEN-2, BVA-PASS-LEN-3 | Thành công, về Login |
-| **TC-FORGOT-PASSWORD-003** | Bước 1 - Để trống Email | EP-IN-EMAIL-2-INV | BVA-EMAIL-EMPTY | Chặn, báo lỗi trên nút |
-| **TC-FORGOT-PASSWORD-004** | Bước 1 - Email chưa đăng ký | EP-IN-EMAIL-3-INV | N/A | Chặn, báo lỗi trên nút |
+| **TC-FORGOT-PASSWORD-001** | Happy Path Step 1 - Gửi OTP thành công | EP-IN-EMAIL-1 | BVA-EMAIL-NOT-EMPTY | Gửi OTP thành công, hiển thị chỉ báo "Bước 1 / 2" và mã OTP trên màn hình |
+| **TC-FORGOT-PASSWORD-002** | Happy Path Step 2 - Đặt lại mật khẩu thành công | EP-IN-OTP-1, EP-IN-PASS-1, EP-IN-CONFIRM-1, EP-IN-SESSION-1, EP-IN-VALIDITY-1 | BVA-OTP-LEN-2, BVA-PASS-LEN-3 | Thành công, hiển thị chỉ báo "Bước 2 / 2", tự động về trang Login |
+| **TC-FORGOT-PASSWORD-003** | Bước 1 - Để trống Email | EP-IN-EMAIL-2-INV | BVA-EMAIL-EMPTY | Chặn, báo lỗi phía trên nút submit |
+| **TC-FORGOT-PASSWORD-004** | Bước 1 - Email chưa đăng ký | EP-IN-EMAIL-3-INV | N/A | Chặn, báo lỗi phía trên nút submit |
 | **TC-FORGOT-PASSWORD-005** | Bước 1 - Email sai định dạng | EP-IN-EMAIL-4-INV | N/A | Chặn bởi trình duyệt/BE |
 | **TC-FORGOT-PASSWORD-006** | Bước 1 - Nhấp nút Quay lại đăng nhập | N/A (Điều hướng) | N/A | Quay lại trang Login |
-| **TC-FORGOT-PASSWORD-007** | Bước 2 - Để trống OTP | EP-IN-OTP-2-INV | BVA-OTP-EMPTY | Chặn, báo lỗi trên nút |
-| **TC-FORGOT-PASSWORD-008** | Bước 2 - OTP thiếu chữ số (5 ký tự) | EP-IN-OTP-3-INV | BVA-OTP-LEN-1 (3-point BVA) | Chặn, báo lỗi trên nút |
-| **TC-FORGOT-PASSWORD-009** | Bước 2 - OTP thừa chữ số (7 ký tự) | EP-IN-OTP-3-INV | BVA-OTP-LEN-3 (3-point BVA) | Chặn, báo lỗi trên nút |
-| **TC-FORGOT-PASSWORD-010** | Bước 2 - OTP chứa chữ cái | EP-IN-OTP-4-INV | N/A | Chặn, báo lỗi trên nút |
-| **TC-FORGOT-PASSWORD-011** | Bước 2 - OTP sai giá trị | EP-IN-OTP-5-INV | N/A | Chặn, báo lỗi trên nút |
-| **TC-FORGOT-PASSWORD-012** | Bước 2 - OTP của email khác | EP-IN-OTP-6-INV | N/A | Chặn, báo lỗi trên nút |
-| **TC-FORGOT-PASSWORD-013** | Bước 2 - Để trống Mật khẩu mới | EP-IN-PASS-2-INV | BVA-PASS-EMPTY | Chặn, báo lỗi trên nút |
-| **TC-FORGOT-PASSWORD-014** | Bước 2 - Mật khẩu mới quá ngắn (7 ký tự) | EP-IN-PASS-3-INV | BVA-PASS-LEN-1 (3-point BVA) | Chặn, báo lỗi trên nút |
-| **TC-FORGOT-PASSWORD-015** | Bước 2 - Mật khẩu mới thiếu chữ hoa | EP-IN-PASS-4-INV | N/A | Chặn, báo lỗi trên nút |
-| **TC-FORGOT-PASSWORD-016** | Bước 2 - Mật khẩu mới thiếu chữ thường | EP-IN-PASS-5-INV | N/A | Chặn, báo lỗi trên nút |
-| **TC-FORGOT-PASSWORD-017** | Bước 2 - Mật khẩu mới thiếu chữ số | EP-IN-PASS-6-INV | N/A | Chặn, báo lỗi trên nút |
-| **TC-FORGOT-PASSWORD-018** | Bước 2 - Mật khẩu mới thiếu ký tự đặc biệt | EP-IN-PASS-7-INV | N/A | Chặn, báo lỗi trên nút |
-| **TC-FORGOT-PASSWORD-019** | Bước 2 - Mật khẩu chứa ký tự đặc biệt sai | EP-IN-PASS-8-INV | N/A | Chặn, báo lỗi trên nút |
-| **TC-FORGOT-PASSWORD-020** | Bước 2 - Để trống Xác nhận mật khẩu | EP-IN-CONFIRM-2-INV | BVA-CONFIRM-EMPTY | Chặn, báo lỗi trên nút |
-| **TC-FORGOT-PASSWORD-021** | Bước 2 - Xác nhận mật khẩu không khớp | EP-IN-CONFIRM-3-INV | N/A | Chặn, báo lỗi trên nút |
+| **TC-FORGOT-PASSWORD-007** | Bước 2 - Để trống OTP | EP-IN-OTP-2-INV | BVA-OTP-EMPTY | Chặn, báo lỗi phía trên nút submit |
+| **TC-FORGOT-PASSWORD-008** | Bước 2 - OTP thiếu chữ số (5 ký tự) | EP-IN-OTP-3-INV | BVA-OTP-LEN-1 (3-point BVA) | Chặn, báo lỗi phía trên nút submit |
+| **TC-FORGOT-PASSWORD-009** | Bước 2 - OTP thừa chữ số (7 ký tự) | EP-IN-OTP-3-INV | BVA-OTP-LEN-3 (3-point BVA) | Chặn, báo lỗi phía trên nút submit |
+| **TC-FORGOT-PASSWORD-010** | Bước 2 - OTP chứa chữ cái | EP-IN-OTP-4-INV | N/A | Chặn, báo lỗi phía trên nút submit |
+| **TC-FORGOT-PASSWORD-011** | Bước 2 - OTP sai giá trị | EP-IN-OTP-5-INV | N/A | Chặn, báo lỗi phía trên nút submit |
+| **TC-FORGOT-PASSWORD-012** | Bước 2 - OTP của email khác | EP-IN-OTP-6-INV | N/A | Chặn, báo lỗi phía trên nút submit |
+| **TC-FORGOT-PASSWORD-013** | Bước 2 - Để trống Mật khẩu mới | EP-IN-PASS-2-INV | BVA-PASS-EMPTY | Chặn, báo lỗi phía trên nút submit |
+| **TC-FORGOT-PASSWORD-014** | Bước 2 - Mật khẩu mới quá ngắn (7 ký tự) | EP-IN-PASS-3-INV | BVA-PASS-LEN-1 (3-point BVA) | Chặn, báo lỗi phía trên nút submit |
+| **TC-FORGOT-PASSWORD-015** | Bước 2 - Mật khẩu mới thiếu chữ hoa | EP-IN-PASS-4-INV | N/A | Chặn, báo lỗi phía trên nút submit |
+| **TC-FORGOT-PASSWORD-016** | Bước 2 - Mật khẩu mới thiếu chữ thường | EP-IN-PASS-5-INV | N/A | Chặn, báo lỗi phía trên nút submit |
+| **TC-FORGOT-PASSWORD-017** | Bước 2 - Mật khẩu mới thiếu chữ số | EP-IN-PASS-6-INV | N/A | Chặn, báo lỗi phía trên nút submit |
+| **TC-FORGOT-PASSWORD-018** | Bước 2 - Mật khẩu mới thiếu ký tự đặc biệt | EP-IN-PASS-7-INV | N/A | Chặn, báo lỗi phía trên nút submit |
+| **TC-FORGOT-PASSWORD-019** | Bước 2 - Mật khẩu chứa ký tự đặc biệt sai | EP-IN-PASS-8-INV | N/A | Chặn, báo lỗi phía trên nút submit |
+| **TC-FORGOT-PASSWORD-020** | Bước 2 - Để trống Xác nhận mật khẩu | EP-IN-CONFIRM-2-INV | BVA-CONFIRM-EMPTY | Chặn, báo lỗi phía trên nút submit |
+| **TC-FORGOT-PASSWORD-021** | Bước 2 - Xác nhận mật khẩu không khớp | EP-IN-CONFIRM-3-INV | N/A | Chặn, báo lỗi phía trên nút submit |
 | **TC-FORGOT-PASSWORD-022** | Bước 2 - Kiểm tra ẩn mật khẩu (Masking) | N/A (GUI) | N/A (GUI) | Ký tự ẩn dạng `●`, type="password" |
-| **TC-FORGOT-PASSWORD-023** | Xác thực nhãn bắt buộc & vị trí lỗi | N/A (GUI) | N/A (GUI) | Có nhãn `*`, lỗi trên nút submit |
+| **TC-FORGOT-PASSWORD-023** | Xác thực nhãn bắt buộc & vị trí lỗi | N/A (GUI) | N/A (GUI) | Có nhãn `*`, thông báo lỗi hiển thị phía TRÊN nút submit |
 | **TC-FORGOT-PASSWORD-024** | Bước 2 - Mật khẩu mới có độ dài tối thiểu đạt chuẩn (8 ký tự) | EP-IN-PASS-1 | BVA-PASS-LEN-2 (3-point BVA) | Đặt lại mật khẩu thành công |
 | **TC-FORGOT-PASSWORD-025** | Bước 1 - Email đăng ký chữ thường nhưng yêu cầu OTP bằng chữ hoa | EP-IN-EMAIL-1 | N/A | Chấp nhận không phân biệt chữ hoa/thường, gửi OTP thành công |
-| **TC-FORGOT-PASSWORD-026** | Bước 2 - Đặt lại mật khẩu với mã OTP đã hết hạn | EP-IN-OTP-7-INV | N/A | Chặn, báo lỗi OTP đã hết hạn |
-| **TC-FORGOT-PASSWORD-027** | Bước 2 - Đặt lại mật khẩu với mã OTP đã được sử dụng (Replay Attack) | EP-IN-OTP-8-INV | N/A | Chặn, báo lỗi OTP đã được sử dụng |
+| **TC-FORGOT-PASSWORD-026** | Bước 2 - Đặt lại mật khẩu với mã OTP đã hết hạn | EP-IN-OTP-7-INV | N/A | Chặn, báo lỗi OTP đã hết hạn phía trên nút submit |
+| **TC-FORGOT-PASSWORD-027** | Bước 2 - Đặt lại mật khẩu với mã OTP đã được sử dụng (Replay Attack) | EP-IN-OTP-8-INV | N/A | Chặn, báo lỗi OTP đã được sử dụng phía trên nút submit |
+| **TC-FORGOT-PASSWORD-028** | Bước 2 - Ngăn chặn truy cập trực tiếp vào giao diện đặt lại mật khẩu (Bypass Step 1) | EP-IN-SESSION-2-INV | N/A | Chặn hiển thị giao diện Bước 2, tự động redirect về Bước 1 |
+| **TC-FORGOT-PASSWORD-029** | Kiểm tra tính ngẫu nhiên của mã OTP khi yêu cầu gửi liên tiếp | EP-IN-EMAIL-1 | N/A | Hai lần yêu cầu sinh ra hai mã OTP hoàn toàn khác nhau |
+| **TC-FORGOT-PASSWORD-030** | Khóa yêu cầu đặt lại mật khẩu sau 5 lần nhập sai mã OTP liên tiếp | EP-IN-ATTEMPTS-2-INV | BVA-OTP-ATTEMPTS-2 | Chặn, khóa yêu cầu và báo lỗi tài khoản bị khóa phía trên nút submit |
+| **TC-FORGOT-PASSWORD-031** | Kiểm tra hành vi nút Back của trình duyệt sau khi đặt lại mật khẩu thành công | EP-IN-VALIDITY-2-INV | N/A | Hủy phiên, nhấn Back và gửi lại dữ liệu cũ bị báo lỗi phiên đã kết thúc |
 
 ---
 
@@ -110,13 +124,19 @@ Khung phân tích dưới đây hướng dẫn người đánh giá (kiểm th�
 
 ### Phân tích Khoảng trống Thực tế (Actual AI Gap Analysis)
 
-Trong phiên bản thiết kế đầu tiên, mô hình AI đã bỏ sót hai ca kiểm thử quan trọng về bảo mật mã OTP:
-- **TC-FORGOT-PASSWORD-026**: OTP hết hạn -> Hệ thống phải từ chối.
-- **TC-FORGOT-PASSWORD-027**: Sử dụng lại OTP (Replay Attack) -> Hệ thống phải từ chối.
+Trong các phiên bản thiết kế đầu tiên, mô hình AI đã bộc lộ những khoảng trống lớn về bảo mật hệ thống, kiểm soát trạng thái phiên và hành vi trình duyệt:
+1.  **Bỏ sót kịch bản bảo mật tĩnh ban đầu**:
+    *   **TC-FORGOT-PASSWORD-026**: OTP hết hạn -> Hệ thống phải từ chối.
+    *   **TC-FORGOT-PASSWORD-027**: Sử dụng lại OTP (Replay Attack) -> Hệ thống phải từ chối.
+2.  **Bỏ sót các kịch bản kiểm soát trạng thái động nâng cao (Được bổ sung ở đợt review thứ hai)**:
+    *   **TC-FORGOT-PASSWORD-028**: Bypass Step 1 (Truy cập URL trực tiếp Bước 2 khi chưa qua Bước 1) -> Hệ thống phải chặn và redirect về Bước 1.
+    *   **TC-FORGOT-PASSWORD-029**: OTP Randomness (Yêu cầu gửi OTP liên tiếp phải ra các mã khác nhau).
+    *   **TC-FORGOT-PASSWORD-030**: Chống tấn công Brute Force đoán OTP (Khóa tài khoản/chặn yêu cầu sau 5 lần nhập sai liên tiếp - áp dụng BVA).
+    *   **TC-FORGOT-PASSWORD-031**: Vô hiệu hóa phiên OTP ngay sau khi reset mật khẩu thành công (Người dùng nhấn Back trên trình duyệt và gửi lại dữ liệu cũ sẽ bị từ chối).
 
 **Nguyên nhân gốc rễ (Root Causes):**
-- **Giới hạn phạm vi của Prompt ban đầu**: Prompt yêu cầu ban đầu của người dùng chỉ cung cấp và tham chiếu trực tiếp đến đặc tả chức năng **FR-03** (Quên mật khẩu & Đặt lại mật khẩu) và đặc tả giao diện **FR-22**, hoàn toàn không đề cập hoặc liên kết đến các yêu cầu bảo mật hệ thống chung như **SEC-07** (quy định về thời gian hết hạn OTP và chống tấn công phát lại). Do đó, mô hình AI chỉ tập trung tối ưu hóa các phân vùng dữ liệu đầu vào tĩnh và các ràng buộc độ dài/định dạng trực tiếp trên giao diện, dẫn đến việc bỏ qua các quy tắc bảo mật động/temporal.
-- **Thiếu mô hình hóa trạng thái phi chức năng (Non-functional State Modeling)**: Nếu không được chỉ dẫn rõ ràng bằng các tiêu chuẩn bảo mật hoặc tài liệu kiểm soát bảo mật (như SEC-07), AI có xu hướng mặc định hệ thống hoạt động trong môi trường lý tưởng (happy state), không tự động suy luận ra các kịch bản lạm dụng hệ thống phức tạp (abuse cases) hoặc tấn công an ninh mạng.
+-  **Giới hạn phạm vi của Prompt ban đầu**: Prompt yêu cầu ban đầu chỉ tập trung vào các ô nhập liệu dạng text tĩnh và đặc tả chức năng giao diện trực diện (FR-03, FR-22). AI hoàn toàn thiếu nhận thức về các biến trạng thái ẩn (implicit states) như hiệu lực phiên làm việc (`sessionState`), số lần thử sai (`failedOTPAttempts`), và hiệu lực của phiên sau khi reset thành công nếu không được chỉ dẫn cực kỳ chi tiết.
+-  **Bản chất phi trạng thái của LLM (Stateless Nature)**: AI thiết kế kịch bản dựa trên văn bản tĩnh, không tự động hình dung được các tương tác thời gian thực hoặc hành vi điều hướng của trình duyệt (Back button, mở tab song song), dẫn đến việc bỏ qua các kịch bản kiểm thử luồng nghiệp vụ động quan trọng. Con người đã đóng vai trò chốt chặn để phân tích sâu miền đầu vào (Domain) nâng cao và bổ sung thành công các ca kiểm thử này.
 
 ---
 
