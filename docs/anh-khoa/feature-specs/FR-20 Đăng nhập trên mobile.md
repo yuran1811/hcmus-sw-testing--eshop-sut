@@ -9,7 +9,7 @@
 
 | Field                 | Data Type              | Constraints                                          | Notes                                                                                                                                            |
 | ---------------------- | ------------------------ | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Email                 | String (email format)  | Bắt buộc; phải đúng định dạng email hợp lệ            | FR-22 yêu cầu trường email dùng `type="email"` — đây là thuộc tính HTML chỉ áp dụng cho Web; trên Mobile cần triển khai validate định dạng tương đương (ví dụ: bàn phím kiểu email + kiểm tra regex) |
+| Email                 | String (email format)  | Bắt buộc; phải đúng định dạng email hợp lệ            | FR-22 yêu cầu trường email dùng `type="email"` trên Web; trên Mobile không có thuộc tính HTML5 này nên cần validate đúng định dạng email tương đương bằng logic ứng dụng |
 | Mật khẩu (Password)  | String                  | Bắt buộc                                               | Trường phải ẩn ký tự nhập trên Mobile (tương đương `type="password"` trên Web — theo FR-22)                                                       |
 
 ## Business Rules

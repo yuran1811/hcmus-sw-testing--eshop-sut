@@ -9,6 +9,7 @@
   >
   > Sau đó nhớ lưu lại lịch sử prompt và cả requirement spec bằng skill @.agents/skills/ai-audit-logger/SKILL.md
 - **AI output:**
+
   > # FR-01: Đăng ký tài khoản
   >
   > - **Module:** `REGISTER`
@@ -42,6 +43,13 @@
   >   - Mật khẩu < 8 ký tự hoặc thiếu chữ hoa/chữ thường/chữ số/ký tự đặc biệt → lỗi định dạng mật khẩu.
   >   - Xác nhận mật khẩu không khớp với Mật khẩu → lỗi "mật khẩu xác nhận không khớp", không tạo tài khoản.
 
+- **Đánh giá:** VALID
+- **Suy luận:**
+  - Khớp vởi mô tả trong README.MD
+  - Đúng format yêu cầu
+  - Không tìm thấy ảo giác
+- **Sửa:** Không cần sửa
+
 ---
 
 **AI Audit Report Item**
@@ -55,6 +63,7 @@
   >
   > Sau đó nhớ lưu lại lịch sử prompt và cả requirement spec bằng skill @.agents/skills/ai-audit-logger/SKILL.md
 - **AI output:**
+
   > # FR-07: Giỏ hàng (Shopping Cart)
   >
   > - **Module:** `CART`
@@ -62,15 +71,15 @@
   >
   > ## Input Fields / State Variables
   >
-  > | Field                                       | Data Type               | Constraints                                                                                                                    | Notes                                                                                                                          |
-  > | -------------------------------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-  > | Số lượng (Quantity)                          | Integer                  | Số nguyên dương, tối thiểu là 1 (kế thừa ràng buộc nhập số lượng ở FR-06); điều chỉnh qua nút +/- trên từng dòng sản phẩm        | README không nêu rõ giới hạn tối đa hoặc hành vi khi bấm nút "-" lúc Số lượng = 1 (chặn nút hay xóa dòng) — cần xác minh trên UI thật |
-  > | Sản phẩm (Product reference)                 | Reference (`product_id`) | Mỗi sản phẩm chỉ xuất hiện đúng 1 dòng trong giỏ                                                                                  | Thêm sản phẩm đã có trong giỏ → tăng Số lượng của dòng hiện tại, không tạo dòng mới                                              |
-  > | Đơn giá (Unit Price)                         | Number (₫)               | Chỉ hiển thị (read-only), lấy từ dữ liệu sản phẩm                                                                                 | Không phải trường do người dùng chỉnh sửa                                                                                        |
-  > | Thành tiền (Subtotal, theo dòng)             | Number (₫)               | Read-only; tính tự động = Đơn giá × Số lượng                                                                                     | Phải cập nhật ngay khi Số lượng thay đổi                                                                                          |
-  > | Tổng cộng (Total, toàn giỏ)                  | Number (₫)               | Read-only; tính tự động = tổng Thành tiền của tất cả các dòng                                                                    | Nhãn hiển thị phải chính xác là **"Tổng cộng"**, không phải "Tổng tạm tính"                                                       |
-  > | Nút Xóa sản phẩm (Remove action)             | Action                   | Bắt buộc hiển thị dialog xác nhận trước khi xóa khỏi giỏ                                                                          | -                                                                                                                                  |
-  > | Nút Tiếp tục mua sắm (Continue Shopping)     | Action / Navigation      | Điều hướng về trang chủ                                                                                                           | -                                                                                                                                  |
+  > | Field                                    | Data Type                | Constraints                                                                                                               | Notes                                                                                                                                 |
+  > | ---------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+  > | Số lượng (Quantity)                      | Integer                  | Số nguyên dương, tối thiểu là 1 (kế thừa ràng buộc nhập số lượng ở FR-06); điều chỉnh qua nút +/- trên từng dòng sản phẩm | README không nêu rõ giới hạn tối đa hoặc hành vi khi bấm nút "-" lúc Số lượng = 1 (chặn nút hay xóa dòng) — cần xác minh trên UI thật |
+  > | Sản phẩm (Product reference)             | Reference (`product_id`) | Mỗi sản phẩm chỉ xuất hiện đúng 1 dòng trong giỏ                                                                          | Thêm sản phẩm đã có trong giỏ → tăng Số lượng của dòng hiện tại, không tạo dòng mới                                                   |
+  > | Đơn giá (Unit Price)                     | Number (₫)               | Chỉ hiển thị (read-only), lấy từ dữ liệu sản phẩm                                                                         | Không phải trường do người dùng chỉnh sửa                                                                                             |
+  > | Thành tiền (Subtotal, theo dòng)         | Number (₫)               | Read-only; tính tự động = Đơn giá × Số lượng                                                                              | Phải cập nhật ngay khi Số lượng thay đổi                                                                                              |
+  > | Tổng cộng (Total, toàn giỏ)              | Number (₫)               | Read-only; tính tự động = tổng Thành tiền của tất cả các dòng                                                             | Nhãn hiển thị phải chính xác là **"Tổng cộng"**, không phải "Tổng tạm tính"                                                           |
+  > | Nút Xóa sản phẩm (Remove action)         | Action                   | Bắt buộc hiển thị dialog xác nhận trước khi xóa khỏi giỏ                                                                  | -                                                                                                                                     |
+  > | Nút Tiếp tục mua sắm (Continue Shopping) | Action / Navigation      | Điều hướng về trang chủ                                                                                                   | -                                                                                                                                     |
   >
   > ## Business Rules
   >
@@ -95,6 +104,13 @@
   >   - Bấm Xóa sản phẩm nhưng hủy (cancel) dialog xác nhận → dòng sản phẩm không bị xóa, giỏ hàng giữ nguyên.
   >   - Bấm nút "-" khi Số lượng đang là 1 → hệ thống phải chặn việc giảm xuống dưới 1 (không cho Số lượng ≤ 0).
 
+- **Đánh giá:** VALID
+- **Suy luận:**
+  - Khớp vởi mô tả trong README.MD
+  - Đúng format yêu cầu
+  - Không tìm thấy ảo giác
+- **Sửa:** Không cần sửa
+
 ---
 
 **AI Audit Report Item**
@@ -108,6 +124,7 @@
   >
   > Sau đó nhớ lưu lại lịch sử prompt và cả requirement spec bằng skill @.agents/skills/ai-audit-logger/SKILL.md
 - **AI output:**
+
   > # FR-15: Quản lý Sản phẩm (Product CRUD)
   >
   > - **Module:** `PRODUCT`
@@ -115,13 +132,13 @@
   >
   > ## Input Fields
   >
-  > | Field                         | Data Type                | Constraints                                                                                  | Notes                                                                                                |
-  > | ------------------------------ | -------------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-  > | Tên sản phẩm (Product Name)   | String                    | Bắt buộc, không được để trống; tối đa 255 ký tự                                                | -                                                                                                       |
-  > | Giá (Price)                   | Number (₫)                | Bắt buộc; phải là số dương (> 0)                                                                | Giá = 0 hoặc âm là không hợp lệ                                                                        |
-  > | Danh mục (Category)           | Reference (`category_id`) | Bắt buộc; phải chọn từ danh sách danh mục có sẵn trong hệ thống (xem FR-14)                     | Không cho phép gán danh mục không tồn tại                                                              |
-  > | Mô tả (Description)           | String                    | README không nêu ràng buộc bắt buộc/độ dài cụ thể cho FR-15                                     | Trường này xuất hiện ở trang chi tiết sản phẩm (FR-06) và trong header CSV import (FR-16)              |
-  > | Ảnh (Image URL)                | String (URL)               | README không nêu ràng buộc bắt buộc/định dạng cụ thể cho FR-15                                  | Theo FR-05/FR-06/FR-24, ảnh hiển thị trên UI cần có thuộc tính `alt` mô tả (yêu cầu UI, không phải ràng buộc nhập liệu) |
+  > | Field                       | Data Type                 | Constraints                                                                 | Notes                                                                                                                   |
+  > | --------------------------- | ------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+  > | Tên sản phẩm (Product Name) | String                    | Bắt buộc, không được để trống; tối đa 255 ký tự                             | -                                                                                                                       |
+  > | Giá (Price)                 | Number (₫)                | Bắt buộc; phải là số dương (> 0)                                            | Giá = 0 hoặc âm là không hợp lệ                                                                                         |
+  > | Danh mục (Category)         | Reference (`category_id`) | Bắt buộc; phải chọn từ danh sách danh mục có sẵn trong hệ thống (xem FR-14) | Không cho phép gán danh mục không tồn tại                                                                               |
+  > | Mô tả (Description)         | String                    | README không nêu ràng buộc bắt buộc/độ dài cụ thể cho FR-15                 | Trường này xuất hiện ở trang chi tiết sản phẩm (FR-06) và trong header CSV import (FR-16)                               |
+  > | Ảnh (Image URL)             | String (URL)              | README không nêu ràng buộc bắt buộc/định dạng cụ thể cho FR-15              | Theo FR-05/FR-06/FR-24, ảnh hiển thị trên UI cần có thuộc tính `alt` mô tả (yêu cầu UI, không phải ràng buộc nhập liệu) |
   >
   > ## Business Rules
   >
@@ -145,6 +162,14 @@
   >   - Không chọn Danh mục hoặc chọn danh mục không tồn tại → lỗi validate, không lưu sản phẩm.
   >   - Gọi API Thêm/Sửa/Xóa sản phẩm mà không có token hợp lệ, hoặc token không có `role = 'admin'` → lỗi 401/403, không thực hiện thao tác.
 
+- **Đánh giá:** INCOMPLETE
+- **Suy luận:**
+  - 3 ràng buộc chính không sai
+  - Tuy nhiên, output tự thêm 2 trường Mô tả và Ảnh vào bảng Input Fields dù FR-15 không hề liệt kê ràng buộc nào cho 2 trường này — chỉ suy ra từ FR-06 (trang chi tiết) và FR-16 (header CSV). Việc này làm loãng bảng: mục tiêu của bảng Input Fields là phục vụ Boundary Value Analysis, nhưng 2 trường này "không có ràng buộc cụ thể" thì không có biên (boundary) nào để thiết kế test — đưa vào bảng chính dễ gây hiểu nhầm là chúng cũng cần BVA như 3 trường kia
+- **Sửa:**
+  - Tách Mô tả và Ảnh ra khỏi bảng Input Fields chính, đưa vào một mục riêng (Trường khác).
+  - Giữ nguyên phần 3 ràng buộc chính và toàn bộ Business Rules/Expected Outcomes vì đã chính xác.
+
 ---
 
 **AI Audit Report Item**
@@ -158,6 +183,7 @@
   >
   > Sau đó nhớ lưu lại lịch sử prompt và cả requirement spec bằng skill @.agents/skills/ai-audit-logger/SKILL.md
 - **AI output:**
+
   > # FR-20: Đăng nhập trên Mobile (Mobile Login)
   >
   > - **Module:** `MOBILE_LOGIN`
@@ -167,10 +193,10 @@
   >
   > ## Input Fields
   >
-  > | Field                 | Data Type              | Constraints                                          | Notes                                                                                                                                            |
-  > | ---------------------- | ------------------------ | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-  > | Email                 | String (email format)  | Bắt buộc; phải đúng định dạng email hợp lệ            | FR-22 yêu cầu trường email dùng `type="email"` — đây là thuộc tính HTML chỉ áp dụng cho Web; trên Mobile cần triển khai validate định dạng tương đương (ví dụ: bàn phím kiểu email + kiểm tra regex) |
-  > | Mật khẩu (Password)  | String                  | Bắt buộc                                               | Trường phải ẩn ký tự nhập trên Mobile (tương đương `type="password"` trên Web — theo FR-22)                                                       |
+  > | Field               | Data Type             | Constraints                                | Notes                                                                                                                                                                                                |
+  > | ------------------- | --------------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  > | Email               | String (email format) | Bắt buộc; phải đúng định dạng email hợp lệ | FR-22 yêu cầu trường email dùng `type="email"` — đây là thuộc tính HTML chỉ áp dụng cho Web; trên Mobile cần triển khai validate định dạng tương đương (ví dụ: bàn phím kiểu email + kiểm tra regex) |
+  > | Mật khẩu (Password) | String                | Bắt buộc                                   | Trường phải ẩn ký tự nhập trên Mobile (tương đương `type="password"` trên Web — theo FR-22)                                                                                                          |
   >
   > ## Business Rules
   >
@@ -189,3 +215,9 @@
   >   - Email hoặc mật khẩu không đúng → lỗi đăng nhập (không nêu rõ trường nào sai), bộ đếm sai tăng thêm 1.
   >   - Đăng nhập sai từ lần thứ 3 liên tiếp → tài khoản bị tạm khóa 30 giây, hệ thống trả về thông báo lỗi phù hợp (không lộ nguyên nhân khóa).
   >   - Đăng nhập trong lúc tài khoản đang bị khóa → bị từ chối dù nhập đúng Email/Mật khẩu, kèm thông báo lỗi phù hợp.
+
+- **Đánh giá:** INCOMPLETE
+
+- **Suy luận:** Output chèn thuật ngữ triển khai cụ thể của React Native (secureTextEntry, "bàn phím kiểu email"/keyboardType) — những thứ này không xuất hiện trong README. Skill yêu cầu phân tích dựa trên mô tả được cung cấp, không phải suy đoán giải pháp kỹ thuật của framework.
+
+- **Sửa:** Bỏ các tên thuộc tính/API framework, chỉ giữ yêu cầu nghiệp vụ trung lập nền tảng — ví dụ đổi Notes của trường Mật khẩu thành "Phải ẩn ký tự khi nhập (tương đương type="password" trên Web — theo FR-22)" và bỏ câu liên quan secureTextEntry; trường Email bỏ gợi ý "bàn phím kiểu email", chỉ giữ "cần validate đúng định dạng email tương đương yêu cầu HTML5 trên Web".

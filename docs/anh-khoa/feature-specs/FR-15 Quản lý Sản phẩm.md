@@ -10,8 +10,8 @@
 | Tên sản phẩm (Product Name)   | String                    | Bắt buộc, không được để trống; tối đa 255 ký tự                                                | -                                                                                                       |
 | Giá (Price)                   | Number (₫)                | Bắt buộc; phải là số dương (> 0)                                                                | Giá = 0 hoặc âm là không hợp lệ                                                                        |
 | Danh mục (Category)           | Reference (`category_id`) | Bắt buộc; phải chọn từ danh sách danh mục có sẵn trong hệ thống (xem FR-14)                     | Không cho phép gán danh mục không tồn tại                                                              |
-| Mô tả (Description)           | String                    | README không nêu ràng buộc bắt buộc/độ dài cụ thể cho FR-15                                     | Trường này xuất hiện ở trang chi tiết sản phẩm (FR-06) và trong header CSV import (FR-16)              |
-| Ảnh (Image URL)                | String (URL)               | README không nêu ràng buộc bắt buộc/định dạng cụ thể cho FR-15                                  | Theo FR-05/FR-06/FR-24, ảnh hiển thị trên UI cần có thuộc tính `alt` mô tả (yêu cầu UI, không phải ràng buộc nhập liệu) |
+
+> **Trường khác của sản phẩm (ngoài phạm vi ràng buộc của FR-15):** Mô tả (Description) và Ảnh (Image URL) cũng thuộc entity Sản phẩm (xuất hiện ở FR-06, FR-16) nhưng README không nêu ràng buộc bắt buộc/độ dài/định dạng cụ thể nào cho 2 trường này trong FR-15 — không đủ cơ sở để thiết kế Boundary Value Analysis nên không đưa vào bảng Input Fields chính.
 
 ## Business Rules
 
