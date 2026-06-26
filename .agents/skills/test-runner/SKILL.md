@@ -130,7 +130,17 @@ At the end of the test execution run, analyze the testing scope and results to i
 | **Missed Bugs** | [Identify potential hidden defects, race conditions, or environmental issues that might have slipped through this run] | [Identify the underlying technical or logical cause of these bugs in the SUT code] |
 | **Lessons Learned** | [Document insights regarding test coverage, test data quality, execution speed, or improvements to the testing process] | [Identify the systemic root cause of process gaps and how to address them permanently] |
 
-## 5. AI Audit Log Auto-Extraction
+## 5. Agentic Execution with Browser Subagent
+
+When executing test cases using an AI Agent with browser automation capabilities (e.g., `browser_subagent`):
+1. **Test Parsing**: The agent must parse the `Test steps` and `Test data` of each target markdown test case.
+2. **UI Interaction**: The agent must launch the browser, navigate to the SUT, and perform the actions sequentially.
+3. **Session Recording**: The agent must record the entire browser session as a video artifact (e.g., WebP video) to be used as `Evidence` in bug reports and test runs.
+4. **Console/Network Monitoring**: The agent must monitor the browser console and network tab for errors (e.g., 500 Internal Server Error, unhandled exceptions) during execution.
+5. **State Reset**: Between executing different test cases, the agent should reset the state of SUT (e.g., clearing cookies, local storage, or restarting SUT via scripts) to ensure test isolation.
+6. **Result Reporting**: The agent must return a structured summary of execution outputs, screenshots, and video paths to the main agent for logging.
+
+## 6. AI Audit Log Auto-Extraction
 
 At the very end of the session, the agent must automatically append or output an **AI Audit Log entry** in the exact format below:
 
@@ -141,3 +151,4 @@ At the very end of the session, the agent must automatically append or output an
 - **Prompt**: [Exact user input prompt or a faithful representation]
 - **Output**: [A structured summary of the output, listing test runs executed, bugs reported, and files written or modified]
 ```
+
