@@ -1,7 +1,7 @@
 **AI Audit Report Item**
 
 - **Công cụ AI:** Claude Code (Sonnet 4.6)
-- **Thời gian:** 2026-06-26
+- **Thời gian:** 2026-06-26 16:45:50
 - **Nội dung prompt:**
   > Hãy đóng vai QA analyst expert, sử dụng skill @.agents/skills/requirement-analysis/SKILL.md để phân tích chức năng FR-01: Đăng ký tài khoản dựa trên mô tả trong file @README.md
   >
@@ -55,7 +55,7 @@
 **AI Audit Report Item**
 
 - **Công cụ AI:** Claude Code (Sonnet 4.6)
-- **Thời gian:** 2026-06-26
+- **Thời gian:** 2026-06-26 17:01:11
 - **Nội dung prompt:**
   > Hãy đóng vai QA analyst expert, sử dụng skill @.agents/skills/requirement-analysis/SKILL.md để phân tích chức năng FR-07: Giỏ hàng (Shopping Cart) dựa trên mô tả trong file @README.md
   >
@@ -116,7 +116,7 @@
 **AI Audit Report Item**
 
 - **Công cụ AI:** Claude Code (Sonnet 4.6)
-- **Thời gian:** 2026-06-26
+- **Thời gian:** 2026-06-26 17:20:31
 - **Nội dung prompt:**
   > Hãy đóng vai QA analyst expert, sử dụng skill @.agents/skills/requirement-analysis/SKILL.md để phân tích chức năng FR-15 Quản lý Sản phẩm dựa trên mô tả trong file @README.md
   >
@@ -175,7 +175,7 @@
 **AI Audit Report Item**
 
 - **Công cụ AI:** Claude Code (Sonnet 4.6)
-- **Thời gian:** 2026-06-26
+- **Thời gian:** 2026-06-26 17:35:39
 - **Nội dung prompt:**
   > Hãy đóng vai QA analyst expert, sử dụng skill @.agents/skills/requirement-analysis/SKILL.md để phân tích chức năng FR-20 Đăng nhập trên mobile dựa trên mô tả trong file @README.md
   >
@@ -227,7 +227,7 @@
 **AI Audit Report Item**
 
 - **Công cụ AI:** Claude Code (Opus 4.8)
-- **Thời gian:** 2026-06-27
+- **Thời gian:** 2026-06-27 00:46:57
 - **Nội dung prompt:**
   > Sử dụng skill @.agents/skills/domain-testing/SKILL.md để thiết kế test case cho tính năng FR-01: Đăng ký tài khoản
   >
@@ -318,3 +318,83 @@
 - **Suy luận:** AI suy luận tốt, bao phủ các trường hợp trong ràng buộc, có giải thích rõ cách áp dụng domain testing trong tính năng này
 
 - **Sửa:** Không cần sửa
+
+---
+
+**AI Audit Report Item**
+
+- **Công cụ AI:** Claude Code (Opus 4.8)
+- **Thời gian:** 2026-06-27 01:17:30
+- **Nội dung prompt:**
+  > Sử dụng skill @.agents/skills/domain-testing/SKILL.md để thiết kế test case cho tính năng FR-07 Giỏ hàng
+  >
+  > Sử dụng phân tích yêu cầu từ @docs/anh-khoa/feature-specs/FR-07 Giỏ hàng.md
+  >
+  > Sau khi hoàn thành, dùng skill @.agents/skills/ai-audit-logger/SKILL.md để lưu lại lịch sử nhé
+- **AI output:**
+
+  > ## 1. Giải thích cách áp dụng kỹ thuật
+  >
+  > FR-07 chủ yếu là tính năng hành vi/trạng thái, nên tôi áp dụng Domain Testing theo hai hướng. Thứ nhất, với biến số định lượng duy nhất là Số lượng (Quantity) — kiểu Integer, ràng buộc nghiệp vụ tối thiểu = 1, chỉ điều chỉnh qua nút +/- (không nhập trực tiếp) — tôi xác định VEC là miền `≥1` và IEC là nỗ lực đưa giá trị xuống `<1`. Vì cơ chế nhập là nút +/-, biên dưới được kiểm bằng hai ca đối nhau: giảm từ 2→1 (hợp lệ, chạm đúng biên dưới) và bấm "-" tại 1 (cố vượt biên xuống 0 — phải bị chặn). Đây là điểm boundary cốt lõi và là IEC bắt buộc không được bỏ.
+  >
+  > Thứ hai, với các biến trạng thái rời rạc, tôi phân vùng theo từng cặp lớp tương đương: hành vi Thêm sản phẩm (sản phẩm chưa có → tạo dòng mới · đã có → tăng số lượng dòng cũ, bất biến "mỗi sản phẩm đúng 1 dòng"); hộp thoại Xóa (xác nhận → xóa · hủy → giữ nguyên); trạng thái giỏ (có hàng → hiển thị bảng · rỗng → empty state). Ràng buộc liên biến quan trọng: Thành tiền = Đơn giá × Số lượng và Tổng cộng = Σ Thành tiền là các giá trị dẫn xuất — chúng phụ thuộc trực tiếp vào Số lượng, nên mỗi khi Số lượng đổi, các test case đều kiểm đồng thời sự cập nhật của Thành tiền/Tổng cộng để bắt lỗi tính toán.
+  >
+  > ## 2. Bảng phân lớp tương đương (Partition)
+  >
+  > | Variable               | Valid Classes                                                                                                     | Invalid Classes                                     |
+  > | ---------------------- | ----------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+  > | Số lượng (qua nút +/-) | V: `≥1` (tăng bằng "+"; giảm bằng "-" khi đang `>1`)                                                              | I: cố đưa về `0`/âm (bấm "-" khi Số lượng = 1)      |
+  > | Hành vi Thêm sản phẩm  | V1: sản phẩm chưa có trong giỏ → tạo dòng mới · V2: sản phẩm đã có → tăng Số lượng dòng cũ (không tạo dòng trùng) | — (phân vùng hành vi, không có lớp dữ liệu invalid) |
+  > | Hộp thoại Xóa sản phẩm | V1: Xác nhận → xóa dòng · V2: Hủy → giữ nguyên dòng                                                               | —                                                   |
+  > | Trạng thái giỏ hàng    | V1: có ≥1 sản phẩm → hiển thị bảng + "Tổng cộng" · V2: rỗng → empty state (hình minh họa + thông báo)             | —                                                   |
+  >
+  > **File:** `tests/test-cases/cart/TC-CART-001.md`
+  >
+  > ```markdown
+  > # TC-CART-001: Thêm sản phẩm chưa có trong giỏ → tạo dòng mới
+  >
+  > **Requirement ID:** FR-07
+  > **Test Type:** Domain Testing
+  >
+  > ### 1. Preconditions
+  >
+  > - Giỏ hàng hiện chưa chứa "Sản phẩm A".
+  > - "Sản phẩm A" có Đơn giá 100,000 ₫.
+  >
+  > ### 2. Test Data (Inputs)
+  >
+  > - Sản phẩm: `Sản phẩm A` (Đơn giá 100,000 ₫)
+  > - Hành động: Thêm vào giỏ với Số lượng 1
+  >
+  > ### 3. Test Steps
+  >
+  > 1. Mở trang chi tiết "Sản phẩm A".
+  > 2. Bấm "Thêm vào giỏ hàng".
+  > 3. Mở trang Giỏ hàng.
+  >
+  > ### 4. Expected Result
+  >
+  > - Giỏ hàng có đúng 1 dòng mới cho "Sản phẩm A", Số lượng = 1.
+  > - Hiển thị đủ các cột: Sản phẩm, Đơn giá, Số lượng (kèm nút +/-), Thành tiền, Thao tác.
+  > - Thành tiền dòng = 100,000 ₫; Tổng cộng = 100,000 ₫.
+  > ```
+  >
+  > **File:** `tests/test-cases/cart/TC-CART-002.md` — Thêm lại "Sản phẩm A" đã có trong giỏ → vẫn đúng 1 dòng, Số lượng tăng 1→2, Thành tiền & Tổng cộng = 200,000 ₫ (không tạo dòng trùng).
+  >
+  > **File:** `tests/test-cases/cart/TC-CART-003.md` — Bấm "+" tại dòng Số lượng=1 → tăng đúng 1 đơn vị (→2); Thành tiền (200,000 ₫) và Tổng cộng cập nhật theo thời gian thực.
+  >
+  > **File:** `tests/test-cases/cart/TC-CART-004.md` — Bấm "-" khi Số lượng=2 → giảm về 1 (biên dưới hợp lệ); Thành tiền/Tổng cộng cập nhật = 100,000 ₫; dòng vẫn tồn tại.
+  >
+  > **File:** `tests/test-cases/cart/TC-CART-005.md` — (IEC biên) Bấm "-" khi Số lượng=1 → hệ thống chặn, không cho xuống 0/âm, giữ tối thiểu 1; nếu cho phép ≤0 thì là điểm không tuân thủ ràng buộc "tối thiểu là 1".
+  >
+  > **File:** `tests/test-cases/cart/TC-CART-006.md` — Giỏ 2 dòng (A: 1×100,000; B: 2×50,000) → Tổng cộng = 200,000 ₫ (đúng tổng các dòng); nhãn đúng "Tổng cộng" (không phải "Tổng tạm tính"); dùng ký hiệu ₫ + phân cách hàng nghìn.
+  >
+  > **File:** `tests/test-cases/cart/TC-CART-007.md` — Xóa "Sản phẩm A" và bấm Xác nhận trên dialog (dialog bắt buộc hiện trước) → dòng bị xóa, còn lại B, Tổng cộng cập nhật = 50,000 ₫.
+  >
+  > **File:** `tests/test-cases/cart/TC-CART-008.md` — Xóa "Sản phẩm A" nhưng bấm Hủy dialog → dòng KHÔNG bị xóa, giỏ giữ nguyên 2 dòng, Tổng cộng giữ 150,000 ₫.
+  >
+  > **File:** `tests/test-cases/cart/TC-CART-009.md` — Xóa dòng cuối cùng → giỏ rỗng → hiển thị empty state (hình minh họa + thông báo thân thiện), không còn bảng/giá trị Tổng cộng dạng số.
+  >
+  > **File:** `tests/test-cases/cart/TC-CART-010.md` — Bấm "Tiếp tục mua sắm" → điều hướng về trang chủ.
+  >
+  > _(Mỗi file 002–010 tuân theo đúng template Preconditions / Test Data / Test Steps / Expected Result như TC-CART-001; ở đây tóm tắt phần khác biệt cốt lõi để tránh lặp.)_
