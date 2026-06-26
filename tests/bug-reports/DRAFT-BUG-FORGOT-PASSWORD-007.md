@@ -31,9 +31,21 @@
   Để sửa lỗi này, nên chuẩn hóa email về dạng chữ thường (`email.toLowerCase()`) trước khi truy vấn hoặc đăng ký, hoặc dùng từ khóa `COLLATE NOCASE` trong định nghĩa bảng/câu lệnh SQL.
 
 ## Evidence
-- API Test execution output:
+- HTTP API Network Request & Response:
+  ```http
+  POST /api/forgot-password HTTP/1.1
+  Content-Type: application/json
+
+  { "email": "TEST@ESHOP.COM" }
+
+  HTTP/1.1 404 Not Found
+  Content-Type: application/json
+
+  { "error": "User not found" }
   ```
+- Kết xuất từ công cụ kiểm thử:
+  ```text
   Testing TC-FORGOT-PASSWORD-025: Email đăng ký chữ thường nhưng yêu cầu bằng chữ hoa...
   FAILED: Error requesting OTP: 404
   ```
-- Code file: [server.js:L70](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/backend/server.js#L70)
+- Browser recording session showing validation block: [forgot_password_ui_exploration_1782468458161.webp](evidence/forgot_password_ui_exploration_1782468458161.webp)
