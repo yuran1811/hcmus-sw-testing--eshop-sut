@@ -281,10 +281,10 @@ Append a test run entry to `tests/test-runs/`:
 
 ## Detailed Results
 
-| #   | TC ID      | TC Name | Result  | Bug ID      | Notes        |
-| --- | ---------- | ------- | ------- | ----------- | ------------ |
-| 1   | TC-XXX-001 | ...     | PASS    | -           |              |
-| 2   | TC-XXX-002 | ...     | FAIL    | BUG-XXX-001 | {brief note} |
+| #   | TC ID      | TC Name | Result | Bug ID      | Notes        |
+| --- | ---------- | ------- | ------ | ----------- | ------------ |
+| 1   | TC-XXX-001 | ...     | PASS   | -           |              |
+| 2   | TC-XXX-002 | ...     | FAIL   | BUG-XXX-001 | {brief note} |
 ```
 
 ---

@@ -210,19 +210,19 @@ Nominal values: {Variable 1} = {nominal value}, {Variable 2} = {nominal value}, 
 
 #### Input Partition Scenarios
 
-| #   | Partition | Variable Tested | Test Value | Other Variables    | Expected Output (OC) | Expected Result |
-| --- | --------- | --------------- | ---------- | ------------------ | -------------------- | --------------- |
-| 1   | EC1       | Variable 1      | {value}    | all nominal        | OC1, OC3             | Accept          |
-| 2   | EC2       | Variable 1      | {value}    | all nominal        | OC2, OC4             | Reject          |
-| ... | ...       | ...             | ...        | ...                | ...                  | ...             |
+| #   | Partition | Variable Tested | Test Value | Other Variables | Expected Output (OC) | Expected Result |
+| --- | --------- | --------------- | ---------- | --------------- | -------------------- | --------------- |
+| 1   | EC1       | Variable 1      | {value}    | all nominal     | OC1, OC3             | Accept          |
+| 2   | EC2       | Variable 1      | {value}    | all nominal     | OC2, OC4             | Reject          |
+| ... | ...       | ...             | ...        | ...             | ...                  | ...             |
 
 #### Output Partition Scenarios
 
-| #   | Partition | Output Description    | Triggering Input Condition     | Same As Input Scenario |
-| --- | --------- | --------------------- | ------------------------------ | ---------------------- |
-| 1   | OC1       | Success response      | All inputs valid (EC1 + EC6)   | Scenario #1            |
-| 2   | OC2       | Validation error      | Any invalid input              | Scenarios #2-#10       |
-| ... | ...       | ...                   | ...                            | ...                    |
+| #   | Partition | Output Description | Triggering Input Condition   | Same As Input Scenario |
+| --- | --------- | ------------------ | ---------------------------- | ---------------------- |
+| 1   | OC1       | Success response   | All inputs valid (EC1 + EC6) | Scenario #1            |
+| 2   | OC2       | Validation error   | Any invalid input            | Scenarios #2-#10       |
+| ... | ...       | ...                | ...                          | ...                    |
 ```
 
 ---
@@ -292,18 +292,18 @@ Not Run / None
 
 #### Consolidation Table
 
-| Scenario(s) Merged                | Reason                              | Resulting TC   |
-| --------------------------------- | ----------------------------------- | -------------- |
-| EC1 (#1) + EC6 (#6) + OC1 + OC3  | Identical test data and output      | TC-XXX-001     |
-| OC2                               | Already covered by scenarios #2-#10 | (no new TC)    |
+| Scenario(s) Merged              | Reason                              | Resulting TC |
+| ------------------------------- | ----------------------------------- | ------------ |
+| EC1 (#1) + EC6 (#6) + OC1 + OC3 | Identical test data and output      | TC-XXX-001   |
+| OC2                             | Already covered by scenarios #2-#10 | (no new TC)  |
 
 #### Removed Duplicates
 
-| Removed Scenario | Merged Into  | Reason                         |
-| ---------------- | ------------ | ------------------------------ |
-| EC6 (#6)         | EC1 (#1)     | Same input and expected output |
-| OC1              | EC1 (#1)     | Same input and expected output |
-| OC3              | EC1 (#1)     | Same input and expected output |
+| Removed Scenario | Merged Into | Reason                         |
+| ---------------- | ----------- | ------------------------------ |
+| EC6 (#6)         | EC1 (#1)    | Same input and expected output |
+| OC1              | EC1 (#1)    | Same input and expected output |
+| OC3              | EC1 (#1)    | Same input and expected output |
 
 #### Final Test Case Summary
 
@@ -364,12 +364,12 @@ Apply the fault isolation principle: only ONE variable takes the boundary value,
 
 Nominal values: {Variable 1} = {nominal value}, {Variable 2} = {nominal value}, ...
 
-| #   | Boundary      | Test Point | Variable Tested | Test Value | Other Variables | Expected Result |
-| --- | ------------- | ---------- | --------------- | ---------- | --------------- | --------------- |
-| 1   | Var1 Min = 8  | B-1        | Variable 1      | 7          | all nominal     | Reject          |
-| 2   | Var1 Min = 8  | B          | Variable 1      | 8          | all nominal     | Accept          |
-| 3   | Var1 Min = 8  | B+1        | Variable 1      | 9          | all nominal     | Accept          |
-| ... | ...           | ...        | ...             | ...        | ...             | ...             |
+| #   | Boundary     | Test Point | Variable Tested | Test Value | Other Variables | Expected Result |
+| --- | ------------ | ---------- | --------------- | ---------- | --------------- | --------------- |
+| 1   | Var1 Min = 8 | B-1        | Variable 1      | 7          | all nominal     | Reject          |
+| 2   | Var1 Min = 8 | B          | Variable 1      | 8          | all nominal     | Accept          |
+| 3   | Var1 Min = 8 | B+1        | Variable 1      | 9          | all nominal     | Accept          |
+| ... | ...          | ...        | ...             | ...        | ...             | ...             |
 ```
 
 ---
@@ -392,11 +392,11 @@ Apply the fault isolation principle: only ONE variable takes the boundary value,
 
 Nominal values: {Variable 1} = {nominal value}, {Variable 2} = {nominal value}, ...
 
-| #   | Boundary      | Test Point     | Variable Tested | Test Value | Other Variables | Expected Result |
-| --- | ------------- | -------------- | --------------- | ---------- | --------------- | --------------- |
-| 1   | Var1 Min = 8  | B (valid)      | Variable 1      | 8          | all nominal     | Accept          |
-| 2   | Var1 Min = 8  | B-1 (invalid)  | Variable 1      | 7          | all nominal     | Reject          |
-| ... | ...           | ...            | ...             | ...        | ...             | ...             |
+| #   | Boundary     | Test Point    | Variable Tested | Test Value | Other Variables | Expected Result |
+| --- | ------------ | ------------- | --------------- | ---------- | --------------- | --------------- |
+| 1   | Var1 Min = 8 | B (valid)     | Variable 1      | 8          | all nominal     | Accept          |
+| 2   | Var1 Min = 8 | B-1 (invalid) | Variable 1      | 7          | all nominal     | Reject          |
+| ... | ...          | ...           | ...             | ...        | ...             | ...             |
 ```
 
 ---
@@ -464,25 +464,25 @@ Not Run / None
 
 #### Overlap Between 3-Point and 2-Point
 
-| 3-Point Scenario # | 2-Point Scenario # | Variable    | Test Value | Overlap Reason                   |
-| ------------------- | ------------------ | ----------- | ---------- | -------------------------------- |
-| #2 (B at min)       | #1 (B valid)       | Variable 1  | 8          | Same value, same expected result |
-| #1 (B-1 at min)     | #2 (B-1 invalid)   | Variable 1  | 7          | Same value, same expected result |
+| 3-Point Scenario # | 2-Point Scenario # | Variable   | Test Value | Overlap Reason                   |
+| ------------------ | ------------------ | ---------- | ---------- | -------------------------------- |
+| #2 (B at min)      | #1 (B valid)       | Variable 1 | 8          | Same value, same expected result |
+| #1 (B-1 at min)    | #2 (B-1 invalid)   | Variable 1 | 7          | Same value, same expected result |
 
 #### Overlap with Domain Testing TCs
 
-| BVA Scenario # | DT Test Case | Variable   | Test Value | Overlap Reason                   |
-| --------------- | ------------ | ---------- | ---------- | -------------------------------- |
-| (none or list)  | TC-XXX-NNN   | Variable 1 | value      | Same test data and expected result|
+| BVA Scenario # | DT Test Case | Variable   | Test Value | Overlap Reason                     |
+| -------------- | ------------ | ---------- | ---------- | ---------------------------------- |
+| (none or list) | TC-XXX-NNN   | Variable 1 | value      | Same test data and expected result |
 
 #### Final BVA Test Case Summary
 
-| #   | TC ID              | Description         | Technique(s)    | Boundary        | Expected |
-| --- | ------------------ | ------------------- | --------------- | --------------- | -------- |
-| 1   | TC-XXX-BVA-001     | Var1 at min - 1     | 3-Point + 2-Point | Var1 Min, B-1 | Reject   |
-| 2   | TC-XXX-BVA-002     | Var1 at min         | 3-Point + 2-Point | Var1 Min, B   | Accept   |
-| 3   | TC-XXX-BVA-003     | Var1 above min      | 3-Point only      | Var1 Min, B+1 | Accept   |
-| ... | ...                | ...                 | ...             | ...             | ...      |
+| #   | TC ID          | Description     | Technique(s)      | Boundary      | Expected |
+| --- | -------------- | --------------- | ----------------- | ------------- | -------- |
+| 1   | TC-XXX-BVA-001 | Var1 at min - 1 | 3-Point + 2-Point | Var1 Min, B-1 | Reject   |
+| 2   | TC-XXX-BVA-002 | Var1 at min     | 3-Point + 2-Point | Var1 Min, B   | Accept   |
+| 3   | TC-XXX-BVA-003 | Var1 above min  | 3-Point only      | Var1 Min, B+1 | Accept   |
+| ... | ...            | ...             | ...               | ...           | ...      |
 ```
 
 ---
@@ -584,16 +584,16 @@ npx prettier --write "tests/test-cases/**/*.md" "report/*.md"
 ```markdown
 ### Entry {N} — Domain Testing & BVA for {FEATURE_NAME}
 
-| Field                      | Value                                                                        |
-| -------------------------- | ---------------------------------------------------------------------------- |
-| **AI Tool**                | {Tool name, e.g., Gemini 2.5 Pro, Claude Opus 4}                             |
-| **Date/Time**              | {ISO 8601 timestamp}                                                         |
-| **Task**                   | Domain Testing + BVA test case design for {FEATURE_ID}                       |
-| **Feature**                | {FEATURE_NAME}                                                               |
-| **Prompt Summary**         | Invoked `domain-testing-writer` skill with FEATURE_ID={FEATURE_ID}           |
-| **Output Summary**         | Generated {N} Domain Testing TCs + {M} BVA TCs, covering {K} input variables |
-| **Human Review Required**  | Yes — review all TCs for correctness and completeness                        |
-| **Files Created/Modified** | {List of files}                                                              |
+| Field                      | Value                                                                                             |
+| -------------------------- | ------------------------------------------------------------------------------------------------- |
+| **AI Tool**                | {Tool name, e.g., Gemini 2.5 Pro, Claude Opus 4}                                                  |
+| **Date/Time**              | {ISO 8601 timestamp}                                                                              |
+| **Task**                   | Domain Testing + BVA test case design for {FEATURE_ID}                                            |
+| **Feature**                | {FEATURE_NAME}                                                                                    |
+| **Prompt Summary**         | User Prompt: "{user_prompt}" + Invoked `domain-testing-writer` skill with FEATURE_ID={FEATURE_ID} |
+| **Output Summary**         | Generated {N} Domain Testing TCs + {M} BVA TCs, covering {K} input variables                      |
+| **Human Review Required**  | Yes — review all TCs for correctness and completeness                                             |
+| **Files Created/Modified** | {List of files}                                                                                   |
 ```
 
 ---

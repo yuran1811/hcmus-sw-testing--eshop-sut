@@ -105,9 +105,16 @@ Open `report/AI_Audit_Report.md` and append a new entry at the end of the detail
 
 #### Prompt
 
+**[Original User Prompt]**
+
 ```text
-{Full prompt text or faithful summary. If the prompt is very long,
-include the first 500 characters and note "[truncated — see conversation log]"}
+{The raw prompt written by the user/tester.}
+```
+
+**[Skill Execution Details]**
+
+```text
+{Details of the agent skill invocation, parameters, and instructions, if applicable.}
 ```
 ````
 
@@ -232,7 +239,7 @@ Ensure the AI Audit Report is consistent with the AI Critique (Section 10 of HW0
 
 ### Template: Domain Testing Design
 
-```markdown
+````markdown
 ### Entry {N} — Domain Testing Design
 
 | Field              | Value                                                              |
@@ -244,6 +251,16 @@ Ensure the AI Audit Report is consistent with the AI Critique (Section 10 of HW0
 
 #### Prompt
 
+**[Original User Prompt]**
+
+```text
+{User's raw prompt prompting this task}
+```
+````
+
+**[Skill Execution Details]**
+
+```text
 Invoked `domain-testing-writer` agent skill with parameters:
 
 - FEATURE_ID: {FR-XX}
@@ -253,6 +270,7 @@ Invoked `domain-testing-writer` agent skill with parameters:
 Detailed instruction: Follow the 5-step Domain Testing methodology
 (B1→B5) as taught in class to analyze {FEATURE_NAME} and generate
 comprehensive test cases with fault isolation principle.
+```
 
 #### AI Output
 
@@ -269,7 +287,8 @@ comprehensive test cases with fault isolation principle.
 | Corrections made | {Yes/No — details} |
 | Quality rating   | {rating}           |
 | Issues found     | {issues or None}   |
-```
+
+````
 
 ### Template: Test Execution
 
@@ -306,7 +325,7 @@ Invoked `test-runner` agent skill with parameters:
 | Corrections made | {details}                                     |
 | False positives  | {count — tests marked FAIL but actually PASS} |
 | False negatives  | {count — tests marked PASS but actually FAIL} |
-```
+````
 
 ### Template: Gap Analysis
 

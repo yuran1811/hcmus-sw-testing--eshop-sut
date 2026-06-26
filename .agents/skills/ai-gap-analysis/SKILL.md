@@ -88,13 +88,13 @@ Each testable requirement is a single, atomic, verifiable statement.
 ```markdown
 ### Coverage Matrix — {FEATURE_NAME}
 
-| Req ID           | Requirement   | Covered by TC(s)       | Coverage Status      |
-| ---------------- | ------------- | ---------------------- | -------------------- |
-| {FEATURE_ID}-R01 | {requirement} | TC-XXX-001, TC-XXX-003 | Covered              |
-| {FEATURE_ID}-R02 | {requirement} | TC-XXX-005             | Covered              |
-| {FEATURE_ID}-R03 | {requirement} | —                      | NOT Covered          |
-| {FEATURE_ID}-R04 | {requirement} | TC-XXX-002             | Partially Covered    |
-| ...              | ...           | ...                    | ...                  |
+| Req ID           | Requirement   | Covered by TC(s)       | Coverage Status   |
+| ---------------- | ------------- | ---------------------- | ----------------- |
+| {FEATURE_ID}-R01 | {requirement} | TC-XXX-001, TC-XXX-003 | Covered           |
+| {FEATURE_ID}-R02 | {requirement} | TC-XXX-005             | Covered           |
+| {FEATURE_ID}-R03 | {requirement} | —                      | NOT Covered       |
+| {FEATURE_ID}-R04 | {requirement} | TC-XXX-002             | Partially Covered |
+| ...              | ...           | ...                    | ...               |
 
 ### Coverage Summary
 
