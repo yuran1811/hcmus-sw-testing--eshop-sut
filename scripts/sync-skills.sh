@@ -2,7 +2,7 @@
 
 pnpx skills experimental_install
 
-for src in .github; do
+for src in .claude .github; do
   skills_dir="$src/skills"
   mkdir -p "$skills_dir"
   for dir in .agents/skills/*; do

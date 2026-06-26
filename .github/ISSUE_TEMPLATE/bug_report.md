@@ -1,9 +1,9 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: "[BUG][FEAT] - Describe the bug here"
-labels: ""
-assignees: ""
+title: '[BUG][FEAT] - Describe the bug here'
+labels: ''
+assignees: ''
 ---
 
 ## Found by Test Case

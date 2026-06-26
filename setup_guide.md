@@ -3,6 +3,7 @@
 Hệ thống EShop bao gồm 3 phân hệ chính: Backend API, Frontend Web và Frontend Mobile. Để kiểm thử toàn bộ hệ thống, bạn cần khởi chạy Backend và ít nhất một trong hai nền tảng Frontend.
 
 ## Yêu cầu Hệ thống (Prerequisites)
+
 - Đã cài đặt **Node.js** (Phiên bản >= 18.x).
 - Đã cài đặt trình quản lý gói `npm` (thường đi kèm với Node.js).
 - (Tùy chọn) Ứng dụng **Expo Go** trên điện thoại (iOS/Android) nếu muốn chạy Frontend Mobile trên thiết bị thật.
@@ -28,10 +29,10 @@ Backend cung cấp dữ liệu và xử lý logic cho toàn bộ hệ thống.
    ```
 5. Khởi chạy server:
    ```bash
-   node server.js
+   npm run dev
    ```
-   *Terminal sẽ thông báo: `Server is running on http://localhost:3000`.*
-   *(Lưu ý: Bạn phải để Terminal này chạy liên tục trong suốt quá trình test).*
+   _Terminal sẽ thông báo: `Server is running on http://localhost:3000`._
+   _(Lưu ý: Bạn phải để Terminal này chạy liên tục trong suốt quá trình test)._
 
 ---
 
@@ -52,7 +53,9 @@ Frontend Web là giao diện chính để người dùng mua sắm qua trình du
    ```bash
    npm run dev
    ```
-   *Terminal sẽ cung cấp một đường link (ví dụ: `http://localhost:5173/`). Bạn hãy bấm vào hoặc copy dán vào trình duyệt để sử dụng.*
+   _Terminal sẽ cung cấp một đường link (ví dụ: `http://localhost:5173/`). Bạn hãy bấm vào hoặc copy dán vào trình duyệt để sử dụng. Để đăng nhập, hãy sử dụng tài khoản Admin mặc định:_
+   - **Email**: `test@eshop.com`
+   - **Mật khẩu**: `Test1234!`
 
 ---
 
@@ -77,9 +80,9 @@ Frontend Mobile cung cấp giao diện App trên điện thoại. (Lưu ý: Back
    - Một mã QR Code sẽ hiện ra trên Terminal.
    - Sử dụng điện thoại tải app **Expo Go** (từ App Store hoặc Google Play).
    - Mở Expo Go và chọn quét mã QR (Scan QR Code) để mở ứng dụng.
-   - *Lưu ý: Điện thoại và Máy tính phải dùng chung một mạng Wi-Fi.*
-   
-   *(Đối với máy ảo/Emulator, bạn có thể bấm phím `a` để mở trên Android Emulator hoặc `i` để mở trên iOS Simulator nếu đã cài đặt).*
+   - _Lưu ý: Điện thoại và Máy tính phải dùng chung một mạng Wi-Fi._
+
+   _(Đối với máy ảo/Emulator, bạn có thể bấm phím `a` để mở trên Android Emulator hoặc `i` để mở trên iOS Simulator nếu đã cài đặt)._
 
 ---
 
@@ -100,9 +103,9 @@ Frontend Mobile cung cấp giao diện App trên điện thoại. (Lưu ý: Back
    ```bash
    npm run dev
    ```
-   *Terminal sẽ cung cấp đường link `http://localhost:5174/`. Để đăng nhập, hãy sử dụng tài khoản Admin mặc định:*
+   _Terminal sẽ cung cấp đường link `http://localhost:5174/`. Để đăng nhập, hãy sử dụng tài khoản Admin mặc định:_
    - **Email**: `admin@eshop.com`
-   - **Mật khẩu**: `admin123`
+   - **Mật khẩu**: `Admin123!`
 
 ---
 

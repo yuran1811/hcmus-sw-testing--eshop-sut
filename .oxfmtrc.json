@@ -1,0 +1,21 @@
+{
+  "semi": true,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "quoteProps": "consistent",
+  "sortImports": {
+    "groups": [
+      "type-import",
+      "value-builtin",
+      { "newlinesBetween": true },
+      "value-external",
+      "type-internal",
+      "value-internal",
+      ["type-parent", "type-sibling", "type-index"],
+      ["value-parent", "value-sibling", "value-index"],
+      "style",
+      "unknown"
+    ]
+  },
+  "ignorePatterns": ["backend/*", "frontend-*/*", "./*.md"]
+}
