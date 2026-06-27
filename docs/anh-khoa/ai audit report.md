@@ -399,6 +399,12 @@
   >
   > _(Mỗi file 002–010 tuân theo đúng template Preconditions / Test Data / Test Steps / Expected Result như TC-CART-001; ở đây tóm tắt phần khác biệt cốt lõi để tránh lặp.)_
 
+- **Đánh giá:** VALID
+
+- **Suy luận:** AI suy luận tốt, bao phủ các trường hợp trong ràng buộc, có giải thích rõ cách áp dụng domain testing trong tính năng này
+
+- **Sửa:** Không cần sửa
+
 ---
 
 **AI Audit Report Item**
@@ -489,6 +495,12 @@
   >
   > _(Mỗi file 002–015 tuân theo đúng template Preconditions / Test Data / Test Steps / Expected Result như TC-PRODUCT-001; ở đây tóm tắt phần khác biệt cốt lõi để tránh lặp.)_
 
+- **Đánh giá:** VALID
+
+- **Suy luận:** AI suy luận tốt, bao phủ các trường hợp trong ràng buộc, có giải thích rõ cách áp dụng domain testing trong tính năng này
+
+- **Sửa:** Không cần sửa
+
 ---
 
 **AI Audit Report Item**
@@ -496,7 +508,7 @@
 - **Công cụ AI:** Claude Code (Opus 4.8)
 - **Thời gian:** 2026-06-27 10:43:36
 - **Nội dung prompt:**
-  > Sử dụng skill @.agents/skills/domain-testing/SKILL.md để thiết kế test case cho tính năng  FR-20 Đăng nhập trên mobile
+  > Sử dụng skill @.agents/skills/domain-testing/SKILL.md để thiết kế test case cho tính năng FR-20 Đăng nhập trên mobile
   >
   > Sử dụng phân tích yêu cầu từ @docs/anh-khoa/feature-specs/FR-20 Đăng nhập trên mobile.md
   >
@@ -511,11 +523,11 @@
   >
   > ## 2. Bảng phân lớp tương đương (Partition)
   >
-  > | Variable | Valid Classes | Invalid Classes |
-  > |---|---|---|
-  > | Email | V: đúng định dạng và đã đăng ký (vd `test@eshop.com`) | I1: rỗng · I2: sai định dạng · I3: đúng định dạng nhưng chưa đăng ký (→ sai thông tin đăng nhập) |
-  > | Mật khẩu | V: đúng mật khẩu của tài khoản | I4: rỗng · I5: sai mật khẩu |
-  > | Trạng thái khóa / bộ đếm sai | V: chưa khóa, bộ đếm `< 3` (biên dưới: 2 lần sai vẫn cho thử) | I6: bộ đếm `≥ 3` → tài khoản đang bị khóa 30 giây |
+  > | Variable                     | Valid Classes                                                 | Invalid Classes                                                                                  |
+  > | ---------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+  > | Email                        | V: đúng định dạng và đã đăng ký (vd `test@eshop.com`)         | I1: rỗng · I2: sai định dạng · I3: đúng định dạng nhưng chưa đăng ký (→ sai thông tin đăng nhập) |
+  > | Mật khẩu                     | V: đúng mật khẩu của tài khoản                                | I4: rỗng · I5: sai mật khẩu                                                                      |
+  > | Trạng thái khóa / bộ đếm sai | V: chưa khóa, bộ đếm `< 3` (biên dưới: 2 lần sai vẫn cho thử) | I6: bộ đếm `≥ 3` → tài khoản đang bị khóa 30 giây                                                |
   >
   > **File:** `tests/test-cases/mobile_login/TC-MOBILE_LOGIN-001.md`
   >
@@ -526,20 +538,24 @@
   > **Test Type:** Domain Testing
   >
   > ### 1. Preconditions
+  >
   > - App Mobile đang ở màn hình Đăng nhập.
   > - Tồn tại tài khoản hợp lệ `test@eshop.com` / `Test1234!` (tài khoản test mặc định theo README).
   > - Tài khoản không bị khóa (bộ đếm sai = 0).
   >
   > ### 2. Test Data (Inputs)
+  >
   > - Email: `test@eshop.com` (đúng định dạng, đã đăng ký)
   > - Mật khẩu: `Test1234!` (đúng mật khẩu)
   >
   > ### 3. Test Steps
+  >
   > 1. Mở màn hình Đăng nhập trên app.
   > 2. Nhập Email và Mật khẩu hợp lệ.
   > 3. Bấm "Đăng nhập".
   >
   > ### 4. Expected Result
+  >
   > - Đăng nhập thành công; hệ thống trả về JWT Token và lưu phía client.
   > - App chuyển vào màn hình chính.
   > - Các request có xác thực sau đó gửi kèm header `Authorization: Bearer <token>`.
@@ -566,3 +582,9 @@
   > **File:** `tests/test-cases/mobile_login/TC-MOBILE_LOGIN-011.md` — (State biên thời gian) Sau 30 giây hết khóa → đăng nhập đúng lại thành công, nhận JWT.
   >
   > _(Mỗi file 002–011 tuân theo đúng template Preconditions / Test Data / Test Steps / Expected Result như TC-MOBILE_LOGIN-001; ở đây tóm tắt phần khác biệt cốt lõi để tránh lặp.)_
+
+- **Đánh giá:** VALID
+
+- **Suy luận:** AI suy luận tốt, bao phủ các trường hợp trong ràng buộc, có giải thích rõ cách áp dụng domain testing trong tính năng này
+
+- **Sửa:** Không cần sửa
