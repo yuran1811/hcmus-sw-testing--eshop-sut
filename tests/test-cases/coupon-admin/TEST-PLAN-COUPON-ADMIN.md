@@ -113,8 +113,9 @@
 | TC-COUPON-ADMIN-023 | BVA            | max_uses_per_user = 2 (IN, vừa trên min) → được chấp nhận                                                   | Not Run |
 | TC-COUPON-ADMIN-024 | Domain Testing | expired_at = ngày trong quá khứ (vd: "2020-01-01") → hành vi cần xác minh (thăm dò: chấp nhận hay từ chối?) | Not Run |
 | TC-COUPON-ADMIN-025 | Domain Testing | Thiếu hoàn toàn trường bắt buộc trong body (field key không có mặt, không phải rỗng) → bị từ chối           | Not Run |
+| TC-COUPON-ADMIN-026 | Domain Testing | Xử lý an toàn chuỗi nhập vào khi hiển thị mã coupon (chống XSS)                                             | Not Run |
 
 ## Entry / Exit Criteria
 
 **Entry:** Backend chạy tại localhost:3000; tài khoản admin đã sẵn sàng; ít nhất 1 mã giảm giá mẫu (SAVE10) đã được seed.
-**Exit:** Tất cả 25 test case đã được thực thi; defect (nếu có) đã được ghi nhận trong issue tracker.
+**Exit:** Tất cả 26 test case đã được thực thi; defect (nếu có) đã được ghi nhận trong issue tracker.
