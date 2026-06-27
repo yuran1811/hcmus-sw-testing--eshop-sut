@@ -757,3 +757,89 @@
   > ### Quan sát & khuyến nghị (không phải test case)
   >
   > - Spec gap: Số lượng không có giới hạn trên. Đây là rủi ro tiềm ẩn (người dùng có thể đặt số lượng cực lớn → ảnh hưởng tồn kho/tính tiền/tràn số). Khuyến nghị team bổ sung ràng buộc Max (ví dụ theo tồn kho). Khi Max được định nghĩa, mới phát sinh thêm 2 ca BVA mới: Max (On) và Max+1 (Off).
+
+---
+
+**AI Audit Report Item**
+
+- **Công cụ AI:** Claude Code (Opus 4.8)
+- **Thời gian:** 2026-06-27 12:19:42
+- **Nội dung prompt:**
+  > Tiếp tục đóng vai Boundary Value Analysis Expert, sử dụng @.agents/skills/boundary-value-analysis/SKILL.md để phân tích các giá trị biên dựa trên thông tin từ đặc tả @docs/anh-khoa/feature-specs/FR-15 Quản lý Sản phẩm.md
+  >
+  > Yêu cầu thực thi:
+  > - Chỉ lọc ra các biến có giới hạn biên định lượng (ví dụ: độ dài chuỗi, số lượng, khoảng giá trị).
+  > - Xác định rõ các điểm On, Off, In, Out (tùy theo loại biên: 2 giá trị hoặc 3 giá trị) cho từng ranh giới và giải thích lý do lựa chọn một cách ngắn gọn.
+  > - Sinh bảng Test Case bổ sung cho các điểm biên này. Các test case này không được trùng lặp với các test case đã sinh ở phần Domain Testing.
+  > - Chạy kèm @.agents/skills/ai-audit-logger/SKILL.md ở cuối cùng để xuất log nguyên văn (không tóm tắt) toàn bộ quá trình phân tích BVA này.
+- **AI output:**
+
+  > ## 1. Lọc biến & xác định bước nhảy (increment)
+  >
+  > | Biến | Có biên định lượng? | Bước nhảy & ranh giới |
+  > |---|---|---|
+  > | **Tên sản phẩm** | Có (độ dài chuỗi) | Increment = 1 (đếm ký tự); ranh giới: Min = 1 (không rỗng), Max = 255 |
+  > | **Giá** | Có (khoảng giá trị) | Ranh giới dưới tại 0 (`> 0`); không có Max. Increment mơ hồ → xem mục dưới |
+  > | Danh mục | Không | Tham chiếu (tồn tại/không), không định lượng |
+  > | Quyền (Authorization) | Không | Phân quyền, không định lượng |
+  >
+  > Phân tích bước nhảy của Giá (điểm mấu chốt): đặc tả chỉ ghi "số dương (`> 0`)", không nói Giá là số nguyên. Theo nguyên tắc BVA (`1` cho số nguyên, `0.01` cho số thực), vì đặc tả không ràng buộc số nguyên nên tôi xét theo hướng số thực, increment = 0.01 để kiểm biên chặt hơn. Khi đó On của Giá = 0.01 (giá trị dương nhỏ nhất), khác với giá trị `1` mà Domain Testing đã dùng.
+  >
+  > ## 2. Xác định điểm biên & đối chiếu trùng lặp
+  >
+  > ### BVA Points definition
+  >
+  > | Variable | Boundary Type | Target Value | Trạng thái (đối chiếu Domain Testing) |
+  > |---|---|---|---|
+  > | Tên — cận dưới | Off (Min−1) | 0 ký tự (rỗng) | Đã cover — TC-PRODUCT-005 |
+  > | Tên — cận dưới | On (Min) | 1 ký tự | Đã cover — TC-PRODUCT-003 |
+  > | Tên — cận trên | On (Max) | 255 ký tự | Đã cover — TC-PRODUCT-002 |
+  > | Tên — cận trên | Off (Max+1) | 256 ký tự | Đã cover — TC-PRODUCT-006 |
+  > | Giá — cận dưới | Off | 0 | Đã cover — TC-PRODUCT-007 |
+  > | Giá — cận dưới (số nguyên) | On | 1 | Đã cover — TC-PRODUCT-004 |
+  > | Giá — cận dưới (số thực) | On | 0.01 | CHƯA cover (TC-004 dùng `1`, không kiểm khoảng `0 < giá < 1`) |
+  > | Giá — cận trên | Max / Max+1 | (không xác định) | Đặc tả không định nghĩa Max → không có biên trên để kiểm |
+  >
+  > Kết luận đối chiếu: Toàn bộ biên của Tên (0/1/255/256) và biên dưới Giá theo số nguyên (0/1) đã được Domain Testing cover đầy đủ. Chỉ còn 1 điểm On chưa cover: Giá = 0.01 — điểm biên dưới khi xét Giá là số thực. Domain Testing dùng `1` nên không phát hiện được trường hợp hệ thống lỡ chặn các giá trị `0 < giá < 1` (vd ép Giá phải ≥ 1 hoặc phải là số nguyên).
+  >
+  > ## 3. BVA Test Cases (bổ sung, không trùng Domain Testing)
+  >
+  > | Test Case ID | Requirement ID | Target Boundary | Test Data (Inputs) | Test Steps | Expected Result |
+  > |---|---|---|---|---|---|
+  > | TC-PRODUCT-016 | FR-15 | Giá = 0.01 (On, số thực) | Admin; Tên `Áo thun nam` (hợp lệ); Giá `0.01`; Danh mục `Thời trang` (tồn tại) | 1. Mở màn hình Thêm sản phẩm. 2. Nhập Giá = 0.01, Tên & Danh mục hợp lệ. 3. Bấm "Lưu". | Theo đặc tả (`> 0`), `0.01` là hợp lệ → tạo sản phẩm thành công. Probe: nếu hệ thống từ chối/làm tròn về 0 → cần làm rõ đặc tả có ngầm định Giá là số nguyên ₫ hay không (điểm chưa rõ trong README). |
+  >
+  > ### Nội dung file test case bổ sung
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-016.md`
+  >
+  > ```markdown
+  > # TC-PRODUCT-016: BVA — Giá là số thực dương nhỏ nhất (0.01) tại biên dưới `> 0`
+  >
+  > **Requirement ID:** FR-15
+  > **Test Type:** Boundary Value Analysis
+  >
+  > ### 1. Preconditions
+  > - Đã đăng nhập bằng tài khoản Admin (JWT hợp lệ, `role = 'admin'`).
+  > - Tồn tại danh mục hợp lệ "Thời trang".
+  >
+  > ### 2. Test Data (Inputs)
+  > - Tên sản phẩm: `Áo thun nam` (hợp lệ)
+  > - Giá: `0.01` (số thực dương nhỏ nhất với bước nhảy 0.01 — ngay trên biên 0)
+  > - Danh mục: `Thời trang` (tồn tại)
+  >
+  > ### 3. Test Steps
+  > 1. Mở màn hình Thêm sản phẩm (Web Admin).
+  > 2. Nhập Giá = `0.01`, Tên và Danh mục hợp lệ.
+  > 3. Bấm "Lưu".
+  >
+  > ### 4. Expected Result
+  > - Theo đặc tả FR-15 ("Giá phải là số dương `> 0`"), giá trị `0.01` thỏa điều kiện → sản phẩm được tạo thành công.
+  > - Mục tiêu BVA: kiểm khoảng `0 < giá < 1` mà Domain Testing chưa chạm (TC-PRODUCT-004 dùng `1`). Nếu hệ thống từ chối hoặc làm tròn `0.01` về 0:
+  >   - Đó là điểm không tuân thủ đặc tả (đặc tả không ràng buộc Giá phải là số nguyên), hoặc
+  >   - Cho thấy đặc tả còn mơ hồ — cần làm rõ Giá có ngầm định là số nguyên ₫ hay không.
+  > ```
+  >
+  > ### Quan sát & khuyến nghị (không phải test case)
+  >
+  > - Spec gap 1: Giá không có giới hạn trên (Max) → không có biên trên để kiểm; tiềm ẩn rủi ro nhập giá cực lớn. Khuyến nghị định nghĩa Max hợp lý.
+  > - Spec gap 2: Đặc tả không nói rõ Giá là số nguyên hay số thực → tạo mơ hồ về increment (1 hay 0.01). TC-PRODUCT-016 chính là ca để làm rõ điểm này trên hệ thống thật.
