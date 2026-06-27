@@ -36,7 +36,8 @@
 ## Actual result
 
 - Cả hai yêu cầu (nặc danh và tài khoản khác) đều thành công vượt qua kiểm tra, trả về mã trạng thái `200 OK` cùng với toàn bộ thông tin chi tiết đơn hàng của Admin (bao gồm địa chỉ giao hàng, tổng tiền, ngày đặt).
-- **Nguyên nhân gốc rễ**: Tại `backend/server.js:344`, API `/api/orders/:id` hoàn toàn không sử dụng middleware `authenticateToken` và không hề có bước so sánh trường `user_id` của đơn hàng với `id` của người dùng gửi yêu cầu.
+- **Nguyên nhân**: API lấy chi tiết đơn hàng (`/api/orders/:id`) thiếu cơ chế xác thực người dùng và hoàn toàn không kiểm tra phân quyền sở hữu để đối chiếu xem tài khoản gửi yêu cầu có phải là người sở hữu đơn hàng hay không.
+
 
 ## Evidence
 

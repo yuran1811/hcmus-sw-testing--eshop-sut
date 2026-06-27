@@ -28,4 +28,5 @@ Minor / P2
 
 ## Evidence
 - Ảnh chụp màn hình đơn hàng bị hủy trực tiếp không qua xác nhận: [mobile_order_cancelled_immediately.png](evidence/mobile_order_cancelled_immediately.png)
-- Video ghi nhận phiên kiểm thử: [mobile_checkout_run.webp](evidence/mobile_checkout_run.webp)
+- Video ghi nhận phiên kiểm thử: [mobile_cancel_order_bug.webp](evidence/mobile_cancel_order_bug.webp)
+

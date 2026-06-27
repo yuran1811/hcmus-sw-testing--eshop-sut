@@ -29,9 +29,9 @@ Minor / P2
 - Không có bất kỳ nhãn lỗi dạng văn bản nào được render ngay trên nút bấm.
 
 ## Evidence
-Đoạn mã xử lý lỗi tại `frontend-mobile/App.js` dòng 417:
-```javascript
-} catch (error) {
-  Alert.alert("Lỗi khi thanh toán", error.message || "Có lỗi xảy ra.");
-}
-```
+- Ảnh chụp màn hình hộp thoại cảnh báo: [mobile_checkout_network_error.png](evidence/mobile_checkout_network_error.png)
+- Video ghi nhận phiên kiểm thử: [mobile_checkout_network_error.webp](evidence/mobile_checkout_network_error.webp)
+
+
+
+

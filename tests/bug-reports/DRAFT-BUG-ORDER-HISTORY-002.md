@@ -38,7 +38,8 @@
 ## Actual result
 
 - Cột "Mã ĐH" chỉ hiển thị văn bản thô dạng chuỗi chữ (plain text) hoàn toàn không có thuộc tính liên kết hay tính năng tương tác. Không có nút "Xem chi tiết" hay bất kỳ cách nào để chuyển tiếp sang trang chi tiết.
-- Trên thực tế, dự án hoàn toàn thiếu trang "Chi tiết đơn hàng" (Order Details component) ở cả frontend router (`App.jsx`) và mã nguồn.
+- Nguyên nhân: Hệ thống chưa xây dựng chức năng hoặc giao diện xem chi tiết đơn hàng cho người dùng ở cả phía giao diện (Frontend) lẫn cơ chế điều hướng.
+
 
 ## Evidence
 

@@ -25,7 +25,8 @@ Major / P1
 Hệ thống áp dụng mã giảm giá `SAVE10` thành công vì tổng tiền đơn hàng (300.000 ₫) đạt đúng ngưỡng tối thiểu quy định (300.000 ₫).
 
 ## Actual result
-Mã giảm giá bị từ chối với thông báo lỗi: `"Đơn hàng chưa đủ giá trị tối thiểu 300,000 ₫ để áp dụng mã này"`. Lỗi xảy ra do backend (server.js:379) sử dụng toán tử so sánh lớn hơn (`>`) thay vì lớn hơn hoặc bằng (`>=`): `total_amount > coupon.min_order_amount`.
+Mã giảm giá bị từ chối với thông báo lỗi: `"Đơn hàng chưa đủ giá trị tối thiểu 300,000 ₫ để áp dụng mã này"`. Nguyên nhân do hệ thống kiểm tra giá trị tối thiểu của đơn hàng yêu cầu phải lớn hơn hẳn (>) thay vì lớn hơn hoặc bằng (>=) ngưỡng tối thiểu để áp dụng mã giảm giá.
+
 
 ## Evidence
 Kết quả từ file kiểm thử API `tests/api_mobile_test.js`:

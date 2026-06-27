@@ -25,12 +25,11 @@ Critical / P0
 Đơn hàng được tạo thành công chứa đầy đủ 3 sản phẩm đã thêm vào giỏ hàng.
 
 ## Actual result
-Đơn hàng chỉ chứa 2 sản phẩm (sản phẩm thứ 3 bị mất). Lỗi nằm ở file `frontend-mobile/App.js` tại dòng 391, code đã cắt bỏ phần tử cuối cùng của mảng giỏ hàng trước khi gửi yêu cầu POST đến `/api/checkout`:
-```javascript
-items: cart.length > 1 ? cart.slice(0, -1) : cart,
-```
+Đơn hàng được tạo thành công nhưng chỉ chứa 2 sản phẩm (sản phẩm cuối cùng trong giỏ hàng bị mất một cách bất thường). Hệ thống đã tự động cắt bỏ đi sản phẩm cuối cùng trước khi thực hiện gửi yêu cầu thanh toán lên server.
+
 
 ## Evidence
-- Video ghi nhận phiên kiểm thử: [mobile_checkout_run.webp](evidence/mobile_checkout_run.webp)
+- Video ghi nhận phiên kiểm thử: [mobile_cart_delete_bug.webp](evidence/mobile_cart_delete_bug.webp)
 - Ảnh chụp màn hình giỏ hàng ban đầu (3 sản phẩm): [mobile_cart_3_items.png](evidence/mobile_cart_3_items.png)
 - Ảnh chụp màn hình lịch sử đơn hàng sau thanh toán (chỉ còn 2 sản phẩm): [mobile_order_history_active.png](evidence/mobile_order_history_active.png)
+

@@ -27,15 +27,11 @@ Critical / P0
 
 ## Actual result
 - Tiết kiệm hiển thị: `-927.000.000 ₫` (Số tiền âm!).
-- Thành tiền hiển thị: `1.030.000.000 ₫` (Tăng gấp 10 lần!).
-Lỗi xảy ra do backend (`backend/server.js` dòng 399-401 và dòng 419-421) tính giá trị giảm giá bằng công thức:
-```javascript
-discount_amount = Math.floor(total_amount * (1 - coupon.discount_value))
-```
-Vì `coupon.discount_value` trong DB được lưu dạng số nguyên là `10` (tức 10%), biểu thức `1 - 10` bằng `-9`, khiến số tiền được giảm thành số âm khổng lồ và cộng thêm vào tổng đơn hàng. Công thức đúng phải là:
-```javascript
-discount_amount = Math.floor(total_amount * (coupon.discount_value / 100))
-```
+- Thành tiền hiển thị: `1.030.000.000 ₫` (Tăng gấp 10 lần tổng tiền ban đầu!).
+Nguyên nhân do logic tính toán số tiền giảm giá theo phần trăm (%) của hệ thống bị lỗi: hệ thống sử dụng sai hệ số giảm giá, dẫn đến số tiền giảm giá bị âm khổng lồ và tổng số tiền đơn hàng bị nhân lên gấp 10 lần.
+
 
 ## Evidence
 Ảnh chụp màn hình Checkout sau khi áp dụng mã giảm giá: [mobile_coupon_applied_error.png](evidence/mobile_coupon_applied_error.png)
+- Video ghi nhận phiên kiểm thử: [mobile_coupon_calc_bug.webp](evidence/mobile_coupon_calc_bug.webp)
+

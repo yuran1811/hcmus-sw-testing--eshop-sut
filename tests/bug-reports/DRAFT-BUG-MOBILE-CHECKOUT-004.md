@@ -28,4 +28,5 @@ Sản phẩm bị xóa ngay lập tức ra khỏi giỏ hàng mà không hiển 
 
 ## Evidence
 - Ảnh chụp màn hình giỏ hàng trống ngay lập tức sau khi nhấn Xóa: [mobile_deleted_immediately.png](evidence/mobile_deleted_immediately.png)
-- Video ghi nhận thao tác xóa tức thời: [mobile_checkout_run.webp](evidence/mobile_checkout_run.webp)
+- Video ghi nhận thao tác xóa tức thời: [mobile_cart_delete_bug.webp](evidence/mobile_cart_delete_bug.webp)
+

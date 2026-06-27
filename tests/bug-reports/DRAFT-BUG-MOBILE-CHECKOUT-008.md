@@ -27,14 +27,8 @@ Major / P1
 
 ## Actual result
 - Backend trả về tổng tiền thanh toán cuối cùng là `-10.000 ₫` (chấp nhận giá trị âm).
-Lỗi do backend (`backend/server.js`) thiếu bước khống chế cận dưới bằng 0 khi tính toán `final_amount`:
-```javascript
-const final_amount = total_amount - discount_amount;
-```
-Cần thay thế bằng:
-```javascript
-const final_amount = Math.max(0, total_amount - discount_amount);
-```
+Nguyên nhân do logic tính toán số tiền thanh toán cuối cùng (sau khi trừ đi giá trị giảm giá của coupon) thiếu bước khống chế cận dưới bằng 0, dẫn đến việc chấp nhận tổng số tiền thanh toán là một số âm.
+
 
 ## Evidence
 Kết quả từ kịch bản chạy thử nghiệm trên cơ sở dữ liệu:
@@ -48,3 +42,6 @@ Response body: {
   message: 'Áp dụng thành công! Giảm 100,000 ₫'
 }
 ```
+- Video ghi nhận phiên kiểm thử: [mobile_coupon_calc_bug.webp](evidence/mobile_coupon_calc_bug.webp)
+
+
