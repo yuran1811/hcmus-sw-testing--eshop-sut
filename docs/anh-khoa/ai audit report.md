@@ -703,3 +703,57 @@
   > - Hệ thống chuyển hướng sang trang Đăng nhập.
   > - Mục tiêu BVA: phát hiện lỗi nếu implementation lỡ yêu cầu ≥ 2 chữ số (Domain Testing TC-REGISTER-001 dùng 3 chữ số nên không bắt được lỗi này).
   > ```
+
+---
+
+**AI Audit Report Item**
+
+- **Công cụ AI:** Claude Code (Opus 4.8)
+- **Thời gian:** 2026-06-27 12:14:24
+- **Nội dung prompt:**
+  > Tiếp tục đóng vai Boundary Value Analysis Expert, sử dụng @.agents/skills/boundary-value-analysis/SKILL.md để phân tích các giá trị biên dựa trên thông tin từ đặc tả @docs/anh-khoa/feature-specs/FR-07 Giỏ hàng.md
+  >
+  > Yêu cầu thực thi:
+  > - Chỉ lọc ra các biến có giới hạn biên định lượng (ví dụ: độ dài chuỗi, số lượng, khoảng giá trị).
+  > - Xác định rõ các điểm On, Off, In, Out (tùy theo loại biên: 2 giá trị hoặc 3 giá trị) cho từng ranh giới và giải thích lý do lựa chọn một cách ngắn gọn.
+  > - Sinh bảng Test Case bổ sung cho các điểm biên này. Các test case này không được trùng lặp với các test case đã sinh ở phần Domain Testing.
+  > - Chạy kèm @.agents/skills/ai-audit-logger/SKILL.md ở cuối cùng để xuất log nguyên văn (không tóm tắt) toàn bộ quá trình phân tích BVA này.
+- **AI output:**
+
+  > ## 1. Lọc biến & xác định bước nhảy (increment)
+  >
+  > FR-07 chỉ có **một** biến mang biên định lượng: **Số lượng (Quantity)**.
+  >
+  > | Biến | Có biên định lượng? | Lý do |
+  > |---|---|---|
+  > | **Số lượng (Quantity)** | Có | Integer, tối thiểu = 1; điều chỉnh qua nút +/- (bước nhảy = 1) |
+  > | Đơn giá / Thành tiền / Tổng cộng | Không | Read-only, là giá trị dẫn xuất/hiển thị, không phải input có biên do người dùng nhập |
+  > | Sản phẩm (số dòng/sản phẩm) | Không | Là bất biến "đúng 1 dòng" (đẳng thức), không phải khoảng min–max để BVA |
+  > | Nút Xóa / Tiếp tục mua sắm | Không | Hành động, không định lượng |
+  >
+  > → **Số lượng:** Min = 1, bước nhảy = 1, đặc tả KHÔNG định nghĩa Max.
+  >
+  > ## 2. Xác định điểm biên & đối chiếu trùng lặp
+  >
+  > Biên một phía (chỉ có cận dưới) → dùng cặp On / Off (2 giá trị). Điểm In (Số lượng = 2) là lớp tương đương hợp lệ tổng quát → bỏ theo quy tắc khử trùng lặp.
+  >
+  > ### BVA Points definition
+  >
+  > | Variable | Boundary Type | Target Value | Trạng thái (đối chiếu Domain Testing) |
+  > |---|---|---|---|
+  > | Số lượng | Off (Min−1) | 0 (cố giảm xuống dưới 1) | Đã cover — TC-CART-005 (bấm "-" tại 1 → chặn, không cho về 0) |
+  > | Số lượng | On (Min) | 1 (giá trị tối thiểu hợp lệ) | Đã cover — TC-CART-004 (giảm 2→1) và TC-CART-001 (thêm với SL=1) |
+  > | Số lượng | Max / Max+1 | (không xác định) | Đặc tả không định nghĩa Max → không có giá trị biên trên để kiểm |
+  >
+  > ## 3. BVA Test Cases (bổ sung)
+  >
+  > **Không có test case bổ sung nào được sinh.**
+  >
+  > Lý do (trung thực theo đúng quy tắc dedup của skill):
+  >
+  > - Biến định lượng duy nhất là Số lượng, biên một phía (Min=1). Cả hai điểm biên — On=1 và Off=0 — đã được Domain Testing kiểm và còn được dán nhãn biên rõ ràng (TC-CART-004 "biên dưới hợp lệ", TC-CART-005 "chặn vượt biên dưới"). Sinh thêm sẽ trùng lặp → vi phạm yêu cầu.
+  > - Không có biên trên (Max) trong đặc tả → không có giá trị biên hợp lệ để tạo ca Max/Max+1. Sinh một con số Max tự nghĩ ra sẽ là bịa biên không có trong spec, nên tôi không làm.
+  >
+  > ### Quan sát & khuyến nghị (không phải test case)
+  >
+  > - Spec gap: Số lượng không có giới hạn trên. Đây là rủi ro tiềm ẩn (người dùng có thể đặt số lượng cực lớn → ảnh hưởng tồn kho/tính tiền/tràn số). Khuyến nghị team bổ sung ràng buộc Max (ví dụ theo tồn kho). Khi Max được định nghĩa, mới phát sinh thêm 2 ca BVA mới: Max (On) và Max+1 (Off).
