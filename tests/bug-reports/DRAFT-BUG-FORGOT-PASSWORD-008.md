@@ -34,8 +34,7 @@
 ## Actual result
 
 - Server xử lý đặt lại mật khẩu thành công bất kể thời gian trôi qua bao lâu.
-- **Nguyên nhân gốc rễ**: Tại `backend/server.js:73-75`, hệ thống chỉ lưu trường `reset_token` vào bảng `users` mà không lưu thời điểm tạo (`otp_created_at` hoặc `otp_expires_at`).
-  Tại `backend/server.js:87-98` (API reset-password), hệ thống chỉ đối chiếu xem `reset_token` gửi lên có khớp với `reset_token` trong cơ sở dữ liệu hay không mà không hề kiểm tra tính hiệu lực về mặt thời gian của mã đó. Điều này tạo ra rủi ro bảo mật nghiêm trọng nếu hacker có được mã OTP cũ.
+- **Nguyên nhân**: Hệ thống chỉ thực hiện đối khớp mã OTP gửi lên với dữ liệu lưu trữ mà không hề lưu hoặc kiểm tra mốc thời gian hết hạn hay thời điểm tạo của OTP đó, dẫn đến mã OTP có hiệu lực vĩnh viễn và không bao giờ hết hạn.
 
 ## Evidence
 
@@ -55,4 +54,3 @@
   ]
   ```
   _(Quan sát: Bảng `users` hoàn toàn không có bất kỳ cột nào như `otp_created_at` hoặc `otp_expires_at` để đối chiếu thời gian hết hạn)._
-- Thiếu logic kiểm tra thời gian hết hạn tại server

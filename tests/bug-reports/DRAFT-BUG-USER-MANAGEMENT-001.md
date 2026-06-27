@@ -31,5 +31,7 @@ Minor / P2
 - Nó chỉ hiển thị một dòng duy nhất chứa thông tin tài khoản của chính admin trong bảng, không hiển thị bất kỳ thông báo hay hình ảnh minh họa nào cho việc chưa có người dùng khác.
 
 ## Evidence
-- Video ghi nhận phiên kiểm thử: [evidence/user_mgt_test_run.webp](evidence/user_mgt_test_run.webp)
-- Ảnh chụp danh sách người dùng: [evidence/user_list_page.png](evidence/user_list_page.png)
+- Video ghi nhận danh sách trống (chỉ có Admin): [evidence/user_mgt_empty_state.webp](evidence/user_mgt_empty_state.webp)
+- Ảnh chụp bảng danh sách chỉ có tài khoản Admin mà không có giao diện Empty State: [evidence/user_list_only_admin.png](evidence/user_list_only_admin.png)
+- Video ghi nhận phiên kiểm thử toàn bộ: [evidence/user_mgt_test_run.webp](evidence/user_mgt_test_run.webp)
+

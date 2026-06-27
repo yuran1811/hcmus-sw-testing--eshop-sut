@@ -43,11 +43,8 @@
 ## Actual result
 
 - Hệ thống chặn lại và thông báo lỗi: "Mật khẩu quá yếu! Phải dài tối thiểu 8 ký tự, gồm chữ hoa, chữ thường, số và KÝ TỰ ĐẶC BIỆT.".
-- **Nguyên nhân gốc rễ**: Tại `ForgotPassword.jsx:26`, regex kiểm tra được viết là:
-  `const flawedStrongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\s)[A-Za-z\d\s]{8,}$/;`
-  - Lỗi 1: Sử dụng `(?=.*\s)` bắt buộc mật khẩu phải chứa khoảng trắng (dấu cách).
-  - Lỗi 2: Lớp ký tự `[A-Za-z\d\s]` chỉ cho phép chữ cái, chữ số và khoảng trắng. Toàn bộ các ký tự đặc biệt thực tế (như `!`, `@`, `#`, `$`, `%`, etc.) đều bị cấm. Mật khẩu chứa các ký tự này sẽ bị coi là không hợp lệ.
-  - Kết quả là một mật khẩu như `Reset 123` (chứa khoảng trắng, không chứa ký tự đặc biệt) lại được chấp nhận, trong khi mật khẩu an toàn thực sự như `Reset123!` lại bị từ chối.
+- **Nguyên nhân**: Logic kiểm soát định dạng mật khẩu của form bị lỗi: bắt buộc mật khẩu phải chứa khoảng trắng (dấu cách) và chặn toàn bộ các ký tự đặc biệt thực tế (như `!`, `@`, `#`, etc.). Kết quả là mật khẩu như `Reset 123` (chứa dấu cách, không chứa ký tự đặc biệt) được chấp nhận, trong khi mật khẩu an toàn như `Reset123!` (có ký tự đặc biệt, không có dấu cách) lại bị báo lỗi quá yếu.
+
 
 ## Evidence
 

@@ -36,9 +36,8 @@
 ## Actual result
 
 - Hệ thống chỉ sinh ra mã OTP gồm 4 chữ số (ví dụ: `7268` hoặc `4064`).
-- **Nguyên nhân gốc rễ**: Tại file `backend/server.js:72`, hàm sinh mã OTP được định nghĩa là:
-  `const resetToken = Math.floor(1000 + Math.random() * 9000).toString();`
-  Công thức này chỉ sinh ra các số nguyên ngẫu nhiên trong khoảng từ 1000 đến 9999, tức là luôn luôn có độ dài là 4 chữ số.
+- **Nguyên nhân**: Hệ thống chỉ sinh ra các số ngẫu nhiên có độ dài 4 chữ số (trong khoảng từ 1000 đến 9999) thay vì sinh ra mã OTP có độ dài 6 chữ số như quy định của đặc tả yêu cầu.
+
 
 ## Evidence
 

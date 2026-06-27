@@ -27,7 +27,7 @@
 
 ## Actual result
 - Hệ thống không khóa tài khoản. Sau 5 hoặc thậm chí nhiều lần thử sai hơn, người dùng vẫn có thể thực hiện đăng nhập bình thường và tiếp tục thử các mã OTP khác.
-- **Nguyên nhân gốc rễ**: API `/api/reset-password` tại `backend/server.js` không hề ghi nhận, tích lũy số lần thử sai của người dùng (`login_attempts` hay `otp_attempts`) cũng như không cập nhật trường `locked_until` khi phát hiện các yêu cầu sai liên tiếp. Người dùng có thể vô tư thực hiện brute-force đoán mã OTP 4 chữ số (chỉ có 10.000 khả năng) vô cùng dễ dàng và nhanh chóng.
+- **Nguyên nhân**: Hệ thống không ghi nhận, tích lũy số lần thử nhập sai mã OTP của người dùng và không thực hiện khóa tài khoản/chặn yêu cầu khi phát hiện hành vi nhập sai liên tiếp, cho phép brute-force dò mã OTP 4 chữ số.
 
 ## Evidence
 - API Test execution output:
@@ -39,4 +39,4 @@
   Login attempt result after wrong OTPs: 200 { message: 'Login successful', ... }
   FAILED: Account is NOT locked after 5 wrong OTP attempts (Login succeeded).
   ```
-- Code file: [server.js:L87-98](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/backend/server.js#L87-98) thiếu logic xử lý tăng số lần nhập sai hoặc kiểm tra khóa tài khoản.
+

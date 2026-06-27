@@ -29,5 +29,7 @@ Major / P1
 - Tài khoản người dùng bị xóa ngay lập tức khỏi bảng và cơ sở dữ liệu sau khi nhấn nút "Xóa", dẫn đến nguy cơ mất dữ liệu do thao tác nhầm (accidentally click).
 
 ## Evidence
-- Video ghi nhận phiên kiểm thử: [evidence/user_mgt_test_run.webp](evidence/user_mgt_test_run.webp)
-- Ảnh chụp sau khi nhấn nút Xóa: [evidence/after_delete_click.png](evidence/after_delete_click.png)
+- Video ghi nhận hành động xóa nhanh không có xác nhận: [evidence/user_mgt_delete_no_confirm.webp](evidence/user_mgt_delete_no_confirm.webp)
+- Ảnh chụp danh sách người dùng ngay sau khi nhấn nút Xóa: [evidence/after_delete_click.png](evidence/after_delete_click.png)
+- Video ghi nhận phiên kiểm thử toàn bộ: [evidence/user_mgt_test_run.webp](evidence/user_mgt_test_run.webp)
+

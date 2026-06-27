@@ -25,10 +25,8 @@
 
 ## Actual result
 - Server trả về mã lỗi 404 với thông điệp: `{ "error": "User not found" }`.
-- **Nguyên nhân gốc rễ**: SQLite thực hiện so khớp chuỗi phân biệt chữ hoa/chữ thường theo mặc định đối với các so sánh bằng (`=`). Trong `backend/server.js:70`, câu lệnh SQL là:
-  `db.get("SELECT * FROM users WHERE email = ?", [email], ...)`
-  Do đó, khi so khớp `TEST@ESHOP.COM` với `test@eshop.com` trong cơ sở dữ liệu, kết quả trả về là rỗng. Server báo lỗi không tìm thấy người dùng.
-  Để sửa lỗi này, nên chuẩn hóa email về dạng chữ thường (`email.toLowerCase()`) trước khi truy vấn hoặc đăng ký, hoặc dùng từ khóa `COLLATE NOCASE` trong định nghĩa bảng/câu lệnh SQL.
+- **Nguyên nhân**: Hệ thống thực hiện kiểm tra so khớp email có phân biệt chữ hoa/chữ thường (case-sensitive) khi truy vấn tài khoản để gửi OTP. Do đó, email nhập dạng chữ hoa `TEST@ESHOP.COM` không khớp được với email đã lưu trong cơ sở dữ liệu dưới dạng chữ thường `test@eshop.com`.
+
 
 ## Evidence
 - HTTP API Network Request & Response:
