@@ -1,20 +1,20 @@
 | Requirement | Test Case             | Result | Bug Issue | Status  |
 | ----------- | --------------------- | ------ | --------- | ------- |
-| FR-06       | TC-PRODUCT-DETAIL-001 |        |           | Not Run |
-| FR-06       | TC-PRODUCT-DETAIL-002 |        |           | Not Run |
-| FR-06       | TC-PRODUCT-DETAIL-003 |        |           | Not Run |
-| FR-06       | TC-PRODUCT-DETAIL-004 |        |           | Not Run |
-| FR-06       | TC-PRODUCT-DETAIL-005 |        |           | Not Run |
-| FR-06       | TC-PRODUCT-DETAIL-006 |        |           | Not Run |
-| FR-06       | TC-PRODUCT-DETAIL-007 |        |           | Not Run |
-| FR-06       | TC-PRODUCT-DETAIL-008 |        |           | Not Run |
-| FR-06       | TC-PRODUCT-DETAIL-009 |        |           | Not Run |
-| FR-06       | TC-PRODUCT-DETAIL-010 |        |           | Not Run |
-| FR-06       | TC-PRODUCT-DETAIL-011 |        |           | Not Run |
-| FR-08       | TC-PRODUCT-DETAIL-012 |        |           | Not Run |
-| FR-23       | TC-PRODUCT-DETAIL-013 |        |           | Not Run |
-| FR-24       | TC-PRODUCT-DETAIL-014 |        |           | Not Run |
-| FR-21       | TC-PRODUCT-DETAIL-015 |        |           | Not Run |
+| FR-06       | TC-PRODUCT-DETAIL-001 | Fail   | BUG-01    | Run     |
+| FR-06       | TC-PRODUCT-DETAIL-002 | Pass   |           | Run     |
+| FR-06       | TC-PRODUCT-DETAIL-003 | Pass   |           | Run     |
+| FR-06       | TC-PRODUCT-DETAIL-004 | Fail   | BUG-02    | Run     |
+| FR-06       | TC-PRODUCT-DETAIL-005 | Pass   |           | Run     |
+| FR-06       | TC-PRODUCT-DETAIL-006 | Pass   |           | Run     |
+| FR-06       | TC-PRODUCT-DETAIL-007 | Fail   | BUG-03    | Run     |
+| FR-06       | TC-PRODUCT-DETAIL-008 | Pass   |           | Run     |
+| FR-06       | TC-PRODUCT-DETAIL-009 | Pass   |           | Run     |
+| FR-06       | TC-PRODUCT-DETAIL-010 | Pass   |           | Run     |
+| FR-06       | TC-PRODUCT-DETAIL-011 | Pass   |           | Run     |
+| FR-08       | TC-PRODUCT-DETAIL-012 | Fail   | BUG-04    | Run     |
+| FR-23       | TC-PRODUCT-DETAIL-013 | Fail   | BUG-05    | Run     |
+| FR-24       | TC-PRODUCT-DETAIL-014 | Pass   |           | Run     |
+| FR-21       | TC-PRODUCT-DETAIL-015 | Pass   |           | Run     |
 | FR-09       | TC-COUPON-001         |        |           | Not Run |
 | FR-09       | TC-COUPON-002         |        |           | Not Run |
 | FR-09       | TC-COUPON-003         |        |           | Not Run |
