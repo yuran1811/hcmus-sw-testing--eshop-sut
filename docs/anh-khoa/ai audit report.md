@@ -398,3 +398,93 @@
   > **File:** `tests/test-cases/cart/TC-CART-010.md` — Bấm "Tiếp tục mua sắm" → điều hướng về trang chủ.
   >
   > _(Mỗi file 002–010 tuân theo đúng template Preconditions / Test Data / Test Steps / Expected Result như TC-CART-001; ở đây tóm tắt phần khác biệt cốt lõi để tránh lặp.)_
+
+---
+
+**AI Audit Report Item**
+
+- **Công cụ AI:** Claude Code (Opus 4.8)
+- **Thời gian:** 2026-06-27 10:08:55
+- **Nội dung prompt:**
+  > Sử dụng skill @.agents/skills/domain-testing/SKILL.md để thiết kế test case cho tính năng FR-15 Quản lý Sản phẩm
+  >
+  > Sử dụng phân tích yêu cầu từ @docs/anh-khoa/feature-specs/FR-15 Quản lý Sản phẩm.md
+  >
+  > Sau khi hoàn thành, dùng skill @.agents/skills/ai-audit-logger/SKILL.md để lưu lại lịch sử nhé
+- **AI output:**
+
+  > ## 1. Giải thích cách áp dụng kỹ thuật
+  >
+  > Áp dụng Domain Testing cho FR-15, tôi phân tích 3 trường nhập liệu của form Thêm/Sửa sản phẩm — Tên sản phẩm, Giá, Danh mục — cùng một biến trạng thái xuyên suốt là Quyền truy cập (Authorization). Mỗi biến được chia VEC/IEC dựa trên cả giới hạn kiểu dữ liệu (rỗng/null, độ dài cực biên, giá trị không phải số) lẫn ràng buộc nghiệp vụ. Tôi chú trọng phân tích biên: Tên có biên trên 255 (hợp lệ) / 256 (không hợp lệ) và biên dưới 1 ký tự (hợp lệ) / rỗng (không hợp lệ); Giá có biên 0 (không hợp lệ) so với giá trị dương nhỏ nhất (hợp lệ), kèm các IEC số âm, rỗng và không-phải-số.
+  >
+  > Về ràng buộc liên biến: Quyền truy cập đóng vai trò "cổng" — mọi thao tác Thêm/Sửa/Xóa chỉ thực hiện được khi JWT hợp lệ và `role = 'admin'` (FR-12, SEC-03). Vì vậy khi kiểm IEC của từng trường nhập liệu, tôi luôn đặt actor = Admin hợp lệ để lỗi quy đúng về trường đang kiểm; ngược lại, khi kiểm IEC của Quyền, tôi đặt mọi trường ở giá trị hợp lệ để cô lập lỗi phân quyền — đúng Single Fault Assumption. Các VEC được gộp vào ca tạo thành công (TC-PRODUCT-001) và các ca biên hợp lệ (002–004); mỗi IEC kiểm riêng lẻ (005–014); riêng TC-PRODUCT-015 kiểm bất biến nghiệp vụ "Sửa chỉ ảnh hưởng đúng sản phẩm đó".
+  >
+  > ## 2. Bảng phân lớp tương đương (Partition)
+  >
+  > | Variable              | Valid Classes                                               | Invalid Classes                                               |
+  > | --------------------- | ----------------------------------------------------------- | ------------------------------------------------------------- |
+  > | Tên sản phẩm          | V: chuỗi 1–255 ký tự (biên: 1 và 255)                       | I1: rỗng (0 ký tự) · I2: > 255 ký tự (256)                    |
+  > | Giá                   | V: số dương `> 0` (biên dưới: giá trị dương nhỏ nhất, vd 1) | I3: `= 0` · I4: số âm (`< 0`) · I5: rỗng · I6: không phải số  |
+  > | Danh mục              | V: `category_id` tồn tại trong hệ thống                     | I7: không chọn (rỗng) · I8: `category_id` không tồn tại       |
+  > | Quyền (Authorization) | V: JWT hợp lệ + `role = 'admin'`                            | I9: không có token · I10: token hợp lệ nhưng `role ≠ 'admin'` |
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-001.md`
+  >
+  > ```markdown
+  > # TC-PRODUCT-001: Admin thêm sản phẩm với dữ liệu hợp lệ → tạo thành công
+  >
+  > **Requirement ID:** FR-15
+  > **Test Type:** Domain Testing
+  >
+  > ### 1. Preconditions
+  >
+  > - Đã đăng nhập bằng tài khoản Admin (JWT hợp lệ, `role = 'admin'`).
+  > - Tồn tại sẵn danh mục hợp lệ "Thời trang" trong hệ thống.
+  >
+  > ### 2. Test Data (Inputs)
+  >
+  > - Tên sản phẩm: `Áo thun nam` (hợp lệ, 1–255 ký tự)
+  > - Giá: `150000` (số dương)
+  > - Danh mục: `Thời trang` (tồn tại)
+  >
+  > ### 3. Test Steps
+  >
+  > 1. Mở màn hình Thêm sản phẩm (Web Admin).
+  > 2. Nhập Tên, Giá và chọn Danh mục theo Test Data.
+  > 3. Bấm "Lưu".
+  >
+  > ### 4. Expected Result
+  >
+  > - Sản phẩm mới được tạo thành công.
+  > - Sản phẩm xuất hiện trong danh sách sản phẩm với đúng Tên, Giá, Danh mục đã nhập.
+  > ```
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-002.md` — (VEC biên) Tên đúng 255 ký tự (biên trên), Giá/Danh mục hợp lệ, Admin → tạo thành công.
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-003.md` — (VEC biên) Tên 1 ký tự (biên dưới), còn lại hợp lệ → tạo thành công.
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-004.md` — (VEC biên) Giá = 1 (số dương nhỏ nhất, ngay trên biên 0), còn lại hợp lệ → tạo thành công.
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-005.md` — (IEC) Tên để trống → lỗi "Tên sản phẩm là bắt buộc", không lưu.
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-006.md` — (IEC biên) Tên 256 ký tự (>255) → lỗi validate độ dài, không lưu.
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-007.md` — (IEC biên) Giá = 0 → lỗi "Giá phải là số dương", không lưu.
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-008.md` — (IEC) Giá = -1000 (âm) → lỗi "Giá phải là số dương", không lưu.
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-009.md` — (IEC) Giá để trống → lỗi "Giá là bắt buộc", không lưu.
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-010.md` — (IEC kiểu dữ liệu) Giá = `abc` (không phải số) → lỗi định dạng Giá, không lưu.
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-011.md` — (IEC) Không chọn Danh mục → lỗi "Danh mục là bắt buộc", không lưu.
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-012.md` — (IEC) `category_id = 999999` không tồn tại → lỗi "Danh mục không hợp lệ", không lưu.
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-013.md` — (IEC quyền) Không có token (mọi trường hợp lệ) → `401 Unauthorized`, không tạo sản phẩm.
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-014.md` — (IEC quyền) Token hợp lệ nhưng `role = 'user'` → `403 Forbidden`, không tạo sản phẩm.
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-015.md` — (Bất biến nghiệp vụ) Sửa "Sản phẩm X" với dữ liệu hợp lệ → chỉ X được cập nhật; "Sản phẩm Y" và các sản phẩm khác giữ nguyên.
+  >
+  > _(Mỗi file 002–015 tuân theo đúng template Preconditions / Test Data / Test Steps / Expected Result như TC-PRODUCT-001; ở đây tóm tắt phần khác biệt cốt lõi để tránh lặp.)_
