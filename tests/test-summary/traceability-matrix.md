@@ -11,6 +11,10 @@
 | FR-06       | TC-PRODUCT-DETAIL-009 |        |           | Not Run |
 | FR-06       | TC-PRODUCT-DETAIL-010 |        |           | Not Run |
 | FR-06       | TC-PRODUCT-DETAIL-011 |        |           | Not Run |
+| FR-08       | TC-PRODUCT-DETAIL-012 |        |           | Not Run |
+| FR-23       | TC-PRODUCT-DETAIL-013 |        |           | Not Run |
+| FR-24       | TC-PRODUCT-DETAIL-014 |        |           | Not Run |
+| FR-21       | TC-PRODUCT-DETAIL-015 |        |           | Not Run |
 | FR-09       | TC-COUPON-001         |        |           | Not Run |
 | FR-09       | TC-COUPON-002         |        |           | Not Run |
 | FR-09       | TC-COUPON-003         |        |           | Not Run |
