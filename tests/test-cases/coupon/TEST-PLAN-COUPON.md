@@ -101,6 +101,9 @@ Endpoint `POST /api/apply-coupon` theo api_specification.md (5.1) truyền `user
 | TC-COUPON-013 | BVA            | SAVE10, total=300,001 (IN, vừa trên ngưỡng SAVE10) → được chấp nhận                                    | Not Run |
 | TC-COUPON-014 | BVA            | BIGBUY, total=499,999 (OFF, dưới ngưỡng BIGBUY min=500,000) → bị từ chối                               | Not Run |
 | TC-COUPON-015 | BVA            | BIGBUY, total=500,001 (IN, vừa trên ngưỡng BIGBUY) → được chấp nhận                                    | Not Run |
+| TC-COUPON-016 | GUI            | Nhất quán đơn vị tiền: hiển thị số tiền giảm và tổng tiền có ký hiệu ₫ và phân cách hàng nghìn (FR-21) | Not Run |
+| TC-COUPON-017 | GUI            | Nhất quán ngôn ngữ: thông báo thành công/lỗi hiển thị bằng tiếng Việt rõ ràng (FR-21)                  | Not Run |
+| TC-COUPON-018 | Security / GUI | Bảo mật hiển thị: mã giảm giá nhập vào được hiển thị an toàn, không render HTML (SEC-04 / FR-21)       | Not Run |
 
 ## Entry / Exit Criteria
 

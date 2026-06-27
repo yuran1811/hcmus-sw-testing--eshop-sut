@@ -30,9 +30,9 @@
 | FR-09       | TC-COUPON-013         |        |           | Not Run |
 | FR-09       | TC-COUPON-014         |        |           | Not Run |
 | FR-09       | TC-COUPON-015         |        |           | Not Run |
-| FR-09       | TC-COUPON-016         |        |           | Not Run |
-| FR-09       | TC-COUPON-017         |        |           | Not Run |
-| FR-09       | TC-COUPON-018         |        |           | Not Run |
+| FR-21       | TC-COUPON-016         |        |           | Not Run |
+| FR-21       | TC-COUPON-017         |        |           | Not Run |
+| FR-21       | TC-COUPON-018         |        |           | Not Run |
 | FR-17       | TC-COUPON-ADMIN-001   |        |           | Not Run |
 | FR-17       | TC-COUPON-ADMIN-002   |        |           | Not Run |
 | FR-17       | TC-COUPON-ADMIN-003   |        |           | Not Run |
