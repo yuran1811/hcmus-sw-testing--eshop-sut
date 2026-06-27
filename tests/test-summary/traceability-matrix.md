@@ -1,3 +1,57 @@
-| Requirement | Test Case | Result | Bug Issue | Status |
-| ----------- | --------- | ------ | --------- | ------ |
-|             |           |        |           |        |
+| Requirement | Test Case             | Result | Bug Issue | Status  |
+| ----------- | --------------------- | ------ | --------- | ------- |
+| FR-06       | TC-PRODUCT-DETAIL-001 |        |           | Not Run |
+| FR-06       | TC-PRODUCT-DETAIL-002 |        |           | Not Run |
+| FR-06       | TC-PRODUCT-DETAIL-003 |        |           | Not Run |
+| FR-06       | TC-PRODUCT-DETAIL-004 |        |           | Not Run |
+| FR-06       | TC-PRODUCT-DETAIL-005 |        |           | Not Run |
+| FR-06       | TC-PRODUCT-DETAIL-006 |        |           | Not Run |
+| FR-06       | TC-PRODUCT-DETAIL-007 |        |           | Not Run |
+| FR-06       | TC-PRODUCT-DETAIL-008 |        |           | Not Run |
+| FR-06       | TC-PRODUCT-DETAIL-009 |        |           | Not Run |
+| FR-06       | TC-PRODUCT-DETAIL-010 |        |           | Not Run |
+| FR-06       | TC-PRODUCT-DETAIL-011 |        |           | Not Run |
+| FR-09       | TC-COUPON-001         |        |           | Not Run |
+| FR-09       | TC-COUPON-002         |        |           | Not Run |
+| FR-09       | TC-COUPON-003         |        |           | Not Run |
+| FR-09       | TC-COUPON-004         |        |           | Not Run |
+| FR-09       | TC-COUPON-005         |        |           | Not Run |
+| FR-09       | TC-COUPON-006         |        |           | Not Run |
+| FR-09       | TC-COUPON-007         |        |           | Not Run |
+| FR-09       | TC-COUPON-008         |        |           | Not Run |
+| FR-09       | TC-COUPON-009         |        |           | Not Run |
+| FR-09       | TC-COUPON-010         |        |           | Not Run |
+| FR-09       | TC-COUPON-011         |        |           | Not Run |
+| FR-09       | TC-COUPON-012         |        |           | Not Run |
+| FR-09       | TC-COUPON-013         |        |           | Not Run |
+| FR-09       | TC-COUPON-014         |        |           | Not Run |
+| FR-09       | TC-COUPON-015         |        |           | Not Run |
+| FR-09       | TC-COUPON-016         |        |           | Not Run |
+| FR-09       | TC-COUPON-017         |        |           | Not Run |
+| FR-09       | TC-COUPON-018         |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-001   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-002   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-003   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-004   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-005   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-006   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-007   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-008   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-009   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-010   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-011   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-012   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-013   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-014   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-015   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-016   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-017   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-018   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-019   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-020   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-021   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-022   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-023   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-024   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-025   |        |           | Not Run |
+| FR-17       | TC-COUPON-ADMIN-026   |        |           | Not Run |
