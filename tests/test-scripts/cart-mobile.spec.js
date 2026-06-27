@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const sqlite3 = require('../backend/node_modules/sqlite3').verbose();
+const sqlite3 = require('../../backend/node_modules/sqlite3/lib/sqlite3').verbose();
 const path = require('path');
 const dbPath = path.resolve(__dirname, '../backend/database.sqlite');
 
