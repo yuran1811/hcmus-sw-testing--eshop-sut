@@ -488,3 +488,81 @@
   > **File:** `tests/test-cases/product/TC-PRODUCT-015.md` — (Bất biến nghiệp vụ) Sửa "Sản phẩm X" với dữ liệu hợp lệ → chỉ X được cập nhật; "Sản phẩm Y" và các sản phẩm khác giữ nguyên.
   >
   > _(Mỗi file 002–015 tuân theo đúng template Preconditions / Test Data / Test Steps / Expected Result như TC-PRODUCT-001; ở đây tóm tắt phần khác biệt cốt lõi để tránh lặp.)_
+
+---
+
+**AI Audit Report Item**
+
+- **Công cụ AI:** Claude Code (Opus 4.8)
+- **Thời gian:** 2026-06-27 10:43:36
+- **Nội dung prompt:**
+  > Sử dụng skill @.agents/skills/domain-testing/SKILL.md để thiết kế test case cho tính năng  FR-20 Đăng nhập trên mobile
+  >
+  > Sử dụng phân tích yêu cầu từ @docs/anh-khoa/feature-specs/FR-20 Đăng nhập trên mobile.md
+  >
+  > Sau khi hoàn thành, dùng skill @.agents/skills/ai-audit-logger/SKILL.md để lưu lại lịch sử nhé
+- **AI output:**
+
+  > ## 1. Giải thích cách áp dụng kỹ thuật
+  >
+  > Áp dụng Domain Testing cho FR-20, tôi xác định 2 biến nhập liệu — Email, Mật khẩu — và một biến trạng thái quan trọng là bộ đếm đăng nhập sai / trạng thái khóa tài khoản (kế thừa FR-02, quản lý tại backend dùng chung Web/Mobile). Email có VEC là "đúng định dạng + đã đăng ký", IEC gồm rỗng và sai định dạng; trường hợp "đúng định dạng nhưng chưa đăng ký" được xếp vào nhóm sai thông tin đăng nhập. Mật khẩu có VEC "đúng mật khẩu của tài khoản", IEC gồm rỗng và sai mật khẩu.
+  >
+  > Về ràng buộc liên biến: Email và Mật khẩu được đánh giá cùng nhau như một cặp thông tin đăng nhập — khi sai, hệ thống chỉ trả lỗi chung chung, không lộ trường nào sai (FR-02). Biến trạng thái khóa là cổng phủ quyết: khi tài khoản đang khóa, đăng nhập bị từ chối bất kể Email/Mật khẩu đúng hay sai. Tôi chú trọng phân tích biên của state machine: bộ đếm tăng đúng 1 mỗi lần sai; biên là 2 lần sai (chưa khóa) so với 3 lần sai liên tiếp (kích hoạt khóa 30 giây), và biên thời gian khóa (sau 30 giây hết khóa). Áp dụng Single Fault Assumption: khi kiểm IEC một trường, trường còn lại và trạng thái đều để hợp lệ; khi kiểm state machine, dùng đúng cặp thông tin đăng nhập để cô lập đúng hành vi khóa.
+  >
+  > ## 2. Bảng phân lớp tương đương (Partition)
+  >
+  > | Variable | Valid Classes | Invalid Classes |
+  > |---|---|---|
+  > | Email | V: đúng định dạng và đã đăng ký (vd `test@eshop.com`) | I1: rỗng · I2: sai định dạng · I3: đúng định dạng nhưng chưa đăng ký (→ sai thông tin đăng nhập) |
+  > | Mật khẩu | V: đúng mật khẩu của tài khoản | I4: rỗng · I5: sai mật khẩu |
+  > | Trạng thái khóa / bộ đếm sai | V: chưa khóa, bộ đếm `< 3` (biên dưới: 2 lần sai vẫn cho thử) | I6: bộ đếm `≥ 3` → tài khoản đang bị khóa 30 giây |
+  >
+  > **File:** `tests/test-cases/mobile_login/TC-MOBILE_LOGIN-001.md`
+  >
+  > ```markdown
+  > # TC-MOBILE_LOGIN-001: Đăng nhập thành công với thông tin hợp lệ
+  >
+  > **Requirement ID:** FR-20
+  > **Test Type:** Domain Testing
+  >
+  > ### 1. Preconditions
+  > - App Mobile đang ở màn hình Đăng nhập.
+  > - Tồn tại tài khoản hợp lệ `test@eshop.com` / `Test1234!` (tài khoản test mặc định theo README).
+  > - Tài khoản không bị khóa (bộ đếm sai = 0).
+  >
+  > ### 2. Test Data (Inputs)
+  > - Email: `test@eshop.com` (đúng định dạng, đã đăng ký)
+  > - Mật khẩu: `Test1234!` (đúng mật khẩu)
+  >
+  > ### 3. Test Steps
+  > 1. Mở màn hình Đăng nhập trên app.
+  > 2. Nhập Email và Mật khẩu hợp lệ.
+  > 3. Bấm "Đăng nhập".
+  >
+  > ### 4. Expected Result
+  > - Đăng nhập thành công; hệ thống trả về JWT Token và lưu phía client.
+  > - App chuyển vào màn hình chính.
+  > - Các request có xác thực sau đó gửi kèm header `Authorization: Bearer <token>`.
+  > ```
+  >
+  > **File:** `tests/test-cases/mobile_login/TC-MOBILE_LOGIN-002.md` — (IEC) Email để trống (mật khẩu hợp lệ) → lỗi "Email là trường bắt buộc", không gửi yêu cầu.
+  >
+  > **File:** `tests/test-cases/mobile_login/TC-MOBILE_LOGIN-003.md` — (IEC) Email sai định dạng (`test@`) → lỗi định dạng email (validate bằng logic ứng dụng).
+  >
+  > **File:** `tests/test-cases/mobile_login/TC-MOBILE_LOGIN-004.md` — (IEC) Mật khẩu để trống (email hợp lệ) → lỗi "Mật khẩu là trường bắt buộc", không gửi yêu cầu.
+  >
+  > **File:** `tests/test-cases/mobile_login/TC-MOBILE_LOGIN-005.md` — (IEC thông tin đăng nhập) Email đúng định dạng nhưng chưa đăng ký → lỗi đăng nhập chung chung (không lộ trường nào sai), bộ đếm sai +1.
+  >
+  > **File:** `tests/test-cases/mobile_login/TC-MOBILE_LOGIN-006.md` — (IEC thông tin đăng nhập) Email đã đăng ký + sai mật khẩu → lỗi đăng nhập chung chung, bộ đếm sai +1.
+  >
+  > **File:** `tests/test-cases/mobile_login/TC-MOBILE_LOGIN-007.md` — (State) Sai 1 lần → bộ đếm = 1 (tăng đúng 1 đơn vị, không nhảy vọt), chưa khóa.
+  >
+  > **File:** `tests/test-cases/mobile_login/TC-MOBILE_LOGIN-008.md` — (State biên dưới) Sai 2 lần liên tiếp → chưa khóa; lần thứ 3 nhập đúng → đăng nhập thành công, bộ đếm reset.
+  >
+  > **File:** `tests/test-cases/mobile_login/TC-MOBILE_LOGIN-009.md` — (State biên kích hoạt) Sai 3 lần liên tiếp → tài khoản bị khóa 30 giây, thông báo lỗi không lộ nguyên nhân.
+  >
+  > **File:** `tests/test-cases/mobile_login/TC-MOBILE_LOGIN-010.md` — (State phủ quyết) Đăng nhập khi đang khóa, dù nhập ĐÚNG Email/Mật khẩu → vẫn bị từ chối, thông báo phù hợp.
+  >
+  > **File:** `tests/test-cases/mobile_login/TC-MOBILE_LOGIN-011.md` — (State biên thời gian) Sau 30 giây hết khóa → đăng nhập đúng lại thành công, nhận JWT.
+  >
+  > _(Mỗi file 002–011 tuân theo đúng template Preconditions / Test Data / Test Steps / Expected Result như TC-MOBILE_LOGIN-001; ở đây tóm tắt phần khác biệt cốt lõi để tránh lặp.)_
