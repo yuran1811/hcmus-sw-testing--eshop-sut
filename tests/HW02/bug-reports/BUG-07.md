@@ -47,3 +47,25 @@ if (order.status !== "pending" && order.status !== "confirmed") {
 ## Impact
 
 User có thể hủy đơn hàng đang trên đường giao — gây confusion cho shipper, cần xử lý đơn hàng trả về bên ngoài hệ thống.
+
+## Screenshots
+
+**Web UI — đơn hàng đang ở trạng thái "Đang giao" (shipping), UI ẩn nút Hủy (đúng):**
+
+![Shipping Order Web UI](../playwright-tests/screenshots/FR10/BUG07-01-shipping-order-web.png)
+
+**Sau khi user gọi API trực tiếp `PUT /api/orders/:id/cancel` — đơn bị hủy thành công (sai):**
+
+![After Cancel via API](../playwright-tests/screenshots/FR10/BUG07-03-after-cancel.png)
+
+**API Response evidence:**
+```json
+{
+  "test": "BUG-07: User cancel shipping order",
+  "request": "PUT /api/orders/:id/cancel (with USER token)",
+  "expected": "HTTP 400 \"Cannot cancel shipped order\"",
+  "actual": "HTTP 200 — DB status now: canceled"
+}
+```
+
+*Playwright script: `playwright-tests/fr10-screenshots.spec.js` + `playwright-tests/mobile-order-history.spec.js` DT-MOB-13*

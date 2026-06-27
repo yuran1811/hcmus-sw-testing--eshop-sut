@@ -114,28 +114,44 @@
 
 ### Môi trường test
 - Backend: `http://localhost:3000`
-- Tool: curl / Postman / trình duyệt (http://localhost:5173)
+- Tool: **Playwright** (script: `playwright-tests/fr02-login.spec.js`)
+- Frontend: `http://localhost:5173`
 - Test account: `test@eshop.com` / `Test1234!`
+- Ngày thực thi: **2026-06-27**
 
 ### Kết quả
 
-| TC-ID | Status | Actual Result | Bug? |
-|-------|--------|---------------|------|
-| DT-FR02-01 | PASS | HTTP 200, JWT trả về đúng | — |
-| DT-FR02-02 | PASS | HTTP 200, role='admin' | — |
-| DT-FR02-03 | PASS | Login thành công sau khi hết lock | — |
-| DT-FR02-04 | PASS | Login OK, attempts=0 sau khi reset | — |
-| DT-FR02-05 | PASS | HTTP 401, "Invalid email or password" | — |
-| DT-FR02-06 | FAIL | HTTP 401 đúng, nhưng `login_attempts += 2` thay vì `+= 1` | **BUG-01** |
-| DT-FR02-07 | FAIL | Attempts tăng +2 mỗi lần → sau 2 lần sai đã bằng 4, lock sớm | **BUG-01** |
-| DT-FR02-08 | FAIL | Lock kích hoạt sau 2 lần sai (không phải 3) do bug +2; lockout 180s thay vì 30s | **BUG-01, BUG-02** |
-| DT-FR02-09 | PASS | HTTP 401, mật khẩu case-sensitive | — |
-| DT-FR02-10 | PASS | HTTP 403, thông báo khóa đúng | — |
-| DT-FR02-11 | PASS | HTTP 403, trả về thông báo khóa (không kiểm tra password khi locked) | — |
-| DT-FR02-12 | FAIL | Không có validation, trả về 401 thay vì lỗi validation rõ ràng | Minor |
-| DT-FR02-13 | FAIL | Không có validation cho password rỗng | Minor |
-| DT-FR02-14 | FAIL | Backend không validate format email; trường HTML input dùng type="text" | **BUG-04** |
-| DT-FR02-15 | PASS | Email với space không tìm thấy trong DB → HTTP 401 | — |
+| TC-ID | Status | Actual Result | Bug? | Screenshot |
+|-------|--------|---------------|------|-----------|
+| DT-FR02-01 | ✅ PASS | HTTP 200, JWT trả về đúng | — | `screenshots/FR02/DT-FR02-01-after-login.png` |
+| DT-FR02-02 | ✅ PASS | HTTP 200, role='admin' | — | — |
+| DT-FR02-03 | ✅ PASS | Login thành công sau khi hết lock | — | — |
+| DT-FR02-04 | ✅ PASS | Login OK, attempts=0 sau khi reset | — | — |
+| DT-FR02-05 | ✅ PASS | HTTP 401, "Invalid email or password" | — | — |
+| DT-FR02-06 | ❌ FAIL | HTTP 401 đúng, nhưng `login_attempts += 2` thay vì `+= 1` | **BUG-01** | `screenshots/FR02/DT-FR02-lockout-attempt-1.png` |
+| DT-FR02-07 | ❌ FAIL | Attempts tăng +2 mỗi lần → sau 2 lần sai đã bằng 4, lock sớm | **BUG-01** | `screenshots/FR02/DT-FR02-lockout-attempt-2.png` |
+| DT-FR02-08 | ❌ FAIL | Lock kích hoạt sau 2 lần sai (không phải 3); lockout 180s thay vì 30s | **BUG-01, BUG-02** | `screenshots/FR02/DT-FR02-10-locked-response.png` |
+| DT-FR02-09 | ✅ PASS | HTTP 401, mật khẩu case-sensitive | — | — |
+| DT-FR02-10 | ✅ PASS | HTTP 403, thông báo khóa đúng | — | `screenshots/FR02/DT-FR02-10-locked-response.png` |
+| DT-FR02-11 | ✅ PASS | HTTP 403, trả về thông báo khóa (không kiểm tra password khi locked) | — | — |
+| DT-FR02-12 | ❌ FAIL | Không có validation, trả về 401 thay vì lỗi validation rõ ràng | Minor | — |
+| DT-FR02-13 | ❌ FAIL | Không có validation cho password rỗng | Minor | — |
+| DT-FR02-14 | ❌ FAIL | Backend không validate format email; trường HTML input dùng type="text" | **BUG-04** | `screenshots/FR02/DT-FR02-email-input-type.png` |
+| DT-FR02-15 | ✅ PASS | Email với space không tìm thấy trong DB → HTTP 401 | — | — |
+
+### Key Screenshots
+
+**Login thành công (DT-FR02-01):**
+![Login Success](../playwright-tests/screenshots/FR02/DT-FR02-01-after-login.png)
+
+**Lần sai đầu tiên — attempts tăng lên 2 (BUG-01 — lần sai thứ 1, phải là 1 không phải 2):**
+![Lockout Attempt 1](../playwright-tests/screenshots/FR02/DT-FR02-lockout-attempt-1.png)
+
+**Tài khoản bị lock sau 2 lần sai (DT-FR02-10):**
+![Locked Response](../playwright-tests/screenshots/FR02/DT-FR02-10-locked-response.png)
+
+**Password hiển thị plaintext — BUG-03:**
+![Password Plaintext](../playwright-tests/screenshots/FR02/DT-FR02-password-input-type.png)
 
 ### Bugs phát hiện qua Domain Testing
 

@@ -47,3 +47,16 @@ if (order.status === "delivered" || order.status === "canceled") {
 ## Fix
 
 Xem BUG-07 — cùng root cause, fix ở backend sẽ resolve cả BUG-07 và BUG-11.
+
+## Screenshots
+
+**Web Order History — danh sách đơn hàng với nút Hủy (chỉ hiện cho pending/confirmed):**
+
+![Cancel Buttons](../playwright-tests/screenshots/Mobile/MOB-03-cancel-buttons.png)
+
+**Sau khi nhấn Hủy đơn pending (web) hoặc gọi API cancel shipping — cả 2 scenarios:**
+
+![After Cancel](../playwright-tests/screenshots/Mobile/MOB-04-after-cancel.png)
+
+*API Evidence: `PUT /api/orders/:id/cancel` với shipping order → HTTP 200 (sai spec)*
+*Playwright script: `playwright-tests/mobile-order-history.spec.js` — DT-MOB-13*

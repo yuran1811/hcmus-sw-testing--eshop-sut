@@ -1,0 +1,7 @@
+{
+  "test": "BUG-06: canceled → delivered",
+  "orderId": 58,
+  "request": "PUT /api/admin/orders/:id/status { status: \"delivered\" }",
+  "expected": "HTTP 400 Invalid transition",
+  "actual": "HTTP 200 — {\"message\":\"Order status updated\"}"
+}

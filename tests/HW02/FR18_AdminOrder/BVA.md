@@ -97,7 +97,25 @@
 
 ---
 
-## 4. AI Gap Analysis — BVA
+## 4. Screenshots từ Playwright
+
+**BVA Revenue — 2 đơn × 100,000₫ delivered → Dashboard hiện 400,000₫ (BUG-09):**
+
+![Revenue Doubled Dashboard](../playwright-tests/screenshots/FR18/FR18-A2-revenue.png)
+
+**BVA Shipping Address XSS — `<b>` tag render thành bold (BUG-08):**
+
+![XSS Bold Rendered](../playwright-tests/screenshots/FR18/FR18-B2-xss-orders.png)
+
+**Admin Orders tab (BVA — multiple orders display):**
+
+![Orders Tab BVA](../playwright-tests/screenshots/FR18/FR18-B3-order-buttons.png)
+
+*Playwright scripts: `playwright-tests/fr18-focused.spec.js`, `playwright-tests/fr18-admin-ui.spec.js`*
+
+---
+
+## 5. AI Gap Analysis — BVA
 
 **AI phát hiện được:**
 - Order ID boundary (0, âm, không tồn tại)

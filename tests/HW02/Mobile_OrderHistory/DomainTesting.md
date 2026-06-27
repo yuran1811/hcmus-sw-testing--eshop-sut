@@ -157,7 +157,25 @@
 
 ---
 
-## 7. AI Gap Analysis
+## 7. Screenshots từ Playwright
+
+**Web Order History (mobile viewport 390×844) — danh sách đơn hàng với status tiếng Việt:**
+![Mobile Order List](../playwright-tests/screenshots/Mobile/MOB-02-profile-orders.png)
+
+**Nút Hủy — chỉ hiển thị cho pending/confirmed (đúng theo UI):**
+![Cancel Buttons Visible](../playwright-tests/screenshots/Mobile/MOB-03-cancel-buttons.png)
+
+**Sau khi user gọi cancel API shipping order — (BUG-11) đơn bị hủy dù UI ẩn nút:**
+![After Cancel](../playwright-tests/screenshots/Mobile/MOB-04-after-cancel.png)
+
+**Final state sau các test:**
+![Final State](../playwright-tests/screenshots/Mobile/MOB-05-final-state.png)
+
+*Playwright script: `playwright-tests/mobile-order-history.spec.js` (mobile viewport: 390×844 iPhone 14 Pro)*
+
+---
+
+## 8. AI Gap Analysis
 
 **AI phát hiện được:**
 - Phân vùng auth (đăng nhập / chưa đăng nhập)
