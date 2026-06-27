@@ -121,7 +121,7 @@ Before finalising, confirm:
 - [ ] Every invalid partition for every variable has a test case
 - [ ] Every required field tested as empty
 - [ ] All state-based conditions (locked, duplicate, expired) covered
-- [ ] ON and OFF points included for every numeric/length constraint
+- [ ] ON, OFF, and OUT points tested for every numeric/length boundary
 
 ---
 
@@ -181,7 +181,7 @@ FR-XX
 
 ## Module / Test type / Technique
 
-[Module] / Functional / Domain Testing — EP
+[Module] / Functional / Domain Testing (EP + BVA)
 
 ## Preconditions
 
@@ -189,7 +189,7 @@ FR-XX
 
 ## Test Data
 
-| Trường  | Giá trị |
+| Field   | Value   |
 | ------- | ------- |
 | [field] | [value] |
 
@@ -246,13 +246,20 @@ Confirm Password: required string, must equal Password
 | EP-CP-2 | Confirm PW | Invalid | mismatch           | "Different1!"          |
 | EP-CP-3 | Confirm PW | Invalid | required, empty    | ""                     |
 
-### Step 4 — Boundary Points (Password length, min = 8)
+### Step 4 — Boundary Points (Password length, 8 ≤ length ≤ 64)
 
-| Point       | Value   | Expected |
-| ----------- | ------- | -------- |
-| OFF (below) | 7 chars | Invalid  |
-| ON (at min) | 8 chars | Valid    |
-| IN (above)  | 9 chars | Valid    |
+When a variable has both a minimum and maximum boundary, test all four points
+for each boundary. The IN point is shared between both boundaries.
+
+| Point           | Value     | Boundary | Expected |
+| --------------- | --------- | -------- | -------- |
+| OUT (far below) | 2 chars   | min      | Invalid  |
+| OFF (below min) | 7 chars   | min      | Invalid  |
+| ON (at min)     | 8 chars   | min      | Valid    |
+| IN (mid-range)  | 20 chars  | —        | Valid    |
+| ON (at max)     | 64 chars  | max      | Valid    |
+| OFF (above max) | 65 chars  | max      | Invalid  |
+| OUT (far above) | 100 chars | max      | Invalid  |
 
 ### Step 5 — Test Cases
 

@@ -17,6 +17,9 @@ defects cluster at boundaries (off-by-one errors, fence-post errors,
 threshold miscalculations). BVA forces tests at the exact boundary, one unit
 below, and one unit above — guaranteeing coverage of these high-risk zones.
 
+This skill applies **3-value BVA** (OFF, ON, IN per boundary), which is more
+thorough than the classic 2-value variant (ON + OFF only).
+
 ---
 
 ## Methodology (Step-by-Step)
@@ -27,8 +30,10 @@ Scan the requirement for every constraint that implies a numeric edge:
 
 | Signal in spec                 | Boundary type  | Example                                        |
 | ------------------------------ | -------------- | ---------------------------------------------- |
-| `≥ N` / `> N`                  | minimum        | password ≥ 8 chars → min = 8                   |
-| `≤ N` / `< N`                  | maximum        | name ≤ 255 chars → max = 255                   |
+| `≥ N`                          | closed minimum | password ≥ 8 chars → ON = 8 is **Accepted**    |
+| `> N`                          | open minimum   | quantity > 0 → ON = 0 is **Rejected**          |
+| `≤ N`                          | closed maximum | name ≤ 255 chars → ON = 255 is **Accepted**    |
+| `< N`                          | open maximum   | age < 18 → ON = 18 is **Rejected**             |
 | "after N attempts"             | threshold      | lock after 3 consecutive fails → threshold = 3 |
 | "expires after N seconds/days" | time threshold | unlock after 30 s → min-wait = 30              |
 | "must be ≥ 1"                  | minimum count  | special char count ≥ 1 → min = 1               |
@@ -52,7 +57,7 @@ For every identified boundary fill in this table:
 
 ### Step 3 — Generate Test Points per Boundary
 
-#### Minimum boundary (accepted when value ≥ min)
+#### Closed minimum boundary (accepted when value ≥ min)
 
 | Symbol  | Test value | Expected behaviour                 |
 | ------- | ---------- | ---------------------------------- |
@@ -60,7 +65,15 @@ For every identified boundary fill in this table:
 | **ON**  | min        | Accepted (exactly at minimum)      |
 | **IN**  | min + 1    | Accepted (just inside valid range) |
 
-#### Maximum boundary (accepted when value ≤ max)
+#### Open minimum boundary (accepted when value > min)
+
+| Symbol  | Test value | Expected behaviour                  |
+| ------- | ---------- | ----------------------------------- |
+| **OFF** | min − 1    | Rejected (below boundary)           |
+| **ON**  | min        | Rejected (boundary itself excluded) |
+| **IN**  | min + 1    | Accepted (just inside valid range)  |
+
+#### Closed maximum boundary (accepted when value ≤ max)
 
 | Symbol  | Test value | Expected behaviour                 |
 | ------- | ---------- | ---------------------------------- |
@@ -68,13 +81,24 @@ For every identified boundary fill in this table:
 | **ON**  | max        | Accepted (exactly at maximum)      |
 | **OFF** | max + 1    | Rejected (above maximum)           |
 
+#### Open maximum boundary (accepted when value < max)
+
+| Symbol  | Test value | Expected behaviour                  |
+| ------- | ---------- | ----------------------------------- |
+| **IN**  | max − 1    | Accepted (just inside valid range)  |
+| **ON**  | max        | Rejected (boundary itself excluded) |
+| **OFF** | max + 1    | Rejected (above boundary)           |
+
 #### Threshold boundary (behaviour changes at ≥ threshold)
 
-| Symbol    | Test value    | Expected behaviour        |
-| --------- | ------------- | ------------------------- |
-| **Below** | threshold − 1 | Behaviour NOT triggered   |
-| **ON**    | threshold     | Behaviour triggered       |
-| **Above** | threshold + 1 | Behaviour still triggered |
+A threshold boundary is structurally identical to a closed minimum boundary —
+apply the same OFF / ON / IN pattern.
+
+| Symbol  | Test value    | Expected behaviour        |
+| ------- | ------------- | ------------------------- |
+| **OFF** | threshold − 1 | Behaviour NOT triggered   |
+| **ON**  | threshold     | Behaviour triggered       |
+| **IN**  | threshold + 1 | Behaviour still triggered |
 
 ---
 
@@ -94,7 +118,7 @@ describe the setup steps that bring the system to the required state
 
 ### Step 5 — Coverage Checklist
 
-- [ ] Every boundary has at least 3 test points (OFF, ON, IN or equivalent)
+- [ ] Every boundary has OFF, ON, IN test points — for open boundaries verify ON is marked Rejected
 - [ ] Both sides of every boundary are tested
 - [ ] Cumulative/state boundaries describe the exact sequence to reach the state
 - [ ] Time-based boundaries include a waiting step with precise duration
@@ -138,6 +162,9 @@ FR-XX
 | ON (N)     | …          | Accepted |
 | IN (N+1)   | …          | Accepted |
 
+> **Max boundary:** reverse row order and swap Accepted ↔ Rejected
+> (IN = N−1 Accepted, ON = N Accepted, OFF = N+1 Rejected).
+
 _(repeat for each boundary)_
 
 ## Test Cases Summary
@@ -174,7 +201,7 @@ FR-XX
 
 ## Test Data
 
-| Trường  | Giá trị |
+| Field   | Value   |
 | ------- | ------- |
 | [field] | [value] |
 
@@ -206,11 +233,11 @@ B2: Lock duration → unlock after ≥ 30 seconds        (min-wait = 30, step = 
 
 **B1 — Failed attempts (threshold = 3):**
 
-| Point     | Attempts                 | Expected                          |
-| --------- | ------------------------ | --------------------------------- |
-| Below (2) | 2 consecutive failures   | Account NOT locked                |
-| ON (3)    | 3rd consecutive failure  | Account locked, 30 s timer starts |
-| Above (4) | 4th attempt while locked | Remains locked                    |
+| Point   | Attempts                 | Expected                          |
+| ------- | ------------------------ | --------------------------------- |
+| OFF (2) | 2 consecutive failures   | Account NOT locked                |
+| ON (3)  | 3rd consecutive failure  | Account locked, 30 s timer starts |
+| IN (4)  | 4th attempt while locked | Remains locked                    |
 
 **B2 — Lock duration (min-wait = 30 s):**
 
