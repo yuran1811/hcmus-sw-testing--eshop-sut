@@ -1665,6 +1665,7 @@ Các tài liệu kiểm thử cốt lõi trong repository đã được cập nh
 - **Description**: Thực thi toàn bộ 21 test case trong bộ ca kiểm thử quản lý người dùng bằng phương pháp Hybrid (Browser Subagent tự động hóa UI và chạy script Node.js kiểm thử API bảo mật/ràng buộc backend).
 
 ## 1. Prompt của người dùng
+
 ```text
 Please act as an automated QA test runner agent to execute the entire EShop "user-management" (FR-12) test suite (all 21 test cases from `tests/test-cases/user-management/`) by strictly applying the `test-runner` skill.
 
@@ -1691,7 +1692,9 @@ Please execute the following automated testing workflow:
 ```
 
 ## 2. Kết quả thực thi (Execution Results)
+
 Tóm tắt kết quả chạy bộ 21 ca kiểm thử cho module Quản lý người dùng:
+
 - **Tổng số ca kiểm thử**: 21
 - **Đạt (Passed)**: 11
 - **Lỗi (Failed)**: 10
@@ -1699,7 +1702,9 @@ Tóm tắt kết quả chạy bộ 21 ca kiểm thử cho module Quản lý ngư
 - **Tỷ lệ đạt**: 52.38% (11/21)
 
 ## 3. Các lỗi phát hiện & Dự thảo báo cáo (Bug Reports Drafted)
+
 Đã sinh ra 9 báo cáo lỗi dự thảo tại thư mục `tests/bug-reports/`:
+
 1. **[DRAFT-BUG-USER-MANAGEMENT-001.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-USER-MANAGEMENT-001.md)** (Minor / P2): Thiếu giao diện Empty State khi không có người dùng nào khác ngoài Admin trên trang Quản lý người dùng.
 2. **[DRAFT-BUG-USER-MANAGEMENT-002.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-USER-MANAGEMENT-002.md)** (Major / P1): Thiếu hộp thoại xác nhận (Confirmation Dialog) trước khi thực hiện hành động xóa tài khoản người dùng, xóa ngay lập tức khi nhấn.
 3. **[DRAFT-BUG-USER-MANAGEMENT-003.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-USER-MANAGEMENT-003.md)** (Major / P1): Nút xóa chính tài khoản Admin đang đăng nhập vẫn hiển thị và có thể bấm được trên UI (UI Self-Deletion).
@@ -1711,6 +1716,7 @@ Tóm tắt kết quả chạy bộ 21 ca kiểm thử cho module Quản lý ngư
 9. **[DRAFT-BUG-USER-MANAGEMENT-009.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-USER-MANAGEMENT-009.md)** (Minor / P2): Lỗi khả năng tiếp cận bằng bàn phím - Các menu điều hướng ở sidebar bị bỏ qua hoàn toàn trong Tab Order do sử dụng thẻ <li> không có thuộc tính tabindex.
 
 ## 4. Minh chứng thực tế (Evidence)
+
 - **Browser Video Record**: [user_mgt_test_run.webp](evidence/user_mgt_test_run.webp)
 - **Screenshot Login Page**: [login_page.png](evidence/login_page.png)
 - **Screenshot User List Page**: [user_list_page.png](evidence/user_list_page.png)
@@ -1718,6 +1724,7 @@ Tóm tắt kết quả chạy bộ 21 ca kiểm thử cho module Quản lý ngư
 - **Screenshot Tab Focus Out**: [tab_focus_1.png](evidence/tab_focus_1.png)
 
 ## 5. Đồng bộ hóa dữ liệu (Artifact Synchronization)
+
 - **Nhật ký thực thi**: [sprint-1-test-run.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-runs/sprint-1-test-run.md) đã được cập nhật kết quả và liên kết đến các file Bug Draft tương ứng cho cả 21 test case mới.
 - **Ma trận truy vết**: [traceability-matrix.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-summary/traceability-matrix.md) đã ánh xạ hoàn chỉnh các yêu cầu đến từng ca kiểm thử và trạng thái vòng đời lỗi (`Done`, `Open`).
 - **Phân tích khoảng trống**: [gap-analysis.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-summary/gap-analysis.md) đã được mở rộng để phân tích sâu các khoảng trống về phân quyền, khóa ngoại, accessibility và race conditions cho module quản lý người dùng.
@@ -1732,6 +1739,7 @@ Tóm tắt kết quả chạy bộ 21 ca kiểm thử cho module Quản lý ngư
 - **Description**: Thực thi toàn bộ 26 test case trong bộ ca kiểm thử thanh toán di động bằng phương pháp Hybrid (Browser Subagent tự động hóa UI trên web build của Metro server cổng 8081 và chạy script Node.js kiểm thử API bảo mật/ràng buộc backend).
 
 ## 1. Prompt của người dùng
+
 ```text
 Please act as an automated QA test runner agent to execute the entire EShop "mobile-checkout" (FR-20) test suite (all 26 test cases from `tests/test-cases/mobile-checkout/`) by strictly applying the `test-runner` skill.
 
@@ -1752,7 +1760,9 @@ Please execute the following automated testing workflow:
 ```
 
 ## 2. Kết quả thực thi (Execution Results)
+
 Tóm tắt kết quả chạy bộ 26 ca kiểm thử cho module Thanh toán di động:
+
 - **Tổng số ca kiểm thử**: 26
 - **Đạt (Passed)**: 16
 - **Lỗi (Failed)**: 10
@@ -1760,7 +1770,9 @@ Tóm tắt kết quả chạy bộ 26 ca kiểm thử cho module Thanh toán di 
 - **Tỷ lệ đạt**: 61.54% (16/26)
 
 ## 3. Các lỗi phát hiện & Dự thảo báo cáo (Bug Reports Drafted)
+
 Đã sinh ra 10 báo cáo lỗi dự thảo tại thư mục `tests/bug-reports/`:
+
 1. **[DRAFT-BUG-MOBILE-CHECKOUT-001.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-MOBILE-CHECKOUT-001.md)** (Major / P1): Mã giảm giá SAVE10 từ chối đơn hàng có giá trị đúng bằng ngưỡng tối thiểu 300.000 ₫.
 2. **[DRAFT-BUG-MOBILE-CHECKOUT-002.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-MOBILE-CHECKOUT-002.md)** (Critical / P0): Lỗ hổng bảo mật thay đổi tham số giá (Price Parameter Tampering) tại endpoint checkout.
 3. **[DRAFT-BUG-MOBILE-CHECKOUT-003.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-MOBILE-CHECKOUT-003.md)** (Critical / P0): Hệ thống tự động loại bỏ sản phẩm cuối cùng trong giỏ hàng (`slice(0, -1)`) khi nhấn xác nhận thanh toán.
@@ -1773,6 +1785,7 @@ Tóm tắt kết quả chạy bộ 26 ca kiểm thử cho module Thanh toán di 
 10. **[DRAFT-BUG-MOBILE-CHECKOUT-010.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/DRAFT-BUG-MOBILE-CHECKOUT-010.md)** (Minor / P2): Hiển thị thông báo lỗi bằng alert() thay vì nhãn văn bản ở phía trên nút đặt hàng khi xảy ra lỗi kết nối mạng.
 
 ## 4. Minh chứng thực tế (Evidence)
+
 - **Browser Video Record**: [mobile_checkout_run.webp](evidence/mobile_checkout_run.webp)
 - **Screenshot Mobile Homepage**: [mobile_homepage.png](evidence/mobile_homepage.png)
 - **Screenshot Mobile Login**: [mobile_login_before_typing.png](evidence/mobile_login_before_typing.png)
@@ -1784,8 +1797,138 @@ Tóm tắt kết quả chạy bộ 26 ca kiểm thử cho module Thanh toán di 
 - **Screenshot Order Cancelled immediately**: [mobile_order_cancelled_immediately.png](evidence/mobile_order_cancelled_immediately.png)
 
 ## 5. Đồng bộ hóa dữ liệu (Artifact Synchronization)
+
 - **Nhật ký thực thi**: [sprint-1-test-run.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-runs/sprint-1-test-run.md) đã được cập nhật kết quả và liên kết đến các file Bug Draft tương ứng cho cả 26 test case mới.
 - **Ma trận truy vết**: [traceability-matrix.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-summary/traceability-matrix.md) đã ánh xạ hoàn chỉnh các yêu cầu FR-20, FR-08, FR-09, FR-21, FR-22, FR-23, FR-24 đến từng ca kiểm thử và trạng thái vòng đời lỗi (`Done`, `Open`).
 - **Phân tích khoảng trống**: [gap-analysis.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-summary/gap-analysis.md) đã được mở rộng để phân tích sâu các khoảng trống về tính bảo mật thanh toán, lỗi tính toán mã phần trăm, giỏ hàng mồ côi và thiếu dialog xác nhận cho module thanh toán di động.
 
+---
 
+## Entry 21 – Generating Test Summary Report & Appendix A README
+
+### AI Audit Log
+
+- **Name of AI tool**: Antigravity (Gemini 3.5 Flash)
+- **Date and time**: 2026-06-27 20:12:00 +07:00
+- **Prompt**:
+
+  ```text
+  Đây là **Prompt mới** được tối ưu hóa theo yêu cầu của bạn: loại bỏ việc đọc các tệp tin trong thư mục `Appendix_A` để tiết kiệm thời gian, tập trung hoàn toàn vào việc tạo/ghi đè hai file markdown mục tiêu bằng các số liệu tĩnh chính xác và bảng tự đánh giá theo ảnh mẫu.
+  ```
+
+---
+
+### 📋 COPY NỘI DUNG PROMPT DƯỚI ĐÂY:
+
+```markdown
+You are an expert QA and software testing agent. We are working on a Software Testing homework project (HW02 - Domain Testing on EShop).
+
+I need you to create/overwrite two markdown files in the repository:
+
+1. The submission README file: `d:\Project\Testing\hcmus-sw-testing--eshop-sut\Appendix_A\README.md` (Do not read the other files in the Appendix_A directory. Just overwrite this file with our clean submission content).
+2. A new test summary report file: `d:\Project\Testing\hcmus-sw-testing--eshop-sut\tests\test-summary\test_summary_report.md`
+
+### Context & Statistics:
+
+We have completed designing and executing test cases for 4 features:
+
+- **Feature A (FR-03)**: Forgot Password & Password Reset (2 steps)
+- **Feature B (FR-11)**: Order History View (User)
+- **Feature C (FR-19)**: User Management (Admin)
+- **Feature D (Pool D)**: Mobile App Checkout
+
+Execution results:
+
+- **Total Test Cases**: 105 (all are tested/executed, none are skipped or not yet tested)
+- **Passed**: 45
+- **Failed**: 58
+- **Blocked**: 2
+- **Skipped**: 0
+- **Not Yet Tested**: 0
+- **Total Bugs Discovered**: 37 bugs
+
+Breakdown of Test Cases by Requirement:
+
+- **Forgot Password (FR-03)**: Total=31, Tested=31, Passed=5, Failed=24, Blocked=2, Skipped=0, Not Yet Tested=0.
+- **Order History (FR-11)**: Total=27, Tested=27, Passed=13, Failed=14, Blocked=0, Skipped=0, Not Yet Tested=0.
+- **User Management (FR-19)**: Total=21, Tested=21, Passed=11, Failed=10, Blocked=0, Skipped=0, Not Yet Tested=0.
+- **Mobile Checkout (FR-20)**: Total=26, Tested=26, Passed=16, Failed=10, Blocked=0, Skipped=0, Not Yet Tested=0.
+
+### Calculation Formulas:
+
+- **Test Coverage**: Tested Requirements / Total Requirements = 4 / 4 = 100% (or Tested TCs / Total TCs = 105 / 105 = 100%)
+- **Successful Test Coverage**: Passed TCs / Total TCs = 45 / 105 = 42.86% (rounded to 43%)
+
+---
+
+### Task 1: Create `tests/test-summary/test_summary_report.md`
+
+Create this file and format the test summary report as a markdown table mimicking the spreadsheet layout:
+
+- **Header Metadata**:
+  - **Project Name**: EShop SUT - HW02 Domain Testing
+  - **Creator**: [Student Name / ID]
+  - **Reviewer**: Dr. Lam Quang Vu / Dr. Tran Duy Hoang / TAs
+  - **Approver**: TAs
+  - **Date**: 2026/06/27
+  - **Test Coverage**: 100%
+  - **Successful Test Coverage**: 43%
+- **Table Columns**:
+  - `No`, `Requirement ID`, `Requirement name`, `Tested`, `Passed`, `Failed`, `Blocked`, `Skipped`, `Not Yet Tested`, `Total`, `Tested Coverage`
+- **Table Rows**:
+  1. `No: 1`, `Requirement ID: FR-03`, `Requirement name: Forgot Password`, `Tested: 31`, `Passed: 5`, `Failed: 24`, `Blocked: 2`, `Skipped: 0`, `Not Yet Tested: 0`, `Total: 31`, `Tested Coverage: 100%`
+  2. `No: 2`, `Requirement ID: FR-11`, `Requirement name: Order History View`, `Tested: 27`, `Passed: 13`, `Failed: 14`, `Blocked: 0`, `Skipped: 0`, `Not Yet Tested: 0`, `Total: 27`, `Tested Coverage: 100%`
+  3. `No: 3`, `Requirement ID: FR-19`, `Requirement name: User Management`, `Tested: 21`, `Passed: 11`, `Failed: 10`, `Blocked: 0`, `Skipped: 0`, `Not Yet Tested: 0`, `Total: 21`, `Tested Coverage: 100%`
+  4. `No: 4`, `Requirement ID: FR-20`, `Requirement name: Mobile Checkout`, `Tested: 26`, `Passed: 16`, `Failed: 10`, `Blocked: 0`, `Skipped: 0`, `Not Yet Tested: 0`, `Total: 26`, `Tested Coverage: 100%`
+  5. `Total row`: `Tested: 105`, `Passed: 45`, `Failed: 58`, `Blocked: 2`, `Skipped: 0`, `Not Yet Tested: 0`, `Total: 105`, `Tested Coverage: 100%`
+
+---
+
+### Task 2: Create/Update `Appendix_A/README.md`
+
+Overwrite the file at `Appendix_A/README.md` (setting `Overwrite: true`) to serve as our submission landing page. Write the following content directly:
+
+1.  **Project Information**: Title, Course (Software Testing HW02 - Domain Testing), Student name, Student ID, and Class.
+2.  **Self-Assessment Table** (following the exact template: No., Criteria, Grade, Self-Assessed Grade):
+    - `No: 1`, `Criteria: Feature A (Domain + Boundary)`, `Grade: 25`, `Self-Assessed Grade: 25` (Note: Forgot Password FR-03 fully designed and verified with BVA/EP justification).
+    - `No: 2`, `Criteria: Feature B (Domain + Boundary)`, `Grade: 25`, `Self-Assessed Grade: 25` (Note: Order History FR-11 fully designed and BVA defined).
+    - `No: 3`, `Criteria: Feature C (Domain + Boundary)`, `Grade: 25`, `Self-Assessed Grade: 25` (Note: User Management FR-19 fully designed with test case reduction).
+    - `No: 4`, `Criteria: Feature D (Mobile, Domain + Boundary)`, `Grade: 15`, `Self-Assessed Grade: 15` (Note: Mobile Checkout Pool D verified).
+    - `No: 5`, `Criteria: Agent Skills`, `Grade: 10`, `Self-Assessed Grade: 10` (Note: Automated skills created in `.agents/`).
+    - `Total: 100` -> `Self-Assessed Grade: 100`
+3.  **Test Summary Report**: Embed the calculated stats and the summary table from Task 1 directly here.
+4.  **Bugs Found List**: Briefly summarize the 37 bug reports (link to `tests/bug-reports/` folder) and link to the GitHub Issues screenshots that have been staged:
+    - [GitHub Issues Overview](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/evidence/github_issues_overview.png)
+    - [GitHub Issue Detail example 1](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/evidence/github_issue_detail_30_1.png)
+    - [GitHub Issue Detail example 2](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/tests/bug-reports/evidence/github_issue_detail_4_1.png)
+5.  **Demo Videos (Placeholder links)**: Use placeholders for the video links (e.g. YouTube placeholders) showing how the skills were used.
+
+Please generate and write these two files now.
+```
+
+````
+
+- **Output**:
+
+```text
+I have successfully created and overwritten the two target markdown files with the requested precise statistics, layout matching your spreadsheet/assessment mockups, and structured links/images.
+````
+
+Summary of Changes:
+Created tests/test-summary/test_summary_report.md:
+
+Styled using custom HTML/Markdown to perfectly mimic your spreadsheet mockups.
+Contains Project metadata: Project Name, Creator, Reviewer, Approver, Date, and Test Coverage stats.
+Features the complete tabular breakdown for all 4 features: Forgot Password (FR-03), Order History View (FR-11), User Management (FR-19), and Mobile Checkout (FR-20).
+Overwrote Appendix_A/README.md:
+
+Acts as the project submission landing page containing project and course metadata.
+Includes the Self-Assessment Table structured using clean CSS-styled cells for high visual fidelity.
+Includes the complete Test Summary Report statistics and tabular details.
+Summarizes the 37 discovered bugs grouped by feature/module.
+Embeds direct links to the bug reports folder and shows the GitHub Issues screenshots staged in tests/bug-reports/evidence/.
+Incorporates placeholder links for demo videos showing custom agent skill automation.
+
+```
+
+```
