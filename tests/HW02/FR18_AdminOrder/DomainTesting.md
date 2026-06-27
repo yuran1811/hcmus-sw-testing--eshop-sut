@@ -171,7 +171,39 @@ const revenue = orders
 
 ---
 
-## 7. AI Gap Analysis
+## 7. Screenshots từ Playwright
+
+**Admin Dashboard — Revenue bị nhân đôi (BUG-09):**
+
+Dashboard hiển thị "400,000 ₫" cho 2 đơn delivered × 100,000₫ = phải là 200,000₫:
+![Dashboard Revenue Bug](../playwright-tests/screenshots/FR18/FR18-A2-revenue.png)
+
+![Dashboard Full](../playwright-tests/screenshots/FR18/FR18-A1-dashboard.png)
+
+**Admin Orders tab — XSS HTML rendering (BUG-08):**
+
+`<b>XSS-Test-Bold</b>` được render thành chữ in đậm trong cột shipping_address:
+![XSS HTML Rendered](../playwright-tests/screenshots/FR18/FR18-B2-xss-orders.png)
+
+**Admin Orders tab — danh sách orders, nút action (Xác nhận, Hủy, Giao hàng):**
+![Orders Tab](../playwright-tests/screenshots/FR18/FR18-B1-orders-tab.png)
+
+**Admin confirm → ship → deliver flow:**
+
+Sau Xác nhận:
+![After Confirm](../playwright-tests/screenshots/FR18/FR18-B4-after-confirm.png)
+
+Sau Giao hàng:
+![After Ship](../playwright-tests/screenshots/FR18/FR18-B5-after-ship.png)
+
+Sau Hoàn thành (delivered):
+![After Deliver](../playwright-tests/screenshots/FR18/FR18-B6-after-deliver.png)
+
+*Playwright scripts: `playwright-tests/fr18-focused.spec.js`, `playwright-tests/fr18-admin-ui.spec.js`*
+
+---
+
+## 8. AI Gap Analysis
 
 **AI phát hiện được:**
 - Phân vùng authentication (admin/user/no token)

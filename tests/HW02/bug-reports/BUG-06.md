@@ -47,3 +47,25 @@ if (currentStatus === "canceled" && status === "delivered")
 ```
 canceled ──X──► (bất kỳ trạng thái nào)  // BLOCKED
 ```
+
+## Screenshots
+
+**Admin panel — đơn hàng ở trạng thái "Đã hủy" trước khi gọi API:**
+
+![Canceled Order Admin](../playwright-tests/screenshots/FR10/BUG06-01-canceled-order-admin.png)
+
+**Sau khi gọi `PUT /api/admin/orders/:id/status { "status": "delivered" }` (HTTP 200) — trạng thái chuyển thành "Đã giao":**
+
+![Status Changed to Delivered](../playwright-tests/screenshots/FR10/BUG06-03-status-now-delivered.png)
+
+**API Response evidence (JSON):**
+```json
+{
+  "test": "BUG-06: canceled → delivered",
+  "request": "PUT /api/admin/orders/:id/status { status: \"delivered\" }",
+  "expected": "HTTP 400 Invalid transition",
+  "actual": "HTTP 200 — {\"message\":\"Order status updated\"}"
+}
+```
+
+*Playwright script: `playwright-tests/fr10-screenshots.spec.js`*

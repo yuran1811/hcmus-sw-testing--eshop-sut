@@ -104,3 +104,39 @@ app.put('/api/admin/orders/:id/status', authenticateToken, authorizeAdmin, ...);
 1. View all customers' orders and personal data (GDPR breach)
 2. Manipulate any order status (financial fraud)
 3. Access admin-only features without authorization
+
+## Screenshots
+
+**Regular user logged in (web UI) — nhìn vào giao diện người dùng thông thường:**
+
+![Regular User Web](../playwright-tests/screenshots/FR10/BUG14-01-regular-user-web.png)
+
+**API Evidence — user token truy cập được admin endpoints (JSON từ Playwright):**
+
+```json
+{
+  "tests": [
+    {
+      "endpoint": "GET /api/admin/orders (USER token)",
+      "expected": "HTTP 403",
+      "actual": "HTTP 200",
+      "orders_returned": 1
+    },
+    {
+      "endpoint": "GET /api/admin/users (USER token)",
+      "expected": "HTTP 403",
+      "actual": "HTTP 200",
+      "users_returned": 3
+    },
+    {
+      "endpoint": "PUT /api/admin/orders/:id/status (USER token)",
+      "expected": "HTTP 403",
+      "actual": "HTTP 200",
+      "message": "Order status updated"
+    }
+  ]
+}
+```
+
+*Playwright script: `playwright-tests/fr18-admin-ui.spec.js` — DT-FR18-02, DT-FR10-17, DT-FR12-01*
+*Phát hiện trong quá trình thực thi FR-10 tests, session 4 (2026-06-27)*

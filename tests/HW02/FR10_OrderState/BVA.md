@@ -89,7 +89,29 @@ Kiểm tra biên của final states (`delivered` và `canceled`):
 
 ---
 
-## 4. AI Gap Analysis — BVA
+## 4. Screenshots từ Playwright
+
+**BVA — Canceled → Delivered (BUG-06 confirmed):**
+
+Đơn hủy trước khi test:
+![Canceled Before](../playwright-tests/screenshots/FR10/BUG06-01-canceled-order-admin.png)
+
+Sau khi API call canceled→delivered trả về HTTP 200 (sai), admin panel cập nhật:
+![Status Delivered After Bug](../playwright-tests/screenshots/FR10/BUG06-03-status-now-delivered.png)
+
+**BVA — User cancel shipping (BUG-07 confirmed):**
+
+Web UI ẩn nút Hủy cho shipping order (UI đúng):
+![Shipping No Cancel Button](../playwright-tests/screenshots/FR10/BUG07-01-shipping-order-web.png)
+
+Sau khi bypass UI — API cho phép cancel:
+![After API Cancel](../playwright-tests/screenshots/FR10/BUG07-03-after-cancel.png)
+
+*Playwright script: `playwright-tests/fr10-screenshots.spec.js`*
+
+---
+
+## 5. AI Gap Analysis — BVA
 
 **AI phát hiện được:**
 - Order ID boundary (0, âm, không tồn tại)

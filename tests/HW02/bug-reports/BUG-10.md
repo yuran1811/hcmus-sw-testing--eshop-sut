@@ -38,3 +38,11 @@ ORDER BY orders.id DESC
 ## Ghi chú
 
 Đây là thiếu sót về tính năng (missing feature), không phải bug logic. Ảnh hưởng đến scalability.
+
+## Screenshots
+
+**Admin Orders tab — hiển thị toàn bộ danh sách, không có ô search/filter/pagination:**
+
+![Orders Tab No Filter](../playwright-tests/screenshots/FR18/FR18-B1-orders-tab.png)
+
+*Playwright script: `playwright-tests/fr18-focused.spec.js` — DT-FR18-23*

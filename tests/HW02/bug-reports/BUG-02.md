@@ -45,3 +45,17 @@ lockedUntil = new Date(Date.now() + 180000).toISOString();  // 180000ms = 180s (
 ```javascript
 lockedUntil = new Date(Date.now() + 30000).toISOString();  // 30000ms = 30s
 ```
+
+## Screenshots
+
+**Tài khoản bị lock — DB ghi `locked_until` = now + 180s (thay vì 30s):**
+
+![Locked Response - 180s](../playwright-tests/screenshots/FR02/DT-FR02-10-locked-response.png)
+
+**DB Evidence (sqlite3):**
+```
+SELECT locked_until FROM users WHERE email='test@eshop.com';
+-- Kết quả: 2026-06-27T06:44:47.478Z  (≈ 180 giây từ lúc lock)
+```
+
+*Playwright script: `playwright-tests/fr02-login.spec.js` — Test case DT-FR02-09*

@@ -95,7 +95,31 @@
 
 ---
 
-## 4. AI Gap Analysis — BVA
+## 4. Screenshots từ Playwright
+
+**BVA-MOB-01 — 0 đơn hàng (empty state):**
+```
+API: GET /api/orders/my-orders → HTTP 200, [] (empty array)
+```
+
+**BVA-MOB-02 — 1 đơn hàng (boundary):**
+
+Web order list với 1 order (mobile viewport):
+![1 Order Boundary](../playwright-tests/screenshots/Mobile/MOB-02-profile-orders.png)
+
+**BVA — Cancel permission boundary (BUG-11):**
+
+Nút Hủy hiện cho pending/confirmed (UI đúng):
+![Cancel Buttons](../playwright-tests/screenshots/Mobile/MOB-03-cancel-buttons.png)
+
+Sau khi user cancel đơn shipping qua API (backend sai):
+![After Cancel BVA](../playwright-tests/screenshots/Mobile/MOB-04-after-cancel.png)
+
+*Playwright script: `playwright-tests/mobile-order-history.spec.js` (mobile viewport: 390×844)*
+
+---
+
+## 5. AI Gap Analysis — BVA
 
 **AI phát hiện được:**
 - Boundary 0 orders (empty state)

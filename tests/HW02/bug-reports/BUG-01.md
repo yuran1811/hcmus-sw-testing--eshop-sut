@@ -48,4 +48,16 @@ const newAttempts = user.login_attempts + 1;  // Đúng spec
 
 ## Screenshots
 
-> Cần chụp màn hình khi test và đính kèm vào GitHub Issue.
+**Lần sai 1 — attempts tăng lên 4 (phải là 2):**
+
+![Lockout Attempt 1](../playwright-tests/screenshots/FR02/DT-FR02-lockout-attempt-1.png)
+
+**Lần sai 2 — tài khoản bị khóa ngay (phải đợi đến lần 3):**
+
+![Lockout Attempt 2](../playwright-tests/screenshots/FR02/DT-FR02-lockout-attempt-2.png)
+
+**Tài khoản bị lock — login với đúng password vẫn nhận HTTP 403:**
+
+![Locked Response](../playwright-tests/screenshots/FR02/DT-FR02-10-locked-response.png)
+
+*Playwright script: `playwright-tests/fr02-login.spec.js` — Test case DT-FR02-10*

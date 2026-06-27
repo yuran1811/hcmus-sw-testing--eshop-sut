@@ -47,3 +47,16 @@ const revenue = orders
   .filter(o => o.status === "delivered")
   .reduce((sum, o) => sum + o.total_amount, 0);  // Bỏ * 2
 ```
+
+## Screenshots
+
+**Dashboard Admin — hiển thị "400,000 ₫" thay vì "200,000 ₫" (2 đơn × 100,000₫ mỗi đơn):**
+
+![Dashboard Revenue Bug](../playwright-tests/screenshots/FR18/FR18-A2-revenue.png)
+
+**Dashboard full page — thấy tổng doanh thu bị sai:**
+
+![Dashboard Full](../playwright-tests/screenshots/FR18/FR18-A1-dashboard.png)
+
+*Setup test: 2 đơn delivered × 100,000₫ = expected 200,000₫ → actual 400,000₫*
+*Playwright script: `playwright-tests/fr18-focused.spec.js` — DT-FR18-15*

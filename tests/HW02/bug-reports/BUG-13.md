@@ -34,3 +34,18 @@ const API_URL = process.env.EXPO_PUBLIC_API_URL || "http://localhost:3000/api";
 
 - Người chạy app phải sửa tay IP mỗi lần thay đổi môi trường
 - Không thể deploy app mà không sửa code
+
+## Screenshots
+
+**Code Evidence — `App.js:16` hardcoded IP:**
+
+```javascript
+const API_URL = "http://192.168.10.13:3000/api"; // IP LAN để chạy được trên iOS/Android và thiết bị thật
+```
+
+**Login screen (mobile viewport) — app sẽ không kết nối được nếu IP thay đổi:**
+
+![Mobile Login Screen](../playwright-tests/screenshots/Mobile/MOB-01-login.png)
+
+*Source: `frontend-mobile/App.js:16` — confirmed bằng `fs.readFileSync` trong test*
+*Test: `playwright-tests/mobile-order-history.spec.js` — DT-MOB-22*
