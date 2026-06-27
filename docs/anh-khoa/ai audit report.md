@@ -588,3 +588,118 @@
 - **Suy luận:** AI suy luận tốt, bao phủ các trường hợp trong ràng buộc, có giải thích rõ cách áp dụng domain testing trong tính năng này
 
 - **Sửa:** Không cần sửa
+
+---
+
+**AI Audit Report Item**
+
+- **Công cụ AI:** Claude Code (Opus 4.8)
+- **Thời gian:** 2026-06-27 12:06:36
+- **Nội dung prompt:**
+  > Tiếp tục đóng vai Boundary Value Analysis Expert, sử dụng @.agents/skills/boundary-value-analysis/SKILL.md để phân tích các giá trị biên dựa trên thông tin từ đặc tả @docs/anh-khoa/feature-specs/FR-01 Đăng ký tài khoản.md
+  >
+  > Yêu cầu thực thi:
+  > - Chỉ lọc ra các biến có giới hạn biên định lượng (ví dụ: độ dài chuỗi, số lượng, khoảng giá trị).
+  > - Xác định rõ các điểm On, Off, In, Out (tùy theo loại biên: 2 giá trị hoặc 3 giá trị) cho từng ranh giới và giải thích lý do lựa chọn một cách ngắn gọn.
+  > - Sinh bảng Test Case bổ sung cho các điểm biên này. Các test case này không được trùng lặp với các test case đã sinh ở phần Domain Testing.
+  > - Chạy kèm @.agents/skills/ai-audit-logger/SKILL.md ở cuối cùng để xuất log nguyên văn (không tóm tắt) toàn bộ quá trình phân tích BVA này.
+- **AI output:**
+
+  > ## 1. Lọc biến & xác định bước nhảy (increment)
+  >
+  > Trong FR-01, **chỉ có Mật khẩu** chứa ràng buộc biên định lượng. Các biến còn lại bị **loại khỏi BVA**:
+  > - **Họ Tên:** README không nêu giới hạn độ dài → không có biên số học.
+  > - **Email:** ràng buộc *định dạng*, không phải độ dài → không phải biên định lượng.
+  > - **Xác nhận mật khẩu:** ràng buộc *khớp*, không định lượng.
+  >
+  > Mật khẩu có 2 nhóm biên định lượng, đều là **số nguyên → bước nhảy = 1**:
+  > - **Độ dài chuỗi:** Min = 8 (đặc tả **không** có Max).
+  > - **Số lượng mỗi loại ký tự bắt buộc** (hoa / thường / số / đặc biệt): Min = 1 mỗi loại.
+  >
+  > ## 2. Xác định điểm biên & đối chiếu trùng lặp
+  >
+  > Đây là biên **một phía** (chỉ có cận dưới) nên tôi dùng cặp **On / Off** (2 giá trị) cho mỗi biên. Điểm **In** xa (vd độ dài 9, hay >1 ký tự mỗi loại) là lớp tương đương hợp lệ tổng quát → **bỏ theo quy tắc khử trùng lặp** của skill.
+  >
+  > ### BVA Points definition
+  >
+  > | Variable | Boundary Type | Target Value | Trạng thái (đối chiếu Domain Testing) |
+  > |---|---|---|---|
+  > | Mật khẩu — độ dài | Off (Min−1) | 7 ký tự (invalid) | Đã cover — TC-REGISTER-006 |
+  > | Mật khẩu — độ dài | On (Min) | 8 ký tự (valid) | Đã cover — TC-REGISTER-001 |
+  > | Mật khẩu — số chữ hoa | Off | 0 (invalid) | Đã cover — TC-REGISTER-007 |
+  > | Mật khẩu — số chữ hoa | On | 1 (valid) | Đã cover — TC-REGISTER-001 (đúng 1 chữ hoa `A`) |
+  > | Mật khẩu — số chữ thường | Off | 0 (invalid) | Đã cover — TC-REGISTER-008 |
+  > | Mật khẩu — số chữ thường | On | 1 (valid) | CHƯA cover (TC-001 dùng 3 chữ thường) |
+  > | Mật khẩu — số chữ số | Off | 0 (invalid) | Đã cover — TC-REGISTER-009 |
+  > | Mật khẩu — số chữ số | On | 1 (valid) | CHƯA cover (TC-001 dùng 3 chữ số) |
+  > | Mật khẩu — số ký tự đặc biệt | Off | 0 (invalid) | Đã cover — TC-REGISTER-010 |
+  > | Mật khẩu — số ký tự đặc biệt | On | 1 (valid) | Đã cover — TC-REGISTER-001 (đúng 1 ký tự `!`) |
+  >
+  > **Kết luận đối chiếu:** Biên độ dài (7/8) và phần lớn biên đếm ký tự đã được Domain Testing cover. Chỉ còn **2 điểm On chưa được cô lập**: *số chữ thường = 1* và *số chữ số = 1* — vì TC-REGISTER-001 dùng tới 3 chữ thường và 3 chữ số nên không nằm **đúng trên biên**. Hai điểm này nếu implementation lỡ yêu cầu ≥2 thì TC-001 không bắt được → đáng bổ sung.
+  >
+  > ## 3. BVA Test Cases (bổ sung, không trùng Domain Testing)
+  >
+  > | Test Case ID | Requirement ID | Target Boundary | Test Data (Inputs) | Test Steps | Expected Result |
+  > |---|---|---|---|---|---|
+  > | TC-REGISTER-015 | FR-01 | Số chữ thường = 1 (On) | Họ Tên `Nguyễn Văn A`; Email `bva.lower@gmail.com` (mới); Mật khẩu `ABCD12a!` (8 ký tự: 4 hoa, 1 thường `a`, 2 số, 1 đặc biệt); Xác nhận `ABCD12a!` | 1. Mở trang Đăng ký. 2. Nhập dữ liệu theo Test Data. 3. Bấm "Đăng ký". | Đăng ký thành công (mật khẩu thỏa "≥1 chữ thường" tại đúng giá trị biên 1) → chuyển sang trang Đăng nhập. |
+  > | TC-REGISTER-016 | FR-01 | Số chữ số = 1 (On) | Họ Tên `Nguyễn Văn A`; Email `bva.digit@gmail.com` (mới); Mật khẩu `ABCDab1!` (8 ký tự: 4 hoa, 2 thường, 1 số `1`, 1 đặc biệt); Xác nhận `ABCDab1!` | 1. Mở trang Đăng ký. 2. Nhập dữ liệu theo Test Data. 3. Bấm "Đăng ký". | Đăng ký thành công (mật khẩu thỏa "≥1 chữ số" tại đúng giá trị biên 1) → chuyển sang trang Đăng nhập. |
+  >
+  > ### Nội dung file test case bổ sung
+  >
+  > **File:** `tests/test-cases/register/TC-REGISTER-015.md`
+  >
+  > ```markdown
+  > # TC-REGISTER-015: BVA — Mật khẩu có đúng 1 chữ thường (On-point biên đếm chữ thường)
+  >
+  > **Requirement ID:** FR-01
+  > **Test Type:** Boundary Value Analysis
+  >
+  > ### 1. Preconditions
+  > - Người dùng đang ở trang Đăng ký, chưa đăng nhập.
+  > - Email `bva.lower@gmail.com` chưa tồn tại trong hệ thống.
+  >
+  > ### 2. Test Data (Inputs)
+  > - Họ Tên: `Nguyễn Văn A`
+  > - Email: `bva.lower@gmail.com`
+  > - Mật khẩu: `ABCD12a!` (8 ký tự: 4 chữ hoa, đúng 1 chữ thường `a`, 2 chữ số, 1 ký tự đặc biệt)
+  > - Xác nhận mật khẩu: `ABCD12a!`
+  >
+  > ### 3. Test Steps
+  > 1. Mở trang Đăng ký.
+  > 2. Nhập đầy đủ 4 trường theo Test Data.
+  > 3. Bấm "Đăng ký".
+  >
+  > ### 4. Expected Result
+  > - Đăng ký thành công: mật khẩu thỏa ràng buộc "≥ 1 chữ thường" ngay tại giá trị biên dưới (đúng 1).
+  > - Hệ thống chuyển hướng sang trang Đăng nhập.
+  > - Mục tiêu BVA: phát hiện lỗi nếu implementation lỡ yêu cầu ≥ 2 chữ thường (Domain Testing TC-REGISTER-001 dùng 3 chữ thường nên không bắt được lỗi này).
+  > ```
+  >
+  > **File:** `tests/test-cases/register/TC-REGISTER-016.md`
+  >
+  > ```markdown
+  > # TC-REGISTER-016: BVA — Mật khẩu có đúng 1 chữ số (On-point biên đếm chữ số)
+  >
+  > **Requirement ID:** FR-01
+  > **Test Type:** Boundary Value Analysis
+  >
+  > ### 1. Preconditions
+  > - Người dùng đang ở trang Đăng ký, chưa đăng nhập.
+  > - Email `bva.digit@gmail.com` chưa tồn tại trong hệ thống.
+  >
+  > ### 2. Test Data (Inputs)
+  > - Họ Tên: `Nguyễn Văn A`
+  > - Email: `bva.digit@gmail.com`
+  > - Mật khẩu: `ABCDab1!` (8 ký tự: 4 chữ hoa, 2 chữ thường, đúng 1 chữ số `1`, 1 ký tự đặc biệt)
+  > - Xác nhận mật khẩu: `ABCDab1!`
+  >
+  > ### 3. Test Steps
+  > 1. Mở trang Đăng ký.
+  > 2. Nhập đầy đủ 4 trường theo Test Data.
+  > 3. Bấm "Đăng ký".
+  >
+  > ### 4. Expected Result
+  > - Đăng ký thành công: mật khẩu thỏa ràng buộc "≥ 1 chữ số" ngay tại giá trị biên dưới (đúng 1).
+  > - Hệ thống chuyển hướng sang trang Đăng nhập.
+  > - Mục tiêu BVA: phát hiện lỗi nếu implementation lỡ yêu cầu ≥ 2 chữ số (Domain Testing TC-REGISTER-001 dùng 3 chữ số nên không bắt được lỗi này).
+  > ```
