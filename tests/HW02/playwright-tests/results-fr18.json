@@ -1,0 +1,90 @@
+[
+  {
+    "tcId": "DT-FR18-02 (NEW)",
+    "desc": "User token → GET /api/admin/orders",
+    "expected": "HTTP 403 Forbidden",
+    "actual": "HTTP 200 (user có thể list TẤT CẢ orders!)",
+    "status": "FAIL",
+    "bug": "BUG-14"
+  },
+  {
+    "tcId": "DT-FR10-17 (NEW)",
+    "desc": "User token → PUT /api/admin/orders/:id/status",
+    "expected": "HTTP 403 Forbidden",
+    "actual": "HTTP 200 (user đổi được status!)",
+    "status": "FAIL",
+    "bug": "BUG-14"
+  },
+  {
+    "tcId": "DT-FR12-01 (NEW)",
+    "desc": "User token → GET /api/admin/users",
+    "expected": "HTTP 403 Forbidden",
+    "actual": "HTTP 200 (user thấy được danh sách users!)",
+    "status": "FAIL",
+    "bug": "BUG-14"
+  },
+  {
+    "tcId": "DT-FR18-01",
+    "desc": "Admin GET /api/admin/orders",
+    "expected": "HTTP 200, array với user_name",
+    "actual": "HTTP 200, 1 orders",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR18-03",
+    "desc": "No token → GET admin orders",
+    "expected": "HTTP 401",
+    "actual": "HTTP 401",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "BVA-FR18-04",
+    "desc": "Order ID 99999 (không tồn tại)",
+    "expected": "HTTP 404",
+    "actual": "HTTP 404: Order not found",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "UI-FR18-01",
+    "desc": "Admin login qua UI",
+    "expected": "Vào được dashboard",
+    "actual": "URL: http://localhost:5174/",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR18-19 (BUG-08)",
+    "desc": "XSS <script> tag trong shipping_address",
+    "expected": "Script KHÔNG chạy",
+    "actual": "Script executed: false",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR18-20 (BUG-08b)",
+    "desc": "<b> HTML tag render trong shipping_address",
+    "expected": "Hiển thị as text",
+    "actual": "<b> rendered: false",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR18-15 (BUG-09)",
+    "desc": "Dashboard revenue (2×100,000₫ delivered)",
+    "expected": "Hiển thị 200,000₫",
+    "actual": "has 200k: false, has 400k: false (bug: nhân 2)",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR18-09 (UI)",
+    "desc": "Admin confirm pending order",
+    "expected": "status=confirmed",
+    "actual": "Nút Xác nhận không tìm thấy trên trang",
+    "status": "INFO",
+    "bug": "—"
+  }
+]

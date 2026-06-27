@@ -1,0 +1,66 @@
+[
+  {
+    "tcId": "DT-FR18-15 (BUG-09)",
+    "desc": "Dashboard revenue = 2×100,000₫ delivered",
+    "expected": "200.000₫",
+    "actual": "Expected text found: false, Bug text found: true",
+    "status": "FAIL",
+    "bug": "BUG-09"
+  },
+  {
+    "tcId": "DT-FR18-19 (BUG-08)",
+    "desc": "<script> XSS trong shipping_address",
+    "expected": "Script KHÔNG chạy",
+    "actual": "window.__XSS__ executed: false",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR18-20 (BUG-08b)",
+    "desc": "<b> HTML render trong shipping_address",
+    "expected": "Text thô, không bold",
+    "actual": "<b> rendered as bold: true",
+    "status": "FAIL",
+    "bug": "BUG-08"
+  },
+  {
+    "tcId": "DT-FR18-23 (UI)",
+    "desc": "Pending order: hiện nút Xác nhận + Hủy",
+    "expected": "Cả 2 nút xuất hiện",
+    "actual": "Xác nhận: true, Hủy: true",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR18-09 (UI)",
+    "desc": "Admin click Xác nhận → confirmed",
+    "expected": "status=confirmed",
+    "actual": "DB status: confirmed",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR18-10 (UI)",
+    "desc": "Admin click Giao hàng → shipping",
+    "expected": "status=shipping",
+    "actual": "DB: shipping",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR18-11 (UI)",
+    "desc": "Admin click Hoàn thành → delivered",
+    "expected": "status=delivered",
+    "actual": "DB: delivered",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR18-27 (BUG-06)",
+    "desc": "Canceled order UI: có nút \"Đánh dấu Đã giao\"",
+    "expected": "Không có nút (canceled=final state)",
+    "actual": "Nút xuất hiện: false",
+    "status": "PASS",
+    "bug": "—"
+  }
+]
