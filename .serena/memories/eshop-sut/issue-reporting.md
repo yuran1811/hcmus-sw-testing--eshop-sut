@@ -1,0 +1,4 @@
+- Bug-report files live in `tests/github-issues/` and use the `.github/ISSUE_TEMPLATE/bug_report.md` structure.
+- Repository label set includes `bug`, `type:bug`, `status:new`, `priority:P1/P2`, `severity:major/minor`, `module:product`, `module:coupon`, `module:admin`, `module:checkout-mobile`.
+- `hw2` exists as the target milestone in `yuran1811/hcmus-sw-testing--eshop-sut`.
+- Traceability matrix bug-issue cells use escaped bracketed titles like `\[BUG\]\[FR-17\] ...` to avoid Markdown reference-link parsing.
