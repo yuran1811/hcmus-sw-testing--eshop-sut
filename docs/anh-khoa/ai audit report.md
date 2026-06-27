@@ -704,6 +704,12 @@
   > - Mục tiêu BVA: phát hiện lỗi nếu implementation lỡ yêu cầu ≥ 2 chữ số (Domain Testing TC-REGISTER-001 dùng 3 chữ số nên không bắt được lỗi này).
   > ```
 
+- **Đánh giá:** VALID
+
+- **Suy luận:** Lọc đúng (chỉ Mật khẩu có biên định lượng); sinh 2 ca On chưa cô lập (chữ thường=1, chữ số=1), không trùng Domain Testing, giữ Single Fault Assumption.
+
+- **Sửa:** Không cần sửa
+
 ---
 
 **AI Audit Report Item**
@@ -757,6 +763,12 @@
   > ### Quan sát & khuyến nghị (không phải test case)
   >
   > - Spec gap: Số lượng không có giới hạn trên. Đây là rủi ro tiềm ẩn (người dùng có thể đặt số lượng cực lớn → ảnh hưởng tồn kho/tính tiền/tràn số). Khuyến nghị team bổ sung ràng buộc Max (ví dụ theo tồn kho). Khi Max được định nghĩa, mới phát sinh thêm 2 ca BVA mới: Max (On) và Max+1 (Off).
+
+- **Đánh giá:** VALID
+
+- **Suy luận:** Lọc đúng (chỉ Số lượng); kết luận 0 ca bổ sung là trung thực vì On=1/Off=0 đã được Domain Testing cover; không bịa biên Max khi spec không định nghĩa.
+
+- **Sửa:** Không cần sửa
 
 ---
 
@@ -843,3 +855,97 @@
   >
   > - Spec gap 1: Giá không có giới hạn trên (Max) → không có biên trên để kiểm; tiềm ẩn rủi ro nhập giá cực lớn. Khuyến nghị định nghĩa Max hợp lý.
   > - Spec gap 2: Đặc tả không nói rõ Giá là số nguyên hay số thực → tạo mơ hồ về increment (1 hay 0.01). TC-PRODUCT-016 chính là ca để làm rõ điểm này trên hệ thống thật.
+
+- **Đánh giá:** VALID
+
+- **Suy luận:** Lọc đúng (Tên, Giá); phát hiện mơ hồ increment của Giá (nguyên vs thực) → sinh ca 0.01 probe khoảng `0 < giá < 1` mà TC-PRODUCT-004 (dùng 1) bỏ sót, không trùng lặp.
+
+- **Sửa:** Không cần sửa
+
+---
+
+**AI Audit Report Item**
+
+- **Công cụ AI:** Claude Code (Opus 4.8)
+- **Thời gian:** 2026-06-27 12:27:16
+- **Nội dung prompt:**
+  > Tiếp tục đóng vai Boundary Value Analysis Expert, sử dụng @.agents/skills/boundary-value-analysis/SKILL.md để phân tích các giá trị biên dựa trên thông tin từ đặc tả @docs/anh-khoa/feature-specs/FR-20 Đăng nhập trên mobile.md
+  >
+  > Yêu cầu thực thi:
+  > - Chỉ lọc ra các biến có giới hạn biên định lượng (ví dụ: độ dài chuỗi, số lượng, khoảng giá trị).
+  > - Xác định rõ các điểm On, Off, In, Out (tùy theo loại biên: 2 giá trị hoặc 3 giá trị) cho từng ranh giới và giải thích lý do lựa chọn một cách ngắn gọn.
+  > - Sinh bảng Test Case bổ sung cho các điểm biên này. Các test case này không được trùng lặp với các test case đã sinh ở phần Domain Testing.
+  > - Chạy kèm @.agents/skills/ai-audit-logger/SKILL.md ở cuối cùng để xuất log nguyên văn (không tóm tắt) toàn bộ quá trình phân tích BVA này.
+- **AI output:**
+
+  > ## 1. Lọc biến & xác định bước nhảy (increment)
+  >
+  > Đặc thù của login: 2 trường nhập (Email, Mật khẩu) không có biên định lượng — biên định lượng nằm ở state machine khóa tài khoản.
+  >
+  > | Biến | Có biên định lượng? | Bước nhảy & ranh giới |
+  > |---|---|---|
+  > | Email | Không | Ràng buộc định dạng, không phải độ dài |
+  > | Mật khẩu | Không | Login chỉ xác thực; không có ràng buộc độ dài/độ phức tạp ở FR-20 (khác FR-01) |
+  > | **Bộ đếm đăng nhập sai** | Có (đếm) | Increment = 1; ngưỡng khóa = 3 lần liên tiếp |
+  > | **Thời gian khóa** | Có (khoảng thời gian) | Mốc = 30 giây; increment = 1 giây (môi trường demo) |
+  >
+  > ## 2. Xác định điểm biên & đối chiếu trùng lặp
+  >
+  > Cả 2 biên đều một phía, dùng cặp On / Off (2 giá trị). Điểm In/Out xa (vd sai 5 lần, hay chờ 60 giây) là lớp tương đương tổng quát → bỏ theo quy tắc dedup.
+  >
+  > ### BVA Points definition
+  >
+  > | Variable | Boundary Type | Target Value | Trạng thái (đối chiếu Domain Testing) |
+  > |---|---|---|---|
+  > | Bộ đếm sai | Off (Threshold−1) | 2 lần sai → chưa khóa | Đã cover — TC-MOBILE_LOGIN-008 |
+  > | Bộ đếm sai | On (Threshold) | 3 lần sai → khóa | Đã cover — TC-MOBILE_LOGIN-009 |
+  > | Thời gian khóa | On (tại mốc mở khóa) | t = 30s → mở khóa, đăng nhập đúng thành công | Đã cover — TC-MOBILE_LOGIN-011 |
+  > | Thời gian khóa | Off (ngay trước mốc) | t = 29s → vẫn còn khóa | CHƯA cover (TC-010 chỉ kiểm "đang khóa" ngay sau lần sai thứ 3, t≈0; chưa kiểm sát mốc 30s) |
+  >
+  > Kết luận đối chiếu: Biên bộ đếm sai (2 Off / 3 On) đã được Domain Testing cover trọn vẹn. Biên thời gian khóa mới chỉ cover phía On (sau 30s → mở khóa, TC-011) và "đang khóa ở t≈0" (TC-010). Chưa cover điểm Off sát mốc — tức t = 29s vẫn phải còn khóa. Đây là điểm biên quan trọng để bắt lỗi khóa hết hạn quá sớm (vd implementation lỡ đặt 25s): TC-010 (t≈0) và TC-011 (t≥30) đều không phát hiện được lỗi này.
+  >
+  > ## 3. BVA Test Cases (bổ sung, không trùng Domain Testing)
+  >
+  > | Test Case ID | Requirement ID | Target Boundary | Test Data (Inputs) | Test Steps | Expected Result |
+  > |---|---|---|---|---|---|
+  > | TC-MOBILE_LOGIN-012 | FR-20 | Thời gian khóa: Off = 29s (vẫn khóa) | Email `test@eshop.com` + Mật khẩu `Test1234!` (ĐÚNG), thử lúc t≈29s sau khi khóa | 1. Gây khóa bằng 3 lần sai liên tiếp. 2. Chờ ~29 giây (vẫn trong cửa sổ khóa 30s). 3. Nhập đúng Email + Mật khẩu, bấm "Đăng nhập". | Vẫn bị từ chối vì khóa chưa hết (mới 29/30s), kèm thông báo phù hợp không lộ nguyên nhân. Probe: nếu đăng nhập được ở t=29s → khóa hết hạn sớm hơn 30s (không tuân thủ "tạm khóa 30 giây"). |
+  >
+  > ### Nội dung file test case bổ sung
+  >
+  > **File:** `tests/test-cases/mobile_login/TC-MOBILE_LOGIN-012.md`
+  >
+  > ```markdown
+  > # TC-MOBILE_LOGIN-012: BVA — Vẫn còn khóa tại t = 29 giây (Off-point biên thời gian khóa 30s)
+  >
+  > **Requirement ID:** FR-20
+  > **Test Type:** Boundary Value Analysis
+  >
+  > ### 1. Preconditions
+  > - App Mobile đang ở màn hình Đăng nhập.
+  > - Tồn tại tài khoản `test@eshop.com` / `Test1234!`.
+  > - Tài khoản chưa bị khóa, bộ đếm sai = 0 (trước khi bắt đầu).
+  >
+  > ### 2. Test Data (Inputs)
+  > - Bước gây khóa: 3 lần sai liên tiếp với Email `test@eshop.com` + Mật khẩu `WrongPass1!`.
+  > - Bước kiểm biên: Email `test@eshop.com` + Mật khẩu `Test1234!` (ĐÚNG), thực hiện tại thời điểm t ≈ 29 giây sau khi tài khoản bị khóa.
+  >
+  > ### 3. Test Steps
+  > 1. Đăng nhập sai 3 lần liên tiếp để kích hoạt khóa 30 giây.
+  > 2. Chờ khoảng 29 giây (vẫn nằm trong cửa sổ khóa, ngay trước mốc 30s).
+  > 3. Nhập đúng Email và Mật khẩu, bấm "Đăng nhập".
+  >
+  > ### 4. Expected Result
+  > - Đăng nhập vẫn bị từ chối vì thời gian khóa chưa hết (mới qua 29/30 giây), kèm thông báo lỗi phù hợp, không lộ chi tiết nguyên nhân.
+  > - Mục tiêu BVA: kiểm điểm Off sát mốc mở khóa mà Domain Testing chưa chạm (TC-010 kiểm ở t≈0, TC-011 kiểm ở t≥30). Nếu đăng nhập thành công tại t=29s → khóa đã hết hạn sớm hơn 30 giây → không tuân thủ ràng buộc "tạm khóa 30 giây".
+  > ```
+  >
+  > ### Quan sát & khuyến nghị (không phải test case)
+  >
+  > - Biên bộ đếm sai (ngưỡng 3) đã được Domain Testing phủ trọn (Off=2, On=3) nên BVA không sinh thêm cho biến này.
+  > - Đóng góp mới của BVA nằm ở biên thời gian khóa: bổ sung điểm Off (t=29s vẫn khóa) để bắt lỗi khóa hết hạn sớm — rủi ro mà cả TC-010 lẫn TC-011 đều bỏ sót.
+
+- **Đánh giá:** VALID
+
+- **Suy luận:** Lọc đúng — biên nằm ở state machine (đếm sai = 3, khóa = 30s); ca t=29s (vẫn khóa) bắt lỗi khóa hết hạn sớm mà TC-010/011 bỏ sót.
+
+- **Sửa:** Không cần sửa
