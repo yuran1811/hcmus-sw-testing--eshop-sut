@@ -1,4 +1,4 @@
-﻿# TC-CATEGORY-002: Thêm danh mục thất bại khi tên để trống
+# TC-CATEGORY-002: Thêm danh mục thất bại khi tên để trống
 
 ## Requirement ID
 
@@ -37,4 +37,4 @@ EC2 (Name rỗng — Empty string) + OC2 (Validation error — Name bắt buộc
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-CATEGORY-001

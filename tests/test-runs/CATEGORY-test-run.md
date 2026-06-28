@@ -3,7 +3,7 @@
 | Test Case ID | Module | Tester | Result | Related Bug | Note |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | TC-CATEGORY-001 | category | Mạch Quốc Tấn | Pass | | |
-| TC-CATEGORY-002 | category | Mạch Quốc Tấn | Not Run | | |
+| TC-CATEGORY-002 | category | Mạch Quốc Tấn | Fail | BUG-CATEGORY-001 | Không báo lỗi, tạo thành công một danh mục có tên rỗng |
 | TC-CATEGORY-003 | category | Mạch Quốc Tấn | Not Run | | |
 | TC-CATEGORY-004 | category | Mạch Quốc Tấn | Not Run | | |
 | TC-CATEGORY-005 | category | Mạch Quốc Tấn | Not Run | | |
