@@ -8,7 +8,7 @@
 | TC-MOBILE-REGISTER-004     | mobile-register | Mạch Quốc Tấn | Fail   | BUG-MOBILE-REGISTER-001, BUG-MOBILE-REGISTER-004 | Vẫn đăng ký được khi Email sai định dạng & thiếu trường xác nhận mật khẩu |
 | TC-MOBILE-REGISTER-005     | mobile-register | Mạch Quốc Tấn | Fail   | BUG-MOBILE-REGISTER-001, BUG-MOBILE-REGISTER-005 | Vẫn đăng ký được khi Email đã tồn tại & thiếu trường xác nhận mật khẩu    |
 | TC-MOBILE-REGISTER-006     | mobile-register | Mạch Quốc Tấn | Fail   | BUG-MOBILE-REGISTER-001                          | Không có trường xác nhận mật khẩu trên UI                                 |
-| TC-MOBILE-REGISTER-007     | mobile-register |               |        |                                                  |                                                                           |
+| TC-MOBILE-REGISTER-007     | mobile-register | Mạch Quốc Tấn | Fail   | BUG-MOBILE-REGISTER-001                          | Không có trường xác nhận mật khẩu trên UI                                 |
 | TC-MOBILE-REGISTER-008     | mobile-register |               |        |                                                  |                                                                           |
 | TC-MOBILE-REGISTER-009     | mobile-register |               |        |                                                  |                                                                           |
 | TC-MOBILE-REGISTER-010     | mobile-register |               |        |                                                  |                                                                           |
