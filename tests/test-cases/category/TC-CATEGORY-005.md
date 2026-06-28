@@ -1,4 +1,4 @@
-﻿# TC-CATEGORY-005: Xóa danh mục thành công
+# TC-CATEGORY-005: Xóa danh mục thành công
 
 ## Requirement ID
 
@@ -39,4 +39,4 @@ EC7 (Xóa danh mục — ID hợp lệ tồn tại) + OC4 (Xóa thành công)
 
 ## Status / Related bugs
 
-Not Run / None
+Pass / None
