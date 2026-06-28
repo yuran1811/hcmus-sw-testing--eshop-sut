@@ -1,4 +1,4 @@
-﻿# TC-CATEGORY-006: Xóa danh mục thất bại với ID không tồn tại
+# TC-CATEGORY-006: Xóa danh mục thất bại với ID không tồn tại
 
 ## Requirement ID
 
@@ -35,4 +35,4 @@ EC8 (Xóa danh mục — ID không tồn tại) + OC5 (Not Found error)
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-CATEGORY-002
