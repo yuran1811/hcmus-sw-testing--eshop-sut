@@ -155,26 +155,26 @@ Let's start by generating this `SKILL.md` for the test-runner!
 - **Output**:
 
 ````text
-I have completed Step 1 and Step 2 to build the `test-runner` Agent Skill definition based on your class materials.
+  I have completed Step 1 and Step 2 to build the `test-runner` Agent Skill definition based on your class materials.
 
-### Completed Actions
-1. **Read Class Notes & Presentations**: Analyzed [KCPM-Week03.txt](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/KCPM-Week03.txt), [03 - github_testcase_management.pptx.pdf](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/03%20-%20github_testcase_management.pptx.pdf), and [03 - github_bug_management.pptx.pdf](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/03%20-%20github_bug_management.pptx.pdf) using extraction and viewing tools.
-2. **Identified Requirements**:
- - Directory conventions: `tests/test-cases/`, `tests/test-runs/`, and `tests/test-summary/`.
- - Bug report templates, including the exact Vietnamese header `Requirement liên quan` and specific labels.
- - Two-way traceability between test runs and bug issues.
- - Post-execution steps: AI Gap Analysis and AI Audit Log.
-3. **Created Skill Definition**: Written the complete structure to the skill file at [.agents/skills/test-runner/SKILL.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/test-runner/SKILL.md).
+  ### Completed Actions
+  1. **Read Class Notes & Presentations**: Analyzed [KCPM-Week03.txt](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/KCPM-Week03.txt), [03 - github_testcase_management.pptx.pdf](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/03%20-%20github_testcase_management.pptx.pdf), and [03 - github_bug_management.pptx.pdf](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/03%20-%20github_bug_management.pptx.pdf) using extraction and viewing tools.
+  2. **Identified Requirements**:
+  - Directory conventions: `tests/test-cases/`, `tests/test-runs/`, and `tests/test-summary/`.
+  - Bug report templates, including the exact Vietnamese header `Requirement liên quan` and specific labels.
+  - Two-way traceability between test runs and bug issues.
+  - Post-execution steps: AI Gap Analysis and AI Audit Log.
+  3. **Created Skill Definition**: Written the complete structure to the skill file at [.agents/skills/test-runner/SKILL.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/test-runner/SKILL.md).
 
-### Skill File Contents (`SKILL.md`)
-The file contains:
-- **Input Schema**: Fields for target modules, test cases, environment details, tester, and data.
-- **Execution Workflow**: Pre-execution checks, execution tracking, status assignment (Passed, Failed, Blocked, Not Run), and automatic bug report drafting using the specified title format and headers under `tests/bug-reports/DRAFT-BUG-[FEATURE]-[NUMBER].md` with the required labels.
-- **Output Artifacts**: Templates for the Test Run Record (`tests/test-runs/test-run-[feature-name].md`) and the Traceability Matrix (`tests/test-summary/traceability-matrix.md`).
-- **AI Gap Analysis**: Template for `tests/test-summary/gap-analysis.md` assessing missed cases, missed bugs, and lessons learned.
-- **AI Audit Log**: Auto-extraction format for `tests/test-summary/ai-audit-log.md` detailing tool names, dates, prompts, and execution statistics.
+  ### Skill File Contents (`SKILL.md`)
+  The file contains:
+  - **Input Schema**: Fields for target modules, test cases, environment details, tester, and data.
+  - **Execution Workflow**: Pre-execution checks, execution tracking, status assignment (Passed, Failed, Blocked, Not Run), and automatic bug report drafting using the specified title format and headers under `tests/bug-reports/DRAFT-BUG-[FEATURE]-[NUMBER].md` with the required labels.
+  - **Output Artifacts**: Templates for the Test Run Record (`tests/test-runs/test-run-[feature-name].md`) and the Traceability Matrix (`tests/test-summary/traceability-matrix.md`).
+  - **AI Gap Analysis**: Template for `tests/test-summary/gap-analysis.md` assessing missed cases, missed bugs, and lessons learned.
+  - **AI Audit Log**: Auto-extraction format for `tests/test-summary/ai-audit-log.md` detailing tool names, dates, prompts, and execution statistics.
 
-Please review the generated file and let me know the next step or refinement you would like to make.
+  Please review the generated file and let me know the next step or refinement you would like to make.
 `````
 
 ## Entry 4 – Refinement of Test Runner Skill Definition (consistent AI Audit Log, Root Cause, File Renaming)
@@ -1813,15 +1813,8 @@ Tóm tắt kết quả chạy bộ 26 ca kiểm thử cho module Thanh toán di 
 - **Prompt**:
 
   ```text
-  Đây là **Prompt mới** được tối ưu hóa theo yêu cầu của bạn: loại bỏ việc đọc các tệp tin trong thư mục `Appendix_A` để tiết kiệm thời gian, tập trung hoàn toàn vào việc tạo/ghi đè hai file markdown mục tiêu bằng các số liệu tĩnh chính xác và bảng tự đánh giá theo ảnh mẫu.
+  You are an expert QA and software testing agent. We are working on a Software Testing homework project (HW02 - Domain Testing on EShop).
   ```
-
----
-
-### 📋 COPY NỘI DUNG PROMPT DƯỚI ĐÂY:
-
-```markdown
-You are an expert QA and software testing agent. We are working on a Software Testing homework project (HW02 - Domain Testing on EShop).
 
 I need you to create/overwrite two markdown files in the repository:
 
@@ -1904,15 +1897,16 @@ Overwrite the file at `Appendix_A/README.md` (setting `Overwrite: true`) to serv
 5.  **Demo Videos (Placeholder links)**: Use placeholders for the video links (e.g. YouTube placeholders) showing how the skills were used.
 
 Please generate and write these two files now.
+
 ```
 
-````
+```
 
 - **Output**:
 
 ```text
 I have successfully created and overwritten the two target markdown files with the requested precise statistics, layout matching your spreadsheet/assessment mockups, and structured links/images.
-````
+```
 
 Summary of Changes:
 Created tests/test-summary/test_summary_report.md:
@@ -1931,4 +1925,343 @@ Incorporates placeholder links for demo videos showing custom agent skill automa
 
 ```
 
+```
+
+---
+
+## Entry 22 – Main Report Generation
+
+### AI Audit Log
+
+- **Name of AI tool**: Antigravity (Gemini 3.5 Flash)
+- **Date and time**: 2026-06-28 14:52:00 +07:00
+- **Prompt**:
+
+  ```text
+  Bạn là technical writer. Hãy tạo Main Report cho HW02 Domain Testing
+  bằng tiếng Việt. Các keyword kỹ thuật giữ nguyên tiếng Anh
+  (EP, BVA, TC, boundary, partition, valid, invalid, severity, priority...).
+  ```
+
+Report phải bao gồm 4 features:
+
+- FR-03: Quên mật khẩu & Đặt lại mật khẩu (Pool A)
+- FR-11: Xem lịch sử đơn hàng (Pool B)
+- FR-19: Quản lý người dùng - Admin (Pool C)
+- FR-20: Thanh toán trên Mobile (Pool D)
+
+Cấu trúc cho MỖI feature:
+
+## Feature [X]: [Tên] ([FR-ID])
+
+### 1. Phân tích Domain Testing (EP)
+
+- Tóm tắt các biến input đã xác định
+- Bảng EP partition (Valid/Invalid, Partition ID, Giá trị đại diện)
+- Valid Baseline cho Error Isolation
+- Tổng số TC sau khi rút gọn (Test Case Reduction)
+
+### 2. Phân tích Boundary Value Analysis (BVA)
+
+- Các boundary đã xác định
+- Biện luận chọn 2-Point vs 3-Point cho từng boundary
+- Bảng BVA TC (BVA ID, Giá trị test, Expected Output)
+
+### 3. AI Gap Analysis
+
+- Các TC bị bỏ sót phát hiện qua Human Review
+- Root cause của từng gap
+- Student fix đã áp dụng
+
+### 4. Tổng hợp Bug Report
+
+- Tổng số bug tìm được
+- Bảng: Bug ID | Tiêu đề | Found by TC | Severity | Priority | GitHub Issue #
+
+Quy tắc bắt buộc:
+
+- Nội dung viết bằng tiếng Việt, keyword kỹ thuật giữ tiếng Anh
+- Tham chiếu đúng EP ID và BVA ID từ DESIGN_REPORT
+- TC ID theo format TC-[MODULE]-[NUMBER]
+- Severity: Blocker/Critical/Major/Minor/Trivial
+- Priority: P0/P1/P2/P3
+- Đây là summary report — không reproduce toàn bộ DESIGN_REPORT,
+  chỉ tóm tắt các điểm quan trọng
+- Không tự bịa dữ liệu không có trong source files
+
+Dùng các file đính kèm làm nguồn dữ liệu chính xác.
+[README.md](file;file:///d%3A/Project/Testing/hcmus-sw-testing--eshop-sut/Appendix_A/README.md) [AI_Critique.md](file;file:///d%3A/Project/Testing/hcmus-sw-testing--eshop-sut/Appendix_A/AI_Critique.md) [AI_gap_analysis.md](file;file:///d%3A/Project/Testing/hcmus-sw-testing--eshop-sut/Appendix_A/AI_gap_analysis.md) [AI_Audit_Report.md](file;file:///d%3A/Project/Testing/hcmus-sw-testing--eshop-sut/Appendix_A/AI_Audit_Report.md) [DESIGN_REPORT.md](file;file:///d%3A/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/forgot-password/DESIGN_REPORT.md) [DESIGN_REPORT.md](file;file:///d%3A/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-checkout/DESIGN_REPORT.md) [DESIGN_REPORT.md](file;file:///d%3A/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/order-history/DESIGN_REPORT.md) [DESIGN_REPORT.md](file;file:///d%3A/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-cases/user-management/DESIGN_REPORT.md) [sprint-1-test-run.md](file;file:///d%3A/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-runs/sprint-1-test-run.md) [gap-analysis.md](file;file:///d%3A/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-summary/gap-analysis.md)[test_summary_report.md](file;file:///d%3A/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-summary/test_summary_report.md)[traceability-matrix.md](file;file:///d%3A/Project/Testing/hcmus-sw-testing--eshop-sut/tests/test-summary/traceability-matrix.md)
+
+````
+
+- **Output**:
+
+```text
+Viewed DESIGN_REPORT.md:1-212
+Viewed DESIGN_REPORT.md:1-203
+Viewed DESIGN_REPORT.md:1-184
+Viewed DESIGN_REPORT.md:1-223
+Viewed sprint-1-test-run.md:1-129
+Viewed test_summary_report.md:1-27
+Viewed gap-analysis.md:1-10
+Listed directory bug-reports
+Viewed traceability-matrix.md:1-108
+Viewed DRAFT-BUG-FORGOT-PASSWORD-001.md:1-38
+Viewed AI_Audit_Report.md:1-800
+Viewed AI_gap_analysis.md:1-87
+Searched for "GitHub Issue"
+Edited parse_bugs.py
+Ran command: `python d:\Project\Testing\hcmus-sw-testing--eshop-sut\parse_bugs.py`
+Edited parse_bugs.py
+Ran command: `python d:\Project\Testing\hcmus-sw-testing--eshop-sut\parse_bugs.py`
+Viewed bug_summary.txt:1-38
+Viewed DRAFT-BUG-MOBILE-CHECKOUT-001.md:1-38
+Edited parse_bugs.py
+Ran command: `python d:\Project\Testing\hcmus-sw-testing--eshop-sut\parse_bugs.py`
+Viewed bug_summary.txt:1-38
+Edited parse_bugs.py
+Ran command: `python d:\Project\Testing\hcmus-sw-testing--eshop-sut\parse_bugs.py`
+Viewed bug_summary.txt:1-38
+Viewed README.md:1-104
+Viewed AI_Critique.md:1-4
+Listed directory test-summary
+Listed directory test-runs
+Listed directory hcmus-sw-testing--eshop-sut
+Viewed main_report.md
+Listed directory .github
+Searched for "Issue #"
+Edited main_report.md
+Ran command: `rm parse_bugs.py, bug_summary.txt`
+Viewed main_report.md:1-20
+
+Tôi đã tạo thành công tài liệu **Main Report cho HW02 Domain Testing** bằng tiếng Việt tại đường dẫn:
+
+*   [main_report.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/main_report.md)
+
+### Tóm tắt các nội dung đã hoàn thành trong báo cáo:
+
+1.  **Thông tin chung**: Báo cáo được định dạng chuẩn theo đặc tả của sinh viên thực hiện Ân Tiến Nguyên An (MSSV: 23127148, lớp 23KTPM3).
+2.  **Cấu trúc 4 Features**: Báo cáo bao gồm đầy đủ 4 module theo yêu cầu:
+    *   **Feature 1**: Quên mật khẩu & Đặt lại mật khẩu (`FR-03`)
+    *   **Feature 2**: Xem lịch sử đơn hàng (`FR-11`)
+    *   **Feature 3**: Quản lý người dùng - Admin (`FR-19`)
+    *   **Feature 4**: Thanh toán trên Mobile (`FR-20`)
+3.  **Chi tiết cấu trúc cho mỗi Feature**:
+    *   **Phân tích EP**: Liệt kê đầy đủ các biến input (gồm cả các biến trạng thái ẩn như `sessionState`, `failedAttempts`, `networkState`), phân vùng *Valid/Invalid*, baseline dùng cho *Error Isolation*, và tổng số TC sau khi áp dụng *Test Case Reduction*.
+    *   **Phân tích BVA**: Xác định các boundary và biện luận chọn kỹ thuật *2-Point* (cho các ranh giới nhị phân đơn giản hoặc chuyển đổi giao diện) vs *3-Point BVA* (cho các ranh giới độ dài nghiêm ngặt, số lần thử sai, hoặc ngưỡng số tiền).
+    *   **AI Gap Analysis**: Phân tích các lỗi AI bỏ sót do LLM là stateless và chỉ kiểm tra luồng tĩnh, cùng giải pháp khắc phục bằng con người.
+    *   **Tổng hợp Bug Report**: Tổng hợp đầy đủ **37 bug** được tìm thấy qua các ca kiểm thử, phân loại theo độ ưu tiên (*Priority: P0-P3*) và mức độ nghiêm trọng (*Severity: Critical/Major/Minor/Trivial*), ánh xạ trực tiếp đến các tệp nháp issue tương ứng trong thư mục `tests/bug-reports/`.
+```
+````
+
+## Entry 23 - Review & Refine main report generation
+
+### AI Audit Log
+
+- **Name of AI tool**: Antigravity (Gemini 3.5 Flash)
+- **Date and time**: 2026-06-28 15:10:00 +07:00
+- **Prompt**:
+
+  ```text
+  Cập nhật Main Report theo các yêu cầu sau.
+  Giữ nguyên toàn bộ bảng EP, BVA, Bug hiện tại —
+  chỉ thêm và restructure. Nhớ là AI gap analysis chỉ thêm vào NẾU CÓ:[SKILL.md](file;file:///d%3A/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/test-runner/SKILL.md) [SKILL.md](file;file:///d%3A/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/test-writer/SKILL.md)
+  ```
+
+---
+
+## YÊU CẦU 1 — THÊM MỤC LỤC ở đầu report
+
+## Mục lục
+
+1. [Feature 1: Quên mật khẩu & Đặt lại mật khẩu (FR-03)](#feature-1)
+   - 1.1 [Domain Testing (EP)](#fr03-ep)
+   - 1.2 [Boundary Value Analysis (BVA)](#fr03-bva)
+   - 1.3 [AI Gap Analysis — Design Phase](#fr03-gap-design)
+   - 1.4 [Bug Report & AI Gap Analysis — Execution Phase](#fr03-bug)
+2. [Feature 2: Xem lịch sử đơn hàng (FR-11)](#feature-2)
+   - 2.1 [Domain Testing (EP)](#fr11-ep)
+   - 2.2 [Boundary Value Analysis (BVA)](#fr11-bva)
+   - 2.3 [AI Gap Analysis — Design Phase](#fr11-gap-design)
+   - 2.4 [Bug Report & AI Gap Analysis — Execution Phase](#fr11-bug)
+3. [Feature 3: Quản lý người dùng - Admin (FR-19)](#feature-3)
+   - 3.1 [Domain Testing (EP)](#fr19-ep)
+   - 3.2 [Boundary Value Analysis (BVA)](#fr19-bva)
+   - 3.3 [AI Gap Analysis — Design Phase](#fr19-gap-design)
+   - 3.4 [Bug Report & AI Gap Analysis — Execution Phase](#fr19-bug)
+4. [Feature 4: Thanh toán trên Mobile (FR-20)](#feature-4)
+   - 4.1 [Domain Testing (EP)](#fr20-ep)
+   - 4.2 [Boundary Value Analysis (BVA)](#fr20-bva)
+   - 4.3 [AI Gap Analysis — Design Phase](#fr20-gap-design)
+   - 4.4 [Bug Report & AI Gap Analysis — Execution Phase](#fr20-bug)
+5. [Agent Skills](#agent-skills)
+
+---
+
+## YÊU CẦU 2 — ĐỔI TÊN và RESTRUCTURE sections
+
+Với MỖI feature, đổi 4 sections thành:
+
+### 1. Domain Testing (Equivalence Partitioning)
+
+### 2. Boundary Value Analysis (BVA)
+
+### 3. AI Gap Analysis — Giai đoạn Thiết kế (Design Phase)
+
+### 4. Bug Report & AI Gap Analysis — Giai đoạn Thực thi (Execution Phase)
+
+---
+
+## YÊU CẦU 3 — THÊM step-by-step explanation
+
+Trong Section 1 "Domain Testing (EP)" của MỖI feature,
+thêm đoạn step-by-step SAU phần "Tóm tắt các biến input",
+TRƯỚC bảng EP partition:
+
+#### Quy trình áp dụng Domain Testing (EP) từng bước:
+
+**Bước 1 — Xác định Input & Output**  
+[Liệt kê X biến input đã xác định và output tương ứng]
+
+**Bước 2 — Phân chia miền giá trị (Equivalence Partitioning)**  
+Với mỗi biến input, chia thành Valid Partitions (VP)
+và Invalid Partitions (IP) dựa trên business rules của [FR-ID].  
+Tổng số partitions: X valid + X invalid = X partitions.
+
+**Bước 3 — Chọn giá trị đại diện (Representative Values)**  
+Mỗi partition chọn 1 giá trị điển hình nhất
+(không phải biên — biên dành cho BVA).
+
+**Bước 4 — Thiết kế TC theo nguyên tắc Error Isolation**  
+Thiết lập Valid Baseline. Tại mỗi TC,
+chỉ thay đổi 1 biến sang partition cần test,
+các biến còn lại giữ giá trị baseline hợp lệ.  
+Số TC ban đầu: X TCs.
+
+**Bước 5 — Rút gọn TC (Test Case Reduction)**  
+[Ghi cụ thể TC nào bị merge và lý do nếu có,
+hoặc ghi "Không có TC trùng lặp sau khi review."]  
+Số TC sau rút gọn: X TCs.
+
+**Tổng kết EP:**
+
+- TC từ Domain Testing (EP): X TCs
+- TC từ BVA (sẽ thiết kế ở Section 2): X TCs
+- Tổng sau Test Case Reduction: X TCs
+
+---
+
+Trong Section 2 "BVA" của MỖI feature,
+thêm đoạn step-by-step SAU phần "Các boundary đã xác định",
+TRƯỚC bảng biện luận:
+
+#### Quy trình áp dụng BVA từng bước:
+
+**Bước 1 — Xác định các boundary từ kết quả EP**  
+Dựa vào các partition đã chia ở Section 1,
+xác định X boundary points cần kiểm thử.
+
+**Bước 2 — Chọn chiến lược BVA cho từng boundary**  
+[Áp dụng biện luận 2-Point vs 3-Point đã có — giữ nguyên]
+
+**Bước 3 — Thiết kế BVA TC theo Error Isolation**  
+Giữ nguyên Valid Baseline từ Section 1.
+Chỉ thay đổi giá trị của biến đang test boundary,
+các biến còn lại giữ baseline.  
+Số BVA TC: X TCs.
+
+---
+
+## YÊU CẦU 4 — TÁCH Gap Analysis thành 2 phần
+
+Section 3 — Design Phase (giữ nguyên nội dung cũ "AI Gap Analysis"):
+
+- TC bị AI bỏ sót khi thiết kế
+- Root cause
+- Student fix
+
+Section 4 — Execution Phase (lấy từ "Bug Report" cũ):
+
+- Bảng bug hiện tại (giữ nguyên)
+- Thêm sau bảng bug đoạn ngắn:
+
+**Bugs AI không predict được khi thiết kế:**
+| Bug ID | Lý do AI không predict | Root cause |
+|---|---|---|
+| [Bug ID] | [Chỉ phát hiện khi chạy thực tế] | [AI giả định happy path / thiếu security context] |
+
+---
+
+## YÊU CẦU 5 — THÊM Section Agent Skills ở cuối
+
+## Agent Skills
+
+### test-writer
+
+- **Mô tả**: Thiết kế TC tự động bằng EP + BVA
+  theo đúng quy trình KCPM
+- **Input**: Feature Specification Schema
+- **Quy trình**: B0 Thu thập input → B1 EP Partitions
+  → B2 BVA Boundaries → B3 Error Isolation
+  → B4 Reduction → Output TC files
+- **Output**: DESIGN_REPORT.md, TC-[MODULE]-[NUMBER].md,
+  Ambiguity Notes, AI Audit Log
+
+### test-runner
+
+- **Mô tả**: Thực thi TC, ghi kết quả, tạo bug report tự động
+- **Input**: TC directory, môi trường test, tester name
+- **Quy trình**: Pre-execution → Execute
+  → Status (Pass/Fail/Blocked) → Bug Report
+  → Traceability Matrix → Gap Analysis
+- **Output**: sprint-1-test-run.md, traceability-matrix.md,
+  gap-analysis.md, DRAFT-BUG files, AI Audit Log
+
+### Cách 2 skills phối hợp
+
+Feature Spec → [test-writer] → TC files
+→ [test-runner] → Bug Issues + Gap Analysis
+
+### Demo Videos
+
+- 🎥 FR-03 Forgot Password: [YouTube — placeholder]
+- 🎥 FR-20 Mobile Checkout: [YouTube — placeholder]
+
+---
+
+Giữ nguyên toàn bộ nội dung bảng EP, BVA,
+bug tables hiện tại. Chỉ thêm và restructure.
+Output toàn bộ report hoàn chỉnh bằng Markdown.
+
+```
+
+```
+
+- **Output**:
+
+```text
+Viewed SKILL.md:1-155
+Viewed SKILL.md:1-136
+Edited main_report.md
+Viewed main_report.md:1-25
+
+Tôi đã cập nhật thành công tài liệu **Main Report cho HW02 Domain Testing** theo toàn bộ các yêu cầu bổ sung của bạn tại đường dẫn:
+
+*   [main_report.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/main_report.md)
+
+### Các nội dung đã được cập nhật và tái cấu trúc:
+
+1.  **Thêm Mục lục (Table of Contents)**: Đặt ở đầu báo cáo với các liên kết neo (anchor links) trỏ trực tiếp đến từng mục của 4 tính năng và phần Agent Skills.
+2.  **Đổi tên và Restructure sections**: Cấu trúc mỗi feature hiện tại bao gồm đúng 4 phần chuẩn hóa:
+    *   `### 1. Domain Testing (Equivalence Partitioning)`
+    *   `### 2. Boundary Value Analysis (BVA)`
+    *   `### 3. AI Gap Analysis — Giai đoạn Thiết kế (Design Phase)`
+    *   `### 4. Bug Report & AI Gap Analysis — Giai đoạn Thực thi (Execution Phase)`
+3.  **Thêm quy trình step-by-step**:
+    *   Ở mục **EP** của từng feature: Bổ sung chi tiết quy trình 5 bước áp dụng lý thuyết lớp học (Xác định Input/Output, Phân chia miền giá trị, Chọn giá trị đại diện, Thiết kế TC theo *Error Isolation*, Rút gọn TC) kèm số liệu thống kê phân chia miền dữ liệu cụ thể.
+    *   Ở mục **BVA** của từng feature: Bổ sung quy trình 3 bước xác định biên, chọn chiến lược (*2-Point* vs *3-Point BVA*), và thiết kế theo nguyên tắc cô lập lỗi.
+4.  **Tách Gap Analysis thành 2 giai đoạn**:
+    *   **Design Phase**: Trình bày các ca kiểm thử bị bỏ sót, nguyên nhân và cách khắc phục do con người đóng vai trò QC.
+    *   **Execution Phase**: Bảng Bug tìm được và bổ sung thêm bảng **Bugs AI không predict được khi thiết kế** phân tích chi tiết các lỗi logic nghiệp vụ động, lỗ hổng API/security bypass, race condition, và bất đồng bộ chỉ phát hiện khi chạy thực tế trên SUT.
+5.  **Thêm mục Agent Skills ở cuối báo cáo**: Mô tả đầy đủ cấu trúc, input/output, quy trình làm việc của 2 skill `test-writer` và `test-runner`, cách hai skill này phối hợp cùng các link video demo thực tế.
 ```
