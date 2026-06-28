@@ -1,4 +1,4 @@
-﻿# TC-CATEGORY-001: Thêm danh mục thành công với tên hợp lệ
+# TC-CATEGORY-001: Thêm danh mục thành công với tên hợp lệ
 
 ## Requirement ID
 
@@ -37,4 +37,4 @@ EC1 (Name hợp lệ, chuỗi không rỗng) + OC1 (Thêm thành công)
 
 ## Status / Related bugs
 
-Not Run / None
+Pass / None
