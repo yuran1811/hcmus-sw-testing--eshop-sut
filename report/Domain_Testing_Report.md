@@ -160,3 +160,161 @@ Nominal values for other variables: `Product Count` = 3 (multiple products exist
 | 5   | [TC-PLAS-005](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-005.md) | Tìm kiếm sản phẩm bằng từ khóa chứa mã độc HTML/XSS (Hiển thị an toàn) | DT        | EC5, EC7, EC11, OC3, OC4      | Pass - Rendered safely as plain text, no script execution          |
 | 6   | [TC-PLAS-006](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-006.md) | Kiểm tra trạng thái tải dữ liệu (Loading State)                        | DT        | EC10, EC7, OC4                | Pass - Loading indicator displays while fetching                   |
 | 7   | [TC-PLAS-007](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-007.md) | Kiểm tra cấu trúc thẻ H1 duy nhất trên trang chủ                       | DT        | EC11, OC4                     | Pass - Exactly one H1 tag exists on page                           |
+
+---
+
+## Feature: Thanh toán (FR-08)
+
+### B1: Identify Input & Output Variables — Thanh toán
+
+#### Input Variables
+
+| #   | Variable Name           | Data Type | Constraints                                                                 | Source                                              |
+| --- | ----------------------- | --------- | --------------------------------------------------------------------------- | --------------------------------------------------- |
+| 1   | Authorization           | String    | Bắt buộc. Token JWT hợp lệ từ phiên đăng nhập.                              | HTTP Request Header `Authorization: Bearer <token>` |
+| 2   | total_amount            | Integer   | Bắt buộc. Phải khớp chính xác với tổng tiền giỏ hàng do server tự tính lại. | HTTP Request Body                                   |
+| 3   | shipping_address        | String    | Bắt buộc. Địa chỉ giao hàng không được để trống.                            | HTTP Request Body                                   |
+| 4   | Cart State (DB/Session) | Object    | Bắt buộc. Giỏ hàng phải chứa ít nhất 1 sản phẩm.                            | Database / Session state                            |
+
+#### Output Variables
+
+| #   | Variable Name           | Data Type | Description                                                          |
+| --- | ----------------------- | --------- | -------------------------------------------------------------------- |
+| 1   | Response Status         | Integer   | Mã phản hồi HTTP (200, 400, 401, 500,...)                            |
+| 2   | Response Message        | String    | Thông điệp phản hồi từ hệ thống (thành công hoặc chi tiết lỗi)       |
+| 3   | Order Status (DB)       | String    | Trạng thái của đơn hàng vừa tạo trong DB, phải mặc định là "pending" |
+| 4   | Cart State (DB/Session) | Object    | Trạng thái giỏ hàng sau thanh toán, phải được xóa sạch (trống)       |
+
+---
+
+### B2: Identify Value Domains — Thanh toán
+
+#### Input Variable: Authorization
+
+| #   | Domain Type | Equivalence Class | Value Range / Description                           | Expected |
+| --- | ----------- | ----------------- | --------------------------------------------------- | -------- |
+| EC1 | Valid       | Valid JWT token   | Token được ký hợp lệ và chưa hết hạn của khách hàng | Accept   |
+| EC2 | Invalid     | Missing header    | Không truyền header `Authorization`                 | Reject   |
+| EC3 | Invalid     | Invalid JWT token | Token sai chữ ký, hết hạn hoặc malformed            | Reject   |
+
+#### Input Variable: Cart State
+
+| #   | Domain Type | Equivalence Class | Value Range / Description                   | Expected |
+| --- | ----------- | ----------------- | ------------------------------------------- | -------- |
+| EC4 | Valid       | Cart has items    | Số lượng mặt hàng trong giỏ >= 1            | Accept   |
+| EC5 | Invalid     | Empty cart        | Giỏ hàng không có sản phẩm nào (0 mặt hàng) | Reject   |
+
+#### Input Variable: total_amount
+
+| #   | Domain Type | Equivalence Class    | Value Range / Description                                     | Expected |
+| --- | ----------- | -------------------- | ------------------------------------------------------------- | -------- |
+| EC6 | Valid       | Matches Server Total | Giá trị bằng chính xác tổng tiền backend tính lại từ giỏ hàng | Accept   |
+| EC7 | Invalid     | Total Mismatch       | Giá trị khác tổng tiền thực tế backend tính lại               | Reject   |
+
+#### Input Variable: shipping_address
+
+| #    | Domain Type   | Equivalence Class     | Value Range / Description                  | Expected |
+| ---- | ------------- | --------------------- | ------------------------------------------ | -------- |
+| EC8  | Valid         | Non-empty string      | Chuỗi có độ dài >= 1 ký tự, địa chỉ hợp lệ | Accept   |
+| EC9  | Invalid       | Empty string          | Chuỗi rỗng `""` hoặc null / missing        | Reject   |
+| EC10 | Valid/Extreme | Extremely long string | Chuỗi có độ dài lớn (ví dụ: 500+ ký tự)    | Accept   |
+
+#### Output Variables (Expected Output Domains)
+
+| #   | Domain Type | Equivalence Class | Value Range / Description                          | Triggered By                                |
+| --- | ----------- | ----------------- | -------------------------------------------------- | ------------------------------------------- |
+| OC1 | Valid       | Success checkout  | HTTP 200, tạo đơn "pending", xóa giỏ hàng          | Mọi dữ liệu vào hợp lệ (EC1, EC4, EC6, EC8) |
+| OC2 | Error       | Unauthorized      | HTTP 401, không tạo đơn hàng                       | Thiếu hoặc sai token (EC2, EC3)             |
+| OC3 | Error       | Empty Cart error  | HTTP 400, không tạo đơn hàng                       | Giỏ hàng trống (EC5)                        |
+| OC4 | Error       | Price Mismatch    | HTTP 400, không tạo đơn hàng hoặc sửa tiền về đúng | Gửi sai tổng tiền (EC7)                     |
+| OC5 | Error       | Invalid Address   | HTTP 400, không tạo đơn hàng                       | Thiếu địa chỉ (EC9)                         |
+
+---
+
+### B3: Select Representative Values — Thanh toán
+
+#### Input Variable: Authorization
+
+| #   | EC Reference | Representative Value                      | Rationale                         |
+| --- | ------------ | ----------------------------------------- | --------------------------------- |
+| 1   | EC1          | `Bearer <valid_token_for_test@eshop.com>` | Token hợp lệ từ API đăng nhập     |
+| 2   | EC2          | `null` (omitted)                          | Không truyền header Authorization |
+| 3   | EC3          | `Bearer invalid.token.signature`          | Token giả mạo hoặc sai định dạng  |
+
+#### Input Variable: Cart State
+
+| #   | EC Reference | Representative Value                   | Rationale                   |
+| --- | ------------ | -------------------------------------- | --------------------------- |
+| 1   | EC4          | Giỏ có 1 AirPods Pro 2 + 1 Keychron Q1 | Server total = 10.000.000 ₫ |
+| 2   | EC5          | Giỏ hàng trống (0 sản phẩm)            | Server total = 0 ₫          |
+
+#### Input Variable: total_amount
+
+| #   | EC Reference | Representative Value | Rationale                                      |
+| --- | ------------ | -------------------- | ---------------------------------------------- |
+| 1   | EC6          | `10000000`           | Khớp chính xác tổng tiền 2 sản phẩm trong giỏ  |
+| 2   | EC7          | `1000`               | Giá trị thấp hơn thực tế nhằm thử gian lận giá |
+
+#### Input Variable: shipping_address
+
+| #   | EC Reference | Representative Value   | Rationale                            |
+| --- | ------------ | ---------------------- | ------------------------------------ |
+| 1   | EC8          | `"123 Le Loi, TP.HCM"` | Địa chỉ hợp lệ thông thường          |
+| 2   | EC9          | `""`                   | Chuỗi rỗng                           |
+| 3   | EC10         | `"A" * 500`            | Độ dài cực lớn để thử tải và lưu trữ |
+
+---
+
+### B4: Enumerate Partition Scenarios — Thanh toán
+
+Nominal values for other variables: `Authorization` = Valid Token, `Cart State` = 1 AirPods Pro 2 + 1 Keychron Q1 (Server Total = 10.000.000 ₫), `total_amount` = `10000000`, `shipping_address` = `"123 Le Loi, TP.HCM"`.
+
+#### Input Partition Scenarios
+
+| #   | Partition | Variable Tested  | Test Value             | Other Variables  | Expected Output (OC) | Expected Result           |
+| --- | --------- | ---------------- | ---------------------- | ---------------- | -------------------- | ------------------------- |
+| 1   | EC1       | Authorization    | Valid Token            | all nominal      | OC1                  | Accept (200 OK)           |
+| 2   | EC2       | Authorization    | Missing Header         | all nominal      | OC2                  | Reject (401 Unauthorized) |
+| 3   | EC3       | Authorization    | Invalid Token          | all nominal      | OC2                  | Reject (401 Unauthorized) |
+| 4   | EC4       | Cart State       | 1 AirPods + 1 Keychron | all nominal      | OC1                  | Accept (200 OK)           |
+| 5   | EC5       | Cart State       | Empty Cart             | total_amount = 0 | OC3                  | Reject (400 Bad Request)  |
+| 6   | EC6       | total_amount     | 10000000               | all nominal      | OC1                  | Accept (200 OK)           |
+| 7   | EC7       | total_amount     | 1000                   | all nominal      | OC4                  | Reject (400 Bad Request)  |
+| 8   | EC8       | shipping_address | "123 Le Loi, TP.HCM"   | all nominal      | OC1                  | Accept (200 OK)           |
+| 9   | EC9       | shipping_address | `""`                   | all nominal      | OC5                  | Reject (400 Bad Request)  |
+| 10  | EC10      | shipping_address | `"A" * 500`            | all nominal      | OC1                  | Accept (200 OK)           |
+
+#### Output Partition Scenarios
+
+| #   | Partition | Output Description                       | Triggering Input Condition         | Same As Input Scenario |
+| --- | --------- | ---------------------------------------- | ---------------------------------- | ---------------------- |
+| 1   | OC1       | Đơn hàng tạo pending & giỏ hàng được xóa | Tất cả các biến hợp lệ             | Scenario #1            |
+| 2   | OC2       | Lỗi chưa đăng nhập (401)                 | Token không hợp lệ hoặc thiếu      | Scenario #2, #3        |
+| 3   | OC3       | Lỗi giỏ hàng trống (400)                 | Giỏ hàng không có sản phẩm nào     | Scenario #5            |
+| 4   | OC4       | Lỗi sai lệch giá tiền (400)              | total_amount gửi khác máy chủ tính | Scenario #7            |
+| 5   | OC5       | Lỗi thiếu địa chỉ (400)                  | Địa chỉ giao hàng bị để trống      | Scenario #9            |
+
+---
+
+### B5: Consolidate into Test Cases — Thanh toán
+
+#### Consolidation Table
+
+| Scenario(s) Merged                                          | Reason                                                          | Resulting TC                                                                                                                               |
+| ----------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Scenario #1 + Scenario #4 + Scenario #6 + Scenario #8 + OC1 | Trùng test data và expected output cho luồng chính hợp lệ       | [TC-CHECKOUT-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-001.md) |
+| Scenario #2 + Scenario #3 + OC2                             | Kiểm thử bảo mật/phân quyền (chưa đăng nhập hoặc sai token)     | [TC-CHECKOUT-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-002.md) |
+| Scenario #5 + OC3                                           | Kiểm thử nghiệp vụ ngăn chặn giỏ hàng rỗng                      | [TC-CHECKOUT-003](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-003.md) |
+| Scenario #7 + OC4                                           | Kiểm thử tính an toàn/giá tiền không cho phép client tự sửa giá | [TC-CHECKOUT-004](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-004.md) |
+| Scenario #9 + OC5                                           | Kiểm thử trường địa chỉ bắt buộc                                | [TC-CHECKOUT-005](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-005.md) |
+| Scenario #10                                                | Biên độ dài địa chỉ được phân tích ở phần BVA                   | Nằm trong BVA TCs                                                                                                                          |
+
+#### Final Test Case Summary
+
+| #   | TC ID                                                                                                                                      | Description                                                              | Technique | EC/OC Covered           | Expected                                   |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------ | --------- | ----------------------- | ------------------------------------------ |
+| 1   | [TC-CHECKOUT-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-001.md) | Thanh toán đơn hàng thành công với thông tin hợp lệ                      | DT        | EC1, EC4, EC6, EC8, OC1 | Pass - Đơn hàng pending, giỏ hàng được xóa |
+| 2   | [TC-CHECKOUT-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-002.md) | Thanh toán đơn hàng thất bại khi chưa đăng nhập hoặc token không hợp lệ  | DT        | EC2, EC3, OC2           | Fail - Trả về mã lỗi 401                   |
+| 3   | [TC-CHECKOUT-003](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-003.md) | Thanh toán đơn hàng thất bại khi giỏ hàng trống                          | DT        | EC5, OC3                | Fail - Trả về mã lỗi 400                   |
+| 4   | [TC-CHECKOUT-004](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-004.md) | Thanh toán đơn hàng thất bại khi tổng tiền client gửi không khớp máy chủ | DT        | EC7, OC4                | Fail - Trả về mã lỗi 400                   |
+| 5   | [TC-CHECKOUT-005](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-005.md) | Thanh toán đơn hàng thất bại khi địa chỉ giao hàng bị để trống           | DT        | EC9, OC5                | Fail - Trả về mã lỗi 400                   |
