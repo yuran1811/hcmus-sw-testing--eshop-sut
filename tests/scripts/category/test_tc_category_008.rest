@@ -1,0 +1,25 @@
+### TC-CATEGORY-008: Thêm danh mục thất bại khi dùng token của user thường (non-admin)
+
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập với tài khoản user thường để lấy token
+# @name loginUser
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "test@eshop.com",
+  "password": "Test1234!"
+}
+
+### Lấy token user
+@token = {{loginUser.response.body.token}}
+
+### 2. Thêm danh mục mới với token user thường
+POST {{baseUrl}}/categories
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Điện tử"
+}

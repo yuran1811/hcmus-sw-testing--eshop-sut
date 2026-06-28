@@ -1,4 +1,4 @@
-﻿# TC-CATEGORY-008: Thêm danh mục thất bại khi dùng token của user thường (non-admin)
+# TC-CATEGORY-008: Thêm danh mục thất bại khi dùng token của user thường (non-admin)
 
 ## Requirement ID
 
@@ -36,4 +36,4 @@ EC5 (Token của user thường — không có quyền Admin) + OC6 (Forbidden)
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-CATEGORY-003
