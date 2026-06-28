@@ -48,6 +48,6 @@ Lỗi này cho thấy câu lệnh SQL được nối chuỗi trực tiếp (SQL 
 ## Evidence
 
 - **TC-PLAS-005 (Tìm kiếm ký tự đặc biệt):**
-  ![Evidence 1](../screenshots/TC-PLAS-005a.png)
+  ![Evidence 1](../screenshots/product-list-and-search/TC-PLAS-005a.png)
 - **TC-PLAS-005 (Tìm kiếm ký tự đặc biệt - Lỗi hệ thống thô):**
-  ![Evidence 2](../screenshots/TC-PLAS-005b.png)
+  ![Evidence 2](../screenshots/product-list-and-search/TC-PLAS-005b.png)

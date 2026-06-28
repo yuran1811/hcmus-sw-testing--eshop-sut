@@ -42,18 +42,18 @@ Hệ thống trả về kết quả là 2 hoặc 3 (có nhiều thẻ `<h1>` t�
 ## Evidence
 
 - **TC-PLAS-001 (Xem danh sách):**
-  ![Evidence 1](../screenshots/TC-PLAS-001.png)
+  ![Evidence 1](../screenshots/product-list-and-search/TC-PLAS-001.png)
 - **TC-PLAS-002 (Tìm kiếm):**
-  ![Evidence 2](../screenshots/TC-PLAS-002.png)
+  ![Evidence 2](../screenshots/product-list-and-search/TC-PLAS-002.png)
 - **TC-PLAS-004 (Tìm kiếm có dấu):**
-  ![Evidence 3](../screenshots/TC-PLAS-004.png)
+  ![Evidence 3](../screenshots/product-list-and-search/TC-PLAS-004.png)
 - **TC-PLAS-005 (Tìm kiếm ký tự đặc biệt):**
-  ![Evidence 4](../screenshots/TC-PLAS-005a.png)
+  ![Evidence 4](../screenshots/product-list-and-search/TC-PLAS-005a.png)
 - **TC-PLAS-006 (Trễ tải mạng - 2 thẻ h1):**
-  ![Evidence 5](../screenshots/TC-PLAS-006b.png)
+  ![Evidence 5](../screenshots/product-list-and-search/TC-PLAS-006b.png)
 - **TC-PLAS-007 (Cấu trúc H1 trang chủ):**
-  ![Evidence 6](../screenshots/TC-PLAS-007.png)
+  ![Evidence 6](../screenshots/product-list-and-search/TC-PLAS-007.png)
 - **TC-PLAS-BVA-001 (Tìm kiếm 1 ký tự):**
-  ![Evidence 7](../screenshots/TC-PLAS-BVA-001.png)
+  ![Evidence 7](../screenshots/product-list-and-search/TC-PLAS-BVA-001.png)
 - **TC-PLAS-BVA-005 (Database chỉ có 1 sản phẩm):**
-  ![Evidence 8](../screenshots/TC-PLAS-BVA-005b.png)
+  ![Evidence 8](../screenshots/product-list-and-search/TC-PLAS-BVA-005b.png)

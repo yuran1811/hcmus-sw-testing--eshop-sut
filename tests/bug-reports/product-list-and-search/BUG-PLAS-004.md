@@ -46,8 +46,8 @@ Lưới sản phẩm trống nhưng hoàn toàn không hiển thị bất kỳ t
 ## Evidence
 
 - **TC-PLAS-003 (Tìm kiếm không kết quả):**
-  ![Evidence 1](../screenshots/TC-PLAS-003.png)
+  ![Evidence 1](../screenshots/product-list-and-search/TC-PLAS-003.png)
 - **TC-PLAS-BVA-004 (Xóa hết sản phẩm):**
-  ![Evidence 2](../screenshots/TC-PLAS-BVA-004a.png)
+  ![Evidence 2](../screenshots/product-list-and-search/TC-PLAS-BVA-004a.png)
 - **TC-PLAS-BVA-004 (Kết quả trắng trơn):**
-  ![Evidence 3](../screenshots/TC-PLAS-BVA-004b.png)
+  ![Evidence 3](../screenshots/product-list-and-search/TC-PLAS-BVA-004b.png)

@@ -45,4 +45,4 @@ Dòng chữ kết quả tìm kiếm không được ngắt dòng, bị tràn ra 
 - **TC-PLAS-BVA-002 (Vỡ giao diện khi từ khóa quá dài - 255 ký tự):**
   ![Evidence 1](../screenshots/product-list-and-search/TC-PLAS-BVA-002.png)
 - **TC-PLAS-BVA-003 (Vỡ giao diện khi từ khóa quá dài - 256 ký tự):**
-  ![Evidence 2](../screenshots/TC-PLAS-BVA-003.png)
+  ![Evidence 2](../screenshots/product-list-and-search/TC-PLAS-BVA-003.png)
