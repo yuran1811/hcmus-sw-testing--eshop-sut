@@ -9,6 +9,6 @@
 | TC-PLAS-007     | product-list-and-search | Mạch Quốc Tấn | Fail   | BUG-PLAS-001                             | Có 2 thẻ <h1> (trùng lặp nghiệp vụ kiểm thử với TC-PLAS-001)                            |
 | TC-PLAS-BVA-001 | product-list-and-search | Mạch Quốc Tấn | Fail   | BUG-PLAS-001, BUG-PLAS-002, BUG-PLAS-003 | Có 2 thẻ <h1>, không có alt text, đơn vị tiền tệ hiển thị VND thay vì ₫ |
 | TC-PLAS-BVA-002 | product-list-and-search | Mạch Quốc Tấn | Fail   | BUG-PLAS-007                             | Vỡ giao diện (tràn dòng hiển thị từ khóa tìm kiếm)                                      |
-| TC-PLAS-BVA-003 | product-list-and-search | Mạch Quốc Tấn |        |                                          |                                                                         |
+| TC-PLAS-BVA-003 | product-list-and-search | Mạch Quốc Tấn | Fail   | BUG-PLAS-007                             | Không giới hạn ký tự nhập, vỡ giao diện (tràn dòng từ khóa 256 ký tự)                     |
 | TC-PLAS-BVA-004 | product-list-and-search | Mạch Quốc Tấn |        |                                          |                                                                         |
 | TC-PLAS-BVA-005 | product-list-and-search | Mạch Quốc Tấn |        |                                          |                                                                         |

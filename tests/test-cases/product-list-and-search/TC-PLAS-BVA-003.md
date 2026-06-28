@@ -37,4 +37,4 @@ Product List & Search / Functional / Boundary Value Analysis (3-Point + 2-Point 
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-PLAS-007

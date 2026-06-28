@@ -8,7 +8,7 @@ assignees: ""
 
 ## Found by Test Case
 
-TC-PLAS-BVA-002
+TC-PLAS-BVA-002, TC-PLAS-BVA-003
 
 ## Requirement liên quan
 
@@ -26,7 +26,7 @@ Browser: Google Chrome / Microsoft Edge, OS: Windows, URL: http://localhost:5173
 
 1. Truy cập trang chủ EShop (`http://localhost:5173`).
 
-2. Nhập từ khóa tìm kiếm dài 255 ký tự (ví dụ: chuỗi gồm 255 chữ cái `"A"` liên tục không có dấu cách).
+2. Nhập từ khóa tìm kiếm dài 255 hoặc 256 ký tự (ví dụ: chuỗi gồm các chữ cái `"A"` liên tục không có dấu cách).
 
 3. Bấm nút Tìm kiếm (hoặc nhấn Enter).
 
@@ -34,13 +34,15 @@ Browser: Google Chrome / Microsoft Edge, OS: Windows, URL: http://localhost:5173
 
 ## Expected result
 
-Chuỗi từ khóa hiển thị được ngắt dòng tự động hoặc rút gọn có dấu ba chấm (CSS `word-break: break-word` hoặc `text-overflow: ellipsis`) để không làm tràn khung giao diện và kéo dài trang chủ theo chiều ngang.
+Chuỗi từ khóa hiển thị được ngắt dòng tự động hoặc rút gọn có dấu ba chấm (CSS `word-break: break-word` hoặc `text-overflow: ellipsis`) để không làm tràn khung giao diện và kéo dài trang chủ theo chiều ngang. Hệ thống nên giới hạn độ dài ký tự nhập ở ô input (ví dụ: `maxlength="255"`).
 
 ## Actual result
 
-Dòng chữ kết quả tìm kiếm không được ngắt dòng, bị tràn ra ngoài biên giao diện chính của trang chủ, tạo ra thanh cuộn ngang gây vỡ bố cục giao diện.
+Dòng chữ kết quả tìm kiếm không được ngắt dòng, bị tràn ra ngoài biên giao diện chính của trang chủ, tạo ra thanh cuộn ngang gây vỡ bố cục giao diện. Hệ thống hoàn toàn không giới hạn số lượng ký tự nhập vào ô tìm kiếm.
 
 ## Evidence
 
-- **TC-PLAS-BVA-002 (Vỡ giao diện khi từ khóa quá dài):**
-  ![Evidence](../screenshots/TC-PLAS-BVA-002.png)
+- **TC-PLAS-BVA-002 (Vỡ giao diện khi từ khóa quá dài - 255 ký tự):**
+  ![Evidence 1](../screenshots/product-list-and-search/TC-PLAS-BVA-002.png)
+- **TC-PLAS-BVA-003 (Vỡ giao diện khi từ khóa quá dài - 256 ký tự):**
+  ![Evidence 2](../screenshots/TC-PLAS-BVA-003.png)
