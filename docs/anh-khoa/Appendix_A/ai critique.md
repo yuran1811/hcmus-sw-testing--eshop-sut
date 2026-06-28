@@ -1,0 +1,7 @@
+# AI Critique - Phê Bình và Bài Học
+
+Bài học lớn nhất là không thể tin AI tự đánh giá đúng việc nó làm. Nhiều lần AI tự gắn nhãn VALID cho output của mình, nhưng đối chiếu lại với yêu cầu ban đầu thì đã lệch, tự thêm thông tin ngoài đề bài, đọc source code dù bị cấm, hoặc nhét phân tích nguyên nhân kỹ thuật vào báo cáo lẽ ra phải thuần quan sát. Lý do tôi phát hiện được là vì tôi đã viết sẵn giới hạn cho từng skill bằng lời cụ thể (không đọc source code, không tạo test case ở bước phân tích yêu cầu, phải dừng hỏi xác nhận trước khi viết code) và cấu hình quyền chạy lệnh trong settings — cho chạy tự do các lệnh đọc/khảo sát, chặn các lệnh git, rm có thể gây nguy hiểm. Có giới hạn viết rõ thì mới có cái để đối chiếu; và việc chặn quyền ở settings không phụ thuộc AI có tự giác nhớ hay không.
+
+Một vấn đề khác là AI không tự nghi ngờ số liệu nó báo cáo: một lần chạy 13 test chỉ ra đúng 1 lỗi, AI chấp nhận luôn, chỉ khi tôi hỏi lại mới phát hiện phần lớn test đã bị bỏ qua. Tương tự, một số test vẫn báo "pass" dù assertion viết quá chung, không thực sự kiểm đúng điều cần kiểm — pass kiểu này nguy hiểm hơn fail vì tạo cảm giác an toàn giả.
+
+Từ đó tôi rút ra là vai trò của mình không thể chỉ giao việc rồi nhận kết quả, mà phải đọc lại từng bước, đối chiếu với yêu cầu gốc, và test tay lại khi còn nghi ngờ. AI làm nhanh và suy luận tốt trong phạm vi rõ ràng, nhưng kiểm soát ranh giới và tự kiểm tra lại kết quả của chính nó vẫn là việc của con người.

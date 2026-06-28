@@ -1,3 +1,17 @@
+## APPENDIX A: [AI-02] AI AUDIT REPORT
+
+| Field                                  | Value                 |
+| -------------------------------------- | --------------------- |
+| **Student name (printed):**            | NGUYỄN LÊ HỒ ANH KHOA |
+| **Student ID:**                        | 23127211              |
+| **Class / Cohort:**                    | 23KTPM3               |
+| **Assignment ID** (e.g., HW#00, HW#02) | HW02                  |
+| **Assignment date:**                   | 29/06/2026            |
+| **AI tool(s) used:**                   | Claude                |
+| **AI tools used for audit:**           | Yes                   |
+
+---
+
 **AI Audit Report Item**
 
 - **Công cụ AI:** Claude Code (Sonnet 4.6)
@@ -599,6 +613,7 @@
   > Tiếp tục đóng vai Boundary Value Analysis Expert, sử dụng @.agents/skills/boundary-value-analysis/SKILL.md để phân tích các giá trị biên dựa trên thông tin từ đặc tả @docs/anh-khoa/feature-specs/FR-01 Đăng ký tài khoản.md
   >
   > Yêu cầu thực thi:
+  >
   > - Chỉ lọc ra các biến có giới hạn biên định lượng (ví dụ: độ dài chuỗi, số lượng, khoảng giá trị).
   > - Xác định rõ các điểm On, Off, In, Out (tùy theo loại biên: 2 giá trị hoặc 3 giá trị) cho từng ranh giới và giải thích lý do lựa chọn một cách ngắn gọn.
   > - Sinh bảng Test Case bổ sung cho các điểm biên này. Các test case này không được trùng lặp với các test case đã sinh ở phần Domain Testing.
@@ -608,11 +623,13 @@
   > ## 1. Lọc biến & xác định bước nhảy (increment)
   >
   > Trong FR-01, **chỉ có Mật khẩu** chứa ràng buộc biên định lượng. Các biến còn lại bị **loại khỏi BVA**:
+  >
   > - **Họ Tên:** README không nêu giới hạn độ dài → không có biên số học.
-  > - **Email:** ràng buộc *định dạng*, không phải độ dài → không phải biên định lượng.
-  > - **Xác nhận mật khẩu:** ràng buộc *khớp*, không định lượng.
+  > - **Email:** ràng buộc _định dạng_, không phải độ dài → không phải biên định lượng.
+  > - **Xác nhận mật khẩu:** ràng buộc _khớp_, không định lượng.
   >
   > Mật khẩu có 2 nhóm biên định lượng, đều là **số nguyên → bước nhảy = 1**:
+  >
   > - **Độ dài chuỗi:** Min = 8 (đặc tả **không** có Max).
   > - **Số lượng mỗi loại ký tự bắt buộc** (hoa / thường / số / đặc biệt): Min = 1 mỗi loại.
   >
@@ -622,27 +639,27 @@
   >
   > ### BVA Points definition
   >
-  > | Variable | Boundary Type | Target Value | Trạng thái (đối chiếu Domain Testing) |
-  > |---|---|---|---|
-  > | Mật khẩu — độ dài | Off (Min−1) | 7 ký tự (invalid) | Đã cover — TC-REGISTER-006 |
-  > | Mật khẩu — độ dài | On (Min) | 8 ký tự (valid) | Đã cover — TC-REGISTER-001 |
-  > | Mật khẩu — số chữ hoa | Off | 0 (invalid) | Đã cover — TC-REGISTER-007 |
-  > | Mật khẩu — số chữ hoa | On | 1 (valid) | Đã cover — TC-REGISTER-001 (đúng 1 chữ hoa `A`) |
-  > | Mật khẩu — số chữ thường | Off | 0 (invalid) | Đã cover — TC-REGISTER-008 |
-  > | Mật khẩu — số chữ thường | On | 1 (valid) | CHƯA cover (TC-001 dùng 3 chữ thường) |
-  > | Mật khẩu — số chữ số | Off | 0 (invalid) | Đã cover — TC-REGISTER-009 |
-  > | Mật khẩu — số chữ số | On | 1 (valid) | CHƯA cover (TC-001 dùng 3 chữ số) |
-  > | Mật khẩu — số ký tự đặc biệt | Off | 0 (invalid) | Đã cover — TC-REGISTER-010 |
-  > | Mật khẩu — số ký tự đặc biệt | On | 1 (valid) | Đã cover — TC-REGISTER-001 (đúng 1 ký tự `!`) |
+  > | Variable                     | Boundary Type | Target Value      | Trạng thái (đối chiếu Domain Testing)           |
+  > | ---------------------------- | ------------- | ----------------- | ----------------------------------------------- |
+  > | Mật khẩu — độ dài            | Off (Min−1)   | 7 ký tự (invalid) | Đã cover — TC-REGISTER-006                      |
+  > | Mật khẩu — độ dài            | On (Min)      | 8 ký tự (valid)   | Đã cover — TC-REGISTER-001                      |
+  > | Mật khẩu — số chữ hoa        | Off           | 0 (invalid)       | Đã cover — TC-REGISTER-007                      |
+  > | Mật khẩu — số chữ hoa        | On            | 1 (valid)         | Đã cover — TC-REGISTER-001 (đúng 1 chữ hoa `A`) |
+  > | Mật khẩu — số chữ thường     | Off           | 0 (invalid)       | Đã cover — TC-REGISTER-008                      |
+  > | Mật khẩu — số chữ thường     | On            | 1 (valid)         | CHƯA cover (TC-001 dùng 3 chữ thường)           |
+  > | Mật khẩu — số chữ số         | Off           | 0 (invalid)       | Đã cover — TC-REGISTER-009                      |
+  > | Mật khẩu — số chữ số         | On            | 1 (valid)         | CHƯA cover (TC-001 dùng 3 chữ số)               |
+  > | Mật khẩu — số ký tự đặc biệt | Off           | 0 (invalid)       | Đã cover — TC-REGISTER-010                      |
+  > | Mật khẩu — số ký tự đặc biệt | On            | 1 (valid)         | Đã cover — TC-REGISTER-001 (đúng 1 ký tự `!`)   |
   >
-  > **Kết luận đối chiếu:** Biên độ dài (7/8) và phần lớn biên đếm ký tự đã được Domain Testing cover. Chỉ còn **2 điểm On chưa được cô lập**: *số chữ thường = 1* và *số chữ số = 1* — vì TC-REGISTER-001 dùng tới 3 chữ thường và 3 chữ số nên không nằm **đúng trên biên**. Hai điểm này nếu implementation lỡ yêu cầu ≥2 thì TC-001 không bắt được → đáng bổ sung.
+  > **Kết luận đối chiếu:** Biên độ dài (7/8) và phần lớn biên đếm ký tự đã được Domain Testing cover. Chỉ còn **2 điểm On chưa được cô lập**: _số chữ thường = 1_ và _số chữ số = 1_ — vì TC-REGISTER-001 dùng tới 3 chữ thường và 3 chữ số nên không nằm **đúng trên biên**. Hai điểm này nếu implementation lỡ yêu cầu ≥2 thì TC-001 không bắt được → đáng bổ sung.
   >
   > ## 3. BVA Test Cases (bổ sung, không trùng Domain Testing)
   >
-  > | Test Case ID | Requirement ID | Target Boundary | Test Data (Inputs) | Test Steps | Expected Result |
-  > |---|---|---|---|---|---|
-  > | TC-REGISTER-015 | FR-01 | Số chữ thường = 1 (On) | Họ Tên `Nguyễn Văn A`; Email `bva.lower@gmail.com` (mới); Mật khẩu `ABCD12a!` (8 ký tự: 4 hoa, 1 thường `a`, 2 số, 1 đặc biệt); Xác nhận `ABCD12a!` | 1. Mở trang Đăng ký. 2. Nhập dữ liệu theo Test Data. 3. Bấm "Đăng ký". | Đăng ký thành công (mật khẩu thỏa "≥1 chữ thường" tại đúng giá trị biên 1) → chuyển sang trang Đăng nhập. |
-  > | TC-REGISTER-016 | FR-01 | Số chữ số = 1 (On) | Họ Tên `Nguyễn Văn A`; Email `bva.digit@gmail.com` (mới); Mật khẩu `ABCDab1!` (8 ký tự: 4 hoa, 2 thường, 1 số `1`, 1 đặc biệt); Xác nhận `ABCDab1!` | 1. Mở trang Đăng ký. 2. Nhập dữ liệu theo Test Data. 3. Bấm "Đăng ký". | Đăng ký thành công (mật khẩu thỏa "≥1 chữ số" tại đúng giá trị biên 1) → chuyển sang trang Đăng nhập. |
+  > | Test Case ID    | Requirement ID | Target Boundary        | Test Data (Inputs)                                                                                                                                  | Test Steps                                                             | Expected Result                                                                                           |
+  > | --------------- | -------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+  > | TC-REGISTER-015 | FR-01          | Số chữ thường = 1 (On) | Họ Tên `Nguyễn Văn A`; Email `bva.lower@gmail.com` (mới); Mật khẩu `ABCD12a!` (8 ký tự: 4 hoa, 1 thường `a`, 2 số, 1 đặc biệt); Xác nhận `ABCD12a!` | 1. Mở trang Đăng ký. 2. Nhập dữ liệu theo Test Data. 3. Bấm "Đăng ký". | Đăng ký thành công (mật khẩu thỏa "≥1 chữ thường" tại đúng giá trị biên 1) → chuyển sang trang Đăng nhập. |
+  > | TC-REGISTER-016 | FR-01          | Số chữ số = 1 (On)     | Họ Tên `Nguyễn Văn A`; Email `bva.digit@gmail.com` (mới); Mật khẩu `ABCDab1!` (8 ký tự: 4 hoa, 2 thường, 1 số `1`, 1 đặc biệt); Xác nhận `ABCDab1!` | 1. Mở trang Đăng ký. 2. Nhập dữ liệu theo Test Data. 3. Bấm "Đăng ký". | Đăng ký thành công (mật khẩu thỏa "≥1 chữ số" tại đúng giá trị biên 1) → chuyển sang trang Đăng nhập.     |
   >
   > ### Nội dung file test case bổ sung
   >
@@ -655,21 +672,25 @@
   > **Test Type:** Boundary Value Analysis
   >
   > ### 1. Preconditions
+  >
   > - Người dùng đang ở trang Đăng ký, chưa đăng nhập.
   > - Email `bva.lower@gmail.com` chưa tồn tại trong hệ thống.
   >
   > ### 2. Test Data (Inputs)
+  >
   > - Họ Tên: `Nguyễn Văn A`
   > - Email: `bva.lower@gmail.com`
   > - Mật khẩu: `ABCD12a!` (8 ký tự: 4 chữ hoa, đúng 1 chữ thường `a`, 2 chữ số, 1 ký tự đặc biệt)
   > - Xác nhận mật khẩu: `ABCD12a!`
   >
   > ### 3. Test Steps
+  >
   > 1. Mở trang Đăng ký.
   > 2. Nhập đầy đủ 4 trường theo Test Data.
   > 3. Bấm "Đăng ký".
   >
   > ### 4. Expected Result
+  >
   > - Đăng ký thành công: mật khẩu thỏa ràng buộc "≥ 1 chữ thường" ngay tại giá trị biên dưới (đúng 1).
   > - Hệ thống chuyển hướng sang trang Đăng nhập.
   > - Mục tiêu BVA: phát hiện lỗi nếu implementation lỡ yêu cầu ≥ 2 chữ thường (Domain Testing TC-REGISTER-001 dùng 3 chữ thường nên không bắt được lỗi này).
@@ -684,21 +705,25 @@
   > **Test Type:** Boundary Value Analysis
   >
   > ### 1. Preconditions
+  >
   > - Người dùng đang ở trang Đăng ký, chưa đăng nhập.
   > - Email `bva.digit@gmail.com` chưa tồn tại trong hệ thống.
   >
   > ### 2. Test Data (Inputs)
+  >
   > - Họ Tên: `Nguyễn Văn A`
   > - Email: `bva.digit@gmail.com`
   > - Mật khẩu: `ABCDab1!` (8 ký tự: 4 chữ hoa, 2 chữ thường, đúng 1 chữ số `1`, 1 ký tự đặc biệt)
   > - Xác nhận mật khẩu: `ABCDab1!`
   >
   > ### 3. Test Steps
+  >
   > 1. Mở trang Đăng ký.
   > 2. Nhập đầy đủ 4 trường theo Test Data.
   > 3. Bấm "Đăng ký".
   >
   > ### 4. Expected Result
+  >
   > - Đăng ký thành công: mật khẩu thỏa ràng buộc "≥ 1 chữ số" ngay tại giá trị biên dưới (đúng 1).
   > - Hệ thống chuyển hướng sang trang Đăng nhập.
   > - Mục tiêu BVA: phát hiện lỗi nếu implementation lỡ yêu cầu ≥ 2 chữ số (Domain Testing TC-REGISTER-001 dùng 3 chữ số nên không bắt được lỗi này).
@@ -720,6 +745,7 @@
   > Tiếp tục đóng vai Boundary Value Analysis Expert, sử dụng @.agents/skills/boundary-value-analysis/SKILL.md để phân tích các giá trị biên dựa trên thông tin từ đặc tả @docs/anh-khoa/feature-specs/FR-07 Giỏ hàng.md
   >
   > Yêu cầu thực thi:
+  >
   > - Chỉ lọc ra các biến có giới hạn biên định lượng (ví dụ: độ dài chuỗi, số lượng, khoảng giá trị).
   > - Xác định rõ các điểm On, Off, In, Out (tùy theo loại biên: 2 giá trị hoặc 3 giá trị) cho từng ranh giới và giải thích lý do lựa chọn một cách ngắn gọn.
   > - Sinh bảng Test Case bổ sung cho các điểm biên này. Các test case này không được trùng lặp với các test case đã sinh ở phần Domain Testing.
@@ -730,12 +756,12 @@
   >
   > FR-07 chỉ có **một** biến mang biên định lượng: **Số lượng (Quantity)**.
   >
-  > | Biến | Có biên định lượng? | Lý do |
-  > |---|---|---|
-  > | **Số lượng (Quantity)** | Có | Integer, tối thiểu = 1; điều chỉnh qua nút +/- (bước nhảy = 1) |
-  > | Đơn giá / Thành tiền / Tổng cộng | Không | Read-only, là giá trị dẫn xuất/hiển thị, không phải input có biên do người dùng nhập |
-  > | Sản phẩm (số dòng/sản phẩm) | Không | Là bất biến "đúng 1 dòng" (đẳng thức), không phải khoảng min–max để BVA |
-  > | Nút Xóa / Tiếp tục mua sắm | Không | Hành động, không định lượng |
+  > | Biến                             | Có biên định lượng? | Lý do                                                                                |
+  > | -------------------------------- | ------------------- | ------------------------------------------------------------------------------------ |
+  > | **Số lượng (Quantity)**          | Có                  | Integer, tối thiểu = 1; điều chỉnh qua nút +/- (bước nhảy = 1)                       |
+  > | Đơn giá / Thành tiền / Tổng cộng | Không               | Read-only, là giá trị dẫn xuất/hiển thị, không phải input có biên do người dùng nhập |
+  > | Sản phẩm (số dòng/sản phẩm)      | Không               | Là bất biến "đúng 1 dòng" (đẳng thức), không phải khoảng min–max để BVA              |
+  > | Nút Xóa / Tiếp tục mua sắm       | Không               | Hành động, không định lượng                                                          |
   >
   > → **Số lượng:** Min = 1, bước nhảy = 1, đặc tả KHÔNG định nghĩa Max.
   >
@@ -745,11 +771,11 @@
   >
   > ### BVA Points definition
   >
-  > | Variable | Boundary Type | Target Value | Trạng thái (đối chiếu Domain Testing) |
-  > |---|---|---|---|
-  > | Số lượng | Off (Min−1) | 0 (cố giảm xuống dưới 1) | Đã cover — TC-CART-005 (bấm "-" tại 1 → chặn, không cho về 0) |
-  > | Số lượng | On (Min) | 1 (giá trị tối thiểu hợp lệ) | Đã cover — TC-CART-004 (giảm 2→1) và TC-CART-001 (thêm với SL=1) |
-  > | Số lượng | Max / Max+1 | (không xác định) | Đặc tả không định nghĩa Max → không có giá trị biên trên để kiểm |
+  > | Variable | Boundary Type | Target Value                 | Trạng thái (đối chiếu Domain Testing)                            |
+  > | -------- | ------------- | ---------------------------- | ---------------------------------------------------------------- |
+  > | Số lượng | Off (Min−1)   | 0 (cố giảm xuống dưới 1)     | Đã cover — TC-CART-005 (bấm "-" tại 1 → chặn, không cho về 0)    |
+  > | Số lượng | On (Min)      | 1 (giá trị tối thiểu hợp lệ) | Đã cover — TC-CART-004 (giảm 2→1) và TC-CART-001 (thêm với SL=1) |
+  > | Số lượng | Max / Max+1   | (không xác định)             | Đặc tả không định nghĩa Max → không có giá trị biên trên để kiểm |
   >
   > ## 3. BVA Test Cases (bổ sung)
   >
@@ -780,6 +806,7 @@
   > Tiếp tục đóng vai Boundary Value Analysis Expert, sử dụng @.agents/skills/boundary-value-analysis/SKILL.md để phân tích các giá trị biên dựa trên thông tin từ đặc tả @docs/anh-khoa/feature-specs/FR-15 Quản lý Sản phẩm.md
   >
   > Yêu cầu thực thi:
+  >
   > - Chỉ lọc ra các biến có giới hạn biên định lượng (ví dụ: độ dài chuỗi, số lượng, khoảng giá trị).
   > - Xác định rõ các điểm On, Off, In, Out (tùy theo loại biên: 2 giá trị hoặc 3 giá trị) cho từng ranh giới và giải thích lý do lựa chọn một cách ngắn gọn.
   > - Sinh bảng Test Case bổ sung cho các điểm biên này. Các test case này không được trùng lặp với các test case đã sinh ở phần Domain Testing.
@@ -788,12 +815,12 @@
 
   > ## 1. Lọc biến & xác định bước nhảy (increment)
   >
-  > | Biến | Có biên định lượng? | Bước nhảy & ranh giới |
-  > |---|---|---|
-  > | **Tên sản phẩm** | Có (độ dài chuỗi) | Increment = 1 (đếm ký tự); ranh giới: Min = 1 (không rỗng), Max = 255 |
-  > | **Giá** | Có (khoảng giá trị) | Ranh giới dưới tại 0 (`> 0`); không có Max. Increment mơ hồ → xem mục dưới |
-  > | Danh mục | Không | Tham chiếu (tồn tại/không), không định lượng |
-  > | Quyền (Authorization) | Không | Phân quyền, không định lượng |
+  > | Biến                  | Có biên định lượng? | Bước nhảy & ranh giới                                                      |
+  > | --------------------- | ------------------- | -------------------------------------------------------------------------- |
+  > | **Tên sản phẩm**      | Có (độ dài chuỗi)   | Increment = 1 (đếm ký tự); ranh giới: Min = 1 (không rỗng), Max = 255      |
+  > | **Giá**               | Có (khoảng giá trị) | Ranh giới dưới tại 0 (`> 0`); không có Max. Increment mơ hồ → xem mục dưới |
+  > | Danh mục              | Không               | Tham chiếu (tồn tại/không), không định lượng                               |
+  > | Quyền (Authorization) | Không               | Phân quyền, không định lượng                                               |
   >
   > Phân tích bước nhảy của Giá (điểm mấu chốt): đặc tả chỉ ghi "số dương (`> 0`)", không nói Giá là số nguyên. Theo nguyên tắc BVA (`1` cho số nguyên, `0.01` cho số thực), vì đặc tả không ràng buộc số nguyên nên tôi xét theo hướng số thực, increment = 0.01 để kiểm biên chặt hơn. Khi đó On của Giá = 0.01 (giá trị dương nhỏ nhất), khác với giá trị `1` mà Domain Testing đã dùng.
   >
@@ -801,24 +828,24 @@
   >
   > ### BVA Points definition
   >
-  > | Variable | Boundary Type | Target Value | Trạng thái (đối chiếu Domain Testing) |
-  > |---|---|---|---|
-  > | Tên — cận dưới | Off (Min−1) | 0 ký tự (rỗng) | Đã cover — TC-PRODUCT-005 |
-  > | Tên — cận dưới | On (Min) | 1 ký tự | Đã cover — TC-PRODUCT-003 |
-  > | Tên — cận trên | On (Max) | 255 ký tự | Đã cover — TC-PRODUCT-002 |
-  > | Tên — cận trên | Off (Max+1) | 256 ký tự | Đã cover — TC-PRODUCT-006 |
-  > | Giá — cận dưới | Off | 0 | Đã cover — TC-PRODUCT-007 |
-  > | Giá — cận dưới (số nguyên) | On | 1 | Đã cover — TC-PRODUCT-004 |
-  > | Giá — cận dưới (số thực) | On | 0.01 | CHƯA cover (TC-004 dùng `1`, không kiểm khoảng `0 < giá < 1`) |
-  > | Giá — cận trên | Max / Max+1 | (không xác định) | Đặc tả không định nghĩa Max → không có biên trên để kiểm |
+  > | Variable                   | Boundary Type | Target Value     | Trạng thái (đối chiếu Domain Testing)                         |
+  > | -------------------------- | ------------- | ---------------- | ------------------------------------------------------------- |
+  > | Tên — cận dưới             | Off (Min−1)   | 0 ký tự (rỗng)   | Đã cover — TC-PRODUCT-005                                     |
+  > | Tên — cận dưới             | On (Min)      | 1 ký tự          | Đã cover — TC-PRODUCT-003                                     |
+  > | Tên — cận trên             | On (Max)      | 255 ký tự        | Đã cover — TC-PRODUCT-002                                     |
+  > | Tên — cận trên             | Off (Max+1)   | 256 ký tự        | Đã cover — TC-PRODUCT-006                                     |
+  > | Giá — cận dưới             | Off           | 0                | Đã cover — TC-PRODUCT-007                                     |
+  > | Giá — cận dưới (số nguyên) | On            | 1                | Đã cover — TC-PRODUCT-004                                     |
+  > | Giá — cận dưới (số thực)   | On            | 0.01             | CHƯA cover (TC-004 dùng `1`, không kiểm khoảng `0 < giá < 1`) |
+  > | Giá — cận trên             | Max / Max+1   | (không xác định) | Đặc tả không định nghĩa Max → không có biên trên để kiểm      |
   >
   > Kết luận đối chiếu: Toàn bộ biên của Tên (0/1/255/256) và biên dưới Giá theo số nguyên (0/1) đã được Domain Testing cover đầy đủ. Chỉ còn 1 điểm On chưa cover: Giá = 0.01 — điểm biên dưới khi xét Giá là số thực. Domain Testing dùng `1` nên không phát hiện được trường hợp hệ thống lỡ chặn các giá trị `0 < giá < 1` (vd ép Giá phải ≥ 1 hoặc phải là số nguyên).
   >
   > ## 3. BVA Test Cases (bổ sung, không trùng Domain Testing)
   >
-  > | Test Case ID | Requirement ID | Target Boundary | Test Data (Inputs) | Test Steps | Expected Result |
-  > |---|---|---|---|---|---|
-  > | TC-PRODUCT-016 | FR-15 | Giá = 0.01 (On, số thực) | Admin; Tên `Áo thun nam` (hợp lệ); Giá `0.01`; Danh mục `Thời trang` (tồn tại) | 1. Mở màn hình Thêm sản phẩm. 2. Nhập Giá = 0.01, Tên & Danh mục hợp lệ. 3. Bấm "Lưu". | Theo đặc tả (`> 0`), `0.01` là hợp lệ → tạo sản phẩm thành công. Probe: nếu hệ thống từ chối/làm tròn về 0 → cần làm rõ đặc tả có ngầm định Giá là số nguyên ₫ hay không (điểm chưa rõ trong README). |
+  > | Test Case ID   | Requirement ID | Target Boundary          | Test Data (Inputs)                                                             | Test Steps                                                                             | Expected Result                                                                                                                                                                                       |
+  > | -------------- | -------------- | ------------------------ | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  > | TC-PRODUCT-016 | FR-15          | Giá = 0.01 (On, số thực) | Admin; Tên `Áo thun nam` (hợp lệ); Giá `0.01`; Danh mục `Thời trang` (tồn tại) | 1. Mở màn hình Thêm sản phẩm. 2. Nhập Giá = 0.01, Tên & Danh mục hợp lệ. 3. Bấm "Lưu". | Theo đặc tả (`> 0`), `0.01` là hợp lệ → tạo sản phẩm thành công. Probe: nếu hệ thống từ chối/làm tròn về 0 → cần làm rõ đặc tả có ngầm định Giá là số nguyên ₫ hay không (điểm chưa rõ trong README). |
   >
   > ### Nội dung file test case bổ sung
   >
@@ -831,20 +858,24 @@
   > **Test Type:** Boundary Value Analysis
   >
   > ### 1. Preconditions
+  >
   > - Đã đăng nhập bằng tài khoản Admin (JWT hợp lệ, `role = 'admin'`).
   > - Tồn tại danh mục hợp lệ "Thời trang".
   >
   > ### 2. Test Data (Inputs)
+  >
   > - Tên sản phẩm: `Áo thun nam` (hợp lệ)
   > - Giá: `0.01` (số thực dương nhỏ nhất với bước nhảy 0.01 — ngay trên biên 0)
   > - Danh mục: `Thời trang` (tồn tại)
   >
   > ### 3. Test Steps
+  >
   > 1. Mở màn hình Thêm sản phẩm (Web Admin).
   > 2. Nhập Giá = `0.01`, Tên và Danh mục hợp lệ.
   > 3. Bấm "Lưu".
   >
   > ### 4. Expected Result
+  >
   > - Theo đặc tả FR-15 ("Giá phải là số dương `> 0`"), giá trị `0.01` thỏa điều kiện → sản phẩm được tạo thành công.
   > - Mục tiêu BVA: kiểm khoảng `0 < giá < 1` mà Domain Testing chưa chạm (TC-PRODUCT-004 dùng `1`). Nếu hệ thống từ chối hoặc làm tròn `0.01` về 0:
   >   - Đó là điểm không tuân thủ đặc tả (đặc tả không ràng buộc Giá phải là số nguyên), hoặc
@@ -872,6 +903,7 @@
   > Tiếp tục đóng vai Boundary Value Analysis Expert, sử dụng @.agents/skills/boundary-value-analysis/SKILL.md để phân tích các giá trị biên dựa trên thông tin từ đặc tả @docs/anh-khoa/feature-specs/FR-20 Đăng nhập trên mobile.md
   >
   > Yêu cầu thực thi:
+  >
   > - Chỉ lọc ra các biến có giới hạn biên định lượng (ví dụ: độ dài chuỗi, số lượng, khoảng giá trị).
   > - Xác định rõ các điểm On, Off, In, Out (tùy theo loại biên: 2 giá trị hoặc 3 giá trị) cho từng ranh giới và giải thích lý do lựa chọn một cách ngắn gọn.
   > - Sinh bảng Test Case bổ sung cho các điểm biên này. Các test case này không được trùng lặp với các test case đã sinh ở phần Domain Testing.
@@ -882,12 +914,12 @@
   >
   > Đặc thù của login: 2 trường nhập (Email, Mật khẩu) không có biên định lượng — biên định lượng nằm ở state machine khóa tài khoản.
   >
-  > | Biến | Có biên định lượng? | Bước nhảy & ranh giới |
-  > |---|---|---|
-  > | Email | Không | Ràng buộc định dạng, không phải độ dài |
-  > | Mật khẩu | Không | Login chỉ xác thực; không có ràng buộc độ dài/độ phức tạp ở FR-20 (khác FR-01) |
-  > | **Bộ đếm đăng nhập sai** | Có (đếm) | Increment = 1; ngưỡng khóa = 3 lần liên tiếp |
-  > | **Thời gian khóa** | Có (khoảng thời gian) | Mốc = 30 giây; increment = 1 giây (môi trường demo) |
+  > | Biến                     | Có biên định lượng?   | Bước nhảy & ranh giới                                                          |
+  > | ------------------------ | --------------------- | ------------------------------------------------------------------------------ |
+  > | Email                    | Không                 | Ràng buộc định dạng, không phải độ dài                                         |
+  > | Mật khẩu                 | Không                 | Login chỉ xác thực; không có ràng buộc độ dài/độ phức tạp ở FR-20 (khác FR-01) |
+  > | **Bộ đếm đăng nhập sai** | Có (đếm)              | Increment = 1; ngưỡng khóa = 3 lần liên tiếp                                   |
+  > | **Thời gian khóa**       | Có (khoảng thời gian) | Mốc = 30 giây; increment = 1 giây (môi trường demo)                            |
   >
   > ## 2. Xác định điểm biên & đối chiếu trùng lặp
   >
@@ -895,20 +927,20 @@
   >
   > ### BVA Points definition
   >
-  > | Variable | Boundary Type | Target Value | Trạng thái (đối chiếu Domain Testing) |
-  > |---|---|---|---|
-  > | Bộ đếm sai | Off (Threshold−1) | 2 lần sai → chưa khóa | Đã cover — TC-MOBILE_LOGIN-008 |
-  > | Bộ đếm sai | On (Threshold) | 3 lần sai → khóa | Đã cover — TC-MOBILE_LOGIN-009 |
-  > | Thời gian khóa | On (tại mốc mở khóa) | t = 30s → mở khóa, đăng nhập đúng thành công | Đã cover — TC-MOBILE_LOGIN-011 |
-  > | Thời gian khóa | Off (ngay trước mốc) | t = 29s → vẫn còn khóa | CHƯA cover (TC-010 chỉ kiểm "đang khóa" ngay sau lần sai thứ 3, t≈0; chưa kiểm sát mốc 30s) |
+  > | Variable       | Boundary Type        | Target Value                                 | Trạng thái (đối chiếu Domain Testing)                                                       |
+  > | -------------- | -------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------- |
+  > | Bộ đếm sai     | Off (Threshold−1)    | 2 lần sai → chưa khóa                        | Đã cover — TC-MOBILE_LOGIN-008                                                              |
+  > | Bộ đếm sai     | On (Threshold)       | 3 lần sai → khóa                             | Đã cover — TC-MOBILE_LOGIN-009                                                              |
+  > | Thời gian khóa | On (tại mốc mở khóa) | t = 30s → mở khóa, đăng nhập đúng thành công | Đã cover — TC-MOBILE_LOGIN-011                                                              |
+  > | Thời gian khóa | Off (ngay trước mốc) | t = 29s → vẫn còn khóa                       | CHƯA cover (TC-010 chỉ kiểm "đang khóa" ngay sau lần sai thứ 3, t≈0; chưa kiểm sát mốc 30s) |
   >
   > Kết luận đối chiếu: Biên bộ đếm sai (2 Off / 3 On) đã được Domain Testing cover trọn vẹn. Biên thời gian khóa mới chỉ cover phía On (sau 30s → mở khóa, TC-011) và "đang khóa ở t≈0" (TC-010). Chưa cover điểm Off sát mốc — tức t = 29s vẫn phải còn khóa. Đây là điểm biên quan trọng để bắt lỗi khóa hết hạn quá sớm (vd implementation lỡ đặt 25s): TC-010 (t≈0) và TC-011 (t≥30) đều không phát hiện được lỗi này.
   >
   > ## 3. BVA Test Cases (bổ sung, không trùng Domain Testing)
   >
-  > | Test Case ID | Requirement ID | Target Boundary | Test Data (Inputs) | Test Steps | Expected Result |
-  > |---|---|---|---|---|---|
-  > | TC-MOBILE_LOGIN-012 | FR-20 | Thời gian khóa: Off = 29s (vẫn khóa) | Email `test@eshop.com` + Mật khẩu `Test1234!` (ĐÚNG), thử lúc t≈29s sau khi khóa | 1. Gây khóa bằng 3 lần sai liên tiếp. 2. Chờ ~29 giây (vẫn trong cửa sổ khóa 30s). 3. Nhập đúng Email + Mật khẩu, bấm "Đăng nhập". | Vẫn bị từ chối vì khóa chưa hết (mới 29/30s), kèm thông báo phù hợp không lộ nguyên nhân. Probe: nếu đăng nhập được ở t=29s → khóa hết hạn sớm hơn 30s (không tuân thủ "tạm khóa 30 giây"). |
+  > | Test Case ID        | Requirement ID | Target Boundary                      | Test Data (Inputs)                                                               | Test Steps                                                                                                                         | Expected Result                                                                                                                                                                             |
+  > | ------------------- | -------------- | ------------------------------------ | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  > | TC-MOBILE_LOGIN-012 | FR-20          | Thời gian khóa: Off = 29s (vẫn khóa) | Email `test@eshop.com` + Mật khẩu `Test1234!` (ĐÚNG), thử lúc t≈29s sau khi khóa | 1. Gây khóa bằng 3 lần sai liên tiếp. 2. Chờ ~29 giây (vẫn trong cửa sổ khóa 30s). 3. Nhập đúng Email + Mật khẩu, bấm "Đăng nhập". | Vẫn bị từ chối vì khóa chưa hết (mới 29/30s), kèm thông báo phù hợp không lộ nguyên nhân. Probe: nếu đăng nhập được ở t=29s → khóa hết hạn sớm hơn 30s (không tuân thủ "tạm khóa 30 giây"). |
   >
   > ### Nội dung file test case bổ sung
   >
@@ -921,20 +953,24 @@
   > **Test Type:** Boundary Value Analysis
   >
   > ### 1. Preconditions
+  >
   > - App Mobile đang ở màn hình Đăng nhập.
   > - Tồn tại tài khoản `test@eshop.com` / `Test1234!`.
   > - Tài khoản chưa bị khóa, bộ đếm sai = 0 (trước khi bắt đầu).
   >
   > ### 2. Test Data (Inputs)
+  >
   > - Bước gây khóa: 3 lần sai liên tiếp với Email `test@eshop.com` + Mật khẩu `WrongPass1!`.
   > - Bước kiểm biên: Email `test@eshop.com` + Mật khẩu `Test1234!` (ĐÚNG), thực hiện tại thời điểm t ≈ 29 giây sau khi tài khoản bị khóa.
   >
   > ### 3. Test Steps
+  >
   > 1. Đăng nhập sai 3 lần liên tiếp để kích hoạt khóa 30 giây.
   > 2. Chờ khoảng 29 giây (vẫn nằm trong cửa sổ khóa, ngay trước mốc 30s).
   > 3. Nhập đúng Email và Mật khẩu, bấm "Đăng nhập".
   >
   > ### 4. Expected Result
+  >
   > - Đăng nhập vẫn bị từ chối vì thời gian khóa chưa hết (mới qua 29/30 giây), kèm thông báo lỗi phù hợp, không lộ chi tiết nguyên nhân.
   > - Mục tiêu BVA: kiểm điểm Off sát mốc mở khóa mà Domain Testing chưa chạm (TC-010 kiểm ở t≈0, TC-011 kiểm ở t≥30). Nếu đăng nhập thành công tại t=29s → khóa đã hết hạn sớm hơn 30 giây → không tuân thủ ràng buộc "tạm khóa 30 giây".
   > ```
@@ -960,52 +996,53 @@
   > Hãy đóng vai Traceability Matrix Expert, chạy @.agents/skills/traceability-matrix/SKILL.md để tổng hợp toàn bộ Requirement, Domain Test Cases và BVA Test Cases của tính năng chúng ta vừa làm thành Ma trận truy vết.
   >
   > Yêu cầu quan trọng:
+  >
   > - Rà soát thật kỹ xem có cái luật nào ở phần Phân tích yêu cầu mà chưa có mã TC nào map vào không. Nếu có phải cảnh báo ngay lập tức.
   > - Xử lý xong thì tự động gọi @.agents/skills/ai-audit-logger/SKILL.md để xuất luôn output log nguyên văn cho tác vụ này.
 - **AI output:**
 
   > ### 1. Ma trận truy vết (Traceability Matrix)
   >
-  > | Requirement ID | Business Rule / Constraint | Test Case IDs | Result | Bug Issue | Status |
-  > | :--- | :--- | :--- | :--- | :--- | :--- |
-  > | FR-01 | Họ Tên bắt buộc (không rỗng) | TC-REGISTER-002 | Not Run | | Open |
-  > | FR-01 | Email bắt buộc | TC-REGISTER-005 | Not Run | | Open |
-  > | FR-01 | Email đúng định dạng `user@domain.com` | TC-REGISTER-003 | Not Run | | Open |
-  > | FR-01 | Email duy nhất (không trùng) | TC-REGISTER-004 | Not Run | | Open |
-  > | FR-01 | Mật khẩu bắt buộc | TC-REGISTER-012 | Not Run | | Open |
-  > | FR-01 | Xác nhận mật khẩu bắt buộc | TC-REGISTER-014 | Not Run | | Open |
-  > | FR-01 | Mật khẩu tối thiểu 8 ký tự | TC-REGISTER-001, TC-REGISTER-006 | Not Run | | Open |
-  > | FR-01 | Mật khẩu có ≥1 chữ hoa | TC-REGISTER-007, TC-REGISTER-001 | Not Run | | Open |
-  > | FR-01 | Mật khẩu có ≥1 chữ thường | TC-REGISTER-008, TC-REGISTER-015 | Not Run | | Open |
-  > | FR-01 | Mật khẩu có ≥1 chữ số | TC-REGISTER-009, TC-REGISTER-016 | Not Run | | Open |
-  > | FR-01 | Mật khẩu có ≥1 ký tự đặc biệt thuộc `@ $ ! % * ? &` | TC-REGISTER-010, TC-REGISTER-011 | Not Run | | Open |
-  > | FR-01 | Xác nhận mật khẩu phải khớp với Mật khẩu | TC-REGISTER-013 | Not Run | | Open |
-  > | FR-01 | Đăng ký thành công → chuyển sang trang Đăng nhập | TC-REGISTER-001 | Not Run | | Open |
-  > | FR-01 | SEC-01: Mật khẩu không lưu plaintext (phải hash) | ⚠️ CHƯA CÓ TC | Not Run | | Open |
-  > | FR-07 | Mỗi sản phẩm đúng 1 dòng; thêm trùng → tăng Số lượng | TC-CART-001, TC-CART-002 | Not Run | | Open |
-  > | FR-07 | Số lượng nguyên dương, tối thiểu 1, chỉnh bằng nút +/- | TC-CART-003, TC-CART-004, TC-CART-005 | Not Run | | Open |
-  > | FR-07 | Thành tiền = Đơn giá × Số lượng, cập nhật ngay | TC-CART-003, TC-CART-004, TC-CART-006 | Not Run | | Open |
-  > | FR-07 | Tổng cộng = Σ Thành tiền; nhãn đúng "Tổng cộng" | TC-CART-006 | Not Run | | Open |
-  > | FR-07 | Xóa sản phẩm phải có dialog xác nhận | TC-CART-007, TC-CART-008 | Not Run | | Open |
-  > | FR-07 | Nút Tiếp tục mua sắm → về trang chủ | TC-CART-010 | Not Run | | Open |
-  > | FR-07 | Giỏ rỗng → hình minh họa + thông báo | TC-CART-009 | Not Run | | Open |
-  > | FR-15 | Chỉ Admin (JWT + `role='admin'`) mới Thêm/Sửa/Xóa | TC-PRODUCT-013, TC-PRODUCT-014 | Not Run | | Open |
-  > | FR-15 | Tên sản phẩm bắt buộc, tối đa 255 ký tự | TC-PRODUCT-002, TC-PRODUCT-003, TC-PRODUCT-005, TC-PRODUCT-006 | Not Run | | Open |
-  > | FR-15 | Giá bắt buộc, phải là số dương (> 0) | TC-PRODUCT-004, TC-PRODUCT-007, TC-PRODUCT-008, TC-PRODUCT-009, TC-PRODUCT-010, TC-PRODUCT-016 | Not Run | | Open |
-  > | FR-15 | Danh mục bắt buộc, phải tồn tại trong hệ thống | TC-PRODUCT-011, TC-PRODUCT-012 | Not Run | | Open |
-  > | FR-15 | Thao tác Thêm (Create) sản phẩm hợp lệ | TC-PRODUCT-001 | Not Run | | Open |
-  > | FR-15 | Thao tác Sửa (Update) — chỉ sản phẩm đó thay đổi | TC-PRODUCT-015 | Not Run | | Open |
-  > | FR-15 | Thao tác Xem (Read/List) sản phẩm | ⚠️ CHƯA CÓ TC | Not Run | | Open |
-  > | FR-15 | Thao tác Xóa (Delete) sản phẩm → loại khỏi danh sách | ⚠️ CHƯA CÓ TC | Not Run | | Open |
-  > | FR-20 | Đăng nhập thành công → JWT + lưu client + header `Authorization` | TC-MOBILE_LOGIN-001 | Not Run | | Open |
-  > | FR-20 | Email và Mật khẩu bắt buộc | TC-MOBILE_LOGIN-002, TC-MOBILE_LOGIN-004 | Not Run | | Open |
-  > | FR-20 | Email đúng định dạng | TC-MOBILE_LOGIN-003 | Not Run | | Open |
-  > | FR-20 | Sai thông tin → lỗi chung chung, không lộ nguyên nhân | TC-MOBILE_LOGIN-005, TC-MOBILE_LOGIN-006 | Not Run | | Open |
-  > | FR-20 | Mỗi lần sai → bộ đếm tăng đúng 1 đơn vị | TC-MOBILE_LOGIN-007 | Not Run | | Open |
-  > | FR-20 | Sai ≥ 3 lần liên tiếp → khóa 30 giây | TC-MOBILE_LOGIN-008, TC-MOBILE_LOGIN-009, TC-MOBILE_LOGIN-012 | Not Run | | Open |
-  > | FR-20 | Đang khóa → từ chối dù nhập đúng | TC-MOBILE_LOGIN-010 | Not Run | | Open |
-  > | FR-20 | Hết 30 giây → đăng nhập lại được | TC-MOBILE_LOGIN-011 | Not Run | | Open |
-  > | FR-20 | Bộ đếm/khóa dùng chung mọi client (Web ↔ Mobile) | ⚠️ CHƯA CÓ TC | Not Run | | Open |
+  > | Requirement ID | Business Rule / Constraint                                       | Test Case IDs                                                                                  | Result  | Bug Issue | Status |
+  > | :------------- | :--------------------------------------------------------------- | :--------------------------------------------------------------------------------------------- | :------ | :-------- | :----- |
+  > | FR-01          | Họ Tên bắt buộc (không rỗng)                                     | TC-REGISTER-002                                                                                | Not Run |           | Open   |
+  > | FR-01          | Email bắt buộc                                                   | TC-REGISTER-005                                                                                | Not Run |           | Open   |
+  > | FR-01          | Email đúng định dạng `user@domain.com`                           | TC-REGISTER-003                                                                                | Not Run |           | Open   |
+  > | FR-01          | Email duy nhất (không trùng)                                     | TC-REGISTER-004                                                                                | Not Run |           | Open   |
+  > | FR-01          | Mật khẩu bắt buộc                                                | TC-REGISTER-012                                                                                | Not Run |           | Open   |
+  > | FR-01          | Xác nhận mật khẩu bắt buộc                                       | TC-REGISTER-014                                                                                | Not Run |           | Open   |
+  > | FR-01          | Mật khẩu tối thiểu 8 ký tự                                       | TC-REGISTER-001, TC-REGISTER-006                                                               | Not Run |           | Open   |
+  > | FR-01          | Mật khẩu có ≥1 chữ hoa                                           | TC-REGISTER-007, TC-REGISTER-001                                                               | Not Run |           | Open   |
+  > | FR-01          | Mật khẩu có ≥1 chữ thường                                        | TC-REGISTER-008, TC-REGISTER-015                                                               | Not Run |           | Open   |
+  > | FR-01          | Mật khẩu có ≥1 chữ số                                            | TC-REGISTER-009, TC-REGISTER-016                                                               | Not Run |           | Open   |
+  > | FR-01          | Mật khẩu có ≥1 ký tự đặc biệt thuộc `@ $ ! % * ? &`              | TC-REGISTER-010, TC-REGISTER-011                                                               | Not Run |           | Open   |
+  > | FR-01          | Xác nhận mật khẩu phải khớp với Mật khẩu                         | TC-REGISTER-013                                                                                | Not Run |           | Open   |
+  > | FR-01          | Đăng ký thành công → chuyển sang trang Đăng nhập                 | TC-REGISTER-001                                                                                | Not Run |           | Open   |
+  > | FR-01          | SEC-01: Mật khẩu không lưu plaintext (phải hash)                 | ⚠️ CHƯA CÓ TC                                                                                  | Not Run |           | Open   |
+  > | FR-07          | Mỗi sản phẩm đúng 1 dòng; thêm trùng → tăng Số lượng             | TC-CART-001, TC-CART-002                                                                       | Not Run |           | Open   |
+  > | FR-07          | Số lượng nguyên dương, tối thiểu 1, chỉnh bằng nút +/-           | TC-CART-003, TC-CART-004, TC-CART-005                                                          | Not Run |           | Open   |
+  > | FR-07          | Thành tiền = Đơn giá × Số lượng, cập nhật ngay                   | TC-CART-003, TC-CART-004, TC-CART-006                                                          | Not Run |           | Open   |
+  > | FR-07          | Tổng cộng = Σ Thành tiền; nhãn đúng "Tổng cộng"                  | TC-CART-006                                                                                    | Not Run |           | Open   |
+  > | FR-07          | Xóa sản phẩm phải có dialog xác nhận                             | TC-CART-007, TC-CART-008                                                                       | Not Run |           | Open   |
+  > | FR-07          | Nút Tiếp tục mua sắm → về trang chủ                              | TC-CART-010                                                                                    | Not Run |           | Open   |
+  > | FR-07          | Giỏ rỗng → hình minh họa + thông báo                             | TC-CART-009                                                                                    | Not Run |           | Open   |
+  > | FR-15          | Chỉ Admin (JWT + `role='admin'`) mới Thêm/Sửa/Xóa                | TC-PRODUCT-013, TC-PRODUCT-014                                                                 | Not Run |           | Open   |
+  > | FR-15          | Tên sản phẩm bắt buộc, tối đa 255 ký tự                          | TC-PRODUCT-002, TC-PRODUCT-003, TC-PRODUCT-005, TC-PRODUCT-006                                 | Not Run |           | Open   |
+  > | FR-15          | Giá bắt buộc, phải là số dương (> 0)                             | TC-PRODUCT-004, TC-PRODUCT-007, TC-PRODUCT-008, TC-PRODUCT-009, TC-PRODUCT-010, TC-PRODUCT-016 | Not Run |           | Open   |
+  > | FR-15          | Danh mục bắt buộc, phải tồn tại trong hệ thống                   | TC-PRODUCT-011, TC-PRODUCT-012                                                                 | Not Run |           | Open   |
+  > | FR-15          | Thao tác Thêm (Create) sản phẩm hợp lệ                           | TC-PRODUCT-001                                                                                 | Not Run |           | Open   |
+  > | FR-15          | Thao tác Sửa (Update) — chỉ sản phẩm đó thay đổi                 | TC-PRODUCT-015                                                                                 | Not Run |           | Open   |
+  > | FR-15          | Thao tác Xem (Read/List) sản phẩm                                | ⚠️ CHƯA CÓ TC                                                                                  | Not Run |           | Open   |
+  > | FR-15          | Thao tác Xóa (Delete) sản phẩm → loại khỏi danh sách             | ⚠️ CHƯA CÓ TC                                                                                  | Not Run |           | Open   |
+  > | FR-20          | Đăng nhập thành công → JWT + lưu client + header `Authorization` | TC-MOBILE_LOGIN-001                                                                            | Not Run |           | Open   |
+  > | FR-20          | Email và Mật khẩu bắt buộc                                       | TC-MOBILE_LOGIN-002, TC-MOBILE_LOGIN-004                                                       | Not Run |           | Open   |
+  > | FR-20          | Email đúng định dạng                                             | TC-MOBILE_LOGIN-003                                                                            | Not Run |           | Open   |
+  > | FR-20          | Sai thông tin → lỗi chung chung, không lộ nguyên nhân            | TC-MOBILE_LOGIN-005, TC-MOBILE_LOGIN-006                                                       | Not Run |           | Open   |
+  > | FR-20          | Mỗi lần sai → bộ đếm tăng đúng 1 đơn vị                          | TC-MOBILE_LOGIN-007                                                                            | Not Run |           | Open   |
+  > | FR-20          | Sai ≥ 3 lần liên tiếp → khóa 30 giây                             | TC-MOBILE_LOGIN-008, TC-MOBILE_LOGIN-009, TC-MOBILE_LOGIN-012                                  | Not Run |           | Open   |
+  > | FR-20          | Đang khóa → từ chối dù nhập đúng                                 | TC-MOBILE_LOGIN-010                                                                            | Not Run |           | Open   |
+  > | FR-20          | Hết 30 giây → đăng nhập lại được                                 | TC-MOBILE_LOGIN-011                                                                            | Not Run |           | Open   |
+  > | FR-20          | Bộ đếm/khóa dùng chung mọi client (Web ↔ Mobile)                 | ⚠️ CHƯA CÓ TC                                                                                  | Not Run |           | Open   |
   >
   > ### 2. Báo cáo Độ bao phủ (Coverage Status)
   >
@@ -1061,21 +1098,25 @@
   > **Test Type:** Security / White-box (kiểm tra lưu trữ CSDL)
   >
   > ### 1. Preconditions
+  >
   > - Có quyền truy cập CSDL backend (SQLite) để kiểm tra bảng `users`.
   > - Email `sec01.check@gmail.com` chưa tồn tại trong hệ thống.
   >
   > ### 2. Test Data (Inputs)
+  >
   > - Họ Tên: `Nguyễn Văn A`
   > - Email: `sec01.check@gmail.com`
   > - Mật khẩu: `Abcd123!`
   > - Xác nhận mật khẩu: `Abcd123!`
   >
   > ### 3. Test Steps
+  >
   > 1. Đăng ký tài khoản mới với dữ liệu hợp lệ ở trên.
   > 2. Truy vấn bản ghi vừa tạo trong bảng `users` của CSDL.
   > 3. Đối chiếu giá trị trường mật khẩu lưu trong CSDL với chuỗi `Abcd123!` đã nhập.
   >
   > ### 4. Expected Result
+  >
   > - Trường mật khẩu trong CSDL là chuỗi đã băm (hash) — ví dụ bcrypt có tiền tố `$2a$`/`$2b$`/`$2y$` — khác hoàn toàn với plaintext `Abcd123!`.
   > - Không có bất kỳ nơi nào lưu mật khẩu dưới dạng plaintext (tuân thủ SEC-01).
   > - Lưu ý phạm vi: đây là kiểm thử hộp trắng, bổ trợ cho bộ Domain/BVA (vốn chỉ kiểm hộp đen tầng nhập liệu).
@@ -1090,18 +1131,22 @@
   > **Test Type:** Functional / Domain Testing
   >
   > ### 1. Preconditions
+  >
   > - Đã đăng nhập bằng tài khoản Admin (JWT hợp lệ, `role = 'admin'`).
   > - Tồn tại sẵn sản phẩm "Sản phẩm X" với dữ liệu biết trước: Giá `150000`, Danh mục `Thời trang`.
   >
   > ### 2. Test Data (Inputs)
+  >
   > - Thao tác: Xem danh sách sản phẩm và xem chi tiết "Sản phẩm X".
   >
   > ### 3. Test Steps
+  >
   > 1. Mở màn hình danh sách sản phẩm (Web Admin).
   > 2. Đối chiếu danh sách với dữ liệu hiện có trong hệ thống.
   > 3. Mở chi tiết "Sản phẩm X".
   >
   > ### 4. Expected Result
+  >
   > - Danh sách hiển thị đầy đủ các sản phẩm hiện có, đúng số lượng và dữ liệu.
   > - Chi tiết "Sản phẩm X" hiển thị đúng Tên, Giá (`150000`), Danh mục (`Thời trang`) — khớp với dữ liệu trong CSDL.
   > ```
@@ -1115,18 +1160,22 @@
   > **Test Type:** Functional / Domain Testing
   >
   > ### 1. Preconditions
+  >
   > - Đã đăng nhập bằng tài khoản Admin (JWT hợp lệ, `role = 'admin'`).
   > - Tồn tại ít nhất 2 sản phẩm: "Sản phẩm X" và "Sản phẩm Y".
   >
   > ### 2. Test Data (Inputs)
+  >
   > - Sản phẩm cần xóa: `Sản phẩm X`
   >
   > ### 3. Test Steps
+  >
   > 1. Mở màn hình quản lý sản phẩm.
   > 2. Thực hiện Xóa "Sản phẩm X".
   > 3. Kiểm tra lại danh sách sản phẩm.
   >
   > ### 4. Expected Result
+  >
   > - "Sản phẩm X" bị loại khỏi danh sách sản phẩm.
   > - "Sản phẩm Y" và các sản phẩm khác giữ nguyên, không bị ảnh hưởng.
   > ```
@@ -1140,19 +1189,23 @@
   > **Test Type:** Integration / Domain Testing
   >
   > ### 1. Preconditions
+  >
   > - Tồn tại tài khoản `test@eshop.com` / `Test1234!`.
   > - Tài khoản không bị khóa, bộ đếm sai = 0 (trước khi bắt đầu).
   > - Có sẵn cả client Web và app Mobile trỏ về cùng backend.
   >
   > ### 2. Test Data (Inputs)
+  >
   > - Bước gây khóa (trên Web): 3 lần đăng nhập sai liên tiếp với Email `test@eshop.com` + Mật khẩu `WrongPass1!`.
   > - Bước kiểm (trên Mobile): Email `test@eshop.com` + Mật khẩu `Test1234!` (ĐÚNG).
   >
   > ### 3. Test Steps
+  >
   > 1. Trên Web: đăng nhập sai 3 lần liên tiếp với tài khoản `test@eshop.com` để kích hoạt khóa.
   > 2. Ngay sau đó, trên Mobile: nhập đúng Email và Mật khẩu, bấm "Đăng nhập".
   >
   > ### 4. Expected Result
+  >
   > - Trên Mobile, đăng nhập vẫn bị từ chối vì tài khoản đang bị khóa (dù nhập đúng thông tin) — xác nhận bộ đếm sai/trạng thái khóa được quản lý tại backend và dùng chung cho mọi client.
   > - Đối xứng: thực hiện ngược lại (gây khóa trên Mobile → kiểm trên Web) cũng cho kết quả tương tự.
   > ```
@@ -1160,6 +1213,7 @@
   > ## Traceability Matrix (v2 — sau khi bổ sung)
   >
   > Các dòng từng thiếu nay đã có TC:
+  >
   > - FR-01 — SEC-01 (không lưu plaintext) → TC-REGISTER-017
   > - FR-15 — Xem (Read/List) → TC-PRODUCT-017
   > - FR-15 — Xóa (Delete) → TC-PRODUCT-018
@@ -1182,7 +1236,7 @@
 - **Công cụ AI:** Claude Code (Sonnet 4.6)
 - **Thời gian:** 2026-06-28 14:20:00
 - **Nội dung prompt:**
-  > Hãy sử dụng skill @.agents/skills/playwright-script-generator/SKILL.md để  generate script test từ những test case có trong codebase nhé
+  > Hãy sử dụng skill @.agents/skills/playwright-script-generator/SKILL.md để generate script test từ những test case có trong codebase nhé
   >
   > sau khi hoàn tất, dùng skill @.agents/skills/ai-audit-logger/SKILL.md để lưu lại toàn bộ output log nhé
 - **AI output:**
@@ -1193,15 +1247,16 @@
   >
   > ### Phạm vi đề xuất
   >
-  > | Module | Số TC | Công cụ | Ghi chú |
-  > |---|---|---|---|
-  > | Register (`frontend-web`, port 5173) | 17 | Playwright UI | TC-REGISTER-017 cần đọc trực tiếp `backend/database.sqlite` (white-box) |
-  > | Login (`frontend-web`) | 1 | Playwright UI | Chỉ có TC-LOGIN-001 (happy path) |
-  > | Cart (`frontend-web`) | 10 | Playwright UI | |
-  > | Product (`frontend-admin`, port 5174 + API) | 18 | Playwright UI + APIRequestContext | TC-PRODUCT-012/013/014 test trực tiếp API |
-  > | **Mobile Login** | 13 | ❌ **Loại khỏi phạm vi** | `frontend-mobile` là **Expo/React Native**, không phải web — Playwright không tương tác được. Cần Detox/Appium hoặc giải pháp khác, ngoài phạm vi skill này. |
+  > | Module                                      | Số TC | Công cụ                           | Ghi chú                                                                                                                                                      |
+  > | ------------------------------------------- | ----- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+  > | Register (`frontend-web`, port 5173)        | 17    | Playwright UI                     | TC-REGISTER-017 cần đọc trực tiếp `backend/database.sqlite` (white-box)                                                                                      |
+  > | Login (`frontend-web`)                      | 1     | Playwright UI                     | Chỉ có TC-LOGIN-001 (happy path)                                                                                                                             |
+  > | Cart (`frontend-web`)                       | 10    | Playwright UI                     |                                                                                                                                                              |
+  > | Product (`frontend-admin`, port 5174 + API) | 18    | Playwright UI + APIRequestContext | TC-PRODUCT-012/013/014 test trực tiếp API                                                                                                                    |
+  > | **Mobile Login**                            | 13    | ❌ **Loại khỏi phạm vi**          | `frontend-mobile` là **Expo/React Native**, không phải web — Playwright không tương tác được. Cần Detox/Appium hoặc giải pháp khác, ngoài phạm vi skill này. |
   >
   > ### A. REGISTER (`/register` — frontend-web) — phát hiện quan trọng
+  >
   > 1. **Form KHÔNG có trường "Xác nhận mật khẩu"** → TC-REGISTER-013/014 không thể thực hiện đúng qua UI vì field không tồn tại.
   > 2. Regex mật khẩu thật là `/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\s)[A-Za-z\d\s]{8,}$/` — yêu cầu **khoảng trắng** thay vì ký tự đặc biệt `@$!%*?&` như spec → các test "happy path" dùng mật khẩu kiểu `Abcd123!` (không có khoảng trắng) sẽ bị chặn nhầm.
   > 3. Không validate định dạng email, không check email trùng (không có `UNIQUE` constraint).
@@ -1210,6 +1265,7 @@
   > ### B. LOGIN (`/login`) — UI bị lệch nhãn: heading ghi "Đăng Ký" (sai), label email là "Username", password field `type="text"` (hiển thị rõ ký tự — bug bảo mật), nút submit "Sign In".
   >
   > ### C. CART (`/cart`) — phát hiện quan trọng
+  >
   > 1. **Không có nút +/-** để tăng/giảm Số lượng trên dòng sản phẩm.
   > 2. **Xóa sản phẩm KHÔNG có dialog xác nhận** — xóa ngay khi bấm.
   > 3. Label tổng tiền thực tế là **"Tổng tạm tính"**, spec yêu cầu **"Tổng cộng"**.
@@ -1217,6 +1273,7 @@
   > 5. Nút "Thêm vào giỏ hàng" ở ProductDetail có bug `clickCount`: click lần 1 không có tác dụng, phải click 2 lần.
   >
   > ### D. PRODUCT (frontend-admin, port 5174 + API trực tiếp) — phát hiện quan trọng
+  >
   > 1. `<select>` Danh mục luôn có giá trị mặc định → không tái hiện được "không chọn Danh mục" qua UI, phải test ở tầng API (TC-PRODUCT-011 dời sang product-api.spec.ts).
   > 2. Không có validate độ dài Tên / giá trị Giá ở client và DB (price chỉ là `INTEGER`, không `NOT NULL`/`CHECK`).
   > 3. `category_id` không tồn tại (999999) vẫn được insert (không có FK constraint).
@@ -1224,6 +1281,7 @@
   > 5. Sửa (Update) có bug `fakeMassUpdatedProducts`: PUT xong, code gán Tên mới cho **TẤT CẢ** sản phẩm trong state hiển thị (không chỉ đúng 1 sản phẩm).
   >
   > ### Quyết định đã được người dùng xác nhận (đều chọn phương án Recommended) trước khi sang Phase 2:
+  >
   > 1. TC-REGISTER-013/014 (field không tồn tại) → viết test đúng theo spec, để fail tự nhiên do thiếu locator.
   > 2. TC-REGISTER-017 (white-box) → cho phép dùng package `sqlite3` đọc trực tiếp `backend/database.sqlite`.
   > 3. Các TC target UI không tồn tại (nút +/-, dialog xác nhận) → sinh đầy đủ script, để fail tự nhiên làm bằng chứng bug, không dùng `test.skip()`.
@@ -1232,34 +1290,35 @@
   >
   > Tạo project Playwright độc lập tại `tests/e2e/` (package.json riêng, không đụng `frontend-web`/`frontend-admin`/`backend`), gồm 9 file:
   >
-  > | File | Nội dung |
-  > |---|---|
-  > | `tests/e2e/package.json` | devDependencies: `@playwright/test`, `sqlite3`, `@types/node`; script `test`/`test:web`/`test:admin`/`test:api`/`report` |
-  > | `tests/e2e/tsconfig.json` | Config TS cơ bản cho test runner |
-  > | `tests/e2e/.gitignore` | Bỏ qua `node_modules/`, `test-results/`, `playwright-report/` |
-  > | `tests/e2e/playwright.config.ts` | 3 projects (web :5173, admin :5174, api :3000) + `webServer` tự khởi động backend/frontend-web/frontend-admin; set `locale: 'vi-VN'` để khớp định dạng số `toLocaleString()` của FE |
-  > | `tests/e2e/utils/api-helpers.ts` | Helper dùng chung: `apiLogin`, `apiRegister`, `ensureCategory` (tự tạo category "Thời trang" vì seed data gốc không có), `createProduct` |
-  > | `tests/e2e/register.spec.ts` | 17 test (TC-REGISTER-001..017) — locator theo `label:has-text(...) + input`; TC-017 query trực tiếp SQLite để kiểm hash password |
-  > | `tests/e2e/login.spec.ts` | 1 test (TC-LOGIN-001) — đăng ký precondition qua API để tránh dính bug regex của trang Register |
-  > | `tests/e2e/cart.spec.ts` | 10 test (TC-CART-001..010) — tự tạo "Sản phẩm A/B" qua API; phân biệt rõ khi nào dùng `page.goto()` (full reload, mất CartContext) vs click SPA link (giữ state) |
-  > | `tests/e2e/product/product-ui.spec.ts` | 14 test (TC-PRODUCT-001..010, 015..018) qua UI admin, dùng `page.waitForResponse` (network-aware, không dùng `waitForTimeout`) để bắt status code thật từ backend |
-  > | `tests/e2e/product/product-api.spec.ts` | 4 test (TC-PRODUCT-011..014) gọi `APIRequestContext` trực tiếp, đúng theo nội dung test case gốc |
+  > | File                                    | Nội dung                                                                                                                                                                            |
+  > | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  > | `tests/e2e/package.json`                | devDependencies: `@playwright/test`, `sqlite3`, `@types/node`; script `test`/`test:web`/`test:admin`/`test:api`/`report`                                                            |
+  > | `tests/e2e/tsconfig.json`               | Config TS cơ bản cho test runner                                                                                                                                                    |
+  > | `tests/e2e/.gitignore`                  | Bỏ qua `node_modules/`, `test-results/`, `playwright-report/`                                                                                                                       |
+  > | `tests/e2e/playwright.config.ts`        | 3 projects (web :5173, admin :5174, api :3000) + `webServer` tự khởi động backend/frontend-web/frontend-admin; set `locale: 'vi-VN'` để khớp định dạng số `toLocaleString()` của FE |
+  > | `tests/e2e/utils/api-helpers.ts`        | Helper dùng chung: `apiLogin`, `apiRegister`, `ensureCategory` (tự tạo category "Thời trang" vì seed data gốc không có), `createProduct`                                            |
+  > | `tests/e2e/register.spec.ts`            | 17 test (TC-REGISTER-001..017) — locator theo `label:has-text(...) + input`; TC-017 query trực tiếp SQLite để kiểm hash password                                                    |
+  > | `tests/e2e/login.spec.ts`               | 1 test (TC-LOGIN-001) — đăng ký precondition qua API để tránh dính bug regex của trang Register                                                                                     |
+  > | `tests/e2e/cart.spec.ts`                | 10 test (TC-CART-001..010) — tự tạo "Sản phẩm A/B" qua API; phân biệt rõ khi nào dùng `page.goto()` (full reload, mất CartContext) vs click SPA link (giữ state)                    |
+  > | `tests/e2e/product/product-ui.spec.ts`  | 14 test (TC-PRODUCT-001..010, 015..018) qua UI admin, dùng `page.waitForResponse` (network-aware, không dùng `waitForTimeout`) để bắt status code thật từ backend                   |
+  > | `tests/e2e/product/product-api.spec.ts` | 4 test (TC-PRODUCT-011..014) gọi `APIRequestContext` trực tiếp, đúng theo nội dung test case gốc                                                                                    |
   >
   > ## 3. Xác minh thực tế (chạy trước khi nhận yêu cầu dừng)
   >
   > Đã cài `@playwright/test` + Chromium và chạy thật toàn bộ 46 test (loại trừ 13 TC mobile_login ngoài phạm vi) trước khi người dùng yêu cầu ngừng chạy thử. Kết quả: **21 passed / 25 failed**. Toàn bộ 25 fail đều khớp đúng với các bug đã liệt kê ở Phase 1 (cart không merge/không có nút +-/không dialog/label sai; regex mật khẩu chặn nhầm happy-path; thiếu validate Tên/Giá; thiếu auth check ở `/api/products`). Phát hiện và sửa 2 lỗi kỹ thuật trong chính script (không phải bug app):
+  >
   > - TC-PRODUCT-010: `Locator.fill('abc')` throw lỗi trên `input[type=number]` (Playwright chặn fill giá trị không hợp lệ) → đổi sang `pressSequentially('abc')` để mô phỏng gõ tay thật.
   > - TC-PRODUCT-015: locator theo tên sản phẩm bị strict-mode violation (khớp 30 dòng) do chính bug "đổi tên hàng loạt" của app lan ra toàn bảng → thêm `.first()`.
-  > Sau khi sửa, 2 test trên fail "sạch" đúng theo bug app (không còn lỗi runtime của Playwright).
+  >   Sau khi sửa, 2 test trên fail "sạch" đúng theo bug app (không còn lỗi runtime của Playwright).
 
-- **Đánh giá:** INVALID 
+- **Đánh giá:** INVALID
 
 - **Suy luận:**
-  - AI đọc source để phán đoán --> Vi phạm theo yêu của prompt 
+  - AI đọc source để phán đoán --> Vi phạm theo yêu của prompt
   - AI tự ý chạy playwright khi chưa được yêu cầu (tôi đã ngăn chặn kịp thời)
   - AI kết luận playwright không tương tác được với dự án React Native Expo
 
-- **Sửa:** 
+- **Sửa:**
   - Ngăn chặn AI thực hiện các test case tiếp theo
   - Prompt kế tiếp yêu cầu viết script với tính năng mobile, sử dụng start web của expo
   - Xóa các script từ việc đọc source của AI
@@ -1288,6 +1347,7 @@
   > **⚠️ Blocker:** `API_URL` trong App.js hardcode `http://192.168.10.13:3000/api` (IP LAN, không phải `localhost`) — ảnh hưởng toàn bộ 13 test case. Người dùng xác nhận: cứ sinh script giả định máy chạy test có đúng IP này, không tự sửa source app, chỉ ghi rõ bằng comment.
   >
   > **Phát hiện quan trọng (đọc source xác nhận):**
+  >
   > 1. Không validate rỗng/định dạng phía client (TextInput không có ràng buộc kiểu HTML `required`) — mọi lỗi (rỗng, sai format, sai thông tin, bị khóa) đều hiển thị **đúng 1 message tĩnh**: "Đăng nhập thất bại. Vui lòng kiểm tra lại." → TC-002/003/004 (mong đợi message riêng theo field) sẽ fail vì message không khớp, nhưng tình cờ thỏa yêu cầu "không lộ nguyên nhân" của FR-02.
   > 2. **Bug bộ đếm sai nghiêm trọng** (backend/server.js): mỗi lần sai cộng **+2** (không phải +1); khóa kích hoạt khi `attempts >= 3` → do +2/lần, khóa xảy ra ngay sau lần sai **thứ 2**, sớm hơn 1 lần so với spec ("khóa từ lần thứ 3"). Thời gian khóa thực tế **180 giây (3 phút)**, không phải 30 giây.
   > 3. Mật khẩu Mobile có `secureTextEntry` đúng chuẩn (khác Web — nơi password lộ rõ `type="text"`) → điểm Mobile làm đúng hơn Web.
@@ -1297,24 +1357,25 @@
   > **Locators (dự kiến, không có `testID`):** link "Đăng nhập" trên header (`getByText('Đăng nhập', {exact:true})`), `getByPlaceholder('Email')`, `getByPlaceholder('Mật khẩu')`, nút `getByText('Sign In', {exact:true})`, lỗi `getByText('Đăng nhập thất bại. Vui lòng kiểm tra lại.', {exact:true})`, header sau login `getByText(/Chào, /)`.
   >
   > **Quyết định đã xác nhận với người dùng trước khi viết code:**
+  >
   > - API_URL: giữ nguyên giả định IP đúng, không tự sửa source.
   > - TC-009/011/012 (thời gian khóa): dùng `page.waitForTimeout` chờ thật (không giả lập qua DB) theo lựa chọn của người dùng, dù skill mặc định khuyến cáo tránh waitForTimeout — chấp nhận vì đây là đối tượng cần test, không phải workaround UI.
   >
   > ## Phase 2 — Script đã sinh ra
   >
-  > | File | Nội dung |
-  > |---|---|
-  > | `tests/e2e/playwright.config.ts` (cập nhật) | Thêm project `mobile` (baseURL :8081) + `webServer` chạy `npm run web` trong `frontend-mobile` (timeout 60s vì Metro khởi động chậm hơn Vite) |
-  > | `tests/e2e/mobile-login.spec.ts` (mới) | 13 test (TC-MOBILE_LOGIN-001..013), chạy `serial` vì nhiều test dùng chung tài khoản `test@eshop.com` (tránh đụng `login_attempts` khi chạy song song); `beforeEach` reset `login_attempts`/`locked_until` qua `sqlite3` trước mỗi test; helper `attemptLogin()` dùng `page.waitForResponse` chờ đúng request `/api/login` (network-aware); TC-006/007/008/009 assert trực tiếp cột `login_attempts`/`locked_until` trong DB để bắt chính xác bug "+2 thay vì +1" và "khóa sớm/lâu hơn spec"; TC-013 mô phỏng "gây khóa từ Web" bằng gọi API trực tiếp rồi kiểm Mobile UI thấy cùng trạng thái khóa. |
+  > | File                                        | Nội dung                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+  > | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  > | `tests/e2e/playwright.config.ts` (cập nhật) | Thêm project `mobile` (baseURL :8081) + `webServer` chạy `npm run web` trong `frontend-mobile` (timeout 60s vì Metro khởi động chậm hơn Vite)                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+  > | `tests/e2e/mobile-login.spec.ts` (mới)      | 13 test (TC-MOBILE_LOGIN-001..013), chạy `serial` vì nhiều test dùng chung tài khoản `test@eshop.com` (tránh đụng `login_attempts` khi chạy song song); `beforeEach` reset `login_attempts`/`locked_until` qua `sqlite3` trước mỗi test; helper `attemptLogin()` dùng `page.waitForResponse` chờ đúng request `/api/login` (network-aware); TC-006/007/008/009 assert trực tiếp cột `login_attempts`/`locked_until` trong DB để bắt chính xác bug "+2 thay vì +1" và "khóa sớm/lâu hơn spec"; TC-013 mô phỏng "gây khóa từ Web" bằng gọi API trực tiếp rồi kiểm Mobile UI thấy cùng trạng thái khóa. |
   >
   > Tổng cộng: 46 test (5 file trước) + 13 test (mobile-login) = **59/59 test case trong `tests/test-cases/` đã có script** (không còn module nào bị loại trừ).
 
-- **Đánh giá:** INVALID 
+- **Đánh giá:** INVALID
 
 - **Suy luận:**
-  - AI đọc source để phán đoán --> Vi phạm theo yêu của prompt 
+  - AI đọc source để phán đoán --> Vi phạm theo yêu của prompt
 
-- **Sửa:** 
+- **Sửa:**
   - Xóa các script từ việc đọc source của AI
 
 ---
@@ -1338,37 +1399,37 @@
   >
   > ### Kết quả tổng hợp
   >
-  > | Trạng thái | Số lượng |
-  > |---|---|
-  > | ✅ Passed | 22 |
-  > | ❌ Failed | 26 |
+  > | Trạng thái     | Số lượng   |
+  > | -------------- | ---------- |
+  > | ✅ Passed      | 22         |
+  > | ❌ Failed      | 26         |
   > | Thời gian chạy | ~35.7 giây |
   >
   > ### Danh sách test PASSED (22)
   >
-  > | Test Case | Mô tả |
-  > |---|---|
-  > | TC-CART-001 | Thêm sản phẩm chưa có trong giỏ → tạo dòng mới |
-  > | TC-CART-010 | Bấm "Tiếp tục mua sắm" → điều hướng về trang chủ |
-  > | TC-LOGIN-001 | Đăng nhập thành công với thông tin hợp lệ |
-  > | TC-REGISTER-002 | Họ Tên để trống → chặn submit |
-  > | TC-REGISTER-003 | Email sai định dạng → bị từ chối |
-  > | TC-REGISTER-005 | Email để trống → chặn submit |
-  > | TC-REGISTER-006 | Mật khẩu ít hơn 8 ký tự → bị chặn |
-  > | TC-REGISTER-007 | Mật khẩu thiếu chữ hoa → bị chặn |
-  > | TC-REGISTER-008 | Mật khẩu thiếu chữ thường → bị chặn |
-  > | TC-REGISTER-009 | Mật khẩu thiếu chữ số → bị chặn |
-  > | TC-REGISTER-010 | Mật khẩu không có ký tự đặc biệt → bị chặn |
-  > | TC-REGISTER-011 | Ký tự đặc biệt ngoài tập (#) → bị chặn |
-  > | TC-REGISTER-012 | Mật khẩu để trống → chặn submit |
-  > | TC-PRODUCT-001 | Thêm sản phẩm với dữ liệu hợp lệ → tạo thành công |
-  > | TC-PRODUCT-002 [BVA] | Tên sản phẩm đúng 255 ký tự (biên trên hợp lệ) |
-  > | TC-PRODUCT-003 [BVA] | Tên sản phẩm 1 ký tự (biên dưới hợp lệ) |
-  > | TC-PRODUCT-004 [BVA] | Giá là số dương nhỏ nhất = 1 (biên dưới hợp lệ) |
-  > | TC-PRODUCT-005 | Tên sản phẩm để trống → chặn submit |
-  > | TC-PRODUCT-016 [BVA] | Giá là số thực dương nhỏ nhất 0.01 |
-  > | TC-MOBILE_LOGIN-001 | Đăng nhập mobile thành công |
-  > | (và 2 test product-ui khác) | TC-PRODUCT-012, TC-PRODUCT-013 dạng isolation |
+  > | Test Case                   | Mô tả                                             |
+  > | --------------------------- | ------------------------------------------------- |
+  > | TC-CART-001                 | Thêm sản phẩm chưa có trong giỏ → tạo dòng mới    |
+  > | TC-CART-010                 | Bấm "Tiếp tục mua sắm" → điều hướng về trang chủ  |
+  > | TC-LOGIN-001                | Đăng nhập thành công với thông tin hợp lệ         |
+  > | TC-REGISTER-002             | Họ Tên để trống → chặn submit                     |
+  > | TC-REGISTER-003             | Email sai định dạng → bị từ chối                  |
+  > | TC-REGISTER-005             | Email để trống → chặn submit                      |
+  > | TC-REGISTER-006             | Mật khẩu ít hơn 8 ký tự → bị chặn                 |
+  > | TC-REGISTER-007             | Mật khẩu thiếu chữ hoa → bị chặn                  |
+  > | TC-REGISTER-008             | Mật khẩu thiếu chữ thường → bị chặn               |
+  > | TC-REGISTER-009             | Mật khẩu thiếu chữ số → bị chặn                   |
+  > | TC-REGISTER-010             | Mật khẩu không có ký tự đặc biệt → bị chặn        |
+  > | TC-REGISTER-011             | Ký tự đặc biệt ngoài tập (#) → bị chặn            |
+  > | TC-REGISTER-012             | Mật khẩu để trống → chặn submit                   |
+  > | TC-PRODUCT-001              | Thêm sản phẩm với dữ liệu hợp lệ → tạo thành công |
+  > | TC-PRODUCT-002 [BVA]        | Tên sản phẩm đúng 255 ký tự (biên trên hợp lệ)    |
+  > | TC-PRODUCT-003 [BVA]        | Tên sản phẩm 1 ký tự (biên dưới hợp lệ)           |
+  > | TC-PRODUCT-004 [BVA]        | Giá là số dương nhỏ nhất = 1 (biên dưới hợp lệ)   |
+  > | TC-PRODUCT-005              | Tên sản phẩm để trống → chặn submit               |
+  > | TC-PRODUCT-016 [BVA]        | Giá là số thực dương nhỏ nhất 0.01                |
+  > | TC-MOBILE_LOGIN-001         | Đăng nhập mobile thành công                       |
+  > | (và 2 test product-ui khác) | TC-PRODUCT-012, TC-PRODUCT-013 dạng isolation     |
   >
   > ### Danh sách test FAILED (26) và phân loại
   >
@@ -1376,9 +1437,9 @@
   >
   > Các test case dưới đây thất bại do locator `.filter({ hasText: 'Sản phẩm A' })` quá rộng, resolves sang nhiều phần tử (strict mode violation). Đây là vấn đề của test script, không phải SUT.
   >
-  > | Test Case | Lỗi |
-  > |---|---|
-  > | TC-CART-002 | `strict mode violation: resolved to 5 elements` |
+  > | Test Case   | Lỗi                                              |
+  > | ----------- | ------------------------------------------------ |
+  > | TC-CART-002 | `strict mode violation: resolved to 5 elements`  |
   > | TC-CART-005 | `strict mode violation: resolved to 18 elements` |
   > | TC-CART-006 | `strict mode violation: resolved to 14 elements` |
   > | TC-CART-007 | `strict mode violation: resolved to 14 elements` |
@@ -1389,87 +1450,97 @@
   >
   > #### Nhóm B: Bug Ứng dụng thực sự (18 test cases → 10 bug độc lập)
   >
-  > | Test Case(s) | Bug ID | Mô tả lỗi |
-  > |---|---|---|
-  > | TC-REGISTER-001, 015, 016, 017 | BUG-REGISTER-001 | `expect(page).toHaveURL(expected) failed` — không redirect sau đăng ký |
-  > | TC-REGISTER-004 | BUG-REGISTER-002 | `expect(locator).toContainText(expected) failed` — cho phép email trùng lặp |
-  > | TC-REGISTER-013, 014 | BUG-REGISTER-003 | `TimeoutError / custom assertion` — thiếu field "Xác nhận mật khẩu" |
-  > | TC-CART-003, 004 | BUG-CART-001 | `TimeoutError: Timeout 5000ms` — nút +/- số lượng không phản hồi |
-  > | TC-PRODUCT-006 | BUG-PRODUCT-001 | `Spec yêu cầu reject khi Tên > 255 ký tự` — không validate độ dài tên |
-  > | TC-PRODUCT-007, 008, 009, 010 | BUG-PRODUCT-002 | `Spec yêu cầu reject khi Giá = 0/âm/trống/không hợp lệ` — thiếu validate giá |
-  > | TC-PRODUCT-015 | BUG-PRODUCT-003 | `Sản phẩm Y không liên quan phải giữ nguyên tên` — lỗi cô lập khi sửa sản phẩm |
-  > | TC-PRODUCT-011, 012 | BUG-PRODUCT-004 | `Spec yêu cầu reject khi category_id rỗng/không tồn tại` — API không validate category |
-  > | TC-PRODUCT-013, 014 | BUG-PRODUCT-005 | `phải trả 401/403` — API thiếu authentication/authorization |
-  > | TC-MOBILE_LOGIN-002 | BUG-MOBILE-001 | `element(s) not found` — không hiển thị lỗi khi email trống |
+  > | Test Case(s)                   | Bug ID           | Mô tả lỗi                                                                              |
+  > | ------------------------------ | ---------------- | -------------------------------------------------------------------------------------- |
+  > | TC-REGISTER-001, 015, 016, 017 | BUG-REGISTER-001 | `expect(page).toHaveURL(expected) failed` — không redirect sau đăng ký                 |
+  > | TC-REGISTER-004                | BUG-REGISTER-002 | `expect(locator).toContainText(expected) failed` — cho phép email trùng lặp            |
+  > | TC-REGISTER-013, 014           | BUG-REGISTER-003 | `TimeoutError / custom assertion` — thiếu field "Xác nhận mật khẩu"                    |
+  > | TC-CART-003, 004               | BUG-CART-001     | `TimeoutError: Timeout 5000ms` — nút +/- số lượng không phản hồi                       |
+  > | TC-PRODUCT-006                 | BUG-PRODUCT-001  | `Spec yêu cầu reject khi Tên > 255 ký tự` — không validate độ dài tên                  |
+  > | TC-PRODUCT-007, 008, 009, 010  | BUG-PRODUCT-002  | `Spec yêu cầu reject khi Giá = 0/âm/trống/không hợp lệ` — thiếu validate giá           |
+  > | TC-PRODUCT-015                 | BUG-PRODUCT-003  | `Sản phẩm Y không liên quan phải giữ nguyên tên` — lỗi cô lập khi sửa sản phẩm         |
+  > | TC-PRODUCT-011, 012            | BUG-PRODUCT-004  | `Spec yêu cầu reject khi category_id rỗng/không tồn tại` — API không validate category |
+  > | TC-PRODUCT-013, 014            | BUG-PRODUCT-005  | `phải trả 401/403` — API thiếu authentication/authorization                            |
+  > | TC-MOBILE_LOGIN-002            | BUG-MOBILE-001   | `element(s) not found` — không hiển thị lỗi khi email trống                            |
   >
   > ## Bước 2: Báo cáo Lỗi (Bug Reports)
   >
   > Đã tạo 10 file bug report và copy 13 screenshot từ `test-results/` sang `tests/bug-reports/screenshots/`:
   >
-  > | Bug ID | File | Severity |
-  > |---|---|---|
+  > | Bug ID           | File                                             | Severity      |
+  > | ---------------- | ------------------------------------------------ | ------------- |
   > | BUG-REGISTER-001 | `tests/bug-reports/register/BUG-REGISTER-001.md` | Critical / P1 |
   > | BUG-REGISTER-002 | `tests/bug-reports/register/BUG-REGISTER-002.md` | Critical / P1 |
-  > | BUG-REGISTER-003 | `tests/bug-reports/register/BUG-REGISTER-003.md` | Major / P1 |
-  > | BUG-CART-001 | `tests/bug-reports/cart/BUG-CART-001.md` | Critical / P1 |
-  > | BUG-PRODUCT-001 | `tests/bug-reports/product/BUG-PRODUCT-001.md` | Major / P2 |
-  > | BUG-PRODUCT-002 | `tests/bug-reports/product/BUG-PRODUCT-002.md` | Critical / P1 |
-  > | BUG-PRODUCT-003 | `tests/bug-reports/product/BUG-PRODUCT-003.md` | Critical / P1 |
-  > | BUG-PRODUCT-004 | `tests/bug-reports/product/BUG-PRODUCT-004.md` | Major / P2 |
-  > | BUG-PRODUCT-005 | `tests/bug-reports/product/BUG-PRODUCT-005.md` | Blocker / P0 |
-  > | BUG-MOBILE-001 | `tests/bug-reports/mobile/BUG-MOBILE-001.md` | Major / P2 |
+  > | BUG-REGISTER-003 | `tests/bug-reports/register/BUG-REGISTER-003.md` | Major / P1    |
+  > | BUG-CART-001     | `tests/bug-reports/cart/BUG-CART-001.md`         | Critical / P1 |
+  > | BUG-PRODUCT-001  | `tests/bug-reports/product/BUG-PRODUCT-001.md`   | Major / P2    |
+  > | BUG-PRODUCT-002  | `tests/bug-reports/product/BUG-PRODUCT-002.md`   | Critical / P1 |
+  > | BUG-PRODUCT-003  | `tests/bug-reports/product/BUG-PRODUCT-003.md`   | Critical / P1 |
+  > | BUG-PRODUCT-004  | `tests/bug-reports/product/BUG-PRODUCT-004.md`   | Major / P2    |
+  > | BUG-PRODUCT-005  | `tests/bug-reports/product/BUG-PRODUCT-005.md`   | Blocker / P0  |
+  > | BUG-MOBILE-001   | `tests/bug-reports/mobile/BUG-MOBILE-001.md`     | Major / P2    |
   >
   > ### GitHub Issue Templates
   >
   > **[BUG][REGISTER] - Đăng ký thành công nhưng không redirect đến URL mong đợi**
+  >
   > - Found by: TC-REGISTER-001, TC-REGISTER-015, TC-REGISTER-016, TC-REGISTER-017
   > - Error: `expect(page).toHaveURL(expected) failed`
   > - Screenshot: `tests/bug-reports/screenshots/BUG-REGISTER-001-redirect-fail.png`
   >
   > **[BUG][REGISTER] - Cho phép đăng ký email đã tồn tại**
+  >
   > - Found by: TC-REGISTER-004
   > - Error: `expect(locator).toContainText(expected) failed`
   > - Screenshot: `tests/bug-reports/screenshots/BUG-REGISTER-002-duplicate-email.png`
   >
   > **[BUG][REGISTER] - Thiếu trường "Xác nhận mật khẩu" hoặc không validate**
+  >
   > - Found by: TC-REGISTER-013, TC-REGISTER-014
   > - Error: `TimeoutError` / custom assertion fail
   > - Screenshots: `BUG-REGISTER-003-confirm-pw-timeout.png`, `BUG-REGISTER-003-confirm-pw-missing.png`
   >
   > **[BUG][CART] - Nút tăng/giảm số lượng không phản hồi**
+  >
   > - Found by: TC-CART-003, TC-CART-004
   > - Error: `TimeoutError: locator.click: Timeout 5000ms exceeded`
   > - Screenshots: `BUG-CART-001-quantity-plus.png`, `BUG-CART-001-quantity-minus.png`
   >
   > **[BUG][PRODUCT] - Không giới hạn độ dài tên sản phẩm (> 255 ký tự được chấp nhận)**
+  >
   > - Found by: TC-PRODUCT-006
   > - Error: `Spec yêu cầu reject khi Tên > 255 ký tự`
   > - Screenshot: `BUG-PRODUCT-001-name-over-255.png`
   >
   > **[BUG][PRODUCT] - Không validate giá sản phẩm (0, âm, trống, không phải số)**
+  >
   > - Found by: TC-PRODUCT-007, TC-PRODUCT-008, TC-PRODUCT-009, TC-PRODUCT-010
   > - Error: `Spec yêu cầu reject khi Giá = 0/âm/rỗng/không hợp lệ`
   > - Screenshots: 4 file `BUG-PRODUCT-002-price-*.png`
   >
   > **[BUG][PRODUCT] - Chỉnh sửa sản phẩm ảnh hưởng sản phẩm không liên quan**
+  >
   > - Found by: TC-PRODUCT-015
   > - Error: `Sản phẩm Y không liên quan phải giữ nguyên tên`
   > - Screenshot: `BUG-PRODUCT-003-edit-isolation.png`
   >
   > **[BUG][PRODUCT] - API không validate category_id**
+  >
   > - Found by: TC-PRODUCT-011, TC-PRODUCT-012
   > - Error: `Spec yêu cầu reject khi không chọn Danh mục / category_id không tồn tại`
   >
   > **[BUG][PRODUCT][SECURITY] - API sản phẩm thiếu kiểm tra auth (401) và phân quyền (403)**
+  >
   > - Found by: TC-PRODUCT-013, TC-PRODUCT-014
   > - Error: `FR-12/SEC-02: phải trả 401` / `FR-12/SEC-03: phải trả 403`
   >
   > **[BUG][MOBILE] - Không hiển thị thông báo lỗi khi email để trống**
+  >
   > - Found by: TC-MOBILE_LOGIN-002
   > - Error: `expect(locator).toBeVisible() failed — element(s) not found`
   > - Screenshot: `BUG-MOBILE-001-empty-email.png`
 
-- **Đánh giá:** VALID 
+- **Đánh giá:** VALID
 
 - **Suy luận:** AI chạy đúng 59 test case qua Playwright CLI, phân tích log đúng theo Black-box (không đọc source SUT), phân loại rõ ràng giữa test script issue và application bug, tạo đầy đủ 10 bug report với screenshot kèm theo. Tuy nhiên chưa thực thi toàn bộ test case
 
@@ -1493,43 +1564,46 @@
   >
   > ## Kết quả chạy đầy đủ 13 mobile test cases
   >
-  > | Test Case | Kết quả | Ghi chú |
-  > |---|---|---|
-  > | TC-MOBILE_LOGIN-001 | ✅ PASSED | Đăng nhập thành công |
-  > | TC-MOBILE_LOGIN-002 | ❌ FAILED | Không hiện "Email là trường bắt buộc" |
-  > | TC-MOBILE_LOGIN-003 | ❌ FAILED | Không hiện lỗi định dạng email |
-  > | TC-MOBILE_LOGIN-004 | ❌ FAILED | Không hiện "Mật khẩu là trường bắt buộc" |
-  > | TC-MOBILE_LOGIN-005 | ✅ PASSED | Lỗi đăng nhập chung đúng |
-  > | TC-MOBILE_LOGIN-006 | ❌ FAILED | Bộ đếm = 2 thay vì 1 (tăng +2/lần) |
-  > | TC-MOBILE_LOGIN-007 | ❌ FAILED | Bộ đếm = 2 thay vì 1 (xác nhận lại) |
-  > | TC-MOBILE_LOGIN-008 | ❌ FAILED | Bị khóa sau 2 lần sai (thay vì 3) |
-  > | TC-MOBILE_LOGIN-009 | ❌ FAILED | Thời gian khóa ~180s thay vì 30s (diff=149860ms) |
-  > | TC-MOBILE_LOGIN-010 | ✅ PASSED | Từ chối khi đang khóa |
-  > | TC-MOBILE_LOGIN-011 | ❌ FAILED | Sau 30s vẫn không đăng nhập được (khóa 180s) |
+  > | Test Case           | Kết quả                    | Ghi chú                                          |
+  > | ------------------- | -------------------------- | ------------------------------------------------ |
+  > | TC-MOBILE_LOGIN-001 | ✅ PASSED                  | Đăng nhập thành công                             |
+  > | TC-MOBILE_LOGIN-002 | ❌ FAILED                  | Không hiện "Email là trường bắt buộc"            |
+  > | TC-MOBILE_LOGIN-003 | ❌ FAILED                  | Không hiện lỗi định dạng email                   |
+  > | TC-MOBILE_LOGIN-004 | ❌ FAILED                  | Không hiện "Mật khẩu là trường bắt buộc"         |
+  > | TC-MOBILE_LOGIN-005 | ✅ PASSED                  | Lỗi đăng nhập chung đúng                         |
+  > | TC-MOBILE_LOGIN-006 | ❌ FAILED                  | Bộ đếm = 2 thay vì 1 (tăng +2/lần)               |
+  > | TC-MOBILE_LOGIN-007 | ❌ FAILED                  | Bộ đếm = 2 thay vì 1 (xác nhận lại)              |
+  > | TC-MOBILE_LOGIN-008 | ❌ FAILED                  | Bị khóa sau 2 lần sai (thay vì 3)                |
+  > | TC-MOBILE_LOGIN-009 | ❌ FAILED                  | Thời gian khóa ~180s thay vì 30s (diff=149860ms) |
+  > | TC-MOBILE_LOGIN-010 | ✅ PASSED                  | Từ chối khi đang khóa                            |
+  > | TC-MOBILE_LOGIN-011 | ❌ FAILED                  | Sau 30s vẫn không đăng nhập được (khóa 180s)     |
   > | TC-MOBILE_LOGIN-012 | ✅ PASSED (false positive) | Pass vì khóa 180s > 29s, không phải do đúng spec |
-  > | TC-MOBILE_LOGIN-013 | ✅ PASSED | Bộ đếm dùng chung Web/Mobile |
+  > | TC-MOBILE_LOGIN-013 | ✅ PASSED                  | Bộ đếm dùng chung Web/Mobile                     |
   >
   > **Tổng kết mobile:** 5 passed / 8 failed
   >
   > ## Bug reports bổ sung tạo ra
   >
-  > | Bug ID | File | Mô tả | Severity |
-  > |---|---|---|---|
-  > | BUG-MOBILE-001 (cập nhật) | `tests/bug-reports/mobile/BUG-MOBILE-001.md` | Mở rộng thêm TC-003, TC-004 — không validate field-specific | Major/P2 |
-  > | BUG-MOBILE-002 | `tests/bug-reports/mobile/BUG-MOBILE-002.md` | Bộ đếm sai +2/lần → khóa sau 2 lần thay vì 3 | Critical/P1 |
-  > | BUG-MOBILE-003 | `tests/bug-reports/mobile/BUG-MOBILE-003.md` | Thời gian khóa 180s thay vì 30s | Major/P2 |
+  > | Bug ID                    | File                                         | Mô tả                                                       | Severity    |
+  > | ------------------------- | -------------------------------------------- | ----------------------------------------------------------- | ----------- |
+  > | BUG-MOBILE-001 (cập nhật) | `tests/bug-reports/mobile/BUG-MOBILE-001.md` | Mở rộng thêm TC-003, TC-004 — không validate field-specific | Major/P2    |
+  > | BUG-MOBILE-002            | `tests/bug-reports/mobile/BUG-MOBILE-002.md` | Bộ đếm sai +2/lần → khóa sau 2 lần thay vì 3                | Critical/P1 |
+  > | BUG-MOBILE-003            | `tests/bug-reports/mobile/BUG-MOBILE-003.md` | Thời gian khóa 180s thay vì 30s                             | Major/P2    |
   >
   > ## GitHub Issue Templates bổ sung
   >
   > **[BUG][MOBILE] - Không hiển thị thông báo lỗi field-specific khi validate (TC-002, 003, 004)**
+  >
   > - Error: `element(s) not found` cho "Email là trường bắt buộc", lỗi định dạng email, "Mật khẩu là trường bắt buộc"
   > - Root cause: Không có client-side validation per field; app gửi request API và hiện lỗi chung
   >
   > **[BUG][MOBILE] - Bộ đếm đăng nhập sai tăng +2 mỗi lần, khóa sau 2 lần sai (TC-006, 007, 008)**
+  >
   > - Error: `Expected: 1 — Received: 2`; `expect(locked_until).toBeNull() — Received: timestamp`
   > - Root cause: Logic backend cộng +2 thay vì +1 mỗi lần đăng nhập sai
   >
   > **[BUG][MOBILE] - Thời gian khóa tài khoản là 180 giây thay vì 30 giây (TC-009, 011)**
+  >
   > - Error: `Expected < 5000 — Received: 149860` (diff ~150s vs 30s); login vẫn bị từ chối sau 30s
   > - Root cause: Backend set lock duration = 180s thay vì 30s
   >
@@ -1539,7 +1613,7 @@
 
 - **Đánh giá:** INCOMPLETE
 
-- **Suy luận:** 
+- **Suy luận:**
   - Phát hiện đúng nguyên nhân thiếu bug (serial bail), chạy đầy đủ 13 test, bóc tách 3 bug độc lập (field validation, counter +2, lock 180s), nhận diện false positive ở TC-012. Tuy nhiên file `BUG-MOBILE-002.md` thiếu screenshot — Playwright xóa `test-results/` giữa các lần chạy riêng lẻ nên ảnh không kịp copy.
   - Test case TC-CART-002, TC-CART-006, TC-CART-007, TC-CART-008 bug nhưng không phát hiện ra, cần test manual lại.
   - Test case TC-REGISTER-003, TC-REGISTER-006, TC-REGISTER-007, TC-REGISTER-008, TC-REGISTER-009, TC-REGISTER-010, TC-REGISTER-011 bị block, không chạy được nên cần test manual lại.
@@ -1580,17 +1654,18 @@
   >
   > ## Kết quả
   >
-  > | Screenshot | Kích thước | Nội dung |
-  > |---|---|---|
+  > | Screenshot                         | Kích thước   | Nội dung                                                      |
+  > | ---------------------------------- | ------------ | ------------------------------------------------------------- |
   > | `BUG-MOBILE-002-counter-plus2.png` | 23,043 bytes | TC-006: `Expected: 1 — Received: 2` (bộ đếm +2 sau 1 lần sai) |
-  > | `BUG-MOBILE-002-counter-tc007.png` | 23,043 bytes | TC-007: Xác nhận lại bộ đếm +2 |
-  > | `BUG-MOBILE-002-locked-early.png` | 23,043 bytes | TC-008: Tài khoản bị khóa sau 2 lần sai |
+  > | `BUG-MOBILE-002-counter-tc007.png` | 23,043 bytes | TC-007: Xác nhận lại bộ đếm +2                                |
+  > | `BUG-MOBILE-002-locked-early.png`  | 23,043 bytes | TC-008: Tài khoản bị khóa sau 2 lần sai                       |
   >
   > Cả 3 screenshot đã được đặt tại `tests/bug-reports/screenshots/` và tham chiếu trong `BUG-MOBILE-002.md`.
   >
   > ## Nội dung BUG-MOBILE-002.md (đã có sẵn đầy đủ)
   >
   > File đã được tạo từ phiên trước với đầy đủ thông tin bug, chỉ thiếu file ảnh vật lý. Sau khi copy screenshot xong, BUG-MOBILE-002.md hoàn chỉnh với:
+  >
   > - Found by: TC-MOBILE_LOGIN-006, TC-MOBILE_LOGIN-007, TC-MOBILE_LOGIN-008
   > - Severity: Critical / P1
   > - Evidence: 3 screenshot + Playwright log `Expected: 1 — Received: 2`
@@ -1609,6 +1684,7 @@
 - **Thời gian:** 2026-06-28 (bổ sung — thu thập screenshot cho BUG-MOBILE-001)
 - **Nội dung prompt:**
   > Chạy lại TC-MOBILE_LOGIN-002, TC-MOBILE_LOGIN-003, TC-MOBILE_LOGIN-004 để lấy thêm evidence:
+  >
   > - Screenshot TC-003: `![BUG-MOBILE-001-invalid-email](../screenshots/BUG-MOBILE-001-invalid-email.png)`
   > - Screenshot TC-004: `![BUG-MOBILE-001-empty-password](../screenshots/BUG-MOBILE-001-empty-password.png)`
 - **AI output:**
@@ -1633,21 +1709,21 @@
   >
   > ## Kết quả chạy test
   >
-  > | Test Case | Kết quả | Lỗi Playwright |
-  > |---|---|---|
-  > | TC-MOBILE_LOGIN-002 | ❌ FAILED | `element(s) not found — getByText('Email là trường bắt buộc', { exact: true })` |
-  > | TC-MOBILE_LOGIN-003 | ❌ FAILED | `element(s) not found — getByText(/định dạng email/i)` |
+  > | Test Case           | Kết quả   | Lỗi Playwright                                                                     |
+  > | ------------------- | --------- | ---------------------------------------------------------------------------------- |
+  > | TC-MOBILE_LOGIN-002 | ❌ FAILED | `element(s) not found — getByText('Email là trường bắt buộc', { exact: true })`    |
+  > | TC-MOBILE_LOGIN-003 | ❌ FAILED | `element(s) not found — getByText(/định dạng email/i)`                             |
   > | TC-MOBILE_LOGIN-004 | ❌ FAILED | `element(s) not found — getByText('Mật khẩu là trường bắt buộc', { exact: true })` |
   >
   > Cả 3 test đều confirm lại bug: ứng dụng mobile không hiển thị thông báo lỗi field-specific, chỉ có thông báo lỗi chung "Đăng nhập thất bại. Vui lòng kiểm tra lại." (hoặc không hiện gì).
   >
   > ## Screenshot đã thu thập
   >
-  > | File | Kích thước | Test Case |
-  > |---|---|---|
-  > | `BUG-MOBILE-001-empty-email.png` | 22,377 bytes | TC-002: email để trống |
-  > | `BUG-MOBILE-001-invalid-email.png` | 22,615 bytes | TC-003: email sai định dạng (`test@`) |
-  > | `BUG-MOBILE-001-empty-password.png` | 23,614 bytes | TC-004: mật khẩu để trống |
+  > | File                                | Kích thước   | Test Case                             |
+  > | ----------------------------------- | ------------ | ------------------------------------- |
+  > | `BUG-MOBILE-001-empty-email.png`    | 22,377 bytes | TC-002: email để trống                |
+  > | `BUG-MOBILE-001-invalid-email.png`  | 22,615 bytes | TC-003: email sai định dạng (`test@`) |
+  > | `BUG-MOBILE-001-empty-password.png` | 23,614 bytes | TC-004: mật khẩu để trống             |
   >
   > Tất cả đặt tại `tests/bug-reports/screenshots/`, tham chiếu đã có sẵn trong `BUG-MOBILE-001.md`.
 
