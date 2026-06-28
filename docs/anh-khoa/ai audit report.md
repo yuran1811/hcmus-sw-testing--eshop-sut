@@ -1541,7 +1541,8 @@
 
 - **Suy luận:** 
   - Phát hiện đúng nguyên nhân thiếu bug (serial bail), chạy đầy đủ 13 test, bóc tách 3 bug độc lập (field validation, counter +2, lock 180s), nhận diện false positive ở TC-012. Tuy nhiên file `BUG-MOBILE-002.md` thiếu screenshot — Playwright xóa `test-results/` giữa các lần chạy riêng lẻ nên ảnh không kịp copy.
-  - Test case TC-CART-002.md, TC-CART-006.md, TC-CART-007.md, TC-CART-008.md bug nhưng không phát hiện ra, cần test tay lại
+  - Test case TC-CART-002, TC-CART-006, TC-CART-007, TC-CART-008 bug nhưng không phát hiện ra, cần test manual lại.
+  - Test case TC-REGISTER-003, TC-REGISTER-006, TC-REGISTER-007, TC-REGISTER-008, TC-REGISTER-009, TC-REGISTER-010, TC-REGISTER-011 bị block, không chạy được nên cần test manual lại.
 
 - **Sửa:** Cần chạy lại TC-006, TC-007, TC-008 và copy screenshot ngay sau từng lần chạy
 
