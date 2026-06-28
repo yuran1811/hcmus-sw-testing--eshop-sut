@@ -1,4 +1,4 @@
-# Domain Testing Report — HW02
+﻿# Domain Testing Report — HW02
 
 ## Feature: Xem danh sách & Tìm kiếm sản phẩm (FR-05)
 
@@ -140,26 +140,26 @@ Nominal values for other variables: `Product Count` = 3 (multiple products exist
 
 | Scenario(s) Merged                                         | Reason                                                              | Resulting TC                                                                                                                                      |
 | ---------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Scenario #1 + Scenario #7 + Scenario #11 + OC1 + OC2 + OC4 | Identical test data and output (view all products with empty query) | [TC-PLAS-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-001.md) |
-| Scenario #2                                                | Matches specific query and filters list                             | [TC-PLAS-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-002.md) |
-| Scenario #3                                                | Handles non-matching queries, shows empty state                     | [TC-PLAS-003](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-003.md) |
-| Scenario #4                                                | Handles Vietnamese search accents                                   | [TC-PLAS-004](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-004.md) |
-| Scenario #5 + OC3                                          | Handles HTML script block queries safely (XSS protection)           | [TC-PLAS-005](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-005.md) |
-| Scenario #10                                               | Captures system behavior when loading data                          | [TC-PLAS-006](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-006.md) |
-| OC4                                                        | Verification of single H1 tag constraints                           | [TC-PLAS-007](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-007.md) |
+| Scenario #1 + Scenario #7 + Scenario #11 + OC1 + OC2 + OC4 | Identical test data and output (view all products with empty query) | [TC-PLAS-001](../tests/test-cases/product-list-and-search/TC-PLAS-001.md) |
+| Scenario #2                                                | Matches specific query and filters list                             | [TC-PLAS-002](../tests/test-cases/product-list-and-search/TC-PLAS-002.md) |
+| Scenario #3                                                | Handles non-matching queries, shows empty state                     | [TC-PLAS-003](../tests/test-cases/product-list-and-search/TC-PLAS-003.md) |
+| Scenario #4                                                | Handles Vietnamese search accents                                   | [TC-PLAS-004](../tests/test-cases/product-list-and-search/TC-PLAS-004.md) |
+| Scenario #5 + OC3                                          | Handles HTML script block queries safely (XSS protection)           | [TC-PLAS-005](../tests/test-cases/product-list-and-search/TC-PLAS-005.md) |
+| Scenario #10                                               | Captures system behavior when loading data                          | [TC-PLAS-006](../tests/test-cases/product-list-and-search/TC-PLAS-006.md) |
+| OC4                                                        | Verification of single H1 tag constraints                           | [TC-PLAS-007](../tests/test-cases/product-list-and-search/TC-PLAS-007.md) |
 | Scenario #6, #8, #9                                        | These boundaries are handled under Boundary Value Analysis (BVA)    | Represented in BVA TCs                                                                                                                            |
 
 #### Final Test Case Summary
 
 | #   | TC ID                                                                                                                                             | Description                                                            | Technique | EC/OC Covered                 | Expected                                                           |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | --------- | ----------------------------- | ------------------------------------------------------------------ |
-| 1   | [TC-PLAS-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-001.md) | Xem toàn bộ danh sách sản phẩm thành công                              | DT        | EC2, EC7, EC11, OC1, OC2, OC4 | Pass - Grid displays all products with correct format and 1 H1 tag |
-| 2   | [TC-PLAS-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-002.md) | Tìm kiếm sản phẩm bằng từ khóa hợp lệ có kết quả                       | DT        | EC1, EC7, EC11, OC1, OC2, OC4 | Pass - Grid shows only matching products                           |
-| 3   | [TC-PLAS-003](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-003.md) | Tìm kiếm sản phẩm bằng từ khóa không khớp với sản phẩm nào             | DT        | EC3, EC7, EC11, OC4           | Pass - Empty state displayed                                       |
-| 4   | [TC-PLAS-004](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-004.md) | Tìm kiếm sản phẩm bằng từ khóa có dấu tiếng Việt và ký tự đặc biệt     | DT        | EC4, EC7, EC11, OC1, OC2, OC4 | Pass - Correct matching for accents                                |
-| 5   | [TC-PLAS-005](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-005.md) | Tìm kiếm sản phẩm bằng từ khóa chứa mã độc HTML/XSS (Hiển thị an toàn) | DT        | EC5, EC7, EC11, OC3, OC4      | Pass - Rendered safely as plain text, no script execution          |
-| 6   | [TC-PLAS-006](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-006.md) | Kiểm tra trạng thái tải dữ liệu (Loading State)                        | DT        | EC10, EC7, OC4                | Pass - Loading indicator displays while fetching                   |
-| 7   | [TC-PLAS-007](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-007.md) | Kiểm tra cấu trúc thẻ H1 duy nhất trên trang chủ                       | DT        | EC11, OC4                     | Pass - Exactly one H1 tag exists on page                           |
+| 1   | [TC-PLAS-001](../tests/test-cases/product-list-and-search/TC-PLAS-001.md) | Xem toàn bộ danh sách sản phẩm thành công                              | DT        | EC2, EC7, EC11, OC1, OC2, OC4 | Pass - Grid displays all products with correct format and 1 H1 tag |
+| 2   | [TC-PLAS-002](../tests/test-cases/product-list-and-search/TC-PLAS-002.md) | Tìm kiếm sản phẩm bằng từ khóa hợp lệ có kết quả                       | DT        | EC1, EC7, EC11, OC1, OC2, OC4 | Pass - Grid shows only matching products                           |
+| 3   | [TC-PLAS-003](../tests/test-cases/product-list-and-search/TC-PLAS-003.md) | Tìm kiếm sản phẩm bằng từ khóa không khớp với sản phẩm nào             | DT        | EC3, EC7, EC11, OC4           | Pass - Empty state displayed                                       |
+| 4   | [TC-PLAS-004](../tests/test-cases/product-list-and-search/TC-PLAS-004.md) | Tìm kiếm sản phẩm bằng từ khóa có dấu tiếng Việt và ký tự đặc biệt     | DT        | EC4, EC7, EC11, OC1, OC2, OC4 | Pass - Correct matching for accents                                |
+| 5   | [TC-PLAS-005](../tests/test-cases/product-list-and-search/TC-PLAS-005.md) | Tìm kiếm sản phẩm bằng từ khóa chứa mã độc HTML/XSS (Hiển thị an toàn) | DT        | EC5, EC7, EC11, OC3, OC4      | Pass - Rendered safely as plain text, no script execution          |
+| 6   | [TC-PLAS-006](../tests/test-cases/product-list-and-search/TC-PLAS-006.md) | Kiểm tra trạng thái tải dữ liệu (Loading State)                        | DT        | EC10, EC7, OC4                | Pass - Loading indicator displays while fetching                   |
+| 7   | [TC-PLAS-007](../tests/test-cases/product-list-and-search/TC-PLAS-007.md) | Kiểm tra cấu trúc thẻ H1 duy nhất trên trang chủ                       | DT        | EC11, OC4                     | Pass - Exactly one H1 tag exists on page                           |
 
 ---
 
@@ -288,19 +288,19 @@ Nominal values for other variables: `Authorization` = Valid Token, `Cart State` 
 
 | Scenario(s) Merged                            | Reason                                                          | Resulting TC                                                                                                                               |
 | --------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| Scenario #1 + Scenario #4 + Scenario #6 + OC1 | Trùng test data và expected output cho luồng chính hợp lệ       | [TC-CHECKOUT-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-001.md) |
-| Scenario #2 + Scenario #3 + OC2               | Kiểm thử bảo mật/phân quyền (chưa đăng nhập hoặc sai token)     | [TC-CHECKOUT-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-002.md) |
-| Scenario #5 + OC3                             | Kiểm thử nghiệp vụ ngăn chặn giỏ hàng rỗng                      | [TC-CHECKOUT-003](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-003.md) |
-| Scenario #7 + OC4                             | Kiểm thử tính an toàn/giá tiền không cho phép client tự sửa giá | [TC-CHECKOUT-004](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-004.md) |
+| Scenario #1 + Scenario #4 + Scenario #6 + OC1 | Trùng test data và expected output cho luồng chính hợp lệ       | [TC-CHECKOUT-001](../tests/test-cases/checkout/TC-CHECKOUT-001.md) |
+| Scenario #2 + Scenario #3 + OC2               | Kiểm thử bảo mật/phân quyền (chưa đăng nhập hoặc sai token)     | [TC-CHECKOUT-002](../tests/test-cases/checkout/TC-CHECKOUT-002.md) |
+| Scenario #5 + OC3                             | Kiểm thử nghiệp vụ ngăn chặn giỏ hàng rỗng                      | [TC-CHECKOUT-003](../tests/test-cases/checkout/TC-CHECKOUT-003.md) |
+| Scenario #7 + OC4                             | Kiểm thử tính an toàn/giá tiền không cho phép client tự sửa giá | [TC-CHECKOUT-004](../tests/test-cases/checkout/TC-CHECKOUT-004.md) |
 
 #### Final Test Case Summary
 
 | #   | TC ID                                                                                                                                      | Description                                                              | Technique | EC/OC Covered      | Expected                                   |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------ | --------- | ------------------ | ------------------------------------------ |
-| 1   | [TC-CHECKOUT-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-001.md) | Thanh toán đơn hàng thành công với thông tin hợp lệ                      | DT        | EC1, EC4, EC6, OC1 | Pass - Đơn hàng pending, giỏ hàng được xóa |
-| 2   | [TC-CHECKOUT-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-002.md) | Thanh toán đơn hàng thất bại khi chưa đăng nhập hoặc token không hợp lệ  | DT        | EC2, EC3, OC2      | Fail - Trả về mã lỗi 401                   |
-| 3   | [TC-CHECKOUT-003](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-003.md) | Thanh toán đơn hàng thất bại khi giỏ hàng trống                          | DT        | EC5, OC3           | Fail - Trả về mã lỗi 400                   |
-| 4   | [TC-CHECKOUT-004](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-004.md) | Thanh toán đơn hàng thất bại khi tổng tiền client gửi không khớp máy chủ | DT        | EC7, OC4           | Fail - Trả về mã lỗi 400                   |
+| 1   | [TC-CHECKOUT-001](../tests/test-cases/checkout/TC-CHECKOUT-001.md) | Thanh toán đơn hàng thành công với thông tin hợp lệ                      | DT        | EC1, EC4, EC6, OC1 | Pass - Đơn hàng pending, giỏ hàng được xóa |
+| 2   | [TC-CHECKOUT-002](../tests/test-cases/checkout/TC-CHECKOUT-002.md) | Thanh toán đơn hàng thất bại khi chưa đăng nhập hoặc token không hợp lệ  | DT        | EC2, EC3, OC2      | Fail - Trả về mã lỗi 401                   |
+| 3   | [TC-CHECKOUT-003](../tests/test-cases/checkout/TC-CHECKOUT-003.md) | Thanh toán đơn hàng thất bại khi giỏ hàng trống                          | DT        | EC5, OC3           | Fail - Trả về mã lỗi 400                   |
+| 4   | [TC-CHECKOUT-004](../tests/test-cases/checkout/TC-CHECKOUT-004.md) | Thanh toán đơn hàng thất bại khi tổng tiền client gửi không khớp máy chủ | DT        | EC7, OC4           | Fail - Trả về mã lỗi 400                   |
 
 ---
 
@@ -402,17 +402,17 @@ Nominal values: name = Điện tử, Token = JWT Admin, category_id = 1 (khi c�
 
 | #   | TC ID                                                                                                                                      | Description                 | Technique | EC/OC Covered | Expected |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------- | --------- | ------------- | -------- |
-| 1   | [TC-CATEGORY-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-001.md) | Thêm danh mục thành công    | DT        | EC1, OC1      | Pass     |
-| 2   | [TC-CATEGORY-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-002.md) | Thêm thất bại (tên rỗng)    | DT        | EC2, OC2      | Fail     |
-| 3   | [TC-CATEGORY-003](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-003.md) | Thêm thất bại (whitespace)  | DT        | EC3, OC2      | Fail     |
-| 4   | [TC-CATEGORY-004](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-004.md) | Xem danh sách danh mục      | DT        | EC6, OC3      | Pass     |
-| 5   | [TC-CATEGORY-005](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-005.md) | Xóa danh mục thành công     | DT        | EC7, OC4      | Pass     |
-| 6   | [TC-CATEGORY-006](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-006.md) | Xóa danh mục (ID sai)       | DT        | EC8, OC5      | Fail     |
-| 7   | [TC-CATEGORY-007](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-007.md) | Lỗi xác thực (Auth missing) | DT        | EC4, OC6      | Fail     |
-| 8   | [TC-CATEGORY-008](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-008.md) | Lỗi phân quyền (User token) | DT        | EC5, OC6      | Fail     |
-| 9   | [TC-CATEGORY-009](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-009.md) | Xóa danh mục có sản phẩm    | DT        | EC9, OC7      | Fail     |
-| 10  | [TC-CATEGORY-010](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-010.md) | Xóa không có token (401)    | DT        | EC4, OC6      | Fail     |
-| 11  | [TC-CATEGORY-011](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-011.md) | Xóa dùng token user (403)   | DT        | EC5, OC6      | Fail     |
+| 1   | [TC-CATEGORY-001](../tests/test-cases/category/TC-CATEGORY-001.md) | Thêm danh mục thành công    | DT        | EC1, OC1      | Pass     |
+| 2   | [TC-CATEGORY-002](../tests/test-cases/category/TC-CATEGORY-002.md) | Thêm thất bại (tên rỗng)    | DT        | EC2, OC2      | Fail     |
+| 3   | [TC-CATEGORY-003](../tests/test-cases/category/TC-CATEGORY-003.md) | Thêm thất bại (whitespace)  | DT        | EC3, OC2      | Fail     |
+| 4   | [TC-CATEGORY-004](../tests/test-cases/category/TC-CATEGORY-004.md) | Xem danh sách danh mục      | DT        | EC6, OC3      | Pass     |
+| 5   | [TC-CATEGORY-005](../tests/test-cases/category/TC-CATEGORY-005.md) | Xóa danh mục thành công     | DT        | EC7, OC4      | Pass     |
+| 6   | [TC-CATEGORY-006](../tests/test-cases/category/TC-CATEGORY-006.md) | Xóa danh mục (ID sai)       | DT        | EC8, OC5      | Fail     |
+| 7   | [TC-CATEGORY-007](../tests/test-cases/category/TC-CATEGORY-007.md) | Lỗi xác thực (Auth missing) | DT        | EC4, OC6      | Fail     |
+| 8   | [TC-CATEGORY-008](../tests/test-cases/category/TC-CATEGORY-008.md) | Lỗi phân quyền (User token) | DT        | EC5, OC6      | Fail     |
+| 9   | [TC-CATEGORY-009](../tests/test-cases/category/TC-CATEGORY-009.md) | Xóa danh mục có sản phẩm    | DT        | EC9, OC7      | Fail     |
+| 10  | [TC-CATEGORY-010](../tests/test-cases/category/TC-CATEGORY-010.md) | Xóa không có token (401)    | DT        | EC4, OC6      | Fail     |
+| 11  | [TC-CATEGORY-011](../tests/test-cases/category/TC-CATEGORY-011.md) | Xóa dùng token user (403)   | DT        | EC5, OC6      | Fail     |
 
 ---
 
@@ -527,16 +527,16 @@ Nominal values: Full Name = Nguyen Van A, Email = newuser@gmail.com, Password = 
 
 | #   | TC ID                                                                                                                                                           | Description         | Technique | EC/OC Covered            | Expected |
 | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------- | ------------------------ | -------- |
-| 1   | [TC-MOBILE-REGISTER-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-001.md) | Hợp lệ              | DT        | EC1, EC3, EC7, EC14, OC1 | Pass     |
-| 2   | [TC-MOBILE-REGISTER-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-002.md) | Name trống          | DT        | EC2, OC2                 | Fail     |
-| 3   | [TC-MOBILE-REGISTER-003](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-003.md) | Email trống         | DT        | EC4, OC2                 | Fail     |
-| 4   | [TC-MOBILE-REGISTER-004](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-004.md) | Email sai định dạng | DT        | EC5, OC2                 | Fail     |
-| 5   | [TC-MOBILE-REGISTER-005](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-005.md) | Email trùng         | DT        | EC6, OC3                 | Fail     |
-| 6   | [TC-MOBILE-REGISTER-006](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-006.md) | Mật khẩu trống      | DT        | EC8, OC2                 | Fail     |
-| 7   | [TC-MOBILE-REGISTER-007](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-007.md) | Mật khẩu < 8        | DT        | EC9, OC2                 | Fail     |
-| 8   | [TC-MOBILE-REGISTER-008](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-008.md) | Không chữ hoa       | DT        | EC10, OC2                | Fail     |
-| 9   | [TC-MOBILE-REGISTER-009](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-009.md) | Không chữ thường    | DT        | EC11, OC2                | Fail     |
-| 10  | [TC-MOBILE-REGISTER-010](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-010.md) | Không số            | DT        | EC12, OC2                | Fail     |
-| 11  | [TC-MOBILE-REGISTER-011](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-011.md) | Không ký tự ĐB      | DT        | EC13, OC2                | Fail     |
-| 12  | [TC-MOBILE-REGISTER-012](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-012.md) | Xác nhận trống      | DT        | EC15, OC2                | Fail     |
-| 13  | [TC-MOBILE-REGISTER-013](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-013.md) | Xác nhận sai        | DT        | EC16, OC2                | Fail     |
+| 1   | [TC-MOBILE-REGISTER-001](../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-001.md) | Hợp lệ              | DT        | EC1, EC3, EC7, EC14, OC1 | Pass     |
+| 2   | [TC-MOBILE-REGISTER-002](../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-002.md) | Name trống          | DT        | EC2, OC2                 | Fail     |
+| 3   | [TC-MOBILE-REGISTER-003](../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-003.md) | Email trống         | DT        | EC4, OC2                 | Fail     |
+| 4   | [TC-MOBILE-REGISTER-004](../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-004.md) | Email sai định dạng | DT        | EC5, OC2                 | Fail     |
+| 5   | [TC-MOBILE-REGISTER-005](../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-005.md) | Email trùng         | DT        | EC6, OC3                 | Fail     |
+| 6   | [TC-MOBILE-REGISTER-006](../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-006.md) | Mật khẩu trống      | DT        | EC8, OC2                 | Fail     |
+| 7   | [TC-MOBILE-REGISTER-007](../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-007.md) | Mật khẩu < 8        | DT        | EC9, OC2                 | Fail     |
+| 8   | [TC-MOBILE-REGISTER-008](../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-008.md) | Không chữ hoa       | DT        | EC10, OC2                | Fail     |
+| 9   | [TC-MOBILE-REGISTER-009](../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-009.md) | Không chữ thường    | DT        | EC11, OC2                | Fail     |
+| 10  | [TC-MOBILE-REGISTER-010](../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-010.md) | Không số            | DT        | EC12, OC2                | Fail     |
+| 11  | [TC-MOBILE-REGISTER-011](../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-011.md) | Không ký tự ĐB      | DT        | EC13, OC2                | Fail     |
+| 12  | [TC-MOBILE-REGISTER-012](../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-012.md) | Xác nhận trống      | DT        | EC15, OC2                | Fail     |
+| 13  | [TC-MOBILE-REGISTER-013](../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-013.md) | Xác nhận sai        | DT        | EC16, OC2                | Fail     |

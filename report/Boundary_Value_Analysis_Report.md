@@ -1,4 +1,4 @@
-# Boundary Value Analysis Report — HW02
+﻿# Boundary Value Analysis Report — HW02
 
 ## Feature: Xem danh sách & Tìm kiếm sản phẩm (FR-05)
 
@@ -61,8 +61,8 @@ Nominal values for other variables: `Product Count` = 3, `search` = `"MacBook Pr
 
 | BVA Scenario #          | DT Test Case                                                                                                                                      | Variable | Test Value    | Overlap Reason                                                   |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------------- | ---------------------------------------------------------------- |
-| 3-Point #2 / 2-Point #1 | [TC-PLAS-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-001.md) | search   | `""`          | Trùng dữ liệu kiểm thử xem tất cả sản phẩm                       |
-| 3-Point #1 / 2-Point #2 | [TC-PLAS-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-001.md) | search   | N/A (Omitted) | Bản chất giống với truyền query trống hoặc bỏ qua tham số search |
+| 3-Point #2 / 2-Point #1 | [TC-PLAS-001](../tests/test-cases/product-list-and-search/TC-PLAS-001.md) | search   | `""`          | Trùng dữ liệu kiểm thử xem tất cả sản phẩm                       |
+| 3-Point #1 / 2-Point #2 | [TC-PLAS-001](../tests/test-cases/product-list-and-search/TC-PLAS-001.md) | search   | N/A (Omitted) | Bản chất giống với truyền query trống hoặc bỏ qua tham số search |
 
 Các kịch bản BVA còn lại không trùng lắp sẽ được chuyển thành các Test Case BVA mới.
 
@@ -70,11 +70,11 @@ Các kịch bản BVA còn lại không trùng lắp sẽ được chuyển thà
 
 | #   | TC ID                                                                                                                                                     | Description                                                      | Technique(s)      | Boundary            | Expected                                           |
 | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | ----------------- | ------------------- | -------------------------------------------------- |
-| 1   | [TC-PLAS-BVA-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-BVA-001.md) | Tìm kiếm với từ khóa có độ dài tối thiểu + 1 (1 ký tự)           | 3-Point           | Min length, B + 1   | Hiển thị sản phẩm chứa chữ khớp ("MacBook Pro M3") |
-| 2   | [TC-PLAS-BVA-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-BVA-002.md) | Tìm kiếm với từ khóa có độ dài tối đa cho phép (255 ký tự)       | 3-Point + 2-Point | Max length, B       | Không crash, hiển thị empty state                  |
-| 3   | [TC-PLAS-BVA-003](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-BVA-003.md) | Tìm kiếm với từ khóa vượt quá độ dài tối đa cho phép (256 ký tự) | 3-Point + 2-Point | Max length, B + 1   | Không crash, tự động cắt chuỗi hoặc chặn nhập      |
-| 4   | [TC-PLAS-BVA-004](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-BVA-004.md) | Kiểm tra hiển thị khi cơ sở dữ liệu trống (0 sản phẩm)           | 3-Point + 2-Point | Min DB count, B     | Hiển thị thông báo empty state                     |
-| 5   | [TC-PLAS-BVA-005](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-BVA-005.md) | Kiểm tra hiển thị khi cơ sở dữ liệu có đúng 1 sản phẩm           | 3-Point           | Min DB count, B + 1 | Hiển thị lưới chứa đúng 1 thẻ sản phẩm             |
+| 1   | [TC-PLAS-BVA-001](../tests/test-cases/product-list-and-search/TC-PLAS-BVA-001.md) | Tìm kiếm với từ khóa có độ dài tối thiểu + 1 (1 ký tự)           | 3-Point           | Min length, B + 1   | Hiển thị sản phẩm chứa chữ khớp ("MacBook Pro M3") |
+| 2   | [TC-PLAS-BVA-002](../tests/test-cases/product-list-and-search/TC-PLAS-BVA-002.md) | Tìm kiếm với từ khóa có độ dài tối đa cho phép (255 ký tự)       | 3-Point + 2-Point | Max length, B       | Không crash, hiển thị empty state                  |
+| 3   | [TC-PLAS-BVA-003](../tests/test-cases/product-list-and-search/TC-PLAS-BVA-003.md) | Tìm kiếm với từ khóa vượt quá độ dài tối đa cho phép (256 ký tự) | 3-Point + 2-Point | Max length, B + 1   | Không crash, tự động cắt chuỗi hoặc chặn nhập      |
+| 4   | [TC-PLAS-BVA-004](../tests/test-cases/product-list-and-search/TC-PLAS-BVA-004.md) | Kiểm tra hiển thị khi cơ sở dữ liệu trống (0 sản phẩm)           | 3-Point + 2-Point | Min DB count, B     | Hiển thị thông báo empty state                     |
+| 5   | [TC-PLAS-BVA-005](../tests/test-cases/product-list-and-search/TC-PLAS-BVA-005.md) | Kiểm tra hiển thị khi cơ sở dữ liệu có đúng 1 sản phẩm           | 3-Point           | Min DB count, B + 1 | Hiển thị lưới chứa đúng 1 thẻ sản phẩm             |
 
 ---
 
@@ -136,8 +136,8 @@ Nominal values for other variables: `Authorization` = Valid Token, `Cart State` 
 
 | BVA Scenario #          | DT Test Case                                                                                                                               | Variable        | Test Value | Overlap Reason                                         |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | --------------- | ---------- | ------------------------------------------------------ |
-| 3-Point #1 / 2-Point #2 | [TC-CHECKOUT-003](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-003.md) | Cart Item count | 0          | Đã được bao phủ trong ca kiểm thử giỏ hàng trống       |
-| 3-Point #5 / 2-Point #3 | [TC-CHECKOUT-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-001.md) | total_amount    | 10000000   | Đã được bao phủ bởi ca kiểm thử thành công luồng chính |
+| 3-Point #1 / 2-Point #2 | [TC-CHECKOUT-003](../tests/test-cases/checkout/TC-CHECKOUT-003.md) | Cart Item count | 0          | Đã được bao phủ trong ca kiểm thử giỏ hàng trống       |
+| 3-Point #5 / 2-Point #3 | [TC-CHECKOUT-001](../tests/test-cases/checkout/TC-CHECKOUT-001.md) | total_amount    | 10000000   | Đã được bao phủ bởi ca kiểm thử thành công luồng chính |
 
 Các kịch bản BVA còn lại không trùng lắp sẽ được chuyển thành các Test Case BVA mới.
 
@@ -145,9 +145,9 @@ Các kịch bản BVA còn lại không trùng lắp sẽ được chuyển thà
 
 | #   | TC ID                                                                                                                                              | Description                                                                | Technique(s)      | Boundary                   | Expected                            |
 | --- | -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ----------------- | -------------------------- | ----------------------------------- |
-| 1   | [TC-CHECKOUT-BVA-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-BVA-001.md) | Thanh toán đơn hàng thành công khi giỏ hàng có đúng 1 sản phẩm             | 3-Point + 2-Point | Giỏ hàng = 1 sản phẩm (B)  | Pass - Đơn hàng được tạo thành công |
-| 2   | [TC-CHECKOUT-BVA-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-BVA-002.md) | Thanh toán đơn hàng thất bại khi tổng tiền client gửi ít hơn máy chủ 1đ    | 3-Point + 2-Point | total_amount = T - 1 (B-1) | Fail - Trả về mã lỗi 400            |
-| 3   | [TC-CHECKOUT-BVA-003](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-BVA-003.md) | Thanh toán đơn hàng thất bại khi tổng tiền client gửi nhiều hơn máy chủ 1đ | 3-Point + 2-Point | total_amount = T + 1 (B+1) | Fail - Trả về mã lỗi 400            |
+| 1   | [TC-CHECKOUT-BVA-001](../tests/test-cases/checkout/TC-CHECKOUT-BVA-001.md) | Thanh toán đơn hàng thành công khi giỏ hàng có đúng 1 sản phẩm             | 3-Point + 2-Point | Giỏ hàng = 1 sản phẩm (B)  | Pass - Đơn hàng được tạo thành công |
+| 2   | [TC-CHECKOUT-BVA-002](../tests/test-cases/checkout/TC-CHECKOUT-BVA-002.md) | Thanh toán đơn hàng thất bại khi tổng tiền client gửi ít hơn máy chủ 1đ    | 3-Point + 2-Point | total_amount = T - 1 (B-1) | Fail - Trả về mã lỗi 400            |
+| 3   | [TC-CHECKOUT-BVA-003](../tests/test-cases/checkout/TC-CHECKOUT-BVA-003.md) | Thanh toán đơn hàng thất bại khi tổng tiền client gửi nhiều hơn máy chủ 1đ | 3-Point + 2-Point | total_amount = T + 1 (B+1) | Fail - Trả về mã lỗi 400            |
 
 ---
 
@@ -197,8 +197,8 @@ Nominal values: Token = JWT Admin
 
 | #   | TC ID                                                                                                                                              | Description       | Technique(s)      | Boundary | Expected |
 | --- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | ----------------- | -------- | -------- |
-| 1   | [TC-CATEGORY-BVA-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-BVA-001.md) | Name đúng 1 ký tự | 3-Point + 2-Point | Min, B   | Accept   |
-| 2   | [TC-CATEGORY-BVA-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-BVA-002.md) | Name 2 ký tự      | 3-Point only      | Min, B+1 | Accept   |
+| 1   | [TC-CATEGORY-BVA-001](../tests/test-cases/category/TC-CATEGORY-BVA-001.md) | Name đúng 1 ký tự | 3-Point + 2-Point | Min, B   | Accept   |
+| 2   | [TC-CATEGORY-BVA-002](../tests/test-cases/category/TC-CATEGORY-BVA-002.md) | Name 2 ký tự      | 3-Point only      | Min, B+1 | Accept   |
 
 ---
 
@@ -244,5 +244,5 @@ Nominal values: Token = JWT Admin
 
 | #   | TC ID                                                                                                                                                                   | Description   | Technique(s)      | Boundary | Expected |
 | --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ----------------- | -------- | -------- |
-| 1   | [TC-MOBILE-REGISTER-BVA-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-BVA-001.md) | Độ dài đúng 8 | 3-Point + 2-Point | Min, B   | Accept   |
-| 2   | [TC-MOBILE-REGISTER-BVA-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-BVA-002.md) | Độ dài đúng 9 | 3-Point only      | Min, B+1 | Accept   |
+| 1   | [TC-MOBILE-REGISTER-BVA-001](../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-BVA-001.md) | Độ dài đúng 8 | 3-Point + 2-Point | Min, B   | Accept   |
+| 2   | [TC-MOBILE-REGISTER-BVA-002](../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-BVA-002.md) | Độ dài đúng 9 | 3-Point only      | Min, B+1 | Accept   |
