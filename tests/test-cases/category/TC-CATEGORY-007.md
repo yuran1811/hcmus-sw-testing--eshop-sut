@@ -1,4 +1,4 @@
-﻿# TC-CATEGORY-007: Thêm danh mục thất bại khi không có token (Unauthorized)
+# TC-CATEGORY-007: Thêm danh mục thất bại khi không có token (Unauthorized)
 
 ## Requirement ID
 
@@ -35,4 +35,4 @@ EC4 (Token không tồn tại / Unauthorized) + OC6 (Unauthorized / Forbidden)
 
 ## Status / Related bugs
 
-Not Run / None
+Pass / None
