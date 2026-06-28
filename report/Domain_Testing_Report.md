@@ -301,3 +301,108 @@ Nominal values for other variables: `Authorization` = Valid Token, `Cart State` 
 | 2   | [TC-CHECKOUT-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-002.md) | Thanh toán đơn hàng thất bại khi chưa đăng nhập hoặc token không hợp lệ  | DT        | EC2, EC3, OC2      | Fail - Trả về mã lỗi 401                   |
 | 3   | [TC-CHECKOUT-003](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-003.md) | Thanh toán đơn hàng thất bại khi giỏ hàng trống                          | DT        | EC5, OC3           | Fail - Trả về mã lỗi 400                   |
 | 4   | [TC-CHECKOUT-004](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-004.md) | Thanh toán đơn hàng thất bại khi tổng tiền client gửi không khớp máy chủ | DT        | EC7, OC4           | Fail - Trả về mã lỗi 400                   |
+
+---
+
+## Feature: Quản lý Danh mục (FR-14)
+
+### B1: Identify Input & Output Variables — Quản lý Danh mục
+
+#### Input Variables
+
+| #   | Variable Name | Data Type | Constraints                           | Source          |
+| --- | ------------- | --------- | ------------------------------------- | --------------- |
+| 1   | name          | String    | Bắt buộc, không được để trống         | UI Form / API   |
+| 2   | category_id   | Integer   | ID hợp lệ của danh mục đang tồn tại   | UI Action / API |
+| 3   | Token         | String    | Bắt buộc, role Admin (Bearer <token>) | HTTP Header     |
+
+#### Output Variables
+
+| #   | Variable Name | Data Type | Description                                         |
+| --- | ------------- | --------- | --------------------------------------------------- |
+| 1   | Response Code | Integer   | Trạng thái HTTP (200, 201, 204, 400, 401, 403, 404) |
+| 2   | Category List | Array     | Danh sách danh mục được trả về hoặc cập nhật        |
+| 3   | Error Msg     | String    | Thông báo lỗi khi thất bại                          |
+
+### B2: Identify Value Domains — Quản lý Danh mục
+
+#### Input Variable: name
+
+| #   | Domain Type | Equivalence Class       | Value Range / Description             | Expected |
+| --- | ----------- | ----------------------- | ------------------------------------- | -------- |
+| EC1 | Valid       | Tên hợp lệ, chuỗi ký tự | >= 1 ký tự, không chỉ chứa whitespace | Accept   |
+| EC2 | Invalid     | Tên rỗng (Empty string) | "" hoặc không gửi trường này          | Reject   |
+| EC3 | Invalid     | Chỉ chứa whitespace     | " "                                   | Reject   |
+
+#### Input Variable: Token
+
+| #   | Domain Type | Equivalence Class        | Value Range / Description               | Expected |
+| --- | ----------- | ------------------------ | --------------------------------------- | -------- |
+| EC4 | Invalid     | Không có token / Hết hạn | Thiếu Authorization header hoặc expired | Reject   |
+| EC5 | Invalid     | Token không phải Admin   | Token hợp lệ nhưng role = user          | Reject   |
+| EC6 | Valid       | Token Admin hợp lệ       | Có chứa role = admin                    | Accept   |
+
+#### Input Variable: category_id
+
+| #   | Domain Type | Equivalence Class | Value Range / Description            | Expected |
+| --- | ----------- | ----------------- | ------------------------------------ | -------- |
+| EC7 | Valid       | ID tồn tại        | ID của một danh mục đang có trong DB | Accept   |
+| EC8 | Invalid     | ID không tồn tại  | ID không có trong DB (VD: 99999)     | Reject   |
+
+#### Output Variables
+
+| #   | Domain Type | Equivalence Class    | Value Range / Description            | Triggered By             |
+| --- | ----------- | -------------------- | ------------------------------------ | ------------------------ |
+| OC1 | Valid       | Thêm thành công      | HTTP 201 / 200, danh mục mới tạo     | Tạo DM hợp lệ            |
+| OC2 | Error       | Validation error     | HTTP 400, tên bắt buộc/không hợp lệ  | EC2, EC3                 |
+| OC3 | Valid       | Trả về danh sách DM  | HTTP 200, mảng danh mục              | Token Admin hợp lệ       |
+| OC4 | Valid       | Xóa thành công       | HTTP 200 / 204, không còn trong list | Xóa với ID tồn tại       |
+| OC5 | Error       | Not Found error      | HTTP 404, thông báo không tìm thấy   | Xóa với ID không tồn tại |
+| OC6 | Error       | Auth Error (401/403) | HTTP 401 hoặc 403, từ chối truy cập  | EC4, EC5                 |
+
+### B3: Select Representative Values — Quản lý Danh mục
+
+#### Input Variables
+
+| #   | EC Reference              | Representative Value | Rationale                    |
+| --- | ------------------------- | -------------------- | ---------------------------- |
+| 1   | EC1 (Tên hợp lệ)          | Điện tử              | Tên phổ biến, hợp lệ         |
+| 2   | EC2 (Tên rỗng)            | "" (Rỗng)            | Boundary: không có input     |
+| 3   | EC3 (Chỉ chứa whitespace) | " "                  | Invalid data type handling   |
+| 4   | EC4 (Không có token)      | Null                 | Không cung cấp header        |
+| 5   | EC5 (Token user)          | JWT (role=user)      | Kiểm tra quyền Admin         |
+| 6   | EC6 (Token Admin)         | JWT (role=admin)     | Quyền truy cập đầy đủ        |
+| 7   | EC7 (ID tồn tại)          | 1                    | ID thực tế có trong hệ thống |
+| 8   | EC8 (ID không tồn tại)    | 99999                | ID không thể có              |
+
+### B4: Enumerate Partition Scenarios — Quản lý Danh mục
+
+Nominal values: name = Điện tử, Token = JWT Admin, category_id = 1 (khi cần)
+
+#### Input Partition Scenarios
+
+| #   | Partition | Variable Tested | Test Value  | Other Variables | Expected Output (OC) | Expected Result |
+| --- | --------- | --------------- | ----------- | --------------- | -------------------- | --------------- |
+| 1   | EC1       | name            | Điện tử     | all nominal     | OC1                  | Accept          |
+| 2   | EC2       | name            | ""          | all nominal     | OC2                  | Reject          |
+| 3   | EC3       | name            | " "         | all nominal     | OC2                  | Reject          |
+| 4   | EC4       | Token           | Null        | all nominal     | OC6                  | Reject          |
+| 5   | EC5       | Token           | JWT (user)  | all nominal     | OC6                  | Reject          |
+| 6   | EC6       | Token           | JWT (admin) | all nominal     | OC3                  | Accept          |
+| 7   | EC7       | category_id     | 1           | all nominal     | OC4                  | Accept          |
+| 8   | EC8       | category_id     | 99999       | all nominal     | OC5                  | Reject          |
+
+### B5: Consolidate into Test Cases — Quản lý Danh mục
+
+#### Final Test Case Summary
+
+| #   | TC ID                                                                                                                                      | Description                 | Technique | EC/OC Covered | Expected |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------- | --------- | ------------- | -------- |
+| 1   | [TC-CATEGORY-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-001.md) | Thêm danh mục thành công    | DT        | EC1, OC1      | Pass     |
+| 2   | [TC-CATEGORY-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-002.md) | Thêm thất bại (tên rỗng)    | DT        | EC2, OC2      | Fail     |
+| 3   | [TC-CATEGORY-003](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-003.md) | Thêm thất bại (whitespace)  | DT        | EC3, OC2      | Fail     |
+| 4   | [TC-CATEGORY-004](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-004.md) | Xem danh sách danh mục      | DT        | EC6, OC3      | Pass     |
+| 5   | [TC-CATEGORY-005](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-005.md) | Xóa danh mục thành công     | DT        | EC7, OC4      | Pass     |
+| 6   | [TC-CATEGORY-006](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-006.md) | Xóa danh mục (ID sai)       | DT        | EC8, OC5      | Fail     |
+| 7   | [TC-CATEGORY-007](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-007.md) | Lỗi xác thực (Auth missing) | DT        | EC4, OC6      | Fail     |
+| 8   | [TC-CATEGORY-008](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-008.md) | Lỗi phân quyền (User token) | DT        | EC5, OC6      | Fail     |

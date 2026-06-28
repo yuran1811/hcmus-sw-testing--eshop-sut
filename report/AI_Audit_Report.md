@@ -32,9 +32,11 @@
 | 2   | Gemini 3.5 Flash | BVA Design            | FR-05   | 2026-06-27 | G9.2 (Apply)   |
 | 3   | Gemini 3.5 Flash | Domain Testing Design | FR-08   | 2026-06-28 | G9.2 (Apply)   |
 | 4   | Gemini 3.5 Flash | BVA Design            | FR-08   | 2026-06-28 | G9.2 (Apply)   |
+| 5   | Gemini 3.1 Pro   | Domain Testing Design | FR-14   | 2026-06-28 | G9.2 (Apply)   |
+| 6   | Gemini 3.1 Pro   | BVA Design            | FR-14   | 2026-06-28 | G9.2 (Apply)   |
 | 5   |                  | Test Execution        |         |            | G9.2 (Apply)   |
-| 6   |                  | AI Gap Analysis       |         |            | G9.3 (Analyse) |
-| 7   |                  | Bug Report Writing    |         |            | G9.2 (Apply)   |
+| 8   |                  | AI Gap Analysis       |         |            | G9.3 (Analyse) |
+| 9   |                  | Bug Report Writing    |         |            | G9.2 (Apply)   |
 
 > **Hướng dẫn**: Điền thông tin vào bảng trên cho mỗi lần sử dụng AI. Thêm dòng nếu cần.
 
@@ -198,19 +200,74 @@ Detailed instruction: Design test cases for FR-08 based on Domain Testing (Equiv
 
 ---
 
+### Entry 4
+
+| Field              | Value                                    |
+| ------------------ | ---------------------------------------- |
+| **AI Tool**        | Gemini 3.1 Pro                           |
+| **Date/Time**      | 2026-06-28 19:25:00                      |
+| **Task**           | Domain Testing & BVA test case design    |
+| **Feature**        | FR-14 — Quản lý Danh mục (Category CRUD) |
+| **Bloom-AI Level** | G9.2 (Apply) / G9.3 (Analyse)            |
+
+#### Prompt
+
+**[Original User Prompt]**
+
+`	ext
+dựa vào mô tả của FR-14 trong file README.md , dựa vào skill .agents\skills	est-writer\SKILL.md , bạn hãy tạo ra những test case cho tính năng này dựa trên 2 kĩ thuật được đề cập trong skill, thực hiện tuần tự và đầy đủ các phase được đề cập, sau đó sử dụng .agents\skillsi-audit-report\SKILL.md để log lại quá trình, các thông tin cần human review để trống để tôi điền vào, ngoài ra tạo trong folder tests	est-cases\category tôi đã tạo sẵn và làm theo các template
+`
+
+**[Skill Execution Details]**
+
+` ext
+Invoked skill: domain-testing-writer with parameters:
+
+- FEATURE_ID: FR-14
+- FEATURE_NAME: Quản lý Danh mục (Category CRUD)
+- POOL: C
+- OUTPUT_DIR: tests/test-cases/category/
+
+Detailed instruction: Design test cases for FR-14 based on Domain Testing (Equivalence Partitioning) and Boundary Value Analysis (BVA), following the HCMUS Software Testing course methodology. Produce markdown test case files and comprehensive reports, then append audit log.
+`
+
+#### AI Output
+
+` ext
+
+- Identified 3 input variables and 3 output variables with multiple equivalence classes.
+- Generated 8 Domain Testing test cases (TC-CATEGORY-001 to TC-CATEGORY-008).
+- Identified 1 boundary point and generated 2 Boundary Value Analysis test cases (TC-CATEGORY-BVA-001 to TC-CATEGORY-BVA-002).
+- Updated Domain Testing Report (Domain_Testing_Report.md).
+- Updated Boundary Value Analysis Report (Boundary_Value_Analysis_Report.md).
+  [Full output: see tests/test-cases/category/ and report/]
+  `
+
+#### Human Review
+
+| Aspect           | Detail |
+| ---------------- | ------ |
+| Reviewed by      |        |
+| Review date      |        |
+| Corrections made |        |
+| Quality rating   |        |
+| Issues found     |        |
+
+---
+
 ## Thống kê tổng hợp (Summary Statistics)
 
-| Metric                                           | Value            |
-| ------------------------------------------------ | ---------------- |
-| Tổng số lần tương tác AI (Total AI interactions) | 3                |
-| Công cụ AI đã dùng (AI tools used)               | Gemini 3.5 Flash |
-| Tính năng đã test (Features covered)             | FR-05, FR-08     |
-| Tổng TC do AI sinh (Total TCs by AI)             | 21               |
-| TC đã chỉnh sửa sau review (TCs modified)        | 12 (57%)         |
-| TC giữ nguyên (TCs accepted as-is)               | 0 (0%)           |
-| Độ chính xác AI (AI accuracy before review)      | 80%              |
-| Bug tìm bởi AI (Bugs found with AI)              | 7                |
-| Bug AI bỏ sót (Bugs AI missed)                   | 0                |
+| Metric                                           | Value                            |
+| ------------------------------------------------ | -------------------------------- |
+| Tổng số lần tương tác AI (Total AI interactions) | 4                                |
+| Công cụ AI đã dùng (AI tools used)               | Gemini 3.5 Flash, Gemini 3.1 Pro |
+| Tính năng đã test (Features covered)             | FR-05, FR-08, FR-14              |
+| Tổng TC do AI sinh (Total TCs by AI)             | 31                               |
+| TC đã chỉnh sửa sau review (TCs modified)        | 12 (57%)                         |
+| TC giữ nguyên (TCs accepted as-is)               | 0 (0%)                           |
+| Độ chính xác AI (AI accuracy before review)      | 80%                              |
+| Bug tìm bởi AI (Bugs found with AI)              | 7                                |
+| Bug AI bỏ sót (Bugs AI missed)                   | 0                                |
 
 ### Tỷ lệ đóng góp AI vs Human (AI Contribution Breakdown)
 

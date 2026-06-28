@@ -1,4 +1,4 @@
-﻿# TC-CATEGORY-001: Thêm danh mục thành công với tên hợp lệ
+﻿# TC-CATEGORY-002: Thêm danh mục thất bại khi tên để trống
 
 ## Requirement ID
 
@@ -17,23 +17,23 @@ Quản lý Danh mục / Functional / Domain Testing (Equivalence Partitioning)
 
 | Field | Value     |
 | ----- | --------- |
-| name  | `Điện tử` |
+| name  | `` (rỗng) |
 
 ## Test steps
 
 1. Mở trang Admin → Categories
-2. Nhập tên danh mục `Điện tử` vào trường Name
+2. Để trống trường Name (không nhập gì)
 3. Bấm nút Thêm / Submit
 
 ## Expected result
 
-- Hệ thống trả về HTTP 201 (Created) hoặc 200 (OK)
-- Danh mục `Điện tử` xuất hiện trong danh sách danh mục
-- Không có thông báo lỗi nào hiển thị
+- Hệ thống từ chối yêu cầu (HTTP 400 Bad Request hoặc hiển thị validation error)
+- Thông báo lỗi xuất hiện: trường Name là bắt buộc
+- Không có danh mục nào được thêm vào danh sách
 
 ## EC / Partition Covered
 
-EC1 (Name hợp lệ, chuỗi không rỗng) + OC1 (Thêm thành công)
+EC2 (Name rỗng — Empty string) + OC2 (Validation error — Name bắt buộc)
 
 ## Status / Related bugs
 

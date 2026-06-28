@@ -148,3 +148,54 @@ Các kịch bản BVA còn lại không trùng lắp sẽ được chuyển thà
 | 1   | [TC-CHECKOUT-BVA-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-BVA-001.md) | Thanh toán đơn hàng thành công khi giỏ hàng có đúng 1 sản phẩm             | 3-Point + 2-Point | Giỏ hàng = 1 sản phẩm (B)  | Pass - Đơn hàng được tạo thành công |
 | 2   | [TC-CHECKOUT-BVA-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-BVA-002.md) | Thanh toán đơn hàng thất bại khi tổng tiền client gửi ít hơn máy chủ 1đ    | 3-Point + 2-Point | total_amount = T - 1 (B-1) | Fail - Trả về mã lỗi 400            |
 | 3   | [TC-CHECKOUT-BVA-003](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/checkout/TC-CHECKOUT-BVA-003.md) | Thanh toán đơn hàng thất bại khi tổng tiền client gửi nhiều hơn máy chủ 1đ | 3-Point + 2-Point | total_amount = T + 1 (B+1) | Fail - Trả về mã lỗi 400            |
+
+---
+
+## Feature: Quản lý Danh mục (FR-14)
+
+### BVA Step 1: Identify Boundary Points
+
+| #   | Variable            | Boundary Description | Boundary Value (B) | Valid Side          | Invalid Side            |
+| --- | ------------------- | -------------------- | -----------------: | ------------------- | ----------------------- |
+| 1   | Tên danh mục (name) | Chiều dài tối thiểu  |                  1 | B (1 ký tự) = valid | B-1 (0 ký tự) = invalid |
+
+### BVA Step 2: 3-Point BVA Scenarios
+
+Nominal values: Token = JWT Admin
+
+| #   | Boundary     | Test Point | Variable Tested | Test Value | Other Variables | Expected Result  |
+| --- | ------------ | ---------- | --------------- | ---------- | --------------- | ---------------- |
+| 1   | name Min = 1 | B-1        | name            | ""         | all nominal     | Reject (400)     |
+| 2   | name Min = 1 | B          | name            | "A"        | all nominal     | Accept (201/200) |
+| 3   | name Min = 1 | B+1        | name            | "AB"       | all nominal     | Accept (201/200) |
+
+### BVA Step 3: 2-Point BVA Scenarios
+
+Nominal values: Token = JWT Admin
+
+| #   | Boundary     | Test Point    | Variable Tested | Test Value | Other Variables | Expected Result  |
+| --- | ------------ | ------------- | --------------- | ---------- | --------------- | ---------------- |
+| 1   | name Min = 1 | B (valid)     | name            | "A"        | all nominal     | Accept (201/200) |
+| 2   | name Min = 1 | B-1 (invalid) | name            | ""         | all nominal     | Reject (400)     |
+
+### BVA Step 4: Consolidate BVA Test Cases
+
+#### Overlap Between 3-Point and 2-Point
+
+| 3-Point Scenario # | 2-Point Scenario # | Variable | Test Value | Overlap Reason                   |
+| ------------------ | ------------------ | -------- | ---------- | -------------------------------- |
+| #2 (B at min)      | #1 (B valid)       | name     | "A"        | Same value, same expected result |
+| #1 (B-1 at min)    | #2 (B-1 invalid)   | name     | ""         | Same value, same expected result |
+
+#### Overlap with Domain Testing TCs
+
+| BVA Scenario #  | DT Test Case    | Variable | Test Value | Overlap Reason                                 |
+| --------------- | --------------- | -------- | ---------- | ---------------------------------------------- |
+| #1 (B-1 at min) | TC-CATEGORY-002 | name     | ""         | Same test data and expected result (Name rỗng) |
+
+#### Final BVA Test Case Summary
+
+| #   | TC ID                                                                                                                                              | Description       | Technique(s)      | Boundary | Expected |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | ----------------- | -------- | -------- |
+| 1   | [TC-CATEGORY-BVA-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-BVA-001.md) | Name đúng 1 ký tự | 3-Point + 2-Point | Min, B   | Accept   |
+| 2   | [TC-CATEGORY-BVA-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-BVA-002.md) | Name 2 ký tự      | 3-Point only      | Min, B+1 | Accept   |
