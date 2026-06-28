@@ -94,13 +94,13 @@ Detailed instruction: Design test cases for FR-05 based on Domain Testing (Equiv
 
 #### Human Review
 
-| Aspect           | Detail |
-| ---------------- | ------ |
-| Reviewed by      |        |
-| Review date      |        |
-| Corrections made |        |
-| Quality rating   |        |
-| Issues found     |        |
+| Aspect           | Detail                                                                                                                |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Reviewed by      | Mạch Quốc Tấn                                                                                                         |
+| Review date      | 28/06/2026                                                                                                            |
+| Corrections made | Sửa lại các dữ liệu đại diện sao cho phù hợp với test data, và thêm vào log của skill                                 |
+| Quality rating   | Khá tốt, bao quát được yêu cầu, cần xác thực lại các chi tiết nhỏ                                                     |
+| Issues found     | AI không yêu cầu biết thêm hay cung cấp thông tin db mà tự bịa ra một dữ liệu hợp lệ, và dữ liệu đó không có trong db |
 
 ---
 
