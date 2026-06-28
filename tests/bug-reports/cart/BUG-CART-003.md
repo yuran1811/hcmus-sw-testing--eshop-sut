@@ -33,14 +33,6 @@ Nhãn tổng tiền hiển thị đúng là **"Tổng cộng"** (theo FR-07).
 
 Nhãn hiển thị là **"Tổng tạm tính"** — sai theo đặc tả. Giá trị số tiền (60,000,000 ₫ trong ảnh chụp) tính đúng, chỉ sai nhãn chữ.
 
-**Root cause:** `frontend-web/src/pages/Cart.jsx:63`
-
-```jsx
-Tổng tạm tính: <span className="text-red-600">{cartTotal.toLocaleString()} ₫</span>
-```
-
-Chuỗi nhãn bị hardcode sai thành `"Tổng tạm tính"` thay vì `"Tổng cộng"`.
-
 ## Evidence
 
 - Screenshot: `![BUG-CART-003-incorrect-label](../screenshots/BUG-CART-003-incorrect-in-label.png)`
