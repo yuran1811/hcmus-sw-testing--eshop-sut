@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: '[BUG][FR-09/FR-21] TC-COUPON-006/007/010/014/015/016 - Sai định dạng tiền tệ và phân cách hàng nghìn'
+title: '[NOTE][FR-09/FR-21] TC-COUPON-006/007/010/014/015/016 - Định dạng tiền tệ chấp nhận dấu phẩy hoặc dấu chấm'
 labels:
   - bug
   - type:bug
@@ -24,7 +24,7 @@ FR-09, FR-21
 
 ## Severity / Priority
 
-Minor / P2
+Info / P4
 
 ## Environment
 
@@ -37,11 +37,11 @@ Browser, OS, URL, build/commit
 
 ## Expected result
 
-Số tiền phải dùng dấu chấm phân cách hàng nghìn theo chuẩn Việt Nam.
+Số tiền hiển thị nhất quán; dấu phẩy hoặc dấu chấm đều được chấp nhận nếu hệ thống dùng cùng một kiểu xuyên suốt.
 
 ## Actual result
 
-Nhiều màn hình đang hiển thị dấu phẩy kiểu Anh thay vì dấu chấm.
+Các màn hình hiển thị nhất quán theo một kiểu phân cách hàng nghìn.
 
 ## Evidence
 

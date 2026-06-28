@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: '[BUG][FR-20] TC-CART-MOBILE-022 - Sai định dạng tiền tệ và nhãn Tổng cộng'
+title: '[BUG][FR-20] TC-CART-MOBILE-022 - Sai nhãn Tổng cộng'
 labels:
   - bug
   - type:bug
@@ -37,11 +37,11 @@ Browser, OS, URL, build/commit
 
 ## Expected result
 
-Tiền tệ phải dùng dấu chấm và nhãn phải là "Tổng cộng".
+Tiền tệ hiển thị nhất quán; nhãn phải là "Tổng cộng".
 
 ## Actual result
 
-Giá dùng dấu phẩy kiểu Anh và nhãn hiển thị là "Tổng tạm tính".
+Nhãn hiển thị là "Tổng tạm tính".
 
 ## Evidence
 
