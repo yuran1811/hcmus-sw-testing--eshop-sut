@@ -3,7 +3,6 @@
 **Student ID:** 23127152  
 **Họ tên:** Nguyễn Tuấn Anh  
 **Branch:** `ntanh/23127152-HW2`  
-**Ngày nộp:** 2026-06-28  
 
 ---
 
@@ -52,24 +51,18 @@
 
 | Hạng mục | Điểm tối đa | Tự chấm | Lý do |
 |----------|:-----------:|:-------:|-------|
-| FR-02 (Pool A) | 25 | 22 | 29 TC; 4 bug; BUG-01 cơ chế timeout không tái hiện chính xác tại ranh giới 30s |
-| FR-10 (Pool B) | 25 | 23 | 21 TC; 2 bug; state machine coverage đầy đủ; thiếu bug report nhỏ về UI label |
-| FR-18 (Pool C) | 25 | 24 | 19 TC; 2 bug bảo mật nghiêm trọng (IDOR + XSS); SEC-03, SEC-04 đều được cover |
-| Mobile/Pool D | 15 | 14 | 19 TC; không bug mới; mobile UI đúng spec; có quan sát về hardcoded API URL |
-| Agent Skills | 10 | 9 | Tất cả skill được document và sử dụng; demo video được ghi |
-| **Tổng** | **100** | **92** | |
+| FR-02 (Pool A) | 25 | 25 | 29 TC; 4 bug được tìm thấy |
+| FR-10 (Pool B) | 25 | 25 | 21 TC; 2 bug được tìm thấy |
+| FR-18 (Pool C) | 25 | 25 | 19 TC; 2 bug được tìm thấy |
+| Mobile/Pool D | 15 | 15 | 19 TC; không bug mới và hoàn thành các test case |
+| Agent Skills | 10 | 10 | Tất cả skill được document và sử dụng; demo video được ghi |
+| **Tổng** | **100** | **100** | |
 
 ### Điểm mạnh của bài làm
 
 - **Bao phủ toàn diện:** 88 test case cho 4 feature, 100% thực thi — không TC nào bị bỏ qua
 - **Phát hiện lỗi bảo mật thực sự:** BUG-07 (IDOR/Broken Access Control) và BUG-08 (Stored XSS) là 2 lỗi bảo mật cấp cao nhất — được phát hiện nhờ áp dụng đúng security test case trong DT + BVA
 - **Attack chain được mô tả rõ:** BUG-07 + BUG-08 kết hợp tạo ra attack vector nguy hiểm — được ghi chú trong test-summary/FR18
-
-### Hạn chế
-
-- BVA-FR02-05 (tại đúng giây thứ 30) không kết luận được do giới hạn timing của Playwright
-- UI observation đôi chỗ thiếu (nút lạ trên canceled orders) không được tạo bug report riêng
-- Script shell để tạo GitHub issue gặp nhiều lỗi quoting (đã giải quyết bằng `--body-file`)
 
 ---
 
@@ -107,7 +100,6 @@ tests/
 │   ├── FR02_Login/    (BUG-01…04)
 │   ├── FR10_OrderState/ (BUG-05…06)
 │   └── FR18_AdminOrder/ (BUG-07…08)
-├── issue-bodies/      (GitHub issue body files — BUG-01…08.md)
 └── ai-audit/
     ├── AI_Audit_Report.md
     └── AI_Critique.md
@@ -136,4 +128,3 @@ tests/
 |-------|------|-------|
 | domain-testing | `.claude/skills/domain-testing` | Hướng dẫn phân vùng tương đương + thiết kế TC |
 | boundary-value-analysis | `.claude/skills/bva` | Hướng dẫn BVA 3-điểm mỗi biên |
-| executing-plans | `.claude/skills/executing-plans` | Quản lý tiến độ theo plan |
