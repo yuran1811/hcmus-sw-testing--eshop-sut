@@ -1,4 +1,4 @@
-﻿# TC-CATEGORY-BVA-001: Thêm danh mục với tên đúng 1 ký tự (Boundary Min)
+# TC-CATEGORY-BVA-001: Thêm danh mục với tên đúng 1 ký tự (Boundary Min)
 
 ## Requirement ID
 
@@ -37,4 +37,4 @@ Boundary: Name length Min = 1 ký tự, Test Point: B (đúng tại biên), cove
 
 ## Status / Related bugs
 
-Not Run / None
+Pass / None

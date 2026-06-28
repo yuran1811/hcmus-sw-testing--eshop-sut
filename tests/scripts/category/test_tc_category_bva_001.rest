@@ -1,0 +1,25 @@
+### TC-CATEGORY-BVA-001: Thêm danh mục với tên đúng 1 ký tự (Boundary Min)
+
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập với tài khoản Admin để lấy token
+# @name loginAdmin
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "admin@eshop.com",
+  "password": "Admin123!"
+}
+
+### Lấy token
+@token = {{loginAdmin.response.body.token}}
+
+### 2. Thêm danh mục mới có tên 1 ký tự
+POST {{baseUrl}}/categories
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "A"
+}
