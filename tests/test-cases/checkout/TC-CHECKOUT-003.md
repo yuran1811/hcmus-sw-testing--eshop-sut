@@ -40,4 +40,4 @@ Checkout / Functional / Domain Testing (Equivalence Partitioning)
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-CHECKOUT-003
