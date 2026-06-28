@@ -1,4 +1,4 @@
-﻿# TC-CATEGORY-003: Thêm danh mục thất bại khi tên chỉ gồm khoảng trắng
+# TC-CATEGORY-003: Thêm danh mục thất bại khi tên chỉ gồm khoảng trắng
 
 ## Requirement ID
 
@@ -37,4 +37,4 @@ EC3 (Name chỉ chứa whitespace) + OC2 (Validation error)
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-CATEGORY-001
