@@ -737,6 +737,17 @@ Verify không nằm ở 1 bước cuối duy nhất, mà là một lớp giám s
 - **`Bash(rtk:*)`:** allowlist riêng cho `rtk` — công cụ dùng để **giảm dung lượng output log** khi chạy lệnh (lọc/cắt output dài trước khi đưa vào context), tránh các lệnh build/test/log dài làm tốn token và chậm phiên làm việc không cần thiết.
 - **`enabledPlugins.claude-mem`:** plugin lưu trí nhớ giữa các phiên làm việc, giúp AI giữ lại context của các phiên trước.
 
+## 5.5 Ưu điểm của cách Prompt theo Pipeline (so với 1 prompt hộp đen)
+
+Toàn bộ prompt trong dự án này đều theo chung 1 khuôn: đóng vai chuyên gia cụ thể → trích dẫn đúng file cần đọc bằng `@` → chỉ định rõ file lưu kết quả → bắt buộc gọi `ai-audit-logger` ngay sau. Cách prompt này có 6 ưu điểm cụ thể quan sát được trong suốt quá trình làm:
+
+1. **Tách trách nhiệm theo từng bước** — mỗi prompt chỉ yêu cầu đúng 1 kỹ thuật (chỉ phân tích yêu cầu, chỉ sinh EP, chỉ bổ sung biên...). Nhờ vậy khi có lỗi, biết ngay lỗi nằm ở bước nào, không phải dò lại cả 1 output dài do 1 prompt tổng làm hết mọi thứ.
+2. **Bắt buộc trích dẫn file cụ thể (`@README.md`, `@feature-specs/FR-xx.md`)** thay vì để AI tự nhớ lại từ phiên trước — giảm hẳn rủi ro AI dùng sai version hoặc tự suy diễn ngữ cảnh, và giúp người review chỉ cần mở đúng file được trích để đối chiếu.
+3. **Input của bước sau luôn là output đã qua duyệt của bước trước**, không phải để AI tự suy luận lại từ đầu mỗi lần — giảm lỗi tích lũy qua nhiều bước, vì có điểm kiểm soát con người ở giữa từng bước, không chỉ kiểm 1 lần ở cuối.
+4. **Yêu cầu gọi `ai-audit-logger` ngay sau mỗi bước** (không dồn lại cuối buổi) — đảm bảo log được ghi nguyên văn ngay lúc vừa tạo ra, không bị quên hay tóm tắt sai lệch về sau. Toàn bộ phần AI Gap Analysis của báo cáo này chỉ viết được nhờ thói quen prompt này.
+5. **Có điểm dừng hỏi xác nhận tường minh** (`playwright-script-generator` luôn dừng ở Phase 1 chờ duyệt trước khi sinh code) — biến AI từ "tự động hoàn toàn" thành "có chỗ con người can thiệp trước khi tạo ra side-effect khó hoàn tác" (file code, file test).
+6. **Lặp lại được giữa các feature khác nhau** — cùng 1 khuôn prompt áp dụng nguyên vẹn cho cả FR-01, FR-07, FR-15, FR-20, chỉ đổi tên file — đã được chứng minh thực tế trong dự án, không phải lý thuyết.
+
 ---
 
 # 6. Phụ lục — Quy tắc gộp nhiều kịch bản vào 1 Bug ID

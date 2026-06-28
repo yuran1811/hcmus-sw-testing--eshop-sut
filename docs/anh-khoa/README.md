@@ -31,7 +31,7 @@
 | Minor     |    6     |   2   |    0    |   0    |   8    |
 | **Total** |  **10**  | **5** |  **5**  | **3**  | **23** |
 
-_Chi tiết từng test case và bug — xem `tests/test-cases/`, `tests/bug-reports/`, và phân tích đầy đủ trong `main-report.md`._
+_Chi tiết từng test case và bug — xem `./test-cases/`, `./bug-reports/`, và phân tích đầy đủ trong `main-report.pdf`._
 
 ---
 
