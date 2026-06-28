@@ -40,4 +40,4 @@ EC6 + OC3
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-MOBILE-REGISTER-001, BUG-MOBILE-REGISTER-005
