@@ -39,4 +39,4 @@ Checkout / Functional / Domain Testing (Equivalence Partitioning)
 
 ## Status / Related bugs
 
-Not Run / None
+Pass / None
