@@ -1,0 +1,8 @@
+- Write all analysis content (field descriptions, constraints, business rules, expected outcomes) in **Vietnamese**. Keep section headers and column names in English — this matches the existing project convention (see local copy `references/TC-LOGIN-001.md`).
+- `Module` must be the uppercase feature name; it will later become the lowercase folder name under `tests/test-cases/[module]/` (e.g. `LOGIN` → `tests/test-cases/login/`).
+- Return the result as Markdown with clear, professional tables and bullet points, including at least:
+  - **Module:** `[MODULE]`
+  - **Requirement ID:** `FR-[NN]`
+  - A table of input fields: `| Field | Data Type | Constraints | Notes |`
+  - A bullet list of Business Rules
+  - A bullet list of Expected Outcomes (success / failure)

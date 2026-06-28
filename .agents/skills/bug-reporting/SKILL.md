@@ -2,7 +2,7 @@
 
 ## Context
 
-SUT (System Under Test): EShop. This skill turns an observed defect (found while executing a test case from `tests/test-cases/`) into a standardized bug report, matching the project's GitHub Issue template (`.github/ISSUE_TEMPLATE/bug_report.md`) and saved as a Markdown record under `tests/bug-reports/`.
+SUT (System Under Test): EShop. This skill turns an observed defect (found while executing a test case from `tests/test-cases/`) into a standardized bug report, matching the project's GitHub Issue template (local copy: `templates/bug_report.md`, mirrors `.github/ISSUE_TEMPLATE/bug_report.md`) and saved as a Markdown record under `tests/bug-reports/`. See `references/BUG-PRODUCT-002.md` for a real, fully Black-box-compliant example.
 
 ## Instructions
 
@@ -19,8 +19,8 @@ I will describe a defect I found while executing a test case (or paste the faili
 
 ## Output Format
 
-- Write all narrative content (steps, results, environment notes) in **Vietnamese**. Keep field labels exactly as defined in `.github/ISSUE_TEMPLATE/bug_report.md` (including `Requirement liên quan`) so the report can be pasted directly into a GitHub Issue.
+- Write all narrative content (steps, results, environment notes) in **Vietnamese**. Keep field labels exactly as defined in `templates/bug_report.md` (including `Requirement liên quan`) so the report can be pasted directly into a GitHub Issue.
 - Produce two outputs:
-  1. **GitHub Issue body** — matching `.github/ISSUE_TEMPLATE/bug_report.md` field-for-field, plus a suggested title in the format `[BUG][FEAT] - <short description>`.
+  1. **GitHub Issue body** — matching `templates/bug_report.md` field-for-field, plus a suggested title in the format `[BUG][FEAT] - <short description>`.
   2. **Markdown file content** for `tests/bug-reports/[module]/BUG-[MODULE]-[NNN].md` (module folder name in lowercase), starting with a `# BUG-[MODULE]-[NNN]: <short title>` heading, followed by the same fields as the Issue body.
 - Remind me to update the `Bug Issue` column in `tests/test-summary/traceability-matrix.md` with the GitHub Issue number/link once the issue is created.
