@@ -10,7 +10,7 @@ Product List & Search / Functional / Boundary Value Analysis (3-Point BVA)
 
 ## Preconditions
 
-- Cơ sở dữ liệu EShop chỉ chứa duy nhất đúng 1 sản phẩm (ví dụ: "Keyboard" giá 150.000 ₫).
+- Cơ sở dữ liệu EShop chỉ chứa duy nhất đúng 1 sản phẩm (ví dụ: "MacBook Pro M3" giá 45.000.000 ₫).
 - Người dùng đang ở trang chủ EShop.
 
 ## Test data
@@ -27,8 +27,8 @@ Product List & Search / Functional / Boundary Value Analysis (3-Point BVA)
 
 ## Expected result
 
-- Lưới sản phẩm hiển thị đúng 1 thẻ sản phẩm duy nhất ("Keyboard").
-- Sản phẩm hiển thị đúng: ảnh (alt text), tên, giá định dạng chuẩn (`150.000 ₫`).
+- Lưới sản phẩm hiển thị đúng 1 thẻ sản phẩm duy nhất ("MacBook Pro M3").
+- Sản phẩm hiển thị đúng: ảnh (alt text), tên, giá định dạng chuẩn (`45.000.000 ₫`).
 - Chỉ tồn tại đúng 1 thẻ `<h1>` duy nhất trên trang chủ.
 
 ## BVA Coverage

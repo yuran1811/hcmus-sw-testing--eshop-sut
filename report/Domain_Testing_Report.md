@@ -70,7 +70,7 @@
 
 | #   | EC Reference | Representative Value              | Rationale                                          |
 | --- | ------------ | --------------------------------- | -------------------------------------------------- |
-| 1   | EC1          | `"Keyboard"`                      | Typical alphanumeric search term                   |
+| 1   | EC1          | `"MacBook Pro M3"`                | Typical alphanumeric search term                   |
 | 2   | EC2          | `""` (empty string)               | Boundary: no keyword, should return all products   |
 | 3   | EC3          | `"NonExistentProduct12345"`       | Query that is guaranteed not to match              |
 | 4   | EC4          | `"Bàn phím"`                      | Contains Vietnamese accents                        |
@@ -97,7 +97,7 @@
 | #   | OC Reference | Representative Value              | Rationale                               |
 | --- | ------------ | --------------------------------- | --------------------------------------- |
 | 1   | OC1          | Image with alt text, Name, Price  | Complete elements of product card       |
-| 2   | OC2          | `150.000 ₫`                       | Hundreds separator and "₫" character    |
+| 2   | OC2          | `45.000.000 ₫`                    | Hundreds separator and "₫" character    |
 | 3   | OC3          | `"<script>alert('XSS')</script>"` | Rendered safely as plain text, no popup |
 | 4   | OC4          | Exactly 1 `<h1>` tag              | Standard homepage SEO constraint        |
 
@@ -105,14 +105,14 @@
 
 ### B4: Enumerate Partition Scenarios — Xem danh sách & Tìm kiếm sản phẩm
 
-Nominal values for other variables: `Product Count` = 3 (multiple products exist in DB), `API Latency` = resolved (completed), `search` = `"Keyboard"`.
+Nominal values for other variables: `Product Count` = 3 (multiple products exist in DB), `API Latency` = resolved (completed), `search` = `"MacBook Pro M3"`.
 
 #### Input Partition Scenarios
 
 | #   | Partition | Variable Tested | Test Value                        | Other Variables                                          | Expected Output (OC)  | Expected Result                      |
 | --- | --------- | --------------- | --------------------------------- | -------------------------------------------------------- | --------------------- | ------------------------------------ |
 | 1   | EC2       | search          | `""`                              | Count = 3, Latency = resolved                            | OC1, OC2, OC4         | Accept & Show all 3 products         |
-| 2   | EC1       | search          | `"Keyboard"`                      | Count = 3, Latency = resolved                            | OC1, OC2, OC4         | Accept & Show matching products      |
+| 2   | EC1       | search          | `"MacBook Pro M3"`                | Count = 3, Latency = resolved                            | OC1, OC2, OC4         | Accept & Show matching products      |
 | 3   | EC3       | search          | `"NonExistentProduct12345"`       | Count = 3, Latency = resolved                            | OC4, Empty State      | Accept & Show Empty State            |
 | 4   | EC4       | search          | `"Bàn phím"`                      | Count = 3 (containing "Bàn phím cơ"), Latency = resolved | OC1, OC2, OC4         | Accept & Show matching products      |
 | 5   | EC5       | search          | `"<script>alert('XSS')</script>"` | Count = 3, Latency = resolved                            | OC3, OC4, Empty State | Accept, Display safely as plain text |

@@ -10,7 +10,7 @@ Product List & Search / Functional / Domain Testing (Equivalence Partitioning)
 
 ## Preconditions
 
-- Cơ sở dữ liệu EShop đã có các sản phẩm (ví dụ: Keyboard, Mouse, Monitor).
+- Cơ sở dữ liệu EShop đã có các sản phẩm (ví dụ: iPhone 15 Pro Max, MacBook Pro M3, Tai nghe AirPods Pro 2).
 - Người dùng đang ở trang chủ EShop.
 
 ## Test data

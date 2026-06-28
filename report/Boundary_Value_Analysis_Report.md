@@ -14,13 +14,13 @@
 
 ### BVA Step 2: 3-Point BVA Scenarios — Xem danh sách & Tìm kiếm sản phẩm
 
-Nominal values for other variables: `Product Count` = 3, `search` = `"Keyboard"`.
+Nominal values for other variables: `Product Count` = 3, `search` = `"MacBook Pro M3"`.
 
 | #   | Boundary                  | Test Point | Variable Tested | Test Value         | Other Variables | Expected Result                             |
 | --- | ------------------------- | ---------- | --------------- | ------------------ | --------------- | ------------------------------------------- |
 | 1   | Độ dài tìm kiếm Min = 0   | B-1        | search          | N/A (Null/Omitted) | Count = 3       | Accept (Hiển thị tất cả 3 sản phẩm)         |
 | 2   | Độ dài tìm kiếm Min = 0   | B          | search          | `""` (0 ký tự)     | Count = 3       | Accept (Hiển thị tất cả 3 sản phẩm)         |
-| 3   | Độ dài tìm kiếm Min = 0   | B+1        | search          | `"K"` (1 ký tự)    | Count = 3       | Accept (Hiển thị các sản phẩm khớp chữ "k") |
+| 3   | Độ dài tìm kiếm Min = 0   | B+1        | search          | `"M"` (1 ký tự)    | Count = 3       | Accept (Hiển thị các sản phẩm khớp chữ "m") |
 | 4   | Độ dài tìm kiếm Max = 255 | B-1        | search          | `"A" * 254`        | Count = 3       | Accept (Hiển thị empty state)               |
 | 5   | Độ dài tìm kiếm Max = 255 | B          | search          | `"A" * 255`        | Count = 3       | Accept (Hiển thị empty state)               |
 | 6   | Độ dài tìm kiếm Max = 255 | B+1        | search          | `"A" * 256`        | Count = 3       | Giới hạn hoặc cắt về 255 ký tự / Báo lỗi    |
@@ -32,16 +32,16 @@ Nominal values for other variables: `Product Count` = 3, `search` = `"Keyboard"`
 
 ### BVA Step 3: 2-Point BVA Scenarios — Xem danh sách & Tìm kiếm sản phẩm
 
-Nominal values for other variables: `Product Count` = 3, `search` = `"Keyboard"`.
+Nominal values for other variables: `Product Count` = 3, `search` = `"MacBook Pro M3"`.
 
-| #   | Boundary                  | Test Point    | Variable Tested | Test Value         | Other Variables | Expected Result                     |
-| --- | ------------------------- | ------------- | --------------- | ------------------ | --------------- | ----------------------------------- |
-| 1   | Độ dài tìm kiếm Min = 0   | B (valid)     | search          | `""` (0 ký tự)     | Count = 3       | Accept (Hiển thị tất cả 3 sản phẩm) |
-| 2   | Độ dài tìm kiếm Min = 0   | B-1 (invalid) | search          | N/A (Null/Omitted) | Count = 3       | Accept (Hiển thị tất cả 3 sản phẩm) |
-| 3   | Độ dài tìm kiếm Max = 255 | B (valid)     | search          | `"A" * 255`        | Count = 3       | Accept (Hiển thị empty state)       |
-| 4   | Độ dài tìm kiếm Max = 255 | B+1 (invalid) | search          | `"A" * 256`        | Count = 3       | Giới hạn hoặc báo lỗi               |
-| 5   | Số sản phẩm DB Min = 0    | B (valid)     | Product Count   | 0                  | search = `""`   | Accept (Hiển thị empty state)       |
-| 6   | Số sản phẩm DB Min = 0    | B-1 (invalid) | Product Count   | N/A                | search = `""`   | N/A                                 |
+| #   | Boundary                  | Test Point | Variable Tested | Test Value         | Other Variables | Expected Result                     |
+| --- | ------------------------- | ---------- | --------------- | ------------------ | --------------- | ----------------------------------- |
+| 1   | Độ dài tìm kiếm Min = 0   | B (valid)  | search          | `""` (0 ký tự)     | Count = 3       | Accept (Hiển thị tất cả 3 sản phẩm) |
+| 2   | Độ dài tìm kiếm Min = 0   | B-1 (invalid)| search          | N/A (Null/Omitted) | Count = 3       | Accept (Hiển thị tất cả 3 sản phẩm) |
+| 3   | Độ dài tìm kiếm Max = 255 | B (valid)  | search          | `"A" * 255`        | Count = 3       | Accept (Hiển thị empty state)       |
+| 4   | Độ dài tìm kiếm Max = 255 | B+1 (invalid)| search          | `"A" * 256`        | Count = 3       | Giới hạn hoặc báo lỗi               |
+| 5   | Số sản phẩm DB Min = 0    | B (valid)  | Product Count   | 0                  | search = `""`   | Accept (Hiển thị empty state)       |
+| 6   | Số sản phẩm DB Min = 0    | B-1 (invalid)| Product Count   | N/A                | search = `""`   | N/A                                 |
 
 ---
 
@@ -70,7 +70,7 @@ Các kịch bản BVA còn lại không trùng lắp sẽ được chuyển thà
 
 | #   | TC ID                                                                                                                                                     | Description                                                      | Technique(s)      | Boundary            | Expected                                      |
 | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | ----------------- | ------------------- | --------------------------------------------- |
-| 1   | [TC-PLAS-BVA-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-BVA-001.md) | Tìm kiếm với từ khóa có độ dài tối thiểu + 1 (1 ký tự)           | 3-Point           | Min length, B + 1   | Hiển thị sản phẩm chứa chữ khớp ("Keyboard")  |
+| 1   | [TC-PLAS-BVA-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-BVA-001.md) | Tìm kiếm với từ khóa có độ dài tối thiểu + 1 (1 ký tự)           | 3-Point           | Min length, B + 1   | Hiển thị sản phẩm chứa chữ khớp ("MacBook Pro M3")  |
 | 2   | [TC-PLAS-BVA-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-BVA-002.md) | Tìm kiếm với từ khóa có độ dài tối đa cho phép (255 ký tự)       | 3-Point + 2-Point | Max length, B       | Không crash, hiển thị empty state             |
 | 3   | [TC-PLAS-BVA-003](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-BVA-003.md) | Tìm kiếm với từ khóa vượt quá độ dài tối đa cho phép (256 ký tự) | 3-Point + 2-Point | Max length, B + 1   | Không crash, tự động cắt chuỗi hoặc chặn nhập |
 | 4   | [TC-PLAS-BVA-004](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/product-list-and-search/TC-PLAS-BVA-004.md) | Kiểm tra hiển thị khi cơ sở dữ liệu trống (0 sản phẩm)           | 3-Point + 2-Point | Min DB count, B     | Hiển thị thông báo empty state                |
