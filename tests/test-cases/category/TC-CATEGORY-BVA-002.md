@@ -1,4 +1,4 @@
-﻿# TC-CATEGORY-BVA-002: Thêm danh mục với tên 2 ký tự (B+1 tại biên Min)
+# TC-CATEGORY-BVA-002: Thêm danh mục với tên 2 ký tự (B+1 tại biên Min)
 
 ## Requirement ID
 
@@ -37,4 +37,4 @@ Boundary: Name length Min = 1 ký tự, Test Point: B+1 = 2 ký tự (1 bước 
 
 ## Status / Related bugs
 
-Not Run / None
+Pass / None
