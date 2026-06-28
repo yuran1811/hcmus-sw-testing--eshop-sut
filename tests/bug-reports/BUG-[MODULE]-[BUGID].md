@@ -1,5 +1,12 @@
-Title: [BUG][Login] Hệ thống cho phép đăng nhập với password sai
-Các labels đề xuất cần gắn bao gồm: `type: bug`, `module: login`, `severity: major`, `priority: P1`, `status: new`, và `found-by: test-case`.
+---
+name: Bug report
+about: Create a report to help us improve
+title: "[BUG][FEAT] - Describe the bug here"
+labels: ""
+assignees: ""
+---
+Mô tả về labels:
+- Các labels đề xuất cần gắn bao gồm: `type: bug`, `module: login`, `severity: major`, `priority: P1`, `status: new`, và `found-by: test-case`.
 **Hệ thống Labels quản lý test case và bug:**
 - **Type:** `type: test-case`, `type: test-run`, `type: bug`, `type: task`
 - **Module:** `module: login`, `module: register`, `module: cart`, `module: checkout`, `module: api`
