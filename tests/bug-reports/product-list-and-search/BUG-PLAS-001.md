@@ -9,7 +9,7 @@ assignees: ""
 
 ## Found by Test Case
 
-TC-PLAS-001, TC-PLAS-002, TC-PLAS-004, TC-PLAS-005, TC-PLAS-006
+TC-PLAS-001, TC-PLAS-002, TC-PLAS-004, TC-PLAS-005, TC-PLAS-006, TC-PLAS-007
 
 ## Requirement liên quan
 
@@ -51,3 +51,5 @@ Hệ thống trả về kết quả là 2 hoặc 3 (có nhiều thẻ `<h1>` t�
   ![Evidence 4](../screenshots/TC-PLAS-005a.png)
 - **TC-PLAS-006 (Trễ tải mạng - 2 thẻ h1):**
   ![Evidence 5](../screenshots/TC-PLAS-006b.png)
+- **TC-PLAS-007 (Cấu trúc H1 trang chủ):**
+  ![Evidence 6](../screenshots/TC-PLAS-007.png)
