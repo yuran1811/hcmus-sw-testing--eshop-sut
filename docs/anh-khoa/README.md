@@ -50,4 +50,6 @@ _Chi tiết từng test case và bug — xem `./test-cases/`, `./bug-reports/`, 
 
 ## Demo Agent Skill
 
-Các Agent Skill được thiết kế để tự động hóa quy trình phân tích yêu cầu, sinh test case, thực thi Playwright và báo cáo lỗi. Link demo :[Link]()
+Các Agent Skill được thiết kế để tự động hóa quy trình phân tích yêu cầu, sinh test case, thực thi Playwright và báo cáo lỗi.
+Video tổng quan về bộ agent skill: [URL](https://youtu.be/OuuM2Md3yzg)
+Video chạy demo với FR-05: [URL](https://youtu.be/eS2YUv1ijW4)
