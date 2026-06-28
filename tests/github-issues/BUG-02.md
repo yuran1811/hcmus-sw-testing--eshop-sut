@@ -3,7 +3,6 @@ name: Bug report
 about: Create a report to help us improve
 title: '[BUG][FR-06] TC-PRODUCT-DETAIL-004 - Double-click mới thêm được và thiếu badge giỏ hàng'
 labels:
-  - bug
   - type:bug
   - status:new
   - priority:P1
@@ -28,7 +27,7 @@ Major / P1
 
 ## Environment
 
-Browser, OS, URL, build/commit
+Chrome, macOS, http://localhost:5173/product/1, 85af3ba875c88283615e22cb108f13e2fccaf0e9
 
 ## Steps to reproduce
 

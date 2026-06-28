@@ -3,7 +3,6 @@ name: Bug report
 about: Create a report to help us improve
 title: '[BUG][FR-09] TC-COUPON-001 - SAVE10 percent bị tính sai công thức giảm giá'
 labels:
-  - bug
   - type:bug
   - status:new
   - priority:P1
@@ -28,7 +27,7 @@ Major / P1
 
 ## Environment
 
-Browser, OS, URL, build/commit
+Chrome, macOS, http://localhost:5173/checkout, 85af3ba875c88283615e22cb108f13e2fccaf0e9
 
 ## Steps to reproduce
 

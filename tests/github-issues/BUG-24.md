@@ -3,7 +3,6 @@ name: Bug report
 about: Create a report to help us improve
 title: '[BUG][FR-20] TC-CART-MOBILE-024 - Empty state thiếu hình minh họa'
 labels:
-  - bug
   - type:bug
   - status:new
   - priority:P2
@@ -28,7 +27,7 @@ Minor / P2
 
 ## Environment
 
-Browser, OS, URL, build/commit
+Chrome, macOS, http://localhost:8081, 85af3ba875c88283615e22cb108f13e2fccaf0e9
 
 ## Steps to reproduce
 

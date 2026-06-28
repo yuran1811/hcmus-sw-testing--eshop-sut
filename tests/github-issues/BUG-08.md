@@ -3,7 +3,6 @@ name: Bug report
 about: Create a report to help us improve
 title: '[NOTE][FR-09/FR-21] TC-COUPON-006/007/010/014/015/016 - Định dạng tiền tệ chấp nhận dấu phẩy hoặc dấu chấm'
 labels:
-  - bug
   - type:bug
   - status:new
   - priority:P2
@@ -28,7 +27,7 @@ Info / P4
 
 ## Environment
 
-Browser, OS, URL, build/commit
+Chrome, macOS, http://localhost:5173/checkout, 85af3ba875c88283615e22cb108f13e2fccaf0e9
 
 ## Steps to reproduce
 
