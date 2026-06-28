@@ -91,11 +91,10 @@ _(Click here to view the file: [github_issue_detail_30_1.png](evidence/github_is
 ![GitHub Issue Detail Example 2](evidence/github_issue_detail_4_1.png)
 _(Click here to view the file: [github_issue_detail_4_1.png](evidence/github_issue_detail_4_1.png))_
 
-
 ---
 
 ## 🎥 Demo Videos (Custom Agent Skills)
 
 Below are the video demonstrations showcasing how our custom testing skills were leveraged to automate testing and bug reporting:
 
-- 🎥 **End-to-End Agentic Testing Video Demo**: [Watch on YouTube](https://youtu.be/Nu8V0eNnoV0)
+- 🎥 **End-to-End Agentic Testing Video Demo**: [https://youtu.be/Nu8V0eNnoV0](https://youtu.be/Nu8V0eNnoV0)
