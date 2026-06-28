@@ -10,7 +10,7 @@ Product List & Search / Functional / Domain Testing (Equivalence Partitioning)
 
 ## Preconditions
 
-- Cơ sở dữ liệu EShop đã có sản phẩm tên "Bàn phím cơ không dây" và "Chuột máy tính".
+- Cơ sở dữ liệu EShop đã có sản phẩm tên "Bàn phím cơ Keychron Q1" và "Chuột máy tính".
 - Người dùng đang ở trang chủ EShop.
 
 ## Test data
@@ -28,7 +28,7 @@ Product List & Search / Functional / Domain Testing (Equivalence Partitioning)
 
 ## Expected result
 
-- Lưới sản phẩm hiển thị đúng sản phẩm "Bàn phím cơ không dây". Sản phẩm "Chuột máy tính" không hiển thị.
+- Lưới sản phẩm hiển thị đúng sản phẩm "Bàn phím cơ Keychron Q1". Sản phẩm "Chuột máy tính" không hiển thị.
 - Sản phẩm hiển thị đúng thông tin: ảnh (alt text), tên, giá (đơn vị: ₫, phân cách hàng nghìn).
 - Từ khóa `"Bàn phím"` hiển thị an toàn trên giao diện.
 - Chỉ có đúng 1 thẻ `<h1>` duy nhất trên trang.
@@ -39,4 +39,4 @@ EC4 (search = "Bàn phím") + EC7 (DB có sản phẩm) + EC11 (tải dữ liệ
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-PLAS-001, BUG-PLAS-002, BUG-PLAS-003

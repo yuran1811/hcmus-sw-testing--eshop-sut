@@ -9,7 +9,7 @@ assignees: ""
 
 ## Found by Test Case
 
-TC-PLAS-001, TC-PLAS-002
+TC-PLAS-001, TC-PLAS-002, TC-PLAS-004
 
 ## Requirement liên quan
 
@@ -53,3 +53,5 @@ Thẻ `<img>` thuộc tính `alt` bị bỏ trống (`alt=""`).
   ![Evidence 1](../screenshots/TC-PLAS-001.png)
 - **TC-PLAS-002 (Tìm kiếm):**
   ![Evidence 2](../screenshots/TC-PLAS-002.png)
+- **TC-PLAS-004 (Tìm kiếm có dấu):**
+  ![Evidence 3](../screenshots/TC-PLAS-004.png)
