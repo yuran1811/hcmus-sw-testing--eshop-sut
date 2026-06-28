@@ -1,4 +1,4 @@
-﻿# TC-CATEGORY-011: Xóa danh mục thất bại khi dùng token của user thường (Forbidden)
+# TC-CATEGORY-011: Xóa danh mục thất bại khi dùng token của user thường (Forbidden)
 
 ## Requirement ID
 
@@ -35,4 +35,4 @@ EC5 (Token user thường) + OC6 (Unauthorized / Forbidden)
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-CATEGORY-005
