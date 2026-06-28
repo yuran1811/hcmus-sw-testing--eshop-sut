@@ -39,4 +39,4 @@ EC10 + OC2
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-MOBILE-REGISTER-001
