@@ -487,3 +487,40 @@ Mobile UI (`App.js`) ẩn nút Hủy đúng tại biên `shipping` (BVA-MOB-02 p
 | BUG-07 | FR-18 | Major | P1 | IDOR: user token truy cập `GET /api/admin/orders` |
 | BUG-08 | FR-18 | **Critical** | **P0** | Stored XSS qua `shipping_address` — session admin bị lộ |
 
+---
+
+## 7. Commit Log
+
+> File đầy đủ: **[commit-log.txt](./commit-log.txt)**
+
+Lịch sử commit trên branch `ntanh/23127152-HW2` theo thứ tự từ mới đến cũ:
+
+| SHA (7 ký tự) | Ngày | Nội dung commit |
+|:-------------:|------|----------------|
+| `b99eaed` | 2026-06-28 | add report |
+| `542c171` | 2026-06-28 | add AI-audit |
+| `8ce4df6` | 2026-06-28 | test(mobile): test summary |
+| `a0de32c` | 2026-06-28 | test(mobile): execution — domain testing + BVA with screenshots report |
+| `4b4a07c` | 2026-06-28 | test(mobile): domain testing + BVA — variables, order status classes, cancel boundary design |
+| `4472c56` | 2026-06-28 | test(fr18): test summary |
+| `465e247` | 2026-06-28 | test(fr18): Execution — domain testing + BVA with screenshots report |
+| `db812f6` | 2026-06-28 | test(fr18): domain testing + BVA — variables, auth/content classes, boundaries, test cases design |
+| `b2bb961` | 2026-06-28 | test(FR10): add test summary FR10 |
+| `2dccb2e` | 2026-06-28 | test(FR10): execute DT and BVA test cases |
+| `a66aff6` | 2026-06-28 | test(FR10): add Domain Testing and BVA test case design for Order State Machine |
+| `78f9c5a` | 2026-06-28 | test(fr02): test summary |
+| `6161a8c` | 2026-06-28 | test(fr02): bug reports |
+| `5318fd4` | 2026-06-28 | test(fr02): Execution — domain testing + BVA with screenshots report |
+| `4e839d7` | 2026-06-28 | test(fr02): restructure |
+| `3ccc36a` | 2026-06-28 | test(fr02): domain testing and bva |
+| `239f7b3` | 2026-06-28 | add claude skill |
+| `3bc3b7c` | 2026-06-08 | chore: create bug issue templates *(repo maintainer)* |
+| `85af3ba` | 2026-05-15 | first upload *(repo maintainer)* |
+| `2f9bf2b` | 2026-05-15 | Initial commit *(repo maintainer)* |
+
+**Nhận xét:** Toàn bộ 14 commit thuộc về bài kiểm thử (từ `239f7b3` đến `b99eaed`) được thực hiện trong ngày 2026-06-28 — phản ánh workflow tập trung, liên tục từ thiết kế → thực thi → báo cáo trong một ngày làm việc.
+
+---
+
+*Báo cáo được tạo bởi: Nguyễn Tuấn Anh (23127152) — 2026-06-28*  
+*Công cụ: Claude Code (claude-sonnet-4-6) + Playwright MCP*

@@ -99,10 +99,16 @@ tests/
 ├── bug-reports/
 │   ├── FR02_Login/    (BUG-01…04)
 │   ├── FR10_OrderState/ (BUG-05…06)
-│   └── FR18_AdminOrder/ (BUG-07…08)
-└── ai-audit/
-    ├── AI_Audit_Report.md
-    └── AI_Critique.md
+│   ├── FR18_AdminOrder/ (BUG-07…08)
+│   └── screenshots/   (bug-1.png … bug-8.png)
+├── issue-bodies/      (GitHub issue body files — BUG-01…08.md)
+├── ai-audit/
+│   ├── AI_Audit_Report.md
+│   ├── AI_Critique.md
+│   └── AI_Full_Report.md  ← tổng hợp Audit + Critique
+├── Final_Report.md    ← báo cáo chính DT + BVA + Agent Skills
+├── Bug_Report.md      ← tổng hợp 8 bug kèm screenshots
+└── commit-log.txt     ← lịch sử git commit của branch
 ```
 
 ---
@@ -119,6 +125,34 @@ tests/
 | BUG-06 | Admin không hủy được đơn shipping | `type:bug` `severity:major` `priority:P1` `module:admin` |
 | BUG-07 | IDOR — user token vào admin API | `type:bug` `severity:major` `priority:P1` `module:admin` |
 | BUG-08 | Stored XSS trong admin panel | `type:bug` `severity:critical` `priority:P0` `module:admin` |
+
+---
+
+## Commit Log
+
+> File đầy đủ: **[commit-log.txt](./commit-log.txt)**
+
+Lịch sử 14 commit thuộc bài kiểm thử trên branch `ntanh/23127152-HW2`:
+
+| SHA | Ngày | Nội dung |
+|:---:|------|---------|
+| `b99eaed` | 2026-06-28 | add report |
+| `542c171` | 2026-06-28 | add AI-audit |
+| `8ce4df6` | 2026-06-28 | test(mobile): test summary |
+| `a0de32c` | 2026-06-28 | test(mobile): execution — DT + BVA with screenshots |
+| `4b4a07c` | 2026-06-28 | test(mobile): domain testing + BVA design |
+| `4472c56` | 2026-06-28 | test(fr18): test summary |
+| `465e247` | 2026-06-28 | test(fr18): execution — DT + BVA with screenshots |
+| `db812f6` | 2026-06-28 | test(fr18): domain testing + BVA design |
+| `b2bb961` | 2026-06-28 | test(FR10): test summary |
+| `2dccb2e` | 2026-06-28 | test(FR10): execute DT and BVA test cases |
+| `a66aff6` | 2026-06-28 | test(FR10): Domain Testing + BVA design |
+| `78f9c5a` | 2026-06-28 | test(fr02): test summary |
+| `6161a8c` | 2026-06-28 | test(fr02): bug reports |
+| `5318fd4` | 2026-06-28 | test(fr02): execution — DT + BVA with screenshots |
+| `4e839d7` | 2026-06-28 | test(fr02): restructure |
+| `3ccc36a` | 2026-06-28 | test(fr02): domain testing and bva |
+| `239f7b3` | 2026-06-28 | add claude skill |
 
 ---
 

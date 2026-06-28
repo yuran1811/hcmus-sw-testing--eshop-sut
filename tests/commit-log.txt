@@ -1,0 +1,155 @@
+commit b99eaed4b006c912aa9036da0795ac5ccd8e424b
+Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+Date:   Sun Jun 28 17:22:37 2026 +0700
+
+    add report
+
+commit 542c1714924aad6335b772dd2a554a5b3dd288d0
+Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+Date:   Sun Jun 28 16:49:52 2026 +0700
+
+    add AI-audit
+
+commit 8ce4df64248b442f9895153f44b61de54fff3f8f
+Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+Date:   Sun Jun 28 15:29:29 2026 +0700
+
+    test(mobile): test summary
+
+commit a0de32c8512e68095e1e5095fef68e2b3890f082
+Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+Date:   Sun Jun 28 15:29:25 2026 +0700
+
+    test(mobile): execution — domain testing + BVA with screenshots report
+
+commit 4b4a07c1a69274e8316943b5f2d2728b4d2a0577
+Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+Date:   Sun Jun 28 15:29:22 2026 +0700
+
+    test(mobile): domain testing + BVA — variables, order status classes, cancel boundary design
+
+commit 4472c565727a6502884488ca831c6ec1b7abfbf7
+Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+Date:   Sun Jun 28 15:29:02 2026 +0700
+
+    test(fr18): test summary
+
+commit 465e247e0bfe0059a764359f6d26327bfaac47b5
+Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+Date:   Sun Jun 28 15:28:53 2026 +0700
+
+    test(fr18): Execution — domain testing + BVA with screenshots report
+
+commit db812f6a3875a059eed3ea5ccb4ae74741863693
+Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+Date:   Sun Jun 28 15:28:49 2026 +0700
+
+    test(fr18): domain testing + BVA — variables, auth/content classes, boundaries, test cases design
+
+commit b2bb961bf5c032b155c967ae0119e367f36ac908
+Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+Date:   Sun Jun 28 15:28:17 2026 +0700
+
+    test(FR10): add test summary FR10
+
+commit 2dccb2e30dbe3d75d9787f2df8f9b6245cdf2907
+Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+Date:   Sun Jun 28 15:28:12 2026 +0700
+
+    test(FR10): execute DT and BVA test cases
+
+commit a66aff66d425bc4b65d66888588ad3b6d91efb33
+Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+Date:   Sun Jun 28 15:28:08 2026 +0700
+
+    test(FR10): add Domain Testing and BVA test case design for Order State Machine
+
+commit 78f9c5a61b8b4196441e5dacbc39606f4c6bdf66
+Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+Date:   Sun Jun 28 15:26:21 2026 +0700
+
+    test(fr02): test summary
+
+commit 6161a8c379bb5b8887f7dd0eb75d8cae1ffe1fa3
+Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+Date:   Sun Jun 28 15:25:50 2026 +0700
+
+    test(fr02): bug reports
+
+commit 5318fd4d2ffd769cd1588b8a80498215df3d826a
+Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+Date:   Sun Jun 28 15:25:41 2026 +0700
+
+    test(fr02): Execution — domain testing + BVA with screenshots report
+
+commit 4e839d760bae32e759affe605ba04a3903730102
+Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+Date:   Sun Jun 28 15:24:56 2026 +0700
+
+    test(fr02): restructure
+
+commit 3ccc36a5931d818472515ce3411625f812c31cc7
+Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+Date:   Sun Jun 28 12:11:27 2026 +0700
+
+    test(fr02): domain testing and bva
+
+commit 239f7b38324608345f5dcbf673518b732d624f98
+Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+Date:   Sun Jun 28 11:41:12 2026 +0700
+
+    add claude skill
+
+commit 3bc3b7c2b68afb3ba4da251c58c75ced05e798cd
+Author: Yuran <trieuvanbd123@gmail.com>
+Date:   Mon Jun 8 17:15:53 2026 +0700
+
+    chore: create bug issue templates
+
+commit 3741bd9aeeebfb2ffab24f8714a1d4a360c9bb07
+Author: yuran1811 <trieuvanbd123@gmail.com>
+Date:   Mon Jun 8 17:12:12 2026 +0700
+
+    chore: update templates
+
+commit b2dd8abf0021257cad1d63ef4dbe38338f178803
+Author: yuran1811 <trieuvanbd123@gmail.com>
+Date:   Mon Jun 8 17:06:15 2026 +0700
+
+    chore: prepare template
+
+commit 8498ae513eb195e9db4b1a1be0c14729e3edc248
+Author: yuran1811 <trieuvanbd123@gmail.com>
+Date:   Mon Jun 8 16:43:45 2026 +0700
+
+    chore: add sqlite3 as built deps
+
+commit 7b2739cb2aa1b0245211097c0612849f5c99f534
+Author: yuran1811 <trieuvanbd123@gmail.com>
+Date:   Mon Jun 8 16:29:07 2026 +0700
+
+    chore: add install in run server script
+
+commit 31eb8f205b2fa4653df7ad8379d4ea40a412b48a
+Author: yuran1811 <trieuvanbd123@gmail.com>
+Date:   Mon Jun 8 16:23:58 2026 +0700
+
+    chore: add .gitignore and pnpm-lock.json
+
+commit e00dcc84b9d312b14680e3d16e3ee5a804734451
+Author: yuran1811 <trieuvanbd123@gmail.com>
+Date:   Mon Jun 8 16:20:43 2026 +0700
+
+    fix: correct
+
+commit 85af3ba875c88283615e22cb108f13e2fccaf0e9
+Author: ttbhanh-hcmus <ttbhanh@hcmus.edu.vn>
+Date:   Fri May 15 08:30:35 2026 +0700
+
+    first upload
+
+commit 2f9bf2bab45855abf211377a5d5eba10031649e3
+Author: Hanh Tran <ttbhanh@fit.hcmus.edu.vn>
+Date:   Fri May 15 08:27:44 2026 +0700
+
+    Initial commit
