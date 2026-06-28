@@ -4,7 +4,7 @@
 | :------------------------- | :-------------- | :------------ | :----- | :----------------------------------------------- | :----------------------------------------------------------------- |
 | TC-MOBILE-REGISTER-001     | mobile-register | Mạch Quốc Tấn | Fail   | BUG-MOBILE-REGISTER-001                          | Không có trường xác nhận mật khẩu trên UI                          |
 | TC-MOBILE-REGISTER-002     | mobile-register | Mạch Quốc Tấn | Fail   | BUG-MOBILE-REGISTER-001, BUG-MOBILE-REGISTER-002 | Vẫn đăng ký được khi trống Họ Tên & thiếu trường xác nhận mật khẩu |
-| TC-MOBILE-REGISTER-003     | mobile-register |               |        |                                                  |                                                                    |
+| TC-MOBILE-REGISTER-003     | mobile-register | Mạch Quốc Tấn | Fail   | BUG-MOBILE-REGISTER-001, BUG-MOBILE-REGISTER-003 | Vẫn đăng ký được khi trống Email & thiếu trường xác nhận mật khẩu  |
 | TC-MOBILE-REGISTER-004     | mobile-register |               |        |                                                  |                                                                    |
 | TC-MOBILE-REGISTER-005     | mobile-register |               |        |                                                  |                                                                    |
 | TC-MOBILE-REGISTER-006     | mobile-register |               |        |                                                  |                                                                    |
