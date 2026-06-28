@@ -39,4 +39,4 @@ EC1 (search = "MacBook Pro M3") + EC7 (DB có nhiều sản phẩm) + EC11 (tả
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-PLAS-001, BUG-PLAS-002, BUG-PLAS-003

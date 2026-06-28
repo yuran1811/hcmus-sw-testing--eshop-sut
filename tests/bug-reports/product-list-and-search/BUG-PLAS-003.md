@@ -9,7 +9,7 @@ assignees: ""
 
 ## Found by Test Case
 
-TC-PLAS-001
+TC-PLAS-001, TC-PLAS-002
 
 ## Requirement liên quan
 
@@ -39,4 +39,7 @@ Giá sản phẩm hiển thị đơn vị là `VND` (Ví dụ: `30.000.000 VND`)
 
 ## Evidence
 
-![Evidence](../screenshots/TC-PLAS-001.png)
+- **TC-PLAS-001 (Xem danh sách):**
+  ![Evidence 1](../screenshots/TC-PLAS-001.png)
+- **TC-PLAS-002 (Tìm kiếm):**
+  ![Evidence 2](../screenshots/TC-PLAS-002.png)
