@@ -38,4 +38,4 @@ Product List & Search / Functional / Boundary Value Analysis (3-Point BVA)
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-PLAS-001, BUG-PLAS-002, BUG-PLAS-003
