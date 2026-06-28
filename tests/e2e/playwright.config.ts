@@ -48,21 +48,21 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: 'npm run dev',
+      command: 'pnpm dev',
       cwd: '../../backend',
       url: 'http://localhost:3000/api/categories',
       reuseExistingServer: true,
       timeout: 30_000,
     },
     {
-      command: 'npm run dev',
+      command: 'pnpm dev',
       cwd: '../../frontend-web',
       url: 'http://localhost:5173',
       reuseExistingServer: true,
       timeout: 30_000,
     },
     {
-      command: 'npm run dev',
+      command: 'pnpm dev',
       cwd: '../../frontend-admin',
       url: 'http://localhost:5174',
       reuseExistingServer: true,
@@ -70,7 +70,6 @@ export default defineConfig({
     },
     {
       // Metro web bundler khởi động chậm hơn Vite -> timeout dài hơn. Nếu Expo tự đổi sang
-      // cổng khác (8081 đang bận), cập nhật lại url/baseURL của project 'mobile' tương ứng.
       command: 'npm run web',
       cwd: '../../frontend-mobile',
       url: 'http://localhost:8081',
