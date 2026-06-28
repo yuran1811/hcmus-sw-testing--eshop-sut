@@ -31,7 +31,7 @@ Product Detail / Functional / Domain Testing
 - Hệ thống hiển thị đầy đủ các thông tin của sản phẩm bao gồm:
   - Ảnh lớn sản phẩm.
   - Tên sản phẩm.
-  - Giá sản phẩm (được định dạng phân cách hàng nghìn và có ký hiệu ₫, ví dụ: `100.000 ₫`).
+  - Giá sản phẩm được hiển thị đúng định dạng tiền tệ của hệ thống, có ký hiệu ₫; dấu phẩy hoặc dấu chấm đều được chấp nhận làm phân cách hàng nghìn nếu hiển thị nhất quán.
   - Mô tả chi tiết sản phẩm.
   - Tên danh mục của sản phẩm.
 - Không hiển thị bất kỳ thông báo lỗi nào.

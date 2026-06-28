@@ -37,4 +37,4 @@ Product Detail / Functional / Domain Testing
 
 ## Status / Related Bugs
 
-Not Run / None
+Fail / [BUG][FR-06] TC-PRODUCT-DETAIL-005/006/007/008/009 - Quantity không hợp lệ vẫn được thêm vào giỏ

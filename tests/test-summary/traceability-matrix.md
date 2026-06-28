@@ -1,14 +1,14 @@
 | Requirement | Test Case             | Result | Bug Issue                                                                                                | Status |
 | ----------- | --------------------- | ------ | -------------------------------------------------------------------------------------------------------- | ------ |
-| FR-06       | TC-PRODUCT-DETAIL-001 | Fail   | \[BUG\]\[FR-06\] TC-PRODUCT-DETAIL-001 - Thiếu tên danh mục và sai định dạng giá                         | Run    |
+| FR-06       | TC-PRODUCT-DETAIL-001 | Fail   | \[BUG\]\[FR-06\] TC-PRODUCT-DETAIL-001 - Thiếu tên danh mục của sản phẩm                                 | Run    |
 | FR-06       | TC-PRODUCT-DETAIL-002 | Pass   |                                                                                                          | Run    |
 | FR-06       | TC-PRODUCT-DETAIL-003 | Pass   |                                                                                                          | Run    |
 | FR-06       | TC-PRODUCT-DETAIL-004 | Fail   | \[BUG\]\[FR-06\] TC-PRODUCT-DETAIL-004 - Double-click mới thêm được và thiếu badge giỏ hàng              | Run    |
-| FR-06       | TC-PRODUCT-DETAIL-005 | Pass   |                                                                                                          | Run    |
-| FR-06       | TC-PRODUCT-DETAIL-006 | Pass   |                                                                                                          | Run    |
-| FR-06       | TC-PRODUCT-DETAIL-007 | Fail   | \[BUG\]\[FR-06\] TC-PRODUCT-DETAIL-007 - Quantity thập phân bị làm tròn sang 1                           | Run    |
-| FR-06       | TC-PRODUCT-DETAIL-008 | Pass   |                                                                                                          | Run    |
-| FR-06       | TC-PRODUCT-DETAIL-009 | Pass   |                                                                                                          | Run    |
+| FR-06       | TC-PRODUCT-DETAIL-005 | Fail   | \[BUG\]\[FR-06\] TC-PRODUCT-DETAIL-005/006/007/008/009 - Quantity không hợp lệ vẫn được thêm vào giỏ     | Run    |
+| FR-06       | TC-PRODUCT-DETAIL-006 | Fail   | \[BUG\]\[FR-06\] TC-PRODUCT-DETAIL-005/006/007/008/009 - Quantity không hợp lệ vẫn được thêm vào giỏ     | Run    |
+| FR-06       | TC-PRODUCT-DETAIL-007 | Fail   | \[BUG\]\[FR-06\] TC-PRODUCT-DETAIL-005/006/007/008/009 - Quantity không hợp lệ vẫn được thêm vào giỏ     | Run    |
+| FR-06       | TC-PRODUCT-DETAIL-008 | Fail   | \[BUG\]\[FR-06\] TC-PRODUCT-DETAIL-005/006/007/008/009 - Quantity không hợp lệ vẫn được thêm vào giỏ     | Run    |
+| FR-06       | TC-PRODUCT-DETAIL-009 | Fail   | \[BUG\]\[FR-06\] TC-PRODUCT-DETAIL-005/006/007/008/009 - Quantity không hợp lệ vẫn được thêm vào giỏ     | Run    |
 | FR-06       | TC-PRODUCT-DETAIL-010 | Pass   |                                                                                                          | Run    |
 | FR-06       | TC-PRODUCT-DETAIL-011 | Pass   |                                                                                                          | Run    |
 | FR-08       | TC-PRODUCT-DETAIL-012 | Fail   | \[BUG\]\[FR-08\] TC-PRODUCT-DETAIL-012 - Khách chưa đăng nhập vẫn thêm được vào giỏ                      | Run    |

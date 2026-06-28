@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: '[BUG][FR-06] TC-PRODUCT-DETAIL-007 - Quantity thập phân bị làm tròn sang 1'
+title: '[BUG][FR-06] TC-PRODUCT-DETAIL-005/006/007/008/009 - Quantity không hợp lệ vẫn được thêm vào giỏ'
 labels:
   - bug
   - type:bug
@@ -16,7 +16,7 @@ milestone: hw2
 
 ## Found by Test Case
 
-TC-PRODUCT-DETAIL-007
+TC-PRODUCT-DETAIL-005 / TC-PRODUCT-DETAIL-006 / TC-PRODUCT-DETAIL-007 / TC-PRODUCT-DETAIL-008 / TC-PRODUCT-DETAIL-009
 
 ## Requirement liên quan
 
@@ -33,16 +33,16 @@ Browser, OS, URL, build/commit
 ## Steps to reproduce
 
 1. Mở trang Product Detail.
-2. Nhập quantity = 1.5.
+2. Nhập quantity không hợp lệ, ví dụ: `0`, `-1`, `1.5`, `""`, `e`, `,`, `.` hoặc các giá trị tương tự.
 3. Bấm "Thêm vào giỏ hàng".
 
 ## Expected result
 
-Hệ thống từ chối quantity thập phân.
+Hệ thống từ chối quantity <= 0, quantity rỗng và các giá trị không phải số, hiển thị lỗi phù hợp.
 
 ## Actual result
 
-Quantity 1.5 bị tự chuyển thành 1 và vẫn được thêm vào giỏ.
+Quantity không hợp lệ vẫn được chấp nhận và thêm sản phẩm vào giỏ hàng thay vì bị từ chối, bao gồm cả input rỗng.
 
 ## Evidence
 

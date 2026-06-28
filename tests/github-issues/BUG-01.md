@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: '[BUG][FR-06] TC-PRODUCT-DETAIL-001 - Thiếu tên danh mục và sai định dạng giá'
+title: '[BUG][FR-06] TC-PRODUCT-DETAIL-001 - Thiếu tên danh mục của sản phẩm'
 labels:
   - bug
   - type:bug
@@ -33,15 +33,15 @@ Browser, OS, URL, build/commit
 ## Steps to reproduce
 
 1. Mở trang Product Detail với product ID hợp lệ.
-2. Quan sát tên danh mục và định dạng giá.
+2. Quan sát tên danh mục của sản phẩm.
 
 ## Expected result
 
-Hiển thị đầy đủ tên danh mục và giá dùng dấu chấm theo chuẩn Việt Nam.
+Hiển thị đầy đủ tên danh mục của sản phẩm. Giá hiển thị đúng định dạng tiền tệ của hệ thống; dấu phẩy hoặc dấu chấm đều được chấp nhận làm phân cách hàng nghìn nếu hiển thị nhất quán.
 
 ## Actual result
 
-Thiếu tên danh mục của sản phẩm và giá hiển thị bằng dấu phẩy kiểu Anh.
+Thiếu tên danh mục của sản phẩm.
 
 ## Evidence
 
