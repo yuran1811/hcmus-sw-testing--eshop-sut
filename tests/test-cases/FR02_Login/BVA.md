@@ -34,50 +34,381 @@ Từ các phân vùng tương đương trong DomainTesting.md, xác định mọ
 
 ## Bước 2 — Danh sách Test Case BVA
 
-> **Tài liệu chỉ dành cho thiết kế.** Cột `Kết quả thực tế` và `Đạt/Không đạt` thuộc về `test-runs/FR02_Login/BVA.md`.  
+> **Tài liệu chỉ dành cho thiết kế.** Kết quả thực tế thuộc về `test-runs/FR02_Login/BVA.md`.  
 > Áp dụng 3-điểm BVA: một trường hợp dưới biên, một tại biên, một trên biên.
 
-### Ranh giới B1 — Ngưỡng khóa `login_attempts` (ngưỡng = 3)
+---
 
-| Mã TC | Biến | Ranh giới | Điểm BVA | Thao tác / Giá trị kiểm thử | Điều kiện tiên quyết | Kết quả mong đợi |
-|-------|------|-----------|---------|---------------------------|---------------------|-----------------|
-| BVA-FR02-01 | login_attempts | ngưỡng = 3 | **Dưới biên** (lần sai thứ 2) | Nhập sai mật khẩu | Tài khoản đã có 1 lần sai (tổng sẽ là 2) | Đăng nhập thất bại; tổng = 2 lần sai; tài khoản **chưa bị khóa**; có thể thử lại |
-| BVA-FR02-02 | login_attempts | ngưỡng = 3 | **Tại biên** (lần sai thứ 3) | Nhập sai mật khẩu | Tài khoản đã có 2 lần sai (tổng sẽ là 3) | Đăng nhập thất bại; tổng = 3 lần sai; tài khoản **bị khóa** 30 giây |
-| BVA-FR02-03 | login_attempts | ngưỡng = 3 | **Trên biên** (đang bị khóa) | Nhập đúng mật khẩu | Tài khoản có ≥3 lần sai; trong vòng 30 giây | Đăng nhập thất bại; hiển thị thông báo "tài khoản bị khóa"; không cấp JWT |
+# BVA-FR02-01: Lần sai thứ 2 — tài khoản chưa bị khóa (dưới biên B1)
 
-### Ranh giới B2 — Thời gian khóa `lock_duration` (30 giây)
+## Requirement ID
+FR-02
 
-| Mã TC | Biến | Ranh giới | Điểm BVA | Thao tác / Giá trị kiểm thử | Điều kiện tiên quyết | Kết quả mong đợi |
-|-------|------|-----------|---------|---------------------------|---------------------|-----------------|
-| BVA-FR02-04 | lock_duration | mở khóa tại 30 giây | **Dưới biên** (t = 29 giây) | Nhập đúng mật khẩu tại t=29 giây sau khi bị khóa | Tài khoản vừa bị khóa (t=0) | Đăng nhập thất bại; khóa vẫn còn hiệu lực; thông báo "tài khoản bị khóa" |
-| BVA-FR02-05 | lock_duration | mở khóa tại 30 giây | **Tại biên** (t = 30 giây) | Nhập đúng mật khẩu tại t=30 giây sau khi bị khóa | Tài khoản bị khóa đúng 30 giây trước | Đăng nhập thành công; khóa đã được gỡ; JWT trả về |
-| BVA-FR02-06 | lock_duration | mở khóa tại 30 giây | **Trên biên** (t = 31 giây) | Nhập đúng mật khẩu tại t=31 giây sau khi bị khóa | Tài khoản bị khóa 31 giây trước | Đăng nhập thành công; khóa đã được gỡ; JWT trả về |
+## Module / Test type / Technique
+FR02 Login / Functional / BVA
 
-### Ranh giới B3 — Độ dài `email` (RFC 5321 tối đa = 254 ký tự)
+## Preconditions
+- Tài khoản đã có 1 lần sai (tổng sẽ là 2 sau TC này)
+- Ranh giới B1: ngưỡng khóa = 3 lần sai
 
-> Định dạng dùng để kiểm thử: `a×N + @test.com` trong đó `@test.com` = 9 ký tự  
-> 253 ký tự = `a`×244 + `@test.com`  
-> 254 ký tự = `a`×245 + `@test.com`  
-> 255 ký tự = `a`×246 + `@test.com`
+## Test data
+| Email | test@eshop.com |
+| Password | WrongPass999! |
+| Điểm BVA | Dưới biên — lần sai thứ 2 |
 
-| Mã TC | Biến | Ranh giới | Điểm BVA | Giá trị kiểm thử | Điều kiện tiên quyết | Kết quả mong đợi |
-|-------|------|-----------|---------|----------------|---------------------|-----------------|
-| BVA-FR02-07 | độ dài email | tối đa = 254 ký tự | **Dưới tối đa** (253 ký tự) | `aaa…a@test.com` (tổng 253 ký tự) | — | Định dạng được chấp nhận; đăng nhập thất bại vì "sai thông tin" (không phải lỗi định dạng) |
-| BVA-FR02-08 | độ dài email | tối đa = 254 ký tự | **Tại tối đa** (254 ký tự) | `aaa…a@test.com` (tổng 254 ký tự) | — | Định dạng được chấp nhận; đăng nhập thất bại vì "sai thông tin" (không phải lỗi định dạng) |
-| BVA-FR02-09 | độ dài email | tối đa = 254 ký tự | **Vượt tối đa** (255 ký tự) | `aaa…a@test.com` (tổng 255 ký tự) | — | Đăng nhập thất bại; email vượt quá độ dài tối đa; thông báo lỗi định dạng |
+## Test steps
+1. (Setup) Đăng nhập sai 1 lần
+2. Nhập email `test@eshop.com`, password sai `WrongPass999!` lần thứ 2
+3. Bấm Login
 
-### Ranh giới B4 — Sự hiện diện của `password` (tối thiểu = 1 ký tự)
+## Expected result
+Đăng nhập thất bại; tổng = 2 lần sai; tài khoản **chưa bị khóa**; có thể thử lại.
 
-| Mã TC | Biến | Ranh giới | Điểm BVA | Giá trị kiểm thử | Điều kiện tiên quyết | Kết quả mong đợi |
-|-------|------|-----------|---------|----------------|---------------------|-----------------|
-| BVA-FR02-10 | độ dài password | tối thiểu = 1 ký tự (không rỗng) | **Dưới tối thiểu** (0 ký tự — rỗng) | `test@eshop.com` / `""` | Trạng thái bình thường | Đăng nhập thất bại; thông báo trường bắt buộc; không được tính là lần sai |
-| BVA-FR02-11 | độ dài password | tối thiểu = 1 ký tự (không rỗng) | **Tại tối thiểu** (1 ký tự) | `test@eshop.com` / `X` | Trạng thái bình thường | Đăng nhập thất bại; sai thông tin đăng nhập; 1 ký tự là định dạng hợp lệ (chỉ sai giá trị) |
+## Status / Related bugs
+Not Run / None
 
-### Ranh giới B5 — Reset bộ đếm liên tiếp
+---
 
-| Mã TC | Biến | Ranh giới | Điểm BVA | Thao tác | Điều kiện tiên quyết | Kết quả mong đợi |
-|-------|------|-----------|---------|---------|---------------------|-----------------|
-| BVA-FR02-12 | bộ đếm liên tiếp | reset khi đăng nhập thành công | **Tại điểm reset** | Bước 1: đăng nhập đúng sau 2 lần sai. Bước 2: nhập sai 1 lần nữa | 2 lần sai trước đó | Bước 1: thành công, bộ đếm reset về 0. Bước 2: 1 lần sai mới (bộ đếm = 1, không phải 3 — tài khoản **chưa bị khóa**) |
+# BVA-FR02-02: Lần sai thứ 3 — kích hoạt khóa tài khoản (tại biên B1)
+
+## Requirement ID
+FR-02
+
+## Module / Test type / Technique
+FR02 Login / Functional / BVA
+
+## Preconditions
+- Tài khoản đã có 2 lần sai (tổng sẽ là 3 sau TC này)
+- Ranh giới B1: ngưỡng khóa = 3 lần sai
+
+## Test data
+| Email | test@eshop.com |
+| Password | WrongPass999! |
+| Điểm BVA | Tại biên — lần sai thứ 3 |
+
+## Test steps
+1. (Setup) Đăng nhập sai 2 lần
+2. Nhập email `test@eshop.com`, password sai `WrongPass999!` lần thứ 3
+3. Bấm Login
+
+## Expected result
+Đăng nhập thất bại; tổng = 3 lần sai; tài khoản **bị khóa** 30 giây.
+
+## Status / Related bugs
+Not Run / None
+
+---
+
+# BVA-FR02-03: Tài khoản đang bị khóa — từ chối dù mật khẩu đúng (trên biên B1)
+
+## Requirement ID
+FR-02
+
+## Module / Test type / Technique
+FR02 Login / Functional / BVA
+
+## Preconditions
+- Tài khoản có ≥3 lần sai; trong vòng 30 giây
+- Ranh giới B1: tài khoản đang bị khóa
+
+## Test data
+| Email | test@eshop.com |
+| Password | Test1234! (đúng) |
+| Điểm BVA | Trên biên — đang bị khóa |
+
+## Test steps
+1. (Setup) Kích hoạt khóa (3 lần đăng nhập sai)
+2. Trong vòng 30 giây, nhập email và password đúng `Test1234!`
+3. Bấm Login
+
+## Expected result
+Đăng nhập thất bại; hiển thị thông báo "tài khoản bị khóa"; không cấp JWT.
+
+## Status / Related bugs
+Not Run / None
+
+---
+
+# BVA-FR02-04: Đăng nhập tại t=29 giây — khóa vẫn còn hiệu lực (dưới biên B2)
+
+## Requirement ID
+FR-02
+
+## Module / Test type / Technique
+FR02 Login / Functional / BVA
+
+## Preconditions
+- Tài khoản vừa bị khóa (t=0)
+- Ranh giới B2: mở khóa tại t=30 giây
+
+## Test data
+| Email | test@eshop.com |
+| Password | Test1234! |
+| Thời điểm | t = 29 giây sau khi bị khóa |
+| Điểm BVA | Dưới biên — t=29s |
+
+## Test steps
+1. Kích hoạt khóa tài khoản
+2. Chờ đúng 29 giây
+3. Nhập email và password đúng `Test1234!`
+4. Bấm Login
+
+## Expected result
+Đăng nhập thất bại; khóa vẫn còn hiệu lực; thông báo "tài khoản bị khóa".
+
+## Status / Related bugs
+Not Run / None
+
+---
+
+# BVA-FR02-05: Đăng nhập tại t=30 giây — khóa được gỡ (tại biên B2)
+
+## Requirement ID
+FR-02
+
+## Module / Test type / Technique
+FR02 Login / Functional / BVA
+
+## Preconditions
+- Tài khoản bị khóa đúng 30 giây trước
+- Ranh giới B2: mở khóa tại t=30 giây
+
+## Test data
+| Email | test@eshop.com |
+| Password | Test1234! |
+| Thời điểm | t = 30 giây sau khi bị khóa |
+| Điểm BVA | Tại biên — t=30s |
+
+## Test steps
+1. Kích hoạt khóa tài khoản
+2. Chờ đúng 30 giây
+3. Nhập email và password đúng `Test1234!`
+4. Bấm Login
+
+## Expected result
+Đăng nhập thành công; khóa đã được gỡ; JWT trả về.
+
+## Status / Related bugs
+Not Run / None
+
+---
+
+# BVA-FR02-06: Đăng nhập tại t=31 giây — khóa đã được gỡ (trên biên B2)
+
+## Requirement ID
+FR-02
+
+## Module / Test type / Technique
+FR02 Login / Functional / BVA
+
+## Preconditions
+- Tài khoản bị khóa 31 giây trước
+- Ranh giới B2: mở khóa tại t=30 giây
+
+## Test data
+| Email | test@eshop.com |
+| Password | Test1234! |
+| Thời điểm | t = 31 giây sau khi bị khóa |
+| Điểm BVA | Trên biên — t=31s |
+
+## Test steps
+1. Kích hoạt khóa tài khoản
+2. Chờ 31 giây
+3. Nhập email và password đúng `Test1234!`
+4. Bấm Login
+
+## Expected result
+Đăng nhập thành công; khóa đã được gỡ; JWT trả về.
+
+## Status / Related bugs
+Not Run / None
+
+---
+
+# BVA-FR02-07: Email 253 ký tự — dưới tối đa RFC 5321, định dạng chấp nhận
+
+## Requirement ID
+FR-02
+
+## Module / Test type / Technique
+FR02 Login / Functional / BVA
+
+## Preconditions
+- User đang ở trang Login
+- Ranh giới B3: độ dài email tối đa = 254 ký tự
+
+## Test data
+| Email | `a`×244 + `@test.com` (tổng 253 ký tự) |
+| Password | Test1234! |
+| Điểm BVA | Dưới tối đa — 253 ký tự |
+
+## Test steps
+1. Mở trang Login
+2. Nhập email 253 ký tự (244 ký tự `a` + `@test.com`)
+3. Nhập password tùy ý
+4. Bấm Login
+
+## Expected result
+Định dạng được chấp nhận; đăng nhập thất bại vì "sai thông tin" (không phải lỗi định dạng).
+
+## Status / Related bugs
+Not Run / None
+
+---
+
+# BVA-FR02-08: Email 254 ký tự — tại tối đa RFC 5321, định dạng chấp nhận
+
+## Requirement ID
+FR-02
+
+## Module / Test type / Technique
+FR02 Login / Functional / BVA
+
+## Preconditions
+- User đang ở trang Login
+- Ranh giới B3: độ dài email tối đa = 254 ký tự
+
+## Test data
+| Email | `a`×245 + `@test.com` (tổng 254 ký tự) |
+| Password | Test1234! |
+| Điểm BVA | Tại tối đa — 254 ký tự |
+
+## Test steps
+1. Mở trang Login
+2. Nhập email 254 ký tự (245 ký tự `a` + `@test.com`)
+3. Nhập password tùy ý
+4. Bấm Login
+
+## Expected result
+Định dạng được chấp nhận; đăng nhập thất bại vì "sai thông tin" (không phải lỗi định dạng).
+
+## Status / Related bugs
+Not Run / None
+
+---
+
+# BVA-FR02-09: Email 255 ký tự — vượt tối đa RFC 5321, từ chối định dạng
+
+## Requirement ID
+FR-02
+
+## Module / Test type / Technique
+FR02 Login / Functional / BVA
+
+## Preconditions
+- User đang ở trang Login
+- Ranh giới B3: độ dài email tối đa = 254 ký tự
+
+## Test data
+| Email | `a`×246 + `@test.com` (tổng 255 ký tự) |
+| Password | Test1234! |
+| Điểm BVA | Vượt tối đa — 255 ký tự |
+
+## Test steps
+1. Mở trang Login
+2. Nhập email 255 ký tự (246 ký tự `a` + `@test.com`)
+3. Nhập password tùy ý
+4. Bấm Login
+
+## Expected result
+Đăng nhập thất bại; email vượt quá độ dài tối đa; thông báo lỗi định dạng.
+
+## Status / Related bugs
+Not Run / None
+
+---
+
+# BVA-FR02-10: Password rỗng — dưới tối thiểu, trường bắt buộc (dưới biên B4)
+
+## Requirement ID
+FR-02
+
+## Module / Test type / Technique
+FR02 Login / Functional / BVA
+
+## Preconditions
+- Trạng thái tài khoản = bình thường
+- Ranh giới B4: password tối thiểu = 1 ký tự
+
+## Test data
+| Email | test@eshop.com |
+| Password | (rỗng — 0 ký tự) |
+| Điểm BVA | Dưới tối thiểu — 0 ký tự |
+
+## Test steps
+1. Mở trang Login
+2. Nhập email hợp lệ `test@eshop.com`
+3. Để trống trường password (0 ký tự)
+4. Bấm Login
+
+## Expected result
+Đăng nhập thất bại; thông báo trường bắt buộc; không được tính là lần sai.
+
+## Status / Related bugs
+Not Run / None
+
+---
+
+# BVA-FR02-11: Password 1 ký tự — tại tối thiểu, sai thông tin đăng nhập (tại biên B4)
+
+## Requirement ID
+FR-02
+
+## Module / Test type / Technique
+FR02 Login / Functional / BVA
+
+## Preconditions
+- Trạng thái tài khoản = bình thường
+- Ranh giới B4: password tối thiểu = 1 ký tự
+
+## Test data
+| Email | test@eshop.com |
+| Password | X (1 ký tự) |
+| Điểm BVA | Tại tối thiểu — 1 ký tự |
+
+## Test steps
+1. Mở trang Login
+2. Nhập email hợp lệ `test@eshop.com`
+3. Nhập password 1 ký tự `X`
+4. Bấm Login
+
+## Expected result
+Đăng nhập thất bại; sai thông tin đăng nhập; 1 ký tự là định dạng hợp lệ (chỉ sai giá trị).
+
+## Status / Related bugs
+Not Run / None
+
+---
+
+# BVA-FR02-12: Đăng nhập thành công reset bộ đếm — lần sai sau không tích lũy (tại điểm reset B5)
+
+## Requirement ID
+FR-02
+
+## Module / Test type / Technique
+FR02 Login / Functional / BVA
+
+## Preconditions
+- 2 lần sai trước đó
+- Ranh giới B5: reset bộ đếm khi đăng nhập thành công
+
+## Test data
+| Email | test@eshop.com |
+| Password Bước 1 | Test1234! (đúng) |
+| Password Bước 2 | WrongPass999! (sai) |
+| Điểm BVA | Tại điểm reset |
+
+## Test steps
+1. (Setup) Đăng nhập sai 2 lần
+2. Đăng nhập đúng với `Test1234!` (bộ đếm reset về 0)
+3. Đăng nhập sai 1 lần nữa với `WrongPass999!`
+4. Kiểm tra trạng thái tài khoản
+
+## Expected result
+Bước 2 thành công — bộ đếm reset về 0. Bước 3 — 1 lần sai mới (bộ đếm = 1, không phải 3 — tài khoản **chưa bị khóa**).
+
+## Status / Related bugs
+Not Run / None
 
 ---
 
