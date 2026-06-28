@@ -109,18 +109,23 @@ Từ Test Case ID, trích xuất module slug:
 
 ### PHASE 2: BUG ANALYSIS — Phân tích lỗi
 
-#### Step 2.1: Phân loại ghi chú của tester
+#### Step 2.1: Phân loại ghi chú của tester và quy tắc tách bug
 
 Từ ghi chú/nhận xét của tester, xác định danh sách các vấn đề riêng biệt.
 
-**Ví dụ:** Ghi chú `"Có 2 thẻ <h1>, không có alt text, đơn vị tiền tệ hiển thị VND thay vì ₫"` → 3 vấn đề:
-1. Duplicate `<h1>` tags
-2. Missing alt text
-3. Currency symbol sai
+> [!IMPORTANT]
+> **QUY TẮC TÁCH BUG (BUG SPLITTING):**
+> Luôn tách các vấn đề có bản chất khác nhau về mặt kỹ thuật, chức năng hoặc độ nghiêm trọng (severity) thành các bug report riêng biệt.
+> - **KHÔNG** gộp chung lỗi semantic/SEO (như dư thừa thẻ `<h1>`) chung với các lỗi hiển thị thô/crash backend (như raw exception/stack trace) hay lỗi định dạng tiền tệ.
+> - Nếu một test case phát hiện 2 lỗi thuộc 2 nhóm khác nhau, phải cập nhật/tạo 2 bug reports riêng.
+
+**Ví dụ:** Ghi chú `"Có 3 thẻ <h1>, hiển thị lỗi hệ thống thay vì empty state"` → 2 vấn đề hoàn toàn khác nhau cần xử lý riêng:
+1. Dư thừa thẻ `<h1>` (Gom/cập nhật vào `BUG-PLAS-001` đã có)
+2. Hiển thị lỗi hệ thống thô/raw stack trace (Tạo mới `BUG-PLAS-005`)
 
 #### Step 2.2: So khớp với Bug Reports hiện có
 
-Với mỗi vấn đề trong ghi chú:
+Với mỗi vấn đề riêng biệt đã phân tách:
 
 1. **Tìm kiếm bug report đã tồn tại** có mô tả tương tự:
    - So sánh title và actual result trong các BUG files đã đọc ở Step 1.4
@@ -132,7 +137,7 @@ Với mỗi vấn đề trong ghi chú:
 
 #### Step 2.3: Xác nhận với user nếu không chắc chắn
 
-Nếu agent không chắc một vấn đề trong ghi chú có khớp với bug cũ hay không:
+Nếu agent không chắc một vấn đề trong ghi chú có khớp với bug cũ hay không hoặc phân vân về việc tách bug:
 - Hỏi user để xác nhận trước khi tạo bug mới
 - Liệt kê các bug hiện có có vẻ liên quan
 
