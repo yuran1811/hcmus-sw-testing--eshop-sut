@@ -39,4 +39,4 @@ EC3 (search = "NonExistentProduct12345") + EC7 (DB có sản phẩm) + EC11 (t�
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-PLAS-004
