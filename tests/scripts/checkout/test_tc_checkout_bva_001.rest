@@ -1,0 +1,47 @@
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập để lấy token
+# @name loginRequest
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "test@eshop.com",
+  "password": "Test1234!"
+}
+
+### Tự động lấy token
+@token = {{loginRequest.response.body.token}}
+
+
+### 2. Thêm đồ vào giỏ hàng (Đúng 1 sản phẩm - Keychron Q1 4M)
+POST {{baseUrl}}/cart
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": 5,
+  "name": "Bàn phím cơ Keychron Q1",
+  "price": 4000000,
+  "quantity": 1
+}
+
+
+### 3. Gửi yêu cầu Checkout (total_amount khớp chính xác 4M)
+POST {{baseUrl}}/checkout
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "total_amount": 4000000,
+  "shipping_address": "Nhà tôi"
+}
+
+
+### 4. Kiểm tra xem đơn hàng lưu trong hệ thống là giá bao nhiêu
+GET {{baseUrl}}/orders/my-orders
+Authorization: Bearer {{token}}
+
+### 5. Kiểm tra giỏ hàng xem đã bị xóa sạch chưa
+GET {{baseUrl}}/cart
+Authorization: Bearer {{token}}

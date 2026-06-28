@@ -6,6 +6,6 @@
 | TC-CHECKOUT-002    | checkout | Mạch Quốc Tấn | Pass   |                  | Không thể thanh toán khi chưa đăng nhập / sai token |
 | TC-CHECKOUT-003    | checkout | Mạch Quốc Tấn | Fail   | BUG-CHECKOUT-003 | Vẫn tạo được đơn hàng (total_amount = 0) dù giỏ hàng trống |
 | TC-CHECKOUT-004    | checkout | Mạch Quốc Tấn | Fail   | BUG-CHECKOUT-004 | Thanh toán thành công với total_amount = 1000 không khớp với giỏ hàng |
-| TC-CHECKOUT-BVA-001| checkout |               |        |                  |                                                            |
+| TC-CHECKOUT-BVA-001| checkout | Mạch Quốc Tấn | Fail   | BUG-CHECKOUT-001 | Giống TC-CHECKOUT-001 (giỏ hàng không bị xóa sau khi thanh toán) |
 | TC-CHECKOUT-BVA-002| checkout |               |        |                  |                                                            |
 | TC-CHECKOUT-BVA-003| checkout |               |        |                  |                                                            |
