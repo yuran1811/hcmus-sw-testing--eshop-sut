@@ -98,6 +98,4 @@ _(Click here to view the file: [github_issue_detail_4_1.png](evidence/github_iss
 
 Below are the video demonstrations showcasing how our custom testing skills were leveraged to automate testing and bug reporting:
 
-- 🎥 **Forgot Password Test Execution**: [Watch on YouTube](https://www.youtube.com/watch?v=dQw4w9WgXcQ) _(Placeholder Link)_
-- 🎥 **Mobile Checkout Test Run**: [Watch on YouTube](https://www.youtube.com/watch?v=dQw4w9WgXcQ) _(Placeholder Link)_
-- 🎥 **Bug Reporting Automation Flow**: [Watch on YouTube](https://www.youtube.com/watch?v=dQw4w9WgXcQ) _(Placeholder Link)_
+- 🎥 **End-to-End Agentic Testing Video Demo**: [Watch on YouTube](https://youtu.be/Nu8V0eNnoV0)

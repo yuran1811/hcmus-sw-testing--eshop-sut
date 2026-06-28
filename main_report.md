@@ -1,6 +1,6 @@
-# BÁO CÁO CHÍNH: KIỂM THỬ MIỀN DỮ LIỆU (MAIN REPORT: DOMAIN TESTING) - HW02
+# BÁO CÁO CHÍNH - HW02
 
-**Môn học**: Kiểm thử phần mềm (KCPM)  
+**Môn học**: Kiểm thử phần mềm (KTPM)  
 **Hệ thống kiểm thử (SUT)**: EShop  
 **Sinh viên thực hiện**: ÂN TIẾN NGUYÊN AN  
 **Mã số sinh viên**: 23127148  
@@ -731,6 +731,7 @@ Hệ thống kiểm thử này sử dụng hai **Agent Skills** (Kỹ năng Đ�
   - **Outputs**: Danh sách kết quả đầu ra mong đợi và logic/công thức tính toán liên quan.
   - **Business Rules**: Các quy tắc nghiệp vụ, phân cấp quyền truy cập, các ràng buộc khóa ngoại cơ sở dữ liệu và điều kiện tiên quyết (Preconditions).
 - **Quy trình thực thi**:
+
   ```mermaid
   flowchart TD
       B0[B0: Thu thập Feature Spec] --> B1[B1: Phân tích EP]
@@ -744,6 +745,7 @@ Hệ thống kiểm thử này sử dụng hai **Agent Skills** (Kỹ năng Đ�
   - _Bước 2 (BVA)_: Xác định ranh giới chuyển đổi logic của các phân vùng. Áp dụng **2-Point BVA** cho biên nhị phân và **3-Point BVA** ($B-1, B, B+1$) cho các biên số lượng, chiều dài, giới hạn số lần.
   - _Bước 3 (Error Isolation)_: Xây dựng cấu hình Baseline hợp lệ. Mỗi ca kiểm thử phát sinh chỉ được phép thay đổi duy nhất một tham số để đảm bảo tính cô lập nguồn gốc lỗi.
   - _Bước 4 (Test Case Reduction)_: Rà soát và loại bỏ/merge các ca kiểm thử trùng lặp về mặt dữ liệu nhập và kết quả mong đợi để tiết kiệm tài nguyên chạy thử.
+
 - **Output**:
   - `DESIGN_REPORT.md`: Báo cáo thiết kế kiểm thử chi tiết (chứa EP, BVA, Baseline, ma trận truy vết).
   - `TC-[MODULE]-[NUMBER].md`: Các file ca kiểm thử đơn lẻ lưu tại `tests/test-cases/[module]/`.
@@ -797,3 +799,5 @@ sequenceDiagram
 ### 4. Link video Demo thực tế <a name="demo-videos"></a>
 
 Dưới đây là các video ghi hình ghi nhận phiên làm việc tự động của Agent trong việc thiết kế và thực thi kiểm thử thực tế trên hệ thống SUT:
+
+- 🎥 **Video Demo Kiểm thử End-to-End**: [Xem trên YouTube](https://youtu.be/Nu8V0eNnoV0)
