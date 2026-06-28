@@ -9,7 +9,7 @@ assignees: ""
 
 ## Found by Test Case
 
-TC-PLAS-001, TC-PLAS-002, TC-PLAS-004, TC-PLAS-BVA-001
+TC-PLAS-001, TC-PLAS-002, TC-PLAS-004, TC-PLAS-BVA-001, TC-PLAS-BVA-005
 
 ## Requirement liên quan
 
@@ -47,3 +47,5 @@ Giá sản phẩm hiển thị đơn vị là `VND` (Ví dụ: `30.000.000 VND`)
   ![Evidence 3](../screenshots/TC-PLAS-004.png)
 - **TC-PLAS-BVA-001 (Tìm kiếm 1 ký tự):**
   ![Evidence 4](../screenshots/TC-PLAS-BVA-001.png)
+- **TC-PLAS-BVA-005 (Database chỉ có 1 sản phẩm):**
+  ![Evidence 5](../screenshots/TC-PLAS-BVA-005b.png)
