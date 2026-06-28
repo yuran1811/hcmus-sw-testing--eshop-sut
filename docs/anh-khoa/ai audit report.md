@@ -949,3 +949,228 @@
 - **Suy luận:** Lọc đúng — biên nằm ở state machine (đếm sai = 3, khóa = 30s); ca t=29s (vẫn khóa) bắt lỗi khóa hết hạn sớm mà TC-010/011 bỏ sót.
 
 - **Sửa:** Không cần sửa
+
+---
+
+**AI Audit Report Item**
+
+- **Công cụ AI:** Claude Code (Opus 4.8)
+- **Thời gian:** 2026-06-27 16:16:09
+- **Nội dung prompt:**
+  > Hãy đóng vai Traceability Matrix Expert, chạy @.agents/skills/traceability-matrix/SKILL.md để tổng hợp toàn bộ Requirement, Domain Test Cases và BVA Test Cases của tính năng chúng ta vừa làm thành Ma trận truy vết.
+  >
+  > Yêu cầu quan trọng:
+  > - Rà soát thật kỹ xem có cái luật nào ở phần Phân tích yêu cầu mà chưa có mã TC nào map vào không. Nếu có phải cảnh báo ngay lập tức.
+  > - Xử lý xong thì tự động gọi @.agents/skills/ai-audit-logger/SKILL.md để xuất luôn output log nguyên văn cho tác vụ này.
+- **AI output:**
+
+  > ### 1. Ma trận truy vết (Traceability Matrix)
+  >
+  > | Requirement ID | Business Rule / Constraint | Test Case IDs | Result | Bug Issue | Status |
+  > | :--- | :--- | :--- | :--- | :--- | :--- |
+  > | FR-01 | Họ Tên bắt buộc (không rỗng) | TC-REGISTER-002 | Not Run | | Open |
+  > | FR-01 | Email bắt buộc | TC-REGISTER-005 | Not Run | | Open |
+  > | FR-01 | Email đúng định dạng `user@domain.com` | TC-REGISTER-003 | Not Run | | Open |
+  > | FR-01 | Email duy nhất (không trùng) | TC-REGISTER-004 | Not Run | | Open |
+  > | FR-01 | Mật khẩu bắt buộc | TC-REGISTER-012 | Not Run | | Open |
+  > | FR-01 | Xác nhận mật khẩu bắt buộc | TC-REGISTER-014 | Not Run | | Open |
+  > | FR-01 | Mật khẩu tối thiểu 8 ký tự | TC-REGISTER-001, TC-REGISTER-006 | Not Run | | Open |
+  > | FR-01 | Mật khẩu có ≥1 chữ hoa | TC-REGISTER-007, TC-REGISTER-001 | Not Run | | Open |
+  > | FR-01 | Mật khẩu có ≥1 chữ thường | TC-REGISTER-008, TC-REGISTER-015 | Not Run | | Open |
+  > | FR-01 | Mật khẩu có ≥1 chữ số | TC-REGISTER-009, TC-REGISTER-016 | Not Run | | Open |
+  > | FR-01 | Mật khẩu có ≥1 ký tự đặc biệt thuộc `@ $ ! % * ? &` | TC-REGISTER-010, TC-REGISTER-011 | Not Run | | Open |
+  > | FR-01 | Xác nhận mật khẩu phải khớp với Mật khẩu | TC-REGISTER-013 | Not Run | | Open |
+  > | FR-01 | Đăng ký thành công → chuyển sang trang Đăng nhập | TC-REGISTER-001 | Not Run | | Open |
+  > | FR-01 | SEC-01: Mật khẩu không lưu plaintext (phải hash) | ⚠️ CHƯA CÓ TC | Not Run | | Open |
+  > | FR-07 | Mỗi sản phẩm đúng 1 dòng; thêm trùng → tăng Số lượng | TC-CART-001, TC-CART-002 | Not Run | | Open |
+  > | FR-07 | Số lượng nguyên dương, tối thiểu 1, chỉnh bằng nút +/- | TC-CART-003, TC-CART-004, TC-CART-005 | Not Run | | Open |
+  > | FR-07 | Thành tiền = Đơn giá × Số lượng, cập nhật ngay | TC-CART-003, TC-CART-004, TC-CART-006 | Not Run | | Open |
+  > | FR-07 | Tổng cộng = Σ Thành tiền; nhãn đúng "Tổng cộng" | TC-CART-006 | Not Run | | Open |
+  > | FR-07 | Xóa sản phẩm phải có dialog xác nhận | TC-CART-007, TC-CART-008 | Not Run | | Open |
+  > | FR-07 | Nút Tiếp tục mua sắm → về trang chủ | TC-CART-010 | Not Run | | Open |
+  > | FR-07 | Giỏ rỗng → hình minh họa + thông báo | TC-CART-009 | Not Run | | Open |
+  > | FR-15 | Chỉ Admin (JWT + `role='admin'`) mới Thêm/Sửa/Xóa | TC-PRODUCT-013, TC-PRODUCT-014 | Not Run | | Open |
+  > | FR-15 | Tên sản phẩm bắt buộc, tối đa 255 ký tự | TC-PRODUCT-002, TC-PRODUCT-003, TC-PRODUCT-005, TC-PRODUCT-006 | Not Run | | Open |
+  > | FR-15 | Giá bắt buộc, phải là số dương (> 0) | TC-PRODUCT-004, TC-PRODUCT-007, TC-PRODUCT-008, TC-PRODUCT-009, TC-PRODUCT-010, TC-PRODUCT-016 | Not Run | | Open |
+  > | FR-15 | Danh mục bắt buộc, phải tồn tại trong hệ thống | TC-PRODUCT-011, TC-PRODUCT-012 | Not Run | | Open |
+  > | FR-15 | Thao tác Thêm (Create) sản phẩm hợp lệ | TC-PRODUCT-001 | Not Run | | Open |
+  > | FR-15 | Thao tác Sửa (Update) — chỉ sản phẩm đó thay đổi | TC-PRODUCT-015 | Not Run | | Open |
+  > | FR-15 | Thao tác Xem (Read/List) sản phẩm | ⚠️ CHƯA CÓ TC | Not Run | | Open |
+  > | FR-15 | Thao tác Xóa (Delete) sản phẩm → loại khỏi danh sách | ⚠️ CHƯA CÓ TC | Not Run | | Open |
+  > | FR-20 | Đăng nhập thành công → JWT + lưu client + header `Authorization` | TC-MOBILE_LOGIN-001 | Not Run | | Open |
+  > | FR-20 | Email và Mật khẩu bắt buộc | TC-MOBILE_LOGIN-002, TC-MOBILE_LOGIN-004 | Not Run | | Open |
+  > | FR-20 | Email đúng định dạng | TC-MOBILE_LOGIN-003 | Not Run | | Open |
+  > | FR-20 | Sai thông tin → lỗi chung chung, không lộ nguyên nhân | TC-MOBILE_LOGIN-005, TC-MOBILE_LOGIN-006 | Not Run | | Open |
+  > | FR-20 | Mỗi lần sai → bộ đếm tăng đúng 1 đơn vị | TC-MOBILE_LOGIN-007 | Not Run | | Open |
+  > | FR-20 | Sai ≥ 3 lần liên tiếp → khóa 30 giây | TC-MOBILE_LOGIN-008, TC-MOBILE_LOGIN-009, TC-MOBILE_LOGIN-012 | Not Run | | Open |
+  > | FR-20 | Đang khóa → từ chối dù nhập đúng | TC-MOBILE_LOGIN-010 | Not Run | | Open |
+  > | FR-20 | Hết 30 giây → đăng nhập lại được | TC-MOBILE_LOGIN-011 | Not Run | | Open |
+  > | FR-20 | Bộ đếm/khóa dùng chung mọi client (Web ↔ Mobile) | ⚠️ CHƯA CÓ TC | Not Run | | Open |
+  >
+  > ### 2. Báo cáo Độ bao phủ (Coverage Status)
+  >
+  > ⚠️ Warning - Thiếu Coverage: Các luật sau đây CHƯA có Test Case bao phủ:
+  >
+  > 1. FR-01 — SEC-01: Mật khẩu không được lưu plaintext (phải hash).
+  >    - Lý do thiếu: toàn bộ test Domain/BVA là kiểm thử hộp đen ở tầng nhập liệu; không ca nào kiểm tra cách mật khẩu được lưu trong CSDL.
+  >    - Đề xuất: viết test bảo mật / kiểm tra hộp trắng — sau khi đăng ký, truy vấn CSDL xác nhận trường mật khẩu là chuỗi đã hash (vd bcrypt), không phải plaintext.
+  > 2. FR-15 — Thao tác Xem (Read/List) sản phẩm.
+  >    - Lý do thiếu: Domain Testing tập trung vào form Thêm + validate + phân quyền + bất biến Sửa; chưa có ca kiểm thao tác Xem danh sách / chi tiết hiển thị đúng dữ liệu.
+  >    - Đề xuất: thêm 1 ca Functional — Admin xem danh sách/chi tiết → hiển thị đúng dữ liệu sản phẩm hiện có.
+  > 3. FR-15 — Thao tác Xóa (Delete) sản phẩm.
+  >    - Lý do thiếu: mới có ca phân quyền (401/403) trên thao tác ghi nói chung; chưa có ca Xóa thành công (Admin xóa → sản phẩm bị loại khỏi danh sách).
+  >    - Đề xuất: thêm 1 ca — Admin xóa 1 sản phẩm hợp lệ → sản phẩm biến mất khỏi danh sách, các sản phẩm khác giữ nguyên.
+  > 4. FR-20 — Bộ đếm sai/trạng thái khóa dùng chung giữa Web và Mobile.
+  >    - Lý do thiếu: mọi ca FR-20 chỉ thao tác trong phạm vi Mobile; chưa có ca kiểm tính nhất quán xuyên client.
+  >    - Đề xuất: thêm 1 ca tích hợp — gây khóa bằng cách sai nhiều lần trên Web, sau đó thử đăng nhập trên Mobile → phải thấy tài khoản đang bị khóa (và ngược lại).
+  >
+  > Các feature đã bao phủ đủ: FR-07 (Giỏ hàng) — 100% luật nghiệp vụ đều có ít nhất 1 Test Case.
+
+- **Đánh giá:** VALID
+
+- **Suy luận:** Map đầy đủ rule ↔ TC cho 4 feature; phát hiện đúng 4 lỗ hổng coverage (SEC-01 hash, FR-15 Read & Delete, FR-20 xuyên client) mà bộ Domain/BVA chưa chạm.
+
+- **Sửa:** Bổ sung 4 test case cho các rule còn thiếu (xem mục Coverage Status).
+
+---
+
+**AI Audit Report Item**
+
+- **Công cụ AI:** Claude Code (Opus 4.8)
+- **Thời gian:** 2026-06-27 16:23:20
+- **Nội dung prompt:**
+  > Sử dụng skill @.agents/skills/domain-testing/SKILL.md kết hợp với @.agents/skills/boundary-value-analysis/SKILL.md để phân tích, thiết kế và bổ sung các test case còn thiếu nha
+  >
+  > sau đó chạy lại skill @.agents/skills/traceability-matrix/SKILL.md để tạo traceability matrix lại nha
+  >
+  > Xử lý xong thì tự động gọi @.agents/skills/ai-audit-logger/SKILL.md để xuất luôn output log nguyên văn cho tác vụ này.
+- **AI output:**
+
+  > ## Phân tích (Domain Testing + BVA)
+  >
+  > 4 luật thiếu coverage đều là functional / security / integration — không phát sinh biên định lượng mới nào, nên BVA không sinh thêm giá trị biên; chỉ áp dụng Domain Testing (kiểm thao tác hợp lệ + bất biến). SEC-01 nằm ngoài phạm vi hộp đen tầng nhập liệu nên thiết kế dạng kiểm tra hộp trắng/CSDL. ID mới đánh tiếp nối: TC-REGISTER-017, TC-PRODUCT-017, TC-PRODUCT-018, TC-MOBILE_LOGIN-013.
+  >
+  > ### Test case bổ sung
+  >
+  > **File:** `tests/test-cases/register/TC-REGISTER-017.md`
+  >
+  > ```markdown
+  > # TC-REGISTER-017: SEC-01 — Mật khẩu được lưu dạng hash, không phải plaintext
+  >
+  > **Requirement ID:** FR-01 (SEC-01)
+  > **Test Type:** Security / White-box (kiểm tra lưu trữ CSDL)
+  >
+  > ### 1. Preconditions
+  > - Có quyền truy cập CSDL backend (SQLite) để kiểm tra bảng `users`.
+  > - Email `sec01.check@gmail.com` chưa tồn tại trong hệ thống.
+  >
+  > ### 2. Test Data (Inputs)
+  > - Họ Tên: `Nguyễn Văn A`
+  > - Email: `sec01.check@gmail.com`
+  > - Mật khẩu: `Abcd123!`
+  > - Xác nhận mật khẩu: `Abcd123!`
+  >
+  > ### 3. Test Steps
+  > 1. Đăng ký tài khoản mới với dữ liệu hợp lệ ở trên.
+  > 2. Truy vấn bản ghi vừa tạo trong bảng `users` của CSDL.
+  > 3. Đối chiếu giá trị trường mật khẩu lưu trong CSDL với chuỗi `Abcd123!` đã nhập.
+  >
+  > ### 4. Expected Result
+  > - Trường mật khẩu trong CSDL là chuỗi đã băm (hash) — ví dụ bcrypt có tiền tố `$2a$`/`$2b$`/`$2y$` — khác hoàn toàn với plaintext `Abcd123!`.
+  > - Không có bất kỳ nơi nào lưu mật khẩu dưới dạng plaintext (tuân thủ SEC-01).
+  > - Lưu ý phạm vi: đây là kiểm thử hộp trắng, bổ trợ cho bộ Domain/BVA (vốn chỉ kiểm hộp đen tầng nhập liệu).
+  > ```
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-017.md`
+  >
+  > ```markdown
+  > # TC-PRODUCT-017: Xem (Read/List) sản phẩm hiển thị đúng dữ liệu
+  >
+  > **Requirement ID:** FR-15
+  > **Test Type:** Functional / Domain Testing
+  >
+  > ### 1. Preconditions
+  > - Đã đăng nhập bằng tài khoản Admin (JWT hợp lệ, `role = 'admin'`).
+  > - Tồn tại sẵn sản phẩm "Sản phẩm X" với dữ liệu biết trước: Giá `150000`, Danh mục `Thời trang`.
+  >
+  > ### 2. Test Data (Inputs)
+  > - Thao tác: Xem danh sách sản phẩm và xem chi tiết "Sản phẩm X".
+  >
+  > ### 3. Test Steps
+  > 1. Mở màn hình danh sách sản phẩm (Web Admin).
+  > 2. Đối chiếu danh sách với dữ liệu hiện có trong hệ thống.
+  > 3. Mở chi tiết "Sản phẩm X".
+  >
+  > ### 4. Expected Result
+  > - Danh sách hiển thị đầy đủ các sản phẩm hiện có, đúng số lượng và dữ liệu.
+  > - Chi tiết "Sản phẩm X" hiển thị đúng Tên, Giá (`150000`), Danh mục (`Thời trang`) — khớp với dữ liệu trong CSDL.
+  > ```
+  >
+  > **File:** `tests/test-cases/product/TC-PRODUCT-018.md`
+  >
+  > ```markdown
+  > # TC-PRODUCT-018: Xóa (Delete) sản phẩm thành công → loại khỏi danh sách
+  >
+  > **Requirement ID:** FR-15
+  > **Test Type:** Functional / Domain Testing
+  >
+  > ### 1. Preconditions
+  > - Đã đăng nhập bằng tài khoản Admin (JWT hợp lệ, `role = 'admin'`).
+  > - Tồn tại ít nhất 2 sản phẩm: "Sản phẩm X" và "Sản phẩm Y".
+  >
+  > ### 2. Test Data (Inputs)
+  > - Sản phẩm cần xóa: `Sản phẩm X`
+  >
+  > ### 3. Test Steps
+  > 1. Mở màn hình quản lý sản phẩm.
+  > 2. Thực hiện Xóa "Sản phẩm X".
+  > 3. Kiểm tra lại danh sách sản phẩm.
+  >
+  > ### 4. Expected Result
+  > - "Sản phẩm X" bị loại khỏi danh sách sản phẩm.
+  > - "Sản phẩm Y" và các sản phẩm khác giữ nguyên, không bị ảnh hưởng.
+  > ```
+  >
+  > **File:** `tests/test-cases/mobile_login/TC-MOBILE_LOGIN-013.md`
+  >
+  > ```markdown
+  > # TC-MOBILE_LOGIN-013: Bộ đếm sai / trạng thái khóa dùng chung giữa Web và Mobile
+  >
+  > **Requirement ID:** FR-20
+  > **Test Type:** Integration / Domain Testing
+  >
+  > ### 1. Preconditions
+  > - Tồn tại tài khoản `test@eshop.com` / `Test1234!`.
+  > - Tài khoản không bị khóa, bộ đếm sai = 0 (trước khi bắt đầu).
+  > - Có sẵn cả client Web và app Mobile trỏ về cùng backend.
+  >
+  > ### 2. Test Data (Inputs)
+  > - Bước gây khóa (trên Web): 3 lần đăng nhập sai liên tiếp với Email `test@eshop.com` + Mật khẩu `WrongPass1!`.
+  > - Bước kiểm (trên Mobile): Email `test@eshop.com` + Mật khẩu `Test1234!` (ĐÚNG).
+  >
+  > ### 3. Test Steps
+  > 1. Trên Web: đăng nhập sai 3 lần liên tiếp với tài khoản `test@eshop.com` để kích hoạt khóa.
+  > 2. Ngay sau đó, trên Mobile: nhập đúng Email và Mật khẩu, bấm "Đăng nhập".
+  >
+  > ### 4. Expected Result
+  > - Trên Mobile, đăng nhập vẫn bị từ chối vì tài khoản đang bị khóa (dù nhập đúng thông tin) — xác nhận bộ đếm sai/trạng thái khóa được quản lý tại backend và dùng chung cho mọi client.
+  > - Đối xứng: thực hiện ngược lại (gây khóa trên Mobile → kiểm trên Web) cũng cho kết quả tương tự.
+  > ```
+  >
+  > ## Traceability Matrix (v2 — sau khi bổ sung)
+  >
+  > Các dòng từng thiếu nay đã có TC:
+  > - FR-01 — SEC-01 (không lưu plaintext) → TC-REGISTER-017
+  > - FR-15 — Xem (Read/List) → TC-PRODUCT-017
+  > - FR-15 — Xóa (Delete) → TC-PRODUCT-018
+  > - FR-20 — Bộ đếm/khóa dùng chung Web ↔ Mobile → TC-MOBILE_LOGIN-013
+  >
+  > ### Báo cáo Độ bao phủ (Coverage Status)
+  >
+  > ✅ Passed: Toàn bộ các luật nghiệp vụ của 4 feature (FR-01, FR-07, FR-15, FR-20) đều đã được bao phủ bởi ít nhất một Test Case. (Ma trận đầy đủ lưu tại `docs/anh-khoa/traceability-matrix.md`.)
+
+- **Đánh giá:** VALID
+
+- **Suy luận:** Thiết kế đúng 4 ca lấp đúng 4 lỗ hổng; nhận định trung thực rằng các ca này là functional/security/integration nên BVA không thêm biên. Coverage chuyển từ Warning → Passed.
+
+- **Sửa:** Không cần sửa
