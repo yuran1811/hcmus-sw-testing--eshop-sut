@@ -236,7 +236,7 @@ Detailed instruction: Design test cases for FR-14 based on Domain Testing (Equiv
 ` ext
 
 - Identified 3 input variables and 3 output variables with multiple equivalence classes.
-- Generated 8 Domain Testing test cases (TC-CATEGORY-001 to TC-CATEGORY-008).
+- Generated 11 Domain Testing test cases (TC-CATEGORY-001 to TC-CATEGORY-008).
 - Identified 1 boundary point and generated 2 Boundary Value Analysis test cases (TC-CATEGORY-BVA-001 to TC-CATEGORY-BVA-002).
 - Updated Domain Testing Report (Domain_Testing_Report.md).
 - Updated Boundary Value Analysis Report (Boundary_Value_Analysis_Report.md).
@@ -245,13 +245,13 @@ Detailed instruction: Design test cases for FR-14 based on Domain Testing (Equiv
 
 #### Human Review
 
-| Aspect           | Detail |
-| ---------------- | ------ |
-| Reviewed by      |        |
-| Review date      |        |
-| Corrections made |        |
-| Quality rating   |        |
-| Issues found     |        |
+| Aspect           | Detail                                               |
+| ---------------- | ---------------------------------------------------- |
+| Reviewed by      | Mạch Quốc Tấn                                        |
+| Review date      | 28/06/2026                                           |
+| Corrections made | Thêm các test cases liên quan đến việc xóa danh mục  |
+| Quality rating   | Tốt                                                  |
+| Issues found     | Không có test case cho việc xóa danh mục có sản phẩm |
 
 ---
 
