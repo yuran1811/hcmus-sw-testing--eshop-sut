@@ -732,15 +732,7 @@ Hệ thống kiểm thử này sử dụng hai **Agent Skills** (Kỹ năng Đ�
   - **Business Rules**: Các quy tắc nghiệp vụ, phân cấp quyền truy cập, các ràng buộc khóa ngoại cơ sở dữ liệu và điều kiện tiên quyết (Preconditions).
 - **Quy trình thực thi**:
 
-  ```mermaid
-  flowchart TD
-      B0[B0: Thu thập Feature Spec] --> B1[B1: Phân tích EP]
-      B1 -->|Chia VP / IP| B2[B2: Phân tích BVA]
-      B2 -->|Chọn 2-Point / 3-Point| B3[B3: Cô lập lỗi - Error Isolation]
-      B3 -->|Thiết lập Baseline & Biến đổi đơn lẻ| B4[B4: Tối giản bộ ca kiểm thử - Reduction]
-      B4 -->|Loại bỏ trùng lặp| B5[B5: Sinh file DESIGN_REPORT & TCs]
-  ```
-
+  ![Flow chart](assets/flow_chart.png)
   - _Bước 1 (EP)_: Chia miền dữ liệu thành các phân vùng hợp lệ (Valid Partitions) và không hợp lệ (Invalid Partitions), gán ID duy nhất và chọn giá trị đại diện.
   - _Bước 2 (BVA)_: Xác định ranh giới chuyển đổi logic của các phân vùng. Áp dụng **2-Point BVA** cho biên nhị phân và **3-Point BVA** ($B-1, B, B+1$) cho các biên số lượng, chiều dài, giới hạn số lần.
   - _Bước 3 (Error Isolation)_: Xây dựng cấu hình Baseline hợp lệ. Mỗi ca kiểm thử phát sinh chỉ được phép thay đổi duy nhất một tham số để đảm bảo tính cô lập nguồn gốc lỗi.
@@ -777,27 +769,10 @@ Hệ thống kiểm thử này sử dụng hai **Agent Skills** (Kỹ năng Đ�
 
 Quy trình phối hợp khép kín giữa thiết kế, rà soát và thực thi được thể hiện qua sơ đồ dưới đây:
 
-```mermaid
-sequenceDiagram
-    participant User/SRS as Tài liệu SRS
-    participant TW as Agent Skill: test-writer
-    participant Human as Kiểm thử viên (Human Review)
-    participant TR as Agent Skill: test-runner
-    participant Repo as GitHub Issues / Báo cáo
-
-    User/SRS->>TW: Nạp Feature Spec Schema
-    Note over TW: Phân tích EP, BVA<br/>Cô lập lỗi & Tối giản TC
-    TW->>Human: Xuất bản DESIGN_REPORT & TC Files
-    Note over Human: Rà soát thiết kế (AI Gap Analysis - Design Phase)<br/>Bổ sung ca kiểm thử trạng thái động/bảo mật
-    Human->>TR: Nạp bộ ca kiểm thử hoàn chỉnh
-    Note over TR: Thực thi từng bước trên SUT<br/>Bắt lỗi và gán trạng thái (Pass/Fail)
-    TR->>Repo: Tự động đăng tải Bug Reports (Drafts)
-    TR->>Human: Xuất bản sprint-1-test-run & gap-analysis.md
-    Note over Human: Đánh giá thực tế (AI Gap Analysis - Execution Phase)<br/>Bài học kinh nghiệm & Nâng cấp Skill
-```
+![Joint Workflow](assets/sequence_diagram.png)
 
 ### 4. Link video Demo thực tế <a name="demo-videos"></a>
 
 Dưới đây là các video ghi hình ghi nhận phiên làm việc tự động của Agent trong việc thiết kế và thực thi kiểm thử thực tế trên hệ thống SUT:
 
-- 🎥 **Video Demo Kiểm thử End-to-End**: [Xem trên YouTube](https://youtu.be/Nu8V0eNnoV0)
+- 🎥 **Video Demo Kiểm thử End-to-End**: [https://youtu.be/Nu8V0eNnoV0](https://youtu.be/Nu8V0eNnoV0)
