@@ -38,4 +38,4 @@ EC10 (API đang loading) + EC7 (DB có sản phẩm) + OC4 (đúng 1 thẻ `<h1>
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-PLAS-001, BUG-PLAS-006
