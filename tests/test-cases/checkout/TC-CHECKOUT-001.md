@@ -41,9 +41,8 @@ Checkout / Functional / Domain Testing (Equivalence Partitioning)
 - EC1 (Valid token)
 - EC4 (Cart contains >= 1 items)
 - EC6 (total_amount matches server total)
-- EC8 (Non-empty shipping address)
 - OC1 (Success response, order pending, cart cleared)
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-CHECKOUT-001, BUG-CHECKOUT-002
