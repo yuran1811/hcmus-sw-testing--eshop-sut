@@ -104,15 +104,42 @@ Detailed instruction: Design test cases for FR-05 based on Domain Testing (Equiv
 
 ---
 
-<!-- COPY THE TEMPLATE ABOVE FOR EACH NEW AI INTERACTION -->
-
-<!--
 ### Entry 2
-{Copy and fill Entry template}
 
-### Entry 3
-{Copy and fill Entry template}
--->
+| Field              | Value                                            |
+| ------------------ | ------------------------------------------------ |
+| **AI Tool**        | Gemini 3.5 Flash                                 |
+| **Date/Time**      | 2026-06-28 15:03:00                              |
+| **Task**           | Test run manual reporting & Bug updates          |
+| **Feature**        | FR-05 — Xem danh sách & Tìm kiếm sản phẩm        |
+| **Bloom-AI Level** | G9.2 (Apply)                                     |
+
+#### Prompt
+
+**[Original User Prompt]**
+
+```text
+Sử dụng skill test-run-reporter áp dụng cho {TEST_CASE}, và kết quả tôi thực hiện được là {KẾT_QUẢ}, với các hình ảnh {HÌNH_ẢNH} lần lượt minh chứng cho {LỖI}.
+```
+
+#### AI Output
+
+```text
+- Renamed and organized 13 screenshots to target names.
+- Created 3 new bug reports (BUG-PLAS-005, BUG-PLAS-006, BUG-PLAS-007) and updated BUG-PLAS-001/002/003/004.
+- Updated 9 test case files (TC-PLAS-004 to TC-PLAS-007, TC-PLAS-BVA-001 to BVA-005) with status fail and related bugs.
+- Populated sprint-1-test-run.md table with results and bug tracking.
+```
+
+#### Human Review
+
+| Aspect           | Detail                                                                                    |
+| ---------------- | ----------------------------------------------------------------------------------------- |
+| Reviewed by      | Mạch Quốc Tấn                                                                             |
+| Review date      | 28/06/2026                                                                                |
+| Corrections made | Yêu cầu tách BUG-PLAS-005 thành 2 lỗi (H1 và SQLite error), xóa BUG-PLAS-001 khỏi BVA-002 |
+| Quality rating   | Rất tốt, tự động hóa toàn bộ việc cập nhật bảng và file test case theo đúng conventions   |
+| Issues found     | Cần lưu ý quy tắc tách bug rõ ràng hơn khi có nhiều lỗi trên cùng 1 test case             |
 
 ---
 
@@ -120,39 +147,39 @@ Detailed instruction: Design test cases for FR-05 based on Domain Testing (Equiv
 
 | Metric                                           | Value            |
 | ------------------------------------------------ | ---------------- |
-| Tổng số lần tương tác AI (Total AI interactions) | 1                |
+| Tổng số lần tương tác AI (Total AI interactions) | 2                |
 | Công cụ AI đã dùng (AI tools used)               | Gemini 3.5 Flash |
 | Tính năng đã test (Features covered)             | FR-05            |
 | Tổng TC do AI sinh (Total TCs by AI)             | 12               |
-| TC đã chỉnh sửa sau review (TCs modified)        | `{N} ({%}%)`     |
-| TC giữ nguyên (TCs accepted as-is)               | `{N} ({%}%)`     |
-| Độ chính xác AI (AI accuracy before review)      | `{%}%`           |
-| Bug tìm bởi AI (Bugs found with AI)              | `{N}`            |
-| Bug AI bỏ sót (Bugs AI missed)                   | `{N}`            |
+| TC đã chỉnh sửa sau review (TCs modified)        | 12 (100%)        |
+| TC giữ nguyên (TCs accepted as-is)               | 0 (0%)           |
+| Độ chính xác AI (AI accuracy before review)      | 80%              |
+| Bug tìm bởi AI (Bugs found with AI)              | 7                |
+| Bug AI bỏ sót (Bugs AI missed)                   | 0                |
 
 ### Tỷ lệ đóng góp AI vs Human (AI Contribution Breakdown)
 
 | Task                    | AI (%) | Human (%) |
 | ----------------------- | ------ | --------- |
-| Domain Testing analysis |        |           |
-| BVA analysis            |        |           |
-| Test case writing       |        |           |
-| Test execution          |        |           |
-| Bug identification      |        |           |
-| Report writing          |        |           |
+| Domain Testing analysis | 90%    | 10%       |
+| BVA analysis            | 90%    | 10%       |
+| Test case writing       | 80%    | 20%       |
+| Test execution          | 0%     | 100%      |
+| Bug identification      | 50%    | 50%       |
+| Report writing          | 85%    | 15%       |
 
 ---
 
 ## Agent Skills đã sử dụng (Agent Skills Used)
 
-| #   | Skill ID                    | Invocations | Description                      |
-| --- | --------------------------- | ----------- | -------------------------------- |
-| 1   | `domain-testing-writer`     | 1           | Domain Testing + BVA test design |
-| 2   | `test-runner`               |             | Test case execution              |
-| 3   | `ai-audit-report-generator` |             | AI Audit Report generation       |
-| 4   | `ai-gap-analysis`           |             | Coverage gap analysis            |
+| #   | Skill ID                    | Invocations | Description                             |
+| --- | --------------------------- | ----------- | --------------------------------------- |
+| 1   | `domain-testing-writer`     | 1           | Domain Testing + BVA test design        |
+| 2   | `test-run-reporter`         | 1           | Manual test execution reporting & sync  |
+| 3   | `ai-audit-report-generator` |             | AI Audit Report generation              |
+| 4   | `ai-gap-analysis`           |             | Coverage gap analysis                   |
 
 ---
 
 _Report generated with assistance from `ai-audit-report-generator` agent skill._
-_Last updated: 2026-06-27 00:21:00_
+_Last updated: 2026-06-28 15:03:00_
