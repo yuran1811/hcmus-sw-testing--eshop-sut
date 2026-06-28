@@ -1,5 +1,7 @@
 # CHECKOUT Test Run
 
+- **Ngày kiểm thử (Test Date):** 2026-06-28
+
 | Test Case ID       | Module   | Tester        | Result | Related Bug      | Note                                                       |
 | :----------------- | :------- | :------------ | :----- | :--------------- | :--------------------------------------------------------- |
 | TC-CHECKOUT-001    | checkout | Mạch Quốc Tấn | Fail   | BUG-CHECKOUT-001, BUG-CHECKOUT-002 | Đồ vẫn trong giỏ, không gọi API cập nhật cart |

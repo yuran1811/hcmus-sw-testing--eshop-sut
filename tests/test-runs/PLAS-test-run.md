@@ -1,3 +1,7 @@
+# Product List And Search Test Run
+
+- **Ngày kiểm thử (Test Date):** 2026-06-28
+
 | Test Case ID    | Module                  | Tester        | Result | Related Bug                              | Note                                                                    |
 | :-------------- | :---------------------- | :------------ | :----- | :--------------------------------------- | :---------------------------------------------------------------------- |
 | TC-PLAS-001     | product-list-and-search | Mạch Quốc Tấn | Fail   | BUG-PLAS-001, BUG-PLAS-002, BUG-PLAS-003 | Có 2 thẻ <h1>, không có alt text, đơn vị tiền tệ hiện thị VND thay vì ₫ |

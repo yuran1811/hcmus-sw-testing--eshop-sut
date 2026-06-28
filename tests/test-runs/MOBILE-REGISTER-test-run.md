@@ -1,5 +1,7 @@
 # MOBILE-REGISTER Test Run
 
+- **Ngày kiểm thử (Test Date):** 2026-06-29
+
 | Test Case ID               | Module          | Tester        | Result | Related Bug                                      | Note                                                                      |
 | :------------------------- | :-------------- | :------------ | :----- | :----------------------------------------------- | :------------------------------------------------------------------------ |
 | TC-MOBILE-REGISTER-001     | mobile-register | Mạch Quốc Tấn | Fail   | BUG-MOBILE-REGISTER-001                          | Không có trường xác nhận mật khẩu trên UI                                 |
