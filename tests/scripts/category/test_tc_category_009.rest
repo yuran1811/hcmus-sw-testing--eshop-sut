@@ -1,0 +1,20 @@
+### TC-CATEGORY-009: Xóa danh mục thất bại khi danh mục đang chứa sản phẩm liên kết
+
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập với tài khoản Admin để lấy token
+# @name loginAdmin
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "admin@eshop.com",
+  "password": "Admin123!"
+}
+
+### Lấy token
+@token = {{loginAdmin.response.body.token}}
+
+### 2. Thử xóa danh mục ID = 1 (đang chứa các sản phẩm liên kết mặc định)
+DELETE {{baseUrl}}/categories/1
+Authorization: Bearer {{token}}

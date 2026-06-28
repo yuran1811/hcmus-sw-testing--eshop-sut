@@ -1,4 +1,4 @@
-﻿# TC-CATEGORY-009: Xóa danh mục thất bại khi danh mục đang chứa sản phẩm liên kết
+# TC-CATEGORY-009: Xóa danh mục thất bại khi danh mục đang chứa sản phẩm liên kết
 
 ## Requirement ID
 
@@ -38,4 +38,4 @@ EC9 (Xóa danh mục — Danh mục đang chứa sản phẩm) + OC7 (Lỗi ràn
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-CATEGORY-004
