@@ -172,6 +172,19 @@ Số BVA TC: **2 TCs**.
 | **BUG-REGISTER-009** | Mật khẩu không có ký tự đặc biệt bị chặn với thông báo chung, không xác nhận rõ lý do là thiếu ký tự đặc biệt | TC-REGISTER-010                   | Minor    | P3       | 112            |
 | **BUG-REGISTER-010** | Mật khẩu có ký tự đặc biệt ngoài tập cho phép bị chặn với thông báo chung, không xác nhận rõ lý do            | TC-REGISTER-011                   | Minor    | P3       | 113            |
 
+**Ảnh chụp GitHub Issue (bằng chứng đã tạo issue thật trên GitHub):**
+
+- BUG-REGISTER-001 (#94): ![BUG-REGISTER-001](images/issues/94.png)
+- BUG-REGISTER-002 (#95): ![BUG-REGISTER-002](images/issues/95.png)
+- BUG-REGISTER-003 (#96): ![BUG-REGISTER-003](images/issues/96.png)
+- BUG-REGISTER-004 (#107): ![BUG-REGISTER-004](images/issues/107.png)
+- BUG-REGISTER-005 (#108): ![BUG-REGISTER-005](images/issues/108.png)
+- BUG-REGISTER-006 (#110): ![BUG-REGISTER-006](images/issues/110.png)
+- BUG-REGISTER-007 (#119): ![BUG-REGISTER-007](images/issues/119.png)
+- BUG-REGISTER-008 (#111): ![BUG-REGISTER-008](images/issues/111.png)
+- BUG-REGISTER-009 (#112): ![BUG-REGISTER-009](images/issues/112.png)
+- BUG-REGISTER-010 (#113): ![BUG-REGISTER-010](images/issues/113.png)
+
 **AI Gap Analysis (Execution Phase) — 2 dạng gap thật, đối chiếu với AI Audit Report:**
 
 - **Gap A — Domain Testing/BVA tự thân không đạt coverage đầy đủ, chỉ lộ ra khi đối chiếu bằng Traceability Matrix.**
@@ -301,6 +314,14 @@ Không trùng lặp. Số TC sau rút gọn: **10 TCs**.
 | **BUG-CART-003** | Nhãn tổng tiền giỏ hàng sai — hiển thị "Tổng tạm tính" thay vì "Tổng cộng" | TC-CART-006                               | Minor    | P3       | 71             |
 | **BUG-CART-004** | Xóa sản phẩm khỏi giỏ hàng không có dialog xác nhận — xóa ngay khi bấm     | TC-CART-008, -009 (TC-CART-007 liên quan) | Major    | P2       | 74             |
 | **BUG-CART-005** | Empty state giỏ hàng thiếu hình minh họa (illustration/icon)               | TC-CART-009                               | Minor    | P3       | 130            |
+
+**Ảnh chụp GitHub Issue (bằng chứng đã tạo issue thật trên GitHub):**
+
+- BUG-CART-001 (#68): ![BUG-CART-001](images/issues/68.png)
+- BUG-CART-002 (#70): ![BUG-CART-002](images/issues/70.png)
+- BUG-CART-003 (#71): ![BUG-CART-003](images/issues/71.png)
+- BUG-CART-004 (#74): ![BUG-CART-004](images/issues/74.png)
+- BUG-CART-005 (#130): ![BUG-CART-005](images/issues/130.png)
 
 **AI Gap Analysis (Execution Phase) — đối chiếu với AI Audit Report:**
 
@@ -441,6 +462,14 @@ Không trùng lặp. Số TC sau rút gọn: **15 TCs**.
 | **BUG-PRODUCT-004** | API không validate category_id (chấp nhận giá trị rỗng và không tồn tại)  | TC-PRODUCT-011, -012             | Major    | P2       | 93             |
 | **BUG-PRODUCT-005** | API sản phẩm thiếu kiểm tra xác thực (401) và phân quyền (403)            | TC-PRODUCT-013, -014             | Blocker  | P0       | 131            |
 
+**Ảnh chụp GitHub Issue (bằng chứng đã tạo issue thật trên GitHub):**
+
+- BUG-PRODUCT-001 (#90): ![BUG-PRODUCT-001](images/issues/90.png)
+- BUG-PRODUCT-002 (#91): ![BUG-PRODUCT-002](images/issues/91.png)
+- BUG-PRODUCT-003 (#92): ![BUG-PRODUCT-003](images/issues/92.png)
+- BUG-PRODUCT-004 (#93): ![BUG-PRODUCT-004](images/issues/93.png)
+- BUG-PRODUCT-005 (#131): ![BUG-PRODUCT-005](images/issues/131.png)
+
 **AI Gap Analysis (Execution Phase) — đối chiếu với AI Audit Report:**
 
 Khác với Cart, lượt chạy tự động cho Product (`2026-06-28`, entry **VALID**) không gặp lỗi script nào — cả 18 test case Product đều chạy "sạch" qua Playwright (UI cho TC-001→010/015→018, API trực tiếp cho TC-011→014), tự phân loại đúng 5 bug độc lập ngay từ lượt đầu, không cần vòng test tay bổ sung như Cart.
@@ -567,6 +596,12 @@ Không trùng lặp. Số TC sau rút gọn: **11 TCs**.
 | **BUG-MOBILE-001** | Ứng dụng mobile không hiển thị thông báo lỗi field-specific khi validate thất bại | TC-MOBILE_LOGIN-002, -003, -004 | Major    | P2       | 87             |
 | **BUG-MOBILE-002** | Bộ đếm đăng nhập sai tăng +2 mỗi lần thay vì +1, gây khóa tài khoản sau 2 lần sai | TC-MOBILE_LOGIN-006, -007, -008 | Critical | P1       | 88             |
 | **BUG-MOBILE-003** | Thời gian khóa tài khoản là 180 giây thay vì 30 giây theo spec                    | TC-MOBILE_LOGIN-009, -011       | Major    | P2       | 89             |
+
+**Ảnh chụp GitHub Issue (bằng chứng đã tạo issue thật trên GitHub):**
+
+- BUG-MOBILE-001 (#87): ![BUG-MOBILE-001](images/issues/87.png)
+- BUG-MOBILE-002 (#88): ![BUG-MOBILE-002](images/issues/88.png)
+- BUG-MOBILE-003 (#89): ![BUG-MOBILE-003](images/issues/89.png)
 
 **AI Gap Analysis (Execution Phase) — đối chiếu với AI Audit Report:**
 
