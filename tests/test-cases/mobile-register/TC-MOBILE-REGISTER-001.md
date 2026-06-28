@@ -40,4 +40,4 @@ EC1 + EC3 + EC7 + EC14 + OC1
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-MOBILE-REGISTER-001
