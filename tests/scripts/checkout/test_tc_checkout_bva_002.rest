@@ -1,0 +1,60 @@
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập để lấy token
+# @name loginRequest
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "test@eshop.com",
+  "password": "Test1234!"
+}
+
+### Tự động lấy token
+@token = {{loginRequest.response.body.token}}
+
+
+### 2. Thêm đồ vào giỏ hàng (AirPods Pro 2 - 6M)
+POST {{baseUrl}}/cart
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": 4,
+  "name": "Tai nghe AirPods Pro 2",
+  "price": 6000000,
+  "quantity": 1
+}
+
+### Thêm đồ vào giỏ hàng (Keychron Q1 - 4M)
+POST {{baseUrl}}/cart
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": 5,
+  "name": "Bàn phím cơ Keychron Q1",
+  "price": 4000000,
+  "quantity": 1
+}
+
+
+### Kiểm tra giỏ hàng trước khi checkout
+GET {{baseUrl}}/cart
+Authorization: Bearer {{token}}
+
+
+### 3. Cố tình gian lận gửi total_amount = 9999999 đ (thiếu 1 đơn vị)
+POST {{baseUrl}}/checkout
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "total_amount": 9999999,
+  "shipping_address": "Nhà tôi"
+}
+
+
+### 4. Kiểm tra xem đơn hàng lưu trong hệ thống có đúng giá hay bị tạo sai
+GET {{baseUrl}}/orders/my-orders
+Authorization: Bearer {{token}}

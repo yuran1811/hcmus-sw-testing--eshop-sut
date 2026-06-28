@@ -8,7 +8,7 @@ assignees: ""
 
 ## Found by Test Case
 
-TC-CHECKOUT-004
+TC-CHECKOUT-004, TC-CHECKOUT-BVA-002, TC-CHECKOUT-BVA-003
 
 ## Requirement liên quan
 
