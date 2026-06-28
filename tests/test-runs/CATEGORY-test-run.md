@@ -5,7 +5,7 @@
 | TC-CATEGORY-001 | category | Mạch Quốc Tấn | Pass | | |
 | TC-CATEGORY-002 | category | Mạch Quốc Tấn | Fail | BUG-CATEGORY-001 | Không báo lỗi, tạo thành công một danh mục có tên rỗng |
 | TC-CATEGORY-003 | category | Mạch Quốc Tấn | Fail | BUG-CATEGORY-001 | Không báo lỗi, tạo thành công một danh mục chỉ có khoảng trắng |
-| TC-CATEGORY-004 | category | Mạch Quốc Tấn | Not Run | | |
+| TC-CATEGORY-004 | category | Mạch Quốc Tấn | Pass | | |
 | TC-CATEGORY-005 | category | Mạch Quốc Tấn | Not Run | | |
 | TC-CATEGORY-006 | category | Mạch Quốc Tấn | Not Run | | |
 | TC-CATEGORY-007 | category | Mạch Quốc Tấn | Not Run | | |

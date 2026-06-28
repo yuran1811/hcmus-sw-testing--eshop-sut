@@ -1,4 +1,4 @@
-﻿# TC-CATEGORY-004: Xem danh sách danh mục thành công
+# TC-CATEGORY-004: Xem danh sách danh mục thành công
 
 ## Requirement ID
 
@@ -36,4 +36,4 @@ EC6 (Xem danh sách — token admin hợp lệ) + OC3 (Trả về danh sách dan
 
 ## Status / Related bugs
 
-Not Run / None
+Pass / None
