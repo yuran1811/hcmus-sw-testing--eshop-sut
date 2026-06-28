@@ -1,3 +1,265 @@
+- commit d03437185efe1e8e8082ec1058bf49c8ab8030ef
+  | Author: KhoaNguyen-HCMUS <anhkhoa515.dev@gmail.com>
+  | Date: Mon Jun 29 04:14:11 2026 +0700
+  |
+  | docs: 📖 add link video demo
+  |
+  | docs/anh-khoa/README.md | 4 +++-
+  | docs/anh-khoa/README.pdf | Bin 119722 -> 120929 bytes
+  | 2 files changed, 3 insertions(+), 1 deletion(-)
+  |
+- commit a33110d4053b58920ba1b861ca5743cc55f4adcb
+  | Author: KhoaNguyen-HCMUS <anhkhoa515.dev@gmail.com>
+  | Date: Mon Jun 29 04:13:50 2026 +0700
+  |
+  | docs: 📖 add AI experience
+  |
+  | docs/anh-khoa/Appendix_A/ai critique.md | 8 +++++---
+  | docs/anh-khoa/Appendix_A/ai critique.pdf | Bin 38941 -> 39388 bytes
+  | docs/anh-khoa/README.md | 2 +-
+  | docs/anh-khoa/main-report.md | 11 +++++++++++
+  | docs/anh-khoa/main-report.pdf | Bin 4072788 -> 4082711 bytes
+  | 5 files changed, 17 insertions(+), 4 deletions(-)
+  |
+- commit c63a630384d632de111d8e6cb3c11137c0fded4c
+  | Author: KhoaNguyen-HCMUS <anhkhoa515.dev@gmail.com>
+  | Date: Mon Jun 29 02:50:18 2026 +0700
+  |
+  | feat: ✨ add templates and references for various skills in the .agents directory
+  |
+  | .../references/FR-01-audit-entry.md | 46 +++++++++++++
+  | .../templates/audit-entry-template.md | 12 ++++
+  | .../references/TC-REGISTER-015.md | 28 ++++++++
+  | .../templates/output-format-template.md | 9 +++
+  | .agents/skills/bug-reporting/SKILL.md | 6 +-
+  | .../bug-reporting/references/BUG-PRODUCT-002.md | 69 ++++++++++++++++++++
+  | .../skills/bug-reporting/templates/bug_report.md | 42 ++++++++++++
+  | .../domain-testing/references/TC-REGISTER-001.md | 27 ++++++++
+  | .../templates/output-format-template.md | 34 ++++++++++
+  | .../references/login.spec.ts.md | 32 ++++++++++
+  | .../templates/output-format-template.md | 21 ++++++
+  | .agents/skills/requirement-analysis/SKILL.md | 2 +-
+  | .../requirement-analysis/references/FR-01.md | 32 ++++++++++
+  | .../references/TC-LOGIN-001.md | 33 ++++++++++
+  | .../templates/output-format-template.md | 8 +++
+  | .../test-runner/references/automated-test-run.md | 71 +++++++++++++++++++++
+  | .../templates/output-format-template.md | 28 ++++++++
+  | .../references/traceability-matrix.md | 62 ++++++++++++++++++
+  | .../templates/output-format-template.md | 19 ++++++
+  | 19 files changed, 577 insertions(+), 4 deletions(-)
+  |
+- commit 543d127adc816ed491f77f86c5fc863f1c991c58
+  | Author: KhoaNguyen-HCMUS <anhkhoa515.dev@gmail.com>
+  | Date: Mon Jun 29 01:46:26 2026 +0700
+  |
+  | docs: 📖 add bug-reports, test-cases and pdf version
+  |
+  | docs/anh-khoa/Appendix_A/ai audit report.pdf | Bin 0 -> 1177072 bytes
+  | docs/anh-khoa/Appendix_A/ai critique.pdf | Bin 0 -> 38941 bytes
+  | docs/anh-khoa/README.pdf | Bin 0 -> 119722 bytes
+  | docs/anh-khoa/bug-reports/cart/BUG-CART-001.md | 58 +
+  | docs/anh-khoa/bug-reports/cart/BUG-CART-001.pdf | Bin 0 -> 109485 bytes
+  | docs/anh-khoa/bug-reports/cart/BUG-CART-002.md | 45 +
+  | docs/anh-khoa/bug-reports/cart/BUG-CART-002.pdf | Bin 0 -> 92794 bytes
+  | docs/anh-khoa/bug-reports/cart/BUG-CART-003.md | 42 +
+  | docs/anh-khoa/bug-reports/cart/BUG-CART-003.pdf | Bin 0 -> 92195 bytes
+  | docs/anh-khoa/bug-reports/cart/BUG-CART-004.md | 46 +
+  | docs/anh-khoa/bug-reports/cart/BUG-CART-004.pdf | Bin 0 -> 101335 bytes
+  | docs/anh-khoa/bug-reports/cart/BUG-CART-005.md | 42 +
+  | docs/anh-khoa/bug-reports/cart/BUG-CART-005.pdf | Bin 0 -> 86819 bytes
+  | .../anh-khoa/bug-reports/mobile/BUG-MOBILE-001.md | 66 +
+  | .../bug-reports/mobile/BUG-MOBILE-001.pdf | Bin 0 -> 138690 bytes
+  | .../anh-khoa/bug-reports/mobile/BUG-MOBILE-002.md | 61 +
+  | .../bug-reports/mobile/BUG-MOBILE-002.pdf | Bin 0 -> 139829 bytes
+  | .../anh-khoa/bug-reports/mobile/BUG-MOBILE-003.md | 62 +
+  | .../bug-reports/mobile/BUG-MOBILE-003.pdf | Bin 0 -> 95493 bytes
+  | .../bug-reports/product/BUG-PRODUCT-001.md | 48 +
+  | .../bug-reports/product/BUG-PRODUCT-001.pdf | Bin 0 -> 98378 bytes
+  | .../bug-reports/product/BUG-PRODUCT-002.md | 69 +
+  | .../bug-reports/product/BUG-PRODUCT-002.pdf | Bin 0 -> 187250 bytes
+  | .../bug-reports/product/BUG-PRODUCT-003.md | 47 +
+  | .../bug-reports/product/BUG-PRODUCT-003.pdf | Bin 0 -> 98757 bytes
+  | .../bug-reports/product/BUG-PRODUCT-004.md | 51 +
+  | .../bug-reports/product/BUG-PRODUCT-004.pdf | Bin 0 -> 79677 bytes
+  | .../bug-reports/product/BUG-PRODUCT-005.md | 56 +
+  | .../bug-reports/product/BUG-PRODUCT-005.pdf | Bin 0 -> 82274 bytes
+  | .../bug-reports/register/BUG-REGISTER-001.md | 44 +
+  | .../bug-reports/register/BUG-REGISTER-001.pdf | Bin 0 -> 82855 bytes
+  | .../bug-reports/register/BUG-REGISTER-002.md | 39 +
+  | .../bug-reports/register/BUG-REGISTER-002.pdf | Bin 0 -> 88883 bytes
+  | .../bug-reports/register/BUG-REGISTER-003.md | 53 +
+  | .../bug-reports/register/BUG-REGISTER-003.pdf | Bin 0 -> 120640 bytes
+  | .../bug-reports/register/BUG-REGISTER-004.md | 38 +
+  | .../bug-reports/register/BUG-REGISTER-004.pdf | Bin 0 -> 88565 bytes
+  | .../bug-reports/register/BUG-REGISTER-005.md | 38 +
+  | .../bug-reports/register/BUG-REGISTER-005.pdf | Bin 0 -> 87250 bytes
+  | .../bug-reports/register/BUG-REGISTER-006.md | 38 +
+  | .../bug-reports/register/BUG-REGISTER-006.pdf | Bin 0 -> 86964 bytes
+  | .../bug-reports/register/BUG-REGISTER-007.md | 38 +
+  | .../bug-reports/register/BUG-REGISTER-007.pdf | Bin 0 -> 89845 bytes
+  | .../bug-reports/register/BUG-REGISTER-008.md | 38 +
+  | .../bug-reports/register/BUG-REGISTER-008.pdf | Bin 0 -> 89997 bytes
+  | .../bug-reports/register/BUG-REGISTER-009.md | 38 +
+  | .../bug-reports/register/BUG-REGISTER-009.pdf | Bin 0 -> 92273 bytes
+  | .../bug-reports/register/BUG-REGISTER-010.md | 38 +
+  | .../bug-reports/register/BUG-REGISTER-010.pdf | Bin 0 -> 93610 bytes
+  | .../screenshots/BUG-CART-001-quantity-minus.png | Bin 0 -> 21304 bytes
+  | .../screenshots/BUG-CART-001-quantity-plus.png | Bin 0 -> 21304 bytes
+  | .../screenshots/BUG-CART-002-duplicate-item.png | Bin 0 -> 35539 bytes
+  | .../BUG-CART-003-incorrect-in-label.png | Bin 0 -> 35539 bytes
+  | .../BUG-CART-004-not-display-dialog.png | Bin 0 -> 32338 bytes
+  | .../screenshots/BUG-CART-005-not-display-icon.png | Bin 0 -> 24487 bytes
+  | .../screenshots/BUG-MOBILE-001-empty-email.png | Bin 0 -> 22377 bytes
+  | .../screenshots/BUG-MOBILE-001-empty-password.png | Bin 0 -> 23614 bytes
+  | .../screenshots/BUG-MOBILE-001-invalid-email.png | Bin 0 -> 22615 bytes
+  | .../screenshots/BUG-MOBILE-002-counter-plus2.png | Bin 0 -> 23043 bytes
+  | .../screenshots/BUG-MOBILE-002-counter-tc007.png | Bin 0 -> 23043 bytes
+  | .../screenshots/BUG-MOBILE-002-locked-early.png | Bin 0 -> 23043 bytes
+  | .../BUG-MOBILE-003-lock-duration-180s.png | Bin 0 -> 23043 bytes
+  | .../BUG-MOBILE-003-still-locked-30s.png | Bin 0 -> 23036 bytes
+  | .../screenshots/BUG-PRODUCT-001-name-over-255.png | Bin 0 -> 32222 bytes
+  | .../screenshots/BUG-PRODUCT-002-price-empty.png | Bin 0 -> 32222 bytes
+  | .../screenshots/BUG-PRODUCT-002-price-invalid.png | Bin 0 -> 32223 bytes
+  | .../BUG-PRODUCT-002-price-negative.png | Bin 0 -> 32222 bytes
+  | .../screenshots/BUG-PRODUCT-002-price-zero.png | Bin 0 -> 32222 bytes
+  | .../BUG-PRODUCT-003-edit-isolation.png | Bin 0 -> 40699 bytes
+  | .../BUG-REGISTER-001-redirect-fail.png | Bin 0 -> 26997 bytes
+  | .../BUG-REGISTER-002-duplicate-email.png | Bin 0 -> 26648 bytes
+  | .../BUG-REGISTER-003-confirm-pw-missing.png | Bin 0 -> 24618 bytes
+  | .../BUG-REGISTER-003-confirm-pw-timeout.png | Bin 0 -> 24595 bytes
+  | .../BUG-REGISTER-004-generic-message.png | Bin 0 -> 40724 bytes
+  | .../BUG-REGISTER-005-generic-message.png | Bin 0 -> 41178 bytes
+  | .../BUG-REGISTER-006-generic-message.png | Bin 0 -> 41203 bytes
+  | .../BUG-REGISTER-007-generic-message.png | Bin 0 -> 41537 bytes
+  | .../BUG-REGISTER-008-generic-message.png | Bin 0 -> 41537 bytes
+  | .../BUG-REGISTER-009-generic-message.png | Bin 0 -> 41537 bytes
+  | .../BUG-REGISTER-010-generic-message.png | Bin 0 -> 41537 bytes
+  | ...3ng k\303\275 t\303\240i kho\341\272\243n.pdf" | Bin 0 -> 100154 bytes
+  | .../FR-07 Gi\341\273\217 h\303\240ng.pdf" | Bin 0 -> 97491 bytes
+  | ... l\303\275 S\341\272\243n ph\341\272\251m.pdf" | Bin 0 -> 99972 bytes
+  | ...\203ng nh\341\272\255p tr\303\252n mobile.pdf" | Bin 0 -> 92177 bytes
+  | docs/anh-khoa/git log.md | 2762 +++++++++++++++++++
+  | docs/anh-khoa/git log.pdf | Bin 0 -> 564291 bytes
+  | docs/anh-khoa/main-report.pdf | Bin 0 -> 4072788 bytes
+  | docs/anh-khoa/test-cases/cart/TC-CART-001.md | 26 +
+  | docs/anh-khoa/test-cases/cart/TC-CART-001.pdf | Bin 0 -> 61465 bytes
+  | docs/anh-khoa/test-cases/cart/TC-CART-002.md | 25 +
+  | docs/anh-khoa/test-cases/cart/TC-CART-002.pdf | Bin 0 -> 61177 bytes
+  | docs/anh-khoa/test-cases/cart/TC-CART-003.md | 24 +
+  | docs/anh-khoa/test-cases/cart/TC-CART-003.pdf | Bin 0 -> 61770 bytes
+  | docs/anh-khoa/test-cases/cart/TC-CART-004.md | 25 +
+  | docs/anh-khoa/test-cases/cart/TC-CART-004.pdf | Bin 0 -> 61746 bytes
+  | docs/anh-khoa/test-cases/cart/TC-CART-005.md | 24 +
+  | docs/anh-khoa/test-cases/cart/TC-CART-005.pdf | Bin 0 -> 72486 bytes
+  | docs/anh-khoa/test-cases/cart/TC-CART-006.md | 27 +
+  | docs/anh-khoa/test-cases/cart/TC-CART-006.pdf | Bin 0 -> 66260 bytes
+  | docs/anh-khoa/test-cases/cart/TC-CART-007.md | 26 +
+  | docs/anh-khoa/test-cases/cart/TC-CART-007.pdf | Bin 0 -> 61875 bytes
+  | docs/anh-khoa/test-cases/cart/TC-CART-008.md | 25 +
+  | docs/anh-khoa/test-cases/cart/TC-CART-008.pdf | Bin 0 -> 61782 bytes
+  | docs/anh-khoa/test-cases/cart/TC-CART-009.md | 25 +
+  | docs/anh-khoa/test-cases/cart/TC-CART-009.pdf | Bin 0 -> 62129 bytes
+  | docs/anh-khoa/test-cases/cart/TC-CART-010.md | 21 +
+  | docs/anh-khoa/test-cases/cart/TC-CART-010.pdf | Bin 0 -> 48678 bytes
+  | .../mobile_login/TC-MOBILE_LOGIN-001.md | 27 +
+  | .../mobile_login/TC-MOBILE_LOGIN-001.pdf | Bin 0 -> 68642 bytes
+  | .../mobile_login/TC-MOBILE_LOGIN-002.md | 25 +
+  | .../mobile_login/TC-MOBILE_LOGIN-002.pdf | Bin 0 -> 62284 bytes
+  | .../mobile_login/TC-MOBILE_LOGIN-003.md | 25 +
+  | .../mobile_login/TC-MOBILE_LOGIN-003.pdf | Bin 0 -> 65037 bytes
+  | .../mobile_login/TC-MOBILE_LOGIN-004.md | 25 +
+  | .../mobile_login/TC-MOBILE_LOGIN-004.pdf | Bin 0 -> 63038 bytes
+  | .../mobile_login/TC-MOBILE_LOGIN-005.md | 26 +
+  | .../mobile_login/TC-MOBILE_LOGIN-005.pdf | Bin 0 -> 66864 bytes
+  | .../mobile_login/TC-MOBILE_LOGIN-006.md | 26 +
+  | .../mobile_login/TC-MOBILE_LOGIN-006.pdf | Bin 0 -> 67625 bytes
+  | .../mobile_login/TC-MOBILE_LOGIN-007.md | 26 +
+  | .../mobile_login/TC-MOBILE_LOGIN-007.pdf | Bin 0 -> 68752 bytes
+  | .../mobile_login/TC-MOBILE_LOGIN-008.md | 25 +
+  | .../mobile_login/TC-MOBILE_LOGIN-008.pdf | Bin 0 -> 68147 bytes
+  | .../mobile_login/TC-MOBILE_LOGIN-009.md | 24 +
+  | .../mobile_login/TC-MOBILE_LOGIN-009.pdf | Bin 0 -> 69166 bytes
+  | .../mobile_login/TC-MOBILE_LOGIN-010.md | 24 +
+  | .../mobile_login/TC-MOBILE_LOGIN-010.pdf | Bin 0 -> 66918 bytes
+  | .../mobile_login/TC-MOBILE_LOGIN-011.md | 25 +
+  | .../mobile_login/TC-MOBILE_LOGIN-011.pdf | Bin 0 -> 65127 bytes
+  | .../mobile_login/TC-MOBILE_LOGIN-012.md | 26 +
+  | .../mobile_login/TC-MOBILE_LOGIN-012.pdf | Bin 0 -> 83890 bytes
+  | .../mobile_login/TC-MOBILE_LOGIN-013.md | 25 +
+  | .../mobile_login/TC-MOBILE_LOGIN-013.pdf | Bin 0 -> 81884 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-001.md | 26 +
+  | .../test-cases/product/TC-PRODUCT-001.pdf | Bin 0 -> 66298 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-002.md | 25 +
+  | .../test-cases/product/TC-PRODUCT-002.pdf | Bin 0 -> 67062 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-003.md | 25 +
+  | .../test-cases/product/TC-PRODUCT-003.pdf | Bin 0 -> 65495 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-004.md | 25 +
+  | .../test-cases/product/TC-PRODUCT-004.pdf | Bin 0 -> 65112 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-005.md | 26 +
+  | .../test-cases/product/TC-PRODUCT-005.pdf | Bin 0 -> 65264 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-006.md | 26 +
+  | .../test-cases/product/TC-PRODUCT-006.pdf | Bin 0 -> 67385 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-007.md | 26 +
+  | .../test-cases/product/TC-PRODUCT-007.pdf | Bin 0 -> 65799 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-008.md | 26 +
+  | .../test-cases/product/TC-PRODUCT-008.pdf | Bin 0 -> 66039 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-009.md | 26 +
+  | .../test-cases/product/TC-PRODUCT-009.pdf | Bin 0 -> 65290 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-010.md | 26 +
+  | .../test-cases/product/TC-PRODUCT-010.pdf | Bin 0 -> 65905 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-011.md | 26 +
+  | .../test-cases/product/TC-PRODUCT-011.pdf | Bin 0 -> 64614 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-012.md | 25 +
+  | .../test-cases/product/TC-PRODUCT-012.pdf | Bin 0 -> 66006 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-013.md | 25 +
+  | .../test-cases/product/TC-PRODUCT-013.pdf | Bin 0 -> 68120 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-014.md | 25 +
+  | .../test-cases/product/TC-PRODUCT-014.pdf | Bin 0 -> 68466 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-015.md | 25 +
+  | .../test-cases/product/TC-PRODUCT-015.pdf | Bin 0 -> 67433 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-016.md | 28 +
+  | .../test-cases/product/TC-PRODUCT-016.pdf | Bin 0 -> 83499 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-017.md | 24 +
+  | .../test-cases/product/TC-PRODUCT-017.pdf | Bin 0 -> 65001 bytes
+  | .../anh-khoa/test-cases/product/TC-PRODUCT-018.md | 24 +
+  | .../test-cases/product/TC-PRODUCT-018.pdf | Bin 0 -> 64726 bytes
+  | .../test-cases/register/TC-REGISTER-001.md | 27 +
+  | .../test-cases/register/TC-REGISTER-001.pdf | Bin 0 -> 67109 bytes
+  | .../test-cases/register/TC-REGISTER-002.md | 26 +
+  | .../test-cases/register/TC-REGISTER-002.pdf | Bin 0 -> 64727 bytes
+  | .../test-cases/register/TC-REGISTER-003.md | 26 +
+  | .../test-cases/register/TC-REGISTER-003.pdf | Bin 0 -> 66971 bytes
+  | .../test-cases/register/TC-REGISTER-004.md | 27 +
+  | .../test-cases/register/TC-REGISTER-004.pdf | Bin 0 -> 68247 bytes
+  | .../test-cases/register/TC-REGISTER-005.md | 26 +
+  | .../test-cases/register/TC-REGISTER-005.pdf | Bin 0 -> 64499 bytes
+  | .../test-cases/register/TC-REGISTER-006.md | 26 +
+  | .../test-cases/register/TC-REGISTER-006.pdf | Bin 0 -> 67038 bytes
+  | .../test-cases/register/TC-REGISTER-007.md | 26 +
+  | .../test-cases/register/TC-REGISTER-007.pdf | Bin 0 -> 67126 bytes
+  | .../test-cases/register/TC-REGISTER-008.md | 26 +
+  | .../test-cases/register/TC-REGISTER-008.pdf | Bin 0 -> 67194 bytes
+  | .../test-cases/register/TC-REGISTER-009.md | 26 +
+  | .../test-cases/register/TC-REGISTER-009.pdf | Bin 0 -> 67247 bytes
+  | .../test-cases/register/TC-REGISTER-010.md | 26 +
+  | .../test-cases/register/TC-REGISTER-010.pdf | Bin 0 -> 66533 bytes
+  | .../test-cases/register/TC-REGISTER-011.md | 27 +
+  | .../test-cases/register/TC-REGISTER-011.pdf | Bin 0 -> 83008 bytes
+  | .../test-cases/register/TC-REGISTER-012.md | 26 +
+  | .../test-cases/register/TC-REGISTER-012.pdf | Bin 0 -> 64313 bytes
+  | .../test-cases/register/TC-REGISTER-013.md | 26 +
+  | .../test-cases/register/TC-REGISTER-013.pdf | Bin 0 -> 66858 bytes
+  | .../test-cases/register/TC-REGISTER-014.md | 26 +
+  | .../test-cases/register/TC-REGISTER-014.pdf | Bin 0 -> 66058 bytes
+  | .../test-cases/register/TC-REGISTER-015.md | 28 +
+  | .../test-cases/register/TC-REGISTER-015.pdf | Bin 0 -> 80378 bytes
+  | .../test-cases/register/TC-REGISTER-016.md | 28 +
+  | .../test-cases/register/TC-REGISTER-016.pdf | Bin 0 -> 79767 bytes
+  | .../test-cases/register/TC-REGISTER-017.md | 28 +
+  | .../test-cases/register/TC-REGISTER-017.pdf | Bin 0 -> 83961 bytes
+  | docs/anh-khoa/traceability-matrix.pdf | Bin 0 -> 172410 bytes
+  | 204 files changed, 5344 insertions(+)
+  |
 - commit 7be0d850076ceb77e41a999df6680dcce4c4337e
   | Author: KhoaNguyen-HCMUS <anhkhoa515.dev@gmail.com>
   | Date: Mon Jun 29 01:31:10 2026 +0700
@@ -542,6 +804,207 @@
   | docs/anh-khoa/main-report.md | 0
   | 10 files changed, 0 insertions(+), 0 deletions(-)
   |  
+  | _ commit 4d69b7174b0e692dff44ee526efba543709a7a7a
+  | | Author: mqt4n <machquoctan2005@gmail.com>
+  | | Date: Mon Jun 29 01:52:41 2026 +0700
+  | |
+  | | test(mobile): record TC-MOBILE-REGISTER-BVA-001 and BVA-002 fail under BUG-MOBILE-REGISTER-001
+  | |
+  | | tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-001.md | 2 +-
+  | | tests/test-cases/mobile-register/TC-MOBILE-REGISTER-BVA-001.md | 2 +-
+  | | tests/test-cases/mobile-register/TC-MOBILE-REGISTER-BVA-002.md | 2 +-
+  | | tests/test-runs/MOBILE-REGISTER-test-run.md | 4 ++--
+  | | 4 files changed, 5 insertions(+), 5 deletions(-)
+  | |
+  | _ commit 6dc091d1ec2df3d3a4458ac4714670c0b0e8a7ba
+  | | Author: mqt4n <machquoctan2005@gmail.com>
+  | | Date: Mon Jun 29 01:50:43 2026 +0700
+  | |
+  | | test(mobile): record TC-MOBILE-REGISTER-012 and 013 fail under BUG-MOBILE-REGISTER-001
+  | |
+  | | tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-001.md | 2 +-
+  | | tests/test-cases/mobile-register/TC-MOBILE-REGISTER-012.md | 2 +-
+  | | tests/test-cases/mobile-register/TC-MOBILE-REGISTER-013.md | 2 +-
+  | | tests/test-runs/MOBILE-REGISTER-test-run.md | 4 ++--
+  | | 4 files changed, 5 insertions(+), 5 deletions(-)
+  | |
+  | _ commit 3a83d8794ef982598346dea950d474c26c3d0bdc
+  | | Author: mqt4n <machquoctan2005@gmail.com>
+  | | Date: Mon Jun 29 01:48:34 2026 +0700
+  | |
+  | | test(mobile): record TC-MOBILE-REGISTER-009 to 011 fail under BUG-MOBILE-REGISTER-001
+  | |
+  | | tests/test-cases/mobile-register/TC-MOBILE-REGISTER-009.md | 2 +-
+  | | tests/test-cases/mobile-register/TC-MOBILE-REGISTER-010.md | 2 +-
+  | | tests/test-cases/mobile-register/TC-MOBILE-REGISTER-011.md | 2 +-
+  | | 3 files changed, 3 insertions(+), 3 deletions(-)
+  | |
+  | _ commit bb67b2cde98a434ff393c2e0b968f7d8e515676c
+  | | Author: mqt4n <machquoctan2005@gmail.com>
+  | | Date: Mon Jun 29 01:47:56 2026 +0700
+  | |
+  | | test(mobile): record TC-MOBILE-REGISTER-008 fail under BUG-MOBILE-REGISTER-001
+  | |
+  | | tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-001.md | 2 +-
+  | | tests/test-cases/mobile-register/TC-MOBILE-REGISTER-008.md | 2 +-
+  | | tests/test-runs/MOBILE-REGISTER-test-run.md | 8 ++++----
+  | | 3 files changed, 6 insertions(+), 6 deletions(-)
+  | |
+  | _ commit f1e98b742e859150c3590b38c82341cb7be8ac40
+  | | Author: mqt4n <machquoctan2005@gmail.com>
+  | | Date: Mon Jun 29 01:45:19 2026 +0700
+  | |
+  | | test(mobile): record TC-MOBILE-REGISTER-007 fail under BUG-MOBILE-REGISTER-001
+  | |
+  | | tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-001.md | 2 +-
+  | | tests/test-cases/mobile-register/TC-MOBILE-REGISTER-007.md | 2 +-
+  | | tests/test-runs/MOBILE-REGISTER-test-run.md | 2 +-
+  | | 3 files changed, 3 insertions(+), 3 deletions(-)
+  | |
+  | _ commit c7111fee614ccb17a4777b9a2c0370f3d8e230e9
+  | | Author: mqt4n <machquoctan2005@gmail.com>
+  | | Date: Mon Jun 29 01:43:24 2026 +0700
+  | |
+  | | test(mobile): record TC-MOBILE-REGISTER-006 fail under BUG-MOBILE-REGISTER-001
+  | |
+  | | tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-001.md | 2 +-
+  | | tests/test-cases/mobile-register/TC-MOBILE-REGISTER-006.md | 2 +-
+  | | tests/test-runs/MOBILE-REGISTER-test-run.md | 2 +-
+  | | 3 files changed, 3 insertions(+), 3 deletions(-)
+  | |
+  | _ commit e6c93d60dbf4b31689701c881b57cf7a9a5ece97
+  | | Author: mqt4n <machquoctan2005@gmail.com>
+  | | Date: Mon Jun 29 01:41:49 2026 +0700
+  | |
+  | | test(mobile): record TC-MOBILE-REGISTER-005 fail and create BUG-MOBILE-REGISTER-005
+  | |
+  | | .../mobile-register/BUG-MOBILE-REGISTER-001.md | 2 +-
+  | | .../mobile-register/BUG-MOBILE-REGISTER-005.md | 48 +++++++++++++++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-005a.png | Bin 0 -> 241853 bytes
+  | | .../mobile-register/TC-MOBILE-REGISTER-005b.png | Bin 0 -> 235151 bytes
+  | | .../mobile-register/TC-MOBILE-REGISTER-005.md | 2 +-
+  | | tests/test-runs/MOBILE-REGISTER-test-run.md | 2 +-
+  | | 6 files changed, 51 insertions(+), 3 deletions(-)
+  | |
+  | _ commit 69a5f9e710f483852febfbe775ea17801400d0a7
+  | | Author: mqt4n <machquoctan2005@gmail.com>
+  | | Date: Mon Jun 29 01:39:13 2026 +0700
+  | |
+  | | test(mobile): record TC-MOBILE-REGISTER-004 fail and create BUG-MOBILE-REGISTER-004
+  | |
+  | | .../mobile-register/BUG-MOBILE-REGISTER-001.md | 2 +-
+  | | .../mobile-register/BUG-MOBILE-REGISTER-004.md | 48 +++++++++++++++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-004a.png | Bin 0 -> 239848 bytes
+  | | .../mobile-register/TC-MOBILE-REGISTER-004b.png | Bin 0 -> 233367 bytes
+  | | .../mobile-register/TC-MOBILE-REGISTER-004.md | 2 +-
+  | | tests/test-runs/MOBILE-REGISTER-test-run.md | 34 ++++++-------
+  | | 6 files changed, 67 insertions(+), 19 deletions(-)
+  | |
+  | _ commit ebc064c35d835aa39b96ff8528c92d47275597a2
+  | | Author: mqt4n <machquoctan2005@gmail.com>
+  | | Date: Mon Jun 29 01:35:09 2026 +0700
+  | |
+  | | test(mobile): record TC-MOBILE-REGISTER-003 fail and create BUG-MOBILE-REGISTER-003
+  | |
+  | | .../mobile-register/BUG-MOBILE-REGISTER-001.md | 2 +-
+  | | .../mobile-register/BUG-MOBILE-REGISTER-003.md | 48 +++++++++++++++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-003a.png | Bin 0 -> 241455 bytes
+  | | .../mobile-register/TC-MOBILE-REGISTER-003b.png | Bin 0 -> 236239 bytes
+  | | .../mobile-register/TC-MOBILE-REGISTER-003.md | 2 +-
+  | | tests/test-runs/MOBILE-REGISTER-test-run.md | 2 +-
+  | | 6 files changed, 51 insertions(+), 3 deletions(-)
+  | |
+  | _ commit 1ed39464565b3a10f14a414027d44d8eb19f391c
+  | | Author: mqt4n <machquoctan2005@gmail.com>
+  | | Date: Mon Jun 29 01:29:39 2026 +0700
+  | |
+  | | test(mobile): record TC-MOBILE-REGISTER-002 fail and create BUG-MOBILE-REGISTER-002
+  | |
+  | | .../mobile-register/BUG-MOBILE-REGISTER-001.md | 2 +-
+  | | .../mobile-register/BUG-MOBILE-REGISTER-002.md | 48 +++++++++++++++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-002a.png | Bin 0 -> 353312 bytes
+  | | .../mobile-register/TC-MOBILE-REGISTER-002b.png | Bin 0 -> 247314 bytes
+  | | .../test*tc_mobile_register_002.rest | 13 +++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-002.md | 2 +-
+  | | tests/test-runs/MOBILE-REGISTER-test-run.md | 34 ++++++-------
+  | | 7 files changed, 80 insertions(+), 19 deletions(-)
+  | |
+  | * commit 2032565629643088d7d03a367eab09b1e4352c31
+  | | Author: mqt4n <machquoctan2005@gmail.com>
+  | | Date: Mon Jun 29 01:13:51 2026 +0700
+  | |
+  | | test(mobile): record TC-MOBILE-REGISTER-001 fail and create bug report
+  | |
+  | | .../mobile-register/BUG-MOBILE-REGISTER-001.md | 42 +++++++++++++++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-001.png | Bin 0 -> 183607 bytes
+  | | .../mobile-register/TC-MOBILE-REGISTER-001.md | 2 +-
+  | | tests/test-runs/MOBILE-REGISTER-test-run.md | 19 +++++++++
+  | | 4 files changed, 62 insertions(+), 1 deletion(-)
+  | |
+  | _ commit e1ea348683cf9e8d185860d7e45e25a11f99f541
+  | | Author: mqt4n <machquoctan2005@gmail.com>
+  | | Date: Mon Jun 29 00:56:28 2026 +0700
+  | |
+  | | refactor: use relative paths for test case links in reports
+  | |
+  | | report/AI_Audit_Report.md | 14 ++---
+  | | report/Boundary_Value_Analysis_Report.md | 34 +++++-----
+  | | report/Domain_Testing_Report.md | 94 ++++++++++++++--------------
+  | | 3 files changed, 71 insertions(+), 71 deletions(-)
+  | |
+  | _ commit a392bddd01bc7798f011e2b7304c72973943aae2
+  | | Author: mqt4n <machquoctan2005@gmail.com>
+  | | Date: Mon Jun 29 00:25:33 2026 +0700
+  | |
+  | | test(mobile): design domain testing and BVA test cases for FR-01 and FR-20
+  | |  
+  | | - Generate 13 Domain Testing test cases for mobile registration
+  | | - Generate 2 Boundary Value Analysis test cases
+  | | - Update Domain Testing and BVA reports
+  | | - Append AI Audit Report entry
+  | |
+  | | report/AI*Audit_Report.md | 75 +++++++++--
+  | | report/Boundary_Value_Analysis_Report.md | 47 +++++++
+  | | report/Domain_Testing_Report.md | 127 +++++++++++++++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-001.md | 43 +++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-002.md | 42 ++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-003.md | 42 ++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-004.md | 42 ++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-005.md | 43 +++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-006.md | 42 ++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-007.md | 42 ++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-008.md | 42 ++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-009.md | 42 ++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-010.md | 42 ++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-011.md | 42 ++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-012.md | 42 ++++++
+  | | .../mobile-register/TC-MOBILE-REGISTER-013.md | 42 ++++++
+  | | .../TC-MOBILE-REGISTER-BVA-001.md | 43 +++++++
+  | | .../TC-MOBILE-REGISTER-BVA-002.md | 43 +++++++
+  | | 18 files changed, 871 insertions(+), 12 deletions(-)
+  | |
+  | * commit 64e9907af53cc451e5909ced7d3ab74e1215b842
+  | | Author: mqt4n <machquoctan2005@gmail.com>
+  | | Date: Mon Jun 29 00:16:37 2026 +0700
+  | |
+  | | config(mobile): update local host IP address for backend API connection
+  | |
+  | | frontend-mobile/App.js | 2 +-
+  | | frontend-mobile/package-lock.json | 221 +++++++++++++++++++++++++++++++++-
+  | | frontend-mobile/package.json | 5 +-
+  | | 3 files changed, 225 insertions(+), 3 deletions(-)
+  | |
+  | _ commit 74bc1964140b4f4d3358b135c50bd3530ecb873f
+  | | Author: mqt4n <machquoctan2005@gmail.com>
+  | | Date: Sun Jun 28 23:33:27 2026 +0700
+  | |
+  | | refactor(tests): clean up login/mobile test cases and rename register to mobile-register
+  | |
+  | | tests/test-cases/login/TC-LOGIN-001.md | 33 --------------------
+  | | .../TC-MPLAS-001.md | 33 --------------------
+  | | .../TC-MOBILE-REGISTER-001.md} | 0
+  | | 3 files changed, 66 deletions(-)
+  | |
   | _ commit 018b6fcd253f853bd8507b780582e28f4ae6092e
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sun Jun 28 23:23:11 2026 +0700
@@ -572,12 +1035,12 @@
   | |
   | | test: record TC-CATEGORY-BVA-001 result as Pass
   | |
-  | | .../category/test_tc_category_bva_001.rest | 25 ++++++++++++++++++++
+  | | .../category/test*tc_category_bva_001.rest | 25 ++++++++++++++++++++
   | | tests/test-cases/category/TC-CATEGORY-BVA-001.md | 4 ++--
   | | tests/test-runs/CATEGORY-test-run.md | 2 +-
   | | 3 files changed, 28 insertions(+), 3 deletions(-)
   | |
-  | _ commit a17808facdb7e701299524d5e400540ab3e77b17
+  | * commit a17808facdb7e701299524d5e400540ab3e77b17
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sun Jun 28 23:04:35 2026 +0700
   | |
@@ -585,23 +1048,23 @@
   | |
   | | tests/bug-reports/category/BUG-CATEGORY-005.md | 42 +++++++++++++++++++
   | | .../screenshots/category/TC-CATEGORY-011.png | Bin 0 -> 330398 bytes
-  | | tests/scripts/category/test_tc_category_011.rest | 20 +++++++++
+  | | tests/scripts/category/test*tc_category_011.rest | 20 +++++++++
   | | tests/test-cases/category/TC-CATEGORY-011.md | 4 +-
   | | tests/test-runs/CATEGORY-test-run.md | 2 +-
   | | 5 files changed, 65 insertions(+), 3 deletions(-)
   | |
-  | _ commit fb0414d40768d438e635340183882aed7dff4ddd
+  | * commit fb0414d40768d438e635340183882aed7dff4ddd
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sun Jun 28 23:01:17 2026 +0700
   | |
   | | test: record TC-CATEGORY-010 result and script as Pass
   | |
-  | | tests/scripts/category/test_tc_category_010.rest | 5 +++++
+  | | tests/scripts/category/test*tc_category_010.rest | 5 +++++
   | | tests/test-cases/category/TC-CATEGORY-010.md | 4 ++--
   | | tests/test-runs/CATEGORY-test-run.md | 2 +-
   | | 3 files changed, 8 insertions(+), 3 deletions(-)
   | |
-  | _ commit a4a9e0e5465ae299d4794f434cc429cbbce63a7f
+  | * commit a4a9e0e5465ae299d4794f434cc429cbbce63a7f
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sun Jun 28 22:59:38 2026 +0700
   | |
@@ -609,12 +1072,12 @@
   | |
   | | tests/bug-reports/category/BUG-CATEGORY-004.md | 43 +++++++++++++++++++
   | | .../screenshots/category/TC-CATEGORY-009.png | Bin 0 -> 281032 bytes
-  | | tests/scripts/category/test_tc_category_009.rest | 20 +++++++++
+  | | tests/scripts/category/test*tc_category_009.rest | 20 +++++++++
   | | tests/test-cases/category/TC-CATEGORY-009.md | 4 +-
   | | tests/test-runs/CATEGORY-test-run.md | 2 +-
   | | 5 files changed, 66 insertions(+), 3 deletions(-)
   | |
-  | _ commit 6e73b869e8b15c3c09a99fbf871c991e049ceb8d
+  | * commit 6e73b869e8b15c3c09a99fbf871c991e049ceb8d
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sun Jun 28 22:55:52 2026 +0700
   | |
@@ -622,23 +1085,23 @@
   | |
   | | tests/bug-reports/category/BUG-CATEGORY-003.md | 43 +++++++++++++++++++
   | | .../screenshots/category/TC-CATEGORY-008.png | Bin 0 -> 288912 bytes
-  | | tests/scripts/category/test_tc_category_008.rest | 25 +++++++++++
+  | | tests/scripts/category/test*tc_category_008.rest | 25 +++++++++++
   | | tests/test-cases/category/TC-CATEGORY-008.md | 4 +-
   | | tests/test-runs/CATEGORY-test-run.md | 2 +-
   | | 5 files changed, 71 insertions(+), 3 deletions(-)
   | |
-  | _ commit 4c22debb6aaffd9bf3ce4eb5841d591803152a61
+  | * commit 4c22debb6aaffd9bf3ce4eb5841d591803152a61
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sun Jun 28 22:50:52 2026 +0700
   | |
   | | test: record TC-CATEGORY-007 result and script as Pass
   | |
-  | | tests/scripts/category/test_tc_category_007.rest | 10 ++++++++++
+  | | tests/scripts/category/test*tc_category_007.rest | 10 ++++++++++
   | | tests/test-cases/category/TC-CATEGORY-007.md | 4 ++--
   | | tests/test-runs/CATEGORY-test-run.md | 2 +-
   | | 3 files changed, 13 insertions(+), 3 deletions(-)
   | |
-  | _ commit 2013d271909bcdd96767dbba98357f27075a47f0
+  | * commit 2013d271909bcdd96767dbba98357f27075a47f0
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sun Jun 28 22:50:44 2026 +0700
   | |
@@ -646,34 +1109,34 @@
   | |
   | | tests/bug-reports/category/BUG-CATEGORY-002.md | 42 +++++++++++++++++++
   | | .../screenshots/category/TC-CATEGORY-006.png | Bin 0 -> 235502 bytes
-  | | tests/scripts/category/test_tc_category_006.rest | 20 +++++++++
+  | | tests/scripts/category/test*tc_category_006.rest | 20 +++++++++
   | | tests/test-cases/category/TC-CATEGORY-006.md | 4 +-
   | | tests/test-runs/CATEGORY-test-run.md | 2 +-
   | | 5 files changed, 65 insertions(+), 3 deletions(-)
   | |
-  | _ commit c7b32e0596eff36408e66789fe23d5e8e3041770
+  | * commit c7b32e0596eff36408e66789fe23d5e8e3041770
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sun Jun 28 22:41:39 2026 +0700
   | |
   | | test: record TC-CATEGORY-005 result as Pass
   | |
-  | | tests/scripts/category/test_tc_category_005.rest | 37 ++++++++++++++++++++
+  | | tests/scripts/category/test*tc_category_005.rest | 37 ++++++++++++++++++++
   | | tests/test-cases/category/TC-CATEGORY-005.md | 4 +--
   | | tests/test-runs/CATEGORY-test-run.md | 2 +-
   | | 3 files changed, 40 insertions(+), 3 deletions(-)
   | |
-  | _ commit a792ec46a7a261b31c05d0ffc12fa9982af32196
+  | * commit a792ec46a7a261b31c05d0ffc12fa9982af32196
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sun Jun 28 22:37:07 2026 +0700
   | |
   | | test: record TC-CATEGORY-004 result as Pass
   | |
-  | | tests/scripts/category/test_tc_category_004.rest | 20 ++++++++++++++++++++
+  | | tests/scripts/category/test*tc_category_004.rest | 20 ++++++++++++++++++++
   | | tests/test-cases/category/TC-CATEGORY-004.md | 4 ++--
   | | tests/test-runs/CATEGORY-test-run.md | 2 +-
   | | 3 files changed, 23 insertions(+), 3 deletions(-)
   | |
-  | _ commit 3468abc9d71d1d9614b26dcf6a3ac407f92f3189
+  | * commit 3468abc9d71d1d9614b26dcf6a3ac407f92f3189
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sun Jun 28 22:20:38 2026 +0700
   | |
@@ -726,7 +1189,7 @@
   | |
   | | test(category): generate DT and BVA test cases for FR-14
   | |
-  | | report/AI_Audit_Report.md | 83 ++++++++++++---
+  | | report/AI*Audit_Report.md | 83 ++++++++++++---
   | | report/Boundary_Value_Analysis_Report.md | 51 +++++++++
   | | report/Domain_Testing_Report.md | 105 +++++++++++++++++++
   | | tests/test-cases/category/TC-CATEGORY-001.md | 29 +++--
@@ -741,33 +1204,33 @@
   | | tests/test-cases/category/TC-CATEGORY-BVA-002.md | 40 +++++++
   | | 13 files changed, 600 insertions(+), 24 deletions(-)
   | |
-  | _ commit 6440429639addfb084b6ae81c0126a8246a76f25
+  | * commit 6440429639addfb084b6ae81c0126a8246a76f25
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sun Jun 28 18:09:33 2026 +0700
   | |
   | | test: record TC-CHECKOUT-BVA-002 and 003 results, update bug report
   | |
   | | tests/bug-reports/checkout/BUG-CHECKOUT-004.md | 2 +-
-  | | .../checkout/test_tc_checkout_bva_002.rest | 60 ++++++++++++++++++++
+  | | .../checkout/test*tc_checkout_bva_002.rest | 60 ++++++++++++++++++++
   | | .../checkout/test_tc_checkout_bva_003.rest | 60 ++++++++++++++++++++
   | | tests/test-cases/checkout/TC-CHECKOUT-BVA-002.md | 2 +-
   | | tests/test-cases/checkout/TC-CHECKOUT-BVA-003.md | 2 +-
   | | tests/test-runs/CHECKOUT-test-run.md | 4 +-
   | | 6 files changed, 125 insertions(+), 5 deletions(-)
   | |
-  | _ commit ec0012fe739d9266164be9dc8fa2d20e3984d151
+  | * commit ec0012fe739d9266164be9dc8fa2d20e3984d151
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sun Jun 28 17:57:30 2026 +0700
   | |
   | | test: record TC-CHECKOUT-BVA-001 result and update bug reports
   | |
   | | tests/bug-reports/checkout/BUG-CHECKOUT-001.md | 2 +-
-  | | .../checkout/test_tc_checkout_bva_001.rest | 47 ++++++++++++++++++++
+  | | .../checkout/test*tc_checkout_bva_001.rest | 47 ++++++++++++++++++++
   | | tests/test-cases/checkout/TC-CHECKOUT-BVA-001.md | 2 +-
   | | tests/test-runs/CHECKOUT-test-run.md | 2 +-
   | | 4 files changed, 50 insertions(+), 3 deletions(-)
   | |
-  | _ commit a75508e55520b7940cecab12f9bd7cc4edeec117
+  | * commit a75508e55520b7940cecab12f9bd7cc4edeec117
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sun Jun 28 17:39:29 2026 +0700
   | |
@@ -777,12 +1240,12 @@
   | | .../screenshots/checkout/TC-CHECKOUT-004a.png | Bin 0 -> 330405 bytes
   | | .../screenshots/checkout/TC-CHECKOUT-004b.png | Bin 0 -> 324273 bytes
   | | .../screenshots/checkout/TC-CHECKOUT-004c.png | Bin 0 -> 324218 bytes
-  | | tests/scripts/checkout/test_tc_checkout_004.rest | 59 +++++++++++++++++++
+  | | tests/scripts/checkout/test*tc_checkout_004.rest | 59 +++++++++++++++++++
   | | tests/test-cases/checkout/TC-CHECKOUT-004.md | 2 +-
   | | tests/test-runs/CHECKOUT-test-run.md | 2 +-
   | | 7 files changed, 109 insertions(+), 2 deletions(-)
   | |
-  | _ commit e75f07b2a8622a144163d22865b6d787388cbc5f
+  | * commit e75f07b2a8622a144163d22865b6d787388cbc5f
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sun Jun 28 17:20:57 2026 +0700
   | |
@@ -794,12 +1257,12 @@
   | | .../screenshots/checkout/TC-CHECKOUT-003c.png | Bin 0 -> 289060 bytes
   | | .../bug-reports/screenshots/checkout/image.1.png | Bin 267174 -> 0 bytes
   | | tests/bug-reports/screenshots/checkout/image.png | Bin 311698 -> 0 bytes
-  | | tests/scripts/checkout/test_tc_checkout_003.rest | 27 +++++++++++
+  | | tests/scripts/checkout/test*tc_checkout_003.rest | 27 +++++++++++
   | | tests/test-cases/checkout/TC-CHECKOUT-003.md | 2 +-
   | | tests/test-runs/CHECKOUT-test-run.md | 2 +-
   | | 9 files changed, 77 insertions(+), 2 deletions(-)
   | |
-  | _ commit 3f419f2c693029cf577ab5c8b17d737a5a98bf5d
+  | * commit 3f419f2c693029cf577ab5c8b17d737a5a98bf5d
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sun Jun 28 17:03:52 2026 +0700
   | |
@@ -807,12 +1270,12 @@
   | |
   | | .../bug-reports/screenshots/checkout/image.1.png | Bin 0 -> 267174 bytes
   | | tests/bug-reports/screenshots/checkout/image.png | Bin 0 -> 311698 bytes
-  | | tests/scripts/checkout/test_tc_checkout_002.rest | 20 +++++++++++++++++++
+  | | tests/scripts/checkout/test*tc_checkout_002.rest | 20 +++++++++++++++++++
   | | tests/test-cases/checkout/TC-CHECKOUT-002.md | 2 +-
   | | tests/test-runs/CHECKOUT-test-run.md | 2 +-
   | | 5 files changed, 22 insertions(+), 2 deletions(-)
   | |
-  | _ commit f986ad805e68eaecc165374038449685ed43ef6f
+  | * commit f986ad805e68eaecc165374038449685ed43ef6f
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sun Jun 28 16:57:20 2026 +0700
   | |
@@ -912,11 +1375,11 @@
   | |
   | | docs: rename test run file to PLAS-test-run and update AI Audit Report
   | |
-  | | report/AI_Audit_Report.md | 79 +++++++++++++-------
+  | | report/AI*Audit_Report.md | 79 +++++++++++++-------
   | | .../{sprint-1-test-run.md => PLAS-test-run.md} | 0
   | | 2 files changed, 53 insertions(+), 26 deletions(-)
   | |
-  | _ commit 269aad2ae2c36da3d953bda9f28af1c45a960443
+  | * commit 269aad2ae2c36da3d953bda9f28af1c45a960443
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sun Jun 28 15:01:52 2026 +0700
   | |
@@ -1131,7 +1594,7 @@
   | |
   | | test(fr-05): generate domain testing and boundary value analysis test cases and reports
   | |
-  | | report/AI_Audit_Report.md | 138 +++++++++-------
+  | | report/AI*Audit_Report.md | 138 +++++++++-------
   | | report/Boundary_Value_Analysis_Report.md | 77 +++++++++
   | | report/Domain_Testing_Report.md | 162 +++++++++++++++++++
   | | .../product-list-and-search/TC-PLAS-001.md | 32 ++--
@@ -1148,7 +1611,7 @@
   | | .../product-list-and-search/TC-PLAS-BVA-005.md | 40 +++++
   | | 15 files changed, 789 insertions(+), 72 deletions(-)
   | |
-  | _ commit 5e71779ec9e5790e9005c719963bc50e93f397a2
+  | * commit 5e71779ec9e5790e9005c719963bc50e93f397a2
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Sat Jun 27 01:11:18 2026 +0700
   | |
@@ -1175,7 +1638,7 @@
   | |
   | | chore: add initial test cases and report templates
   | |
-  | | report/AI_Critique.md | 0
+  | | report/AI*Critique.md | 0
   | | report/Boundary_Value_Analysis_Report.md | 0
   | | report/Bug_Report.md | 0
   | | report/Domain_Testing_Report.md | 0
@@ -1187,16 +1650,16 @@
   | | .../product-list-and-search/TC-PLAS-001.md | 33 ++++++++++++++++++++
   | | 10 files changed, 132 insertions(+)
   | |
-  | _ commit f02fd8e3086df8c0c79efdf5499618793f4d788c
+  | * commit f02fd8e3086df8c0c79efdf5499618793f4d788c
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Fri Jun 26 20:12:40 2026 +0700
   | |
   | | docs(report): add initial AI Audit Report template
   | |
-  | | report/AI_Audit_Report.md | 142 ++++++++++++++++++++++++++++++++++++++++++
+  | | report/AI*Audit_Report.md | 142 ++++++++++++++++++++++++++++++++++++++++++
   | | 1 file changed, 142 insertions(+)
   | |
-  | _ commit 725229478dfecde02a739cb4449bc8f77158e402
+  | * commit 725229478dfecde02a739cb4449bc8f77158e402
   | | Author: mqt4n <machquoctan2005@gmail.com>
   | | Date: Fri Jun 26 20:12:33 2026 +0700
   | |
@@ -1312,7 +1775,7 @@
   | | test: create gh-issue drafts
   | |
   | | .serena/memories/eshop-sut/issue-reporting.md | 4 +
-  | | .serena/memories/memory_maintenance.md | 33 +++++
+  | | .serena/memories/memory*maintenance.md | 33 +++++
   | | tests/github-issues/BUG-01.md | 48 ++++++
   | | tests/github-issues/BUG-02.md | 49 +++++++
   | | tests/github-issues/BUG-03.md | 49 +++++++
@@ -1342,7 +1805,7 @@
   | | tests/test-summary/traceability-matrix.md | 170 +++++++++++-----------
   | | 29 files changed, 1375 insertions(+), 85 deletions(-)
   | |
-  | _ commit d92b189a6f067d59b6fb302ee23152782e4123b1
+  | * commit d92b189a6f067d59b6fb302ee23152782e4123b1
   | | Author: yuran1811 <trieuvanbd123@gmail.com>
   | | Date: Sat Jun 27 22:10:20 2026 +0700
   | |
@@ -1700,7 +2163,7 @@
   | |
   | | Finalize the submission
   | |
-  | | Appendix_A/README.md | 3 +--
+  | | Appendix*A/README.md | 3 +--
   | | .../github_issue_detail_30_1.png | Bin
   | | .../github_issue_detail_30_2.png | Bin 0 -> 277227 bytes
   | | .../github_issue_detail_4_1.png | Bin
@@ -1708,29 +2171,29 @@
   | | .../github_issues_overview.png | Bin
   | | 6 files changed, 1 insertion(+), 2 deletions(-)
   | |
-  | _ commit 54619a3c618eb6b6bae1c4bf8ee1fdd46740afb6
+  | * commit 54619a3c618eb6b6bae1c4bf8ee1fdd46740afb6
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Sun Jun 28 20:37:25 2026 +0700
   | |
   | | Export main report from md to pdf
   | |
-  | | assets/flow_chart.png | Bin 0 -> 98507 bytes
+  | | assets/flow*chart.png | Bin 0 -> 98507 bytes
   | | assets/sequence_diagram.png | Bin 0 -> 310306 bytes
   | | main_report.md | 31 +++----------------------------
   | | main_report.pdf | Bin 0 -> 4334993 bytes
   | | 4 files changed, 3 insertions(+), 28 deletions(-)
   | |
-  | _ commit 6561b5e32c63368096c25008336fa7b96d6ff0a8
+  | * commit 6561b5e32c63368096c25008336fa7b96d6ff0a8
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Sun Jun 28 20:22:13 2026 +0700
   | |
   | | feat: Add video demo link
   | |
-  | | Appendix_A/README.md | 4 +---
+  | | Appendix*A/README.md | 4 +---
   | | main_report.md | 8 ++++++--
   | | 2 files changed, 7 insertions(+), 5 deletions(-)
   | |
-  | _ commit fb57c41c45110db691ec0401432c7cb0d715cd99
+  | * commit fb57c41c45110db691ec0401432c7cb0d715cd99
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Sun Jun 28 20:12:04 2026 +0700
   | |
@@ -1742,7 +2205,7 @@
   | | .../bug-reports/DRAFT-BUG-FORGOT-PASSWORD-001.md | 42 +++++
   | | .../bug-reports/DRAFT-BUG-FORGOT-PASSWORD-002.md | 42 +++++
   | | .../bug-reports/DRAFT-BUG-FORGOT-PASSWORD-003.md | 54 +++++++
-  | | tests/demo/forgot_password_design_report.md | 157 +++++++++++++++++++
+  | | tests/demo/forgot*password_design_report.md | 157 +++++++++++++++++++
   | | tests/demo/test-cases/TC-FORGOT-PASSWORD-001.md | 48 ++++++
   | | tests/demo/test-cases/TC-FORGOT-PASSWORD-002.md | 37 +++++
   | | tests/demo/test-cases/TC-FORGOT-PASSWORD-003.md | 37 +++++
@@ -1770,44 +2233,44 @@
   | | tests/demo/test-summary/traceability-matrix.md | 35 +++++
   | | 32 files changed, 1505 insertions(+)
   | |
-  | _ commit e98751c593b8251d2040de64df1d04e64a3ca7ca
+  | * commit e98751c593b8251d2040de64df1d04e64a3ca7ca
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Sun Jun 28 15:32:44 2026 +0700
   | |
   | | feat: finish main report + AI Audit Report + AI Critique (MD + PDF)
   | |
-  | | Appendix_A/AI_Audit_Report.md | 393 ++++++++-
+  | | Appendix*A/AI_Audit_Report.md | 393 ++++++++-
   | | Appendix_A/AI_Critique.md | 4 +-
   | | ...[AI-02] - FIT@HCMUS - AI Audit Report_En.docx | Bin 37217 -> 163380 bytes
   | | .../[AI-02] - FIT@HCMUS - AI Audit Report_En.pdf | Bin 0 -> 4951812 bytes
   | | main_report.md | 799 +++++++++++++++++++
   | | 5 files changed, 1165 insertions(+), 31 deletions(-)
   | |
-  | _ commit 70e99542c95e8f345f6baf457dfd4a30134889cf
+  | * commit 70e99542c95e8f345f6baf457dfd4a30134889cf
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Sat Jun 27 22:15:33 2026 +0700
   | |
   | | feat: add AI Critique
   | |
-  | | Appendix_A/AI_Critique.md | 3 +++
+  | | Appendix*A/AI_Critique.md | 3 +++
   | | 1 file changed, 3 insertions(+)
   | |
-  | _ commit 99f8ffa0398717a7f4f07593e9e5c1c9c1f7cca0
+  | * commit 99f8ffa0398717a7f4f07593e9e5c1c9c1f7cca0
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Sat Jun 27 20:39:32 2026 +0700
   | |
   | | rename prompt log to AI Audit Report with format md
   | |
-  | | Appendix_A/{prompt_log.md => AI_Audit_Report.md} | 0
+  | | Appendix*A/{prompt_log.md => AI_Audit_Report.md} | 0
   | | 1 file changed, 0 insertions(+), 0 deletions(-)
   | |
-  | _ commit 1ab243d897ac4a3d6659fcafbdbcba543474c566
+  | * commit 1ab243d897ac4a3d6659fcafbdbcba543474c566
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Sat Jun 27 20:33:41 2026 +0700
   | |
   | | feat: add README.md for submission
   | |
-  | | Appendix_A/README.md | 103 +++++++++++++
+  | | Appendix*A/README.md | 103 +++++++++++++
   | | Appendix_A/evidence/github_issue_detail_30_1.png | Bin 0 -> 172582 bytes
   | | Appendix_A/evidence/github_issue_detail_4_1.png | Bin 0 -> 168476 bytes
   | | Appendix_A/evidence/github_issues_overview.png | Bin 0 -> 314520 bytes
@@ -1815,20 +2278,20 @@
   | | tests/test-summary/test_summary_report.md | 26 ++++
   | | 6 files changed, 272 insertions(+)
   | |
-  | _ commit 281a00b9ff1e5c465bafbe90e0ff1a1a866f7251
+  | * commit 281a00b9ff1e5c465bafbe90e0ff1a1a866f7251
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Sat Jun 27 19:59:47 2026 +0700
   | |
   | | feat: Add screenshots of the bugs on the GitHub Issues page
   | |
-  | | .../evidence/github_issue_detail_30_1.png | Bin 0 -> 172582 bytes
+  | | .../evidence/github*issue_detail_30_1.png | Bin 0 -> 172582 bytes
   | | .../evidence/github_issue_detail_30_2.png | Bin 0 -> 277227 bytes
   | | .../evidence/github_issue_detail_4_1.png | Bin 0 -> 168476 bytes
   | | .../evidence/github_issue_detail_4_2.png | Bin 0 -> 176053 bytes
   | | .../evidence/github_issues_overview.png | Bin 0 -> 314520 bytes
   | | 5 files changed, 0 insertions(+), 0 deletions(-)
   | |
-  | _ commit bc5afd9f10ae773301999923ea7d16bed6e9694d
+  | * commit bc5afd9f10ae773301999923ea7d16bed6e9694d
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Sat Jun 27 17:38:41 2026 +0700
   | |
@@ -1882,7 +2345,7 @@
   | | tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-007.md | 9 ++++++++-
   | | .../bug-reports/DRAFT-BUG-USER-MANAGEMENT-001.md | 6 ++++--
   | | .../bug-reports/DRAFT-BUG-USER-MANAGEMENT-002.md | 6 ++++--
-  | | .../bug-reports/evidence/after_delete_click.png | Bin 62386 -> 67560 bytes
+  | | .../bug-reports/evidence/after*delete_click.png | Bin 62386 -> 67560 bytes
   | | tests/bug-reports/evidence/tab_focus_1.png | Bin 62779 -> 73009 bytes
   | | .../evidence/user_list_only_admin.png | Bin 0 -> 62350 bytes
   | | tests/bug-reports/evidence/user_list_page.png | Bin 67466 -> 70736 bytes
@@ -1890,14 +2353,14 @@
   | | .../evidence/user_mgt_empty_state.webp | Bin 0 -> 494800 bytes
   | | 16 files changed, 33 insertions(+), 23 deletions(-)
   | |
-  | _ commit 3d42b1b4c0062a03efaac9cd46aaa1de172e6de8
+  | * commit 3d42b1b4c0062a03efaac9cd46aaa1de172e6de8
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Fri Jun 26 23:43:16 2026 +0700
   | |
   | | Update evidence for FR-03 and FR-11
   | |
   | | backend/database.sqlite | Bin 36864 -> 36864 bytes
-  | | backend/seed_orders.js | 27 ++++++++++++++
+  | | backend/seed*orders.js | 27 ++++++++++++++
   | | .../bug-reports/DRAFT-BUG-FORGOT-PASSWORD-002.md | 9 ++++-
   | | .../bug-reports/DRAFT-BUG-FORGOT-PASSWORD-003.md | 12 +++++--
   | | .../bug-reports/DRAFT-BUG-FORGOT-PASSWORD-004.md | 11 +++++-
@@ -1919,7 +2382,7 @@
   | | tests/bug-reports/evidence/profile_unauth.png | Bin 0 -> 49781 bytes
   | | 21 files changed, 202 insertions(+), 25 deletions(-)
   | |
-  | _ commit efd1efbd01f8917f7b8be5e84d1cb05aa0f7eb7c
+  | * commit efd1efbd01f8917f7b8be5e84d1cb05aa0f7eb7c
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Fri Jun 26 18:47:16 2026 +0700
   | |
@@ -1985,7 +2448,7 @@
   | |
   | | test(order-history): execute test suite and document execution results
   | |
-  | | Appendix_A/prompt_log.md | 120 +++++++++++++++++++
+  | | Appendix*A/prompt_log.md | 120 +++++++++++++++++++
   | | backend/database.sqlite | Bin 36864 -> 36864 bytes
   | | tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-001.md | 43 +++++++
   | | tests/bug-reports/DRAFT-BUG-ORDER-HISTORY-002.md | 40 +++++++
@@ -2003,13 +2466,13 @@
   | | tests/test-summary/traceability-matrix.md | 27 +++++
   | | 16 files changed, 473 insertions(+), 9 deletions(-)
   | |
-  | _ commit 2e1d6c0241af45cf10ca2587720f569c09f2ede8
+  | * commit 2e1d6c0241af45cf10ca2587720f569c09f2ede8
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Fri Jun 26 17:24:12 2026 +0700
   | |
   | | test(forgot-password): execute test suite and document execution results
   | |
-  | | Appendix_A/prompt_log.md | 478 ++++++++++++-------
+  | | Appendix*A/prompt_log.md | 478 ++++++++++++-------
   | | backend/database.sqlite | Bin 36864 -> 36864 bytes
   | | .../bug-reports/DRAFT-BUG-FORGOT-PASSWORD-001.md | 37 ++
   | | .../bug-reports/DRAFT-BUG-FORGOT-PASSWORD-002.md | 47 ++
@@ -2030,7 +2493,7 @@
   | | tests/test-summary/traceability-matrix.md | 34 +-
   | | 19 files changed, 790 insertions(+), 167 deletions(-)
   | |
-  | _ commit a6352864919d5523bbaa295fe7f68f40d59def82
+  | * commit a6352864919d5523bbaa295fe7f68f40d59def82
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Fri Jun 26 17:01:29 2026 +0700
   | |
@@ -2061,7 +2524,7 @@
   | |
   | | feat: update FR-19: user-management test suites based on human review
   | |
-  | | Appendix_A/AI_gap_analysis.md | 4 +-
+  | | Appendix*A/AI_gap_analysis.md | 4 +-
   | | Appendix_A/prompt_log.md | 57 ++++++++++++++++++++
   | | .../test-cases/user-management/DESIGN_REPORT.md | 33 ++++++++----
   | | .../user-management/TC-USER-MANAGEMENT-018.md | 41 ++++++++++++++
@@ -2070,13 +2533,13 @@
   | | .../user-management/TC-USER-MANAGEMENT-021.md | 34 ++++++++++++
   | | 7 files changed, 236 insertions(+), 11 deletions(-)
   | |
-  | _ commit 97e6fb607f233b06fe2c7452493d5348e835ac3e
+  | * commit 97e6fb607f233b06fe2c7452493d5348e835ac3e
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Fri Jun 26 16:08:57 2026 +0700
   | |
   | | feat: update FR-03: forgot-password test suites based on human review
   | |
-  | | Appendix_A/AI_gap_analysis.md | 77 +++++++++++++++++++
+  | | Appendix*A/AI_gap_analysis.md | 77 +++++++++++++++++++
   | | ...[AI-02] - FIT@HCMUS - AI Audit Report_En.docx | Bin 34749 -> 36236 bytes
   | | Appendix_A/prompt_log.md | 54 +++++++++++++
   | | .../test-cases/forgot-password/DESIGN_REPORT.md | 76 +++++++++++-------
@@ -2087,13 +2550,13 @@
   | | .../forgot-password/TC-FORGOT-PASSWORD-031.md | 39 ++++++++++
   | | 9 files changed, 342 insertions(+), 32 deletions(-)
   | |
-  | _ commit 1b0ec08ef278cf64a471b65fdf2da61aa1525e7c
+  | * commit 1b0ec08ef278cf64a471b65fdf2da61aa1525e7c
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Fri Jun 26 15:54:54 2026 +0700
   | |
   | | feat: update FR-20 (checkout mobile) test suite with review findings + AI Audit Log + DOCX
   | |
-  | | ...[AI-02] - FIT@HCMUS - AI Audit Report_En.docx | Bin 33616 -> 34749 bytes
+  | | ...[AI-02] - FIT@HCMUS - AI Audit Report*En.docx | Bin 33616 -> 34749 bytes
   | | Appendix_A/prompt_log.md | 606 ++++++++++++++++++-
   | | .../test-cases/mobile-checkout/DESIGN_REPORT.md | 222 +++++++
   | | .../mobile-checkout/TC-MOBILE-CHECKOUT-001.md | 48 ++
@@ -2124,13 +2587,13 @@
   | | .../mobile-checkout/TC-MOBILE-CHECKOUT-026.md | 40 ++
   | | 29 files changed, 1832 insertions(+), 6 deletions(-)
   | |
-  | _ commit 4905a2fb09f77fb0805cb4ea1cd7c7cb0d4f01d7
+  | * commit 4905a2fb09f77fb0805cb4ea1cd7c7cb0d4f01d7
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Fri Jun 26 15:35:17 2026 +0700
   | |
   | | feat: update FR-19 (user-management for admin) test suite with review findings + AI Audit Log + DOCX
   | |
-  | | ...[AI-02] - FIT@HCMUS - AI Audit Report_En.docx | Bin 33043 -> 33616 bytes
+  | | ...[AI-02] - FIT@HCMUS - AI Audit Report*En.docx | Bin 33043 -> 33616 bytes
   | | Appendix_A/prompt_log.md | 46 +++++
   | | .../test-cases/user-management/DESIGN_REPORT.md | 168 +++++++++++++++++++
   | | .../user-management/TC-USER-MANAGEMENT-001.md | 42 +++++
@@ -2152,13 +2615,13 @@
   | | .../user-management/TC-USER-MANAGEMENT-017.md | 37 ++++
   | | 20 files changed, 843 insertions(+)
   | |
-  | _ commit fda7aa25e9caba6d73833713942de60d0e8f7b6f
+  | * commit fda7aa25e9caba6d73833713942de60d0e8f7b6f
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Fri Jun 26 15:13:42 2026 +0700
   | |
   | | feat: update FR-11 (order-history) test suite with review findings + AI Audit log + DOCX
   | |
-  | | ...[AI-02] - FIT@HCMUS - AI Audit Report_En.docx | Bin 32090 -> 33043 bytes
+  | | ...[AI-02] - FIT@HCMUS - AI Audit Report*En.docx | Bin 32090 -> 33043 bytes
   | | Appendix_A/prompt_log.md | 188 ++++++++++++++++++-
   | | tests/test-cases/order-history/DESIGN_REPORT.md | 183 ++++++++++++++++++
   | | .../order-history/TC-ORDER-HISTORY-001.md | 41 ++++
@@ -2186,13 +2649,13 @@
   | | .../order-history/TC-ORDER-HISTORY-023.md | 38 ++++
   | | 26 files changed, 1192 insertions(+), 1 deletion(-)
   | |
-  | _ commit d373179e8f613967e3feb4f21c1f85823dc268a2
+  | * commit d373179e8f613967e3feb4f21c1f85823dc268a2
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Fri Jun 26 14:30:33 2026 +0700
   | |
   | | feat: update FR-03 (forgot password) test suite with review findings + AI Audit Log + DOCX
   | |
-  | | ...[AI-02] - FIT@HCMUS - AI Audit Report_En.docx | Bin 0 -> 32090 bytes
+  | | ...[AI-02] - FIT@HCMUS - AI Audit Report*En.docx | Bin 0 -> 32090 bytes
   | | Appendix_A/prompt_log.md | 430 +++++++++++++++----
   | | .../test-cases/forgot-password/DESIGN_REPORT.md | 191 ++++++++
   | | .../forgot-password/TC-FORGOT-PASSWORD-001.md | 39 ++
@@ -2225,7 +2688,7 @@
   | | .../test-cases/hotel}/hotel_design_report.md | 0
   | | 31 files changed, 1565 insertions(+), 88 deletions(-)
   | |
-  | _ commit dc848658fcf1b7f661d7d722b8d070b5c70701a9
+  | * commit dc848658fcf1b7f661d7d722b8d070b5c70701a9
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Thu Jun 25 18:19:32 2026 +0700
   | |
@@ -2253,10 +2716,10 @@
   | | Finalized the skill test-writter.md for agent
   | |
   | | .agents/skills/test-writer/SKILL.md | 4 ++--
-  | | Appendix_A/prompt_log.md | 17 +++++++++++++++++
+  | | Appendix*A/prompt_log.md | 17 +++++++++++++++++
   | | 2 files changed, 19 insertions(+), 2 deletions(-)
   | |
-  | _ commit b1ffa61e8b0933d720e9b951959322dcbcd531da
+  | * commit b1ffa61e8b0933d720e9b951959322dcbcd531da
   | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
   | | Date: Thu Jun 25 15:47:34 2026 +0700
   | |
@@ -2304,285 +2767,320 @@
   | .agents/skills/test-writer/SKILL.md | 135 ++++++++++++++++++++++++++++++++
   | 1 file changed, 135 insertions(+)
   |  
-  | _ commit e97d164b6da053fa2e66b322a64ce2af8a101737
-  | | Author: spartan-anhnguyen <anh.tuan.nguyen@c0x12c.com>
-  | | Date: Sun Jun 28 11:27:17 2026 +0700
+  | _ commit 65fc494c281b42337a7195d584a3c83cba57b18d
+  | | Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | | Date: Sun Jun 28 17:29:27 2026 +0700
   | |
-  | | test(fr02): BVA — boundary identification and test cases design
-  | |  
-  | | Identify 5 boundaries from DT classes: login_attempts lock threshold (3),
-  | | lock duration (30s), email length (254 chars), password presence, consecutive
-  | | counter reset. 12 test cases BVA-FR02-01..12 using 3-point BVA per boundary.
-  | | Design-only document — no execution results yet.
-  | |  
-  | | Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+  | | add commit
   | |
-  | | tests/HW02/test-cases/FR02_Login/BVA.md | 103 ++++++++++++++++++++++++++++
-  | | 1 file changed, 103 insertions(+)
+  | | tests/Final_Report.md | 37 +++++++++++
+  | | tests/README.md | 42 +++++++++++--
+  | | tests/commit-log.txt | 155 ++++++++++++++++++++++++++++++++++++++++++++++
+  | | 3 files changed, 230 insertions(+), 4 deletions(-)
   | |
-  | _ commit 27581ff976e595b7572173026920e7bbb3dad032
-  | | Author: spartan-anhnguyen <anh.tuan.nguyen@c0x12c.com>
-  | | Date: Sun Jun 28 11:27:09 2026 +0700
+  | _ commit b99eaed4b006c912aa9036da0795ac5ccd8e424b
+  | | Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | | Date: Sun Jun 28 17:22:37 2026 +0700
   | |
-  | | test(fr02): domain testing — variables, equivalence classes, test cases design
-  | |  
-  | | Define 6 input variables (email, password, account_state, 3 UI attrs),
-  | | 7 email classes, 4 password classes, 5 account_state classes.
-  | | 17 test cases DT-FR02-01..17 covering all valid and invalid partitions.
-  | | Design-only document — no execution results yet.
-  | |  
-  | | Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+  | | add report
   | |
-  | | .../HW02/test-cases/FR02_Login/DomainTesting.md | 137 +++++++++++++++++++
-  | | 1 file changed, 137 insertions(+)
+  | | plan.md | 494 ++++++++++++++++++++++++++++++++++++++++++++++
+  | | tests/AI*Report.md | 271 +++++++++++++++++++++++++
+  | | tests/Bug_Report.md | 480 ++++++++++++++++++++++++++++++++++++++++++++
+  | | tests/Final_Report.md | 489 +++++++++++++++++++++++++++++++++++++++++++++
+  | | tests/README.md | 23 +--
+  | | 5 files changed, 1741 insertions(+), 16 deletions(-)
   | |
-  | _ commit a532b3203701212f2a11aeab4b683bf109aeabb4
-  | | Author: spartan-anhnguyen <anh.tuan.nguyen@c0x12c.com>
-  | | Date: Sun Jun 28 10:52:15 2026 +0700
+  | * commit 542c1714924aad6335b772dd2a554a5b3dd288d0
+  | | Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | | Date: Sun Jun 28 16:49:52 2026 +0700
   | |
-  | | add claude skill
+  | | add AI-audit
   | |
-  | | .claude/skills/boundary-value-analysis/SKILL.md | 84 ++++
-  | | .claude/skills/domain-testing/SKILL.md | 82 ++++
-  | | 2026.HW02.Domain Testing_En.pdf | Bin 0 -> 310849 bytes
-  | | backend/database.sqlite | Bin 36864 -> 36864 bytes
-  | | backend/pnpm-workspace.yaml | 2 +
-  | | tests/HW02/FR02_Login/BVA.md | 121 ------
-  | | tests/HW02/FR02_Login/DomainTesting.md | 181 --------
-  | | tests/HW02/FR10_OrderState/BVA.md | 124 ------
-  | | tests/HW02/FR10_OrderState/DomainTesting.md | 243 -----------
-  | | tests/HW02/FR18_AdminOrder/BVA.md | 129 ------
-  | | tests/HW02/FR18_AdminOrder/DomainTesting.md | 216 ----------
-  | | tests/HW02/Mobile_OrderHistory/BVA.md | 134 ------
-  | | tests/HW02/Mobile_OrderHistory/DomainTesting.md | 190 ---------
-  | | tests/HW02/README.md | 165 --------
-  | | tests/HW02/ai-audit/AI_Audit_Report.md | 130 ------
-  | | tests/HW02/ai-audit/AI_Critique.md | 13 -
-  | | tests/HW02/bug-reports/BUG-01.md | 63 ---
-  | | tests/HW02/bug-reports/BUG-02.md | 61 ---
-  | | tests/HW02/bug-reports/BUG-03.md | 55 ---
-  | | tests/HW02/bug-reports/BUG-04.md | 41 --
-  | | tests/HW02/bug-reports/BUG-05.md | 66 ---
-  | | tests/HW02/bug-reports/BUG-06.md | 71 ----
-  | | tests/HW02/bug-reports/BUG-07.md | 71 ----
-  | | tests/HW02/bug-reports/BUG-08.md | 61 ---
-  | | tests/HW02/bug-reports/BUG-09.md | 62 ---
-  | | tests/HW02/bug-reports/BUG-10.md | 48 ---
-  | | tests/HW02/bug-reports/BUG-11.md | 62 ---
-  | | tests/HW02/bug-reports/BUG-12.md | 40 --
-  | | tests/HW02/bug-reports/BUG-13.md | 51 ---
-  | | tests/HW02/bug-reports/BUG-14.md | 142 -------
-  | | tests/HW02/playwright-tests/fr02-login.spec.js | 249 -----------
-  | | .../playwright-tests/fr10-fr18-orders.spec.js | 423 -------------------
-  | | .../playwright-tests/fr10-screenshots.spec.js | 177 --------
-  | | .../HW02/playwright-tests/fr18-admin-ui.spec.js | 246 -----------
-  | | tests/HW02/playwright-tests/fr18-focused.spec.js | 163 -------
-  | | .../mobile-order-history.spec.js | 262 ------------
-  | | tests/HW02/playwright-tests/package-lock.json | 75 ----
-  | | tests/HW02/playwright-tests/package.json | 16 -
-  | | tests/HW02/playwright-tests/results-fr02.json | 106 -----
-  | | .../playwright-tests/results-fr18-focused.json | 66 ---
-  | | tests/HW02/playwright-tests/results-fr18.json | 90 ----
-  | | tests/HW02/playwright-tests/results-mobile.json | 146 -------
-  | | .../screenshots/FR02/DT-FR02-01-after-login.png | Bin 68534 -> 0 bytes
-  | | .../FR02/DT-FR02-01-before-submit.png | Bin 33958 -> 0 bytes
-  | | .../FR02/DT-FR02-10-locked-response.png | Bin 39677 -> 0 bytes
-  | | .../FR02/DT-FR02-email-input-type.png | Bin 29580 -> 0 bytes
-  | | .../FR02/DT-FR02-lockout-attempt-1.png | Bin 40562 -> 0 bytes
-  | | .../FR02/DT-FR02-lockout-attempt-2.png | Bin 40562 -> 0 bytes
-  | | .../screenshots/FR02/DT-FR02-login-form.png | Bin 29580 -> 0 bytes
-  | | .../FR02/DT-FR02-password-input-type.png | Bin 29580 -> 0 bytes
-  | | .../FR10/BUG06-01-canceled-order-admin.png | Bin 39832 -> 0 bytes
-  | | .../screenshots/FR10/BUG06-02-api-response.json | 7 -
-  | | .../FR10/BUG06-03-status-now-delivered.png | Bin 32923 -> 0 bytes
-  | | .../FR10/BUG07-01-shipping-order-web.png | Bin 65371 -> 0 bytes
-  | | .../screenshots/FR10/BUG07-02-api-response.json | 7 -
-  | | .../screenshots/FR10/BUG07-03-after-cancel.png | Bin 64005 -> 0 bytes
-  | | .../FR10/BUG14-01-regular-user-web.png | Bin 77884 -> 0 bytes
-  | | .../FR10/BUG14-02-role-bypass-results.json | 23 -
-  | | .../screenshots/FR10/FR10-01-pending-order.png | Bin 40649 -> 0 bytes
-  | | .../screenshots/FR10/FR10-02-confirmed.png | Bin 40797 -> 0 bytes
-  | | .../screenshots/FR10/FR10-03-shipping.png | Bin 39488 -> 0 bytes
-  | | .../screenshots/FR10/FR10-04-delivered.png | Bin 38343 -> 0 bytes
-  | | .../FR10/FR10-05-delivered-final-state.png | Bin 38343 -> 0 bytes
-  | | .../screenshots/FR18/FR18-00-admin-login.png | Bin 12336 -> 0 bytes
-  | | .../screenshots/FR18/FR18-00-login-page.png | Bin 12336 -> 0 bytes
-  | | .../FR18/FR18-01-admin-credentials-filled.png | Bin 13557 -> 0 bytes
-  | | .../FR18/FR18-02-admin-after-login.png | Bin 33217 -> 0 bytes
-  | | .../screenshots/FR18/FR18-03-orders-page.png | Bin 41920 -> 0 bytes
-  | | .../screenshots/FR18/FR18-04-xss-check.png | Bin 41920 -> 0 bytes
-  | | .../screenshots/FR18/FR18-05-dashboard.png | Bin 41920 -> 0 bytes
-  | | .../FR18/FR18-06-pending-order-ui.png | Bin 31230 -> 0 bytes
-  | | .../screenshots/FR18/FR18-07-no-confirm-btn.png | Bin 31230 -> 0 bytes
-  | | .../screenshots/FR18/FR18-A1-dashboard.png | Bin 33361 -> 0 bytes
-  | | .../screenshots/FR18/FR18-A2-revenue.png | Bin 33361 -> 0 bytes
-  | | .../screenshots/FR18/FR18-B1-orders-tab.png | Bin 51919 -> 0 bytes
-  | | .../screenshots/FR18/FR18-B2-xss-orders.png | Bin 51919 -> 0 bytes
-  | | .../screenshots/FR18/FR18-B3-order-buttons.png | Bin 51919 -> 0 bytes
-  | | .../screenshots/FR18/FR18-B4-after-confirm.png | Bin 51204 -> 0 bytes
-  | | .../screenshots/FR18/FR18-B5-after-ship.png | Bin 50485 -> 0 bytes
-  | | .../screenshots/FR18/FR18-B6-after-deliver.png | Bin 48878 -> 0 bytes
-  | | .../screenshots/FR18/FR18-B7-canceled-order.png | Bin 31230 -> 0 bytes
-  | | .../screenshots/Mobile/MOB-01-login.png | Bin 33521 -> 0 bytes
-  | | .../screenshots/Mobile/MOB-02-profile-orders.png | Bin 67632 -> 0 bytes
-  | | .../screenshots/Mobile/MOB-03-cancel-buttons.png | Bin 67718 -> 0 bytes
-  | | .../screenshots/Mobile/MOB-04-after-cancel.png | Bin 66180 -> 0 bytes
-  | | .../screenshots/Mobile/MOB-05-final-state.png | Bin 66262 -> 0 bytes
-  | | 86 files changed, 168 insertions(+), 4596 deletions(-)
+  | | backend/database.sqlite | Bin 36864 -> 45056 bytes
+  | | frontend-mobile/package-lock.json | 197 ++++++++++++++++++++++-
+  | | frontend-mobile/package.json | 4 +-
+  | | tests/README.md | 139 ++++++++++++++++
+  | | tests/ai-audit/AI*Audit_Report.md | 85 ++++++++++
+  | | tests/ai-audit/AI_Critique.md | 31 ++++
+  | | tests/bug-reports/screenshots/bug-1.png | Bin 0 -> 591448 bytes
+  | | tests/bug-reports/screenshots/bug-2.png | Bin 0 -> 516590 bytes
+  | | tests/bug-reports/screenshots/bug-3.png | Bin 0 -> 541491 bytes
+  | | tests/bug-reports/screenshots/bug-4.png | Bin 0 -> 536434 bytes
+  | | tests/bug-reports/screenshots/bug-5.png | Bin 0 -> 558991 bytes
+  | | tests/bug-reports/screenshots/bug-6.png | Bin 0 -> 571672 bytes
+  | | tests/bug-reports/screenshots/bug-7.png | Bin 0 -> 578094 bytes
+  | | tests/bug-reports/screenshots/bug-8.png | Bin 0 -> 559571 bytes
+  | | tests/test-cases/register/TC-REGISTER-001.md | 0
+  | | tests/test-runs/sprint-1-test-run.md | 0
+  | | 16 files changed, 454 insertions(+), 2 deletions(-)
   | |
-  | _ commit 2f964ad37cae97ecd88ece70b1c0167d6f2e61d2
-  | | Author: spartan-anhnguyen <anh.tuan.nguyen@c0x12c.com>
-  | | Date: Sat Jun 27 14:02:41 2026 +0700
+  | * commit 8ce4df64248b442f9895153f44b61de54fff3f8f
+  | | Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | | Date: Sun Jun 28 15:29:29 2026 +0700
   | |
-  | | test(hw02): add Playwright screenshots to all reports and bug reports
-  | |  
-  | | - Added FR10 screenshot script (fr10-screenshots.spec.js)
-  | | - Captured screenshots for BUG-06 (canceled→delivered), BUG-07 (cancel shipping),
-  | | BUG-14 (role bypass), and FR-10 normal state flow
-  | | - Updated all 14 bug reports (BUG-01 to BUG-14) with actual Playwright screenshots
-  | | - Updated DomainTesting.md for all 4 features with screenshot sections
-  | | - Updated BVA.md for all 4 features with screenshot evidence
-  | | - Screenshots embedded with relative paths (../playwright-tests/screenshots/...)
-  | |  
-  | | Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+  | | test(mobile): test summary
   | |
-  | | tests/HW02/FR02_Login/BVA.md | 19 ++
-  | | tests/HW02/FR02_Login/DomainTesting.md | 52 ++++--
-  | | tests/HW02/FR10_OrderState/BVA.md | 24 ++-
-  | | tests/HW02/FR10_OrderState/DomainTesting.md | 38 +++-
-  | | tests/HW02/FR18_AdminOrder/BVA.md | 20 ++-
-  | | tests/HW02/FR18_AdminOrder/DomainTesting.md | 34 +++-
-  | | tests/HW02/Mobile_OrderHistory/BVA.md | 26 ++-
-  | | tests/HW02/Mobile_OrderHistory/DomainTesting.md | 20 ++-
-  | | tests/HW02/bug-reports/BUG-01.md | 14 +-
-  | | tests/HW02/bug-reports/BUG-02.md | 14 ++
-  | | tests/HW02/bug-reports/BUG-03.md | 12 ++
-  | | tests/HW02/bug-reports/BUG-04.md | 8 +
-  | | tests/HW02/bug-reports/BUG-05.md | 16 ++
-  | | tests/HW02/bug-reports/BUG-06.md | 22 +++
-  | | tests/HW02/bug-reports/BUG-07.md | 22 +++
-  | | tests/HW02/bug-reports/BUG-08.md | 14 ++
-  | | tests/HW02/bug-reports/BUG-09.md | 13 ++
-  | | tests/HW02/bug-reports/BUG-10.md | 8 +
-  | | tests/HW02/bug-reports/BUG-11.md | 13 ++
-  | | tests/HW02/bug-reports/BUG-12.md | 8 +
-  | | tests/HW02/bug-reports/BUG-13.md | 15 ++
-  | | tests/HW02/bug-reports/BUG-14.md | 36 ++++
-  | | .../playwright-tests/fr10-screenshots.spec.js | 177 +++++++++++++++++++
-  | | .../FR10/BUG06-01-canceled-order-admin.png | Bin 0 -> 39832 bytes
-  | | .../screenshots/FR10/BUG06-02-api-response.json | 7 +
-  | | .../FR10/BUG06-03-status-now-delivered.png | Bin 0 -> 32923 bytes
-  | | .../FR10/BUG07-01-shipping-order-web.png | Bin 0 -> 65371 bytes
-  | | .../screenshots/FR10/BUG07-02-api-response.json | 7 +
-  | | .../screenshots/FR10/BUG07-03-after-cancel.png | Bin 0 -> 64005 bytes
-  | | .../FR10/BUG14-01-regular-user-web.png | Bin 0 -> 77884 bytes
-  | | .../FR10/BUG14-02-role-bypass-results.json | 23 +++
-  | | .../screenshots/FR10/FR10-01-pending-order.png | Bin 0 -> 40649 bytes
-  | | .../screenshots/FR10/FR10-02-confirmed.png | Bin 0 -> 40797 bytes
-  | | .../screenshots/FR10/FR10-03-shipping.png | Bin 0 -> 39488 bytes
-  | | .../screenshots/FR10/FR10-04-delivered.png | Bin 0 -> 38343 bytes
-  | | .../FR10/FR10-05-delivered-final-state.png | Bin 0 -> 38343 bytes
-  | | 36 files changed, 637 insertions(+), 25 deletions(-)
+  | | tests/test-summary/Mobile*OrderHistory.md | 54 +++++++++++++++++++++++++++
+  | | 1 file changed, 54 insertions(+)
   | |
-  | _ commit d5a0543878dc1b63182157b3570786d939c2bba0
-  | | Author: spartan-anhnguyen <anh.tuan.nguyen@c0x12c.com>
-  | | Date: Sat Jun 27 13:53:03 2026 +0700
+  | * commit a0de32c8512e68095e1e5095fef68e2b3890f082
+  | | Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | | Date: Sun Jun 28 15:29:25 2026 +0700
   | |
-  | | test(hw02): update AI audit report with session 4 execution results
-  | |  
-  | | Added session 4 log covering Playwright execution across all 4 features,
-  | | confirmed 14 bugs (including newly discovered BUG-14: missing admin role check),
-  | | and updated README with actual PASS/FAIL counts.
-  | |  
-  | | Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+  | | test(mobile): execution — domain testing + BVA with screenshots report
   | |
-  | | tests/HW02/ai-audit/AI_Audit_Report.md | 43 +++++++++++++++++++++++-------
-  | | 1 file changed, 33 insertions(+), 10 deletions(-)
+  | | tests/test-runs/Mobile*OrderHistory/BVA.md | 52 ++++++++++++++
+  | | .../Mobile_OrderHistory/DomainTesting.md | 72 +++++++++++++++++++
+  | | .../screenshots/BVA-MOB-01-result.png | Bin 0 -> 47254 bytes
+  | | .../screenshots/BVA-MOB-02-result.png | Bin 0 -> 59595 bytes
+  | | .../screenshots/BVA-MOB-03-result.png | Bin 0 -> 58370 bytes
+  | | .../screenshots/BVA-MOB-04-result.png | Bin 0 -> 58370 bytes
+  | | .../screenshots/BVA-MOB-05-result.png | Bin 0 -> 47850 bytes
+  | | .../screenshots/BVA-MOB-06-result.png | Bin 0 -> 47850 bytes
+  | | .../screenshots/DT-MOB-01-result.png | Bin 0 -> 60167 bytes
+  | | .../screenshots/DT-MOB-02-result.png | Bin 0 -> 61378 bytes
+  | | .../screenshots/DT-MOB-03-result.png | Bin 0 -> 55660 bytes
+  | | .../screenshots/DT-MOB-04-result.png | Bin 0 -> 49805 bytes
+  | | .../screenshots/DT-MOB-05-result.png | Bin 0 -> 50427 bytes
+  | | .../screenshots/DT-MOB-06-result.png | Bin 0 -> 60167 bytes
+  | | .../screenshots/DT-MOB-07-result.png | Bin 0 -> 61378 bytes
+  | | .../screenshots/DT-MOB-08-result.png | Bin 0 -> 55660 bytes
+  | | .../screenshots/DT-MOB-09-result.png | Bin 0 -> 49805 bytes
+  | | .../screenshots/DT-MOB-10-result.png | Bin 0 -> 50427 bytes
+  | | .../screenshots/DT-MOB-11-before.png | Bin 0 -> 51317 bytes
+  | | .../screenshots/DT-MOB-11-result.png | Bin 0 -> 54398 bytes
+  | | .../screenshots/DT-MOB-12-before.png | Bin 0 -> 47201 bytes
+  | | .../screenshots/DT-MOB-12-result.png | Bin 0 -> 50387 bytes
+  | | .../screenshots/DT-MOB-13-result.png | Bin 0 -> 50387 bytes
+  | | .../screenshots/MOB-00-profile-loaded.png | Bin 0 -> 43443 bytes
+  | | 24 files changed, 124 insertions(+)
   | |
-  | \* commit acccd83e001a8284528bfabff281f02ebb200200
-  |/ Author: spartan-anhnguyen <anh.tuan.nguyen@c0x12c.com>
-  | Date: Sat Jun 27 13:52:24 2026 +0700
+  | * commit 4b4a07c1a69274e8316943b5f2d2728b4d2a0577
+  | | Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | | Date: Sun Jun 28 15:29:22 2026 +0700
+  | |
+  | | test(mobile): domain testing + BVA — variables, order status classes, cancel boundary design
+  | |
+  | | tests/test-cases/Mobile*OrderHistory/BVA.md | 238 +++++++++
+  | | .../Mobile_OrderHistory/DomainTesting.md | 483 +++++++++++++++++++
+  | | 2 files changed, 721 insertions(+)
+  | |
+  | * commit 4472c565727a6502884488ca831c6ec1b7abfbf7
+  | | Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | | Date: Sun Jun 28 15:29:02 2026 +0700
+  | |
+  | | test(fr18): test summary
+  | |
+  | | tests/test-summary/FR18*AdminOrder.md | 83 +++++++++++++++++++++++++++++++
+  | | 1 file changed, 83 insertions(+)
+  | |
+  | * commit 465e247e0bfe0059a764359f6d26327bfaac47b5
+  | | Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | | Date: Sun Jun 28 15:28:53 2026 +0700
+  | |
+  | | test(fr18): Execution — domain testing + BVA with screenshots report
+  | |
+  | | tests/test-runs/FR18*AdminOrder/BVA.md | 61 +++++++++++++++++
+  | | tests/test-runs/FR18_AdminOrder/DomainTesting.md | 65 +++++++++++++++++++
+  | | .../screenshots/BVA-FR18-01-result.png | Bin 0 -> 9152 bytes
+  | | .../screenshots/BVA-FR18-02-result.png | Bin 0 -> 9152 bytes
+  | | .../screenshots/BVA-FR18-03-result.png | Bin 0 -> 9152 bytes
+  | | .../screenshots/BVA-FR18-04-result.png | Bin 0 -> 106366 bytes
+  | | .../screenshots/BVA-FR18-05-result.png | Bin 0 -> 104761 bytes
+  | | .../screenshots/BVA-FR18-06-result.png | Bin 0 -> 103948 bytes
+  | | .../screenshots/BVA-FR18-07-result.png | Bin 0 -> 103948 bytes
+  | | .../screenshots/BVA-FR18-08-result.png | Bin 0 -> 104913 bytes
+  | | .../screenshots/DT-FR18-01-result.png | Bin 0 -> 9152 bytes
+  | | .../screenshots/DT-FR18-02-result.png | Bin 0 -> 9152 bytes
+  | | .../screenshots/DT-FR18-03-result.png | Bin 0 -> 9152 bytes
+  | | .../screenshots/DT-FR18-04-result.png | Bin 0 -> 124530 bytes
+  | | .../screenshots/DT-FR18-05-result.png | Bin 0 -> 123847 bytes
+  | | .../screenshots/DT-FR18-06-before.png | Bin 0 -> 122684 bytes
+  | | .../screenshots/DT-FR18-06-result.png | Bin 0 -> 122764 bytes
+  | | .../screenshots/DT-FR18-07-result.png | Bin 0 -> 9152 bytes
+  | | .../screenshots/DT-FR18-08-result.png | Bin 0 -> 9152 bytes
+  | | .../screenshots/DT-FR18-09-result.png | Bin 0 -> 116881 bytes
+  | | .../screenshots/DT-FR18-10-result.png | Bin 0 -> 111726 bytes
+  | | .../screenshots/DT-FR18-11-result.png | Bin 0 -> 112722 bytes
+  | | 22 files changed, 126 insertions(+)
+  | |
+  | * commit db812f6a3875a059eed3ea5ccb4ae74741863693
+  | | Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | | Date: Sun Jun 28 15:28:49 2026 +0700
+  | |
+  | | test(fr18): domain testing + BVA — variables, auth/content classes, boundaries, test cases design
+  | |
+  | | tests/test-cases/FR18*AdminOrder/BVA.md | 289 +++++++++++++
+  | | .../test-cases/FR18_AdminOrder/DomainTesting.md | 426 +++++++++++++++++++
+  | | 2 files changed, 715 insertions(+)
+  | |
+  | * commit b2bb961bf5c032b155c967ae0119e367f36ac908
+  | | Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | | Date: Sun Jun 28 15:28:17 2026 +0700
+  | |
+  | | test(FR10): add test summary FR10
+  | |
+  | | tests/test-summary/FR10*OrderState.md | 88 +++++++++++++++++++++++++++++++
+  | | 1 file changed, 88 insertions(+)
+  | |
+  | * commit 2dccb2e30dbe3d75d9787f2df8f9b6245cdf2907
+  | | Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | | Date: Sun Jun 28 15:28:12 2026 +0700
+  | |
+  | | test(FR10): execute DT and BVA test cases
+  | |
+  | | tests/test-runs/FR10*OrderState/BVA.md | 65 +++++++++++++++
+  | | tests/test-runs/FR10_OrderState/DomainTesting.md | 79 +++++++++++++++++++
+  | | .../screenshots/BVA-FR10-01-before.png | Bin 0 -> 132631 bytes
+  | | .../screenshots/BVA-FR10-01-result.png | Bin 0 -> 131943 bytes
+  | | .../screenshots/BVA-FR10-02-before.png | Bin 0 -> 132533 bytes
+  | | .../screenshots/BVA-FR10-02-result.png | Bin 0 -> 131571 bytes
+  | | .../screenshots/BVA-FR10-03-before.png | Bin 0 -> 131477 bytes
+  | | .../screenshots/BVA-FR10-03-result.png | Bin 0 -> 130749 bytes
+  | | .../screenshots/BVA-FR10-04-before.png | Bin 0 -> 125868 bytes
+  | | .../screenshots/BVA-FR10-04-result.png | Bin 0 -> 126507 bytes
+  | | .../screenshots/BVA-FR10-05-before.png | Bin 0 -> 126118 bytes
+  | | .../screenshots/BVA-FR10-05-result.png | Bin 0 -> 124823 bytes
+  | | .../screenshots/BVA-FR10-06-before.png | Bin 0 -> 123139 bytes
+  | | .../screenshots/BVA-FR10-06-result.png | Bin 0 -> 123139 bytes
+  | | .../screenshots/BVA-FR10-07-before.png | Bin 0 -> 122082 bytes
+  | | .../screenshots/BVA-FR10-07-result.png | Bin 0 -> 123196 bytes
+  | | .../screenshots/BVA-FR10-08-before.png | Bin 0 -> 124530 bytes
+  | | .../screenshots/BVA-FR10-08-result.png | Bin 0 -> 124530 bytes
+  | | .../screenshots/DT-FR10-01-before.png | Bin 0 -> 121744 bytes
+  | | .../screenshots/DT-FR10-01-result.png | Bin 0 -> 121776 bytes
+  | | .../screenshots/DT-FR10-02-before.png | Bin 0 -> 121770 bytes
+  | | .../screenshots/DT-FR10-02-result.png | Bin 0 -> 121281 bytes
+  | | .../screenshots/DT-FR10-03-before.png | Bin 0 -> 128015 bytes
+  | | .../screenshots/DT-FR10-03-result.png | Bin 0 -> 126528 bytes
+  | | .../screenshots/DT-FR10-04-before.png | Bin 0 -> 120579 bytes
+  | | .../screenshots/DT-FR10-04-result.png | Bin 0 -> 126726 bytes
+  | | .../screenshots/DT-FR10-05-before.png | Bin 0 -> 120779 bytes
+  | | .../screenshots/DT-FR10-05-result.png | Bin 0 -> 126855 bytes
+  | | .../screenshots/DT-FR10-06-before.png | Bin 0 -> 126400 bytes
+  | | .../screenshots/DT-FR10-06-result.png | Bin 0 -> 126400 bytes
+  | | .../screenshots/DT-FR10-07-before.png | Bin 0 -> 131561 bytes
+  | | .../screenshots/DT-FR10-07-result.png | Bin 0 -> 130784 bytes
+  | | .../screenshots/DT-FR10-08-before.png | Bin 0 -> 131569 bytes
+  | | .../screenshots/DT-FR10-08-result.png | Bin 0 -> 130909 bytes
+  | | .../screenshots/DT-FR10-09-before.png | Bin 0 -> 126831 bytes
+  | | .../screenshots/DT-FR10-09-result.png | Bin 0 -> 126831 bytes
+  | | .../screenshots/DT-FR10-10-before.png | Bin 0 -> 129004 bytes
+  | | .../screenshots/DT-FR10-10-result.png | Bin 0 -> 129004 bytes
+  | | .../screenshots/DT-FR10-11-before.png | Bin 0 -> 130958 bytes
+  | | .../screenshots/DT-FR10-11-result.png | Bin 0 -> 130209 bytes
+  | | .../screenshots/DT-FR10-12-before.png | Bin 0 -> 124319 bytes
+  | | .../screenshots/DT-FR10-12-result.png | Bin 0 -> 124319 bytes
+  | | .../screenshots/DT-FR10-13-before.png | Bin 0 -> 123181 bytes
+  | | .../screenshots/DT-FR10-13-result.png | Bin 0 -> 123181 bytes
+  | | 44 files changed, 144 insertions(+)
+  | |
+  | * commit a66aff66d425bc4b65d66888588ad3b6d91efb33
+  | | Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | | Date: Sun Jun 28 15:28:08 2026 +0700
+  | |
+  | | test(FR10): add Domain Testing and BVA test case design for Order State Machine
+  | |
+  | | tests/test-cases/FR10*OrderState/BVA.md | 316 +++++++++++
+  | | .../test-cases/FR10_OrderState/DomainTesting.md | 524 +++++++++++++++++++
+  | | 2 files changed, 840 insertions(+)
+  | |
+  | * commit 78f9c5a61b8b4196441e5dacbc39606f4c6bdf66
+  | | Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | | Date: Sun Jun 28 15:26:21 2026 +0700
+  | |
+  | | test(fr02): test summary
+  | |
+  | | tests/test-summary/FR02*Login.md | 96 ++++++++++++++++++++++++++++++++++++
+  | | 1 file changed, 96 insertions(+)
+  | |
+  | * commit 6161a8c379bb5b8887f7dd0eb75d8cae1ffe1fa3
+  | | Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | | Date: Sun Jun 28 15:25:50 2026 +0700
+  | |
+  | | test(fr02): bug reports
+  | |
+  | | tests/bug-reports/FR02*Login/BUG-01.md | 70 ++++++++++++
+  | | tests/bug-reports/FR02_Login/BUG-02.md | 78 +++++++++++++
+  | | tests/bug-reports/FR02_Login/BUG-03.md | 81 ++++++++++++++
+  | | tests/bug-reports/FR02_Login/BUG-04.md | 85 ++++++++++++++
+  | | tests/bug-reports/FR10_OrderState/BUG-05.md | 96 ++++++++++++++++
+  | | tests/bug-reports/FR10_OrderState/BUG-06.md | 117 +++++++++++++++++++
+  | | tests/bug-reports/FR18_AdminOrder/BUG-07.md | 109 ++++++++++++++++++
+  | | tests/bug-reports/FR18_AdminOrder/BUG-08.md | 142 ++++++++++++++++++++++++
+  | | 8 files changed, 778 insertions(+)
+  | |
+  | * commit 5318fd4d2ffd769cd1588b8a80498215df3d826a
+  | | Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | | Date: Sun Jun 28 15:25:41 2026 +0700
+  | |
+  | | test(fr02): Execution — domain testing + BVA with screenshots report
+  | |
+  | | tests/test-runs/FR02*Login/BVA.md | 76 ++++++++++++++++++
+  | | tests/test-runs/FR02_Login/DomainTesting.md | 80 +++++++++++++++++++
+  | | .../screenshots/BVA-FR02-01-result.png | Bin 0 -> 40962 bytes
+  | | .../screenshots/BVA-FR02-02-result.png | Bin 0 -> 40962 bytes
+  | | .../screenshots/BVA-FR02-03-result.png | Bin 0 -> 40043 bytes
+  | | .../screenshots/BVA-FR02-04-result.png | Bin 0 -> 40043 bytes
+  | | .../screenshots/BVA-FR02-05-result.png | Bin 0 -> 40043 bytes
+  | | .../screenshots/BVA-FR02-06-result.png | Bin 0 -> 40043 bytes
+  | | .../screenshots/BVA-FR02-07-result.png | Bin 0 -> 38485 bytes
+  | | .../screenshots/BVA-FR02-08-result.png | Bin 0 -> 38485 bytes
+  | | .../screenshots/BVA-FR02-09-result.png | Bin 0 -> 38485 bytes
+  | | .../screenshots/BVA-FR02-10-result.png | Bin 0 -> 36901 bytes
+  | | .../screenshots/BVA-FR02-11-result.png | Bin 0 -> 38851 bytes
+  | | .../screenshots/BVA-FR02-12-result.png | Bin 0 -> 40962 bytes
+  | | .../screenshots/BVA-FR02-12-step1-result.png | Bin 0 -> 40043 bytes
+  | | .../screenshots/BVA-FR02-12-verify-result.png | Bin 0 -> 40043 bytes
+  | | .../FR02_Login/screenshots/DT-FR02-01-result.png | Bin 0 -> 67780 bytes
+  | | .../FR02_Login/screenshots/DT-FR02-02-result.png | Bin 0 -> 68156 bytes
+  | | .../FR02_Login/screenshots/DT-FR02-03-result.png | Bin 0 -> 40481 bytes
+  | | .../FR02_Login/screenshots/DT-FR02-04-result.png | Bin 0 -> 39829 bytes
+  | | .../FR02_Login/screenshots/DT-FR02-05-result.png | Bin 0 -> 38997 bytes
+  | | .../FR02_Login/screenshots/DT-FR02-06-result.png | Bin 0 -> 36390 bytes
+  | | .../FR02_Login/screenshots/DT-FR02-07-result.png | Bin 0 -> 37838 bytes
+  | | .../FR02_Login/screenshots/DT-FR02-08-result.png | Bin 0 -> 40962 bytes
+  | | .../FR02_Login/screenshots/DT-FR02-09-result.png | Bin 0 -> 36901 bytes
+  | | .../FR02_Login/screenshots/DT-FR02-10-result.png | Bin 0 -> 40118 bytes
+  | | .../FR02_Login/screenshots/DT-FR02-11-result.png | Bin 0 -> 67780 bytes
+  | | .../FR02_Login/screenshots/DT-FR02-12-result.png | Bin 0 -> 40962 bytes
+  | | .../FR02_Login/screenshots/DT-FR02-13-result.png | Bin 0 -> 40043 bytes
+  | | .../FR02_Login/screenshots/DT-FR02-14-result.png | Bin 0 -> 40043 bytes
+  | | .../FR02_Login/screenshots/DT-FR02-15-result.png | Bin 0 -> 31271 bytes
+  | | .../FR02_Login/screenshots/DT-FR02-16-result.png | Bin 0 -> 31271 bytes
+  | | .../FR02_Login/screenshots/DT-FR02-17-result.png | Bin 0 -> 41015 bytes
+  | | 33 files changed, 156 insertions(+)
+  | |
+  | * commit 4e839d760bae32e759affe605ba04a3903730102
+  | | Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | | Date: Sun Jun 28 15:24:56 2026 +0700
+  | |
+  | | test(fr02): restructure
+  | |
+  | | tests/test-cases/FR02*Login/BVA.md | 395 +++++++++++++++--
+  | | tests/test-cases/FR02_Login/DomainTesting.md | 536 +++++++++++++++++++++--
+  | | 2 files changed, 866 insertions(+), 65 deletions(-)
+  | |
+  | * commit 3ccc36a5931d818472515ce3411625f812c31cc7
+  | | Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | | Date: Sun Jun 28 12:11:27 2026 +0700
+  | |
+  | | test(fr02): domain testing and bva
+  | |
+  | | tests/test-cases/FR02*Login/BVA.md | 103 +++++++++++++++++
+  | | tests/test-cases/FR02_Login/DomainTesting.md | 137 +++++++++++++++++++++++
+  | | 2 files changed, 240 insertions(+)
+  | |
+  | * commit 239f7b38324608345f5dcbf673518b732d624f98
+  |/ Author: Anhnguyenk835 <tuananh835.nta@gmail.com>
+  | Date: Sun Jun 28 11:41:12 2026 +0700
   |  
-  | test(hw02): add domain testing & BVA reports for 4 features
+  | add claude skill
   |  
-  | - FR-02 Login: 30 TC (15 DT + 15 BVA), bugs BUG-01..05 confirmed
-  | - FR-10 Order State: 48 TC (27 DT + 21 BVA), bugs BUG-06, 07, 14
-  | - FR-18 Admin Orders: 47 TC (27 DT + 20 BVA), bugs BUG-08, 09, 14
-  | - Mobile Order History: 44 TC (24 DT + 20 BVA), bugs BUG-11, 13
-  | - Playwright automation scripts for all features with screenshots
-  | - 14 bug reports (BUG-01 to BUG-14, including new critical BUG-14)
-  | - AI Audit Report and Critique included
-  |  
-  | Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
-  |  
-  | tests/HW02/FR02_Login/BVA.md | 102 +++++
-  | tests/HW02/FR02_Login/DomainTesting.md | 165 ++++++++
-  | tests/HW02/FR10_OrderState/BVA.md | 102 +++++
-  | tests/HW02/FR10_OrderState/DomainTesting.md | 207 +++++++++
-  | tests/HW02/FR18_AdminOrder/BVA.md | 111 +++++
-  | tests/HW02/FR18_AdminOrder/DomainTesting.md | 184 ++++++++
-  | tests/HW02/Mobile_OrderHistory/BVA.md | 110 +++++
-  | tests/HW02/Mobile_OrderHistory/DomainTesting.md | 172 ++++++++
-  | tests/HW02/README.md | 165 ++++++++
-  | tests/HW02/ai-audit/AI_Audit_Report.md | 107 +++++
-  | tests/HW02/ai-audit/AI_Critique.md | 13 +
-  | tests/HW02/bug-reports/BUG-01.md | 51 +++
-  | tests/HW02/bug-reports/BUG-02.md | 47 +++
-  | tests/HW02/bug-reports/BUG-03.md | 43 ++
-  | tests/HW02/bug-reports/BUG-04.md | 33 ++
-  | tests/HW02/bug-reports/BUG-05.md | 50 +++
-  | tests/HW02/bug-reports/BUG-06.md | 49 +++
-  | tests/HW02/bug-reports/BUG-07.md | 49 +++
-  | tests/HW02/bug-reports/BUG-08.md | 47 +++
-  | tests/HW02/bug-reports/BUG-09.md | 49 +++
-  | tests/HW02/bug-reports/BUG-10.md | 40 ++
-  | tests/HW02/bug-reports/BUG-11.md | 49 +++
-  | tests/HW02/bug-reports/BUG-12.md | 32 ++
-  | tests/HW02/bug-reports/BUG-13.md | 36 ++
-  | tests/HW02/bug-reports/BUG-14.md | 106 +++++
-  | tests/HW02/playwright-tests/fr02-login.spec.js | 249 +++++++++++
-  | .../playwright-tests/fr10-fr18-orders.spec.js | 423 +++++++++++++++++++
-  | .../HW02/playwright-tests/fr18-admin-ui.spec.js | 246 +++++++++++
-  | tests/HW02/playwright-tests/fr18-focused.spec.js | 163 +++++++
-  | .../mobile-order-history.spec.js | 262 ++++++++++++
-  | tests/HW02/playwright-tests/package-lock.json | 75 ++++
-  | tests/HW02/playwright-tests/package.json | 16 +
-  | tests/HW02/playwright-tests/results-fr02.json | 106 +++++
-  | .../playwright-tests/results-fr18-focused.json | 66 +++
-  | tests/HW02/playwright-tests/results-fr18.json | 90 ++++
-  | tests/HW02/playwright-tests/results-mobile.json | 146 +++++++
-  | .../screenshots/FR02/DT-FR02-01-after-login.png | Bin 0 -> 68534 bytes
-  | .../FR02/DT-FR02-01-before-submit.png | Bin 0 -> 33958 bytes
-  | .../FR02/DT-FR02-10-locked-response.png | Bin 0 -> 39677 bytes
-  | .../FR02/DT-FR02-email-input-type.png | Bin 0 -> 29580 bytes
-  | .../FR02/DT-FR02-lockout-attempt-1.png | Bin 0 -> 40562 bytes
-  | .../FR02/DT-FR02-lockout-attempt-2.png | Bin 0 -> 40562 bytes
-  | .../screenshots/FR02/DT-FR02-login-form.png | Bin 0 -> 29580 bytes
-  | .../FR02/DT-FR02-password-input-type.png | Bin 0 -> 29580 bytes
-  | .../screenshots/FR18/FR18-00-admin-login.png | Bin 0 -> 12336 bytes
-  | .../screenshots/FR18/FR18-00-login-page.png | Bin 0 -> 12336 bytes
-  | .../FR18/FR18-01-admin-credentials-filled.png | Bin 0 -> 13557 bytes
-  | .../FR18/FR18-02-admin-after-login.png | Bin 0 -> 33217 bytes
-  | .../screenshots/FR18/FR18-03-orders-page.png | Bin 0 -> 41920 bytes
-  | .../screenshots/FR18/FR18-04-xss-check.png | Bin 0 -> 41920 bytes
-  | .../screenshots/FR18/FR18-05-dashboard.png | Bin 0 -> 41920 bytes
-  | .../FR18/FR18-06-pending-order-ui.png | Bin 0 -> 31230 bytes
-  | .../screenshots/FR18/FR18-07-no-confirm-btn.png | Bin 0 -> 31230 bytes
-  | .../screenshots/FR18/FR18-A1-dashboard.png | Bin 0 -> 33361 bytes
-  | .../screenshots/FR18/FR18-A2-revenue.png | Bin 0 -> 33361 bytes
-  | .../screenshots/FR18/FR18-B1-orders-tab.png | Bin 0 -> 51919 bytes
-  | .../screenshots/FR18/FR18-B2-xss-orders.png | Bin 0 -> 51919 bytes
-  | .../screenshots/FR18/FR18-B3-order-buttons.png | Bin 0 -> 51919 bytes
-  | .../screenshots/FR18/FR18-B4-after-confirm.png | Bin 0 -> 51204 bytes
-  | .../screenshots/FR18/FR18-B5-after-ship.png | Bin 0 -> 50485 bytes
-  | .../screenshots/FR18/FR18-B6-after-deliver.png | Bin 0 -> 48878 bytes
-  | .../screenshots/FR18/FR18-B7-canceled-order.png | Bin 0 -> 31230 bytes
-  | .../screenshots/Mobile/MOB-01-login.png | Bin 0 -> 33521 bytes
-  | .../screenshots/Mobile/MOB-02-profile-orders.png | Bin 0 -> 67632 bytes
-  | .../screenshots/Mobile/MOB-03-cancel-buttons.png | Bin 0 -> 67718 bytes
-  | .../screenshots/Mobile/MOB-04-after-cancel.png | Bin 0 -> 66180 bytes
-  | .../screenshots/Mobile/MOB-05-final-state.png | Bin 0 -> 66262 bytes
-  | 67 files changed, 3961 insertions(+)
+  | .claude/skills/boundary-value-analysis/SKILL.md | 84 +++++++++++++++++++++
+  | .claude/skills/domain-testing/SKILL.md | 82 ++++++++++++++++++++
+  | 2 files changed, 166 insertions(+)
   |
 - commit 3bc3b7c2b68afb3ba4da251c58c75ced05e798cd
   | Author: Yuran <trieuvanbd123@gmail.com>
