@@ -1,4 +1,4 @@
-# TC-MOBILE-REGISTER-001: Đăng ký với thông tin hợp lệ
+# TC-MOBILE-REGISTER-007: Đăng ký với Mật khẩu quá ngắn (< 8 ký tự)
 
 ## Requirement ID
 
@@ -11,7 +11,6 @@ Mobile Registration / Functional / Domain Testing (Equivalence Partitioning)
 ## Preconditions
 
 - Người dùng mở ứng dụng Mobile và đang ở trang Đăng ký.
-- Email sử dụng chưa từng được đăng ký trong hệ thống.
 
 ## Test data
 
@@ -19,24 +18,24 @@ Mobile Registration / Functional / Domain Testing (Equivalence Partitioning)
 | ---------------- | ----------------- |
 | Full Name        | Nguyen Van A      |
 | Email            | newuser@gmail.com |
-| Password         | Test1234!         |
-| Confirm Password | Test1234!         |
+| Password         | Te1!abc           |
+| Confirm Password | Te1!abc           |
 
 ## Test steps
 
 1. Nhập Full Name: Nguyen Van A
 2. Nhập Email: newuser@gmail.com
-3. Nhập Password: Test1234!
-4. Nhập Confirm Password: Test1234!
+3. Nhập Password: Te1!abc
+4. Nhập Confirm Password: Te1!abc
 5. Bấm nút Đăng ký
 
 ## Expected result
 
-Đăng ký thành công, hệ thống chuyển hướng người dùng tới trang Đăng nhập.
+Hệ thống từ chối đăng ký và hiển thị thông báo lỗi mật khẩu phải có tối thiểu 8 ký tự.
 
 ## EC / Partition Covered
 
-EC1 + EC3 + EC7 + EC14 + OC1
+EC9 + OC2
 
 ## Status / Related bugs
 

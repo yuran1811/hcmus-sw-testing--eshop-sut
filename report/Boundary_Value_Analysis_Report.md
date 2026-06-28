@@ -199,3 +199,50 @@ Nominal values: Token = JWT Admin
 | --- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | ----------------- | -------- | -------- |
 | 1   | [TC-CATEGORY-BVA-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-BVA-001.md) | Name đúng 1 ký tự | 3-Point + 2-Point | Min, B   | Accept   |
 | 2   | [TC-CATEGORY-BVA-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-BVA-002.md) | Name 2 ký tự      | 3-Point only      | Min, B+1 | Accept   |
+
+---
+
+## Feature: Đăng ký Mobile (FR-01 / FR-20)
+
+### BVA Step 1: Identify Boundary Points
+
+| #   | Variable        | Boundary Description | Boundary Value (B) | Valid Side          | Invalid Side            |
+| --- | --------------- | -------------------- | -----------------: | ------------------- | ----------------------- |
+| 1   | Độ dài Password | Chiều dài tối thiểu  |                  8 | B (8 ký tự) = valid | B-1 (7 ký tự) = invalid |
+
+### BVA Step 2: 3-Point BVA Scenarios
+
+| #   | Boundary     | Test Point | Variable Tested | Test Value | Other Variables | Expected Result |
+| --- | ------------ | ---------- | --------------- | ---------- | --------------- | --------------- |
+| 1   | pass Min = 8 | B-1        | password        | 7 chars    | all nominal     | Reject          |
+| 2   | pass Min = 8 | B          | password        | 8 chars    | all nominal     | Accept          |
+| 3   | pass Min = 8 | B+1        | password        | 9 chars    | all nominal     | Accept          |
+
+### BVA Step 3: 2-Point BVA Scenarios
+
+| #   | Boundary     | Test Point    | Variable Tested | Test Value | Other Variables | Expected Result |
+| --- | ------------ | ------------- | --------------- | ---------- | --------------- | --------------- |
+| 1   | pass Min = 8 | B (valid)     | password        | 8 chars    | all nominal     | Accept          |
+| 2   | pass Min = 8 | B-1 (invalid) | password        | 7 chars    | all nominal     | Reject          |
+
+### BVA Step 4: Consolidate BVA Test Cases
+
+#### Overlap Between 3-Point and 2-Point
+
+| 3-Point Scenario # | 2-Point Scenario # | Variable | Test Value | Overlap Reason                   |
+| ------------------ | ------------------ | -------- | ---------- | -------------------------------- |
+| #2 (B at min)      | #1 (B valid)       | password | 8 chars    | Same value, same expected result |
+| #1 (B-1 at min)    | #2 (B-1 invalid)   | password | 7 chars    | Same value, same expected result |
+
+#### Overlap with Domain Testing TCs
+
+| BVA Scenario #  | DT Test Case           | Variable | Test Value | Overlap Reason                                 |
+| --------------- | ---------------------- | -------- | ---------- | ---------------------------------------------- |
+| #1 (B-1 at min) | TC-MOBILE-REGISTER-007 | password | 7 chars    | Same test data and expected result (< 8 chars) |
+
+#### Final BVA Test Case Summary
+
+| #   | TC ID                                                                                                                                                                   | Description   | Technique(s)      | Boundary | Expected |
+| --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ----------------- | -------- | -------- |
+| 1   | [TC-MOBILE-REGISTER-BVA-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-BVA-001.md) | Độ dài đúng 8 | 3-Point + 2-Point | Min, B   | Accept   |
+| 2   | [TC-MOBILE-REGISTER-BVA-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-BVA-002.md) | Độ dài đúng 9 | 3-Point only      | Min, B+1 | Accept   |

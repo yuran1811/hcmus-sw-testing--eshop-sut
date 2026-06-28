@@ -413,3 +413,130 @@ Nominal values: name = Điện tử, Token = JWT Admin, category_id = 1 (khi c�
 | 9   | [TC-CATEGORY-009](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-009.md) | Xóa danh mục có sản phẩm    | DT        | EC9, OC7      | Fail     |
 | 10  | [TC-CATEGORY-010](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-010.md) | Xóa không có token (401)    | DT        | EC4, OC6      | Fail     |
 | 11  | [TC-CATEGORY-011](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/category/TC-CATEGORY-011.md) | Xóa dùng token user (403)   | DT        | EC5, OC6      | Fail     |
+
+---
+
+## Feature: Đăng ký Mobile (FR-01 / FR-20)
+
+### B1: Identify Input & Output Variables — Đăng ký Mobile
+
+#### Input Variables
+
+| #   | Variable Name | Data Type | Constraints                                            | Source  |
+| --- | ------------- | --------- | ------------------------------------------------------ | ------- |
+| 1   | Full Name     | String    | Bắt buộc                                               | UI Form |
+| 2   | Email         | String    | Bắt buộc, email format, duy nhất                       | UI Form |
+| 3   | Password      | String    | Bắt buộc, >=8 ký tự, 1 hoa, 1 thường, 1 số, 1 đặc biệt | UI Form |
+| 4   | Confirm Pwd   | String    | Bắt buộc, phải khớp với Password                       | UI Form |
+
+#### Output Variables
+
+| #   | Variable Name | Data Type | Description                                                    |
+| --- | ------------- | --------- | -------------------------------------------------------------- |
+| 1   | UI State      | UI        | Thành công chuyển hướng login, Thất bại hiển thị lỗi trên form |
+| 2   | DB State      | DB        | User được tạo trong hệ thống khi đăng ký hợp lệ                |
+
+### B2: Identify Value Domains — Đăng ký Mobile
+
+#### Input Variable: Full Name
+
+| #   | Domain Type | Equivalence Class | Expected |
+| --- | ----------- | ----------------- | -------- |
+| EC1 | Valid       | Có nhập dữ liệu   | Accept   |
+| EC2 | Invalid     | Bỏ trống          | Reject   |
+
+#### Input Variable: Email
+
+| #   | Domain Type | Equivalence Class        | Expected |
+| --- | ----------- | ------------------------ | -------- |
+| EC3 | Valid       | Email hợp lệ và duy nhất | Accept   |
+| EC4 | Invalid     | Bỏ trống                 | Reject   |
+| EC5 | Invalid     | Sai định dạng email      | Reject   |
+| EC6 | Invalid     | Email đã tồn tại         | Reject   |
+
+#### Input Variable: Password
+
+| #    | Domain Type | Equivalence Class       | Expected |
+| ---- | ----------- | ----------------------- | -------- |
+| EC7  | Valid       | Khớp mọi điều kiện      | Accept   |
+| EC8  | Invalid     | Bỏ trống                | Reject   |
+| EC9  | Invalid     | Nhỏ hơn 8 ký tự         | Reject   |
+| EC10 | Invalid     | Không có chữ hoa        | Reject   |
+| EC11 | Invalid     | Không có chữ thường     | Reject   |
+| EC12 | Invalid     | Không có số             | Reject   |
+| EC13 | Invalid     | Không có ký tự đặc biệt | Reject   |
+
+#### Input Variable: Confirm Pwd
+
+| #    | Domain Type | Equivalence Class       | Expected |
+| ---- | ----------- | ----------------------- | -------- |
+| EC14 | Valid       | Khớp với Password       | Accept   |
+| EC15 | Invalid     | Bỏ trống                | Reject   |
+| EC16 | Invalid     | Không khớp với Password | Reject   |
+
+#### Output Variables
+
+| #   | Domain Type | Equivalence Class      | Triggered By                     |
+| --- | ----------- | ---------------------- | -------------------------------- |
+| OC1 | Valid       | Thành công             | Tất cả valid (EC1,3,7,14)        |
+| OC2 | Error       | Validation Error UI    | EC2, EC4, EC5, EC8..EC13, EC15.. |
+| OC3 | Error       | Trùng lặp Email UI/API | EC6                              |
+
+### B3: Select Representative Values — Đăng ký Mobile
+
+- EC1: "Nguyen Van A"
+- EC2: ""
+- EC3: "newuser@gmail.com"
+- EC4: ""
+- EC5: "invalid-email"
+- EC6: "test@eshop.com"
+- EC7: "Test1234!"
+- EC8: ""
+- EC9: "Te1!abc" (7 char)
+- EC10: "test1234!"
+- EC11: "TEST1234!"
+- EC12: "TestPass!"
+- EC13: "Test12345"
+- EC14: Khớp với mật khẩu trên
+- EC15: ""
+- EC16: Không khớp (ví dụ "Test1234@")
+
+### B4: Enumerate Partition Scenarios — Đăng ký Mobile
+
+Nominal values: Full Name = Nguyen Van A, Email = newuser@gmail.com, Password = Test1234!, Confirm = Test1234!
+
+| #   | Partition | Tested Variable | Test Value       | Output |
+| --- | --------- | --------------- | ---------------- | ------ |
+| 1   | EC1...    | All Valid       | Nominal          | OC1    |
+| 2   | EC2       | Full Name       | ""               | OC2    |
+| 3   | EC4       | Email           | ""               | OC2    |
+| 4   | EC5       | Email           | "invalid-email"  | OC2    |
+| 5   | EC6       | Email           | "test@eshop.com" | OC3    |
+| 6   | EC8       | Password        | ""               | OC2    |
+| 7   | EC9       | Password        | "Te1!abc"        | OC2    |
+| 8   | EC10      | Password        | "test1234!"      | OC2    |
+| 9   | EC11      | Password        | "TEST1234!"      | OC2    |
+| 10  | EC12      | Password        | "TestPass!"      | OC2    |
+| 11  | EC13      | Password        | "Test12345"      | OC2    |
+| 12  | EC15      | Confirm Pwd     | ""               | OC2    |
+| 13  | EC16      | Confirm Pwd     | "Test1234@"      | OC2    |
+
+### B5: Consolidate into Test Cases — Đăng ký Mobile
+
+#### Final Test Case Summary
+
+| #   | TC ID                                                                                                                                                           | Description         | Technique | EC/OC Covered            | Expected |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------- | ------------------------ | -------- |
+| 1   | [TC-MOBILE-REGISTER-001](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-001.md) | Hợp lệ              | DT        | EC1, EC3, EC7, EC14, OC1 | Pass     |
+| 2   | [TC-MOBILE-REGISTER-002](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-002.md) | Name trống          | DT        | EC2, OC2                 | Fail     |
+| 3   | [TC-MOBILE-REGISTER-003](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-003.md) | Email trống         | DT        | EC4, OC2                 | Fail     |
+| 4   | [TC-MOBILE-REGISTER-004](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-004.md) | Email sai định dạng | DT        | EC5, OC2                 | Fail     |
+| 5   | [TC-MOBILE-REGISTER-005](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-005.md) | Email trùng         | DT        | EC6, OC3                 | Fail     |
+| 6   | [TC-MOBILE-REGISTER-006](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-006.md) | Mật khẩu trống      | DT        | EC8, OC2                 | Fail     |
+| 7   | [TC-MOBILE-REGISTER-007](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-007.md) | Mật khẩu < 8        | DT        | EC9, OC2                 | Fail     |
+| 8   | [TC-MOBILE-REGISTER-008](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-008.md) | Không chữ hoa       | DT        | EC10, OC2                | Fail     |
+| 9   | [TC-MOBILE-REGISTER-009](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-009.md) | Không chữ thường    | DT        | EC11, OC2                | Fail     |
+| 10  | [TC-MOBILE-REGISTER-010](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-010.md) | Không số            | DT        | EC12, OC2                | Fail     |
+| 11  | [TC-MOBILE-REGISTER-011](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-011.md) | Không ký tự ĐB      | DT        | EC13, OC2                | Fail     |
+| 12  | [TC-MOBILE-REGISTER-012](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-012.md) | Xác nhận trống      | DT        | EC15, OC2                | Fail     |
+| 13  | [TC-MOBILE-REGISTER-013](file:///g:/HCMUS/NAM3-HK3/Testing/Homework/HW2/hcmus-sw-testing--eshop-sut/tests/test-cases/mobile-register/TC-MOBILE-REGISTER-013.md) | Xác nhận sai        | DT        | EC16, OC2                | Fail     |

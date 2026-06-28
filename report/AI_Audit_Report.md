@@ -255,19 +255,70 @@ Detailed instruction: Design test cases for FR-14 based on Domain Testing (Equiv
 
 ---
 
+### Entry 5
+
+| Field              | Value                                 |
+| ------------------ | ------------------------------------- |
+| **AI Tool**        | Gemini 3.1 Pro                        |
+| **Date/Time**      | 2026-06-29 00:18:30                   |
+| **Task**           | Domain Testing & BVA test case design |
+| **Feature**        | FR-01 / FR-20 — Đăng ký Mobile        |
+| **Bloom-AI Level** | G9.2 (Apply) / G9.3 (Analyse)         |
+
+#### Prompt
+
+**[Original User Prompt]**
+
+```text
+dựa vào mô tả của FR-01, FR-20 trong file README.md , dựa vào skill @[g:\HCMUS\NAM3-HK3\Testing\Homework\HW2\hcmus-sw-testing--eshop-sut\.agents\skills\test-writer\SKILL.md]  , bạn hãy tạo ra những test case cho tính năng này dựa trên 2 kĩ thuật được đề cập trong skill, thực hiện tuần tự và đầy đủ các phase được đề cập, sau đó sử dụng @[g:\HCMUS\NAM3-HK3\Testing\Homework\HW2\hcmus-sw-testing--eshop-sut\.agents\skills\ai-audit-report\SKILL.md]  để log lại quá trình, các thông tin cần human review để trống để tôi điền vào, ngoài ra tạo trong folder @[g:\HCMUS\NAM3-HK3\Testing\Homework\HW2\hcmus-sw-testing--eshop-sut\tests\test-cases\mobile-register]  tôi đã tạo sẵn và làm theo các template
+```
+
+**[Skill Execution Details]**
+
+```text
+Invoked skill: domain-testing-writer with parameters:
+- FEATURE_ID: FR-01 / FR-20
+- FEATURE_NAME: Đăng ký Mobile
+- POOL: A
+- OUTPUT_DIR: tests/test-cases/mobile-register/
+
+Detailed instruction: Design test cases based on Domain Testing (Equivalence Partitioning) and Boundary Value Analysis (BVA), following the HCMUS Software Testing course methodology. Produce markdown test case files and comprehensive reports, then append audit log.
+```
+
+#### AI Output
+
+- Identified 4 input variables and 2 output variables with multiple equivalence classes.
+- Generated 13 Domain Testing test cases (TC-MOBILE-REGISTER-001 to TC-MOBILE-REGISTER-013).
+- Identified 1 boundary point and generated 2 Boundary Value Analysis test cases (TC-MOBILE-REGISTER-BVA-001 to TC-MOBILE-REGISTER-BVA-002).
+- Updated Domain Testing Report (Domain_Testing_Report.md).
+- Updated Boundary Value Analysis Report (Boundary_Value_Analysis_Report.md).
+  [Full output: see tests/test-cases/mobile-register/ and report/]
+
+#### Human Review
+
+| Aspect           | Detail |
+| ---------------- | ------ |
+| Reviewed by      |        |
+| Review date      |        |
+| Corrections made |        |
+| Quality rating   |        |
+| Issues found     |        |
+
+---
+
 ## Thống kê tổng hợp (Summary Statistics)
 
-| Metric                                           | Value                            |
-| ------------------------------------------------ | -------------------------------- |
-| Tổng số lần tương tác AI (Total AI interactions) | 4                                |
-| Công cụ AI đã dùng (AI tools used)               | Gemini 3.5 Flash, Gemini 3.1 Pro |
-| Tính năng đã test (Features covered)             | FR-05, FR-08, FR-14              |
-| Tổng TC do AI sinh (Total TCs by AI)             | 31                               |
-| TC đã chỉnh sửa sau review (TCs modified)        | 12 (57%)                         |
-| TC giữ nguyên (TCs accepted as-is)               | 0 (0%)                           |
-| Độ chính xác AI (AI accuracy before review)      | 80%                              |
-| Bug tìm bởi AI (Bugs found with AI)              | 7                                |
-| Bug AI bỏ sót (Bugs AI missed)                   | 0                                |
+| Metric                                           | Value                             |
+| ------------------------------------------------ | --------------------------------- |
+| Tổng số lần tương tác AI (Total AI interactions) | 5                                 |
+| Công cụ AI đã dùng (AI tools used)               | Gemini 3.5 Flash, Gemini 3.1 Pro  |
+| Tính năng đã test (Features covered)             | FR-01, FR-05, FR-08, FR-14, FR-20 |
+| Tổng TC do AI sinh (Total TCs by AI)             | 46                                |
+| TC đã chỉnh sửa sau review (TCs modified)        | 12 (57%)                          |
+| TC giữ nguyên (TCs accepted as-is)               | 0 (0%)                            |
+| Độ chính xác AI (AI accuracy before review)      | 80%                               |
+| Bug tìm bởi AI (Bugs found with AI)              | 7                                 |
+| Bug AI bỏ sót (Bugs AI missed)                   | 0                                 |
 
 ### Tỷ lệ đóng góp AI vs Human (AI Contribution Breakdown)
 
@@ -294,4 +345,4 @@ Detailed instruction: Design test cases for FR-14 based on Domain Testing (Equiv
 ---
 
 _Report generated with assistance from `ai-audit-report-generator` agent skill._
-_Last updated: 2026-06-28 15:30:00_
+_Last updated: 2026-06-29 00:24:00_
