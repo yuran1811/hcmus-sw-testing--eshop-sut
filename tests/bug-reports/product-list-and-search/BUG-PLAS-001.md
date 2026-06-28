@@ -9,7 +9,7 @@ assignees: ""
 
 ## Found by Test Case
 
-TC-PLAS-001, TC-PLAS-002, TC-PLAS-004
+TC-PLAS-001, TC-PLAS-002, TC-PLAS-004, TC-PLAS-005
 
 ## Requirement liên quan
 
@@ -37,7 +37,7 @@ Chỉ tồn tại đúng 1 thẻ `<h1>` duy nhất trên trang chủ phục vụ
 
 ## Actual result
 
-Hệ thống trả về kết quả là 2 (có 2 thẻ `<h1>` tồn tại trên trang).
+Hệ thống trả về kết quả là 2 hoặc 3 (có nhiều thẻ `<h1>` tồn tại trên trang).
 
 ## Evidence
 
@@ -47,3 +47,5 @@ Hệ thống trả về kết quả là 2 (có 2 thẻ `<h1>` tồn tại trên 
   ![Evidence 2](../screenshots/TC-PLAS-002.png)
 - **TC-PLAS-004 (Tìm kiếm có dấu):**
   ![Evidence 3](../screenshots/TC-PLAS-004.png)
+- **TC-PLAS-005 (Tìm kiếm ký tự đặc biệt):**
+  ![Evidence 4](../screenshots/TC-PLAS-005b.png)
