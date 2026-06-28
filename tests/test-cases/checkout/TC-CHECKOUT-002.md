@@ -15,10 +15,10 @@ Checkout / Functional / Domain Testing (Equivalence Partitioning)
 
 ## Test data
 
-| Field                | Value                                                                |
-| -------------------- | -------------------------------------------------------------------- |
-| Authorization Header | Omitted hoặc `Bearer invalid-token-12345`                            |
-| Request Body         | `{"total_amount": 200000, "shipping_address": "123 Le Loi, TP.HCM"}` |
+| Field                | Value                                     |
+| -------------------- | ----------------------------------------- |
+| Authorization Header | Omitted hoặc `Bearer invalid-token-12345` |
+| Request Body         | `{"total_amount": 200000}`                |
 
 ## Test steps
 

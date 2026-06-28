@@ -188,13 +188,13 @@ Detailed instruction: Design test cases for FR-08 based on Domain Testing (Equiv
 
 #### Human Review
 
-| Aspect           | Detail |
-| ---------------- | ------ |
-| Reviewed by      |        |
-| Review date      |        |
-| Corrections made |        |
-| Quality rating   |        |
-| Issues found     |        |
+| Aspect           | Detail                                                                    |
+| ---------------- | ------------------------------------------------------------------------- |
+| Reviewed by      | Mạch Quốc Tấn                                                             |
+| Review date      | 28/06/2026                                                                |
+| Corrections made | Sửa lại dữ liệu đại diện, bỏ phần nhập địa chỉ                            |
+| Quality rating   | Tốt, logic hợp lý, chỉ cần điều chỉnh lại một chút để phù hợp với yêu cầu |
+| Issues found     | AI tự đọc yêu cầu rồi bịa thêm việc nhập địa chỉ                          |
 
 ---
 

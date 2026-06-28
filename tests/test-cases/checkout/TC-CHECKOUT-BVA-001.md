@@ -16,16 +16,16 @@ Checkout / Functional / Boundary Value Analysis (3-point + 2-point)
 
 ## Test data
 
-| Field                | Value                                                                 |
-| -------------------- | --------------------------------------------------------------------- |
-| Authorization Header | `Bearer <valid_token>`                                                |
-| Request Body         | `{"total_amount": 4000000, "shipping_address": "123 Le Loi, TP.HCM"}` |
+| Field                | Value                       |
+| -------------------- | --------------------------- |
+| Authorization Header | `Bearer <valid_token>`      |
+| Request Body         | `{"total_amount": 4000000}` |
 
 ## Test steps
 
 1. Đăng nhập và lấy Token JWT hợp lệ.
 2. Thêm đúng 1 "Bàn phím cơ Keychron Q1" có giá 4.000.000 ₫ vào giỏ hàng.
-3. Gửi yêu cầu POST tới `/api/checkout` với Token JWT trong header và Request Body chứa `total_amount = 4000000` và `shipping_address = "123 Le Loi, TP.HCM"`.
+3. Gửi yêu cầu POST tới `/api/checkout` với Token JWT trong header và Request Body chứa `total_amount = 4000000`.
 4. Kiểm tra phản hồi trả về từ API.
 5. Kiểm tra cơ sở dữ liệu để xác nhận đơn hàng đã được tạo với giá trị đúng.
 6. Gửi yêu cầu GET tới `/api/cart` để kiểm tra giỏ hàng đã sạch chưa.
