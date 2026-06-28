@@ -35,5 +35,5 @@ Hệ thống không hiển thị thông báo lỗi trùng email. Assertion `expe
 
 ## Evidence
 
-- Screenshot: `![BUG-REGISTER-002](../screenshots/BUG-REGISTER-002-duplicate-email.png)`
+- Screenshot: ![BUG-REGISTER-002](../screenshots/BUG-REGISTER-002-duplicate-email.png)
 - Playwright log: `Error: expect(locator).toContainText(expected) failed`

@@ -49,8 +49,8 @@ Playwright timeout sau 5 giây khi chờ click vào nút "+" hoặc "-". Các n�
 
 ## Evidence
 
-- Screenshot TC-CART-003 (nút "+"): `![BUG-CART-001-plus](../screenshots/BUG-CART-001-quantity-plus.png)`
-- Screenshot TC-CART-004 (nút "-"): `![BUG-CART-001-minus](../screenshots/BUG-CART-001-quantity-minus.png)`
+- Screenshot TC-CART-003 (nút "+"): ![BUG-CART-001-plus](../screenshots/BUG-CART-001-quantity-plus.png)
+- Screenshot TC-CART-004 (nút "-"): ![BUG-CART-001-minus](../screenshots/BUG-CART-001-quantity-minus.png)
 - Playwright log: `TimeoutError: locator.click: Timeout 5000ms exceeded`
 
 ## Notes

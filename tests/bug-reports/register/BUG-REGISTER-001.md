@@ -35,7 +35,7 @@ Hệ thống xử lý request nhưng URL trang không thay đổi sang địa ch
 
 ## Evidence
 
-- Screenshot TC-REGISTER-001: `![BUG-REGISTER-001](../screenshots/BUG-REGISTER-001-redirect-fail.png)`
+- Screenshot TC-REGISTER-001: ![BUG-REGISTER-001](../screenshots/BUG-REGISTER-001-redirect-fail.png)
 - Playwright log: `Error: expect(page).toHaveURL(expected) failed`
 - Các test case cùng bị ảnh hưởng bởi lỗi này: TC-REGISTER-015, TC-REGISTER-016, TC-REGISTER-017
 

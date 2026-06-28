@@ -35,8 +35,8 @@ Không có dialog/popup xác nhận nào xuất hiện — sản phẩm bị xó
 
 ## Evidence
 
-- Screenshot (TC-CART-008): `![BUG-CART-004-not-display-dialog](../screenshots/BUG-CART-004-not-display-dialog.png)`
-- Screenshot (TC-CART-009 — xóa dòng cuối cùng, không qua dialog nào): `![BUG-CART-004-tc009](../screenshots/BUG-CART-004-tc009-empty-no-dialog.png)`
+- Screenshot (TC-CART-008): ![BUG-CART-004-not-display-dialog](../screenshots/BUG-CART-004-not-display-dialog.png)
+- Screenshot (TC-CART-009 — xóa dòng cuối cùng, không qua dialog nào): ![BUG-CART-004-tc009](../screenshots/BUG-CART-004-tc009-empty-no-dialog.png)
 - Playwright: `cart.spec.ts:149` (TC-CART-008) — `page.getByRole('button', { name: 'Hủy' }).click({ timeout: 5_000 })` timeout vì không tồn tại nút "Hủy" nào trên trang.
 
 ## Notes

@@ -40,7 +40,7 @@ Hệ thống chấp nhận và lưu sản phẩm thành công dù tên vượt q
 
 ## Evidence
 
-- Screenshot: `![BUG-PRODUCT-001](../screenshots/BUG-PRODUCT-001-name-over-255.png)`
+- Screenshot: ![BUG-PRODUCT-001](../screenshots/BUG-PRODUCT-001-name-over-255.png)
 - Playwright log: `Error: Spec yêu cầu reject khi Tên > 255 ký tự`
 
 ## Notes

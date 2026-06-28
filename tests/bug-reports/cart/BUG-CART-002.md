@@ -38,7 +38,7 @@ Giỏ hàng hiển thị **2 dòng riêng biệt** cùng tên "iPhone 15 Pro Max
 
 ## Evidence
 
-- Screenshot: `![BUG-CART-002-duplicate-item](../screenshots/BUG-CART-002-duplicate-item.png)`
+- Screenshot: ![BUG-CART-002-duplicate-item](../screenshots/BUG-CART-002-duplicate-item.png)
 
 ## Notes
 

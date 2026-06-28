@@ -22,19 +22,23 @@ Critical / P1
 ## Steps to reproduce
 
 **Kịch bản 1 — Giá = 0 (TC-PRODUCT-007):**
+
 1. Đăng nhập trang Admin
 2. Thêm sản phẩm mới, nhập tên hợp lệ, đặt giá = `0`
 3. Bấm "Lưu"
 
 **Kịch bản 2 — Giá âm (TC-PRODUCT-008):**
+
 1. Tương tự, đặt giá = `-1` hoặc bất kỳ số âm nào
 2. Bấm "Lưu"
 
 **Kịch bản 3 — Giá trống (TC-PRODUCT-009):**
+
 1. Tương tự, để trống trường Giá
 2. Bấm "Lưu"
 
 **Kịch bản 4 — Giá không phải số (TC-PRODUCT-010):**
+
 1. Tương tự, nhập `abc` vào trường Giá
 2. Bấm "Lưu"
 
@@ -55,10 +59,10 @@ Error: Spec yêu cầu reject khi Giá không hợp lệ
 
 ## Evidence
 
-- Screenshot (giá = 0): `![BUG-PRODUCT-002-zero](../screenshots/BUG-PRODUCT-002-price-zero.png)`
-- Screenshot (giá âm): `![BUG-PRODUCT-002-neg](../screenshots/BUG-PRODUCT-002-price-negative.png)`
-- Screenshot (giá trống): `![BUG-PRODUCT-002-empty](../screenshots/BUG-PRODUCT-002-price-empty.png)`
-- Screenshot (giá không hợp lệ): `![BUG-PRODUCT-002-invalid](../screenshots/BUG-PRODUCT-002-price-invalid.png)`
+- Screenshot (giá = 0): ![BUG-PRODUCT-002-zero](../screenshots/BUG-PRODUCT-002-price-zero.png)
+- Screenshot (giá âm): ![BUG-PRODUCT-002-neg](../screenshots/BUG-PRODUCT-002-price-negative.png)
+- Screenshot (giá trống): ![BUG-PRODUCT-002-empty](../screenshots/BUG-PRODUCT-002-price-empty.png)
+- Screenshot (giá không hợp lệ): ![BUG-PRODUCT-002-invalid](../screenshots/BUG-PRODUCT-002-price-invalid.png)
 
 ## Notes
 

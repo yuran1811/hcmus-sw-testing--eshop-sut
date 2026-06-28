@@ -35,4 +35,4 @@ Tài khoản không được tạo (đúng một phần), nhưng thông báo hi�
 
 ## Evidence
 
-- Screenshot: `![BUG-REGISTER-006](../screenshots/BUG-REGISTER-006-generic-message.png)`
+- Screenshot: ![BUG-REGISTER-006](../screenshots/BUG-REGISTER-006-generic-message.png)

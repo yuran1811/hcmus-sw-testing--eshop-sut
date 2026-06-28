@@ -35,4 +35,4 @@ Hệ thống không hiển thị bất kỳ thông báo nào về định dạng
 
 ## Evidence
 
-- Screenshot: `![BUG-REGISTER-004](../screenshots/BUG-REGISTER-004-generic-message.png)`
+- Screenshot: ![BUG-REGISTER-004](../screenshots/BUG-REGISTER-004-generic-message.png)

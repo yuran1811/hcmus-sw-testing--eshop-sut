@@ -22,12 +22,14 @@ Major / P1
 ## Steps to reproduce
 
 **Kịch bản A — TC-REGISTER-013 (Xác nhận mật khẩu không khớp):**
+
 1. Mở trang đăng ký
 2. Điền đầy đủ các trường: Họ Tên, Email, Mật khẩu hợp lệ
 3. Nhập giá trị **khác** vào trường "Xác nhận mật khẩu"
 4. Bấm nút "Đăng ký"
 
 **Kịch bản B — TC-REGISTER-014 (Xác nhận mật khẩu để trống):**
+
 1. Mở trang đăng ký
 2. Điền đầy đủ: Họ Tên, Email, Mật khẩu hợp lệ
 3. Để trống trường "Xác nhận mật khẩu"
@@ -45,7 +47,7 @@ Major / P1
 
 ## Evidence
 
-- Screenshot TC-REGISTER-013: `![BUG-REGISTER-003-timeout](../screenshots/BUG-REGISTER-003-confirm-pw-timeout.png)`
-- Screenshot TC-REGISTER-014: `![BUG-REGISTER-003-missing](../screenshots/BUG-REGISTER-003-confirm-pw-missing.png)`
+- Screenshot TC-REGISTER-013: ![BUG-REGISTER-003-timeout](../screenshots/BUG-REGISTER-003-confirm-pw-timeout.png)
+- Screenshot TC-REGISTER-014: ![BUG-REGISTER-003-missing](../screenshots/BUG-REGISTER-003-confirm-pw-missing.png)
 - Playwright log TC-REGISTER-013: `TimeoutError: locator.fill: Timeout 5000ms exceeded`
 - Playwright log TC-REGISTER-014: `Error: Trường Xác nhận mật khẩu phải tồn tại và bị đánh dấu invalid khi trống`

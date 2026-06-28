@@ -35,7 +35,7 @@ Trang chỉ hiển thị phần thông báo dạng chữ ("Giỏ hàng của b�
 
 ## Evidence
 
-- Screenshot: `![BUG-CART-005-empty-no-illustration](../screenshots/BUG-CART-005-not-display-icon.png)`
+- Screenshot: ![BUG-CART-005-empty-no-illustration](../screenshots/BUG-CART-005-not-display-icon.png)
 
 ## Notes
 

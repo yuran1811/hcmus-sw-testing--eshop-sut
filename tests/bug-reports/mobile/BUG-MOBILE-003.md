@@ -22,12 +22,14 @@ Major / P2
 ## Steps to reproduce
 
 **Kịch bản A — TC-MOBILE_LOGIN-009 (Kiểm thời gian khóa thực tế):**
+
 1. Reset trạng thái tài khoản `test@eshop.com`
 2. Đăng nhập sai 3 lần liên tiếp (kích hoạt khóa)
 3. Đọc giá trị `locked_until` từ database
 4. Tính khoảng cách giữa `locked_until` và `Date.now() + 30 giây`
 
 **Kịch bản B — TC-MOBILE_LOGIN-011 (Thử đăng nhập đúng sau 30 giây):**
+
 1. Kích hoạt khóa bằng 3 lần sai liên tiếp
 2. Chờ **30 giây** (đúng thời gian spec)
 3. Đăng nhập lại với thông tin đúng
@@ -49,8 +51,8 @@ TC-011: expect(loggedInHeader).toBeVisible() — element(s) not found (sau chờ
 
 ## Evidence
 
-- Screenshot TC-009: `![BUG-MOBILE-003-lock-duration](../screenshots/BUG-MOBILE-003-lock-duration-180s.png)`
-- Screenshot TC-011: `![BUG-MOBILE-003-still-locked](../screenshots/BUG-MOBILE-003-still-locked-30s.png)`
+- Screenshot TC-009: \![BUG-MOBILE-003-lock-duration](../screenshots/BUG-MOBILE-003-lock-duration-180s.png)\
+- Screenshot TC-011: \![BUG-MOBILE-003-still-locked](../screenshots/BUG-MOBILE-003-still-locked-30s.png)\
 - Playwright log: `expect(received).toBeLessThan(5000) — Received: 149860`
 
 ## Notes

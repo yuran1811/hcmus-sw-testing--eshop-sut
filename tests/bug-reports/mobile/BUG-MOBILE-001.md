@@ -22,16 +22,19 @@ Major / P2
 ## Steps to reproduce
 
 **Kịch bản A — TC-MOBILE_LOGIN-002 (Email để trống):**
+
 1. Mở http://localhost:8081, điều hướng đến màn hình Đăng nhập
 2. Để trống trường **Email**, nhập mật khẩu hợp lệ
 3. Bấm "Sign In"
 
 **Kịch bản B — TC-MOBILE_LOGIN-003 (Email sai định dạng):**
+
 1. Nhập email sai định dạng (vd `test@`) vào trường Email
 2. Nhập mật khẩu hợp lệ
 3. Bấm "Sign In"
 
 **Kịch bản C — TC-MOBILE_LOGIN-004 (Mật khẩu để trống):**
+
 1. Nhập email hợp lệ, để trống trường **Mật khẩu**
 2. Bấm "Sign In"
 
@@ -53,9 +56,9 @@ TC-004: Error: element(s) not found — getByText('Mật khẩu là trường b�
 
 ## Evidence
 
-- Screenshot TC-002: `![BUG-MOBILE-001-empty-email](../screenshots/BUG-MOBILE-001-empty-email.png)`
-- Screenshot TC-003: `![BUG-MOBILE-001-invalid-email](../screenshots/BUG-MOBILE-001-invalid-email.png)`
-- Screenshot TC-004: `![BUG-MOBILE-001-empty-password](../screenshots/BUG-MOBILE-001-empty-password.png)`
+- Screenshot TC-002: ![BUG-MOBILE-001-empty-email](../screenshots/BUG-MOBILE-001-empty-email.png)
+- Screenshot TC-003: ![BUG-MOBILE-001-invalid-email](../screenshots/BUG-MOBILE-001-invalid-email.png)
+- Screenshot TC-004: ![BUG-MOBILE-001-empty-password](../screenshots/BUG-MOBILE-001-empty-password.png)
 - Playwright log: `expect(locator).toBeVisible() failed — element(s) not found` (3 test cases)
 
 ## Notes

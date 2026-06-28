@@ -22,11 +22,13 @@ Critical / P1
 ## Steps to reproduce
 
 **Kịch bản A — TC-MOBILE_LOGIN-006 / TC-MOBILE_LOGIN-007 (Đếm +2 sau 1 lần sai):**
+
 1. Reset trạng thái tài khoản `test@eshop.com` (login_attempts = 0)
 2. Đăng nhập sai mật khẩu **1 lần** với email hợp lệ
 3. Kiểm tra giá trị `login_attempts` trong database
 
 **Kịch bản B — TC-MOBILE_LOGIN-008 (Khóa sau 2 lần sai):**
+
 1. Reset trạng thái tài khoản
 2. Đăng nhập sai **2 lần** liên tiếp
 3. Kiểm tra giá trị `locked_until` trong database
@@ -49,9 +51,9 @@ TC-008: expect(state?.locked_until).toBeNull() — Received: "2026-06-28T11:23:2
 
 ## Evidence
 
-- Screenshot TC-006: `![BUG-MOBILE-002-counter](../screenshots/BUG-MOBILE-002-counter-plus2.png)`
-- Screenshot TC-007: `![BUG-MOBILE-002-counter-tc007](../screenshots/BUG-MOBILE-002-counter-tc007.png)`
-- Screenshot TC-008: `![BUG-MOBILE-002-locked-early](../screenshots/BUG-MOBILE-002-locked-early.png)`
+- Screenshot TC-006: ![BUG-MOBILE-002-counter](../screenshots/BUG-MOBILE-002-counter-plus2.png)
+- Screenshot TC-007: ![BUG-MOBILE-002-counter-tc007](../screenshots/BUG-MOBILE-002-counter-tc007.png)
+- Screenshot TC-008: ![BUG-MOBILE-002-locked-early](../screenshots/BUG-MOBILE-002-locked-early.png)
 - Playwright log: `expect(received).toBe(1) — Received: 2`
 
 ## Notes

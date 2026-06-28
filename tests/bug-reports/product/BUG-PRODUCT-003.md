@@ -34,12 +34,13 @@ Critical / P1
 ## Actual result
 
 Tên "Sản phẩm Y" bị thay đổi hoặc biến mất. Assertion về cô lập dữ liệu thất bại với lỗi:
+
 - `Sản phẩm Y không liên quan phải giữ nguyên tên`
 - `expect(locator).toBeVisible() failed — element(s) not found`
 
 ## Evidence
 
-- Screenshot: `![BUG-PRODUCT-003](../screenshots/BUG-PRODUCT-003-edit-isolation.png)`
+- Screenshot: ![BUG-PRODUCT-003](../screenshots/BUG-PRODUCT-003-edit-isolation.png)
 - Playwright log:
   - `Error: Sản phẩm Y không liên quan phải giữ nguyên tên`
   - `expect(locator).toBeVisible() failed`

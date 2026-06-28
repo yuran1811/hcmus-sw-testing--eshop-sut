@@ -35,7 +35,7 @@ Nhãn hiển thị là **"Tổng tạm tính"** — sai theo đặc tả. Giá t
 
 ## Evidence
 
-- Screenshot: `![BUG-CART-003-incorrect-label](../screenshots/BUG-CART-003-incorrect-in-label.png)`
+- Screenshot: ![BUG-CART-003-incorrect-label](../screenshots/BUG-CART-003-incorrect-in-label.png)
 
 ## Notes
 
