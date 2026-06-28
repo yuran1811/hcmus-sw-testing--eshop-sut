@@ -40,4 +40,4 @@ Password length Min boundary, B+1 = 9, covered by 3-Point only
 
 ## Status / Related bugs
 
-Not Run / None
+Fail / BUG-MOBILE-REGISTER-001

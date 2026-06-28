@@ -15,5 +15,5 @@
 | TC-MOBILE-REGISTER-011     | mobile-register | Mạch Quốc Tấn | Fail   | BUG-MOBILE-REGISTER-001                          | Không có trường xác nhận mật khẩu trên UI                                 |
 | TC-MOBILE-REGISTER-012     | mobile-register | Mạch Quốc Tấn | Fail   | BUG-MOBILE-REGISTER-001                          | Không có trường xác nhận mật khẩu trên UI                                 |
 | TC-MOBILE-REGISTER-013     | mobile-register | Mạch Quốc Tấn | Fail   | BUG-MOBILE-REGISTER-001                          | Không có trường xác nhận mật khẩu trên UI                                 |
-| TC-MOBILE-REGISTER-BVA-001 | mobile-register |               |        |                                                  |                                                                           |
-| TC-MOBILE-REGISTER-BVA-002 | mobile-register |               |        |                                                  |                                                                           |
+| TC-MOBILE-REGISTER-BVA-001 | mobile-register | Mạch Quốc Tấn | Fail   | BUG-MOBILE-REGISTER-001                          | Không có trường xác nhận mật khẩu trên UI                                 |
+| TC-MOBILE-REGISTER-BVA-002 | mobile-register | Mạch Quốc Tấn | Fail   | BUG-MOBILE-REGISTER-001                          | Không có trường xác nhận mật khẩu trên UI                                 |
