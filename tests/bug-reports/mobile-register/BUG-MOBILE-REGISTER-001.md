@@ -8,7 +8,7 @@ assignees: ""
 
 ## Found by Test Case
 
-TC-MOBILE-REGISTER-001
+TC-MOBILE-REGISTER-001, TC-MOBILE-REGISTER-002
 
 ## Requirement liên quan
 
