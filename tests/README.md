@@ -158,7 +158,133 @@ Lịch sử 14 commit thuộc bài kiểm thử trên branch `ntanh/23127152-HW2
 
 ## Agent Skills
 
-| Skill | File | Mô tả |
-|-------|------|-------|
-| domain-testing | `.claude/skills/domain-testing` | Hướng dẫn phân vùng tương đương + thiết kế TC |
-| boundary-value-analysis | `.claude/skills/bva` | Hướng dẫn BVA 3-điểm mỗi biên |
+Dự án sử dụng **Claude Code Agent Skills** — các file hướng dẫn được nhúng vào `.claude/skills/` và tự động kích hoạt khi agent nhận yêu cầu liên quan. Mỗi skill định nghĩa quy trình cụ thể, bảng tham chiếu, và định dạng output, giúp agent tạo ra test case đúng phương pháp thay vì phụ thuộc vào prompt tự do.
+
+### Tổng quan
+
+| Skill | Đường dẫn | Trigger | Output |
+|-------|-----------|---------|--------|
+| `domain-testing` | `.claude/skills/domain-testing/SKILL.md` | "what values should I test", feature có input có kiểu/range/constraint | Bảng DT Markdown: ID \| Variable \| Class \| Test Value \| Preconditions \| Expected \| Actual \| Pass/Fail |
+| `boundary-value-analysis` | `.claude/skills/boundary-value-analysis/SKILL.md` | Spec có "between X and Y", "at least N", "no more than M"; sau khi domain testing xác định biên | Bảng BVA Markdown: ID \| Variable \| Boundary \| BVA Point \| Test Value \| Expected \| Actual \| Pass/Fail |
+
+---
+
+### Skill 1 — `domain-testing`
+
+**Mục đích:** Phân vùng không gian đầu vào của mỗi biến thành các **lớp tương đương** (equivalence classes) — nhóm giá trị mà hệ thống xử lý giống hệt nhau. Kiểm thử một đại diện mỗi lớp thay vì kiểm thử toàn bộ giá trị, giảm số lượng TC trong khi vẫn đạt coverage tối đa.
+
+**Quy tắc cốt lõi:** Phải phủ đủ cả lớp hợp lệ (valid) VÀ lớp không hợp lệ (invalid). Bỏ sót lớp invalid là lỗi phổ biến nhất khi thiết kế test thủ công.
+
+**Quy trình 6 bước:**
+
+1. **Xác định biến đầu vào** — liệt kê mọi input ảnh hưởng đến hành vi cần kiểm tra, bao gồm cả hidden inputs: trạng thái session, quyền tài khoản, dữ liệu tiền điều kiện.
+2. **Xác định miền của từng biến** — kiểu dữ liệu, định dạng hợp lệ, phạm vi hợp lệ, và các ràng buộc từ spec.
+3. **Phân lớp tương đương** — mỗi biến phải có đủ:
+
+   | Loại lớp | Bắt buộc phải có |
+   |----------|-----------------|
+   | Valid — điển hình | Giá trị sử dụng thông thường |
+   | Valid — tối thiểu | Giá trị hợp lệ nhỏ nhất |
+   | Valid — tối đa | Giá trị hợp lệ lớn nhất |
+   | Invalid — rỗng / null | Blank, null, vắng mặt |
+   | Invalid — sai định dạng | Sai kiểu hoặc cấu trúc |
+   | Invalid — dưới minimum | Một đơn vị dưới phạm vi hợp lệ |
+   | Invalid — trên maximum | Một đơn vị trên phạm vi hợp lệ |
+   | Invalid — ký tự đặc biệt | Khi feature sanitize input |
+
+4. **Chọn đại diện và kết quả mong đợi** — mỗi lớp chỉ cần một giá trị đại diện.
+5. **Xây dựng test case đa biến** — cô lập từng biến: baseline là tất cả valid → thay đổi MỘT biến thành invalid → expect failure. Không bao giờ kết hợp hai biến invalid trong một TC.
+6. **Đánh số và document** — định dạng `DT-<FEATURE_ID>-<NN>`.
+
+**Lỗi thường gặp:**
+- Bỏ qua các lớp invalid — chúng phát hiện nhiều bug hơn lớp valid
+- Dựa vào code thay vì spec khi định nghĩa lớp
+- Kiểm thử tổ hợp nhiều biến invalid cùng lúc — che giấu nguyên nhân gốc rễ
+- Quên hidden variables: user role, session token, locale
+
+**Áp dụng trong dự án:** Skill này dẫn dắt thiết kế 44/88 TC (50% tổng pool). Đặc biệt hiệu quả ở FR-18 nơi các lớp invalid của `user_role` phát hiện BUG-07 (IDOR) và lớp invalid của `shipping_address` phát hiện BUG-08 (Stored XSS).
+
+---
+
+### Skill 2 — `boundary-value-analysis`
+
+**Mục đích:** Kiểm thử chính xác tại và ngay xung quanh biên của các lớp tương đương. Lỗi thường tập trung tại biên phân vùng (off-by-one, sai dấu `<` vs `≤`, sai điều kiện range). BVA bổ sung sau khi domain testing đã xác định biên — không thay thế coverage lớp.
+
+**Quy tắc cốt lõi:** Với mỗi biên giữa lớp valid và invalid, sinh ra 3 điểm: một đơn vị bên trong (valid), giá trị tại biên, một đơn vị bên ngoài (invalid).
+
+**Mô hình 3 điểm (preferred):**
+
+| BVA Point | Công thức | Kết quả mong đợi |
+|-----------|-----------|-----------------|
+| Dưới minimum | `min − 1` | **rejected** |
+| Tại minimum | `min` | accepted |
+| Danh nghĩa | Giá trị giữa khoảng | accepted |
+| Tại maximum | `max` | accepted |
+| Trên maximum | `max + 1` | **rejected** |
+
+> "Một đơn vị" phụ thuộc vào miền: `1` cho integer, `1 ký tự` cho string length, `1 ngày` cho date range, `delta nhỏ nhất có nghĩa` cho float.
+
+**Quy trình 7 bước:**
+
+1. Từ bảng domain testing, liệt kê mọi biên lớp (nơi valid gặp invalid).
+2. Xác định đơn vị tăng của từng biến.
+3. Đọc spec để xác định biên **inclusive** (`≤`) hay **exclusive** (`<`) — điều này quyết định phía nào là valid.
+4. Sinh 3 điểm BVA cho mỗi biên.
+5. Gán ID theo định dạng `BVA-<FEATURE_ID>-<NN>`.
+6. Ghi kết quả mong đợi từ spec (không phải từ behavior hiện tại của app).
+7. Thực thi và ghi actual result.
+
+**Bảng tham chiếu biên theo domain:**
+
+| Domain | Biên | Giá trị cần test |
+|--------|------|-----------------|
+| Integer range `[a, b]` | Biên dưới | `a−1`, `a`, `a+1` |
+| Integer range `[a, b]` | Biên trên | `b−1`, `b`, `b+1` |
+| String length `[n, m]` | Min length | `n−1` chars, `n` chars, `n+1` chars |
+| String length `[n, m]` | Max length | `m−1` chars, `m` chars, `m+1` chars |
+| Date range | Start | `start−1day`, `start`, `start+1day` |
+| Required field | Presence | `null`, `""`, 1 char, whitespace-only |
+| Enum / ordered set | First | index 0, index 1 |
+| Enum / ordered set | Last | index n−2, index n−1 |
+
+**Lỗi thường gặp:**
+
+| Lỗi | Cách sửa |
+|-----|----------|
+| Chỉ test boundary, không có nominal | Thêm case giữa khoảng để chứng minh interior hoạt động |
+| Sai đơn vị increment | Integer → ±1, float → delta nhỏ nhất có nghĩa |
+| Bỏ qua spec ambiguity | "8 đến 64 ký tự" — 8 có inclusive không? Xác nhận trước |
+| Trùng với domain test value | Nếu DT đã cover `min`, BVA chỉ thêm `min−1` và `min+1` |
+| Kiểm thử nhiều biên cùng lúc | Mỗi biến có biên riêng; test độc lập từng cái |
+| Dùng behavior hiện tại làm expected | So sánh với **spec**, không phải với behavior cũ |
+
+**Áp dụng trong dự án:** Skill này dẫn dắt thiết kế 34/88 TC (38.6% tổng pool). Đặc biệt hiệu quả ở FR-02 (biên độ dài password 7/8/9 ký tự, biên số lần đăng nhập sai 4/5/6 lần phát hiện BUG-01) và FR-10 (biên trạng thái đơn hàng phát hiện BUG-05 và BUG-06).
+
+---
+
+### Tích hợp giữa hai skill
+
+Hai skill hoạt động theo pipeline:
+
+```
+Spec/Requirements
+       │
+       ▼
+domain-testing          ← xác định lớp, chọn đại diện, viết DT-xx TC
+       │
+       │ (biên lớp được chuyển tiếp)
+       ▼
+boundary-value-analysis ← sinh 3 điểm tại mỗi biên, viết BVA-xx TC
+       │
+       ▼
+Test Run (thực thi DT + BVA) → Bug Report nếu fail
+```
+
+Skill `domain-testing` có cross-reference tường minh đến `boundary-value-analysis` qua `[[boundary-value-analysis]]` trong phần Quick Reference, giúp agent biết khi nào cần kích hoạt skill tiếp theo mà không cần người dùng nhắc lại.
+
+---
+
+### Demo
+
+Clip demo agent sinh test case bằng hai skill trên toàn bộ 4 feature:
+**https://www.youtube.com/watch?v=8p0HZDNp1GY**
