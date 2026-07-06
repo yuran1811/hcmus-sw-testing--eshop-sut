@@ -1,0 +1,11 @@
+# TC-CHECKOUT-PWS-002: Guest - 1 SP - Invalid Positive (total_amount = 999000)
+@baseUrl = http://localhost:3000/api
+
+### 1. Thực hiện checkout không truyền Token (Guest) với total_amount sai lệch lớn hơn 0
+POST {{baseUrl}}/checkout
+Content-Type: application/json
+
+{
+    "total_amount": 999000,
+    "shipping_address": "123 Đường ABC, Quận 1"
+}

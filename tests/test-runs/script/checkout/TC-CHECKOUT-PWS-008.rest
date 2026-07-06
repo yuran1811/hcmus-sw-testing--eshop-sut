@@ -1,0 +1,36 @@
+# TC-CHECKOUT-PWS-008: User - 1 SP - Invalid Zero (total_amount = 0)
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập User
+# @name login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "Test1234!"
+}
+
+### 2. Lưu token
+@token = {{login.response.body.token}}
+
+### 3. Setup giỏ hàng: Thêm 1 sản phẩm (giá 150000 ₫)
+POST {{baseUrl}}/cart
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "Sản phẩm 1",
+    "price": 150000
+}
+
+### 4. Thực hiện checkout gửi total_amount = 0
+POST {{baseUrl}}/checkout
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "total_amount": 0,
+    "shipping_address": "123 Đường ABC, Quận 1"
+}

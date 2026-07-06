@@ -1,0 +1,47 @@
+# TC-CHECKOUT-PWS-009: User - >1 SP - Valid (total_amount = 400000)
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập User
+# @name login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "Test1234!"
+}
+
+### 2. Lưu token
+@token = {{login.response.body.token}}
+
+### 3. Setup giỏ hàng: Thêm sản phẩm 1 (giá 150000 ₫)
+POST {{baseUrl}}/cart
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "Sản phẩm 1",
+    "price": 150000
+}
+
+### 4. Setup giỏ hàng: Thêm sản phẩm 2 (giá 250000 ₫)
+POST {{baseUrl}}/cart
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "id": 2,
+    "name": "Sản phẩm 2",
+    "price": 250000
+}
+
+### 5. Thực hiện checkout với số tiền đúng (400000 ₫)
+POST {{baseUrl}}/checkout
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "total_amount": 400000,
+    "shipping_address": "123 Đường ABC, Quận 1"
+}

@@ -1,0 +1,11 @@
+# TC-CHECKOUT-PWS-001: Guest - 0 SP - Valid (total_amount = 0)
+@baseUrl = http://localhost:3000/api
+
+### 1. Thực hiện checkout không truyền Token (Guest) với total_amount = 0
+POST {{baseUrl}}/checkout
+Content-Type: application/json
+
+{
+    "total_amount": 0,
+    "shipping_address": "123 Đường ABC, Quận 1"
+}

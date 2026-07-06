@@ -1,0 +1,25 @@
+# TC-CHECKOUT-PWS-005: User - 0 SP - Invalid Positive (total_amount = 50000)
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập User
+# @name login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "Test1234!"
+}
+
+### 2. Lưu token
+@token = {{login.response.body.token}}
+
+### 3. Thực hiện checkout khi giỏ hàng trống với total_amount = 50000 ₫
+POST {{baseUrl}}/checkout
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "total_amount": 50000,
+    "shipping_address": "123 Đường ABC, Quận 1"
+}
