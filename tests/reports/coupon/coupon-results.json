@@ -1,0 +1,656 @@
+{
+  "generatedAt": "2026-07-06T09:13:18.210Z",
+  "cases": [
+    {
+      "id": "TC-FR09-ST-001",
+      "title": "Apply coupon hop le tai bien min order",
+      "status": "FAIL",
+      "message": "TC-FR09-ST-001 expected successful coupon application",
+      "bugIds": [
+        "BUG-FR09-001"
+      ],
+      "evidence": {
+        "expected": {
+          "discount_amount": 30000,
+          "final_amount": 270000
+        },
+        "actual": {
+          "status": 400,
+          "body": {
+            "error": "Đơn hàng chưa đủ giá trị tối thiểu 300,000 ₫ để áp dụng mã này"
+          }
+        }
+      }
+    },
+    {
+      "id": "TC-FR09-ST-002",
+      "title": "Ghi nhan usage sau checkout thanh cong",
+      "status": "FAIL",
+      "message": "TC-FR09-ST-002 expected usage=1 and order coupon/discount fields persisted",
+      "bugIds": [
+        "BUG-FR09-005"
+      ],
+      "evidence": {
+        "expected": {
+          "usage": 1,
+          "orderFields": [
+            "coupon_id",
+            "discount_amount"
+          ]
+        },
+        "actual": {
+          "usage": 1,
+          "order": {
+            "id": 3,
+            "user_id": 17,
+            "total_amount": 270000,
+            "status": "pending",
+            "shipping_address": null,
+            "created_at": "2026-07-06 09:13:18"
+          }
+        }
+      }
+    },
+    {
+      "id": "TC-FR09-ST-003",
+      "title": "Chan coupon SAVE10 khi het luot dung",
+      "status": "FAIL",
+      "message": "TC-FR09-ST-003 expected rejection containing \"giới hạn\"",
+      "bugIds": [
+        "BUG-FR09-001"
+      ],
+      "evidence": {
+        "expected": {
+          "status": "4xx",
+          "errorContains": "giới hạn"
+        },
+        "actual": {
+          "status": 400,
+          "body": {
+            "error": "Đơn hàng chưa đủ giá trị tối thiểu 300,000 ₫ để áp dụng mã này"
+          }
+        }
+      }
+    },
+    {
+      "id": "TC-FR09-ST-004",
+      "title": "Apply coupon VIP100 khi con luot dung",
+      "status": "FAIL",
+      "message": "TC-FR09-ST-004 expected successful coupon application",
+      "bugIds": [
+        "BUG-FR09-001"
+      ],
+      "evidence": {
+        "expected": {
+          "discount_amount": 100000,
+          "final_amount": 200000
+        },
+        "actual": {
+          "status": 400,
+          "body": {
+            "error": "Đơn hàng chưa đủ giá trị tối thiểu 300,000 ₫ để áp dụng mã này"
+          }
+        }
+      }
+    },
+    {
+      "id": "TC-FR09-ST-005",
+      "title": "Chan lan thu 3 cua coupon VIP100",
+      "status": "FAIL",
+      "message": "TC-FR09-ST-005 expected rejection containing \"giới hạn\"",
+      "bugIds": [
+        "BUG-FR09-001"
+      ],
+      "evidence": {
+        "expected": {
+          "status": "4xx",
+          "errorContains": "giới hạn"
+        },
+        "actual": {
+          "status": 400,
+          "body": {
+            "error": "Đơn hàng chưa đủ giá trị tối thiểu 300,000 ₫ để áp dụng mã này"
+          }
+        }
+      }
+    },
+    {
+      "id": "TC-FR09-ST-006",
+      "title": "Coupon expired la invalid state",
+      "status": "FAIL",
+      "message": "TC-FR09-ST-006 expected rejection containing \"hết hạn\"",
+      "bugIds": [
+        "BUG-FR09-001"
+      ],
+      "evidence": {
+        "expected": {
+          "status": "4xx",
+          "errorContains": "hết hạn"
+        },
+        "actual": {
+          "status": 400,
+          "body": {
+            "error": "Đơn hàng chưa đủ giá trị tối thiểu 100,000 ₫ để áp dụng mã này"
+          }
+        }
+      }
+    },
+    {
+      "id": "TC-FR09-ST-007",
+      "title": "Below min order khong duoc apply",
+      "status": "PASS"
+    },
+    {
+      "id": "TC-FR09-ST-008",
+      "title": "Fixed coupon hop le tai bien min order",
+      "status": "FAIL",
+      "message": "TC-FR09-ST-008 expected successful coupon application",
+      "bugIds": [
+        "BUG-FR09-001"
+      ],
+      "evidence": {
+        "expected": {
+          "discount_amount": 50000,
+          "final_amount": 450000
+        },
+        "actual": {
+          "status": 400,
+          "body": {
+            "error": "Đơn hàng chưa đủ giá trị tối thiểu 500,000 ₫ để áp dụng mã này"
+          }
+        }
+      }
+    },
+    {
+      "id": "TC-FR09-UC-001",
+      "title": "Apply coupon va checkout thanh cong",
+      "status": "FAIL",
+      "message": "TC-FR09-UC-001 expected successful coupon application",
+      "bugIds": [
+        "BUG-FR09-001"
+      ],
+      "evidence": {
+        "expected": {
+          "discount_amount": 30000,
+          "final_amount": 270000
+        },
+        "actual": {
+          "status": 400,
+          "body": {
+            "error": "Đơn hàng chưa đủ giá trị tối thiểu 300,000 ₫ để áp dụng mã này"
+          }
+        }
+      }
+    },
+    {
+      "id": "TC-FR09-UC-002",
+      "title": "Khach chua dang nhap khong duoc dung coupon",
+      "status": "FAIL",
+      "message": "TC-FR09-UC-002 expected unauthenticated apply-coupon to be rejected",
+      "bugIds": [
+        "BUG-FR09-003"
+      ],
+      "evidence": {
+        "exactCase": {
+          "status": 400,
+          "body": {
+            "error": "Đơn hàng chưa đủ giá trị tối thiểu 300,000 ₫ để áp dụng mã này"
+          }
+        },
+        "diagnosticNoJwtAboveMin": {
+          "status": 200,
+          "body": {
+            "success": true,
+            "coupon_id": 1,
+            "discount_amount": -2700009,
+            "final_amount": 3000010,
+            "message": "Áp dụng thành công! Giảm 10%"
+          }
+        }
+      }
+    },
+    {
+      "id": "TC-FR09-UC-003",
+      "title": "Ma coupon khong ton tai hoac khong active",
+      "status": "PASS"
+    },
+    {
+      "id": "TC-FR09-UC-004",
+      "title": "Backend khong tin total client gui len",
+      "status": "FAIL",
+      "message": "TC-FR09-UC-004 expected backend to ignore tampered total_amount=3000000 and use real total=300000",
+      "bugIds": [
+        "BUG-FR09-004",
+        "BUG-FR09-002"
+      ],
+      "evidence": {
+        "expected": {
+          "apply": {
+            "discount_amount": 30000,
+            "final_amount": 270000
+          },
+          "orderTotalNot": 3000000
+        },
+        "actual": {
+          "apply": {
+            "status": 200,
+            "body": {
+              "success": true,
+              "coupon_id": 1,
+              "discount_amount": -27000000,
+              "final_amount": 30000000,
+              "message": "Áp dụng thành công! Giảm 10%"
+            }
+          },
+          "checkout": {
+            "status": 200,
+            "body": {
+              "message": "Checkout successful",
+              "orderId": 4
+            }
+          },
+          "order": {
+            "id": 4,
+            "user_id": 26,
+            "total_amount": 3000000,
+            "status": "pending",
+            "shipping_address": null,
+            "created_at": "2026-07-06 09:13:18"
+          }
+        }
+      }
+    },
+    {
+      "id": "TC-FR09-UC-005",
+      "title": "Percent discount dung cong thuc",
+      "status": "FAIL",
+      "message": "TC-FR09-UC-005 expected discount_amount=50000, received -4500000",
+      "bugIds": [
+        "BUG-FR09-002"
+      ],
+      "evidence": {
+        "expected": {
+          "discount_amount": 50000,
+          "final_amount": 450000
+        },
+        "actual": {
+          "status": 200,
+          "body": {
+            "success": true,
+            "coupon_id": 1,
+            "discount_amount": -4500000,
+            "final_amount": 5000000,
+            "message": "Áp dụng thành công! Giảm 10%"
+          }
+        }
+      }
+    },
+    {
+      "id": "TC-FR09-UC-006",
+      "title": "Fixed discount dung cong thuc",
+      "status": "PASS"
+    }
+  ],
+  "bugs": {
+    "BUG-FR09-001": {
+      "title": "Minimum order boundary is implemented as > instead of >=",
+      "severity": "High",
+      "requirement": "FR-09 C3: total_amount >= min_order_amount",
+      "cases": [
+        {
+          "id": "TC-FR09-ST-001",
+          "title": "Apply coupon hop le tai bien min order",
+          "status": "FAIL",
+          "message": "TC-FR09-ST-001 expected successful coupon application",
+          "bugIds": [
+            "BUG-FR09-001"
+          ],
+          "evidence": {
+            "expected": {
+              "discount_amount": 30000,
+              "final_amount": 270000
+            },
+            "actual": {
+              "status": 400,
+              "body": {
+                "error": "Đơn hàng chưa đủ giá trị tối thiểu 300,000 ₫ để áp dụng mã này"
+              }
+            }
+          }
+        },
+        {
+          "id": "TC-FR09-ST-003",
+          "title": "Chan coupon SAVE10 khi het luot dung",
+          "status": "FAIL",
+          "message": "TC-FR09-ST-003 expected rejection containing \"giới hạn\"",
+          "bugIds": [
+            "BUG-FR09-001"
+          ],
+          "evidence": {
+            "expected": {
+              "status": "4xx",
+              "errorContains": "giới hạn"
+            },
+            "actual": {
+              "status": 400,
+              "body": {
+                "error": "Đơn hàng chưa đủ giá trị tối thiểu 300,000 ₫ để áp dụng mã này"
+              }
+            }
+          }
+        },
+        {
+          "id": "TC-FR09-ST-004",
+          "title": "Apply coupon VIP100 khi con luot dung",
+          "status": "FAIL",
+          "message": "TC-FR09-ST-004 expected successful coupon application",
+          "bugIds": [
+            "BUG-FR09-001"
+          ],
+          "evidence": {
+            "expected": {
+              "discount_amount": 100000,
+              "final_amount": 200000
+            },
+            "actual": {
+              "status": 400,
+              "body": {
+                "error": "Đơn hàng chưa đủ giá trị tối thiểu 300,000 ₫ để áp dụng mã này"
+              }
+            }
+          }
+        },
+        {
+          "id": "TC-FR09-ST-005",
+          "title": "Chan lan thu 3 cua coupon VIP100",
+          "status": "FAIL",
+          "message": "TC-FR09-ST-005 expected rejection containing \"giới hạn\"",
+          "bugIds": [
+            "BUG-FR09-001"
+          ],
+          "evidence": {
+            "expected": {
+              "status": "4xx",
+              "errorContains": "giới hạn"
+            },
+            "actual": {
+              "status": 400,
+              "body": {
+                "error": "Đơn hàng chưa đủ giá trị tối thiểu 300,000 ₫ để áp dụng mã này"
+              }
+            }
+          }
+        },
+        {
+          "id": "TC-FR09-ST-006",
+          "title": "Coupon expired la invalid state",
+          "status": "FAIL",
+          "message": "TC-FR09-ST-006 expected rejection containing \"hết hạn\"",
+          "bugIds": [
+            "BUG-FR09-001"
+          ],
+          "evidence": {
+            "expected": {
+              "status": "4xx",
+              "errorContains": "hết hạn"
+            },
+            "actual": {
+              "status": 400,
+              "body": {
+                "error": "Đơn hàng chưa đủ giá trị tối thiểu 100,000 ₫ để áp dụng mã này"
+              }
+            }
+          }
+        },
+        {
+          "id": "TC-FR09-ST-008",
+          "title": "Fixed coupon hop le tai bien min order",
+          "status": "FAIL",
+          "message": "TC-FR09-ST-008 expected successful coupon application",
+          "bugIds": [
+            "BUG-FR09-001"
+          ],
+          "evidence": {
+            "expected": {
+              "discount_amount": 50000,
+              "final_amount": 450000
+            },
+            "actual": {
+              "status": 400,
+              "body": {
+                "error": "Đơn hàng chưa đủ giá trị tối thiểu 500,000 ₫ để áp dụng mã này"
+              }
+            }
+          }
+        },
+        {
+          "id": "TC-FR09-UC-001",
+          "title": "Apply coupon va checkout thanh cong",
+          "status": "FAIL",
+          "message": "TC-FR09-UC-001 expected successful coupon application",
+          "bugIds": [
+            "BUG-FR09-001"
+          ],
+          "evidence": {
+            "expected": {
+              "discount_amount": 30000,
+              "final_amount": 270000
+            },
+            "actual": {
+              "status": 400,
+              "body": {
+                "error": "Đơn hàng chưa đủ giá trị tối thiểu 300,000 ₫ để áp dụng mã này"
+              }
+            }
+          }
+        }
+      ],
+      "screenshot": "screenshots/BUG-FR09-001.png"
+    },
+    "BUG-FR09-005": {
+      "title": "Orders do not persist coupon or discount details",
+      "severity": "Medium",
+      "requirement": "FR-09: checkout order stores applied coupon/discount information",
+      "cases": [
+        {
+          "id": "TC-FR09-ST-002",
+          "title": "Ghi nhan usage sau checkout thanh cong",
+          "status": "FAIL",
+          "message": "TC-FR09-ST-002 expected usage=1 and order coupon/discount fields persisted",
+          "bugIds": [
+            "BUG-FR09-005"
+          ],
+          "evidence": {
+            "expected": {
+              "usage": 1,
+              "orderFields": [
+                "coupon_id",
+                "discount_amount"
+              ]
+            },
+            "actual": {
+              "usage": 1,
+              "order": {
+                "id": 3,
+                "user_id": 17,
+                "total_amount": 270000,
+                "status": "pending",
+                "shipping_address": null,
+                "created_at": "2026-07-06 09:13:18"
+              }
+            }
+          }
+        }
+      ],
+      "screenshot": "screenshots/BUG-FR09-005.png"
+    },
+    "BUG-FR09-003": {
+      "title": "Apply coupon does not require a valid JWT and trusts client user_id",
+      "severity": "Critical",
+      "requirement": "FR-09 C4/C5: authenticated user and per-user usage limit",
+      "cases": [
+        {
+          "id": "TC-FR09-UC-002",
+          "title": "Khach chua dang nhap khong duoc dung coupon",
+          "status": "FAIL",
+          "message": "TC-FR09-UC-002 expected unauthenticated apply-coupon to be rejected",
+          "bugIds": [
+            "BUG-FR09-003"
+          ],
+          "evidence": {
+            "exactCase": {
+              "status": 400,
+              "body": {
+                "error": "Đơn hàng chưa đủ giá trị tối thiểu 300,000 ₫ để áp dụng mã này"
+              }
+            },
+            "diagnosticNoJwtAboveMin": {
+              "status": 200,
+              "body": {
+                "success": true,
+                "coupon_id": 1,
+                "discount_amount": -2700009,
+                "final_amount": 3000010,
+                "message": "Áp dụng thành công! Giảm 10%"
+              }
+            }
+          }
+        }
+      ],
+      "screenshot": "screenshots/BUG-FR09-003.png"
+    },
+    "BUG-FR09-004": {
+      "title": "Backend trusts client-supplied total_amount for coupon and checkout totals",
+      "severity": "Critical",
+      "requirement": "FR-08/FR-09: backend recalculates totals and ignores tampered client totals",
+      "cases": [
+        {
+          "id": "TC-FR09-UC-004",
+          "title": "Backend khong tin total client gui len",
+          "status": "FAIL",
+          "message": "TC-FR09-UC-004 expected backend to ignore tampered total_amount=3000000 and use real total=300000",
+          "bugIds": [
+            "BUG-FR09-004",
+            "BUG-FR09-002"
+          ],
+          "evidence": {
+            "expected": {
+              "apply": {
+                "discount_amount": 30000,
+                "final_amount": 270000
+              },
+              "orderTotalNot": 3000000
+            },
+            "actual": {
+              "apply": {
+                "status": 200,
+                "body": {
+                  "success": true,
+                  "coupon_id": 1,
+                  "discount_amount": -27000000,
+                  "final_amount": 30000000,
+                  "message": "Áp dụng thành công! Giảm 10%"
+                }
+              },
+              "checkout": {
+                "status": 200,
+                "body": {
+                  "message": "Checkout successful",
+                  "orderId": 4
+                }
+              },
+              "order": {
+                "id": 4,
+                "user_id": 26,
+                "total_amount": 3000000,
+                "status": "pending",
+                "shipping_address": null,
+                "created_at": "2026-07-06 09:13:18"
+              }
+            }
+          }
+        }
+      ],
+      "screenshot": "screenshots/BUG-FR09-004.png"
+    },
+    "BUG-FR09-002": {
+      "title": "Percent coupon discount is calculated with the wrong formula",
+      "severity": "Critical",
+      "requirement": "FR-09: discount_amount = total x discount_value / 100",
+      "cases": [
+        {
+          "id": "TC-FR09-UC-004",
+          "title": "Backend khong tin total client gui len",
+          "status": "FAIL",
+          "message": "TC-FR09-UC-004 expected backend to ignore tampered total_amount=3000000 and use real total=300000",
+          "bugIds": [
+            "BUG-FR09-004",
+            "BUG-FR09-002"
+          ],
+          "evidence": {
+            "expected": {
+              "apply": {
+                "discount_amount": 30000,
+                "final_amount": 270000
+              },
+              "orderTotalNot": 3000000
+            },
+            "actual": {
+              "apply": {
+                "status": 200,
+                "body": {
+                  "success": true,
+                  "coupon_id": 1,
+                  "discount_amount": -27000000,
+                  "final_amount": 30000000,
+                  "message": "Áp dụng thành công! Giảm 10%"
+                }
+              },
+              "checkout": {
+                "status": 200,
+                "body": {
+                  "message": "Checkout successful",
+                  "orderId": 4
+                }
+              },
+              "order": {
+                "id": 4,
+                "user_id": 26,
+                "total_amount": 3000000,
+                "status": "pending",
+                "shipping_address": null,
+                "created_at": "2026-07-06 09:13:18"
+              }
+            }
+          }
+        },
+        {
+          "id": "TC-FR09-UC-005",
+          "title": "Percent discount dung cong thuc",
+          "status": "FAIL",
+          "message": "TC-FR09-UC-005 expected discount_amount=50000, received -4500000",
+          "bugIds": [
+            "BUG-FR09-002"
+          ],
+          "evidence": {
+            "expected": {
+              "discount_amount": 50000,
+              "final_amount": 450000
+            },
+            "actual": {
+              "status": 200,
+              "body": {
+                "success": true,
+                "coupon_id": 1,
+                "discount_amount": -4500000,
+                "final_amount": 5000000,
+                "message": "Áp dụng thành công! Giảm 10%"
+              }
+            }
+          }
+        }
+      ],
+      "screenshot": "screenshots/BUG-FR09-002.png"
+    }
+  }
+}
