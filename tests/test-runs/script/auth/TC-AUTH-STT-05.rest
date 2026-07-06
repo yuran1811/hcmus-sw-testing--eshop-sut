@@ -1,0 +1,29 @@
+# TC-AUTH-STT-05: Đăng nhập thành công khi đang có 2 lần sai liên tiếp
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập sai lần 1
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "WrongPassword123!"
+}
+
+### 2. Đăng nhập sai lần 2
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "WrongPassword123!"
+}
+
+### 3. Đăng nhập đúng (sau 2 lần sai -> Thành công & Reset counter)
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "Test1234!"
+}

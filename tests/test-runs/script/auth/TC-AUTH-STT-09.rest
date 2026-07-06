@@ -1,0 +1,39 @@
+# TC-AUTH-STT-09: Tự động mở khóa tài khoản sau khi hết thời hạn 30 giây
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập sai 3 lần để khóa tài khoản
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "WrongPassword123!"
+}
+
+###
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "WrongPassword123!"
+}
+
+###
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "WrongPassword123!"
+}
+
+### 2. Đợi 31 giây (Tester chờ đủ 31s)
+### 3. Đăng nhập lại sau 31s -> Thành công
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "Test1234!"
+}

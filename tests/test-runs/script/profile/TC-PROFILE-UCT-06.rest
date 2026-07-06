@@ -1,0 +1,30 @@
+# TC-PROFILE-UCT-06: Đảm bảo không thể tự nâng quyền role thành admin qua request cập nhật hồ sơ (Extension 3c)
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập User (role = 'user')
+# @name login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "Test1234!"
+}
+
+### 2. Lưu token
+@token = {{login.response.body.token}}
+
+### 3. Cố tình gửi role = 'admin' trong request body
+PUT {{baseUrl}}/users/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "name": "Nguyen Van Test",
+    "role": "admin",
+    "phone": "0912345678"
+}
+
+### 4. Kiểm tra lại role của user (Role phải duy trì là 'user')
+GET {{baseUrl}}/users/me
+Authorization: Bearer {{token}}

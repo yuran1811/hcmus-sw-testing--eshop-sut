@@ -1,3 +1,21 @@
-| Requirement | Test Case | Result | Bug Issue | Status |
-| ----------- | --------- | ------ | --------- | ------ |
-|             |           |        |           |        |
+# Requirement Traceability Matrix (RTM)
+
+| Requirement | Test Case ID                                                    | Test Technique           | Result  | Bug Issue                                                                                                | Status   |
+| :---------- | :-------------------------------------------------------------- | :----------------------- | :------ | :------------------------------------------------------------------------------------------------------- | :------- |
+| **FR-02**   | [TC-AUTH-STT-01](../test-cases/auth/TC-AUTH-STT-01.md)          | State Transition Testing | Pass    | None                                                                                                     | Executed |
+| **FR-02**   | [TC-AUTH-STT-02](../test-cases/auth/TC-AUTH-STT-02.md)          | State Transition Testing | Fail    | [BUG-AUTH-001](../bug-reports/auth/BUG-AUTH-001.md)                                                      | Executed |
+| **FR-02**   | [TC-AUTH-STT-03](../test-cases/auth/TC-AUTH-STT-03.md)          | State Transition Testing | Blocked | [BUG-AUTH-001](../bug-reports/auth/BUG-AUTH-001.md)                                                      | Executed |
+| **FR-02**   | [TC-AUTH-STT-04](../test-cases/auth/TC-AUTH-STT-04.md)          | State Transition Testing | Fail    | [BUG-AUTH-001](../bug-reports/auth/BUG-AUTH-001.md), [BUG-AUTH-003](../bug-reports/auth/BUG-AUTH-003.md) | Executed |
+| **FR-02**   | [TC-AUTH-STT-05](../test-cases/auth/TC-AUTH-STT-05.md)          | State Transition Testing | Fail    | [BUG-AUTH-003](../bug-reports/auth/BUG-AUTH-003.md)                                                      | Executed |
+| **FR-02**   | [TC-AUTH-STT-06](../test-cases/auth/TC-AUTH-STT-06.md)          | State Transition Testing | Fail    | [BUG-AUTH-002](../bug-reports/auth/BUG-AUTH-002.md)                                                      | Executed |
+| **FR-02**   | [TC-AUTH-STT-07](../test-cases/auth/TC-AUTH-STT-07.md)          | State Transition Testing | Pass    | None                                                                                                     | Executed |
+| **FR-02**   | [TC-AUTH-STT-08](../test-cases/auth/TC-AUTH-STT-08.md)          | State Transition Testing | Pass    | None                                                                                                     | Executed |
+| **FR-02**   | [TC-AUTH-STT-09](../test-cases/auth/TC-AUTH-STT-09.md)          | State Transition Testing | Fail    | [BUG-AUTH-002](../bug-reports/auth/BUG-AUTH-002.md)                                                      | Executed |
+| **FR-02**   | [TC-AUTH-STT-10](../test-cases/auth/TC-AUTH-STT-10.md)          | State Transition Testing | Fail    | [BUG-AUTH-002](../bug-reports/auth/BUG-AUTH-002.md)                                                      | Executed |
+| **FR-04**   | [TC-PROFILE-UCT-01](../test-cases/profile/TC-PROFILE-UCT-01.md) | Use Case Testing         | Pass    | None                                                                                                     | Executed |
+| **FR-04**   | [TC-PROFILE-UCT-02](../test-cases/profile/TC-PROFILE-UCT-02.md) | Use Case Testing         | Fail    | [BUG-PROFILE-002](../bug-reports/profile/BUG-PROFILE-002.md)                                             | Executed |
+| **FR-04**   | [TC-PROFILE-UCT-03](../test-cases/profile/TC-PROFILE-UCT-03.md) | Use Case Testing         | Fail    | [BUG-PROFILE-002](../bug-reports/profile/BUG-PROFILE-002.md)                                             | Executed |
+| **FR-04**   | [TC-PROFILE-UCT-04](../test-cases/profile/TC-PROFILE-UCT-04.md) | Use Case Testing         | Fail    | [BUG-PROFILE-002](../bug-reports/profile/BUG-PROFILE-002.md)                                             | Executed |
+| **FR-04**   | [TC-PROFILE-UCT-05](../test-cases/profile/TC-PROFILE-UCT-05.md) | Use Case Testing         | Pass    | None                                                                                                     | Executed |
+| **FR-04**   | [TC-PROFILE-UCT-06](../test-cases/profile/TC-PROFILE-UCT-06.md) | Use Case Testing         | Fail    | [BUG-PROFILE-001](../bug-reports/profile/BUG-PROFILE-001.md)                                             | Executed |
+| **FR-04**   | [TC-PROFILE-UCT-07](../test-cases/profile/TC-PROFILE-UCT-07.md) | Use Case Testing         | Pass    | None                                                                                                     | Executed |

@@ -1,0 +1,38 @@
+# TC-AUTH-STT-08: Đăng nhập với thông tin SAI khi tài khoản đang bị khóa (Invalid Transition)
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập sai 3 lần để làm tài khoản bị khóa 30s
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "WrongPassword123!"
+}
+
+###
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "WrongPassword123!"
+}
+
+###
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "WrongPassword123!"
+}
+
+### 2. Đăng nhập tiếp tục với thông tin SAI khi chưa đủ 30s -> Hệ thống từ chối
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "WrongPassword123!"
+}

@@ -1,0 +1,39 @@
+# TC-AUTH-STT-10: Đăng nhập thành công sau khi tài khoản hết 30 giây bị khóa (Sequence End-to-End)
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập sai 3 lần
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "WrongPassword123!"
+}
+
+###
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "WrongPassword123!"
+}
+
+###
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "WrongPassword123!"
+}
+
+### 2. Chờ 31 giây trôi qua...
+### 3. Đăng nhập với credentials đúng -> Thành công thu được token
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "Test1234!"
+}

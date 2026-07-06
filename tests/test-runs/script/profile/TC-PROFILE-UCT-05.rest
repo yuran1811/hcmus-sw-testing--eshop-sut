@@ -1,0 +1,30 @@
+# TC-PROFILE-UCT-05: Đảm bảo không thể thay đổi địa chỉ Email qua request cập nhật hồ sơ (Extension 3b)
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập User
+# @name login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "Test1234!"
+}
+
+### 2. Lưu token
+@token = {{login.response.body.token}}
+
+### 3. Cố tình gửi trường email mới trong body cập nhật hồ sơ
+PUT {{baseUrl}}/users/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "name": "Nguyen Van Test",
+    "email": "hacker@domain.com",
+    "phone": "0912345678"
+}
+
+### 4. Kiểm tra lại thông tin hồ sơ (Email vẫn phải là test@eshop.com)
+GET {{baseUrl}}/users/me
+Authorization: Bearer {{token}}

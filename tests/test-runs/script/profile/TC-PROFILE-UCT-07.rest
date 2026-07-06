@@ -1,0 +1,21 @@
+# TC-PROFILE-UCT-07: Cập nhật hồ sơ thất bại khi chưa đăng nhập hoặc Token JWT không hợp lệ (Extension 1a)
+@baseUrl = http://localhost:3000/api
+
+### 1. Gửi request cập nhật không truyền Token -> Server phải trả về HTTP 401
+PUT {{baseUrl}}/users/me
+Content-Type: application/json
+
+{
+    "name": "Hacker Name",
+    "phone": "0912345678"
+}
+
+### 2. Gửi request cập nhật với Token giả/hư hỏng -> Server phải trả về HTTP 403
+PUT {{baseUrl}}/users/me
+Authorization: Bearer invalid_jwt_token_12345
+Content-Type: application/json
+
+{
+    "name": "Hacker Name",
+    "phone": "0912345678"
+}

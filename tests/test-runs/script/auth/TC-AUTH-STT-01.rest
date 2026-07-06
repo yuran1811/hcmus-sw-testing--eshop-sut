@@ -1,0 +1,11 @@
+# TC-AUTH-STT-01: Đăng nhập thành công lần đầu khi tài khoản ở trạng thái Unlocked (0 failed)
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập thành công
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "Test1234!"
+}

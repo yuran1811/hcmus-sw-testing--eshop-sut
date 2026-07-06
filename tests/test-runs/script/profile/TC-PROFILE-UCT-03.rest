@@ -1,0 +1,26 @@
+# TC-PROFILE-UCT-03: Cập nhật hồ sơ thất bại khi Số điện thoại không bắt đầu bằng số 0 (Extension 3a)
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập User
+# @name login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "Test1234!"
+}
+
+### 2. Lưu token
+@token = {{login.response.body.token}}
+
+### 3. Cập nhật hồ sơ với SĐT không bắt đầu bằng số 0
+PUT {{baseUrl}}/users/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "name": "Nguyen Van Test",
+    "phone": "1234567890",
+    "shipping_address": "123 Đường ABC"
+}

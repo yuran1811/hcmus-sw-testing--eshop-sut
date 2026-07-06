@@ -1,0 +1,29 @@
+# TC-AUTH-STT-06: Đăng nhập sai lần thứ 3 liên tiếp dẫn đến khóa tài khoản 30 giây
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập sai lần 1
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "WrongPassword123!"
+}
+
+### 2. Đăng nhập sai lần 2
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "WrongPassword123!"
+}
+
+### 3. Đăng nhập sai lần 3 (Bị khóa tài khoản 30s)
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "WrongPassword123!"
+}

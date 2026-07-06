@@ -1,0 +1,11 @@
+# TC-AUTH-STT-02: Đăng nhập sai lần thứ 1 từ trạng thái Unlocked (0 failed)
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập sai lần 1
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "WrongPassword123!"
+}

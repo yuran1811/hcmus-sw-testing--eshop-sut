@@ -1,0 +1,30 @@
+# TC-PROFILE-UCT-01: Cập nhật thông tin hồ sơ cá nhân thành công với dữ liệu hợp lệ (Main Success Scenario)
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng nhập User
+# @name login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@eshop.com",
+    "password": "Test1234!"
+}
+
+### 2. Lưu token
+@token = {{login.response.body.token}}
+
+### 3. Cập nhật hồ sơ với dữ liệu hợp lệ
+PUT {{baseUrl}}/users/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "name": "Nguyen Van Test",
+    "phone": "0912345678",
+    "shipping_address": "123 Đường Nguyễn Huệ, Quận 1, TP.HCM"
+}
+
+### 4. Kiểm tra lại thông tin hồ sơ sau khi cập nhật
+GET {{baseUrl}}/users/me
+Authorization: Bearer {{token}}
