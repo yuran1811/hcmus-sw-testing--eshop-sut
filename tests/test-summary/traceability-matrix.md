@@ -83,3 +83,17 @@
 | FR-20       | TC-CART-MOBILE-022    | Fail   | [BUG][Cart Mobile] - Total label not display correctly                                                        | Run    |
 | FR-20       | TC-CART-MOBILE-023    | Fail   | [BUG][Cart Mobile] - Cart Badge count the number of different items, not the total quantity                   | Run    |
 | FR-20       | TC-CART-MOBILE-024    | Fail   | [BUG][Cart Mobile] - No illustration on empty state                                                           | Run    |
+| FR-09       | TC-FR09-ST-001        | Fail   | BUG-FR09-001 - Minimum order boundary uses `>` instead of `>=`                                                | Run    |
+| FR-09       | TC-FR09-ST-002        | Fail   | BUG-FR09-005 - Orders do not persist coupon or discount details                                               | Run    |
+| FR-09       | TC-FR09-ST-003        | Fail   | BUG-FR09-001 - Minimum order boundary prevents usage-limit validation at exact threshold                      | Run    |
+| FR-09       | TC-FR09-ST-004        | Fail   | BUG-FR09-001 - Minimum order boundary rejects VIP100 at exact threshold                                       | Run    |
+| FR-09       | TC-FR09-ST-005        | Fail   | BUG-FR09-001 - Minimum order boundary prevents exhausted-usage validation at exact threshold                  | Run    |
+| FR-09       | TC-FR09-ST-006        | Fail   | BUG-FR09-001 - Minimum order boundary prevents expired-coupon validation at exact threshold                   | Run    |
+| FR-09       | TC-FR09-ST-007        | Pass   |                                                                                                               | Run    |
+| FR-09       | TC-FR09-ST-008        | Fail   | BUG-FR09-001 - Minimum order boundary rejects BIGBUY at exact threshold                                       | Run    |
+| FR-09       | TC-FR09-UC-001        | Fail   | BUG-FR09-001 - Main coupon checkout flow blocked at exact threshold                                           | Run    |
+| FR-09       | TC-FR09-UC-002        | Fail   | BUG-FR09-003 - Apply coupon does not require valid JWT and trusts client user_id                              | Run    |
+| FR-09       | TC-FR09-UC-003        | Pass   |                                                                                                               | Run    |
+| FR-09       | TC-FR09-UC-004        | Fail   | BUG-FR09-004 - Backend trusts client total; BUG-FR09-002 - percent formula wrong                              | Run    |
+| FR-09       | TC-FR09-UC-005        | Fail   | BUG-FR09-002 - Percent coupon discount formula is wrong                                                       | Run    |
+| FR-09       | TC-FR09-UC-006        | Pass   |                                                                                                               | Run    |
