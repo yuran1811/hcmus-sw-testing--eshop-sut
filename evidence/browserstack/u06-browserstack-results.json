@@ -1,0 +1,57 @@
+{
+  "executedAt": "2026-07-20T09:36:31.987Z",
+  "results": [
+    {
+      "browser": "chrome",
+      "os": "Windows",
+      "os_version": "11",
+      "label": "chrome-windows11",
+      "build": "U06-Usability-2026-07-20",
+      "stages": {
+        "login": "PASS",
+        "account": "PASS",
+        "personalTickets": "FAIL",
+        "wishlist": "PASS",
+        "watchHistory": "PASS",
+        "lunarPoints": "PASS"
+      },
+      "issues": [
+        "No personal-ticket entry in account navigation",
+        "Invalid empty-state pagination: Page 1 of 0",
+        "Lunar Points mismatch: sidebar 18/500, main content 0/500"
+      ],
+      "wishlistState": "DATA",
+      "historyState": "EMPTY",
+      "pagination": "Page 1 of 0",
+      "pointsSidebar": "18/500",
+      "pointsMain": "0/500",
+      "execution": "PASS"
+    },
+    {
+      "browser": "edge",
+      "os": "Windows",
+      "os_version": "11",
+      "label": "edge-windows11",
+      "build": "U06-Usability-2026-07-20",
+      "stages": {
+        "login": "PASS",
+        "account": "PASS",
+        "personalTickets": "FAIL",
+        "wishlist": "PASS",
+        "watchHistory": "PASS",
+        "lunarPoints": "PASS"
+      },
+      "issues": [
+        "No personal-ticket entry in account navigation",
+        "Invalid empty-state pagination: Page 1 of 0",
+        "Lunar Points mismatch: sidebar 18/500, main content 0/500"
+      ],
+      "wishlistState": "DATA",
+      "historyState": "EMPTY",
+      "pagination": "Page 1 of 0",
+      "pointsSidebar": "18/500",
+      "pointsMain": "0/500",
+      "execution": "PASS"
+    }
+  ]
+}
