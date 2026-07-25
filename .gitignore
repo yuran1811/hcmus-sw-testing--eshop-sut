@@ -1,2 +1,5 @@
 node_modules/
+.playwright-mcp/
 
+.env*
+!.env*.example
