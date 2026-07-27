@@ -293,3 +293,621 @@
   - `PRODDETAIL-VIS-14` _(thêm mới, sau VIS-13)_ — Category: Visual · Checklist Item: _"Mở DevTools Console, gõ `document.documentElement.setAttribute('dir','rtl')` rồi Enter, quan sát toàn trang"_ · Expected Result: _"Bố cục 2 cột không vỡ; các phần tử không chồng lấn nhau và không tràn ra ngoài viewport"_.
   - `PRODDETAIL-ACC-07` — bổ sung vào Checklist Item: _"(NVDA trên Windows: tải tại nvaccess.org, bật bằng Ctrl+Alt+N; hoặc Narrator tích hợp sẵn: Win+Ctrl+Enter)"_.
   - Coverage gate và pass log: cập nhật tổng từ **71 → 73**, IA-01 từ 23 → 25 (`VIS` từ 12 → 14).
+
+---
+
+**AI Audit Report Item**
+
+- **Công cụ AI:** Claude Code (Claude Opus 5 — `claude-opus-5`)
+- **Thời gian:** 2026-07-27 20:26:36
+- **Nội dung prompt:**
+  > Hãy chạy skill @.agents/skills/usability-evaluation-builder/SKILL.md thực hiện Phase 1 — Plan. Dừng lại sau khi xuất xong các file Phase 1, không sang Phase 2 hay Phase 3.
+  >
+  > ## Inputs
+  >
+  > **Flow under test:**
+  >
+  > - Flow ID: U-01
+  > - Tên: Tìm kiếm sản phẩm → Xem chi tiết → Thêm giỏ hàng → Áp mã giảm giá → Checkout
+  > - FR liên quan: FR-05, FR-06, FR-07, FR-09, FR-08
+  >
+  > **Target user profile:**
+  > Người từ 18–35 tuổi, có thói quen mua sắm online (đã dùng Shopee/Lazada)
+  >
+  > **Thang đo:** SUS (đã chọn — không cần hỏi lại)
+  >
+  > **Timebox:** 10 phút/người
+  >
+  > **Số phiên:** 7 người chính (P01–P07) + 1 pilot (P00)
+  >
+  > **SUT URL:** http://localhost:5173
+  >
+  > **Người điều phối:** nlhakhoa23@clc.fitus.edu.vn
+  >
+  > ## Yêu cầu output (Phase 1 only)
+  >
+  > Xuất 3 file sau, theo đúng template trong skill:
+  >
+  > ### File 1 — test-plan.md
+  >
+  > Bao gồm đầy đủ:
+  >
+  > - Metadata (ngày, URL, flow, FR, timebox, người điều phối, thiết bị/browser)
+  > - Mục tiêu (1–3 câu hỏi testable, không phải mô tả lại flow)
+  > - Task scenario dạng mục tiêu (KHÔNG liệt kê từng bước bấm)
+  > - Start state / Success state / Failure state / Deviation handling
+  > - Instrument: SUS — 10 item đầy đủ bằng tiếng Việt (lấy từ instruments_reference.md)
+  > - Probe questions: tối thiểu 1 câu/nhóm (clarity / error recovery / speed / trust),
+  >   viết bằng tiếng Việt, giọng trung lập không dẫn dắt
+  > - Pre-session checklist
+  > - Kịch bản mở đầu bằng lời (đoạn moderator đọc cho participant trước khi bắt đầu)
+  > - Cách giao task scenario (đọc nguyên văn, không giải thích thêm)
+  >
+  > ### File 2 — recruitment-tracker.md
+  >
+  > - Bảng 8 hàng (P00 pilot + P01–P07)
+  > - Toàn bộ cột thông tin cá nhân để TRỐNG (placeholder CHƯA THU THẬP)
+  > - Có câu hỏi sàng lọc phù hợp với target user profile
+  > - Có quy ước che thông tin liên hệ (che 4 số giữa)
+  >
+  > ### File 3 — sessions/P00-pilot.md
+  >
+  > - Template phiên pilot (toàn bộ để CHƯA THU THẬP)
+  > - Có checklist riêng ghi lại "đã đổi gì sau pilot" để tinh chỉnh kịch bản
+  >
+  > ## Ràng buộc bắt buộc
+  >
+  > - KHÔNG tự điền thông tin người tham gia — tất cả là placeholder
+  > - KHÔNG sinh dữ liệu quan sát, timeline, quote, hay rating giả
+  > - Task scenario phải dạng mục tiêu, không phải walkthrough từng bước
+  > - SUS item phải lấy nguyên văn từ instruments_reference.md, không paraphrase
+  > - Probe questions viết bằng tiếng Việt, không dùng lại câu hỏi có sẵn trong bank
+  >   mà phải viết lại phù hợp với flow cụ thể này
+  > - Kịch bản mở đầu phải nhắc rõ: đang test sản phẩm không phải test người dùng,
+  >   yêu cầu think-aloud, xin phép ghi màn hình
+  >
+  > Sau đó, hãy sử dụng skill @.agents/skills/ai-audit-logger/SKILL.md để lưu lại toàn bộ log
+- **AI output:**
+
+  > **File: `tests/usability/U-01/test-plan.md`**
+  >
+  > # Kế hoạch usability test — U-01
+  >
+  > - Ngày: 2026-07-27
+  > - Website: http://localhost:5173
+  > - Flow: U-01 — Tìm kiếm sản phẩm → Xem chi tiết → Thêm giỏ hàng → Áp mã giảm giá → Checkout
+  > - FR liên quan: FR-05 (tìm kiếm & danh sách sản phẩm), FR-06 (xem chi tiết sản phẩm), FR-07 (giỏ hàng), FR-09 (mã giảm giá), FR-08 (thanh toán)
+  > - Timebox: 10 phút/người
+  > - Người điều phối: nlhakhoa23@clc.fitus.edu.vn
+  > - Thiết bị/trình duyệt test chính: Laptop Windows 11, Chrome 126, cửa sổ 1440×900
+  > - Số phiên: 7 người chính (P01–P07) + 1 pilot (P00)
+  > - Hình thức: Moderated, in-person, think-aloud
+  >
+  > > **Lưu ý về thiết bị:** SUT chạy trên `localhost` của máy người điều phối nên người tham gia thao
+  > > tác trên máy đó, không dùng điện thoại cá nhân. Đây là một giới hạn của nghiên cứu (hồ sơ mục
+  > > tiêu là người quen mua sắm trên điện thoại) — phải ghi vào phần hạn chế ở báo cáo Phase 3. Nếu
+  > > muốn test trên điện thoại thật, cần expose dev server ra LAN trước khi chạy phiên.
+  >
+  > ---
+  >
+  > ## Mục tiêu
+  >
+  > Ba câu hỏi kiểm chứng được, mỗi câu trả lời được bằng số liệu trong session log:
+  >
+  > 1. **Người dùng mới có tự hoàn tất đơn hàng có áp mã giảm giá trong 10 phút mà không cần moderator can thiệp không?**
+  >    → đo bằng `Outcome` (`SUCCESS_UNASSISTED` vs các giá trị còn lại) và số `intervention`.
+  > 2. **Người dùng có tự tìm ra chỗ nhập mã giảm giá không, hay đi tìm ở trang Giỏ hàng trước?**
+  >    → đo bằng số `wrong turn` vào trang Giỏ hàng sau khi đã được giao nhiệm vụ có mã, và `hesitation ≥ 5s` tại màn hình Giỏ hàng/Checkout.
+  > 3. **Trước khi bấm xác nhận thanh toán, người dùng có đối chiếu lại số tiền cuối cùng không?**
+  >    → đo bằng quan sát hành vi (có quay lại nhìn/đọc to số tiền trước khi bấm) + câu hỏi mở nhóm Trust.
+  >
+  > *Vì sao chọn 3 câu này:* câu 1 đo hiệu quả tổng thể (effectiveness), câu 2 nhắm vào một điểm nghi
+  > ngờ cụ thể của thiết kế — ô nhập mã giảm giá nằm ở **trang Checkout** chứ không nằm ở trang Giỏ
+  > hàng, trong khi tên flow và thói quen từ Shopee/Lazada khiến người dùng dễ tìm ở Giỏ hàng trước.
+  > Câu 3 nhắm vào sự tin tưởng vào con số cuối cùng — màn hình Checkout cho phép **sửa trực tiếp ô
+  > "Tổng tiền thanh toán"**, nên việc người dùng có kiểm chứng lại hay không là một tín hiệu đáng đo.
+  >
+  > ---
+  >
+  > ## Task scenario
+  >
+  > > Bạn đang muốn mua một món phụ kiện công nghệ **dưới 10 triệu đồng** để tự thưởng cho mình.
+  > > Bạn vừa nhận được mã giảm giá **VIP100** từ chương trình khuyến mãi của EShop.
+  > > Hãy tìm một sản phẩm phù hợp với ngân sách, xem kỹ thông tin sản phẩm trước khi quyết định, rồi
+  > > hoàn tất việc đặt hàng có sử dụng mã giảm giá đó.
+  >
+  > **Vì sao kịch bản dừng ở đây:** kịch bản nêu *mục tiêu* (mua phụ kiện, có ngân sách, có mã giảm
+  > giá) và để người tham gia tự tìm đường. Không có câu nào chỉ ra phải bấm nút nào, vào trang nào,
+  > hay nhập mã ở đâu — nếu chỉ ra thì chính câu hỏi mục tiêu số 2 sẽ không còn đo được gì.
+  >
+  > **Ràng buộc tạo ra điểm quyết định thật:** với ngân sách dưới 10 triệu, danh mục hiện có **2 sản
+  > phẩm hợp lệ** (Tai nghe AirPods Pro 2 — 6.000.000 ₫ và Bàn phím cơ Keychron Q1 — 4.000.000 ₫) và
+  > 3 sản phẩm vượt ngân sách (28–45 triệu). Người tham gia phải thật sự lọc, không có đường đi duy nhất.
+  >
+  > ---
+  >
+  > ## Điều kiện
+  >
+  > - **Bắt đầu:** trình duyệt đã mở `http://localhost:5173`, trang chủ đã tải xong, **đã đăng nhập sẵn**
+  >   bằng tài khoản test, giỏ hàng rỗng, ô tìm kiếm trống, chưa cuộn trang.
+  > - **Thành công:** màn hình hiển thị **"Thanh toán thành công!"**, và trước khi bấm xác nhận đã quan
+  >   sát được mã giảm giá áp dụng thành công ở bước Checkout (xuất hiện dòng `Tiết kiệm: 100.000 ₫`).
+  > - **Thất bại:** bỏ cuộc, hết timebox 10 phút, hoặc bị kẹt không phục hồi và không đến được trạng
+  >   thái thành công.
+  > - **Deviation:**
+  >   - Nếu mã `VIP100` báo đã đạt giới hạn số lần dùng → **dừng đồng hồ**, khởi động lại backend để
+  >     reseed dữ liệu, cho người tham gia thử lại, ghi lại là deviation (xem checklist trước phiên).
+  >   - Nếu người tham gia **tự ý thử một mã khác** (`SAVE10`, `BIGBUY`, `EXPIRED`…) → **không ngăn cản**,
+  >     ghi lại nguyên văn mã đã nhập, phản hồi hệ thống và phản ứng của họ. Đây là dữ liệu quan sát
+  >     hợp lệ, không tính là deviation.
+  >   - Nếu ảnh sản phẩm không tải được (ảnh trỏ ra domain ngoài `placehold.co`, phụ thuộc mạng) → ghi
+  >     deviation và cho phiên tiếp tục.
+  >
+  > ### Vì sao đăng nhập sẵn trước khi tính giờ
+  >
+  > Trang Giỏ hàng chặn thao tác thanh toán nếu chưa đăng nhập (hiện `alert` rồi chuyển sang trang
+  > Đăng nhập). Flow U-01 **không bao gồm** FR-01/FR-02, nên nếu để người tham gia tự đăng nhập thì:
+  > (a) timebox 10 phút bị tiêu vào phần ngoài phạm vi, (b) các phiên không còn so sánh được với nhau
+  > vì người có tài khoản sẵn và người phải đăng ký sẽ mất thời gian rất khác nhau. Vì vậy đăng nhập
+  > sẵn là một phần của **start state chuẩn hoá**, không phải sự trợ giúp.
+  >
+  > Tài khoản dùng cho mọi phiên: `test@eshop.com` / `Test1234!` (tài khoản seed sẵn của SUT).
+  >
+  > ### Vì sao kịch bản dùng mã VIP100 chứ không phải SAVE10
+  >
+  > Đã kiểm chứng trực tiếp qua API `POST /api/apply-coupon` trước khi viết kế hoạch này:
+  >
+  > | Mã | Loại | Kết quả với đơn 30.000.000 ₫ | Dùng được trong kịch bản? |
+  > | --- | --- | --- | --- |
+  > | `VIP100` | fixed 100.000 ₫, đơn tối thiểu 300.000 ₫, tối đa 2 lần/người | giảm đúng 100.000 ₫ → còn 29.900.000 ₫ | ✅ **Dùng mã này** |
+  > | `BIGBUY` | fixed 50.000 ₫, đơn tối thiểu 500.000 ₫, tối đa 1 lần/người | giảm đúng 50.000 ₫ | Dự phòng |
+  > | `SAVE10` | percent 10%, đơn tối thiểu 300.000 ₫ | **tổng tiền tăng lên 300.000.000 ₫** trong khi vẫn báo "Áp dụng thành công! Giảm 10%" | ❌ **Không dùng** |
+  > | `EXPIRED` | percent 20%, đã hết hạn | bị từ chối đúng: "Mã giảm giá đã hết hạn" | ❌ Không dùng |
+  >
+  > `SAVE10` bị lỗi tính toán nghiêm trọng ở backend. Nếu đưa mã này vào kịch bản, cả 7 phiên sẽ bị
+  > một lỗi **chức năng** chi phối và nghiên cứu sẽ không còn đo được **usability của flow** nữa. Lỗi
+  > này cần được ghi nhận riêng thành bug report chức năng, không nhập chung vào nghiên cứu usability.
+  >
+  > > **Ranh giới quan trọng khi chấm "Thành công":** điều kiện thành công là *áp được mã và tới màn
+  > > hình xác nhận*, **không** phải *số tiền giảm đúng*. Tính đúng/sai của số tiền là kiểm thử chức
+  > > năng; nếu đặt nó làm tiêu chí thành công thì mọi phiên đều "thất bại" vì lỗi backend chứ không
+  > > phải vì vấn đề usability.
+  >
+  > ---
+  >
+  > ## Công cụ đánh giá (Instrument)
+  >
+  > **Thang đo chuẩn: SUS (System Usability Scale)** — 10 item, thang Likert 1–5
+  > (1 = Hoàn toàn không đồng ý, 5 = Hoàn toàn đồng ý). Thực hiện **ngay sau khi kết thúc task, trước
+  > các câu hỏi mở**. Người tham gia thuộc nhóm không chuyên IT nên SUS phù hợp: dễ đọc, dễ trả lời,
+  > dễ quy đổi ra một con số so sánh được.
+  >
+  > Nội dung 10 item (lấy nguyên văn từ `instruments_reference.md`):
+  >
+  > | # | Nội dung item | Điểm (1–5) |
+  > | --- | --- | --- |
+  > | 1 | Tôi nghĩ tôi sẽ muốn dùng hệ thống này thường xuyên. | |
+  > | 2 | Tôi thấy hệ thống này phức tạp một cách không cần thiết. | |
+  > | 3 | Tôi thấy hệ thống này dễ sử dụng. | |
+  > | 4 | Tôi nghĩ mình cần người rành kỹ thuật hỗ trợ mới dùng được hệ thống này. | |
+  > | 5 | Tôi thấy các chức năng trong hệ thống này được tích hợp tốt với nhau. | |
+  > | 6 | Tôi thấy hệ thống này có quá nhiều điểm thiếu nhất quán. | |
+  > | 7 | Tôi nghĩ hầu hết mọi người sẽ học cách dùng hệ thống này rất nhanh. | |
+  > | 8 | Tôi thấy hệ thống này rất cồng kềnh, bất tiện khi dùng. | |
+  > | 9 | Tôi cảm thấy rất tự tin khi dùng hệ thống này. | |
+  > | 10 | Tôi cần học nhiều thứ trước khi có thể bắt đầu dùng hệ thống này. | |
+  >
+  > **Công thức tính điểm** (chỉ áp dụng ở Phase 3, không quy đổi tại chỗ để tránh sai số cộng dồn):
+  >
+  > - Item lẻ (1, 3, 5, 7, 9): điểm đóng góp = (giá trị người dùng chọn) − 1
+  > - Item chẵn (2, 4, 6, 8, 10): điểm đóng góp = 5 − (giá trị người dùng chọn)
+  > - Tổng 10 điểm đóng góp (0–40) × 2.5 = điểm SUS cuối cùng (0–100)
+  >
+  > **Thang xếp loại:** > 85 = A (Tuyệt vời) · 73–85 = B (Tốt) · 52–72 = C (Trung bình) · < 51 = D/F (Kém, cần thiết kế lại)
+  >
+  > ### Câu hỏi mở (probe questions)
+  >
+  > Hỏi **sau** khi điền SUS. Giọng trung lập — không có câu nào gợi sẵn câu trả lời hay ám chỉ rằng
+  > có vấn đề tồn tại. Mỗi nhóm có 2 câu; nếu hết giờ, hỏi ít nhất câu đầu của mỗi nhóm.
+  >
+  > | Nhóm | Câu hỏi |
+  > | --- | --- |
+  > | **Clarity** | 1. Ở bước nhập mã giảm giá, bạn tìm thấy chỗ nhập mã bằng cách nào? |
+  > | | 2. Khi xem trang thông tin chi tiết của sản phẩm, những gì hiển thị ở đó có đủ để bạn quyết định mua chưa? |
+  > | **Error recovery** | 1. Nếu lúc nãy bạn muốn đổi sang một sản phẩm khác sau khi đã thêm vào giỏ, bạn sẽ làm thế nào? |
+  > | | 2. Trong lúc thao tác, có lúc nào bạn nghĩ mình vừa làm sai một bước không? Lúc đó bạn đã làm gì tiếp theo? |
+  > | **Speed** | 1. Từ lúc bắt đầu tìm sản phẩm đến lúc đặt xong, bạn thấy mất nhiều thời gian hơn hay ít hơn so với bạn hình dung ban đầu? |
+  > | | 2. Có bước nào bạn thấy mình phải lặp lại thao tác nhiều lần không? |
+  > | **Trust** | 1. Số tiền cuối cùng hiển thị trước khi bấm xác nhận — bạn có đối chiếu lại với giá sản phẩm không? Vì sao? |
+  > | | 2. Nếu đây là tiền thật của bạn, bạn có bấm "Xác Nhận Thanh Toán" ở màn hình đó không? |
+  >
+  > ---
+  >
+  > ## Checklist trước phiên
+  >
+  > **Chuẩn bị hệ thống (làm lại trước mỗi phiên, không phải một lần cho cả 7 phiên):**
+  >
+  > - [ ] **Khởi động lại backend để reseed dữ liệu.** `initDatabase()` trong `backend/database.js`
+  >       chạy `DROP TABLE` rồi seed lại mỗi lần khởi động, nên restart sẽ xoá sạch bảng `coupon_usage`.
+  >       **Bắt buộc** vì `VIP100` giới hạn 2 lần/người mà cả 7 phiên đều dùng chung một tài khoản
+  >       `test@eshop.com` — không reset thì từ phiên thứ 3 trở đi mã sẽ bị từ chối.
+  > - [ ] Kiểm tra frontend `http://localhost:5173` tải được và backend `http://localhost:3000` phản hồi.
+  > - [ ] Thử áp `VIP100` một lần để chắc chắn mã còn hiệu lực, **rồi restart backend lần nữa** để xoá
+  >       lượt dùng thử này.
+  > - [ ] Đăng nhập sẵn `test@eshop.com` / `Test1234!`.
+  > - [ ] Đưa trình duyệt về start state: trang chủ, giỏ hàng rỗng, ô tìm kiếm trống, cửa sổ 1440×900.
+  > - [ ] Kiểm tra ảnh sản phẩm tải được (phụ thuộc mạng ngoài — `placehold.co`).
+  >
+  > **Chuẩn bị phiên:**
+  >
+  > - [ ] Có đồng thuận tham gia và đồng thuận ghi màn hình/ghi âm (ghi rõ hình thức: ký hay bằng lời).
+  > - [ ] Phần mềm ghi màn hình đã chạy thử và có tiếng.
+  > - [ ] Đồng hồ bấm giờ sẵn sàng; quy ước rõ thời điểm bắt đầu tính giờ (ngay sau khi đọc xong kịch bản).
+  > - [ ] Phiếu SUS in sẵn hoặc mở sẵn form.
+  > - [ ] Dùng mã P01–P07 (và P00 cho pilot); không ghi dữ liệu cá nhân ngoài mức cần thiết.
+  > - [ ] **Không tập trước flow** cho người tham gia; không cho họ xem người khác làm.
+  > - [ ] Đóng các tab nhạy cảm trên máy trước khi ghi màn hình.
+  >
+  > ---
+  >
+  > ## Kịch bản mở đầu (moderator đọc cho người tham gia)
+  >
+  > > "Cảm ơn bạn đã dành thời gian tham gia hôm nay.
+  > >
+  > > Trước khi bắt đầu, mình muốn nói rõ một điều quan trọng: **hôm nay mình kiểm tra sản phẩm, không
+  > > phải kiểm tra bạn.** Không có câu trả lời đúng hay sai, và bạn cũng không cần cố gắng làm cho
+  > > đúng. Nếu bạn thấy chỗ nào khó hiểu hay bị kẹt, thì đó chính là thông tin mình cần — nó cho thấy
+  > > sản phẩm đang có vấn đề, chứ không phải bạn làm sai.
+  > >
+  > > Trong lúc thao tác, bạn hãy **nói ra thành lời những gì bạn đang nghĩ**: bạn đang tìm gì, bạn
+  > > đang định bấm vào đâu, vì sao bạn chọn như vậy, chỗ nào làm bạn phân vân. Nghe hơi lạ lúc đầu
+  > > nhưng bạn cứ nói tự nhiên, nghĩ gì nói nấy.
+  > >
+  > > Mình sẽ ngồi quan sát và hạn chế trả lời trong lúc bạn làm, không phải vì mình không muốn giúp,
+  > > mà vì mình cần thấy trải nghiệm thật của bạn khi không có ai hướng dẫn. Nếu bạn kẹt hẳn thì mình
+  > > sẽ vào hỗ trợ.
+  > >
+  > > Buổi này kéo dài khoảng 10 phút cho phần thao tác, sau đó mình xin bạn khoảng 5 phút để điền một
+  > > bảng khảo sát ngắn và trả lời vài câu hỏi.
+  > >
+  > > **Mình xin phép được ghi lại màn hình và ghi âm giọng nói trong buổi hôm nay** — chỉ dùng cho
+  > > mục đích phân tích của bài tập môn học, không chia sẻ ra ngoài, và trong báo cáo bạn sẽ chỉ được
+  > > ghi bằng mã (ví dụ P01) chứ không ghi tên. Bạn có đồng ý không?
+  > >
+  > > Bạn có thể dừng lại hoặc rút khỏi buổi test bất cứ lúc nào mà không cần nêu lý do.
+  > >
+  > > Bạn có câu hỏi gì trước khi mình bắt đầu không?"
+  >
+  > **Chỉ bắt đầu sau khi nhận được đồng ý rõ ràng cho việc ghi hình/ghi âm.**
+  >
+  > ---
+  >
+  > ## Cách giao task scenario
+  >
+  > 1. Bật ghi màn hình **trước** khi đọc kịch bản.
+  > 2. Đọc **nguyên văn** đoạn task scenario ở mục trên — đọc chậm, có thể đọc lại **y hệt** lần thứ hai
+  >    nếu người tham gia yêu cầu.
+  > 3. **Không giải thích thêm, không diễn giải lại bằng từ khác, không gợi ý bước nào.** Nếu người
+  >    tham gia hỏi "mình phải bấm vào đâu?" hoặc "mã giảm giá nhập ở chỗ nào?", trả lời trung lập:
+  >    > "Bạn cứ làm theo cách bạn nghĩ là hợp lý nhé."
+  > 4. Đưa mã `VIP100` dưới dạng **văn bản viết sẵn** (mẩu giấy hoặc dán vào ô ghi chú) để người tham
+  >    gia không phải nhớ, và để mọi phiên nhận cùng một thông tin đầu vào.
+  > 5. **Bắt đầu bấm giờ ngay sau khi đọc xong** kịch bản.
+  > 6. Trong lúc quan sát, chỉ dùng các câu nhắc trung lập:
+  >    - "Bạn đang nghĩ gì vậy?"
+  >    - "Bạn đang định làm gì tiếp theo?"
+  >    - "Bạn có thể nói to suy nghĩ của bạn được không?"
+  > 7. **Chỉ can thiệp khi người tham gia kẹt hẳn** (không thao tác gì trong ~60 giây và tự nói rằng
+  >    không biết làm gì tiếp). Khi can thiệp, ghi lại **nguyên văn câu đã nói**, trạng thái màn hình
+  >    ngay trước đó, và kết quả sau can thiệp — mỗi lần như vậy tính là 1 `intervention` và phiên
+  >    không còn được tính `SUCCESS_UNASSISTED`.
+  >
+  > ---
+  >
+  > ## Liên kết
+  >
+  > - Danh sách người tham gia: [`recruitment-tracker.md`](recruitment-tracker.md)
+  > - Kế hoạch & kết quả pilot: [`sessions/P00-pilot.md`](sessions/P00-pilot.md)
+  > - Định nghĩa Outcome/Error/Wrong turn/Hesitation/Intervention: xem `session_log_template.md` trong skill,
+  >   áp dụng thống nhất cho cả 8 phiên.
+  >
+  > ---
+  >
+  > ## Trạng thái tài liệu
+  >
+  > Đây là **Phase 1 — Plan**. Chưa chạy phiên nào, chưa có dữ liệu quan sát.
+  > Phase 2 (Conduct) và Phase 3 (Analyse) chỉ được thực hiện sau khi các phiên thật đã diễn ra.
+  >
+  > ---
+  >
+  > **File: `tests/usability/U-01/recruitment-tracker.md`**
+  >
+  > # Danh sách người tham gia — U-01
+  >
+  > > **Cảnh báo bắt buộc đọc trước khi điền:** Bảng dưới đây phải được điền bằng thông tin người
+  > > thật, do chính người thực hiện bài tập thu thập. AI không được tự sinh tên, số điện thoại,
+  > > hay câu trả lời sàng lọc — đây là vi phạm quy định chống gian lận của môn học (TA có thể
+  > > gọi ngẫu nhiên 2 người để xác minh, và giả mạo người tham gia = 0 điểm cho toàn bộ Task 2).
+  > > Mọi ô trong bảng "Người tham gia" phải giữ nguyên `CHƯA THU THẬP` cho đến khi có dữ liệu thật.
+  >
+  > - Flow: U-01 — Tìm kiếm sản phẩm → Xem chi tiết → Thêm giỏ hàng → Áp mã giảm giá → Checkout
+  > - Người điều phối: nlhakhoa23@clc.fitus.edu.vn
+  > - Số lượng cần tuyển: **7 người chính (P01–P07) + 1 người pilot (P00) = 8 người**
+  >
+  > ---
+  >
+  > ## Hồ sơ mục tiêu (target profile)
+  >
+  > - **Độ tuổi:** 18–35.
+  > - **Mức quen thuộc với ngành hàng:** có thói quen mua sắm online, đã từng tự đặt hàng trên
+  >   Shopee/Lazada/Tiki (tức là đã quen khái niệm giỏ hàng, mã giảm giá, thanh toán).
+  > - **Mức quen thuộc với EShop:** **chưa từng dùng EShop** — cần phản ứng của người dùng mới.
+  > - **Thiết bị thường dùng:** ưu tiên người quen mua sắm trên điện thoại (để đối chiếu với thói quen
+  >   thật), dù phiên test sẽ chạy trên laptop của người điều phối.
+  > - **Ưu tiên:** người **không** làm trong lĩnh vực IT/kiểm thử phần mềm, để phản hồi usability
+  >   không bị "nghề nghiệp hoá".
+  > - **Bắt buộc loại trừ:** sinh viên đang học môn này / đang làm cùng bài tập HW03 (theo quy định của đề).
+  >
+  > ---
+  >
+  > ## Câu hỏi sàng lọc (screener)
+  >
+  > Hỏi trước khi hẹn lịch. Ghi lại câu trả lời vào cột "Hồ sơ" ở bảng dưới.
+  >
+  > 1. Bạn bao nhiêu tuổi? *(Đạt: 18–35)*
+  > 2. Trong 6 tháng qua, bạn đã tự đặt hàng online bao nhiêu lần? Trên ứng dụng/trang nào?
+  >    *(Đạt: ≥ 1 lần, có nêu được tên sàn như Shopee/Lazada/Tiki)*
+  > 3. Bạn đã từng dùng mã giảm giá khi mua hàng online chưa?
+  >    *(Ghi nhận — không loại, nhưng dùng để hiểu bối cảnh khi phân tích)*
+  > 4. Bạn đã từng dùng trang EShop này bao giờ chưa?
+  >    *(Trả lời "Rồi" thì **loại** — nghiên cứu cần người dùng mới)*
+  > 5. Bạn có đang học môn Kiểm thử phần mềm hoặc đang làm bài tập HW03 này không?
+  >    *(Trả lời "Có" thì **loại** — theo quy định chống gian lận của đề)*
+  > 6. Bạn có làm việc trong lĩnh vực IT hoặc kiểm thử phần mềm không?
+  >    *(Trả lời "Có" thì vẫn nhận được nhưng **ưu tiên thấp**; ghi rõ vào cột Hồ sơ)*
+  > 7. Bạn có đồng ý cho ghi màn hình và ghi âm buổi kiểm thử không?
+  >    *(Trả lời "Không" thì **loại** — không có bằng chứng thì phiên không dùng được)*
+  >
+  > ---
+  >
+  > ## Quy ước che thông tin liên hệ
+  >
+  > Giữ lại phần đầu và **2 số cuối**, che **4 số ở giữa**.
+  >
+  > | Loại | Ví dụ gốc | Ghi vào bảng |
+  > | --- | --- | --- |
+  > | Số điện thoại / Zalo | `0912345678` | `0912****78` |
+  > | Email | `nguyenvanan@gmail.com` | `nguy****an@gmail.com` |
+  >
+  > > Chỉ ghi **một** kênh liên hệ đã che cho mỗi người — đủ để TA xác minh, không thu thập thừa.
+  > > Bản đầy đủ chưa che (nếu cần cho việc liên hệ) giữ riêng, **không commit vào repo**.
+  >
+  > ---
+  >
+  > ## Người tham gia
+  >
+  > | # | Vai trò | Họ tên | Kênh liên hệ | Thông tin liên hệ (đã che) | Hồ sơ (tuổi/nghề nghiệp/mức quen thuộc) | Ngày hẹn | Đồng ý ghi hình (Y/N) |
+  > | --- | --- | --- | --- | --- | --- | --- | --- |
+  > | 0 | P00 (Pilot) | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | 1 | P01 | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | 2 | P02 | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | 3 | P03 | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | 4 | P04 | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | 5 | P05 | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | 6 | P06 | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | 7 | P07 | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  >
+  > ## Người đã liên hệ nhưng bị loại
+  >
+  > > Giữ vết minh bạch cho quá trình tuyển chọn — ghi lý do loại thay vì xoá dòng.
+  >
+  > | # | Kênh liên hệ (đã che) | Lý do bị loại (theo câu screener số mấy) |
+  > | --- | --- | --- |
+  > | — | CHƯA THU THẬP | CHƯA THU THẬP |
+  >
+  > ---
+  >
+  > ## Ghi chú
+  >
+  > - **P00 (Pilot) không tính vào 7 người chính thức** và **không đưa vào số liệu tổng hợp ở Phase 3**.
+  >   Vai trò duy nhất của pilot là phát hiện lỗi trong kịch bản/công cụ trước khi chạy phiên thật.
+  > - Pilot phải khớp hồ sơ mục tiêu nhưng **không được** là một trong 7 người chính.
+  > - Mỗi người chỉ tham gia **đúng 1 phiên**.
+  > - Nếu một người không đạt tiêu chí sàng lọc, ghi vào bảng "đã liên hệ nhưng bị loại" ở trên.
+  > - Nhắc lại quy định của đề: người tham gia **phải ở ngoài lớp học**; TA có thể gọi ngẫu nhiên 2
+  >   người để xác minh.
+  >
+  > ---
+  >
+  > **File: `tests/usability/U-01/sessions/P00-pilot.md`**
+  >
+  > # Phiên P00 (Pilot) — U-01
+  >
+  > > **Chưa chạy.** Toàn bộ file này là template rỗng. Điền các mục dưới đây **trong hoặc ngay sau**
+  > > phiên pilot thật. Không suy đoán, không điền sẵn nội dung "hợp lý" — mọi dòng phải bắt nguồn từ
+  > > quan sát thực tế (ghi chú tay, video, hoặc bản ghi âm của chính phiên này).
+  >
+  > **Mục đích của phiên pilot:** phát hiện lỗi trong **kịch bản và công cụ**, *không* phải để tạo dữ
+  > liệu cho báo cáo. Kết quả phiên này **không được đưa vào số liệu tổng hợp ở Phase 3** — chỉ ghi
+  > chú trong báo cáo rằng đã chạy pilot và đã sửa những gì.
+  >
+  > ---
+  >
+  > ## Metadata
+  >
+  > - Ngày/giờ: CHƯA THU THẬP
+  > - Người tham gia: P00 (Pilot) — khớp hồ sơ mục tiêu, **không** thuộc nhóm 7 người chính
+  > - Thiết bị, OS, trình duyệt: CHƯA THU THẬP
+  > - Đồng thuận: CHƯA THU THẬP *(ghi rõ hình thức: đã ký / bằng lời)*
+  > - Timebox: 10 phút
+  > - Deviation: CHƯA THU THẬP
+  >
+  > **Xác nhận đã chuẩn bị (đánh dấu tại thời điểm chạy phiên):**
+  >
+  > - [ ] Đã restart backend để reseed dữ liệu (xoá `coupon_usage`)
+  > - [ ] Đã đăng nhập sẵn `test@eshop.com`
+  > - [ ] Giỏ hàng rỗng, ô tìm kiếm trống, cửa sổ 1440×900
+  > - [ ] Ghi màn hình + ghi âm đang chạy
+  > - [ ] Mã `VIP100` đã viết sẵn ra giấy/ghi chú
+  >
+  > ---
+  >
+  > ## Kết quả
+  >
+  > - Outcome: CHƯA THU THẬP *(`SUCCESS_UNASSISTED` | `SUCCESS_ASSISTED` | `FAIL` | `ABANDONED`)*
+  > - Thời lượng (giây): CHƯA THU THẬP
+  > - Số error: CHƯA THU THẬP
+  > - Số wrong turn: CHƯA THU THẬP
+  > - Số hesitation ≥ 5 giây: CHƯA THU THẬP
+  > - Số intervention: CHƯA THU THẬP
+  > - Đạt điều kiện thành công (theo test-plan): CHƯA THU THẬP
+  >
+  > **Định nghĩa dùng để đếm (giữ nhất quán giữa các phiên):**
+  >
+  > | Thuật ngữ | Định nghĩa |
+  > | --- | --- |
+  > | Error | Hành động cho kết quả trái mục tiêu mà hệ thống không ngăn được (VD: thêm nhầm sản phẩm vượt ngân sách vào giỏ và tiến hành thanh toán) |
+  > | Wrong turn | Điều hướng sang màn hình không tiến gần mục tiêu, tự sửa được, chưa đến mức là error (VD: mở trang Giỏ hàng để tìm ô nhập mã giảm giá rồi tự quay ra) |
+  > | Hesitation ≥ 5s | Dừng lại không thao tác từ 5 giây trở lên, có biểu hiện phân vân — ghi lại mốc thời gian |
+  > | Intervention | Moderator nói/làm gì đó để giúp người tham gia thoát khỏi bế tắc — ghi nguyên văn, trạng thái trước đó và kết quả |
+  >
+  > ---
+  >
+  > ## Timeline quan sát
+  >
+  > > Một dòng cho mỗi sự kiện đáng chú ý. Cột "Quote nguyên văn" chỉ ghi lời người tham gia **thật sự
+  > > nói ra**, không diễn giải lại.
+  >
+  > | Thời gian | Stage/FR | Mục tiêu | Hành động quan sát được | Phản hồi hệ thống | Tác động | Quote nguyên văn |
+  > | --- | --- | --- | --- | --- | --- | --- |
+  > | | | | | | | |
+  > | | | | | | | |
+  > | | | | | | | |
+  >
+  > *Gợi ý các stage để đối chiếu (không bắt buộc theo thứ tự này — người tham gia tự chọn đường đi):*
+  > `FR-05 tìm/lọc sản phẩm` · `FR-06 xem chi tiết` · `FR-07 thêm & xem giỏ hàng` · `FR-09 áp mã giảm giá` · `FR-08 xác nhận thanh toán`
+  >
+  > ---
+  >
+  > ## Can thiệp của moderator
+  >
+  > > Ghi nguyên văn lời gợi ý, thời điểm, trạng thái trước gợi ý và kết quả. Nếu không có, ghi `Không có`.
+  >
+  > CHƯA THU THẬP
+  >
+  > ---
+  >
+  > ## Thang đo sau phiên — SUS
+  >
+  > Ghi **điểm thô** từng item (1 = Hoàn toàn không đồng ý → 5 = Hoàn toàn đồng ý).
+  > **Không quy đổi tại chỗ** — việc quy đổi thực hiện ở Phase 3 để tránh sai số cộng dồn.
+  >
+  > | # | Nội dung item | Điểm (1–5) |
+  > | --- | --- | --- |
+  > | 1 | Tôi nghĩ tôi sẽ muốn dùng hệ thống này thường xuyên. | |
+  > | 2 | Tôi thấy hệ thống này phức tạp một cách không cần thiết. | |
+  > | 3 | Tôi thấy hệ thống này dễ sử dụng. | |
+  > | 4 | Tôi nghĩ mình cần người rành kỹ thuật hỗ trợ mới dùng được hệ thống này. | |
+  > | 5 | Tôi thấy các chức năng trong hệ thống này được tích hợp tốt với nhau. | |
+  > | 6 | Tôi thấy hệ thống này có quá nhiều điểm thiếu nhất quán. | |
+  > | 7 | Tôi nghĩ hầu hết mọi người sẽ học cách dùng hệ thống này rất nhanh. | |
+  > | 8 | Tôi thấy hệ thống này rất cồng kềnh, bất tiện khi dùng. | |
+  > | 9 | Tôi cảm thấy rất tự tin khi dùng hệ thống này. | |
+  > | 10 | Tôi cần học nhiều thứ trước khi có thể bắt đầu dùng hệ thống này. | |
+  >
+  > ---
+  >
+  > ## Câu hỏi mở (probe questions)
+  >
+  > | Nhóm | Câu hỏi | Trả lời |
+  > | --- | --- | --- |
+  > | Clarity | Ở bước nhập mã giảm giá, bạn tìm thấy chỗ nhập mã bằng cách nào? | |
+  > | Clarity | Khi xem trang thông tin chi tiết của sản phẩm, những gì hiển thị ở đó có đủ để bạn quyết định mua chưa? | |
+  > | Error recovery | Nếu lúc nãy bạn muốn đổi sang một sản phẩm khác sau khi đã thêm vào giỏ, bạn sẽ làm thế nào? | |
+  > | Error recovery | Trong lúc thao tác, có lúc nào bạn nghĩ mình vừa làm sai một bước không? Lúc đó bạn đã làm gì tiếp theo? | |
+  > | Speed | Từ lúc bắt đầu tìm sản phẩm đến lúc đặt xong, bạn thấy mất nhiều thời gian hơn hay ít hơn so với bạn hình dung ban đầu? | |
+  > | Speed | Có bước nào bạn thấy mình phải lặp lại thao tác nhiều lần không? | |
+  > | Trust | Số tiền cuối cùng hiển thị trước khi bấm xác nhận — bạn có đối chiếu lại với giá sản phẩm không? Vì sao? | |
+  > | Trust | Nếu đây là tiền thật của bạn, bạn có bấm "Xác Nhận Thanh Toán" ở màn hình đó không? | |
+  >
+  > ---
+  >
+  > ## Tóm tắt của researcher
+  >
+  > - Điểm nghẽn chính: CHƯA THU THẬP
+  > - Điều hỗ trợ hoàn thành: CHƯA THU THẬP
+  > - Ghi chú cần xác minh, không phải quan sát trực tiếp: CHƯA THU THẬP
+  >
+  > ---
+  >
+  > # Checklist riêng của pilot — "đã đổi gì sau pilot"
+  >
+  > > Đây là **sản phẩm đầu ra thật sự** của phiên pilot. Mỗi mục: ghi phát hiện → quyết định sửa hay
+  > > giữ → nội dung đã sửa. Nếu không có vấn đề, ghi rõ `Không đổi` kèm lý do — đừng để trống.
+  >
+  > ## A. Kịch bản task scenario
+  >
+  > | # | Cần kiểm tra | Phát hiện ở pilot | Quyết định | Nội dung đã sửa |
+  > | --- | --- | --- | --- | --- |
+  > | A1 | Người tham gia có hiểu ngay mục tiêu sau khi nghe đọc 1 lần không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | A2 | Kịch bản có vô tình **gợi ý các bước** (nói lộ chỗ nhập mã, tên nút) không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | A3 | Ràng buộc "dưới 10 triệu" có tạo ra lựa chọn thật không, hay người tham gia chọn ngay không cần cân nhắc? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | A4 | Có từ ngữ nào trong kịch bản gây khó hiểu / phải hỏi lại không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | A5 | Cách đưa mã `VIP100` (viết ra giấy) có tự nhiên không, hay làm người tham gia tưởng phải dùng ngay lập tức? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  >
+  > ## B. Timebox và nhịp phiên
+  >
+  > | # | Cần kiểm tra | Phát hiện ở pilot | Quyết định | Nội dung đã sửa |
+  > | --- | --- | --- | --- | --- |
+  > | B1 | Thời gian thực tế hoàn thành task là bao nhiêu? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | B2 | 10 phút là quá dài, quá ngắn, hay vừa? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | B3 | Phần SUS + câu hỏi mở mất bao lâu? Tổng buổi có vượt dự kiến không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  >
+  > ## C. Công cụ và môi trường
+  >
+  > | # | Cần kiểm tra | Phát hiện ở pilot | Quyết định | Nội dung đã sửa |
+  > | --- | --- | --- | --- | --- |
+  > | C1 | Ghi màn hình có bắt được toàn bộ thao tác không? Có tiếng rõ không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | C2 | Đồng hồ bấm giờ và cách đánh dấu mốc thời gian có dùng được trong lúc vừa quan sát vừa ghi chú không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | C3 | **Mã `VIP100` còn hiệu lực khi tới bước checkout không?** (giới hạn 2 lần/người — nếu báo hết lượt nghĩa là quy trình reseed chưa đúng) | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | C4 | Quy trình restart backend để reseed có thực sự xoá `coupon_usage` không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | C5 | Ảnh sản phẩm (tải từ domain ngoài) có hiện đủ trong suốt phiên không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | C6 | Start state có được khôi phục đúng và nhanh giữa các phiên không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  >
+  > ## D. SUS và câu hỏi mở
+  >
+  > | # | Cần kiểm tra | Phát hiện ở pilot | Quyết định | Nội dung đã sửa |
+  > | --- | --- | --- | --- | --- |
+  > | D1 | Có item SUS nào người tham gia đọc xong phải hỏi lại nghĩa không? (ghi rõ item số mấy) | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | D2 | Người tham gia có hiểu thang 1–5 theo đúng chiều không (không nhầm ngược)? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | D3 | Câu hỏi mở nào bị trả lời cụt lủn "không có gì" — cần diễn đạt lại? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | D4 | Có câu hỏi nào vô tình **dẫn dắt** (khiến người tham gia đoán ý moderator) không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  >
+  > ## E. Vai trò moderator
+  >
+  > | # | Cần kiểm tra | Phát hiện ở pilot | Quyết định | Nội dung đã sửa |
+  > | --- | --- | --- | --- | --- |
+  > | E1 | Có lúc nào moderator lỡ gợi ý/xác nhận đúng-sai không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | E2 | Ngưỡng can thiệp (~60 giây kẹt) có hợp lý không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | E3 | Việc vừa quan sát vừa ghi timeline có kịp không, hay cần người ghi chú thứ hai? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  >
+  > ---
+  >
+  > ## Kết luận pilot
+  >
+  > - [ ] **Đã sửa xong kịch bản/công cụ — sẵn sàng chạy P01–P07**
+  > - [ ] Cần chạy thêm một pilot nữa (ghi lý do: CHƯA THU THẬP)
+  >
+  > **Tổng số thay đổi đã thực hiện sau pilot:** CHƯA THU THẬP
+  >
+  > **Ngày chốt phiên bản kịch bản dùng cho P01–P07:** CHƯA THU THẬP
+  >
+  > > Sau khi chốt, **không được đổi kịch bản giữa chừng** trong 7 phiên chính — nếu buộc phải đổi,
+  > > ghi rõ đổi từ phiên nào và cân nhắc loại các phiên trước đó khỏi phần tổng hợp định lượng.
+  >
+  > ---
+  >
+
+- **Đánh giá:** Valid
+- **Suy luận:** File do AI sinh ra khá tốt và đầy đủ
+- **Sửa:** Không cần sửa
