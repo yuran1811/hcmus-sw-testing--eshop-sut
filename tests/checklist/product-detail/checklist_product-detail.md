@@ -114,11 +114,11 @@ Ba nhóm lý do: **[WPI]** Weak prompt input · **[NLU]** No access to live UI �
 
 | Aspect                       | Categories                   | Items  | ≥ 1 item? |
 | ---------------------------- | ---------------------------- | ------ | --------- |
-| IA-01 — General UI standards | `VIS` 14 + `RES` 7 + `COM` 4 | 23     | ✅        |
+| IA-01 — General UI standards | `VIS` 14 + `RES` 7 + `COM` 4 | 25     | ✅        |
 | IA-02 — Forms                | `VAL` 10 + `FUN` 7           | 17     | ✅        |
 | IA-03 — Navigation           | `NAV` 10                     | 10     | ✅        |
 | IA-04 — Feedback / state     | `FDB` 7 + `USB` 5 + `ACC` 9  | 21     | ✅        |
-| **Total**                    |                              | **71** | ✅ > 40   |
+| **Total**                    |                              | **73** | ✅ > 40   |
 
 **Kiểm tra cân bằng:** aspect nhỏ nhất (IA-03, 10 item) chiếm 14% tổng số, aspect lớn nhất (IA-01, 23 item) chiếm 32%. Không có aspect nào rỗng hay bị bỏ rơi; phân bố lệch về IA-01 là hợp lý vì đề yêu cầu test trên 3 viewport và 2 trình duyệt.
 
