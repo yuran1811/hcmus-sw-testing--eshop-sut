@@ -1,0 +1,1525 @@
+
+Running 15 tests using 1 worker
+
+  ✘  1 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-001] Valid product displays complete details (3.8s)
+  ✘  2 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-001] Valid product displays complete details (retry #1) (3.1s)
+  ✘  3 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-002] Unknown numeric product ID produces a not-found response (607ms)
+  ✘  4 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-002] Unknown numeric product ID produces a not-found response (retry #1) (613ms)
+  ✘  5 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-003] Non-numeric product ID produces a validation response (646ms)
+  ✘  6 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-003] Non-numeric product ID produces a validation response (retry #1) (678ms)
+  ✘  7 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-004] Quantity two adds the product and gives visual feedback (7.7s)
+  ✘  8 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-004] Quantity two adds the product and gives visual feedback (retry #1) (7.9s)
+  ✘  9 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-005] Quantity zero is rejected (1.7s)
+  ✘  10 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-005] Quantity zero is rejected (retry #1) (1.7s)
+  ✘  11 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-006] Negative quantity is rejected (1.7s)
+  ✘  12 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-006] Negative quantity is rejected (retry #1) (1.8s)
+  ✘  13 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-007] Decimal quantity is rejected (1.7s)
+  ✘  14 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-007] Decimal quantity is rejected (retry #1) (1.8s)
+  ✘  15 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-008] Empty quantity is rejected (1.7s)
+  ✘  16 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-008] Empty quantity is rejected (retry #1) (1.7s)
+  ✘  17 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-009] Alphabetic quantity is rejected (1.7s)
+  ✘  18 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-009] Alphabetic quantity is rejected (retry #1) (1.8s)
+  ✘  19 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-010] Minimum quantity one is accepted (7.6s)
+  ✘  20 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-010] Minimum quantity one is accepted (retry #1) (7.9s)
+  ✘  21 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-011] Quantity just above minimum is accepted (7.7s)
+  ✘  22 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-011] Quantity just above minimum is accepted (retry #1) (7.7s)
+  ✘  23 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-012] Unauthenticated add-to-cart is rejected (3.7s)
+  ✘  24 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-012] Unauthenticated add-to-cart is rejected (retry #1) (3.8s)
+  ✘  25 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-013] Breadcrumb links back to the home page (2.6s)
+  ✘  26 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-013] Breadcrumb links back to the home page (retry #1) (2.7s)
+  ✓  27 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-014] Primary product image has non-empty alternative text (562ms)
+  ✓  28 [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-015] Malicious product text is escaped and never executed (405ms)
+
+
+  1) [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-001] Valid product displays complete details 
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m()[22m
+
+    Locator: locator('main').getByText('Điện thoại', { exact: true })
+    Expected: visible
+    Received: <element(s) not found>
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 2000ms[22m
+    [2m  - waiting for locator('main').getByText('Điện thoại', { exact: true })[22m
+
+
+      120 |       await expect(
+      121 |         productPage.main.getByText(expectation.category, { exact: true }),
+    > 122 |       ).toBeVisible();
+          |         ^
+      123 |       await expect(productPage.main).toContainText(
+      124 |         new RegExp(expectation.formattedPricePattern),
+      125 |       );
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:122:9)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3e24c-t-displays-complete-details-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3e24c-t-displays-complete-details-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3e24c-t-displays-complete-details-webkit/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m()[22m
+
+    Locator: locator('main').getByText('Điện thoại', { exact: true })
+    Expected: visible
+    Received: <element(s) not found>
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 2000ms[22m
+    [2m  - waiting for locator('main').getByText('Điện thoại', { exact: true })[22m
+
+
+      120 |       await expect(
+      121 |         productPage.main.getByText(expectation.category, { exact: true }),
+    > 122 |       ).toBeVisible();
+          |         ^
+      123 |       await expect(productPage.main).toContainText(
+      124 |         new RegExp(expectation.formattedPricePattern),
+      125 |       );
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:122:9)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3e24c-t-displays-complete-details-webkit-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3e24c-t-displays-complete-details-webkit-retry1/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3e24c-t-displays-complete-details-webkit-retry1/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3e24c-t-displays-complete-details-webkit-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3e24c-t-displays-complete-details-webkit-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-002] Unknown numeric product ID produces a not-found response 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m404[39m
+    Received: [31m200[39m
+
+      126 |       return;
+      127 |     case "error_state":
+    > 128 |       expect(productPage.productApiStatus()).toBe(expectation.httpStatus);
+          |                                              ^
+      129 |       await expect(productPage.main).toContainText(new RegExp(expectation.messagePattern, "i"));
+      130 |       await expect(productPage.main).not.toBeEmpty();
+      131 |       return;
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:128:46)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-f257a-oduces-a-not-found-response-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-f257a-oduces-a-not-found-response-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-f257a-oduces-a-not-found-response-webkit/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m404[39m
+    Received: [31m200[39m
+
+      126 |       return;
+      127 |     case "error_state":
+    > 128 |       expect(productPage.productApiStatus()).toBe(expectation.httpStatus);
+          |                                              ^
+      129 |       await expect(productPage.main).toContainText(new RegExp(expectation.messagePattern, "i"));
+      130 |       await expect(productPage.main).not.toBeEmpty();
+      131 |       return;
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:128:46)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-f257a-oduces-a-not-found-response-webkit-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-f257a-oduces-a-not-found-response-webkit-retry1/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-f257a-oduces-a-not-found-response-webkit-retry1/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-f257a-oduces-a-not-found-response-webkit-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-f257a-oduces-a-not-found-response-webkit-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-003] Non-numeric product ID produces a validation response 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m400[39m
+    Received: [31m200[39m
+
+      126 |       return;
+      127 |     case "error_state":
+    > 128 |       expect(productPage.productApiStatus()).toBe(expectation.httpStatus);
+          |                                              ^
+      129 |       await expect(productPage.main).toContainText(new RegExp(expectation.messagePattern, "i"));
+      130 |       await expect(productPage.main).not.toBeEmpty();
+      131 |       return;
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:128:46)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-df10f-duces-a-validation-response-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-df10f-duces-a-validation-response-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-df10f-duces-a-validation-response-webkit/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m400[39m
+    Received: [31m200[39m
+
+      126 |       return;
+      127 |     case "error_state":
+    > 128 |       expect(productPage.productApiStatus()).toBe(expectation.httpStatus);
+          |                                              ^
+      129 |       await expect(productPage.main).toContainText(new RegExp(expectation.messagePattern, "i"));
+      130 |       await expect(productPage.main).not.toBeEmpty();
+      131 |       return;
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:128:46)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-df10f-duces-a-validation-response-webkit-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-df10f-duces-a-validation-response-webkit-retry1/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-df10f-duces-a-validation-response-webkit-retry1/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-df10f-duces-a-validation-response-webkit-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-df10f-duces-a-validation-response-webkit-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-004] Quantity two adds the product and gives visual feedback 
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })
+    Expected string: [32m"Đã thêm"[39m
+    Received string: [31m"Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toHaveText" with timeout 1000ms[22m
+    [2m  - waiting for getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })[22m
+    [2m    5 × locator resolved to <button class="bg-green-600 text-white py-3 px-6 rounded hover:bg-green-700 self-start bug-mobile-hidden">Thêm vào giỏ hàng</button>[22m
+    [2m      - unexpected value "Thêm vào giỏ hàng"[22m
+
+
+      131 |       return;
+      132 |     case "cart_accepted": {
+    > 133 |       await expect.soft(productPage.addToCartButton).toHaveText(expectation.successText, {
+          |                                                      ^
+      134 |         timeout: 1_000,
+      135 |       });
+      136 |       await productPage.openCart();
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:133:54)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr')
+    Expected: [32m1[39m
+    Received: [31m0[39m
+    Call log:
+    [2m  - Expect "soft toHaveCount" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr')[22m
+    [2m    6 × locator resolved to 0 elements[22m
+    [2m      - unexpected value "0"[22m
+
+
+      135 |       });
+      136 |       await productPage.openCart();
+    > 137 |       await expect.soft(productPage.cartRows()).toHaveCount(1);
+          |                                                 ^
+      138 |       const row = productPage.cartRows().first();
+      139 |       await expect.soft(row).toContainText(expectation.productName);
+      140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:137:49)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr').first()
+    Expected string: [32m"iPhone 15 Pro Max"[39m
+    Received: <element(s) not found>
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr').first()[22m
+
+
+      137 |       await expect.soft(productPage.cartRows()).toHaveCount(1);
+      138 |       const row = productPage.cartRows().first();
+    > 139 |       await expect.soft(row).toContainText(expectation.productName);
+          |                              ^
+      140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+      141 |       expect(expectation.cartChange).toBe(Number(expectation.expectedQuantity));
+      142 |       return;
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:139:30)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr').first().getByRole('cell').nth(2)
+    Expected string: [32m"2"[39m
+    Received: <element(s) not found>
+    Call log:
+    [2m  - Expect "soft toHaveText" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr').first().getByRole('cell').nth(2)[22m
+
+
+      138 |       const row = productPage.cartRows().first();
+      139 |       await expect.soft(row).toContainText(expectation.productName);
+    > 140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+          |                                                       ^
+      141 |       expect(expectation.cartChange).toBe(Number(expectation.expectedQuantity));
+      142 |       return;
+      143 |     }
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:140:55)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-061a1-t-and-gives-visual-feedback-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-061a1-t-and-gives-visual-feedback-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-061a1-t-and-gives-visual-feedback-webkit/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })
+    Expected string: [32m"Đã thêm"[39m
+    Received string: [31m"Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toHaveText" with timeout 1000ms[22m
+    [2m  - waiting for getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })[22m
+    [2m    5 × locator resolved to <button class="bg-green-600 text-white py-3 px-6 rounded hover:bg-green-700 self-start bug-mobile-hidden">Thêm vào giỏ hàng</button>[22m
+    [2m      - unexpected value "Thêm vào giỏ hàng"[22m
+
+
+      131 |       return;
+      132 |     case "cart_accepted": {
+    > 133 |       await expect.soft(productPage.addToCartButton).toHaveText(expectation.successText, {
+          |                                                      ^
+      134 |         timeout: 1_000,
+      135 |       });
+      136 |       await productPage.openCart();
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:133:54)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr')
+    Expected: [32m1[39m
+    Received: [31m0[39m
+    Call log:
+    [2m  - Expect "soft toHaveCount" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr')[22m
+    [2m    6 × locator resolved to 0 elements[22m
+    [2m      - unexpected value "0"[22m
+
+
+      135 |       });
+      136 |       await productPage.openCart();
+    > 137 |       await expect.soft(productPage.cartRows()).toHaveCount(1);
+          |                                                 ^
+      138 |       const row = productPage.cartRows().first();
+      139 |       await expect.soft(row).toContainText(expectation.productName);
+      140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:137:49)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr').first()
+    Expected string: [32m"iPhone 15 Pro Max"[39m
+    Received: <element(s) not found>
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr').first()[22m
+
+
+      137 |       await expect.soft(productPage.cartRows()).toHaveCount(1);
+      138 |       const row = productPage.cartRows().first();
+    > 139 |       await expect.soft(row).toContainText(expectation.productName);
+          |                              ^
+      140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+      141 |       expect(expectation.cartChange).toBe(Number(expectation.expectedQuantity));
+      142 |       return;
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:139:30)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr').first().getByRole('cell').nth(2)
+    Expected string: [32m"2"[39m
+    Received: <element(s) not found>
+    Call log:
+    [2m  - Expect "soft toHaveText" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr').first().getByRole('cell').nth(2)[22m
+
+
+      138 |       const row = productPage.cartRows().first();
+      139 |       await expect.soft(row).toContainText(expectation.productName);
+    > 140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+          |                                                       ^
+      141 |       expect(expectation.cartChange).toBe(Number(expectation.expectedQuantity));
+      142 |       return;
+      143 |     }
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:140:55)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-061a1-t-and-gives-visual-feedback-webkit-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-061a1-t-and-gives-visual-feedback-webkit-retry1/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-061a1-t-and-gives-visual-feedback-webkit-retry1/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-061a1-t-and-gives-visual-feedback-webkit-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-061a1-t-and-gives-visual-feedback-webkit-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-005] Quantity zero is rejected 
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main')
+    Expected pattern: [32m/số lượng tối thiểu là 1|số nguyên dương|không hợp lệ/i[39m
+    Received string:  [31m"iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 1000ms[22m
+    [2m  - waiting for locator('main')[22m
+    [2m    5 × locator resolved to <main class="flex-grow p-4 container mx-auto max-w-5xl">…</main>[22m
+    [2m      - unexpected value "iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[22m
+
+
+      143 |     }
+      144 |     case "quantity_rejected":
+    > 145 |       await expect.soft(productPage.main).toContainText(
+          |                                           ^
+      146 |         new RegExp(expectation.errorPattern, "i"),
+      147 |         { timeout: 1_000 },
+      148 |       );
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:145:43)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-7e464-5-Quantity-zero-is-rejected-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-7e464-5-Quantity-zero-is-rejected-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-7e464-5-Quantity-zero-is-rejected-webkit/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main')
+    Expected pattern: [32m/số lượng tối thiểu là 1|số nguyên dương|không hợp lệ/i[39m
+    Received string:  [31m"iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 1000ms[22m
+    [2m  - waiting for locator('main')[22m
+    [2m    5 × locator resolved to <main class="flex-grow p-4 container mx-auto max-w-5xl">…</main>[22m
+    [2m      - unexpected value "iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[22m
+
+
+      143 |     }
+      144 |     case "quantity_rejected":
+    > 145 |       await expect.soft(productPage.main).toContainText(
+          |                                           ^
+      146 |         new RegExp(expectation.errorPattern, "i"),
+      147 |         { timeout: 1_000 },
+      148 |       );
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:145:43)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-7e464-5-Quantity-zero-is-rejected-webkit-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-7e464-5-Quantity-zero-is-rejected-webkit-retry1/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-7e464-5-Quantity-zero-is-rejected-webkit-retry1/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-7e464-5-Quantity-zero-is-rejected-webkit-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-7e464-5-Quantity-zero-is-rejected-webkit-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-006] Negative quantity is rejected 
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main')
+    Expected pattern: [32m/số lượng tối thiểu là 1|số nguyên dương|không hợp lệ/i[39m
+    Received string:  [31m"iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 1000ms[22m
+    [2m  - waiting for locator('main')[22m
+    [2m    5 × locator resolved to <main class="flex-grow p-4 container mx-auto max-w-5xl">…</main>[22m
+    [2m      - unexpected value "iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[22m
+
+
+      143 |     }
+      144 |     case "quantity_rejected":
+    > 145 |       await expect.soft(productPage.main).toContainText(
+          |                                           ^
+      146 |         new RegExp(expectation.errorPattern, "i"),
+      147 |         { timeout: 1_000 },
+      148 |       );
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:145:43)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-a07eb-gative-quantity-is-rejected-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-a07eb-gative-quantity-is-rejected-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-a07eb-gative-quantity-is-rejected-webkit/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main')
+    Expected pattern: [32m/số lượng tối thiểu là 1|số nguyên dương|không hợp lệ/i[39m
+    Received string:  [31m"iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 1000ms[22m
+    [2m  - waiting for locator('main')[22m
+    [2m    5 × locator resolved to <main class="flex-grow p-4 container mx-auto max-w-5xl">…</main>[22m
+    [2m      - unexpected value "iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[22m
+
+
+      143 |     }
+      144 |     case "quantity_rejected":
+    > 145 |       await expect.soft(productPage.main).toContainText(
+          |                                           ^
+      146 |         new RegExp(expectation.errorPattern, "i"),
+      147 |         { timeout: 1_000 },
+      148 |       );
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:145:43)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-a07eb-gative-quantity-is-rejected-webkit-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-a07eb-gative-quantity-is-rejected-webkit-retry1/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-a07eb-gative-quantity-is-rejected-webkit-retry1/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-a07eb-gative-quantity-is-rejected-webkit-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-a07eb-gative-quantity-is-rejected-webkit-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-007] Decimal quantity is rejected 
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main')
+    Expected pattern: [32m/số lượng phải là số nguyên|số nguyên dương|không hợp lệ/i[39m
+    Received string:  [31m"iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 1000ms[22m
+    [2m  - waiting for locator('main')[22m
+    [2m    5 × locator resolved to <main class="flex-grow p-4 container mx-auto max-w-5xl">…</main>[22m
+    [2m      - unexpected value "iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[22m
+
+
+      143 |     }
+      144 |     case "quantity_rejected":
+    > 145 |       await expect.soft(productPage.main).toContainText(
+          |                                           ^
+      146 |         new RegExp(expectation.errorPattern, "i"),
+      147 |         { timeout: 1_000 },
+      148 |       );
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:145:43)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3279d-ecimal-quantity-is-rejected-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3279d-ecimal-quantity-is-rejected-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3279d-ecimal-quantity-is-rejected-webkit/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main')
+    Expected pattern: [32m/số lượng phải là số nguyên|số nguyên dương|không hợp lệ/i[39m
+    Received string:  [31m"iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 1000ms[22m
+    [2m  - waiting for locator('main')[22m
+    [2m    5 × locator resolved to <main class="flex-grow p-4 container mx-auto max-w-5xl">…</main>[22m
+    [2m      - unexpected value "iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[22m
+
+
+      143 |     }
+      144 |     case "quantity_rejected":
+    > 145 |       await expect.soft(productPage.main).toContainText(
+          |                                           ^
+      146 |         new RegExp(expectation.errorPattern, "i"),
+      147 |         { timeout: 1_000 },
+      148 |       );
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:145:43)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3279d-ecimal-quantity-is-rejected-webkit-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3279d-ecimal-quantity-is-rejected-webkit-retry1/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3279d-ecimal-quantity-is-rejected-webkit-retry1/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3279d-ecimal-quantity-is-rejected-webkit-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3279d-ecimal-quantity-is-rejected-webkit-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-008] Empty quantity is rejected 
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main')
+    Expected pattern: [32m/vui lòng nhập số lượng|bắt buộc|không hợp lệ/i[39m
+    Received string:  [31m"iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 1000ms[22m
+    [2m  - waiting for locator('main')[22m
+    [2m    5 × locator resolved to <main class="flex-grow p-4 container mx-auto max-w-5xl">…</main>[22m
+    [2m      - unexpected value "iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[22m
+
+
+      143 |     }
+      144 |     case "quantity_rejected":
+    > 145 |       await expect.soft(productPage.main).toContainText(
+          |                                           ^
+      146 |         new RegExp(expectation.errorPattern, "i"),
+      147 |         { timeout: 1_000 },
+      148 |       );
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:145:43)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-adb8f--Empty-quantity-is-rejected-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-adb8f--Empty-quantity-is-rejected-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-adb8f--Empty-quantity-is-rejected-webkit/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main')
+    Expected pattern: [32m/vui lòng nhập số lượng|bắt buộc|không hợp lệ/i[39m
+    Received string:  [31m"iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 1000ms[22m
+    [2m  - waiting for locator('main')[22m
+    [2m    5 × locator resolved to <main class="flex-grow p-4 container mx-auto max-w-5xl">…</main>[22m
+    [2m      - unexpected value "iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[22m
+
+
+      143 |     }
+      144 |     case "quantity_rejected":
+    > 145 |       await expect.soft(productPage.main).toContainText(
+          |                                           ^
+      146 |         new RegExp(expectation.errorPattern, "i"),
+      147 |         { timeout: 1_000 },
+      148 |       );
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:145:43)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-adb8f--Empty-quantity-is-rejected-webkit-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-adb8f--Empty-quantity-is-rejected-webkit-retry1/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-adb8f--Empty-quantity-is-rejected-webkit-retry1/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-adb8f--Empty-quantity-is-rejected-webkit-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-adb8f--Empty-quantity-is-rejected-webkit-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-009] Alphabetic quantity is rejected 
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main')
+    Expected pattern: [32m/số lượng phải là số nguyên|định dạng|không hợp lệ/i[39m
+    Received string:  [31m"iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 1000ms[22m
+    [2m  - waiting for locator('main')[22m
+    [2m    5 × locator resolved to <main class="flex-grow p-4 container mx-auto max-w-5xl">…</main>[22m
+    [2m      - unexpected value "iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[22m
+
+
+      143 |     }
+      144 |     case "quantity_rejected":
+    > 145 |       await expect.soft(productPage.main).toContainText(
+          |                                           ^
+      146 |         new RegExp(expectation.errorPattern, "i"),
+      147 |         { timeout: 1_000 },
+      148 |       );
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:145:43)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-729b2-abetic-quantity-is-rejected-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-729b2-abetic-quantity-is-rejected-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-729b2-abetic-quantity-is-rejected-webkit/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main')
+    Expected pattern: [32m/số lượng phải là số nguyên|định dạng|không hợp lệ/i[39m
+    Received string:  [31m"iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 1000ms[22m
+    [2m  - waiting for locator('main')[22m
+    [2m    5 × locator resolved to <main class="flex-grow p-4 container mx-auto max-w-5xl">…</main>[22m
+    [2m      - unexpected value "iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[22m
+
+
+      143 |     }
+      144 |     case "quantity_rejected":
+    > 145 |       await expect.soft(productPage.main).toContainText(
+          |                                           ^
+      146 |         new RegExp(expectation.errorPattern, "i"),
+      147 |         { timeout: 1_000 },
+      148 |       );
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:145:43)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-729b2-abetic-quantity-is-rejected-webkit-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-729b2-abetic-quantity-is-rejected-webkit-retry1/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-729b2-abetic-quantity-is-rejected-webkit-retry1/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-729b2-abetic-quantity-is-rejected-webkit-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-729b2-abetic-quantity-is-rejected-webkit-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  10) [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-010] Minimum quantity one is accepted 
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })
+    Expected string: [32m"Đã thêm"[39m
+    Received string: [31m"Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toHaveText" with timeout 1000ms[22m
+    [2m  - waiting for getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })[22m
+    [2m    5 × locator resolved to <button class="bg-green-600 text-white py-3 px-6 rounded hover:bg-green-700 self-start bug-mobile-hidden">Thêm vào giỏ hàng</button>[22m
+    [2m      - unexpected value "Thêm vào giỏ hàng"[22m
+
+
+      131 |       return;
+      132 |     case "cart_accepted": {
+    > 133 |       await expect.soft(productPage.addToCartButton).toHaveText(expectation.successText, {
+          |                                                      ^
+      134 |         timeout: 1_000,
+      135 |       });
+      136 |       await productPage.openCart();
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:133:54)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr')
+    Expected: [32m1[39m
+    Received: [31m0[39m
+    Call log:
+    [2m  - Expect "soft toHaveCount" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr')[22m
+    [2m    6 × locator resolved to 0 elements[22m
+    [2m      - unexpected value "0"[22m
+
+
+      135 |       });
+      136 |       await productPage.openCart();
+    > 137 |       await expect.soft(productPage.cartRows()).toHaveCount(1);
+          |                                                 ^
+      138 |       const row = productPage.cartRows().first();
+      139 |       await expect.soft(row).toContainText(expectation.productName);
+      140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:137:49)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr').first()
+    Expected string: [32m"iPhone 15 Pro Max"[39m
+    Received: <element(s) not found>
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr').first()[22m
+
+
+      137 |       await expect.soft(productPage.cartRows()).toHaveCount(1);
+      138 |       const row = productPage.cartRows().first();
+    > 139 |       await expect.soft(row).toContainText(expectation.productName);
+          |                              ^
+      140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+      141 |       expect(expectation.cartChange).toBe(Number(expectation.expectedQuantity));
+      142 |       return;
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:139:30)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr').first().getByRole('cell').nth(2)
+    Expected string: [32m"1"[39m
+    Received: <element(s) not found>
+    Call log:
+    [2m  - Expect "soft toHaveText" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr').first().getByRole('cell').nth(2)[22m
+
+
+      138 |       const row = productPage.cartRows().first();
+      139 |       await expect.soft(row).toContainText(expectation.productName);
+    > 140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+          |                                                       ^
+      141 |       expect(expectation.cartChange).toBe(Number(expectation.expectedQuantity));
+      142 |       return;
+      143 |     }
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:140:55)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3c017-um-quantity-one-is-accepted-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3c017-um-quantity-one-is-accepted-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3c017-um-quantity-one-is-accepted-webkit/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })
+    Expected string: [32m"Đã thêm"[39m
+    Received string: [31m"Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toHaveText" with timeout 1000ms[22m
+    [2m  - waiting for getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })[22m
+    [2m    5 × locator resolved to <button class="bg-green-600 text-white py-3 px-6 rounded hover:bg-green-700 self-start bug-mobile-hidden">Thêm vào giỏ hàng</button>[22m
+    [2m      - unexpected value "Thêm vào giỏ hàng"[22m
+
+
+      131 |       return;
+      132 |     case "cart_accepted": {
+    > 133 |       await expect.soft(productPage.addToCartButton).toHaveText(expectation.successText, {
+          |                                                      ^
+      134 |         timeout: 1_000,
+      135 |       });
+      136 |       await productPage.openCart();
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:133:54)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr')
+    Expected: [32m1[39m
+    Received: [31m0[39m
+    Call log:
+    [2m  - Expect "soft toHaveCount" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr')[22m
+    [2m    6 × locator resolved to 0 elements[22m
+    [2m      - unexpected value "0"[22m
+
+
+      135 |       });
+      136 |       await productPage.openCart();
+    > 137 |       await expect.soft(productPage.cartRows()).toHaveCount(1);
+          |                                                 ^
+      138 |       const row = productPage.cartRows().first();
+      139 |       await expect.soft(row).toContainText(expectation.productName);
+      140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:137:49)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr').first()
+    Expected string: [32m"iPhone 15 Pro Max"[39m
+    Received: <element(s) not found>
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr').first()[22m
+
+
+      137 |       await expect.soft(productPage.cartRows()).toHaveCount(1);
+      138 |       const row = productPage.cartRows().first();
+    > 139 |       await expect.soft(row).toContainText(expectation.productName);
+          |                              ^
+      140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+      141 |       expect(expectation.cartChange).toBe(Number(expectation.expectedQuantity));
+      142 |       return;
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:139:30)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr').first().getByRole('cell').nth(2)
+    Expected string: [32m"1"[39m
+    Received: <element(s) not found>
+    Call log:
+    [2m  - Expect "soft toHaveText" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr').first().getByRole('cell').nth(2)[22m
+
+
+      138 |       const row = productPage.cartRows().first();
+      139 |       await expect.soft(row).toContainText(expectation.productName);
+    > 140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+          |                                                       ^
+      141 |       expect(expectation.cartChange).toBe(Number(expectation.expectedQuantity));
+      142 |       return;
+      143 |     }
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:140:55)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3c017-um-quantity-one-is-accepted-webkit-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3c017-um-quantity-one-is-accepted-webkit-retry1/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3c017-um-quantity-one-is-accepted-webkit-retry1/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3c017-um-quantity-one-is-accepted-webkit-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-3c017-um-quantity-one-is-accepted-webkit-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  11) [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-011] Quantity just above minimum is accepted 
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })
+    Expected string: [32m"Đã thêm"[39m
+    Received string: [31m"Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toHaveText" with timeout 1000ms[22m
+    [2m  - waiting for getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })[22m
+    [2m    5 × locator resolved to <button class="bg-green-600 text-white py-3 px-6 rounded hover:bg-green-700 self-start bug-mobile-hidden">Thêm vào giỏ hàng</button>[22m
+    [2m      - unexpected value "Thêm vào giỏ hàng"[22m
+
+
+      131 |       return;
+      132 |     case "cart_accepted": {
+    > 133 |       await expect.soft(productPage.addToCartButton).toHaveText(expectation.successText, {
+          |                                                      ^
+      134 |         timeout: 1_000,
+      135 |       });
+      136 |       await productPage.openCart();
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:133:54)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr')
+    Expected: [32m1[39m
+    Received: [31m0[39m
+    Call log:
+    [2m  - Expect "soft toHaveCount" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr')[22m
+    [2m    6 × locator resolved to 0 elements[22m
+    [2m      - unexpected value "0"[22m
+
+
+      135 |       });
+      136 |       await productPage.openCart();
+    > 137 |       await expect.soft(productPage.cartRows()).toHaveCount(1);
+          |                                                 ^
+      138 |       const row = productPage.cartRows().first();
+      139 |       await expect.soft(row).toContainText(expectation.productName);
+      140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:137:49)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr').first()
+    Expected string: [32m"iPhone 15 Pro Max"[39m
+    Received: <element(s) not found>
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr').first()[22m
+
+
+      137 |       await expect.soft(productPage.cartRows()).toHaveCount(1);
+      138 |       const row = productPage.cartRows().first();
+    > 139 |       await expect.soft(row).toContainText(expectation.productName);
+          |                              ^
+      140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+      141 |       expect(expectation.cartChange).toBe(Number(expectation.expectedQuantity));
+      142 |       return;
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:139:30)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr').first().getByRole('cell').nth(2)
+    Expected string: [32m"2"[39m
+    Received: <element(s) not found>
+    Call log:
+    [2m  - Expect "soft toHaveText" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr').first().getByRole('cell').nth(2)[22m
+
+
+      138 |       const row = productPage.cartRows().first();
+      139 |       await expect.soft(row).toContainText(expectation.productName);
+    > 140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+          |                                                       ^
+      141 |       expect(expectation.cartChange).toBe(Number(expectation.expectedQuantity));
+      142 |       return;
+      143 |     }
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:140:55)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-9664e-t-above-minimum-is-accepted-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-9664e-t-above-minimum-is-accepted-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-9664e-t-above-minimum-is-accepted-webkit/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })
+    Expected string: [32m"Đã thêm"[39m
+    Received string: [31m"Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toHaveText" with timeout 1000ms[22m
+    [2m  - waiting for getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })[22m
+    [2m    5 × locator resolved to <button class="bg-green-600 text-white py-3 px-6 rounded hover:bg-green-700 self-start bug-mobile-hidden">Thêm vào giỏ hàng</button>[22m
+    [2m      - unexpected value "Thêm vào giỏ hàng"[22m
+
+
+      131 |       return;
+      132 |     case "cart_accepted": {
+    > 133 |       await expect.soft(productPage.addToCartButton).toHaveText(expectation.successText, {
+          |                                                      ^
+      134 |         timeout: 1_000,
+      135 |       });
+      136 |       await productPage.openCart();
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:133:54)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr')
+    Expected: [32m1[39m
+    Received: [31m0[39m
+    Call log:
+    [2m  - Expect "soft toHaveCount" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr')[22m
+    [2m    6 × locator resolved to 0 elements[22m
+    [2m      - unexpected value "0"[22m
+
+
+      135 |       });
+      136 |       await productPage.openCart();
+    > 137 |       await expect.soft(productPage.cartRows()).toHaveCount(1);
+          |                                                 ^
+      138 |       const row = productPage.cartRows().first();
+      139 |       await expect.soft(row).toContainText(expectation.productName);
+      140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:137:49)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr').first()
+    Expected string: [32m"iPhone 15 Pro Max"[39m
+    Received: <element(s) not found>
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr').first()[22m
+
+
+      137 |       await expect.soft(productPage.cartRows()).toHaveCount(1);
+      138 |       const row = productPage.cartRows().first();
+    > 139 |       await expect.soft(row).toContainText(expectation.productName);
+          |                              ^
+      140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+      141 |       expect(expectation.cartChange).toBe(Number(expectation.expectedQuantity));
+      142 |       return;
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:139:30)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main tbody tr').first().getByRole('cell').nth(2)
+    Expected string: [32m"2"[39m
+    Received: <element(s) not found>
+    Call log:
+    [2m  - Expect "soft toHaveText" with timeout 2000ms[22m
+    [2m  - waiting for locator('main tbody tr').first().getByRole('cell').nth(2)[22m
+
+
+      138 |       const row = productPage.cartRows().first();
+      139 |       await expect.soft(row).toContainText(expectation.productName);
+    > 140 |       await expect.soft(row.getByRole("cell").nth(2)).toHaveText(expectation.expectedQuantity);
+          |                                                       ^
+      141 |       expect(expectation.cartChange).toBe(Number(expectation.expectedQuantity));
+      142 |       return;
+      143 |     }
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:140:55)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-9664e-t-above-minimum-is-accepted-webkit-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-9664e-t-above-minimum-is-accepted-webkit-retry1/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-9664e-t-above-minimum-is-accepted-webkit-retry1/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-9664e-t-above-minimum-is-accepted-webkit-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-9664e-t-above-minimum-is-accepted-webkit-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  12) [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-012] Unauthenticated add-to-cart is rejected 
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main')
+    Expected pattern: [32m/đăng nhập|unauthorized|xác thực/i[39m
+    Received string:  [31m"iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 1000ms[22m
+    [2m  - waiting for locator('main')[22m
+    [2m    5 × locator resolved to <main class="flex-grow p-4 container mx-auto max-w-5xl">…</main>[22m
+    [2m      - unexpected value "iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[22m
+
+
+      156 |       });
+      157 |       expect(unauthenticatedResponse.status()).toBe(expectation.httpStatus);
+    > 158 |       await expect.soft(productPage.main).toContainText(
+          |                                           ^
+      159 |         new RegExp(expectation.errorPattern, "i"),
+      160 |         { timeout: 1_000 },
+      161 |       );
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:158:43)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mpage[39m[2m).[22mtoHaveURL[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected pattern: [32m/\/login$/[39m
+    Received string:  [31m"http://127.0.0.1:5173/product/1"[39m
+    Call log:
+    [2m  - Expect "soft toHaveURL" with timeout 2000ms[22m
+    [2m    6 × unexpected value "http://127.0.0.1:5173/product/1"[22m
+
+
+      161 |       );
+      162 |       await expect.soft(productPage.addToCartButton).not.toHaveText("Đã thêm");
+    > 163 |       await expect.soft(productPage.page).toHaveURL(
+          |                                           ^
+      164 |         new RegExp(`${expectation.redirectUrl.replace("/", "\\/")}$`),
+      165 |       );
+      166 |       await productPage.openCart();
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:163:43)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-27de5-ted-add-to-cart-is-rejected-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-27de5-ted-add-to-cart-is-rejected-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-27de5-ted-add-to-cart-is-rejected-webkit/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [31mTimed out 1000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m
+
+    Locator: locator('main')
+    Expected pattern: [32m/đăng nhập|unauthorized|xác thực/i[39m
+    Received string:  [31m"iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[39m
+    Call log:
+    [2m  - Expect "soft toContainText" with timeout 1000ms[22m
+    [2m  - waiting for locator('main')[22m
+    [2m    5 × locator resolved to <main class="flex-grow p-4 container mx-auto max-w-5xl">…</main>[22m
+    [2m      - unexpected value "iPhone 15 Pro Max30,000,000 ₫Điện thoại cao cấp của AppleSố lượng:Thêm vào giỏ hàng"[22m
+
+
+      156 |       });
+      157 |       expect(unauthenticatedResponse.status()).toBe(expectation.httpStatus);
+    > 158 |       await expect.soft(productPage.main).toContainText(
+          |                                           ^
+      159 |         new RegExp(expectation.errorPattern, "i"),
+      160 |         { timeout: 1_000 },
+      161 |       );
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:158:43)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mpage[39m[2m).[22mtoHaveURL[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected pattern: [32m/\/login$/[39m
+    Received string:  [31m"http://127.0.0.1:5173/product/1"[39m
+    Call log:
+    [2m  - Expect "soft toHaveURL" with timeout 2000ms[22m
+    [2m    6 × unexpected value "http://127.0.0.1:5173/product/1"[22m
+
+
+      161 |       );
+      162 |       await expect.soft(productPage.addToCartButton).not.toHaveText("Đã thêm");
+    > 163 |       await expect.soft(productPage.page).toHaveURL(
+          |                                           ^
+      164 |         new RegExp(`${expectation.redirectUrl.replace("/", "\\/")}$`),
+      165 |       );
+      166 |       await productPage.openCart();
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:163:43)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-27de5-ted-add-to-cart-is-rejected-webkit-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-27de5-ted-add-to-cart-is-rejected-webkit-retry1/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-27de5-ted-add-to-cart-is-rejected-webkit-retry1/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-27de5-ted-add-to-cart-is-rejected-webkit-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-27de5-ted-add-to-cart-is-rejected-webkit-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  13) [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-013] Breadcrumb links back to the home page 
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m()[22m
+
+    Locator: locator('main').getByRole('link', { name: 'Trang chủ' })
+    Expected: visible
+    Received: <element(s) not found>
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 2000ms[22m
+    [2m  - waiting for locator('main').getByRole('link', { name: 'Trang chủ' })[22m
+
+
+      170 |     case "breadcrumb_navigation": {
+      171 |       const homeLink = productPage.main.getByRole("link", { name: expectation.linkText });
+    > 172 |       await expect(homeLink).toBeVisible();
+          |                              ^
+      173 |       await homeLink.click();
+      174 |       await expect(productPage.page).toHaveURL(
+      175 |         new RegExp(`${expectation.targetUrl.replace("/", "\\/")}$`),
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:172:30)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-a5f28-links-back-to-the-home-page-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-a5f28-links-back-to-the-home-page-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-a5f28-links-back-to-the-home-page-webkit/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [31mTimed out 2000ms waiting for [39m[2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m()[22m
+
+    Locator: locator('main').getByRole('link', { name: 'Trang chủ' })
+    Expected: visible
+    Received: <element(s) not found>
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 2000ms[22m
+    [2m  - waiting for locator('main').getByRole('link', { name: 'Trang chủ' })[22m
+
+
+      170 |     case "breadcrumb_navigation": {
+      171 |       const homeLink = productPage.main.getByRole("link", { name: expectation.linkText });
+    > 172 |       await expect(homeLink).toBeVisible();
+          |                              ^
+      173 |       await homeLink.click();
+      174 |       await expect(productPage.page).toHaveURL(
+      175 |         new RegExp(`${expectation.targetUrl.replace("/", "\\/")}$`),
+        at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:172:30)
+        at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-a5f28-links-back-to-the-home-page-webkit-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-a5f28-links-back-to-the-home-page-webkit-retry1/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-a5f28-links-back-to-the-home-page-webkit-retry1/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-a5f28-links-back-to-the-home-page-webkit-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../reports/artifacts/product-detail/webkit/product-detail--TC-PRODUCT-a5f28-links-back-to-the-home-page-webkit-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  13 failed
+    [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-001] Valid product displays complete details 
+    [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-002] Unknown numeric product ID produces a not-found response 
+    [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-003] Non-numeric product ID produces a validation response 
+    [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-004] Quantity two adds the product and gives visual feedback 
+    [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-005] Quantity zero is rejected 
+    [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-006] Negative quantity is rejected 
+    [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-007] Decimal quantity is rejected 
+    [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-008] Empty quantity is rejected 
+    [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-009] Alphabetic quantity is rejected 
+    [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-010] Minimum quantity one is accepted 
+    [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-011] Quantity just above minimum is accepted 
+    [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-012] Unauthenticated add-to-cart is rejected 
+    [webkit] › specs/product-detail.spec.ts:200:3 › [TC-PRODUCT-DETAIL-013] Breadcrumb links back to the home page 
+  2 passed (1.9m)
+
+To open last HTML report run:
+[36m[39m
+[36m  npx playwright show-report ../../reports/html/product-detail/webkit[39m
+[36m[39m
+[2m[WebServer] [22m(node:26838) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[2m[WebServer] [22m(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26849) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26849) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26907) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26907) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26937) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26937) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26953) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26953) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26975) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26975) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27006) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27006) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27028) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27028) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27049) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27049) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27063) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27063) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27085) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27085) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27098) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27098) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27124) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27124) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27135) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27135) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27156) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27156) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27167) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27167) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27189) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27189) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27203) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27203) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27247) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27247) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27270) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27270) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27289) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27289) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27306) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27306) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27323) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27323) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27341) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27341) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27360) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27360) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)

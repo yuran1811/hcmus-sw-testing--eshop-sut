@@ -1,0 +1,298 @@
+{
+  "generatedAt": "2026-07-27T08:28:38.220Z",
+  "studentId": "23127065",
+  "feature": "Product Detail",
+  "logicalCases": 15,
+  "expectedExecutions": 45,
+  "cells": [
+    {
+      "feature": "Product Detail",
+      "browser": "chromium",
+      "exitStatus": 1,
+      "counts": {
+        "total": 15,
+        "passed": 2,
+        "failed": 13,
+        "skipped": 0
+      },
+      "reportPath": "reports/html/product-detail/chromium",
+      "resultPath": "reports/results/product-detail/chromium.json",
+      "logPath": "reports/results/product-detail/chromium.log",
+      "expectedLabel": "Run by: 23127065 | Product Detail | chromium",
+      "labelVerified": true,
+      "failures": [
+        {
+          "caseId": "TC-PRODUCT-DETAIL-001",
+          "title": "[TC-PRODUCT-DETAIL-001] Valid product displays complete details",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-002",
+          "title": "[TC-PRODUCT-DETAIL-002] Unknown numeric product ID produces a not-found response",
+          "classification": "product defect",
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-003",
+          "title": "[TC-PRODUCT-DETAIL-003] Non-numeric product ID produces a validation response",
+          "classification": "product defect",
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-004",
+          "title": "[TC-PRODUCT-DETAIL-004] Quantity two adds the product and gives visual feedback",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-005",
+          "title": "[TC-PRODUCT-DETAIL-005] Quantity zero is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-006",
+          "title": "[TC-PRODUCT-DETAIL-006] Negative quantity is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-007",
+          "title": "[TC-PRODUCT-DETAIL-007] Decimal quantity is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-008",
+          "title": "[TC-PRODUCT-DETAIL-008] Empty quantity is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-009",
+          "title": "[TC-PRODUCT-DETAIL-009] Alphabetic quantity is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-010",
+          "title": "[TC-PRODUCT-DETAIL-010] Minimum quantity one is accepted",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-011",
+          "title": "[TC-PRODUCT-DETAIL-011] Quantity just above minimum is accepted",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-012",
+          "title": "[TC-PRODUCT-DETAIL-012] Unauthenticated add-to-cart is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-013",
+          "title": "[TC-PRODUCT-DETAIL-013] Breadcrumb links back to the home page",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m"
+        }
+      ]
+    },
+    {
+      "feature": "Product Detail",
+      "browser": "firefox",
+      "exitStatus": 1,
+      "counts": {
+        "total": 15,
+        "passed": 2,
+        "failed": 13,
+        "skipped": 0
+      },
+      "reportPath": "reports/html/product-detail/firefox",
+      "resultPath": "reports/results/product-detail/firefox.json",
+      "logPath": "reports/results/product-detail/firefox.log",
+      "expectedLabel": "Run by: 23127065 | Product Detail | firefox",
+      "labelVerified": true,
+      "failures": [
+        {
+          "caseId": "TC-PRODUCT-DETAIL-001",
+          "title": "[TC-PRODUCT-DETAIL-001] Valid product displays complete details",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-002",
+          "title": "[TC-PRODUCT-DETAIL-002] Unknown numeric product ID produces a not-found response",
+          "classification": "product defect",
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-003",
+          "title": "[TC-PRODUCT-DETAIL-003] Non-numeric product ID produces a validation response",
+          "classification": "product defect",
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-004",
+          "title": "[TC-PRODUCT-DETAIL-004] Quantity two adds the product and gives visual feedback",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-005",
+          "title": "[TC-PRODUCT-DETAIL-005] Quantity zero is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-006",
+          "title": "[TC-PRODUCT-DETAIL-006] Negative quantity is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-007",
+          "title": "[TC-PRODUCT-DETAIL-007] Decimal quantity is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-008",
+          "title": "[TC-PRODUCT-DETAIL-008] Empty quantity is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-009",
+          "title": "[TC-PRODUCT-DETAIL-009] Alphabetic quantity is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-010",
+          "title": "[TC-PRODUCT-DETAIL-010] Minimum quantity one is accepted",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-011",
+          "title": "[TC-PRODUCT-DETAIL-011] Quantity just above minimum is accepted",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-012",
+          "title": "[TC-PRODUCT-DETAIL-012] Unauthenticated add-to-cart is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-013",
+          "title": "[TC-PRODUCT-DETAIL-013] Breadcrumb links back to the home page",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m"
+        }
+      ]
+    },
+    {
+      "feature": "Product Detail",
+      "browser": "webkit",
+      "exitStatus": 1,
+      "counts": {
+        "total": 15,
+        "passed": 2,
+        "failed": 13,
+        "skipped": 0
+      },
+      "reportPath": "reports/html/product-detail/webkit",
+      "resultPath": "reports/results/product-detail/webkit.json",
+      "logPath": "reports/results/product-detail/webkit.log",
+      "expectedLabel": "Run by: 23127065 | Product Detail | webkit",
+      "labelVerified": true,
+      "failures": [
+        {
+          "caseId": "TC-PRODUCT-DETAIL-001",
+          "title": "[TC-PRODUCT-DETAIL-001] Valid product displays complete details",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-002",
+          "title": "[TC-PRODUCT-DETAIL-002] Unknown numeric product ID produces a not-found response",
+          "classification": "product defect",
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-003",
+          "title": "[TC-PRODUCT-DETAIL-003] Non-numeric product ID produces a validation response",
+          "classification": "product defect",
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-004",
+          "title": "[TC-PRODUCT-DETAIL-004] Quantity two adds the product and gives visual feedback",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-005",
+          "title": "[TC-PRODUCT-DETAIL-005] Quantity zero is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-006",
+          "title": "[TC-PRODUCT-DETAIL-006] Negative quantity is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-007",
+          "title": "[TC-PRODUCT-DETAIL-007] Decimal quantity is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-008",
+          "title": "[TC-PRODUCT-DETAIL-008] Empty quantity is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-009",
+          "title": "[TC-PRODUCT-DETAIL-009] Alphabetic quantity is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-010",
+          "title": "[TC-PRODUCT-DETAIL-010] Minimum quantity one is accepted",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-011",
+          "title": "[TC-PRODUCT-DETAIL-011] Quantity just above minimum is accepted",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-012",
+          "title": "[TC-PRODUCT-DETAIL-012] Unauthenticated add-to-cart is rejected",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m"
+        },
+        {
+          "caseId": "TC-PRODUCT-DETAIL-013",
+          "title": "[TC-PRODUCT-DETAIL-013] Breadcrumb links back to the home page",
+          "classification": "product defect",
+          "message": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m"
+        }
+      ]
+    }
+  ],
+  "overallExitStatus": 1
+}

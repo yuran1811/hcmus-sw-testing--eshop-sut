@@ -1,0 +1,250 @@
+{
+  "config": {
+    "configFile": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/playwright.config.ts",
+    "rootDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/results/product-detail/representative-repair.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "open": "never",
+          "outputFolder": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/html/product-detail/representative-repair",
+          "title": "Run by: 23127065 | Product Detail | representative-repair"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative-repair",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 15000
+      },
+      {
+        "outputDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative-repair",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 15000
+      },
+      {
+        "outputDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative-repair",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 15000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.54.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "product-detail.spec.ts",
+      "file": "product-detail.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "[TC-PRODUCT-DETAIL-001] Valid product displays complete details",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2903,
+                  "error": {
+                    "message": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m\n\nLocator: locator('main').getByText('Điện thoại', { exact: true })\nExpected: visible\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for locator('main').getByText('Điện thoại', { exact: true })\u001b[22m\n",
+                    "stack": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m\n\nLocator: locator('main').getByText('Điện thoại', { exact: true })\nExpected: visible\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for locator('main').getByText('Điện thoại', { exact: true })\u001b[22m\n\n    at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:122:9)\n    at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5",
+                    "location": {
+                      "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                      "column": 9,
+                      "line": 122
+                    },
+                    "snippet": "  120 |       await expect(\n  121 |         productPage.main.getByText(expectation.category, { exact: true }),\n> 122 |       ).toBeVisible();\n      |         ^\n  123 |       await expect(productPage.main).toContainText(\n  124 |         new RegExp(expectation.formattedPricePattern),\n  125 |       );"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                        "column": 9,
+                        "line": 122
+                      },
+                      "message": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m\n\nLocator: locator('main').getByText('Điện thoại', { exact: true })\nExpected: visible\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for locator('main').getByText('Điện thoại', { exact: true })\u001b[22m\n\n\n  120 |       await expect(\n  121 |         productPage.main.getByText(expectation.category, { exact: true }),\n> 122 |       ).toBeVisible();\n      |         ^\n  123 |       await expect(productPage.main).toContainText(\n  124 |         new RegExp(expectation.formattedPricePattern),\n  125 |       );\n    at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:122:9)\n    at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-27T08:22:30.251Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative-repair/product-detail--TC-PRODUCT-3e24c-t-displays-complete-details-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative-repair/product-detail--TC-PRODUCT-3e24c-t-displays-complete-details-chromium/video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative-repair/product-detail--TC-PRODUCT-3e24c-t-displays-complete-details-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                    "column": 9,
+                    "line": 122
+                  }
+                },
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2771,
+                  "error": {
+                    "message": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m\n\nLocator: locator('main').getByText('Điện thoại', { exact: true })\nExpected: visible\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for locator('main').getByText('Điện thoại', { exact: true })\u001b[22m\n",
+                    "stack": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m\n\nLocator: locator('main').getByText('Điện thoại', { exact: true })\nExpected: visible\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for locator('main').getByText('Điện thoại', { exact: true })\u001b[22m\n\n    at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:122:9)\n    at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5",
+                    "location": {
+                      "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                      "column": 9,
+                      "line": 122
+                    },
+                    "snippet": "  120 |       await expect(\n  121 |         productPage.main.getByText(expectation.category, { exact: true }),\n> 122 |       ).toBeVisible();\n      |         ^\n  123 |       await expect(productPage.main).toContainText(\n  124 |         new RegExp(expectation.formattedPricePattern),\n  125 |       );"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                        "column": 9,
+                        "line": 122
+                      },
+                      "message": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m\n\nLocator: locator('main').getByText('Điện thoại', { exact: true })\nExpected: visible\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for locator('main').getByText('Điện thoại', { exact: true })\u001b[22m\n\n\n  120 |       await expect(\n  121 |         productPage.main.getByText(expectation.category, { exact: true }),\n> 122 |       ).toBeVisible();\n      |         ^\n  123 |       await expect(productPage.main).toContainText(\n  124 |         new RegExp(expectation.formattedPricePattern),\n  125 |       );\n    at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:122:9)\n    at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:204:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 1,
+                  "startTime": "2026-07-27T08:22:33.776Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative-repair/product-detail--TC-PRODUCT-3e24c-t-displays-complete-details-chromium-retry1/test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative-repair/product-detail--TC-PRODUCT-3e24c-t-displays-complete-details-chromium-retry1/video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative-repair/product-detail--TC-PRODUCT-3e24c-t-displays-complete-details-chromium-retry1/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative-repair/product-detail--TC-PRODUCT-3e24c-t-displays-complete-details-chromium-retry1/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                    "column": 9,
+                    "line": 122
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-d7fe8a3215ee421dd43d",
+          "file": "product-detail.spec.ts",
+          "line": 200,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-07-27T08:22:28.455Z",
+    "duration": 8267.525,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

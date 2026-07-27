@@ -1,0 +1,277 @@
+[
+  {
+    "caseId": "TC-PRODUCT-DETAIL-001",
+    "title": "Valid product displays complete details",
+    "category": "positive/domain",
+    "requirement": "FR-06",
+    "authentication": "authenticated",
+    "preconditions": ["Product 1 exists", "Default user exists"],
+    "product": { "kind": "existing", "id": 1 },
+    "routeParam": "1",
+    "action": { "key": "view_product" },
+    "expectation": {
+      "key": "product_details",
+      "name": "iPhone 15 Pro Max",
+      "description": "Điện thoại cao cấp của Apple",
+      "category": "Điện thoại",
+      "formattedPricePattern": "30[.,]000[.,]000\\s*₫",
+      "httpStatus": 200
+    },
+    "cleanup": []
+  },
+  {
+    "caseId": "TC-PRODUCT-DETAIL-002",
+    "title": "Unknown numeric product ID produces a not-found response",
+    "category": "negative/domain",
+    "requirement": "FR-06",
+    "authentication": "authenticated",
+    "preconditions": ["Product 9999 does not exist", "Default user exists"],
+    "product": { "kind": "missing", "routeParam": "9999" },
+    "routeParam": "9999",
+    "action": { "key": "view_product" },
+    "expectation": {
+      "key": "error_state",
+      "messagePattern": "không tìm thấy|không tồn tại|404",
+      "httpStatus": 404
+    },
+    "cleanup": []
+  },
+  {
+    "caseId": "TC-PRODUCT-DETAIL-003",
+    "title": "Non-numeric product ID produces a validation response",
+    "category": "negative/validation",
+    "requirement": "FR-06",
+    "authentication": "authenticated",
+    "preconditions": ["Default user exists"],
+    "product": { "kind": "missing", "routeParam": "abc" },
+    "routeParam": "abc",
+    "action": { "key": "view_product" },
+    "expectation": {
+      "key": "error_state",
+      "messagePattern": "đường dẫn không hợp lệ|không tồn tại|400|404",
+      "httpStatus": 400
+    },
+    "cleanup": []
+  },
+  {
+    "caseId": "TC-PRODUCT-DETAIL-004",
+    "title": "Quantity two adds the product and gives visual feedback",
+    "category": "positive/cart",
+    "requirement": "FR-06",
+    "authentication": "authenticated",
+    "preconditions": ["Product 1 exists", "Cart starts empty", "Default user exists"],
+    "product": { "kind": "existing", "id": 1 },
+    "routeParam": "1",
+    "action": { "key": "add_to_cart", "quantity": "2" },
+    "expectation": {
+      "key": "cart_accepted",
+      "successText": "Đã thêm",
+      "productName": "iPhone 15 Pro Max",
+      "expectedQuantity": "2",
+      "cartChange": 2
+    },
+    "cleanup": ["Fresh browser context discards cart state"]
+  },
+  {
+    "caseId": "TC-PRODUCT-DETAIL-005",
+    "title": "Quantity zero is rejected",
+    "category": "negative/boundary-off",
+    "requirement": "FR-06",
+    "authentication": "authenticated",
+    "preconditions": ["Product 1 exists", "Cart starts empty", "Default user exists"],
+    "product": { "kind": "existing", "id": 1 },
+    "routeParam": "1",
+    "action": { "key": "add_to_cart", "quantity": "0" },
+    "expectation": {
+      "key": "quantity_rejected",
+      "errorPattern": "số lượng tối thiểu là 1|số nguyên dương|không hợp lệ",
+      "cartChange": 0
+    },
+    "cleanup": ["Fresh browser context discards cart state"]
+  },
+  {
+    "caseId": "TC-PRODUCT-DETAIL-006",
+    "title": "Negative quantity is rejected",
+    "category": "negative/domain",
+    "requirement": "FR-06",
+    "authentication": "authenticated",
+    "preconditions": ["Product 1 exists", "Cart starts empty", "Default user exists"],
+    "product": { "kind": "existing", "id": 1 },
+    "routeParam": "1",
+    "action": { "key": "add_to_cart", "quantity": "-1" },
+    "expectation": {
+      "key": "quantity_rejected",
+      "errorPattern": "số lượng tối thiểu là 1|số nguyên dương|không hợp lệ",
+      "cartChange": 0
+    },
+    "cleanup": ["Fresh browser context discards cart state"]
+  },
+  {
+    "caseId": "TC-PRODUCT-DETAIL-007",
+    "title": "Decimal quantity is rejected",
+    "category": "negative/equivalence",
+    "requirement": "FR-06",
+    "authentication": "authenticated",
+    "preconditions": ["Product 1 exists", "Cart starts empty", "Default user exists"],
+    "product": { "kind": "existing", "id": 1 },
+    "routeParam": "1",
+    "action": { "key": "add_to_cart", "quantity": "1.5" },
+    "expectation": {
+      "key": "quantity_rejected",
+      "errorPattern": "số lượng phải là số nguyên|số nguyên dương|không hợp lệ",
+      "cartChange": 0
+    },
+    "cleanup": ["Fresh browser context discards cart state"]
+  },
+  {
+    "caseId": "TC-PRODUCT-DETAIL-008",
+    "title": "Empty quantity is rejected",
+    "category": "negative/required-field",
+    "requirement": "FR-06",
+    "authentication": "authenticated",
+    "preconditions": ["Product 1 exists", "Cart starts empty", "Default user exists"],
+    "product": { "kind": "existing", "id": 1 },
+    "routeParam": "1",
+    "action": { "key": "add_to_cart", "quantity": "" },
+    "expectation": {
+      "key": "quantity_rejected",
+      "errorPattern": "vui lòng nhập số lượng|bắt buộc|không hợp lệ",
+      "cartChange": 0
+    },
+    "cleanup": ["Fresh browser context discards cart state"]
+  },
+  {
+    "caseId": "TC-PRODUCT-DETAIL-009",
+    "title": "Alphabetic quantity is rejected",
+    "category": "negative/type-validation",
+    "requirement": "FR-06",
+    "authentication": "authenticated",
+    "preconditions": ["Product 1 exists", "Cart starts empty", "Default user exists"],
+    "product": { "kind": "existing", "id": 1 },
+    "routeParam": "1",
+    "action": { "key": "add_to_cart", "quantity": "abc" },
+    "expectation": {
+      "key": "quantity_rejected",
+      "errorPattern": "số lượng phải là số nguyên|định dạng|không hợp lệ",
+      "cartChange": 0
+    },
+    "cleanup": ["Fresh browser context discards cart state"]
+  },
+  {
+    "caseId": "TC-PRODUCT-DETAIL-010",
+    "title": "Minimum quantity one is accepted",
+    "category": "positive/boundary-on",
+    "requirement": "FR-06",
+    "authentication": "authenticated",
+    "preconditions": ["Product 1 exists", "Cart starts empty", "Default user exists"],
+    "product": { "kind": "existing", "id": 1 },
+    "routeParam": "1",
+    "action": { "key": "add_to_cart", "quantity": "1" },
+    "expectation": {
+      "key": "cart_accepted",
+      "successText": "Đã thêm",
+      "productName": "iPhone 15 Pro Max",
+      "expectedQuantity": "1",
+      "cartChange": 1
+    },
+    "cleanup": ["Fresh browser context discards cart state"]
+  },
+  {
+    "caseId": "TC-PRODUCT-DETAIL-011",
+    "title": "Quantity just above minimum is accepted",
+    "category": "positive/boundary-in",
+    "requirement": "FR-06",
+    "authentication": "authenticated",
+    "preconditions": ["Product 1 exists", "Cart starts empty", "Default user exists"],
+    "product": { "kind": "existing", "id": 1 },
+    "routeParam": "1",
+    "action": { "key": "add_to_cart", "quantity": "2" },
+    "expectation": {
+      "key": "cart_accepted",
+      "successText": "Đã thêm",
+      "productName": "iPhone 15 Pro Max",
+      "expectedQuantity": "2",
+      "cartChange": 2
+    },
+    "cleanup": ["Fresh browser context discards cart state"]
+  },
+  {
+    "caseId": "TC-PRODUCT-DETAIL-012",
+    "title": "Unauthenticated add-to-cart is rejected",
+    "category": "negative/security",
+    "requirement": "FR-08 / API Specification",
+    "authentication": "unauthenticated",
+    "preconditions": ["Product 1 exists", "No JWT is present", "Cart starts empty"],
+    "product": { "kind": "existing", "id": 1 },
+    "routeParam": "1",
+    "action": { "key": "add_to_cart", "quantity": "1" },
+    "expectation": {
+      "key": "unauthenticated_rejected",
+      "errorPattern": "đăng nhập|unauthorized|xác thực",
+      "redirectUrl": "/login",
+      "httpStatus": 401,
+      "cartChange": 0
+    },
+    "cleanup": ["Fresh browser context discards cart state"]
+  },
+  {
+    "caseId": "TC-PRODUCT-DETAIL-013",
+    "title": "Breadcrumb links back to the home page",
+    "category": "gui/navigation",
+    "requirement": "FR-23",
+    "authentication": "authenticated",
+    "preconditions": ["Product 1 exists", "Default user exists"],
+    "product": { "kind": "existing", "id": 1 },
+    "routeParam": "1",
+    "action": { "key": "view_product" },
+    "expectation": {
+      "key": "breadcrumb_navigation",
+      "linkText": "Trang chủ",
+      "targetUrl": "/"
+    },
+    "cleanup": []
+  },
+  {
+    "caseId": "TC-PRODUCT-DETAIL-014",
+    "title": "Primary product image has non-empty alternative text",
+    "category": "gui/accessibility",
+    "requirement": "FR-24",
+    "authentication": "authenticated",
+    "preconditions": ["Product 1 exists", "Default user exists"],
+    "product": { "kind": "existing", "id": 1 },
+    "routeParam": "1",
+    "action": { "key": "view_product" },
+    "expectation": {
+      "key": "nonempty_alt",
+      "attribute": "alt",
+      "valuePattern": ".+"
+    },
+    "cleanup": []
+  },
+  {
+    "caseId": "TC-PRODUCT-DETAIL-015",
+    "title": "Malicious product text is escaped and never executed",
+    "category": "security/xss",
+    "requirement": "FR-21 / SEC-04",
+    "authentication": "authenticated",
+    "preconditions": ["Default user exists", "A unique malicious product is created through the API"],
+    "product": {
+      "kind": "malicious",
+      "namePrefix": "<script>alert('xss-name')</script> Sản phẩm XSS",
+      "description": "<img src=\"invalid-xss-image.jpg\" onerror=\"alert('xss-desc')\"> Mô tả sản phẩm chứa XSS",
+      "price": 123456,
+      "imageUrl": "https://placehold.co/300x300/png?text=XSS+Safety",
+      "categoryId": 1
+    },
+    "routeParam": "created-product-id",
+    "action": { "key": "view_product" },
+    "expectation": {
+      "key": "escaped_content",
+      "nameText": "<script>alert('xss-name')</script> Sản phẩm XSS",
+      "descriptionText": "<img src=\"invalid-xss-image.jpg\" onerror=\"alert('xss-desc')\"> Mô tả sản phẩm chứa XSS",
+      "forbiddenImageSource": "invalid-xss-image.jpg",
+      "dialogCount": 0
+    },
+    "cleanup": ["Delete the created product through DELETE /api/products/:id"]
+  }
+]

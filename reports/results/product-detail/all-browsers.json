@@ -1,0 +1,1010 @@
+{
+  "config": {
+    "configFile": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/playwright.config.ts",
+    "rootDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/results/product-detail/all-browsers.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "open": "never",
+          "outputFolder": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/html/product-detail/all-browsers",
+          "title": "Run by: 23127065 | Product Detail | all-browsers"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/all-browsers",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {},
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 15000
+      },
+      {
+        "outputDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/all-browsers",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {},
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 15000
+      },
+      {
+        "outputDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/all-browsers",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {},
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 15000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.54.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "product-detail.spec.ts",
+      "file": "product-detail.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "[TC-PRODUCT-DETAIL-001] Valid product displays complete details",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-d7fe8a3215ee421dd43d",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-002] Unknown numeric product ID produces a not-found response",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-fc65305a7119da828af6",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-003] Non-numeric product ID produces a validation response",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-e61a497a3f69812c1fdd",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-004] Quantity two adds the product and gives visual feedback",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-a5e0c39a6d86329a2418",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-005] Quantity zero is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-9d0ad228b858a2c502a2",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-006] Negative quantity is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-390e89072c3bdb885aae",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-007] Decimal quantity is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-6b05fb024292a8ff1b43",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-008] Empty quantity is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-74d5c2a2d2ba58ddcf62",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-009] Alphabetic quantity is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-e06b614abd77f5495205",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-010] Minimum quantity one is accepted",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-bf064898e714f026f5a0",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-011] Quantity just above minimum is accepted",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-022a34cfd5c310aab1eb",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-012] Unauthenticated add-to-cart is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-7892cc87ee298bbe596a",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-013] Breadcrumb links back to the home page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-015d3233eb8fdcc5b71d",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-014] Primary product image has non-empty alternative text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-df518406d80ba0521ada",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-015] Malicious product text is escaped and never executed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-faa10d52e9c8073c3683",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-001] Valid product displays complete details",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-d9f5cee7a910ec61f116",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-002] Unknown numeric product ID produces a not-found response",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-f4627435987014298d05",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-003] Non-numeric product ID produces a validation response",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-8df8aba4c2995fb8a265",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-004] Quantity two adds the product and gives visual feedback",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-d6db0211cd3a80ab7c34",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-005] Quantity zero is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-36c7fbfbe244f8fbf599",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-006] Negative quantity is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-55067264ff267295241f",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-007] Decimal quantity is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-dba357b6aaf5c11cafe8",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-008] Empty quantity is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-03806342d54a82461205",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-009] Alphabetic quantity is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-533574c98540180e7147",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-010] Minimum quantity one is accepted",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-92f5f06c6619b3495c44",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-011] Quantity just above minimum is accepted",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-797c2317382ccadd0db7",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-012] Unauthenticated add-to-cart is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-3c6a605c412deeace258",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-013] Breadcrumb links back to the home page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-6e31e65f69d741dbe530",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-014] Primary product image has non-empty alternative text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-2e03a445b9131e68c615",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-015] Malicious product text is escaped and never executed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-6687d22b885852c04831",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-001] Valid product displays complete details",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-01c51ed956acf55fd7df",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-002] Unknown numeric product ID produces a not-found response",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-3d0792b6bbdf11a30c3c",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-003] Non-numeric product ID produces a validation response",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-162c15e07ba2ed77c7f2",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-004] Quantity two adds the product and gives visual feedback",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-0bcd5195ffab5fe7a59f",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-005] Quantity zero is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-b40fd91b1c244628378e",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-006] Negative quantity is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-743ec7b500396119dbbf",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-007] Decimal quantity is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-a9086bca6db7fadc3420",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-008] Empty quantity is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-50b0b13dafdd450c94e5",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-009] Alphabetic quantity is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-a1e366bcb94cddfaca18",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-010] Minimum quantity one is accepted",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-bd368321ca3a1af9056b",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-011] Quantity just above minimum is accepted",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-f2dd0cf2de17844d708b",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-012] Unauthenticated add-to-cart is rejected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-693900f48ab0c2b4fffd",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-013] Breadcrumb links back to the home page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-49073d465aed3356d520",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-014] Primary product image has non-empty alternative text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-c8631f4f9d35828fc347",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-015] Malicious product text is escaped and never executed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-dcf216e636edd9aed41e",
+          "file": "product-detail.spec.ts",
+          "line": 176,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-07-27T08:09:49.520Z",
+    "duration": 63.83299999999997,
+    "expected": 0,
+    "skipped": 45,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,400 @@
+{
+  "config": {
+    "configFile": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/playwright.config.ts",
+    "rootDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/results/product-detail/representative.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "open": "never",
+          "outputFolder": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/html/product-detail/representative",
+          "title": "Run by: 23127065 | Product Detail | representative"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 15000
+      },
+      {
+        "outputDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 15000
+      },
+      {
+        "outputDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 15000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.54.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "product-detail.spec.ts",
+      "file": "product-detail.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "[TC-PRODUCT-DETAIL-001] Valid product displays complete details",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1622,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-27T08:21:44.613Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-d7fe8a3215ee421dd43d",
+          "file": "product-detail.spec.ts",
+          "line": 198,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-010] Minimum quantity one is accepted",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 7480,
+                  "error": {
+                    "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nLocator: getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })\nExpected string: \u001b[32m\"Đã thêm\"\u001b[39m\nReceived string: \u001b[31m\"Thêm vào giỏ hàng\"\u001b[39m\nCall log:\n\u001b[2m  - Expect \"soft toHaveText\" with timeout 1000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })\u001b[22m\n\u001b[2m    5 × locator resolved to <button class=\"bg-green-600 text-white py-3 px-6 rounded hover:bg-green-700 self-start bug-mobile-hidden\">Thêm vào giỏ hàng</button>\u001b[22m\n\u001b[2m      - unexpected value \"Thêm vào giỏ hàng\"\u001b[22m\n",
+                    "stack": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nLocator: getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })\nExpected string: \u001b[32m\"Đã thêm\"\u001b[39m\nReceived string: \u001b[31m\"Thêm vào giỏ hàng\"\u001b[39m\nCall log:\n\u001b[2m  - Expect \"soft toHaveText\" with timeout 1000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })\u001b[22m\n\u001b[2m    5 × locator resolved to <button class=\"bg-green-600 text-white py-3 px-6 rounded hover:bg-green-700 self-start bug-mobile-hidden\">Thêm vào giỏ hàng</button>\u001b[22m\n\u001b[2m      - unexpected value \"Thêm vào giỏ hàng\"\u001b[22m\n\n    at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:131:54)\n    at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:202:11",
+                    "location": {
+                      "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                      "column": 54,
+                      "line": 131
+                    },
+                    "snippet": "  129 |       return;\n  130 |     case \"cart_accepted\": {\n> 131 |       await expect.soft(productPage.addToCartButton).toHaveText(expectation.successText, {\n      |                                                      ^\n  132 |         timeout: 1_000,\n  133 |       });\n  134 |       await productPage.openCart();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                        "column": 54,
+                        "line": 131
+                      },
+                      "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nLocator: getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })\nExpected string: \u001b[32m\"Đã thêm\"\u001b[39m\nReceived string: \u001b[31m\"Thêm vào giỏ hàng\"\u001b[39m\nCall log:\n\u001b[2m  - Expect \"soft toHaveText\" with timeout 1000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })\u001b[22m\n\u001b[2m    5 × locator resolved to <button class=\"bg-green-600 text-white py-3 px-6 rounded hover:bg-green-700 self-start bug-mobile-hidden\">Thêm vào giỏ hàng</button>\u001b[22m\n\u001b[2m      - unexpected value \"Thêm vào giỏ hàng\"\u001b[22m\n\n\n  129 |       return;\n  130 |     case \"cart_accepted\": {\n> 131 |       await expect.soft(productPage.addToCartButton).toHaveText(expectation.successText, {\n      |                                                      ^\n  132 |         timeout: 1_000,\n  133 |       });\n  134 |       await productPage.openCart();\n\u001b[2m    at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:131:54)\u001b[22m\n\u001b[2m    at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:202:11\u001b[22m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                        "column": 49,
+                        "line": 135
+                      },
+                      "message": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nLocator: locator('main tbody tr')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nCall log:\n\u001b[2m  - Expect \"soft toHaveCount\" with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for locator('main tbody tr')\u001b[22m\n\u001b[2m    6 × locator resolved to 0 elements\u001b[22m\n\u001b[2m      - unexpected value \"0\"\u001b[22m\n\n\n  133 |       });\n  134 |       await productPage.openCart();\n> 135 |       await expect.soft(productPage.cartRows()).toHaveCount(1);\n      |                                                 ^\n  136 |       const row = productPage.cartRows().first();\n  137 |       await expect.soft(row).toContainText(expectation.productName);\n  138 |       await expect.soft(row.getByRole(\"cell\").nth(2)).toHaveText(expectation.expectedQuantity);\n\u001b[2m    at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:135:49)\u001b[22m\n\u001b[2m    at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:202:5\u001b[22m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                        "column": 30,
+                        "line": 137
+                      },
+                      "message": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nLocator: locator('main tbody tr').first()\nExpected string: \u001b[32m\"iPhone 15 Pro Max\"\u001b[39m\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - Expect \"soft toContainText\" with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for locator('main tbody tr').first()\u001b[22m\n\n\n  135 |       await expect.soft(productPage.cartRows()).toHaveCount(1);\n  136 |       const row = productPage.cartRows().first();\n> 137 |       await expect.soft(row).toContainText(expectation.productName);\n      |                              ^\n  138 |       await expect.soft(row.getByRole(\"cell\").nth(2)).toHaveText(expectation.expectedQuantity);\n  139 |       expect(expectation.cartChange).toBe(Number(expectation.expectedQuantity));\n  140 |       return;\n\u001b[2m    at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:137:30)\u001b[22m\n\u001b[2m    at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:202:5\u001b[22m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                        "column": 55,
+                        "line": 138
+                      },
+                      "message": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nLocator: locator('main tbody tr').first().getByRole('cell').nth(2)\nExpected string: \u001b[32m\"1\"\u001b[39m\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - Expect \"soft toHaveText\" with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for locator('main tbody tr').first().getByRole('cell').nth(2)\u001b[22m\n\n\n  136 |       const row = productPage.cartRows().first();\n  137 |       await expect.soft(row).toContainText(expectation.productName);\n> 138 |       await expect.soft(row.getByRole(\"cell\").nth(2)).toHaveText(expectation.expectedQuantity);\n      |                                                       ^\n  139 |       expect(expectation.cartChange).toBe(Number(expectation.expectedQuantity));\n  140 |       return;\n  141 |     }\n\u001b[2m    at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:138:55)\u001b[22m\n\u001b[2m    at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:202:5\u001b[22m"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-27T08:21:48.859Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative/product-detail--TC-PRODUCT-3c017-um-quantity-one-is-accepted-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative/product-detail--TC-PRODUCT-3c017-um-quantity-one-is-accepted-chromium/video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative/product-detail--TC-PRODUCT-3c017-um-quantity-one-is-accepted-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                    "column": 54,
+                    "line": 131
+                  }
+                },
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 7613,
+                  "error": {
+                    "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nLocator: getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })\nExpected string: \u001b[32m\"Đã thêm\"\u001b[39m\nReceived string: \u001b[31m\"Thêm vào giỏ hàng\"\u001b[39m\nCall log:\n\u001b[2m  - Expect \"soft toHaveText\" with timeout 1000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })\u001b[22m\n\u001b[2m    5 × locator resolved to <button class=\"bg-green-600 text-white py-3 px-6 rounded hover:bg-green-700 self-start bug-mobile-hidden\">Thêm vào giỏ hàng</button>\u001b[22m\n\u001b[2m      - unexpected value \"Thêm vào giỏ hàng\"\u001b[22m\n",
+                    "stack": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nLocator: getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })\nExpected string: \u001b[32m\"Đã thêm\"\u001b[39m\nReceived string: \u001b[31m\"Thêm vào giỏ hàng\"\u001b[39m\nCall log:\n\u001b[2m  - Expect \"soft toHaveText\" with timeout 1000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })\u001b[22m\n\u001b[2m    5 × locator resolved to <button class=\"bg-green-600 text-white py-3 px-6 rounded hover:bg-green-700 self-start bug-mobile-hidden\">Thêm vào giỏ hàng</button>\u001b[22m\n\u001b[2m      - unexpected value \"Thêm vào giỏ hàng\"\u001b[22m\n\n    at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:131:54)\n    at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:202:11",
+                    "location": {
+                      "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                      "column": 54,
+                      "line": 131
+                    },
+                    "snippet": "  129 |       return;\n  130 |     case \"cart_accepted\": {\n> 131 |       await expect.soft(productPage.addToCartButton).toHaveText(expectation.successText, {\n      |                                                      ^\n  132 |         timeout: 1_000,\n  133 |       });\n  134 |       await productPage.openCart();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                        "column": 54,
+                        "line": 131
+                      },
+                      "message": "Error: \u001b[31mTimed out 1000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nLocator: getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })\nExpected string: \u001b[32m\"Đã thêm\"\u001b[39m\nReceived string: \u001b[31m\"Thêm vào giỏ hàng\"\u001b[39m\nCall log:\n\u001b[2m  - Expect \"soft toHaveText\" with timeout 1000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Thêm vào giỏ hàng|Đã thêm/ })\u001b[22m\n\u001b[2m    5 × locator resolved to <button class=\"bg-green-600 text-white py-3 px-6 rounded hover:bg-green-700 self-start bug-mobile-hidden\">Thêm vào giỏ hàng</button>\u001b[22m\n\u001b[2m      - unexpected value \"Thêm vào giỏ hàng\"\u001b[22m\n\n\n  129 |       return;\n  130 |     case \"cart_accepted\": {\n> 131 |       await expect.soft(productPage.addToCartButton).toHaveText(expectation.successText, {\n      |                                                      ^\n  132 |         timeout: 1_000,\n  133 |       });\n  134 |       await productPage.openCart();\n\u001b[2m    at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:131:54)\u001b[22m\n\u001b[2m    at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:202:11\u001b[22m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                        "column": 49,
+                        "line": 135
+                      },
+                      "message": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nLocator: locator('main tbody tr')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nCall log:\n\u001b[2m  - Expect \"soft toHaveCount\" with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for locator('main tbody tr')\u001b[22m\n\u001b[2m    6 × locator resolved to 0 elements\u001b[22m\n\u001b[2m      - unexpected value \"0\"\u001b[22m\n\n\n  133 |       });\n  134 |       await productPage.openCart();\n> 135 |       await expect.soft(productPage.cartRows()).toHaveCount(1);\n      |                                                 ^\n  136 |       const row = productPage.cartRows().first();\n  137 |       await expect.soft(row).toContainText(expectation.productName);\n  138 |       await expect.soft(row.getByRole(\"cell\").nth(2)).toHaveText(expectation.expectedQuantity);\n\u001b[2m    at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:135:49)\u001b[22m\n\u001b[2m    at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:202:5\u001b[22m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                        "column": 30,
+                        "line": 137
+                      },
+                      "message": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nLocator: locator('main tbody tr').first()\nExpected string: \u001b[32m\"iPhone 15 Pro Max\"\u001b[39m\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - Expect \"soft toContainText\" with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for locator('main tbody tr').first()\u001b[22m\n\n\n  135 |       await expect.soft(productPage.cartRows()).toHaveCount(1);\n  136 |       const row = productPage.cartRows().first();\n> 137 |       await expect.soft(row).toContainText(expectation.productName);\n      |                              ^\n  138 |       await expect.soft(row.getByRole(\"cell\").nth(2)).toHaveText(expectation.expectedQuantity);\n  139 |       expect(expectation.cartChange).toBe(Number(expectation.expectedQuantity));\n  140 |       return;\n\u001b[2m    at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:137:30)\u001b[22m\n\u001b[2m    at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:202:5\u001b[22m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                        "column": 55,
+                        "line": 138
+                      },
+                      "message": "Error: \u001b[31mTimed out 2000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nLocator: locator('main tbody tr').first().getByRole('cell').nth(2)\nExpected string: \u001b[32m\"1\"\u001b[39m\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - Expect \"soft toHaveText\" with timeout 2000ms\u001b[22m\n\u001b[2m  - waiting for locator('main tbody tr').first().getByRole('cell').nth(2)\u001b[22m\n\n\n  136 |       const row = productPage.cartRows().first();\n  137 |       await expect.soft(row).toContainText(expectation.productName);\n> 138 |       await expect.soft(row.getByRole(\"cell\").nth(2)).toHaveText(expectation.expectedQuantity);\n      |                                                       ^\n  139 |       expect(expectation.cartChange).toBe(Number(expectation.expectedQuantity));\n  140 |       return;\n  141 |     }\n\u001b[2m    at assertExpectation (/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:138:55)\u001b[22m\n\u001b[2m    at /Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts:202:5\u001b[22m"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 1,
+                  "startTime": "2026-07-27T08:21:56.778Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative/product-detail--TC-PRODUCT-3c017-um-quantity-one-is-accepted-chromium-retry1/test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative/product-detail--TC-PRODUCT-3c017-um-quantity-one-is-accepted-chromium-retry1/video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative/product-detail--TC-PRODUCT-3c017-um-quantity-one-is-accepted-chromium-retry1/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/reports/artifacts/product-detail/representative/product-detail--TC-PRODUCT-3c017-um-quantity-one-is-accepted-chromium-retry1/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/lap15045/@repos/hcmus-sw-testing--eshop-sut/tests/automation/specs/product-detail.spec.ts",
+                    "column": 54,
+                    "line": 131
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-bf064898e714f026f5a0",
+          "file": "product-detail.spec.ts",
+          "line": 198,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-014] Primary product image has non-empty alternative text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 418,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-27T08:22:05.020Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-df518406d80ba0521ada",
+          "file": "product-detail.spec.ts",
+          "line": 198,
+          "column": 3
+        },
+        {
+          "title": "[TC-PRODUCT-DETAIL-015] Malicious product text is escaped and never executed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 15000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 215,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-07-27T08:22:05.560Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "62d53a362a4fbb3b09ca-faa10d52e9c8073c3683",
+          "file": "product-detail.spec.ts",
+          "line": 198,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-07-27T08:21:41.419Z",
+    "duration": 24399.104,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}
