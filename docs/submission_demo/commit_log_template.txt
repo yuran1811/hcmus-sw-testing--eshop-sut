@@ -1,0 +1,32 @@
+HƯỚNG DẪN XUẤT GIT COMMIT LOG – HW03 (MSSV: 23127115)
+
+Chạy lệnh sau tại thư mục gốc repo làm bài (không phải repo eshop-sut, mà repo chứa
+checklist/báo cáo/ghi chú của bạn):
+
+    git log --stat --date=iso > commit_log.txt
+
+File `commit_log.txt` sinh ra cần thể hiện các commit riêng biệt cho từng bước, tối thiểu gồm:
+
+  1. "Thiết kế checklist GUI (IA-01..04)"
+  2. "Thực thi checklist trên SUT"
+  3. "Ghi log lỗi / bug reports"
+  4. "Lên kế hoạch usability (mục tiêu, kịch bản, bộ đo)"
+  5. "Phiên usability P01" ... "Phiên usability P07"  (7 commit riêng)
+  6. "Phân tích & tổng hợp usability"
+  7. "Cross-browser/cross-platform testing"
+  8. "Hoàn thiện AI Audit Report & AI Critique"
+  9. "Đóng gói nộp bài"
+
+Ví dụ định dạng dòng commit (git log --stat sẽ tự sinh, đây chỉ là ví dụ minh hoạ):
+
+    commit 8f3a1c2
+    Author: 23127115 <...>
+    Date:   2026-08-01 14:20:00 +0700
+
+        Thực thi checklist IA-02 (Forms) trên trang Checkout
+
+     checklist_and_test_summary.xlsx | 12 +++++++++---
+     1 file changed, 9 insertions(+), 3 deletions(-)
+
+--- KHÔNG dùng nội dung minh hoạ trên làm commit log thật. Đây chỉ là mẫu định dạng.
+Bạn PHẢI thay bằng git log thật xuất ra từ repo của chính mình.
