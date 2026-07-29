@@ -911,3 +911,333 @@
 - **Đánh giá:** Valid
 - **Suy luận:** File do AI sinh ra khá tốt và đầy đủ
 - **Sửa:** Không cần sửa
+
+---
+
+**AI Audit Report Item**
+
+- **Công cụ AI:** Claude Code (Claude Opus 5 — `claude-opus-5`)
+- **Thời gian:** 2026-07-29 22:24:07
+- **Nội dung prompt:**
+  > Tôi đã chạy sẵn eshop web và backend. Bạn hãy sử dụng playwright mcp để chạy các item trong @tests/checklist/product-detail/checklist_product-detail.md
+  > Sau đó hãy cập nhật status những test nào đã chạy
+  > Nếu có bug thì screenshot, dùng skill @.agents/skills/bug-reporting/SKILL.md để làm report từng bug nhé
+  > tiếp theo, dùng skill @.agents/skills/ai-audit-logger/SKILL.md để ghi toàn bộ audit log lại nhé
+- **AI output:**
+  > # Phần 1 — Checklist đã cập nhật (`tests/checklist/product-detail/checklist_product-detail.md`)
+  >
+  > ## Header block — dòng Trạng thái đã đổi
+  >
+  > | **Trạng thái** | **Đã thực thi** 70/73 item bằng Playwright MCP (Chromium) ngày 2026-07-29 — 30 `Passed`, 40 `Failed`, 3 `Not Run` (cần Firefox 128) |
+  >
+  > ## Ghi chú đầu mục 5
+  >
+  > > **Đã thực thi ngày 2026-07-29** bằng Playwright MCP trên Chromium 1440×900 (và các viewport 768×1024, 767×1024, 390×844, 844×390, 960×600).
+  > > Ảnh chụp bằng chứng cho các item `Failed` nằm ở `tests/bug-reports/screenshots/`; bug report tương ứng ở `tests/bug-reports/product-detail/`.
+  > >
+  > > **Kết quả:** 30 `Passed` · 40 `Failed` · 3 `Not Run` (COM-01/02/03 — cần Firefox 128, Playwright MCP chỉ lái được Chromium).
+  >
+  > ## IA-01 — General UI standards
+  >
+  > | ID | Category | Status | Notes |
+  > | --- | --- | --- | --- |
+  > | PRODDETAIL-VIS-01 | Visual | Failed | Ảnh gốc `naturalWidth×Height = 300×300` nhưng render 455×455 px (phóng 152%) → chữ "iPhone 15" trên ảnh nhoè thấy rõ trong screenshot. → `BUG-PRODDETAIL-010` |
+  > | PRODDETAIL-VIS-02 | Visual | Failed | Hiện `30,000,000 ₫` (dấu phẩy) vì `Number(price).toLocaleString()` không truyền locale nên bám theo locale trình duyệt. → `BUG-PRODDETAIL-008` |
+  > | PRODDETAIL-VIS-03 | Visual | Passed | Chuỗi render `30,000,000 ₫`: `₫` sau phần số, cách đúng 1 khoảng trắng, nằm chung `<p>` nên cùng `font-size: 24px` và màu `rgb(220,38,38)`. |
+  > | PRODDETAIL-VIS-04 | Visual | Failed | Thẻ mô tả có class `flex-grow` nên cao 225 px dù chỉ chứa 1 dòng chữ ~24 px → sinh ~200 px trắng thừa giữa mô tả và "Số lượng:". Các khối khác chỉ cách nhau 16–32 px. → `BUG-PRODDETAIL-010` |
+  > | PRODDETAIL-VIS-05 | Visual | Passed | Nhãn: top 463 + h 24 → tâm 475. Ô nhập: top 454 + h 42 → tâm 475. Hai tâm trùng khít (container dùng `items-center`). |
+  > | PRODDETAIL-VIS-06 | Visual | Passed | Ô nhập 80×42 px, nút 184,3×48 px → tỉ lệ chiều cao 1 : 1,14. Cả hai cùng `border-radius: 4px`. |
+  > | PRODDETAIL-VIS-07 | Visual | Passed | Mock API trả tên 102 ký tự: `<h1>` xuống 4 dòng, `right` 1191 < card `right` 1216, `bottom` 249 < giá `top` 265 → không tràn, không đè. |
+  > | PRODDETAIL-VIS-08 | Visual | Passed | Mock API trả mô tả 675 ký tự: `scrollHeight` = `clientHeight` (không cắt cụt), `overflow: visible`, `bottom` 553 < card `bottom` 708. |
+  > | PRODDETAIL-VIS-09 | Visual | Passed | Chặn `placehold.co` (`route.abort`): `naturalWidth` = 0, hiện chữ alt "iPhone 15 Pro Max"; 2 cột vẫn 455/455 px cùng hàng y=105, cột phải giữ nguyên x=736. |
+  > | PRODDETAIL-VIS-10 | Visual | Failed | `document.title` = `frontend-web` (chuỗi mặc định của Vite) trên mọi sản phẩm, không hề chứa tên sản phẩm. → `BUG-PRODDETAIL-010` |
+  > | PRODDETAIL-VIS-11 | Visual | Passed | Cả 3 trang: `border-radius: 4px`, viền `1px solid rgb(229,231,235)`, shadow `rgba(0,0,0,0.05) 0 1px 2px 0`, nền `rgb(255,255,255)`. |
+  > | PRODDETAIL-VIS-12 | Visual | Passed | Chữ `rgb(55,65,81)` trên nền `rgb(255,255,255)` → tỉ lệ tương phản ≈ 10,3 : 1, vượt xa ngưỡng WCAG AA 4,5 : 1. |
+  > | PRODDETAIL-VIS-13 | Visual | Passed | Chạy bằng `emulateMedia({colorScheme:'dark'})`: app không khai báo dark mode nên giữ nguyên card trắng / `<h1>` đen / mô tả `rgb(55,65,81)` — không sinh cặp màu trùng nền. |
+  > | PRODDETAIL-VIS-14 | Visual | Passed | Sau `dir=rtl`: 2 cột đảo chỗ (ảnh x=736, thông tin x=249), không chồng lấn, nút vẫn trong card, `scrollWidth` = `clientWidth` = 1440. |
+  > | PRODDETAIL-RES-01 | Responsive | Passed | Card rộng 992 px, 2 cột đều 455 px cùng hàng y=105 (mỗi cột ≈ 46% card, phần còn lại là padding + gap 32 px). |
+  > | PRODDETAIL-RES-02 | Responsive | Passed | Vẫn 2 cột 327/327 px cùng hàng y=105; cột trái `right` 368 < cột phải `x` 400 → không chồng lấn. |
+  > | PRODDETAIL-RES-03 | Responsive | Passed | Chuyển đúng 1 cột: ảnh y=105 (670×670), khối thông tin y=807; khoảng cách 32 px — bằng `gap-8` của layout, không bất thường. |
+  > | PRODDETAIL-RES-04 | Responsive | Passed | `document.documentElement.scrollWidth` = `clientWidth` = 390 → không có thanh cuộn ngang. |
+  > | PRODDETAIL-RES-05 | Responsive | Passed | Nút x=41 → right 225,3 nằm trọn trong card (16 → 374), thẳng lề trái với khối "Số lượng". **Lưu ý:** `.bug-mobile-hidden` có đặt `margin-right:-100px` ở ≤640 px nhưng nút dùng `self-start` (rộng theo nội dung) nên chưa gây lệch — rủi ro tiềm ẩn nếu đổi sang `w-full`. |
+  > | PRODDETAIL-RES-06 | Responsive | Passed | Mô phỏng bằng viewport tương đương 960×600 CSS px (1440÷1,5): vẫn 2 cột 415,5 px, không chồng lấn, `scrollWidth` = `clientWidth` = 945. Chưa test bằng Ctrl+= thật (Playwright không có API zoom trình duyệt). |
+  > | PRODDETAIL-RES-07 | Responsive | Passed | 844×390: quay lại 2 cột 357,5 px, không cuộn ngang. Nút ở y=414,5 (dưới nếp gấp 390 px) nhưng trang cuộn dọc tới được. |
+  > | PRODDETAIL-COM-01 | Compatibility | Not Run | Playwright MCP trong phiên này chỉ lái được Chromium; sandbox chặn `require('playwright')` nên không khởi chạy được Firefox 128 để đối chiếu. Cần chạy tay hoặc cấu hình MCP thêm Firefox. |
+  > | PRODDETAIL-COM-02 | Compatibility | Not Run | Cùng lý do COM-01 — thiếu vế Firefox 128. |
+  > | PRODDETAIL-COM-03 | Compatibility | Not Run | Trên Chromium dấu tiếng Việt hiển thị đúng ở mọi vị trí (đã quan sát qua screenshot), nhưng item yêu cầu **cả hai** trình duyệt nên chưa đủ căn cứ kết luận. |
+  > | PRODDETAIL-COM-04 | Compatibility | Failed | Context `en-US` → `30,000,000 ₫`; context `vi-VN` → `30.000.000 ₫`. Chuỗi giá đổi theo locale trình duyệt thay vì cố định chuẩn vi-VN. → `BUG-PRODDETAIL-008` |
+  >
+  > ## IA-02 — Forms
+  >
+  > | ID | Category | Status | Notes |
+  > | --- | --- | --- | --- |
+  > | PRODDETAIL-VAL-01 | Validation | Failed | `-1` được nhận, không có thông báo lỗi nào; giỏ hàng nhận số lượng `-1`, thành tiền **-30.000.000 ₫**, tổng tạm tính âm. → `BUG-PRODDETAIL-002` |
+  > | PRODDETAIL-VAL-02 | Validation | Failed | `0` được nhận, không báo lỗi; giỏ hàng tạo dòng với số lượng `0`, thành tiền `0 ₫`. → `BUG-PRODDETAIL-002` |
+  > | PRODDETAIL-VAL-03 | Validation | Failed | Trình duyệt đã đánh dấu `validity.valid = false` (stepMismatch) nhưng UI **không** đọc tới và không báo gì; `parseInt("1.5")` âm thầm cắt còn `1` rồi thêm vào giỏ — người dùng mất dữ liệu mà không biết. → `BUG-PRODDETAIL-002` |
+  > | PRODDETAIL-VAL-04 | Validation | Failed | Xoá trắng → `parseInt("")` = `NaN`; giỏ hàng hiển thị số lượng `NaN`, thành tiền `NaN ₫`, tổng tạm tính `NaN ₫`. → `BUG-PRODDETAIL-002` |
+  > | PRODDETAIL-VAL-05 | Validation | Failed | Vế đầu đạt (ô nhập chặn chữ), **vế sau không đạt**: giá trị bị xoá thành rỗng chứ không giữ lại `1` trước đó → submit tiếp tạo `NaN` trong giỏ. → `BUG-PRODDETAIL-002` |
+  > | PRODDETAIL-VAL-06 | Validation | Failed | `2e3` được nhận, không báo lỗi. `valueAsNumber` = 2000 nhưng `parseInt("2e3")` = **2** → giỏ nhận 2. Sai lệch giữa giá trị người dùng thấy và giá trị hệ thống dùng. → `BUG-PRODDETAIL-002` |
+  > | PRODDETAIL-VAL-07 | Validation | Failed | Không có giới hạn tối đa: giỏ nhận 999.999.999, thành tiền **29.999.999.970.000.000 ₫**. → `BUG-PRODDETAIL-002` |
+  > | PRODDETAIL-VAL-08 | Validation | Failed | DOM thực tế: `<input class="border p-2 w-20 rounded" type="number" value="1">` — không có `min`, `max`, `step`, cũng không có `id`/`name`. → `BUG-PRODDETAIL-002` |
+  > | PRODDETAIL-VAL-09 | Validation | Failed | Từ `1` nhấn mũi tên giảm (ArrowDown) → giá trị về `0`; do thiếu `min="1"` nên trình duyệt không có mốc chặn. → `BUG-PRODDETAIL-002` |
+  > | PRODDETAIL-VAL-10 | Validation | Failed | Dán `-5` được nhận nguyên vẹn, không báo lỗi; giỏ hàng nhận `-5`, thành tiền **-150.000.000 ₫**. → `BUG-PRODDETAIL-002` |
+  > | PRODDETAIL-FUN-01 | Functional | Failed | Lần bấm đầu tiên `handleAddToCart` chỉ chạy `setClickCount(1); return` → nhãn vẫn là "Thêm vào giỏ hàng" và trang Giỏ hàng báo "Giỏ hàng của bạn đang trống". → `BUG-PRODDETAIL-001` |
+  > | PRODDETAIL-FUN-02 | Functional | Failed | 2 lần bấm chỉ tạo **1** dòng giỏ hàng (số lượng 1). Lần bấm đầu bị nuốt, lần thứ hai mới thực sự thêm. → `BUG-PRODDETAIL-001` |
+  > | PRODDETAIL-FUN-03 | Functional | Failed | Double-click (2 lần bấm) chỉ ghi nhận **1** lượt thêm — không thừa nhưng **thiếu** so với số lần bấm thực tế, nên vẫn lệch khỏi ER. → `BUG-PRODDETAIL-001` |
+  > | PRODDETAIL-FUN-04 | Functional | Failed | 2 lượt thêm tạo **2 dòng riêng biệt** cùng tên "iPhone 15 Pro Max", mỗi dòng số lượng 1. `addToCart` luôn `setCart([...cart, {...}])`, không hề gộp theo `id`. → `BUG-PRODDETAIL-003` |
+  > | PRODDETAIL-FUN-05 | Functional | Passed | Giỏ hàng hiển thị số lượng `3`, thành tiền `90.000.000 ₫` = 30.000.000 × 3. Đúng ER. |
+  > | PRODDETAIL-FUN-06 | Functional | Passed | Nhấn Enter: URL không đổi, không tải lại trang, giá trị `5` được giữ nguyên, không thêm vào giỏ. Nhánh "không làm gì" — hợp lệ vì input không nằm trong `<form>`. |
+  > | PRODDETAIL-FUN-07 | Functional | Passed | Đo thực tế: nhãn "Đã thêm" xuất hiện sau 35 ms và hiển thị **2003 ms** rồi trở về nhãn gốc — đủ để đọc 2 chữ. |
+  >
+  > ## IA-03 — Navigation
+  >
+  > | ID | Category | Status | Notes |
+  > | --- | --- | --- | --- |
+  > | PRODDETAIL-NAV-01 | Navigation | Passed | Bấm logo → URL `http://localhost:5173/`, trang Home render đủ 5 link sản phẩm. |
+  > | PRODDETAIL-NAV-02 | Navigation | Passed | Bấm "Giỏ hàng" → `/cart`; sản phẩm đã thêm hiển thị đúng tên, giá `30,000,000 ₫`, số lượng và thành tiền. |
+  > | PRODDETAIL-NAV-03 | Navigation | Failed | Cuộn Home tới `scrollY` = 118 rồi mở chi tiết, bấm Back → về đúng `/` nhưng `scrollY` = **0**, mất vị trí cuộn. → `BUG-PRODDETAIL-012` |
+  > | PRODDETAIL-NAV-04 | Navigation | Passed | Forward → đúng `/product/1`, `<h1>` "iPhone 15 Pro Max", giá và mô tả hiển thị đầy đủ. |
+  > | PRODDETAIL-NAV-05 | Navigation | Passed | Mở `/product/2` trong browser context hoàn toàn mới → "Samsung Galaxy S24 Ultra", giá `28,000,000 ₫`, ảnh có alt đúng. Không cần qua Home. |
+  > | PRODDETAIL-NAV-06 | Navigation | Failed | Hiện `Sản phẩm không tồn tại (Lỗi trắng trang do data rỗng)` — ngôn ngữ debug nội bộ; `main` không chứa bất kỳ thẻ `<a>` nào nên không có lối quay lại. → `BUG-PRODDETAIL-005` |
+  > | PRODDETAIL-NAV-07 | Navigation | Failed | Không trắng trang và không crash (vế an toàn đạt), nhưng hiện đúng chuỗi debug như NAV-06 → vẫn vi phạm vế "không hiển thị lỗi kỹ thuật". → `BUG-PRODDETAIL-005` |
+  > | PRODDETAIL-NAV-08 | Navigation | Failed | Truy vấn `main a` trả về mảng rỗng — không breadcrumb, không link "Quay lại danh sách". Chỉ còn logo ở header (ngoài phạm vi nội dung). → `BUG-PRODDETAIL-005` |
+  > | PRODDETAIL-NAV-09 | Navigation | Failed | Trước F5 nút đã hiện "Đã thêm"; sau F5 giỏ hàng trống hoàn toàn. `localStorage` và `sessionStorage` đều rỗng — giỏ chỉ nằm trong `useState`. → `BUG-PRODDETAIL-006` |
+  > | PRODDETAIL-NAV-10 | Navigation | Failed | Đăng nhập `test@eshop.com` thành công: header hiện "Chào, Test User" ✓ và giỏ hàng còn nguyên ✓, nhưng bị đưa về `/` thay vì quay lại `/product/1` → **mất ngữ cảnh**. → `BUG-PRODDETAIL-012` |
+  >
+  > ## IA-04 — Feedback / state
+  >
+  > | ID | Category | Status | Notes |
+  > | --- | --- | --- | --- |
+  > | PRODDETAIL-FDB-01 | Feedback | Failed | Làm chậm API 4 giây: trạng thái tải là đúng `<div>Đang tải...</div>` — **0** spinner/skeleton/progressbar, **0** phần tử có `animation`. Chỉ là chữ thuần. → `BUG-PRODDETAIL-004` |
+  > | PRODDETAIL-FDB-02 | Feedback | Failed | Mô phỏng backend chết (`route.abort('connectionrefused')`): sau **30 giây** màn hình vẫn kẹt ở "Đang tải...", 0 nút, 0 thông báo lỗi. `.catch()` chỉ gọi `console.error` nên `product` mãi là `null`. → `BUG-PRODDETAIL-004` |
+  > | PRODDETAIL-FDB-03 | Feedback | Failed | Nguyên văn hiển thị: `Sản phẩm không tồn tại (Lỗi trắng trang do data rỗng)` — phần trong ngoặc là ghi chú debug của lập trình viên bị lộ ra người dùng cuối. → `BUG-PRODDETAIL-005` |
+  > | PRODDETAIL-FDB-04 | Feedback | Failed | So sánh `document.body.innerHTML` trước và sau 2 giây kể từ lần bấm: **giống hệt nhau**. Không nhãn đổi, không toast, không badge — người dùng bấm xong không thấy bất kỳ thay đổi nào. → `BUG-PRODDETAIL-001` |
+  > | PRODDETAIL-FDB-05 | Feedback | Failed | Xác nhận duy nhất là nhãn **bên trong chính nút vừa bấm**; không toast, không thay đổi nào ở header hay vùng khác của trang. Mắt rời khỏi nút là bỏ lỡ. → `BUG-PRODDETAIL-009` |
+  > | PRODDETAIL-FDB-06 | Feedback | Failed | Trong lúc xử lý: `disabled` = `false`, không `aria-busy`, không `aria-disabled`. Nút luôn bấm được, bỏ ngỏ double-submit. → `BUG-PRODDETAIL-009` |
+  > | PRODDETAIL-FDB-07 | Feedback | Failed | Sau khi thêm thành công, text của link header vẫn đúng chuỗi `Giỏ hàng`, không chứa chữ số nào — không có badge đếm. → `BUG-PRODDETAIL-009` |
+  > | PRODDETAIL-USB-01 | Usability | Passed | Nhãn là "Thêm vào giỏ hàng" — mô tả rõ hành động, không dùng "Submit"/"OK"/icon trần. Xét riêng về mặt chữ nghĩa thì đạt. |
+  > | PRODDETAIL-USB-02 | Usability | Failed | Toàn bộ text của `main` là "iPhone 15 Pro Max / 30,000,000 ₫ / Điện thoại cao cấp của Apple / Số lượng: / Thêm vào giỏ hàng" — không có bất kỳ thông tin tồn kho nào. → `BUG-PRODDETAIL-011` |
+  > | PRODDETAIL-USB-03 | Usability | Failed | `main` chỉ có đúng **1** nút ("Thêm vào giỏ hàng") và **0** link — bắt buộc phải qua trang Giỏ hàng mới tới được thanh toán. → `BUG-PRODDETAIL-011` |
+  > | PRODDETAIL-USB-04 | Usability | Failed | Nhãn hứa "Thêm vào giỏ hàng" nhưng **lần bấm đầu tiên không thêm gì cả** (chỉ tăng `clickCount`). Nhãn không khớp hành vi thực tế. → `BUG-PRODDETAIL-001` |
+  > | PRODDETAIL-USB-05 | Usability | Failed | Không có khối sản phẩm liên quan/cùng danh mục; `main` không chứa link nào dù dữ liệu đã có sẵn trường `category_id`. → `BUG-PRODDETAIL-011` |
+  > | PRODDETAIL-ACC-01 | Accessibility | Failed | DOM: `<label>Số lượng:</label>` không có `for`, `<input>` không có `id`. Bấm vào nhãn → `document.activeElement` vẫn là `BODY`, con trỏ không nhảy vào ô nhập. → `BUG-PRODDETAIL-007` |
+  > | PRODDETAIL-ACC-02 | Accessibility | Passed | Thứ tự Tab đo được: EShop → Giỏ hàng → Đăng nhập → Đăng ký → ô số lượng → nút "Thêm vào giỏ hàng" → hết. Đúng trình tự đọc (footer không có phần tử focus được nên không xuất hiện). |
+  > | PRODDETAIL-ACC-03 | Accessibility | Passed | Cả hai phần tử giữ vòng focus mặc định của trình duyệt: `outline-style: auto`, `outline-color: rgb(16,16,16)` — không bị `outline: none` ghi đè. |
+  > | PRODDETAIL-ACC-04 | Accessibility | Passed | Cả `Enter` và `Space` đều kích hoạt nút và thêm được sản phẩm vào giỏ, kết quả giống hệt bấm chuột. |
+  > | PRODDETAIL-ACC-05 | Accessibility | Passed | `alt` = "iPhone 15 Pro Max" — mô tả đúng sản phẩm, không rỗng, không phải tên file. |
+  > | PRODDETAIL-ACC-06 | Accessibility | Failed | `document.documentElement.lang` = `"en"` trong khi 100% nội dung hiển thị là tiếng Việt → screen reader đọc sai ngữ điệu. → `BUG-PRODDETAIL-007` |
+  > | PRODDETAIL-ACC-07 | Accessibility | Failed | **Phương pháp thay thế:** chưa chạy NVDA/Narrator thật (nằm ngoài khả năng của Playwright MCP); kết luận dựa trên DOM — trang có **0** vùng `aria-live` / `role=status` / `role=alert`, nên việc nhãn nút đổi thành "Đã thêm" chắc chắn không được screen reader thông báo. → `BUG-PRODDETAIL-007` |
+  > | PRODDETAIL-ACC-08 | Accessibility | Failed | Ở 390×844: nút 184,3×48 px (đạt) nhưng ô số lượng chỉ 80×**42** px — cạnh ngắn dưới ngưỡng 44 px. Khoảng cách dọc giữa hai vùng chạm là 16 px. → `BUG-PRODDETAIL-007` |
+  > | PRODDETAIL-ACC-09 | Accessibility | Passed | Toàn trang có đúng 1 heading: `<h1>iPhone 15 Pro Max</h1>`. Không nhảy cấp, phù hợp với trang chi tiết một sản phẩm không chia mục con. |
+  >
+  > ## Mục 6 mới — Kết quả thực thi (2026-07-29)
+  >
+  > ### Tổng hợp theo aspect
+  >
+  > | Aspect | Tổng | Passed | Failed | Not Run | Tỉ lệ Failed |
+  > | --- | --- | --- | --- | --- | --- |
+  > | IA-01 — General UI standards | 25 | 17 | 5 | 3 | 20% |
+  > | IA-02 — Forms | 17 | 3 | 14 | 0 | 82% |
+  > | IA-03 — Navigation | 10 | 4 | 6 | 0 | 60% |
+  > | IA-04 — Feedback / state | 21 | 6 | 15 | 0 | 71% |
+  > | **Total** | **73** | **30** | **40** | **3** | **55%** |
+  >
+  > ### Môi trường thực thi
+  >
+  > - **Công cụ:** Playwright MCP (Chromium), điều khiển qua Claude Code
+  > - **Frontend:** http://localhost:5173 · **Backend:** http://localhost:3000
+  > - **Viewport đã chạy:** 1440×900 · 768×1024 · 767×1024 · 390×844 · 844×390 · 960×600 (mô phỏng zoom 150%)
+  > - **Tài khoản test:** `test@eshop.com` / `Test1234!`
+  > - **Nhánh:** `hw3/23127211`
+  >
+  > ### Item không chạy được và lý do
+  >
+  > | ID | Lý do |
+  > | --- | --- |
+  > | COM-01 | Cần đối chiếu Chrome 126 ↔ Firefox 128. Playwright MCP phiên này chỉ lái Chromium; sandbox chặn `require('playwright')` nên không khởi chạy được Firefox. |
+  > | COM-02 | Cùng lý do trên (so sánh spinner của `input[type=number]` giữa 2 trình duyệt). |
+  > | COM-03 | Dấu tiếng Việt đã xác nhận đúng trên Chromium nhưng thiếu vế Firefox 128. |
+  >
+  > ### Item chạy bằng phương pháp thay thế
+  >
+  > | ID | Phương pháp thay thế |
+  > | --- | --- |
+  > | RES-06 | Mô phỏng zoom 150% bằng viewport tương đương 960×600 CSS px thay cho Ctrl+= thật. |
+  > | VIS-13 | `emulateMedia({colorScheme:'dark'})` thay cho việc đổi dark mode ở cấp hệ điều hành. |
+  > | FDB-02 | `route.abort('connectionrefused')` mô phỏng backend chết thay cho việc tắt tiến trình cổng 3000. |
+  > | ACC-07 | Kiểm chứng qua DOM (đếm vùng `aria-live`/`role=status`) thay cho việc chạy NVDA/Narrator thật. |
+  > | VIS-07/08 | Mock response API để tạo tên 102 ký tự và mô tả 675 ký tự (dữ liệu seed không có bản ghi đủ dài). |
+  >
+  > ---
+  >
+  > # Phần 2 — 12 bug report (`tests/bug-reports/product-detail/`)
+  >
+  > ## BUG-PRODDETAIL-001: Lần bấm đầu tiên vào "Thêm vào giỏ hàng" không có bất kỳ tác dụng nào
+  >
+  > **Found by Test Case:** PRODDETAIL-FUN-01, PRODDETAIL-FUN-02, PRODDETAIL-FUN-03, PRODDETAIL-FDB-04, PRODDETAIL-USB-04
+  > **Requirement liên quan:** FR-06 (Xem chi tiết sản phẩm — nút "Thêm vào giỏ hàng", sau khi bấm hiển thị phản hồi trực quan)
+  > **Severity / Priority:** Critical / P0
+  > **Environment:** Chromium (Playwright MCP) 1440×900 · Windows 11 · http://localhost:5173/product/1 · nhánh `hw3/23127211`, commit `ff96609`
+  >
+  > **Steps to reproduce:**
+  > 1. Mở trang `http://localhost:5173/product/1` (tải mới hoàn toàn, không dùng điều hướng SPA)
+  > 2. Giữ nguyên ô "Số lượng" ở giá trị mặc định `1`
+  > 3. Bấm nút "Thêm vào giỏ hàng" **đúng một lần**
+  > 4. Quan sát toàn bộ màn hình trong 2 giây
+  > 5. Bấm link "Giỏ hàng" trên header để kiểm tra nội dung giỏ
+  >
+  > **Expected result:** Sản phẩm được thêm vào giỏ ngay ở lần bấm đầu tiên; nhãn nút chuyển sang trạng thái xác nhận.
+  >
+  > **Actual result:** Lần bấm đầu tiên **hoàn toàn không có tác dụng**: nhãn nút vẫn là "Thêm vào giỏ hàng", `document.body.innerHTML` trước và sau 2 giây **giống hệt nhau**, trang Giỏ hàng hiển thị "Giỏ hàng của bạn đang trống". Chỉ tới lần bấm **thứ hai** sản phẩm mới thực sự được thêm. Nguyên nhân: `handleAddToCart` có nhánh `if (clickCount === 0) { setClickCount(1); return; }`. Vì `clickCount` reset về `0` sau mỗi lượt thêm thành công và khi component remount, lỗi lặp lại liên tục.
+  >
+  > **Evidence:** `BUG-PRODDETAIL-001-first-click-no-effect.png`, `BUG-PRODDETAIL-001-cart-empty-after-click.png`
+  >
+  > ## BUG-PRODDETAIL-002: Ô "Số lượng" không có bất kỳ validation nào
+  >
+  > **Found by Test Case:** PRODDETAIL-VAL-01 → PRODDETAIL-VAL-10
+  > **Requirement liên quan:** FR-06 (ô nhập **Số lượng** chỉ nhận số nguyên dương, tối thiểu là 1)
+  > **Severity / Priority:** Critical / P0
+  > **Environment:** Chromium (Playwright MCP) 1440×900 · Windows 11 · http://localhost:5173/product/1 · nhánh `hw3/23127211`, commit `ff96609`
+  >
+  > **Actual result —** không có bất kỳ validation nào, cả 10 kịch bản đều được chấp nhận:
+  >
+  > | Giá trị nhập | Số lượng vào giỏ | Thành tiền hiển thị | Ghi chú |
+  > | --- | --- | --- | --- |
+  > | `-1` | `-1` | **-30.000.000 ₫** | Tổng tạm tính âm |
+  > | `0` | `0` | `0 ₫` | Dòng rác trong giỏ |
+  > | `1.5` | `1` | `30.000.000 ₫` | `parseInt` âm thầm cắt còn 1 |
+  > | (rỗng) | `NaN` | **`NaN ₫`** | Tổng tạm tính cũng thành `NaN ₫` |
+  > | `abc` | `NaN` | **`NaN ₫`** | Ô chặn chữ nhưng xoá luôn giá trị cũ |
+  > | `2e3` | `2` | `60.000.000 ₫` | `valueAsNumber`=2000 nhưng `parseInt("2e3")`=2 |
+  > | `999999999` | `999999999` | **29.999.999.970.000.000 ₫** | Không có giới hạn tối đa |
+  > | `-5` (paste) | `-5` | **-150.000.000 ₫** | Dán cũng không bị chặn |
+  >
+  > Bổ sung: VAL-08 — DOM là `<input class="border p-2 w-20 rounded" type="number" value="1">`, không có `min`/`max`/`step`. VAL-09 — từ `1` bấm mũi tên giảm về `0`. VAL-03 — trình duyệt đã set `validity.valid = false` nhưng ứng dụng không đọc tới.
+  >
+  > **Evidence:** `BUG-PRODDETAIL-002-qty-negative.png`, `-qty-zero.png`, `-qty-empty-NaN.png`, `-qty-overflow.png`
+  >
+  > **Notes:** Lỗi chạm trực tiếp tới tiền. Cần validate ở **cả frontend lẫn backend**.
+  >
+  > ## BUG-PRODDETAIL-003: Thêm cùng một sản phẩm nhiều lượt tạo ra nhiều dòng trùng lặp
+  >
+  > **Found by Test Case:** PRODDETAIL-FUN-04
+  > **Requirement liên quan:** FR-07 (Giỏ hàng — "Thêm cùng một sản phẩm vào giỏ sẽ tăng số lượng, không tạo dòng mới")
+  > **Severity / Priority:** Major / P1
+  >
+  > **Expected result:** Giỏ hàng gộp thành 1 dòng với số lượng cộng dồn, không tạo 2 dòng trùng tên sản phẩm.
+  >
+  > **Actual result:** Giỏ hàng tạo **2 dòng riêng biệt** cùng tên "iPhone 15 Pro Max", mỗi dòng số lượng `1`. Nguyên nhân trong `CartContext.jsx`: `addToCart` luôn chạy `setCart([...cart, { ...product, quantity }])`, không kiểm tra `product.id` đã tồn tại chưa.
+  >
+  > **Evidence:** `BUG-PRODDETAIL-003-cart-duplicate-rows.png`
+  >
+  > ## BUG-PRODDETAIL-004: Màn hình kẹt vĩnh viễn ở "Đang tải..." khi API lỗi
+  >
+  > **Found by Test Case:** PRODDETAIL-FDB-01, PRODDETAIL-FDB-02
+  > **Requirement liên quan:** FR-06
+  > **Severity / Priority:** Critical / P1
+  >
+  > **Actual result:** Kịch bản backend chết — sau **30 giây** màn hình vẫn kẹt ở "Đang tải...", không thông báo lỗi, không nút "Thử lại". Kịch bản mạng chậm — trạng thái tải là `<div>Đang tải...</div>`, **0** spinner/skeleton/progressbar, **0** phần tử có `animation`. Nguyên nhân: `.catch((err) => console.error(err))` chỉ log mà không set state lỗi, nên `product` giữ nguyên `null` và nhánh `if (!product)` luôn trả về màn hình "Đang tải...".
+  >
+  > **Evidence:** `BUG-PRODDETAIL-004-stuck-loading.png`
+  >
+  > ## BUG-PRODDETAIL-005: Thông báo lỗi lộ ghi chú debug và trang không có lối quay lại danh sách
+  >
+  > **Found by Test Case:** PRODDETAIL-NAV-06, NAV-07, NAV-08, FDB-03
+  > **Requirement liên quan:** FR-06, FR-05
+  > **Severity / Priority:** Major / P1
+  >
+  > **Actual result:** Cả `/product/99999` và `/product/abc` đều hiển thị nguyên văn `Sản phẩm không tồn tại (Lỗi trắng trang do data rỗng)` — phần trong ngoặc là ghi chú nội bộ của lập trình viên. Truy vấn `main a` trên cả 3 kịch bản đều trả về **mảng rỗng** — không breadcrumb, không link "Quay lại danh sách".
+  >
+  > **Evidence:** `BUG-PRODDETAIL-005-debug-message-99999.png`, `-debug-message-abc.png`
+  >
+  > ## BUG-PRODDETAIL-006: Giỏ hàng mất sạch sau khi tải lại trang
+  >
+  > **Found by Test Case:** PRODDETAIL-NAV-09
+  > **Requirement liên quan:** FR-07
+  > **Severity / Priority:** Major / P1
+  >
+  > **Actual result:** Sau F5 giỏ hàng **trống hoàn toàn**. `Object.keys(localStorage)` → `[]`, `Object.keys(sessionStorage)` → `[]`. Nguyên nhân: `const [cart, setCart] = useState([])` — giỏ chỉ tồn tại trong React state, không đồng bộ xuống storage cũng không lưu về backend.
+  >
+  > **Evidence:** `BUG-PRODDETAIL-006-cart-lost-after-reload.png`
+  >
+  > ## BUG-PRODDETAIL-007: Nhóm lỗi accessibility
+  >
+  > **Found by Test Case:** PRODDETAIL-ACC-01, ACC-06, ACC-07, ACC-08
+  > **Requirement liên quan:** FR-06
+  > **Severity / Priority:** Major / P2
+  >
+  > **Actual result:**
+  > - **ACC-01 — Nhãn rời rạc.** `<label>Số lượng:</label>` không có `for`, `<input>` không có `id`. Bấm vào nhãn → `document.activeElement` vẫn là `BODY`.
+  > - **ACC-06 — Sai ngôn ngữ.** `document.documentElement.lang` = `"en"` trong khi 100% nội dung là tiếng Việt.
+  > - **ACC-07 — Không có thông báo cho screen reader.** Trang có **0** vùng `aria-live` / `role=status` / `role=alert`. *Ghi chú phương pháp:* chưa chạy NVDA/Narrator thật, kết luận dựa trên việc đếm live region trong DOM.
+  > - **ACC-08 — Vùng chạm dưới chuẩn.** Ở 390×844: nút 184,3×48 px (đạt), ô nhập số lượng 80×**42** px (không đạt ngưỡng 44 px). Khoảng cách dọc giữa hai vùng chạm 16 px.
+  >
+  > **Evidence:** `BUG-PRODDETAIL-007-mobile-touch-target.png`
+  >
+  > ## BUG-PRODDETAIL-008: Định dạng giá phụ thuộc locale trình duyệt
+  >
+  > **Found by Test Case:** PRODDETAIL-VIS-02, PRODDETAIL-COM-04
+  > **Requirement liên quan:** FR-05, FR-06
+  > **Severity / Priority:** Major / P2
+  >
+  > **Actual result:** Chuỗi giá đổi theo locale — `en-US` → `30,000,000 ₫` (sai chuẩn), `vi-VN` → `30.000.000 ₫` (đúng). Vì `<html lang="en">` và phần lớn người dùng để trình duyệt mặc định, giá hiển thị thực tế là `30,000,000 ₫`. Nguyên nhân: `Number(product.price).toLocaleString()` gọi không truyền locale. Lỗi lặp lại ở trang Giỏ hàng.
+  >
+  > **Evidence:** `BUG-PRODDETAIL-008-price-comma-format.png`
+  >
+  > ## BUG-PRODDETAIL-009: Phản hồi sau khi thêm vào giỏ quá mờ nhạt và không chặn double-submit
+  >
+  > **Found by Test Case:** PRODDETAIL-FDB-05, FDB-06, FDB-07
+  > **Requirement liên quan:** FR-06 ("toast notification hoặc badge cập nhật")
+  > **Severity / Priority:** Minor / P2
+  >
+  > **Actual result:** FDB-05 — toàn bộ phản hồi thành công chỉ là nhãn nút đổi trong 2003 ms, không toast, không thay đổi ở header. FDB-06 — trong lúc xử lý `disabled` = `false`, `aria-busy` = `null`, `aria-disabled` = `null`. FDB-07 — link header vẫn đúng chuỗi `Giỏ hàng`, không chứa chữ số. FR-06 yêu cầu "toast **hoặc** badge" — SUT không có cả hai.
+  >
+  > **Evidence:** `BUG-PRODDETAIL-009-no-cart-badge.png`
+  >
+  > ## BUG-PRODDETAIL-010: Nhóm lỗi hiển thị
+  >
+  > **Found by Test Case:** PRODDETAIL-VIS-01, VIS-04, VIS-10
+  > **Requirement liên quan:** FR-06, FR-05
+  > **Severity / Priority:** Minor / P3
+  >
+  > **Actual result:**
+  > - **VIS-01 — Ảnh phóng 152%.** Ảnh gốc 300×300 px render ở 455×455 px; ở viewport 767 px còn nặng hơn — render 670×670 px (phóng 2,23×). Chữ "iPhone 15" trên ảnh nhoè thấy rõ.
+  > - **VIS-04 — Khoảng trắng thừa ~200 px.** `<p class="text-gray-700 mb-6 flex-grow">` giãn ra chiếm hết chiều cao dư của cột — đo được 225 px dù chỉ chứa 1 dòng chữ ~24 px.
+  > - **VIS-10 — Tiêu đề tab mặc định.** `document.title` = `frontend-web` trên mọi sản phẩm.
+  >
+  > **Evidence:** `BUG-PRODDETAIL-010-whitespace-and-upscaled-image.png`
+  >
+  > ## BUG-PRODDETAIL-011: Trang chi tiết thiếu thông tin tồn kho, lối thanh toán nhanh và sản phẩm liên quan
+  >
+  > **Found by Test Case:** PRODDETAIL-USB-02, USB-03, USB-05
+  > **Requirement liên quan:** FR-06 ("Hiển thị đầy đủ: Ảnh lớn, Tên, Giá, Mô tả, **Danh mục**")
+  > **Severity / Priority:** Minor / P3
+  >
+  > **Actual result:** Toàn bộ nội dung `main` chỉ gồm tên, giá, mô tả, "Số lượng:", nút "Thêm vào giỏ hàng". Không có thông tin tồn kho; `main` chỉ có 1 nút và 0 link nên bắt buộc qua trang Giỏ hàng mới tới thanh toán; không có khối sản phẩm liên quan dù API đã trả sẵn `category_id`. Ngoài ra trang **không hiển thị Danh mục** — vi phạm trực tiếp câu chữ FR-06.
+  >
+  > **Evidence:** `BUG-PRODDETAIL-010-whitespace-and-upscaled-image.png`
+  >
+  > ## BUG-PRODDETAIL-012: Mất vị trí cuộn khi Back và mất ngữ cảnh sau đăng nhập
+  >
+  > **Found by Test Case:** PRODDETAIL-NAV-03, PRODDETAIL-NAV-10
+  > **Requirement liên quan:** FR-06, FR-01
+  > **Severity / Priority:** Minor / P3
+  >
+  > **Actual result:** NAV-03 — cuộn Home tới `scrollY` = 118, mở chi tiết rồi Back: URL đúng nhưng `scrollY` = **0**. NAV-10 — đăng nhập từ `/product/1`: header hiện "Chào, Test User" ✓, giỏ hàng còn nguyên ✓, nhưng bị đưa về `/` thay vì quay lại `/product/1` ❌.
+  >
+  > **Evidence:** `BUG-PRODDETAIL-012-scroll-position-lost.png`
+  >
+  > **Phát hiện ngoài phạm vi checklist:** khi chạy NAV-10 nhận thấy cả hai ô của form đăng nhập đều là `type="text"` — ô mật khẩu **không được che dấu**. Thuộc màn hình Login, cần lập bug riêng cho module LOGIN.
+  >
+  > ---
+  >
+  > # Phần 3 — Screenshot bằng chứng (`tests/bug-reports/screenshots/`)
+  >
+  > 16 ảnh: `BUG-PRODDETAIL-001-first-click-no-effect.png`, `-001-cart-empty-after-click.png`, `-002-qty-negative.png`, `-002-qty-zero.png`, `-002-qty-empty-NaN.png`, `-002-qty-overflow.png`, `-003-cart-duplicate-rows.png`, `-004-stuck-loading.png`, `-005-debug-message-99999.png`, `-005-debug-message-abc.png`, `-006-cart-lost-after-reload.png`, `-007-mobile-touch-target.png`, `-008-price-comma-format.png`, `-009-no-cart-badge.png`, `-010-whitespace-and-upscaled-image.png`, `-012-scroll-position-lost.png`
+- **Đánh giá:** Valid
+- **Suy luận:**
+  AI chạy được 70/73 item bằng Playwright MCP và đưa ra kết luận có số đo cụ thể cho từng item (kích thước px, tỉ lệ tương phản, thời gian ms, nội dung DOM) chứ không phán đoán chung chung. Ba điểm tôi kiểm tra kỹ và thấy hợp lý:
+  - **Không tự nhận đã chạy thứ không chạy được:** COM-01/02/03 giữ `Not Run` với lý do rõ ràng (không mở được Firefox), thay vì suy đoán kết quả từ Chromium.
+  - **Ghi rõ phương pháp thay thế:** 5 item (RES-06, VIS-13, FDB-02, ACC-07, VIS-07/08) chạy bằng cách mô phỏng thay vì thao tác gốc, và điều này được ghi thẳng vào cột Notes lẫn mục 6 — người đọc biết chỗ nào cần xác nhận lại bằng tay.
+  - **Phân biệt được lỗi thật với lỗi trông có vẻ là lỗi:** RES-05 để `Passed` dù class `.bug-mobile-hidden` có `margin-right:-100px`, vì đo thực tế cho thấy `self-start` khiến nó chưa gây lệch; rủi ro tiềm ẩn được ghi vào Notes thay vì báo fail sai.
+- **Sửa:** Không cần sửa
