@@ -35,13 +35,9 @@ Hỏi trước khi hẹn lịch. Ghi lại câu trả lời vào cột "Hồ sơ
    _(Đạt: ≥ 1 lần, có nêu được tên sàn như Shopee/Lazada/Tiki)_
 3. Bạn đã từng dùng mã giảm giá khi mua hàng online chưa?
    _(Ghi nhận — không loại, nhưng dùng để hiểu bối cảnh khi phân tích)_
-4. Bạn đã từng dùng trang EShop này bao giờ chưa?
-   _(Trả lời "Rồi" thì **loại** — nghiên cứu cần người dùng mới)_
-5. Bạn có đang học môn Kiểm thử phần mềm hoặc đang làm bài tập HW03 này không?
-   _(Trả lời "Có" thì **loại** — theo quy định chống gian lận của đề)_
-6. Bạn có làm việc trong lĩnh vực IT hoặc kiểm thử phần mềm không?
+4. Bạn có làm việc trong lĩnh vực IT hoặc kiểm thử phần mềm không?
    _(Trả lời "Có" thì vẫn nhận được nhưng **ưu tiên thấp**; ghi rõ vào cột Hồ sơ)_
-7. Bạn có đồng ý cho ghi màn hình và ghi âm buổi kiểm thử không?
+5. Bạn có đồng ý cho ghi màn hình và ghi âm buổi kiểm thử không?
    _(Trả lời "Không" thì **loại** — không có bằng chứng thì phiên không dùng được)_
 
 ---
