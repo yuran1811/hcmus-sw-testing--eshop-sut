@@ -4,11 +4,12 @@
 - Website: http://localhost:5173
 - Flow: U-01 — Tìm kiếm sản phẩm → Xem chi tiết → Thêm giỏ hàng → Áp mã giảm giá → Checkout
 - FR liên quan: FR-05 (tìm kiếm & danh sách sản phẩm), FR-06 (xem chi tiết sản phẩm), FR-07 (giỏ hàng), FR-09 (mã giảm giá), FR-08 (thanh toán)
-- Timebox: 10 phút/người
+- Timebox: **3 phút/người** *(điều chỉnh sau pilot — xem mục "Điều chỉnh sau pilot")*
 - Người điều phối: nlhakhoa23@clc.fitus.edu.vn
 - Thiết bị/trình duyệt test chính: Laptop Windows 11, Chrome 126, cửa sổ 1440×900
-- Số phiên: 7 người chính (P01–P07) + 1 pilot (P00)
+- Số phiên: 7 người chính (P01–P07) + 1 pilot (P00 — đã chạy)
 - Hình thức: Moderated, in-person, think-aloud
+- Phiên bản kịch bản: **v2 (sau pilot)** — áp dụng thống nhất cho cả P01–P07
 
 ---
 
@@ -16,7 +17,7 @@
 
 Ba câu hỏi kiểm chứng được, mỗi câu trả lời được bằng số liệu trong session log:
 
-1. **Người dùng mới có tự hoàn tất đơn hàng có áp mã giảm giá trong 10 phút mà không cần moderator can thiệp không?**
+1. **Người dùng mới có tự hoàn tất đơn hàng có áp mã giảm giá trong 3 phút mà không cần moderator can thiệp không?**
    → đo bằng `Outcome` (`SUCCESS_UNASSISTED` vs các giá trị còn lại) và số `intervention`.
 2. **Người dùng có tự tìm ra chỗ nhập mã giảm giá không, hay đi tìm ở trang Giỏ hàng trước?**
    → đo bằng số `wrong turn` vào trang Giỏ hàng sau khi đã được giao nhiệm vụ có mã, và `hesitation ≥ 5s` tại màn hình Giỏ hàng/Checkout.
@@ -54,7 +55,7 @@ phẩm hợp lệ** (Tai nghe AirPods Pro 2 — 6.000.000 ₫ và Bàn phím cơ
   bằng tài khoản test, giỏ hàng rỗng, ô tìm kiếm trống, chưa cuộn trang.
 - **Thành công:** màn hình hiển thị **"Thanh toán thành công!"**, và trước khi bấm xác nhận đã quan
   sát được mã giảm giá áp dụng thành công ở bước Checkout (xuất hiện dòng `Tiết kiệm: 100.000 ₫`).
-- **Thất bại:** bỏ cuộc, hết timebox 10 phút, hoặc bị kẹt không phục hồi và không đến được trạng
+- **Thất bại:** bỏ cuộc, hết timebox 3 phút, hoặc bị kẹt không phục hồi và không đến được trạng
   thái thành công.
 - **Deviation:**
   - Nếu mã `VIP100` báo đã đạt giới hạn số lần dùng → **dừng đồng hồ**, khởi động lại backend để
@@ -69,7 +70,7 @@ phẩm hợp lệ** (Tai nghe AirPods Pro 2 — 6.000.000 ₫ và Bàn phím cơ
 
 Trang Giỏ hàng chặn thao tác thanh toán nếu chưa đăng nhập (hiện `alert` rồi chuyển sang trang
 Đăng nhập). Flow U-01 **không bao gồm** FR-01/FR-02, nên nếu để người tham gia tự đăng nhập thì:
-(a) timebox 10 phút bị tiêu vào phần ngoài phạm vi, (b) các phiên không còn so sánh được với nhau
+(a) timebox 3 phút bị tiêu vào phần ngoài phạm vi, (b) các phiên không còn so sánh được với nhau
 vì người có tài khoản sẵn và người phải đăng ký sẽ mất thời gian rất khác nhau. Vì vậy đăng nhập
 sẵn là một phần của **start state chuẩn hoá**, không phải sự trợ giúp.
 
@@ -189,7 +190,7 @@ có vấn đề tồn tại. Mỗi nhóm có 2 câu; nếu hết giờ, hỏi í
 > mà vì mình cần thấy trải nghiệm thật của bạn khi không có ai hướng dẫn. Nếu bạn kẹt hẳn thì mình
 > sẽ vào hỗ trợ.
 >
-> Buổi này kéo dài khoảng 10 phút cho phần thao tác, sau đó mình xin bạn khoảng 5 phút để điền một
+> Buổi này kéo dài khoảng 3 phút cho phần thao tác, sau đó mình xin bạn khoảng 5 phút để điền một
 > bảng khảo sát ngắn và trả lời vài câu hỏi.
 >
 > **Mình xin phép được ghi lại màn hình và ghi âm giọng nói trong buổi hôm nay** — chỉ dùng cho
@@ -219,23 +220,72 @@ có vấn đề tồn tại. Mỗi nhóm có 2 câu; nếu hết giờ, hỏi í
    - "Bạn đang nghĩ gì vậy?"
    - "Bạn đang định làm gì tiếp theo?"
    - "Bạn có thể nói to suy nghĩ của bạn được không?"
-7. **Chỉ can thiệp khi người tham gia kẹt hẳn** (không thao tác gì trong ~60 giây và tự nói rằng
+7. **Chỉ can thiệp khi người tham gia kẹt hẳn** (không thao tác gì trong **~30 giây** và tự nói rằng
    không biết làm gì tiếp). Khi can thiệp, ghi lại **nguyên văn câu đã nói**, trạng thái màn hình
    ngay trước đó, và kết quả sau can thiệp — mỗi lần như vậy tính là 1 `intervention` và phiên
    không còn được tính `SUCCESS_UNASSISTED`.
+   *(Ngưỡng rút từ 60s xuống 30s sau pilot — xem mục "Điều chỉnh sau pilot".)*
+
+---
+
+## Điều chỉnh sau pilot
+
+Phiên pilot **P00 đã chạy**. Nguồn: [`sessions/P00-pilot.md`](sessions/P00-pilot.md).
+Kịch bản chuyển từ **v1 → v2**; v2 là bản dùng cho toàn bộ P01–P07.
+
+| # | Hạng mục | v1 (trước pilot) | v2 (sau pilot) | Căn cứ từ pilot |
+| --- | --- | --- | --- | --- |
+| 1 | Timebox mỗi phiên | 10 phút | **3 phút** | B1: người pilot hoàn thành trong **1 phút 11 giây**. B2: 10 phút bị đánh giá "quá dài". |
+| 2 | Ngưỡng can thiệp của moderator | ~60 giây kẹt | **~30 giây kẹt** | E2: với task chỉ dài ~1 phút, chờ 60 giây là gần bằng toàn bộ thời lượng task nên không còn ý nghĩa. |
+
+**Các hạng mục đã kiểm tra và giữ nguyên** (pilot không phát hiện vấn đề): kịch bản không lộ bước
+(A2), không có từ ngữ gây khó hiểu (A4), cách đưa mã `VIP100` tự nhiên (A5), ghi màn hình/ghi âm
+đạt (C1), đồng hồ bấm giờ dùng được (C2), mã `VIP100` còn hiệu lực tới bước checkout (C3), quy
+trình restart backend reseed đúng (C4), ảnh sản phẩm tải đủ (C5), start state khôi phục được (C6),
+không có item SUS nào phải hỏi lại nghĩa (D1), thang 1–5 không bị hiểu ngược (D2), không có câu
+hỏi dẫn dắt (D4), moderator không lỡ gợi ý (E1), một người vừa quan sát vừa ghi timeline vẫn kịp (E3).
+
+### Kiểm chứng công cụ SUS bằng dữ liệu pilot
+
+Điểm thô của P00: `1, 1, 5, 1, 3, 3, 4, 1, 3, 1` → áp công thức ở mục Instrument:
+
+- Item lẻ (1,3,5,7,9) = 1,5,3,4,3 → đóng góp (x−1): 0+4+2+3+2 = **11**
+- Item chẵn (2,4,6,8,10) = 1,1,3,1,1 → đóng góp (5−x): 4+4+2+4+4 = **18**
+- Tổng 29 × 2.5 = **SUS 72.5 → xếp loại C (Trung bình)**
+
+Con số này chỉ dùng để xác nhận **công thức và phiếu SUS chạy đúng**. Theo quy định ở Step 5 của
+skill, **P00 không được đưa vào số liệu tổng hợp Phase 3**.
+
+### Hai điểm còn mở — cần chốt trước khi chạy P01
+
+1. **Ngân sách trong kịch bản: 10 triệu hay 50 triệu?**
+   Test plan (mục Task scenario) ghi **"dưới 10 triệu"**, nhưng dòng A3 trong file pilot lại ghi
+   **"dưới 50 triệu"**. Đây là khác biệt có ảnh hưởng thật: với mốc 10 triệu chỉ có **2/5 sản phẩm**
+   hợp lệ (AirPods 6 triệu, Keychron 4 triệu) nên người tham gia buộc phải lọc; với mốc 50 triệu thì
+   **cả 5/5 sản phẩm** đều hợp lệ và bước lọc biến mất — đúng như A3 đã ghi nhận là ràng buộc
+   *không* tạo ra lựa chọn thật. Hiện test plan vẫn giữ **10 triệu**; nếu pilot thực tế chạy bằng
+   50 triệu thì phải sửa lại đây cho khớp trước khi chạy P01.
+2. **Câu Clarity 1 chưa moi được thông tin cần.**
+   Người pilot trả lời `"Nhập vào ô"` — đó là mô tả *thao tác*, không trả lời được *làm cách nào
+   tìm ra chỗ nhập*, trong khi đây chính là dữ liệu cho **mục tiêu số 2**. Đề xuất thêm một câu hỏi
+   đuôi trung lập khi gặp câu trả lời kiểu này:
+   > "Trước khi tìm thấy ô đó, bạn có nhìn qua chỗ nào khác không?"
 
 ---
 
 ## Liên kết
 
 - Danh sách người tham gia: [`recruitment-tracker.md`](recruitment-tracker.md)
-- Kế hoạch & kết quả pilot: [`sessions/P00-pilot.md`](sessions/P00-pilot.md)
-- Định nghĩa Outcome/Error/Wrong turn/Hesitation/Intervention: xem `session_log_template.md` trong skill,
+- Kết quả pilot: [`sessions/P00-pilot.md`](sessions/P00-pilot.md)
+- Nhật ký 7 phiên chính: `sessions/P01.md` … `sessions/P07.md`
+- Định nghĩa Outcome/Error/Wrong turn/Hesitation/Intervention: nhúng sẵn trong mỗi file phiên,
   áp dụng thống nhất cho cả 8 phiên.
 
 ---
 
 ## Trạng thái tài liệu
 
-Đây là **Phase 1 — Plan**. Chưa chạy phiên nào, chưa có dữ liệu quan sát.
-Phase 2 (Conduct) và Phase 3 (Analyse) chỉ được thực hiện sau khi các phiên thật đã diễn ra.
+- **Phase 1 — Plan:** hoàn tất, đã cập nhật theo kết quả pilot (kịch bản v2).
+- **Pilot P00:** đã chạy, đã chốt thay đổi.
+- **Phase 2 — Conduct:** chưa chạy. 7 file `sessions/P01.md`–`P07.md` đang ở dạng template rỗng.
+- **Phase 3 — Analyse:** chưa bắt đầu; chỉ thực hiện sau khi cả 7 phiên đã có dữ liệu thật.
