@@ -63,7 +63,7 @@ Seed prompts:
 
 Merge all four passes into one table with columns: `#, ID, IA Aspect, Item Description, Heuristic Source`. Target >40 rows total. Cut near-duplicates.
 
-Give every item a stable ID so it can be referenced from bug files and the traceability matrix, following the course's test-case naming convention: `GUI-[IA]-[NUM]`, e.g. `GUI-IA02-014` (IA-02, item 14). Never reuse or renumber an ID once assigned — a stable ID is what keeps "Found by Test Case" links from breaking, exactly like `TC-[MODULE]-[NUMBER]` does for formal test cases. Avoid unstable labels like "form-check-2" or "item-a".
+Give every item a stable ID so it can be referenced from bug files and the traceability matrix, following the course's test-case naming convention: `[SCREEN]-GUI-[IA]-[NUM]`, e.g. `HOME-GUI-IA02-014` (Screen: HOME, IA-02, item 14), `CART-GUI-IA01-005` (Screen: CART). Never reuse or renumber an ID once assigned — a stable ID is what keeps "Found by Test Case" links from breaking, exactly like `TC-[MODULE]-[NUMBER]` does for formal test cases. Avoid unstable labels like "form-check-2" or "item-a".
 
 ### Step 6 — MANDATORY human-review / gap-finding pass
 
