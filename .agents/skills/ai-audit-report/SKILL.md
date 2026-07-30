@@ -16,13 +16,14 @@ Missing or reconstructed-after-the-fact audit logs are easy for a TA to spot (ti
 A known failure mode: the agent receives **one** prompt (e.g., "design checklist for home screen") but writes **multiple fake entries** (e.g., "Entry 1: IA-01 pass", "Entry 2: IA-02 pass"…) as if the user had sent those prompts separately. **This is dishonest and easily detected by graders.**
 
 Rules:
+
 - The "Prompt used (verbatim)" field must be the **exact text the student typed**, not a paraphrase or a decomposed sub-task the AI invented internally.
 - If the AI internally does IA-01 through IA-04 passes within a single model response, **that is still 1 entry** — the output summary may describe all 4 passes, but the prompt is the one message the student actually sent.
 - If the AI made an error (e.g., generated fabricated entries), log that as a separate entry when the correction prompt was sent, and note what was wrong in the output of the original entry.
 
 ## Live logging format (append one entry per AI interaction, immediately after it happens)
 
-```
+```text
 ### Entry N
 - Tool: <ChatGPT / Claude / Gemini / Copilot / Cursor / ...>
 - Date/time: <YYYY-MM-DD HH:MM>

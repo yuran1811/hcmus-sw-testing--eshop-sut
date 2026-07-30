@@ -14,7 +14,7 @@ The assignment explicitly forbids a single generic prompt like "create a GUI che
 Ask the user (or infer from context) before starting:
 
 1. Which screen(s) or flow will be checklisted (e.g., "Checkout page", "Product search results")? Must not duplicate another team member's screen.
-2. Repo/URL of the SUT (default: https://github.com/ttbhanh/eshop-sut, running locally).
+2. Repo/URL of the SUT (default: <https://github.com/ttbhanh/eshop-sut>, running locally).
 3. Which IA aspects apply to this screen (usually all 4, but note if one is not applicable and why).
 
 ## Step-by-step process (run each step as its own turn/prompt, don't merge)
@@ -59,9 +59,40 @@ Seed prompts:
 - Disabled vs enabled button states communicated visually
 - Optimistic UI vs actual server confirmation mismatches
 
+### Step 4b — Mandatory omission sweep before consolidation
+
+Before merging anything, explicitly run one more pass over the draft checklist and ask:
+
+- Did we include accessibility items beyond visible focus styles, especially screen reader labels, accessible names, and focus order?
+- Did we include full keyboard-only navigation for the whole screen, not just Enter on one field?
+- Did we include dark mode or explicit exclusion of dark mode when the screen or repo context suggests it may matter?
+- Did we include offline / slow-network / retry behavior, not only the happy-path load state?
+- Did we include responsive/mobile interaction details such as tap target size, cramped layouts, and overflow at small breakpoints?
+- Did we include image robustness items such as alt text, broken image fallback, and content remaining understandable when images fail?
+
+If any of these apply to the screen, add concrete pass/fail items for them before moving on. If a category is not applicable, note that explicitly in the checklist or later in `ai_gap_analysis.md`.
+
 ### Step 5 — Consolidate and de-duplicate
 
 Merge all four passes into one table with columns: `#, ID, IA Aspect, Item Description, Heuristic Source`. Target >40 rows total. Cut near-duplicates.
+
+After the mandatory omission sweep, keep expanding the checklist until you have covered every applicable requirement and observable UI/UX concern from the README/SRS for that screen, not just a small sample of each category. In practice, the checklist should intentionally try to be exhaustive for the screen/flow:
+
+- Include all applicable accessibility concerns, not only focus styles
+- Include all applicable keyboard-only navigation concerns, not only one Enter-key case
+- Include all applicable link/navigation integrity concerns, including broken links, dead ends, orphan pages, link destinations that do not match their labels, external link behavior, mailto links, and custom 404 recovery when relevant
+- Include all applicable color/state concerns, including hover, visited, active, disabled, and grouped button/link states when relevant
+- Include all applicable content concerns, including spelling, alignment, title clarity, company/privacy/help text, tooltip availability, and whether visible URLs or email addresses are actually hyperlinks when the screen contains them
+- Include all applicable responsive/mobile concerns, not only a single overflow check
+- Include all applicable loading, empty, error, offline, and retry concerns, not only one happy-path state
+- Include all applicable image/content robustness concerns, not only a single alt-text check
+- Include all applicable form-robustness concerns, including required/optional indicators, default values, field constraints, numeric/string edge cases, and whether the form behaves sensibly when users enter unusual but valid characters
+- When a broader heuristic list is provided by the student, map each applicable heuristic into a screen-specific item; if a heuristic is not applicable on the current screen, write that exclusion explicitly instead of silently skipping it
+- Do not limit link checks to a single "click goes somewhere" item: also consider destination correctness, dead ends, orphan pages, mailto/external-link behavior, and 404 recovery when the screen or product context makes them relevant
+- Do not limit title/content checks to visible headings: also consider browser tab title clarity, spelling/grammar, help text, and whether the screen clearly communicates what it is
+- Also check HTML/document metadata when relevant, especially the `lang` attribute and any page-level title metadata that screen readers and browser tabs rely on
+- Do not limit form checks to the presence of the field: also consider whitespace handling, default values, input type restrictions, and how the field behaves with valid-but-unusual characters
+- Include explicit exclusion items only for categories that truly do not apply, with a short reason why
 
 Give every item a stable ID so it can be referenced from bug files and the traceability matrix, following the course's test-case naming convention: `[SCREEN]-GUI-[IA]-[NUM]`, e.g. `HOME-GUI-IA02-014` (Screen: HOME, IA-02, item 14), `CART-GUI-IA01-005` (Screen: CART). Never reuse or renumber an ID once assigned — a stable ID is what keeps "Found by Test Case" links from breaking, exactly like `TC-[MODULE]-[NUMBER]` does for formal test cases. Avoid unstable labels like "form-check-2" or "item-a".
 
@@ -110,4 +141,3 @@ A checklist item stays Failed until the underlying bug is fixed **and** the item
 - Don't skip Step 6; a checklist with zero student-added items and zero named AI gaps reads as unreviewed AI output, which the rubric explicitly penalizes.
 - **Don't let AI fill in `ai_gap_analysis.md`** — the file must contain the student's own words. An AI-written gap analysis is indistinguishable from no gap analysis.
 - Don't forget the Notes column — "Failed" with no explanation isn't gradable.
-

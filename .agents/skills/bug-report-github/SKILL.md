@@ -26,7 +26,15 @@ Never jump straight to creating a GitHub Issue from a raw observation. The file 
 
 Do not batch-generate all bug reports in a single prompt — repro steps get vague and generic in bulk. For each bug, prompt:
 
-> "Write a bug report for EShop with this raw observation: [paste raw note/failed-item detail]. Use this exact structure: Title in the format '[BUG][Module] Short description', Found by Test Case (checklist item ID or finding ID), Requirement liên quan, Severity (Blocker/Critical/Major/Minor/Trivial) AND Priority (P0/P1/P2/P3) as two separate ratings — do not conflate them, Environment, Steps to Reproduce (numbered, from a known starting state), Expected Result, Actual Result, Evidence (list filenames). Keep steps precise enough that someone unfamiliar with the flow could reproduce it."
+> "Write a bug report for EShop with this raw observation: [paste raw
+> note/failed-item detail]. Use this exact structure: Title in the format
+> `[BUG][Module] Short description`, Found by Test Case (checklist item ID or
+> finding ID), Requirement liên quan, Severity (Blocker/Critical/Major/Minor/
+> Trivial) AND Priority (P0/P1/P2/P3) as two separate ratings - do not
+> conflate them, Environment, Steps to Reproduce (numbered, from a known
+> starting state), Expected Result, Actual Result, Evidence (list filenames).
+> Keep steps precise enough that someone unfamiliar with the flow could
+> reproduce it."
 
 Severity vs Priority reminder (do not let the AI collapse these into one field): **Severity** = how badly it breaks the system (e.g., wrong charge = Critical); **Priority** = how urgently it must be fixed (e.g., a typo on a promo banner might be Trivial severity but P1 priority if it's live during a sale). Assign both independently and justify any case where they diverge.
 

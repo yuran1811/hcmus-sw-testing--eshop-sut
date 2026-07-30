@@ -45,7 +45,7 @@ Or, add to your **workspace** `.vscode/settings.json` if you only want it for a 
 ## What the Premium CSS Includes
 
 | Feature | Description |
-|---------|-------------|
+| --------- | ------------- |
 | **Typography** | Clean font stack (Segoe UI / system fonts), comfortable line-height, justified text |
 | **Headings** | Styled hierarchy with colored left-border accent, bottom dividers for H1/H2 |
 | **Tables** | Dark gradient headers, alternating row colors, hover effects |
@@ -75,6 +75,7 @@ Create a second CSS file and add it after the premium CSS:
 ### Change Code Highlight Theme
 
 Available themes at [highlight.js demo](https://highlightjs.org/demo). Examples:
+
 - `"github-dark.css"` (default - dark code blocks)
 - `"github.css"` (light code blocks)
 - `"monokai.css"` (Monokai dark)
@@ -88,7 +89,7 @@ Available themes at [highlight.js demo](https://highlightjs.org/demo). Examples:
 
 ## Files
 
-```
+```text
 md-to-pdf/
 ├── SKILL.md                                    ← This file
 └── resources/

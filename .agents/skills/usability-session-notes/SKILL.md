@@ -13,7 +13,7 @@ Seven sessions of loose notes are hard to compare and easy to under-analyze. Thi
 
 For each of the 7 sessions, capture:
 
-```
+```text
 Session ID: P0X
 Date/time:
 Task scenario given: [paste exact scenario text used]

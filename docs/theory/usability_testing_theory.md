@@ -100,9 +100,9 @@ Usability Testing thường được phân loại theo hai trục độc lập, 
 
 **Trục 2 — Mức độ điều phối (Moderation)**
 
-3. **Moderated Testing (Có điều phối)**: Có một người điều phối (facilitator) hướng dẫn trực tiếp, đặt các câu hỏi thăm dò (probing questions) theo thời gian thực trong lúc người dùng thực hiện tác vụ.
+1. **Moderated Testing (Có điều phối)**: Có một người điều phối (facilitator) hướng dẫn trực tiếp, đặt các câu hỏi thăm dò (probing questions) theo thời gian thực trong lúc người dùng thực hiện tác vụ.
    - _Phù hợp cho_: Luồng thao tác phức tạp, prototype chưa hoàn thiện (cần người điều phối giải thích các phần chưa dựng xong), giúp thu thập insight rất sâu vì có thể hỏi ngay "vì sao bạn làm vậy" tại đúng thời điểm xảy ra hành vi.
-4. **Unmoderated Testing (Không điều phối)**: Người tham gia tự mình hoàn thành tác vụ thông qua một công cụ hỗ trợ tự động (ghi lại màn hình, giọng nói, thao tác), không có người điều phối theo dõi trực tiếp.
+2. **Unmoderated Testing (Không điều phối)**: Người tham gia tự mình hoàn thành tác vụ thông qua một công cụ hỗ trợ tự động (ghi lại màn hình, giọng nói, thao tác), không có người điều phối theo dõi trực tiếp.
    - _Phù hợp cho_: Cần kết quả nhanh, linh hoạt về thời gian (participant tự chọn giờ làm), loại bỏ được định kiến người điều phối (moderator bias — hiện tượng người dùng cố gắng làm hài lòng người quan sát), lý tưởng cho nhịp độ phát triển sản phẩm theo mô hình Agile (cần vòng lặp phản hồi nhanh).
 
 Bốn hình thức trên có thể kết hợp tự do (ví dụ: Remote + Moderated qua video call, hoặc In-person + Unmoderated bằng cách để người dùng tự làm trong phòng lab mà không có ai quan sát trực tiếp), tùy theo mục tiêu, ngân sách và giai đoạn của dự án.

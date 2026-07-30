@@ -17,13 +17,15 @@ Khi người dùng yêu cầu viết, tạo, cập nhật hoặc biên soạn m�
      * **Khắc phục chồng chéo chữ (đặc biệt là biểu đồ Gantt):** Khi thiết kế biểu đồ Gantt bằng Mermaid, bắt buộc phải thêm directive khởi tạo ở dòng đầu tiên của file `.mmd` để nới rộng không gian hiển thị nhãn công việc: `%%{init: { 'gantt': { 'leftPadding': 180 } } }%%`. Ngoài ra, nhãn công việc phải viết ngắn gọn, cô đọng để không tràn lề.
      * **Cấm sử dụng sơ đồ ASCII hardcode:** Tuyệt đối không vẽ sơ đồ trực quan bằng các ký tự văn bản thô sơ (như `├──`, `└──`, mũi tên `│` `▼` trong khối code code block). Tất cả phải được thiết kế bằng mã Mermaid/PlantUML chuyên nghiệp, biên dịch ra file hình ảnh vector SVG rồi chèn liên kết hình ảnh vào tài liệu.
    * Đảm bảo cấu trúc tài liệu rõ ràng, sử dụng các tiêu đề (`#`, `##`, `###`), danh sách, bảng biểu và sơ đồ (Mermaid) phù hợp.
-   * **Tự động ngắt trang tránh dính chữ:** Trình biên dịch `md_to_pdf.py` tự động áp dụng luật ngắt trang trước mỗi thẻ tiêu đề cấp 2 (`## `) trừ thẻ đầu tiên. Hãy ưu tiên chia các phần lớn bằng tiêu đề cấp 2 (`## `) để đảm bảo định dạng PDF được phân trang tối ưu, tránh chèn thủ công thẻ HTML ngắt trang trong file `.md`.
+   * **Tự động ngắt trang tránh dính chữ:** Trình biên dịch `md_to_pdf.py` tự động áp dụng luật ngắt trang trước mỗi thẻ tiêu đề cấp 2 (`##`) trừ thẻ đầu tiên. Hãy ưu tiên chia các phần lớn bằng tiêu đề cấp 2 (`##`) để đảm bảo định dạng PDF được phân trang tối ưu, tránh chèn thủ công thẻ HTML ngắt trang trong file `.md`.
 
 2. **Biên dịch sang PDF (.pdf):**
    * Ngay sau khi hoàn thành hoặc cập nhật file `.md`, hãy chạy lệnh sau trong terminal thông qua công cụ `run_command` để tự động tạo file PDF tương ứng trong cùng thư mục bằng tập lệnh Python đi kèm của Skill:
+
      ```bash
      python g:/HCMUS/NAM3-HK3/Management/Lab/W5/.agents/skills/doc_generator/scripts/md_to_pdf.py <path_to_markdown_file.md> <path_to_pdf_file.pdf>
      ```
+
      *(Ví dụ: nếu file markdown là `docs/01-project-idea.md`, lệnh biên dịch sẽ là `python g:/HCMUS/NAM3-HK3/Management/Lab/W5/.agents/skills/doc_generator/scripts/md_to_pdf.py docs/01-project-idea.md docs/01-project-idea.pdf`)*
    * Đảm bảo đường dẫn đích hoàn toàn trùng khớp với file markdown gốc, chỉ thay đổi phần mở rộng từ `.md` sang `.pdf`.
 

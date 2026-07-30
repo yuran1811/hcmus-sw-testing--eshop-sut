@@ -101,12 +101,21 @@
 > **Nguồn:** Sinh viên tự bổ sung sau khi thực hiện Step 6 (Gap Analysis).  
 > Các item này **không** được AI gợi ý — sinh viên tự phát hiện và điền vào đây để thực thi kiểm thử.
 
-| #   | ID | Mô tả Checklist Item | Heuristic Nguồn | Trạng Trạng Thái | Ghi Chú / Bug Ref |
-| --- | -- | -------------------- | --------------- | ---------------- | ----------------- |
-| 42  |    | _(Sinh viên tự điền)_ | Student-added   |                  |                   |
-| 43  |    | _(Sinh viên tự điền)_ | Student-added   |                  |                   |
-| 44  |    | _(Sinh viên tự điền)_ | Student-added   |                  |                   |
-| 45  |    | _(Sinh viên tự điền)_ | Student-added   |                  |                   |
+| #   | ID                | Mô tả Checklist Item                                                                                                                                                    | Heuristic Nguồn | Trạng Trạng Thái | Ghi Chú / Bug Ref |
+| --- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ---------------- | ----------------- |
+| 42  | HOME-GUI-IA02-042 | Các control trên Home phải có tên truy cập rõ ràng cho screen reader, đặc biệt là ô tìm kiếm, link Giỏ hàng, Đăng nhập, Đăng ký và các nút trong product card.          | Student-added   |                  |                   |
+| 43  | HOME-GUI-IA02-043 | Người dùng chỉ dùng bàn phím phải đi được hết Home theo thứ tự hợp lý, từ header đến search rồi tới các action trong từng product card, không bị nhảy focus bất thường. | Student-added   |                  |                   |
+| 44  | HOME-GUI-IA04-044 | Khi API sản phẩm chậm hoặc lỗi, Home phải cho người dùng thấy trạng thái chờ hoặc lỗi rõ ràng, không để họ nhìn vào một vùng trống khó hiểu.                            | Student-added   |                  |                   |
+| 45  | HOME-GUI-IA01-045 | Ở màn hình hẹp, cụm search và các nút hành động của sản phẩm phải vẫn gọn, đủ khoảng chạm và không làm vỡ nhịp đọc của card.                                            | Student-added   |                  |                   |
+| 46  | HOME-GUI-IA03-046 | Logo, Giỏ hàng, Đăng nhập, Đăng ký và liên kết Xem chi tiết phải đưa người dùng tới đúng trang mà nhãn đang nói tới, không được trỏ sai đích.                           | Student-added   |                  |                   |
+| 47  | HOME-GUI-IA03-047 | Các trang người dùng đi tới từ Home như Giỏ hàng, Đăng nhập, Đăng ký và Chi tiết sản phẩm không được là trang cụt; phải có lối đi rõ ràng để quay lại hoặc tiếp tục.    | Student-added   |                  |                   |
+| 48  | HOME-GUI-IA03-048 | Khi truy cập một đường dẫn không tồn tại trong web app, hệ thống phải hiển thị trang 404 thân thiện và có đường quay về Trang Chủ hoặc ô tìm kiếm.                      | Student-added   |                  |                   |
+| 49  | HOME-GUI-IA01-049 | Các liên kết và nút trên Home phải có trạng thái hover/visited/active dễ phân biệt, nhất là những link điều hướng ở header và link Xem chi tiết.                        | Student-added   |                  |                   |
+| 50  | HOME-GUI-IA04-050 | Nếu ảnh sản phẩm không tải được, card vẫn phải giữ bố cục đọc được và tên/giá sản phẩm vẫn nhìn rõ, không làm vỡ toàn bộ trang.                                         | Student-added   |                  |                   |
+| 51  | HOME-GUI-IA02-051 | Ô tìm kiếm phải xử lý được từ khóa chữ, số và ký tự đặc biệt hợp lệ mà không làm vỡ layout hay render lỗi trên trang.                                                   | Student-added   |                  |                   |
+| 52  | HOME-GUI-IA01-052 | Tiêu đề tab trình duyệt của Home phải rõ ràng, không giữ mặc định kiểu scaffold như `frontend-web`, để người dùng nhận diện đúng trang đang mở.                         | Student-added   |                  |                   |
+| 53  | HOME-GUI-IA02-053 | Ô tìm kiếm phải xử lý ổn định khoảng trắng đầu/cuối và chuỗi chữ-số-ký tự đặc biệt hợp lệ mà không làm sai kết quả hoặc vỡ layout.                                      | Student-added   |                  |                   |
+| 54  | HOME-GUI-IA01-054 | Thuộc tính `lang` của tài liệu HTML phải phản ánh đúng ngôn ngữ hiển thị của trang Home, không để mặc định `en` khi giao diện đang là tiếng Việt.                       | Student-added   |                  |                   |
 
 ---
 
@@ -125,8 +134,8 @@
 | IA-02 Forms          | 8       |        |        |     |         |
 | IA-03 Navigation     | 10      |        |        |     |         |
 | IA-04 Feedback/State | 11      |        |        |     |         |
-| Student-added        |        |        |        |     |         |
-| **TỔNG**             | **41**  |        |        |     |         |
+| Student-added        | 13      |        |        |     |         |
+| **TỔNG**             | **54**  |        |        |     |         |
 
 ---
 

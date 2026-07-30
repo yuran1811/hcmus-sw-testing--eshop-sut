@@ -384,10 +384,10 @@ Bốn trụ cột chính của một chiến lược GUI Testing toàn diện l�
 
 ## 15. Tài liệu tham khảo
 
-- ISTQB Glossary — mục _GUI Testing_, _Checklist-Based Testing_: https://glossary.istqb.org/
+- ISTQB Glossary — mục _GUI Testing_, _Checklist-Based Testing_: <https://glossary.istqb.org/>
 - ISTQB Foundation Level Syllabus (bản mới nhất)
-- Nielsen Norman Group — _10 Usability Heuristics for User Interface Design_: https://www.nngroup.com/articles/ten-usability-heuristics/
-- W3C — _Web Content Accessibility Guidelines (WCAG) 2.2_: https://www.w3.org/TR/WCAG22/
+- Nielsen Norman Group — _10 Usability Heuristics for User Interface Design_: <https://www.nngroup.com/articles/ten-usability-heuristics/>
+- W3C — _Web Content Accessibility Guidelines (WCAG) 2.2_: <https://www.w3.org/TR/WCAG22/>
 - Mike Cohn — _Succeeding with Agile: Software Development Using Scrum_ (nguồn gốc mô hình Test Automation Pyramid, 2009)
 - Alister Scott — mô hình _Ice-Cream Cone Anti-Pattern_ (2012)
 - Martin Fowler — bài viết về _Test Pyramid_ và tính brittle (dễ vỡ) của UI test
