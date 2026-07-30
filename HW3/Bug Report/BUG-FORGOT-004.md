@@ -1,0 +1,64 @@
+# [BUG][Forgot Password] Nhấp nhãn văn bản label không focus ô nhập email
+
+## Found by Test Case
+
+- GUI-FORGOT-IA02-09
+
+## Requirement liên quan
+
+- FR-22
+
+## Severity / Priority
+
+- **Severity**: Minor
+- **Priority**: P3
+
+## Environment
+
+- Browser: Google Chrome
+- OS: Windows 11
+- URL: http://localhost:5173/forgot-password
+- Build/Commit: 9b1ecea
+
+## Steps to reproduce
+
+1. Truy cập trang Quên Mật Khẩu tại http://localhost:5173/forgot-password
+2. Dùng con trỏ chuột nhấp trực tiếp vào dòng chữ nhãn "Nhập Email của bạn"
+
+## Expected result
+
+- Con trỏ bàn phím (focus) tự động di chuyển vào ô nhập email
+
+## Actual result
+
+- Nhấp vào nhãn không có phản hồi, ô nhập email không được focus do thẻ <label> thiếu thuộc tính htmlFor
+
+## Evidence
+
+- Screenshot: ![Screenshot](../../Evidences/GUI-FORGOT-IA02-09.png)
+
+---
+
+## GitHub Issue Draft
+
+```markdown
+**Title**: [BUG][Forgot Password] Nhấp nhãn văn bản label không focus ô nhập email
+
+**Description**:
+### Preconditions
+- SUT application running on local environment.
+- Google Chrome browser.
+
+### Steps to Reproduce
+1. Truy cập trang Quên Mật Khẩu tại http://localhost:5173/forgot-password
+2. Dùng con trỏ chuột nhấp trực tiếp vào dòng chữ nhãn "Nhập Email của bạn"
+
+### Expected Behavior
+Con trỏ bàn phím (focus) tự động di chuyển vào ô nhập email
+
+### Actual Behavior
+Nhấp vào nhãn không có phản hồi, ô nhập email không được focus do thẻ <label> thiếu thuộc tính htmlFor
+
+### Evidence
+![Screenshot](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/blob/main/HW3/Evidences/GUI-FORGOT-IA02-09.png?raw=true)
+```

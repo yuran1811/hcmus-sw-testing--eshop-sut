@@ -1,0 +1,272 @@
+{
+  "GUI-FORGOT-IA01-01": {
+    "status": "Fail",
+    "actual": "DOM hiển thị 0 thẻ <h1> và 1 thẻ <h2> (\"Quên Mật Khẩu\")",
+    "note": "Trang Quên Mật Khẩu sử dụng thẻ <h2> thay vì <h1> tiêu đề chính",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-FORGOT-IA01-01.png)"
+  },
+  "GUI-FORGOT-IA01-02": {
+    "status": "Pass",
+    "actual": "Tất cả nhãn và nút hiển thị bằng tiếng Việt chuẩn",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-FORGOT-IA01-03": {
+    "status": "Pass",
+    "actual": "Nút \"Lấy mã OTP\" có màu nền xanh dương (rgb(37, 99, 235))",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-FORGOT-IA01-04": {
+    "status": "Pass",
+    "actual": "Thứ tự Tab chuyển focus từ ô email trực tiếp sang nút submit",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-FORGOT-IA01-05": {
+    "status": "Pass",
+    "actual": "Nội dung vừa vặn khung nhìn 1536×864, không có thanh cuộn ngang",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-FORGOT-IA01-06": {
+    "status": "Pass",
+    "actual": "Phần tử hiển thị viền focus rõ ràng khi nhận focus bàn phím",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-FORGOT-IA01-07": {
+    "status": "Pass",
+    "actual": "Chữ gray-700 trên nền trắng đạt tỷ lệ tương phản ~10.7:1 (vượt WCAG 4.5:1)",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-FORGOT-IA02-01": {
+    "status": "Fail",
+    "actual": "Trường email sử dụng type=\"text\"",
+    "note": "Ô nhập email dùng type=\"text\" nên không kích hoạt xác thực định dạng email HTML5",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-FORGOT-IA02-01.png)"
+  },
+  "GUI-FORGOT-IA02-02": {
+    "status": "Fail",
+    "actual": "Nhãn hiển thị: \"Nhập Email của bạn\"",
+    "note": "Nhãn trường email thiếu ký hiệu dấu hoa thị * chỉ định trường bắt buộc",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-FORGOT-IA02-02.png)"
+  },
+  "GUI-FORGOT-IA02-04": {
+    "status": "Fail",
+    "actual": "Không tìm thấy chỉ báo bước \"Bước 1/2\"",
+    "note": "Giao diện không cung cấp chỉ báo bước (Bước 1/2, Bước 2/2) cho người dùng",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-FORGOT-IA02-04.png)"
+  },
+  "GUI-FORGOT-IA02-07": {
+    "status": "Fail",
+    "actual": "Bật popup alert: \"Lỗi: User not found\"",
+    "note": "Thông báo lỗi dùng window.alert thay vì hiển thị thông báo lỗi trên giao diện form",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-FORGOT-IA02-07.png)"
+  },
+  "GUI-FORGOT-IA02-09": {
+    "status": "Fail",
+    "actual": "Nhấp vào nhãn không focus vào ô nhập email",
+    "note": "Nhãn <label> thiếu thuộc tính htmlFor/id để liên kết với ô nhập",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-FORGOT-IA02-09.png)"
+  },
+  "GUI-FORGOT-IA03-01": {
+    "status": "Pass",
+    "actual": "Thanh điều hướng không bị highlight sai mục nào",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-FORGOT-IA03-02": {
+    "status": "Pass",
+    "actual": "Không xuất hiện nút đăng xuất sai nhãn trên trang Quên Mật Khẩu",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-FORGOT-IA03-03": {
+    "status": "Pass",
+    "actual": "Có liên kết quay lại trang Đăng nhập",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-FORGOT-IA03-05": {
+    "status": "Pass",
+    "actual": "Logo EShop trên header đưa về trang chủ /",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-FORGOT-IA04-04": {
+    "status": "Fail",
+    "actual": "Hiển thị alert gốc: \"Lỗi: User not found\"",
+    "note": "Hệ thống sử dụng hộp thoại window.alert gốc của trình duyệt để hiển thị thông báo lỗi thay vì banner giao diện",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-FORGOT-IA04-04.png)"
+  },
+  "GUI-FORGOT-IA04-01": {
+    "status": "Pass",
+    "actual": "Mã OTP hiển thị rõ ràng trên banner thông báo xanh lá (chế độ demo)",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-FORGOT-IA04-02": {
+    "status": "Pass",
+    "actual": "Form chuyển thành công từ Bước 1 sang Bước 2",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-FORGOT-IA02-03": {
+    "status": "Pass",
+    "actual": "Trường mật khẩu mới sử dụng type=\"password\" che ký tự",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-FORGOT-IA02-05": {
+    "status": "Fail",
+    "actual": "Bước 2 chỉ có 2 ô nhập (Mã OTP + Mật khẩu mới)",
+    "note": "Bước 2 thiếu ô nhập \"Xác nhận mật khẩu mới\" làm tăng nguy cơ nhập sai mật khẩu",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-FORGOT-IA02-05.png)"
+  },
+  "GUI-FORGOT-IA02-06": {
+    "status": "Fail",
+    "actual": "Nhãn hiển thị: \"Mã OTP (4 số)\"",
+    "note": "Nhãn ô nhập OTP ghi \"Mã OTP (4 số)\" sai so với đặc tả yêu cầu 6 chữ số (FR-03)",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-FORGOT-IA02-06.png)"
+  },
+  "GUI-FORGOT-IA02-08": {
+    "status": "Fail",
+    "actual": "Không có ô nhập xác nhận mật khẩu ở Bước 2",
+    "note": "Thiếu trường xác nhận mật khẩu để thực hiện và kiểm tra tính năng so sánh mật khẩu không khớp",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-FORGOT-IA02-08.png)"
+  },
+  "GUI-FORGOT-IA02-10": {
+    "status": "Fail",
+    "actual": "Nhập \"Test1234!\" bị báo lỗi: \"Mật khẩu quá yếu! Phải dài tối thiểu 8 ký tự, gồm chữ hoa, chữ thường, số và KÝ TỰ ĐẶC BIỆT.\"",
+    "note": "Thông báo lỗi độ mạnh mật khẩu yêu cầu KÝ TỰ ĐẶC BIỆT nhưng Regex trong code lại bắt buộc ký tự khoảng trắng (\\s)",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-FORGOT-IA02-10.png)"
+  },
+  "GUI-FORGOT-IA03-04": {
+    "status": "Pass",
+    "actual": "Nút \"← Quay lại\" quay lại Bước 1 và giữ nguyên email \"admin@eshop.com\"",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-FORGOT-IA04-03": {
+    "status": "Fail",
+    "actual": "URL hiện tại: http://localhost:5173/forgot-password",
+    "note": "Không chuyển hướng về /login sau khi đổi mật khẩu thành công",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-FORGOT-IA04-03.png)"
+  },
+  "GUI-FORGOT-IA04-05": {
+    "status": "Fail",
+    "actual": "Vẫn ở trang đổi mật khẩu",
+    "note": "Dữ liệu nhạy cảm chưa được xóa",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-FORGOT-IA04-05.png)"
+  },
+  "GUI-ORDERS-IA01-01": {
+    "status": "Pass",
+    "actual": "Chỉ có 1 thẻ <h1> (\"EShop Admin\") ở sidebar; tiêu đề phần sử dụng <h2> (\"Quản lý Đơn hàng\")",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-ORDERS-IA01-02": {
+    "status": "Pass",
+    "actual": "Cột tổng tiền hiển thị giá có phân cách hàng nghìn và ký hiệu ₫ (30,000,000 ₫)",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-ORDERS-IA01-03": {
+    "status": "Pass",
+    "actual": "Badge trạng thái hiển thị đúng tiếng Việt (Đã giao, Đã giao, Đang giao, Đã xác nhận, Chờ xác nhận)",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-ORDERS-IA01-04": {
+    "status": "Pass",
+    "actual": "Bảng đơn hàng sử dụng cấu trúc ngữ nghĩa <table>, <thead>, <tbody>, <th>",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-ORDERS-IA01-05": {
+    "status": "Fail",
+    "actual": "Cột địa chỉ chèn trực tiếp qua dangerouslySetInnerHTML: \"<b>123 XSS St</b><script>alert(1)</script>\"",
+    "note": "Cột địa chỉ giao hàng sử dụng dangerouslySetInnerHTML render HTML thô gây nguy cơ lỗ hổng XSS",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-ORDERS-IA01-05.png)"
+  },
+  "GUI-ORDERS-IA02-01": {
+    "status": "Pass",
+    "actual": "Các nút hành động chuyển trạng thái đều là thẻ <button> chuẩn HTML",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-ORDERS-IA02-02": {
+    "status": "Pass",
+    "actual": "Đơn hàng kết thúc không hiển thị nút hành động",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-ORDERS-IA04-04": {
+    "status": "Pass",
+    "actual": "Không cho phép chuyển trạng thái từ Đã hủy sang Đã giao",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-ORDERS-IA03-01": {
+    "status": "Pass",
+    "actual": "Mục \"Đơn hàng\" trên sidebar được highlight (text-blue-400) khi tab active",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-ORDERS-IA03-02": {
+    "status": "Pass",
+    "actual": "Mục đăng xuất trên sidebar có nhãn chính xác \"Đăng xuất\"",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-ORDERS-IA03-03": {
+    "status": "Pass",
+    "actual": "Chuyển tab mượt mà sang Dashboard và quay lại tab Đơn hàng đầy đủ dữ liệu",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-ORDERS-IA03-04": {
+    "status": "Pass",
+    "actual": "Làm mới trang giữ nguyên phiên làm việc và giao diện Admin",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-ORDERS-IA04-01": {
+    "status": "Fail",
+    "actual": "Không có spinner hoặc skeleton loading khi đang tải dữ liệu đơn hàng",
+    "note": "Thiếu chỉ báo loading (spinner/skeleton) trong quá trình tải dữ liệu đơn hàng từ API",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-ORDERS-IA04-01.png)"
+  },
+  "GUI-ORDERS-IA04-02": {
+    "status": "Fail",
+    "actual": "Giao diện không có container thông báo \"Chưa có đơn hàng\" khi danh sách trống",
+    "note": "Thiếu container thông báo trạng thái trống \"Chưa có đơn hàng\" khi không có đơn hàng nào",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-ORDERS-IA04-02.png)"
+  },
+  "GUI-ORDERS-IA04-03": {
+    "status": "Pass",
+    "actual": "Mỗi badge trạng thái đơn hàng sử dụng màu sắc phân biệt phù hợp ngữ nghĩa (vàng, tím, xanh, đỏ)",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-ORDERS-IA04-05": {
+    "status": "Fail",
+    "actual": "Trạng thái thay đổi lập tức mà không có hộp thoại xác nhận",
+    "note": "Thực hiện chuyển trạng thái ngay lập tức khi click nút mà không hiển thị hộp thoại xác nhận (window.confirm hoặc modal)",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-ORDERS-IA04-05.png)"
+  },
+  "GUI-ORDERS-IA04-06": {
+    "status": "Pass",
+    "actual": "Dòng đơn hàng cập nhật badge trạng thái mới trên giao diện không cần tải lại trang",
+    "note": "",
+    "evidence": ""
+  },
+  "GUI-ORDERS-IA04-07": {
+    "status": "Fail",
+    "actual": "Báo lỗi API bằng window.alert thay vì banner UI",
+    "note": "Khi thay đổi trạng thái thất bại, hệ thống hiển thị window.alert thay vì thông báo lỗi trên UI",
+    "evidence": "[Bằng chứng](../../Evidences/GUI-ORDERS-IA04-07.png)"
+  }
+}
