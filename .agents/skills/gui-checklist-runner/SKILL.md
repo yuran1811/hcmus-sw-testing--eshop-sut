@@ -43,7 +43,7 @@ Execute an existing GUI Checklist (`CHECKLIST.md`) against a live EShop SUT usin
 
 Create a Node.js Playwright script (e.g. `scripts/run_gui_checklist.js`) that:
 
-1. Launches Chromium browser (Viewport: 1536 × 864).
+1. Launches Google Chrome browser in headed mode (`chromium.launch({ headless: false, channel: 'chrome' })`) so the real Google Chrome window visibly pops up on screen during test execution.
 2. Sets up Dialog Listener (`page.on('dialog', dialog => ...)`):
    - Crucial for SUT screens using native `window.alert()` (e.g. `ForgotPassword.jsx`).
 3. Navigates to Target Screens:
@@ -67,29 +67,48 @@ Update both `CHECKLIST.md` and `CHECKLIST.csv`:
 
 ### Step 4: Generate Bug Reports & GitHub Issues
 
-For every `Fail` item, create a Bug Report file `HW3/Bug Report/BUG-GUI-<NN>-<SHORT-NAME>.md` and prepare the GitHub Issue template format:
+For every `Fail` item, create a Bug Report file `HW3/Bug Report/BUG-<MODULE>-<00N>.md` strictly following `bug-report-template.md` (English section headers + Vietnamese body content):
 
 ```markdown
-# Bug Report: [BUG-GUI-NN] [Short Title]
+# [BUG][<Module>] <Mô tả ngắn gọn lỗi bằng tiếng Việt>
 
-- **ID**: `BUG-FORGOT-001`
-- **Checklist ID**: `GUI-FORGOT-IA01-01`
-- **Severity**: High / Medium / Low
-- **Screen**: [Forgot Password / Admin Orders]
-- **Component**: [Component Name]
-- **Spec Violation**: FR-XX / SEC-XX
+## Found by Test Case
 
-## Description
-[Detailed description of the defect]
+- <Checklist ID> (e.g. GUI-FORGOT-IA02-05)
 
-## Expected Behavior
-[What spec requires]
+## Requirement liên quan
 
-## Actual Behavior
-[What SUT actually does]
+- FR-<MODULE>-<NUMBER> (e.g. FR-03, FR-22)
+
+## Severity / Priority
+
+- **Severity**: Critical / Major / Minor / Trivial
+- **Priority**: P0 / P1 / P2 / P3
+
+## Environment
+
+- Browser: Google Chrome
+- OS: Windows 11
+- URL: http://localhost:5173/forgot-password
+- Build/Commit: <Git commit hash>
+
+## Steps to reproduce
+
+1. <Bước 1 bằng tiếng Việt>
+2. <Bước 2 bằng tiếng Việt>
+3. <Bước 3 bằng tiếng Việt>
+
+## Expected result
+
+- <Kết quả mong đợi bằng tiếng Việt>
+
+## Actual result
+
+- <Kết quả thực tế bị lỗi bằng tiếng Việt>
 
 ## Evidence
-![Screenshot](../../Evidences/GUI-FORGOT-IA01-01.png)
+
+- Screenshot: ![Screenshot](../../Evidences/GUI-<ITEM-ID>.png)
 ```
 
 ---
