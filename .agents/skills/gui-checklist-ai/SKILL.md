@@ -72,7 +72,13 @@ This is not optional and cannot be done by the AI alone. The student must:
 1. Re-read the consolidated checklist.
 2. Explicitly check for commonly-missed categories the AI tends to skip — accessibility (screen reader labels, focus order, contrast ratios), RTL/i18n layout, dark mode, keyboard-only operation, offline/slow-network behavior — and add items for any of these that apply to the screen.
 3. For every gap found, write one sentence explaining _why_ the AI likely missed it (e.g., "prompt didn't mention accessibility," "model has no visual access to real contrast values," "RTL not relevant since EShop is Vietnamese-only LTR — explicitly excluded, not missed").
-4. Add at least 3-5 items entirely from the student's own judgement (not AI-suggested), and mark them as such in the source column.
+4. Add any items from the student's own judgement (not AI-suggested) that were missed during the initial run, and mark them as such in the source column. (Note: The student adds as many items as they can find; it is acceptable if no items are added if the AI checklist is already comprehensive).
+
+**CRITICAL — What the AI does vs. what the student does:**
+
+- AI does: Create a **blank `ai_gap_analysis.md` template** with section headers, table structure, and placeholder rows.
+- AI does NOT: Fill in the gap analysis content, write the "lý do AI bỏ qua" explanations, or list the student-added items. That content must come from the student's own observation.
+- If the AI fills in the gap analysis content, the file must be wiped and the student must redo it from scratch — pre-filled AI output submitted as Step 6 is a rubric violation.
 
 ### Step 7 — Execution pass
 
@@ -94,7 +100,7 @@ A checklist item stays Failed until the underlying bug is fixed **and** the item
 ## Output artifacts this produces
 
 - `checklist.md` / `checklist.xlsx` — the >40-item table with Source, Status, Notes columns.
-- `ai_gap_analysis.md` — the Step 6 write-up of missed categories and why.
+- `ai_gap_analysis.md` — **blank template only** (AI creates structure; student fills in all content during Step 6).
 - `screenshots/` — one file per Failed item.
 - Draft GitHub Issue bodies, one per failed item (hand off to `bug-report-github`).
 
@@ -102,4 +108,6 @@ A checklist item stays Failed until the underlying bug is fixed **and** the item
 
 - Don't let the AI produce all 40+ items from one mega-prompt — that is exactly the disallowed pattern.
 - Don't skip Step 6; a checklist with zero student-added items and zero named AI gaps reads as unreviewed AI output, which the rubric explicitly penalizes.
+- **Don't let AI fill in `ai_gap_analysis.md`** — the file must contain the student's own words. An AI-written gap analysis is indistinguishable from no gap analysis.
 - Don't forget the Notes column — "Failed" with no explanation isn't gradable.
+

@@ -98,30 +98,22 @@
 
 ## Mục Items Bổ Sung — Đánh Giá Độc Lập Của Sinh Viên
 
-> **Nguồn:** Sinh viên tự bổ sung sau khi review AI output (Step 6 — gap-finding pass).  
-> Các item này **không** được AI gợi ý — được thêm dựa trên quan sát thực tế của người kiểm thử.
+> **Nguồn:** Sinh viên tự bổ sung sau khi thực hiện Step 6 (Gap Analysis).  
+> Các item này **không** được AI gợi ý — sinh viên tự phát hiện và điền vào đây để thực thi kiểm thử.
 
-| #   | ID                | Mô tả Checklist Item                                                                         | Heuristic Nguồn | Trạng Thái | Ghi Chú / Bug Ref |
-| --- | ----------------- | -------------------------------------------------------------------------------------------- | --------------- | ---------- | ----------------- |
-| 42  | HOME-GUI-IA01-042 | Danh sách sản phẩm responsive trên màn hình tablet (768px): grid chuyển từ 4 cột sang 2 cột  | Student-added   |            |                   |
-| 43  | HOME-GUI-IA03-043 | Khi chưa đăng nhập, navbar không hiển thị link Lịch sử đơn hàng / Hồ sơ                      | Student-added   |            |                   |
-| 44  | HOME-GUI-IA04-044 | Badge số lượng giỏ hàng cập nhật ngay lập tức sau khi thêm sản phẩm (không cần reload trang) | Student-added   |            |                   |
-| 45  | HOME-GUI-IA02-045 | Tìm kiếm case-insensitive: "ĐIỆN THOẠI" và "điện thoại" cho cùng kết quả                     | Student-added   |            |                   |
+| #   | ID | Mô tả Checklist Item | Heuristic Nguồn | Trạng Trạng Thái | Ghi Chú / Bug Ref |
+| --- | -- | -------------------- | --------------- | ---------------- | ----------------- |
+| 42  |    | _(Sinh viên tự điền)_ | Student-added   |                  |                   |
+| 43  |    | _(Sinh viên tự điền)_ | Student-added   |                  |                   |
+| 44  |    | _(Sinh viên tự điền)_ | Student-added   |                  |                   |
+| 45  |    | _(Sinh viên tự điền)_ | Student-added   |                  |                   |
 
 ---
 
-## Phân Tích Gap AI (Step 6 — Mandatory Human Review)
+## Phân Tích Gap AI & Items Bổ Sung (Step 6 — Mandatory Human Review)
 
-> Các hạng mục AI **có thể đã bỏ qua** và lý do:
-
-| Hạng Mục Bị Bỏ Qua                         | Có Áp Dụng?                                                                       | Lý Do AI Bỏ Qua                                                                                                        |
-| ------------------------------------------ | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| Accessibility (screen reader, ARIA labels) | **Có** — đã bổ sung qua alt text (GUI-IA04-034) và focus indicator (GUI-IA02-017) | Prompt không đề cập đến accessibility một cách tường minh; model không có quyền truy cập runtime để kiểm tra ARIA tree |
-| RTL / i18n layout                          | **Không áp dụng** — EShop là ứng dụng tiếng Việt LTR thuần túy                    | EShop chỉ hỗ trợ tiếng Việt, không cần RTL — loại trừ có chủ đích, không phải bỏ sót                                   |
-| Dark mode                                  | **Không áp dụng** — EShop không có dark mode theo đặc tả                          | Giao diện một chủ đề duy nhất — loại trừ có chủ đích                                                                   |
-| Keyboard-only navigation toàn trang        | **Có** — bổ sung qua GUI-IA02-019 và FR-21 Tab Order                              | Model tập trung vào form fields, bỏ qua keyboard flow toàn trang                                                       |
-| Offline/slow-network behavior              | **Có** — bổ sung qua GUI-IA04-041                                                 | Prompt không nhắc đến điều kiện mạng; model không thể simulate môi trường mạng                                         |
-| Performance / page load time               | **Có ảnh hưởng gián tiếp** — chưa có item cụ thể                                  | Không thuộc GUI checklist thuần túy; có thể bổ sung nếu cần test hiệu năng                                             |
+> **Lưu ý quan trọng:** Các đánh giá về gap của AI và giải thích lý do bỏ sót được ghi nhận tại file riêng biệt:
+> Xem chi tiết và điền tại: [ai_gap_analysis.md](./ai_gap_analysis.md)
 
 ---
 
@@ -133,8 +125,8 @@
 | IA-02 Forms          | 8       |        |        |     |         |
 | IA-03 Navigation     | 10      |        |        |     |         |
 | IA-04 Feedback/State | 11      |        |        |     |         |
-| Student-added        | 4       |        |        |     |         |
-| **TỔNG**             | **45**  |        |        |     |         |
+| Student-added        |        |        |        |     |         |
+| **TỔNG**             | **41**  |        |        |     |         |
 
 ---
 
