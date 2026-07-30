@@ -9,6 +9,17 @@ description: Maintain a running AI Audit Report (tool name, timestamp, exact pro
 
 Missing or reconstructed-after-the-fact audit logs are easy for a TA to spot (timestamps that don't match commit history, prompts that don't match what the checklist/report actually shows). Log in real time.
 
+## CRITICAL: Never fabricate entries
+
+**One real user prompt = one entry. No more, no less.**
+
+A known failure mode: the agent receives **one** prompt (e.g., "design checklist for home screen") but writes **multiple fake entries** (e.g., "Entry 1: IA-01 pass", "Entry 2: IA-02 pass"…) as if the user had sent those prompts separately. **This is dishonest and easily detected by graders.**
+
+Rules:
+- The "Prompt used (verbatim)" field must be the **exact text the student typed**, not a paraphrase or a decomposed sub-task the AI invented internally.
+- If the AI internally does IA-01 through IA-04 passes within a single model response, **that is still 1 entry** — the output summary may describe all 4 passes, but the prompt is the one message the student actually sent.
+- If the AI made an error (e.g., generated fabricated entries), log that as a separate entry when the correction prompt was sent, and note what was wrong in the output of the original entry.
+
 ## Live logging format (append one entry per AI interaction, immediately after it happens)
 
 ```
@@ -35,7 +46,9 @@ If AI **was** used, the required declaration is:
 
 ## Aggregating at the end
 
-Before submission, walk the whole project's interaction history (chat log, or per-skill outputs generated during the homework) and make sure every distinct AI-assisted step appears as its own entry — checklist generation (per IA pass), task scenario drafting, instrument drafting, synthesis/severity ranking, bug report drafting. Cross-check entry count roughly matches the number of distinct AI-touched steps in the Git commit log (see `hw-submission-packager` skill) — a mismatch (e.g., 40 checklist items but only 1 logged prompt) is a red flag graders look for.
+Before submission, walk the whole project's interaction history (chat log, or per-skill outputs generated during the homework) and make sure every distinct **user-sent** prompt appears as its own entry. Cross-check that entry count matches the number of distinct user messages in the chat history that involved AI assistance — not the number of AI-generated outputs.
+
+A mismatch in the other direction is also a red flag: if you have 40 checklist items but logged 5 separate "per-IA-pass" entries when the student only sent 1 prompt, graders will notice the timestamps and prompt texts don't align with the git commit log.
 
 ## Drafting the AI Critique (200-300 words)
 
