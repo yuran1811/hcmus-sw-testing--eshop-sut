@@ -1,0 +1,46 @@
+---
+name: Bug report
+about: Create a report to help us improve
+title: "[BUG][Home] Thuộc tính lang của HTML chưa khớp ngôn ngữ hiển thị"
+assignees: ""
+---
+
+## Found by Test Case
+
+HOME-GUI-IA01-054
+
+## Requirement liên quan
+
+N/A
+
+## Severity / Priority
+
+Minor / P3
+
+## Environment
+
+Browser: Google Chrome / Microsoft Edge, OS: Windows, URL: `http://localhost:5173`
+
+## Steps to reproduce
+
+1. Mở trang Home.
+2. Kiểm tra thuộc tính `lang` của thẻ `html`.
+3. Đối chiếu với ngôn ngữ hiển thị của giao diện.
+
+## Expected result
+
+Thuộc tính `lang` phải phản ánh đúng ngôn ngữ tiếng Việt của trang.
+
+## Actual result
+
+Thuộc tính `lang` vẫn là `en`, chưa khớp với giao diện tiếng Việt.
+
+## Console / Repro
+
+```text
+document.documentElement.lang
+```
+
+## Evidence
+
+- ![Evidence 1](BUG-HOME-GUI-IA01-054_01.png)

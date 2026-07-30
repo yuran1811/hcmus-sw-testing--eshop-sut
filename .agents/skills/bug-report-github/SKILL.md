@@ -48,9 +48,21 @@ For every drafted bug:
 4. Trim any invented detail the AI added that you didn't personally observe (e.g., don't let it guess a root cause you haven't verified).
 5. Confirm the file has enough information to move to "In Progress" — per the course rule, _"Issue nào không đủ thông tin thì không được đưa vào 'In Progress'."_ If any required field is empty, the bug is not ready to file.
 
-### Step 3 — Write the standalone bug file
+### Step 3 — Write the standalone bug folder
 
-One file per bug, named `bugs/BUG-0XX.md`. Template (matches the course's Bug Report standard):
+One bug report = one folder, named with the source ID so it is easy to trace
+back from the checklist or finding. Use:
+
+- `bugs/BUG-<SCREEN>-<CHECKLIST-ID>/BUG-<SCREEN>-<CHECKLIST-ID>.md` for
+  checklist items, e.g.
+  `bugs/BUG-HOME-GUI-IA04-034/BUG-HOME-GUI-IA04-034.md`
+- `bugs/BUG-<MODULE>-<FINDING-ID>/BUG-<MODULE>-<FINDING-ID>.md` for usability
+  findings, e.g. `bugs/BUG-CHECKOUT-F03/BUG-CHECKOUT-F03.md`
+
+Do not use a generic numeric filename as the canonical convention for new bug
+files unless the user explicitly asks for one. Put all evidence files inside the
+same bug folder alongside the `.md` file. Template (matches the course's Bug
+Report standard):
 
 ```markdown
 # [BUG][<Module>] <Short description>
@@ -88,12 +100,8 @@ URL / build or commit: <...>
 
 ## Evidence
 
-- `evidence/BUG-0XX_01.png`
-- `evidence/BUG-0XX_02.mp4` (if applicable)
-
-## Labels (planned)
-
-type: bug | module: <...> | severity: <...> | priority: <...> | status: new | found-by: <test-case|usability-session>
+- `BUG-<ID>_01.png`
+- `BUG-<ID>_02.mp4` (if applicable)
 
 ## Status
 
@@ -106,8 +114,8 @@ Not yet filed
 
 ### Step 4 — Bidirectional linking back into the source artifact (do this immediately, same commit)
 
-- In the **checklist** (`checklist_and_test_summary.xlsx`, Checklist sheet): set that row's Status to Failed and Notes to reference `BUG-0XX`.
-- In the **usability findings table** (`usability_evaluation_report.md` §7): set the finding's row to reference `BUG-0XX`.
+- In the **checklist** (`checklist_and_test_summary.xlsx`, Checklist sheet): set that row's Status to Failed and Notes to reference the bug file ID.
+- In the **usability findings table** (`usability_evaluation_report.md` §7): set the finding's row to reference the bug file ID.
 - In the **bug file** itself: "Found by Test Case" already points back the other way.
   This two-way link is exactly the course requirement: _"Một bug phải ghi rõ 'Found by Test Case ID'. Một test case fail phải có 'Related bug #...'."_
 
@@ -125,7 +133,7 @@ Two ways, pick based on what's available:
 gh issue create \
   --repo ttbhanh/eshop-sut \
   --title "[BUG][<Module>] <Short description>" \
-  --body-file bugs/BUG-0XX.md \
+  --body-file bugs/BUG-<ID>.md \
   --label "type: bug" --label "module: <...>" \
   --label "severity: <...>" --label "priority: <...>" \
   --label "status: new" --label "found-by: test-case"
@@ -150,7 +158,8 @@ Copy the bug file's body as-is (it's already in the right shape) into the Issue 
 
 ## Output artifacts
 
-- `bugs/BUG-0XX.md` — one file per bug, evidence-linked, reviewed (Phase 1 deliverable, always produced).
-- `evidence/BUG-0XX_*.png|mp4` — evidence files referenced from the bug file.
+- `bugs/BUG-<ID>/BUG-<ID>.md` — one folder per bug, evidence-linked, reviewed
+  (Phase 1 deliverable, always produced).
+- `bugs/BUG-<ID>/*` — evidence files referenced from the bug file.
 - `bug_index.md` — master cross-reference table: `BUG-ID | Source (checklist item/finding) | Severity | Priority | Status | GitHub Issue # | Evidence files`.
 - GitHub Issues themselves — only created in Phase 2, on explicit request.
