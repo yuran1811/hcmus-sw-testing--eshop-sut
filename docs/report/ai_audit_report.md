@@ -59,12 +59,42 @@
 - **AI output (verbatim or faithful summary if very long):**
   > Agent overwrite file ai_gap_analysis.md thành cấu trúc template rỗng để sinh viên tự điền. Cập nhật file SKILL.md (gui-checklist-ai) để bổ sung rule cấm AI tự điền gap analysis. Dọn dẹp checklist.md đưa các item student-added về dạng trống để sinh viên tự điền.
 - **What the student changed/kept from this output:** Xác nhận file gap analysis và phần items bổ sung ở cuối checklist đã được chuyển về dạng trống hoàn toàn; cập nhật file commit.
+---
+
+## Entry 4
+
+- **Tool:** Claude Sonnet 4.6 (via Antigravity IDE — agent "Antigravity")
+- **Date/time:** 2026-07-31 11:48
+- **Task context:** Task 2 Phase 1 - Usability Evaluation Plan & Preparation (Đăng ký → Đăng nhập → Xem sản phẩm → Thêm giỏ hàng → Checkout)
+- **Prompt used (verbatim):**
+  > tôi muốn thực hiện kiểm thử usability với luồng Đăng ký → Đăng nhập → Xem sản phẩm → Thêm giỏ hàng → Checkout dựa trên đặc tả trong @[README.md] , sử dụng @[.agents\skills\usability-study-designer\SKILL.md], hãy tạo ra các tài liệu đáp ứng các yêu cầu sau:
+  > - Xác định rõ mục tiêu đánh giá.
+  > - Viết kịch bản nhiệm vụ (task scenario) theo hướng mục tiêu thực tế, không hướng dẫn từng bước.
+  > - Chuẩn bị công cụ đo: **SUS hoặc UEQ-S** (hoặc thang đo tùy chỉnh có giải thích rõ), kèm câu hỏi mở về: độ rõ ràng, khả năng phục hồi lỗi, tốc độ, độ tin cậy.
+  > Thực hiện trong folder @[tests\usability-tests]
+- **AI output (verbatim or faithful summary if very long):**
+  > Agent đọc các file hướng dẫn, đặc tả hệ thống và tạo ra 5 tài liệu trong thư mục `tests/usability-tests/`:
+  > 1. `evaluation_goals.md`: Xác định 3 mục tiêu đánh giá cụ thể (khả năng hoàn thành luồng, xác định pain points, đo lường sự hài lòng SUS ≥ 68).
+  > 2. `task_scenario.md`: Viết kịch bản nhiệm vụ dạng goal-oriented (mua quà sinh nhật cho bạn thân có sử dụng mã giảm giá `SAVE10`) và quy định thời điểm facilitator can thiệp.
+  > 3. `instrument.md`: Cung cấp thang đo SUS gồm 10 câu bằng tiếng Việt và 4 câu hỏi mở về Clarity, Error Recovery, Speed/Efficiency, Trust/Reliability.
+  > 4. `recruiting_screen.md`: Soạn tin nhắn tuyển người, checklist sàng lọc 6 câu để lọc đối tượng không thuộc IT/tester và không học cùng lớp, kèm bảng danh sách trống.
+  > 5. `pilot_runsheet.md`: Bản hướng dẫn chi tiết quy trình chạy phiên pilot (chuẩn bị, giới thiệu script, think-aloud, ghi chú nhanh, rà soát sau pilot).
+- **What the student changed/kept from this output:**
+  - Giữ nguyên toàn bộ nội dung kịch bản và thang đo.
+  - Tự căn chỉnh định dạng các bảng markdown cho dễ nhìn và đồng nhất.
 
 ---
 
-## Entries Tiếp Theo
+## Entry 5
 
-> _(Thêm entry mới ngay lập tức sau mỗi tương tác AI tiếp theo — không để đến cuối mới ghi)_
+- **Tool:** Claude Sonnet 4.6 / Gemini 3.5 Flash (via Antigravity IDE)
+- **Date/time:** 2026-07-31 12:03
+- **Task context:** Tái cấu trúc thư mục usability và loại bỏ mã giảm giá khỏi luồng test
+- **Prompt used (verbatim):**
+  > flow hiện tại không áp dụng mã giảm giá, với tôi muốn bỏ các tài liệu hiện tại trong @[tests\usability-tests] vào 1 folder có đánh mã như U-001, bên ngoài có một file md mô tả các flow test để khi xem lại có thể xem file md đó có góc nhìn tổng quát rồi vô từng thư mục biết là test như thế nào
+- **AI output (verbatim or faithful summary if very long):**
+  > Agent thực hiện các lệnh PowerShell để tạo thư mục `U-001` và di chuyển toàn bộ tài liệu đã tạo vào đó. Sau đó thực hiện cập nhật bỏ các tham chiếu mã giảm giá `SAVE10` khỏi: `evaluation_goals.md`, `task_scenario.md`, `instrument.md`, `pilot_runsheet.md`. Cuối cùng, tạo file `README.md` ngoài cùng để mô tả tổng quát các luồng.
+- **What the student changed/kept from this output:** Giữ nguyên toàn bộ cấu trúc thư mục mới và nội dung cập nhật.
 
 ---
 
@@ -82,8 +112,8 @@ Theo skill `ai-audit-report`, trước khi nộp, đối chiếu:
 
 ## Tuyên Bố Cuối
 
-"Tôi sử dụng AI tools cho các tác vụ sau: (1) sinh 41 checklist items cho màn hình Trang Chủ (IA-01 đến IA-04) qua một prompt duy nhất gửi cho Antigravity IDE, (2) tạo cấu trúc template trống cho ai_gap_analysis.md, checklist.md, và ai_audit_report.md. Tôi không sử dụng AI để: thực thi checklist (Step 7 — tự kiểm thử trên SUT), tự đánh giá gap analysis, viết lý do AI bỏ sót, tự ý thêm các items bổ sung vào checklist, xác nhận Pass/Failed status, chụp ảnh evidence, hay quyết định severity bug."
+"Tôi sử dụng AI tools cho các tác vụ sau: (1) sinh 41 checklist items cho màn hình Trang Chủ (IA-01 đến IA-04) qua một prompt duy nhất gửi cho Antigravity IDE, (2) tạo cấu trúc template trống cho ai_gap_analysis.md, checklist.md, (3) thiết kế bộ tài liệu kế hoạch kiểm thử Usability (mục tiêu, kịch bản goal-oriented, thang đo SUS, kịch bản tuyển dụng và runsheet pilot). Tôi không sử dụng AI để: thực thi checklist (Step 7 — tự kiểm thử trên SUT), tự đánh giá gap analysis, viết lý do AI bỏ sót, tuyển 7 người tham gia thực tế, ghi chép nhật ký các phiên kiểm thử hay chấm điểm SUS thực tế của người dùng."
 
 ---
 
-_Tài liệu theo format skill `ai-audit-report` — Phiên bản: 1.2 — Cập nhật: 2026-07-30_
+_Tài liệu theo format skill `ai-audit-report` — Phiên bản: 1.3 — Cập nhật: 2026-07-31_
