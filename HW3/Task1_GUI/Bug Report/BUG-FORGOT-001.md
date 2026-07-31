@@ -35,4 +35,4 @@
 
 ## Evidence
 
-- Screenshot: ![Screenshot](../../Evidences/GUI-FORGOT-IA01-01.png)
+- Screenshot: ![Screenshot](../Evidences/GUI-FORGOT-IA01-01.png)

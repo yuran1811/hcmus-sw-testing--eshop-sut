@@ -37,4 +37,4 @@
 
 ## Evidence
 
-- Screenshot: ![Screenshot](../../Evidences/GUI-ORDERS-IA01-05.png)
+- Screenshot: ![Screenshot](../Evidences/GUI-ORDERS-IA01-05.png)
