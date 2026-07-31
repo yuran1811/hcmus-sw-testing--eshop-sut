@@ -36,29 +36,3 @@
 ## Evidence
 
 - Screenshot: ![Screenshot](../../Evidences/GUI-FORGOT-IA04-04.png)
-
----
-
-## GitHub Issue Draft
-
-```markdown
-**Title**: [BUG][Forgot Password] Hệ thống báo lỗi qua window.alert thay vì thông báo UI
-
-**Description**:
-### Preconditions
-- SUT application running on local environment.
-- Google Chrome browser.
-
-### Steps to Reproduce
-1. Truy cập trang Quên Mật Khẩu
-2. Nhập email chưa đăng ký "unknown@domain.com" và nhấn nút submit
-
-### Expected Behavior
-Thông báo lỗi hiển thị rõ ràng bằng banner/text màu đỏ trên giao diện form phía trên nút submit
-
-### Actual Behavior
-Trình duyệt bật hộp thoại popup window.alert("Lỗi: User not found") làm gián đoạn trải nghiệm người dùng
-
-### Evidence
-![Screenshot](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/blob/main/HW3/Evidences/GUI-FORGOT-IA04-04.png?raw=true)
-```

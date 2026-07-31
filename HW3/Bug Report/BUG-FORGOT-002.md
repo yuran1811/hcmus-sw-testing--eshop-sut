@@ -36,29 +36,3 @@
 ## Evidence
 
 - Screenshot: ![Screenshot](../../Evidences/GUI-FORGOT-IA02-01.png)
-
----
-
-## GitHub Issue Draft
-
-```markdown
-**Title**: [BUG][Forgot Password] Trường email dùng type="text" và thiếu dấu hoa thị * chỉ định bắt buộc
-
-**Description**:
-### Preconditions
-- SUT application running on local environment.
-- Google Chrome browser.
-
-### Steps to Reproduce
-1. Truy cập trang Quên Mật Khẩu tại http://localhost:5173/forgot-password
-2. Quan sát nhãn trường nhập Email và kiểm tra attribute type của ô input
-
-### Expected Behavior
-Nhãn hiển thị dấu hoa thị bắt buộc "*" (ví dụ: "Nhập Email của bạn *") và thẻ input khai báo type="email" để trình duyệt xác thực định dạng HTML5
-
-### Actual Behavior
-Nhãn ghi "Nhập Email của bạn" thiếu dấu "*" và thẻ input sử dụng type="text"
-
-### Evidence
-![Screenshot](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/blob/main/HW3/Evidences/GUI-FORGOT-IA02-01.png?raw=true)
-```
