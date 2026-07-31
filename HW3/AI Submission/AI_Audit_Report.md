@@ -1,4 +1,4 @@
-# AI Audit Report -- HW03-AI Thiết kế Checklist GUI (Task 1)
+# AI Audit Report -- HW03-AI Thiết kế & Thực thi Checklist GUI (Task 1)
 
 ## 1. Student Information
 
@@ -8,8 +8,8 @@
 | **Student ID** | 23127148 |
 | **Class / Cohort** | 23KTPM3 |
 | **Assignment ID** | HW03-AI |
-| **Assignment date** | 2026-07-30 |
-| **AI tool(s) used** | Antigravity IDE (Claude Opus 4.6 Thinking) |
+| **Assignment date** | 2026-07-31 |
+| **AI tool(s) used** | Antigravity IDE (Claude Opus 4.6 Thinking & Gemini 3.6 Flash) |
 | **AI used?** | Yes |
 
 ## 2. Instructions
@@ -22,6 +22,7 @@ Mỗi dòng trong bảng audit đại diện cho một artifact do AI sinh ra (m
 | --- | --- | --- | --- | --- |
 | **Tool:** Antigravity IDE (Claude Opus 4.6 Thinking) **Time:** 14:04 30/07/2026 **Prompt:** "Chose 2 SUT screens: Forgot Password, Admin Orders. Use gui-checklist-writer skill to design GUI checklist of 45 items covering IA-01..IA-04. Save to HW3/GUI-Testing/." | Checklist 45 mục (CHECKLIST.md) + báo cáo thiết kế (DESIGN_REPORT.md). Phủ đủ 4 IA (IA-01: 12, IA-02: 12, IA-03: 9, IA-04: 12). Nội dung ban đầu bằng tiếng Anh. | INCOMPLETE | ISTQB FL 3.2 Review Process + bài giảng GUI Testing: checklist cần human gap-pass cho a11y, RTL, dark mode, Vietnamese copy mà AI thường bỏ sót. Tất cả 45 mục đều Origin=AI, chưa có mục STUDENT. | Sinh viên cần thêm mục Origin=STUDENT qua gap-pass, xác minh lại trên SUT thực, và thực thi Pass/Fail. |
 | **Tool:** Antigravity IDE (Claude Opus 4.6 Thinking) **Time:** 14:13 30/07/2026 **Prompt:** "Viết bằng tiếng Việt hết đi và có output checklist.csv nữa, để sau này export ra xlsx" | Viết lại toàn bộ CHECKLIST.md + DESIGN_REPORT.md bằng tiếng Việt. Tạo thêm CHECKLIST.csv (UTF-8 BOM) cho Excel. Nội dung checklist giữ nguyên 45 mục. | VALID | FR-21 yêu cầu nhất quán ngôn ngữ tiếng Việt; CSV export hỗ trợ workflow thực tế (import Google Sheets / Excel). Không thay đổi logic kiểm tra, chỉ dịch thuật và định dạng. | Chấp nhận nguyên trạng. |
+| **Tool:** Antigravity IDE (Gemini 3.6 Flash) **Time:** 16:00 30/07/2026 **Prompt:** "Please execute Task 1 GUI Checklist (Test Execution Phase) for HW03 end-to-end. Use the gui-checklist-runner skill and Playwright..." | Script Playwright (`run_gui_checklist.js`), kết quả thực thi JSON (`gui_results.json`), cập nhật `CHECKLIST.md` & `CHECKLIST.csv`, 21 ảnh chụp bằng chứng (`HW3/Evidences/`), và 11 báo cáo lỗi (`HW3/Bug Report/`). | INCOMPLETE | ISTQB FL 5.2 (Test Execution & Reporting): Ảnh chụp bằng chứng kiểm thử phải trực quan và chỉ rõ lỗi cụ thể. Ban đầu AI chụp ảnh toàn trang không highlight khiến ảnh bằng chứng bị lặp lại. Sinh viên đã phát hiện và yêu cầu khoanh đỏ viền phần tử lỗi + đính kèm nhãn cảnh báo. | Sinh viên kiểm tra bằng chứng, phản hồi ảnh chụp bị lặp lại. AI đã nâng cấp script khoanh đỏ viền element + đính nhãn badge FAIL trên từng phần tử lỗi, chụp lại 18 ảnh bằng chứng chuẩn xác và commit git. |
 
 ---
 
@@ -139,22 +140,85 @@ Viết bằng tiếng việt hết đi và có output checklist.csv nữa, để
 
 ---
 
+### Artifact #3 -- Thực thi tự động Playwright GUI Runner, cập nhật báo cáo và tạo Bug Reports
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.6 Flash) |
+| **Date/Time** | 2026-07-30 16:00:04 +07:00 |
+| **Task** | Thực thi tự động 45 mục GUI Checklist bằng Playwright trong Google Chrome Headed mode, chụp bằng chứng lỗi, cập nhật CHECKLIST.md/.csv và xuất 11 Bug Reports |
+| **Feature / Module** | Task 1 / Test Execution Phase / Quên Mật Khẩu + Quản lý Đơn hàng Admin |
+| **Bloom-AI Level** | G9.4 (Collaborate / Create) -- phối hợp giữa sinh viên và AI agent để viết Playwright runner script, kiểm thử tự động, khoanh vùng highlight đỏ trên phần tử lỗi, cập nhật báo cáo và tạo bug reports |
+| **Verdict** | INCOMPLETE |
+
+#### (1) Prompt (verbatim)
+
+```text
+Please execute Task 1 GUI Checklist (Test Execution Phase) for HW03 end-to-end.
+
+Use the `gui-checklist-runner` skill and Playwright to perform the following:
+
+1. Generate and run the Playwright GUI runner script:
+   - Create `scripts/run_gui_checklist.js` using `require('./Automation-testing/node_modules/playwright')`.
+   - Configure Google Chrome browser in HEADED mode (`chromium.launch({ headless: false, channel: 'chrome' })`) so the actual Google Chrome window visibly pops up on screen during execution.
+   - Attach a dialog handler `page.on('dialog')` to catch native `window.alert()` messages on `/forgot-password`.
+   - Run `node scripts/run_gui_checklist.js` to evaluate all 45 GUI checklist items in `HW3/GUI-Testing/CHECKLIST.md` across Forgot Password (/forgot-password) and Admin Orders (/admin/orders).
+   - Mark each checklist item as Passed or Failed, record the failure reason in Notes for Failed items, and capture evidence screenshots FOR FAILED ITEMS ONLY into `HW3/Evidences/`.
+
+2. Update execution results in both checklist artifacts:
+   - `HW3/GUI-Testing/CHECKLIST.md`
+   - `HW3/GUI-Testing/CHECKLIST.csv` (preserve UTF-8 BOM encoding)
+
+3. Report all discovered bugs:
+   - Create Markdown bug report files in `HW3/Bug Report/` following `bug-report-template.md` (English section headers + Vietnamese body content).
+   - Include GitHub Issues draft format for each bug with evidence screenshot references.
+```
+
+**Execution notes:**
+
+- Skill: `gui-checklist-runner`
+- Script: `scripts/run_gui_checklist.js` sử dụng Playwright Chromium Headed mode (`channel: 'chrome'`)
+- Đánh giá 45 mục checklist (28 mục Quên Mật Khẩu, 17 mục Admin Orders)
+- Cập nhật kết quả: 27 Pass (60.0%), 18 Fail (40.0%)
+- Tạo 11 Bug Report Markdown files (`BUG-FORGOT-001` đến `BUG-FORGOT-008`, `BUG-ORDERS-001` đến `BUG-ORDERS-003`)
+
+#### (2) AI Output
+
+- **Playwright Runner Script:** [run_gui_checklist.js](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/scripts/run_gui_checklist.js)
+- **Checklist Artifacts:** Cập nhật trạng thái Pass/Fail, Kết quả thực tế, Ghi chú và Bằng chứng cho 45 mục tại [CHECKLIST.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/GUI-Testing/CHECKLIST.md) và [CHECKLIST.csv](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/GUI-Testing/CHECKLIST.csv).
+- **Evidence Screenshots:** 18 ảnh PNG lưu tại [HW3/Evidences/](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Evidences/).
+- **Bug Reports:** 11 file Markdown theo đúng chuẩn template tại [HW3/Bug Report/](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Bug%20Report/).
+
+#### (3)-(5) Review
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | INCOMPLETE |
+| **Reasoning** | ISTQB FL 5.2 (Test Execution & Reporting): Bằng chứng hình ảnh kiểm thử phải có tính trực quan cao và thể hiện rõ ràng thành phần bị lỗi. Ban đầu, AI chụp ảnh màn hình toàn trang (full page screenshot) mà không highlight làm cho các ảnh bằng chứng của các lỗi cùng trang bị lặp lại giống hệt nhau. Sinh viên đã phát hiện, kiểm tra và yêu cầu khoanh đỏ viền phần tử lỗi (`4px solid red`) + đính kèm nhãn cảnh báo `❌ FAIL`. |
+| **Student Fix** | Sinh viên xem lại ảnh bằng chứng, phản hồi ảnh chụp bị lặp lại do thiếu highlight. AI đã cập nhật script `run_gui_checklist.js` chèn CSS highlight đỏ và badge cảnh báo lên từng element bị lỗi, thực thi lại Playwright runner, cập nhật lại 18 ảnh bằng chứng chính xác và commit git (`6f35f7c`). |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-07-30 |
+| **Quality rating** | Acceptable |
+| **Issues found** | Ảnh bằng chứng ban đầu bị lặp lại do thiếu visual highlight; đã được nâng cấp script và chụp lại chuẩn xác. |
+
+---
+
 ## 4. Summary of AI Accuracy
 
 | Metric | Count | Percentage |
 | --- | ---: | ---: |
-| **Total AI-generated artifacts audited** | 2 | 100% |
-| **VALID (correct, accepted as-is)** | 1 | 50.0% |
+| **Total AI-generated artifacts audited** | 3 | 100% |
+| **VALID (correct, accepted as-is)** | 1 | 33.3% |
 | **INVALID (wrong; rejected)** | 0 | 0.0% |
-| **INCOMPLETE (acceptable after edits)** | 1 | 50.0% |
+| **INCOMPLETE (acceptable after edits)** | 2 | 66.7% |
 
 ## 5. Conclusion -- When should AI be used (or not)?
 
-AI hiệu quả trong việc tạo draft checklist GUI số lượng lớn (45 mục) với cấu trúc chuẩn và trích dẫn đặc tả (FR-21..FR-24). Đặc biệt mạnh khi đọc source code thực tế để phát hiện lỗi triển khai (ví dụ: `type="text"` thay vì `type="email"`, `dangerouslySetInnerHTML`, nút chuyển trạng thái không hợp lệ). Tuy nhiên, AI có xu hướng bỏ sót accessibility (focus ring, contrast ratio, screen reader), các trạng thái kết hợp (loading + empty + error cùng lúc), và dark mode. Nên dùng AI để brainstorm draft đầu tiên, sau đó bắt buộc gap-pass bằng tay đối chiếu IA-01..IA-04 trên SUT thực. Không dùng AI để thực thi Pass/Fail, chụp screenshot, hoặc ghi bug report -- đó phải do sinh viên thực hiện trực tiếp.
+AI tỏ ra rất hiệu quả trong việc thiết kế draft GUI checklist 45 mục trích dẫn đặc tả FR-21..24, viết mã tự động hóa Playwright để thực thi kiểm thử trên trình duyệt Google Chrome thực tế, và tự động xuất các báo cáo Bug Report theo chuẩn template. Tuy nhiên, AI có hạn chế ở việc tạo bằng chứng hình ảnh trực quan ban đầu (chụp ảnh toàn trang mà không tự động khoanh vùng highlight lỗi làm ảnh bị lặp lại). Sự giám sát và can thiệp của sinh viên là bắt buộc: sinh viên đã phát hiện sự lặp lại của bằng chứng, yêu cầu AI bổ sung CSS red-highlight overlay và badge lỗi trên từng phần tử HTML trước khi chụp lại. Khuyến nghị dùng AI để dựng framework automation và draft báo cáo, nhưng bắt buộc sinh viên phải kiểm tra trực quan từng ảnh bằng chứng và kết quả thực tế trên SUT.
 
 ## 6. Mandatory Disclosure
 
-"Checklist kiểm thử GUI (45 mục) và báo cáo thiết kế được sinh ban đầu bởi Antigravity IDE (Claude Opus 4.6 Thinking); tôi đã xem xét và sẽ bổ sung các mục mà AI bỏ sót (gap-pass), thực thi Pass/Fail trên SUT thực, và ghi bug report cho các mục Fail. Việc dịch sang tiếng Việt và xuất CSV cũng được thực hiện bởi AI và tôi chấp nhận nguyên trạng. Giai đoạn thực thi checklist, chụp screenshot bằng chứng, và phân tích lỗi được thực hiện hoàn toàn bởi tôi. Báo cáo AI Audit chi tiết được đính kèm. Tôi xác nhận không sử dụng AI để tạo bất kỳ artifact nào thuộc danh mục cấm (danh sách người tham gia, ảnh chụp cross-platform với thông tin cá nhân, kết quả phiên usability)."
+"Checklist kiểm thử GUI (45 mục), kịch bản tự động hóa Playwright (`run_gui_checklist.js`), việc thực thi Pass/Fail tự động, và 11 báo cáo lỗi Markdown được sinh ban đầu bởi Antigravity IDE (Claude Opus 4.6 Thinking & Gemini 3.6 Flash). Tôi đã kiểm tra kỹ lưỡng kết quả thực thi và phát hiện ảnh bằng chứng ban đầu bị lặp lại do thiếu visual highlight; tôi đã yêu cầu AI bổ sung viền khung đỏ và nhãn cảnh báo lỗi trên từng phần tử HTML bị lỗi trước khi chụp lại 18 file bằng chứng chuẩn xác. Báo cáo AI Audit chi tiết được đính kèm. Tôi xác nhận không sử dụng AI để tạo bất kỳ artifact nào thuộc danh mục cấm (danh sách người tham gia, ảnh chụp cross-platform với thông tin cá nhân, kết quả phiên usability)."
 
 ## 7. Signature
 
@@ -165,7 +229,7 @@ AI hiệu quả trong việc tạo draft checklist GUI số lượng lớn (45 m
 | Class / Cohort | 23KTPM3 |
 | Course | CSC13003 - Software Testing |
 | Instructor | |
-| Date | 2026-07-30 |
+| Date | 2026-07-31 |
 | Signature | Ân Tiến Nguyên An |
 
 ## 8. Operational Appendix
@@ -176,6 +240,7 @@ AI hiệu quả trong việc tạo draft checklist GUI số lượng lớn (45 m
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | Antigravity IDE (Claude Opus 4.6 Thinking) | Task 1 GUI Checklist | Thiết kế checklist (Quên Mật Khẩu + Quản lý Đơn hàng) | 2026-07-30 | G9.2 | INCOMPLETE |
 | 2 | Antigravity IDE (Claude Opus 4.6 Thinking) | Task 1 GUI Checklist | Dịch tiếng Việt + xuất CSV | 2026-07-30 | G9.1 | VALID |
+| 3 | Antigravity IDE (Gemini 3.6 Flash) | Task 1 GUI Checklist | Thực thi Playwright + Chụp bằng chứng Highlight + Bug Reports | 2026-07-30 | G9.4 | INCOMPLETE |
 
 ### Contribution Breakdown
 
@@ -183,9 +248,9 @@ AI hiệu quả trong việc tạo draft checklist GUI số lượng lớn (45 m
 | --- | ---: | ---: | --- |
 | Thiết kế checklist (draft 45 mục) | 90% | 10% | AI sinh draft, sinh viên cung cấp yêu cầu và chọn màn hình |
 | Dịch tiếng Việt + CSV | 95% | 5% | AI dịch, sinh viên chỉnh format bảng |
-| Gap-pass (thêm mục STUDENT) | 0% | 100% | Chưa thực hiện -- hoàn toàn do sinh viên |
-| Thực thi Pass/Fail | 0% | 100% | Chưa thực hiện -- hoàn toàn do sinh viên |
-| Bug report | 0% | 100% | Chưa thực hiện -- hoàn toàn do sinh viên |
+| Thực thi Playwright GUI Runner | 85% | 15% | AI viết script & chạy, sinh viên xác minh kết quả trên Chrome |
+| Kiểm tra & khoanh vùng bằng chứng lỗi | 40% | 60% | Sinh viên phát hiện ảnh lặp lại, chỉ đạo khoanh viền đỏ + badge |
+| Lập báo cáo lỗi Bug Reports | 90% | 10% | AI sinh 11 bug reports Markdown & GitHub drafts, sinh viên rà soát |
 
 ### Compliance Checklist
 
