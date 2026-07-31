@@ -22,7 +22,8 @@ Mỗi dòng trong bảng audit đại diện cho một artifact do AI sinh ra (m
 | --- | --- | --- | --- | --- |
 | **Tool:** Antigravity IDE (Claude Opus 4.6 Thinking) **Time:** 14:04 30/07/2026 **Prompt:** "Chose 2 SUT screens: Forgot Password, Admin Orders. Use gui-checklist-writer skill to design GUI checklist of 45 items covering IA-01..IA-04. Save to HW3/GUI-Testing/." | Checklist 45 mục (CHECKLIST.md) + báo cáo thiết kế (DESIGN_REPORT.md). Phủ đủ 4 IA (IA-01: 12, IA-02: 12, IA-03: 9, IA-04: 12). Nội dung ban đầu bằng tiếng Anh. | INCOMPLETE | ISTQB FL 3.2 Review Process + bài giảng GUI Testing: checklist cần human gap-pass cho a11y, RTL, dark mode, Vietnamese copy mà AI thường bỏ sót. Tất cả 45 mục đều Origin=AI, chưa có mục STUDENT. | Sinh viên cần thêm mục Origin=STUDENT qua gap-pass, xác minh lại trên SUT thực, và thực thi Pass/Fail. |
 | **Tool:** Antigravity IDE (Claude Opus 4.6 Thinking) **Time:** 14:13 30/07/2026 **Prompt:** "Viết bằng tiếng Việt hết đi và có output checklist.csv nữa, để sau này export ra xlsx" | Viết lại toàn bộ CHECKLIST.md + DESIGN_REPORT.md bằng tiếng Việt. Tạo thêm CHECKLIST.csv (UTF-8 BOM) cho Excel. Nội dung checklist giữ nguyên 45 mục. | VALID | FR-21 yêu cầu nhất quán ngôn ngữ tiếng Việt; CSV export hỗ trợ workflow thực tế (import Google Sheets / Excel). Không thay đổi logic kiểm tra, chỉ dịch thuật và định dạng. | Chấp nhận nguyên trạng. |
-| **Tool:** Antigravity IDE (Gemini 3.6 Flash) **Time:** 16:00 30/07/2026 **Prompt:** "Please execute Task 1 GUI Checklist (Test Execution Phase) for HW03 end-to-end. Use the gui-checklist-runner skill and Playwright..." | Script Playwright (`run_gui_checklist.js`), kết quả thực thi JSON (`gui_results.json`), cập nhật `CHECKLIST.md` & `CHECKLIST.csv`, 21 ảnh chụp bằng chứng (`HW3/Evidences/`), và 11 báo cáo lỗi (`HW3/Bug Report/`). | INCOMPLETE | ISTQB FL 5.2 (Test Execution & Reporting): Ảnh chụp bằng chứng kiểm thử phải trực quan và chỉ rõ lỗi cụ thể. Ban đầu AI chụp ảnh toàn trang không highlight khiến ảnh bằng chứng bị lặp lại. Sinh viên đã phát hiện và yêu cầu khoanh đỏ viền phần tử lỗi + đính kèm nhãn cảnh báo. | Sinh viên kiểm tra bằng chứng, phản hồi ảnh chụp bị lặp lại. AI đã nâng cấp script khoanh đỏ viền element + đính nhãn badge FAIL trên từng phần tử lỗi, chụp lại 18 ảnh bằng chứng chuẩn xác và commit git. |
+| **Tool:** Antigravity IDE (Gemini 3.6 Flash) **Time:** 16:00 30/07/2026 **Prompt:** "Please execute Task 1 GUI Checklist (Test Execution Phase) for HW03 end-to-end. Use the gui-checklist-runner skill and Playwright..." | Script Playwright (`run_gui_checklist.js`), kết quả thực thi JSON (`gui_results.json`), cập nhật `CHECKLIST.md` & `CHECKLIST.csv`, 18 ảnh chụp bằng chứng (`HW3/Evidences/`), và 11 báo cáo lỗi (`HW3/Bug Report/`). | INCOMPLETE | ISTQB FL 5.2 (Test Execution & Reporting): Ảnh chụp bằng chứng kiểm thử phải trực quan và chỉ rõ lỗi cụ thể. Ban đầu AI chụp ảnh toàn trang không highlight khiến ảnh bằng chứng bị lặp lại. Sinh viên đã phát hiện và yêu cầu khoanh đỏ viền phần tử lỗi + đính kèm nhãn cảnh báo. | Sinh viên kiểm tra bằng chứng, phản hồi ảnh chụp bị lặp lại. AI đã nâng cấp script khoanh đỏ viền element + đính nhãn badge FAIL trên từng phần tử lỗi, chụp lại 18 ảnh bằng chứng chuẩn xác và commit git. |
+| **Tool:** Antigravity IDE (Gemini 3.6 Flash) **Time:** 08:50 31/07/2026 **Prompt:** "I forgot to tell you create test summary for GUI checklist... Tôi cho bạn test summary mẫu từ HW2 nè, hãy chỉnh lại đi... Hãy bỏ hết các git issue draft trong bug report đi" | Báo cáo `TEST_SUMMARY.md` chuẩn mẫu HW02, script `convert_csv_to_excel.py` sinh `CHECKLIST.xlsx`, và script `remove_github_issue_drafts.py` loại bỏ phần GitHub Issue Draft khỏi các file bug report. | INCOMPLETE | ISTQB FL 5.2 (Test Summary Report): Báo cáo tổng kết phải bao gồm tóm tắt kết quả kiểm thử, phạm vi, chỉ số bao phủ, tỷ lệ thành công (Pass rate), danh sách lỗi phát hiện và truy vết tài liệu. AI ban đầu tạo báo cáo chưa đồng bộ mẫu HW02. Sinh viên đã cung cấp template HW02 chuẩn và yêu cầu đồng bộ. | Sinh viên cung cấp mẫu báo cáo HW02 tiêu chuẩn, chỉ đạo AI cập nhật bảng thông tin tổng quan (Summary Information) và chi tiết thực thi (Detailed Execution Results), đồng thời yêu cầu xóa bỏ phần draft không cần thiết trong Bug Reports. |
 
 ---
 
@@ -203,22 +204,68 @@ Use the `gui-checklist-runner` skill and Playwright to perform the following:
 
 ---
 
+### Artifact #4 -- Lập Test Summary Report theo mẫu HW02, xuất CHECKLIST.xlsx và loại bỏ GitHub Issue Drafts
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.6 Flash) |
+| **Date/Time** | 2026-07-31 08:50:00 +07:00 |
+| **Task** | Lập Báo cáo Tổng kết Kiểm thử (Test Summary Report) theo đúng bảng mẫu HW02, tạo file Excel `CHECKLIST.xlsx` có định dạng màu trực quan, và tinh chỉnh các Bug Report loại bỏ phần GitHub Issue Draft |
+| **Feature / Module** | Task 1 / Test Summary & Report Refinement |
+| **Bloom-AI Level** | G9.3 (Analyse) -- Phân tích tổng hợp chỉ số thực thi kiểm thử, đồng bộ hóa định dạng tài liệu báo cáo theo chuẩn môn học và kiểm soát chất lượng danh mục bug reports |
+| **Verdict** | INCOMPLETE |
+
+#### (1) Prompt (verbatim)
+
+```text
+I forgot to tell you create test summary for GUI checklist with this requirement in HW3 "The Excel checklist (more than 40 items) and the test summary."
+Tôi cho bạn test summary mẫu từ HW2 nè, hãy chỉnh lại đi
+[HW2 Template markdown content]
+Hãy bỏ hết các git issue draft trong bug report đi
+```
+
+**Execution notes:**
+
+- Tạo script `scripts/convert_csv_to_excel.py` (sử dụng Python pandas + openpyxl) để chuyển đổi `CHECKLIST.csv` thành `CHECKLIST.xlsx` với định dạng font Segoe UI, viền bảng và tô màu xanh/đỏ cho Pass/Fail.
+- Tạo báo cáo `TEST_SUMMARY.md` tại `HW3/GUI-Testing/` và `HW3/Main Report/` tuân thủ chính xác mẫu HW02 (có bảng 📊 Summary Information và 📋 Detailed Execution Results).
+- Tạo script `scripts/remove_github_issue_drafts.py` cắt bỏ phần draft không cần thiết khỏi tất cả 13 file bug report trong `HW3/Bug Report/`.
+
+#### (2) AI Output
+
+- **Excel Checklist:** [CHECKLIST.xlsx](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/GUI-Testing/CHECKLIST.xlsx)
+- **Test Summary Report:** [TEST_SUMMARY.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/GUI-Testing/TEST_SUMMARY.md) và [TEST_SUMMARY.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Main%20Report/TEST_SUMMARY.md)
+- **Trimmed Bug Reports:** 13 file bug report sạch sẽ trong [HW3/Bug Report/](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Bug%20Report/)
+
+#### (3)-(5) Review
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | INCOMPLETE |
+| **Reasoning** | ISTQB FL 5.2 (Test Summary Report): Báo cáo tổng kết kiểm thử phải có cấu trúc chuẩn hóa, thể hiện rõ tỷ lệ bao phủ (Test Coverage) và tỷ lệ thành công (Successful Test Coverage), phục vụ công tác nghiệm thu. AI ban đầu tạo báo cáo mở rộng nhưng chưa khớp mẫu HW02. Sinh viên đã can thiệp cung cấp mẫu chuẩn HW02, yêu cầu bổ sung giảng viên hướng dẫn/TAs vào bảng thông tin và loại bỏ các phần dư thừa trong bug report. |
+| **Student Fix** | Sinh viên cung cấp bảng mẫu HW02, chỉ đạo AI cập nhật chính xác các thông tin Reviewer, Creator, chỉ số Pass/Fail, đồng thời yêu cầu xóa bỏ phần GitHub Issue Draft để các file bug report đạt chuẩn trình nộp chính thức. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-07-31 |
+| **Quality rating** | Excellent |
+| **Issues found** | Báo cáo ban đầu chưa khớp mẫu HW02; bug report dư thừa phần issue draft. Đã được sinh viên điều chỉnh và hoàn thiện. |
+
+---
+
 ## 4. Summary of AI Accuracy
 
 | Metric | Count | Percentage |
 | --- | ---: | ---: |
-| **Total AI-generated artifacts audited** | 3 | 100% |
-| **VALID (correct, accepted as-is)** | 1 | 33.3% |
+| **Total AI-generated artifacts audited** | 4 | 100% |
+| **VALID (correct, accepted as-is)** | 1 | 25.0% |
 | **INVALID (wrong; rejected)** | 0 | 0.0% |
-| **INCOMPLETE (acceptable after edits)** | 2 | 66.7% |
+| **INCOMPLETE (acceptable after edits)** | 3 | 75.0% |
 
 ## 5. Conclusion -- When should AI be used (or not)?
 
-AI tỏ ra rất hiệu quả trong việc thiết kế draft GUI checklist 45 mục trích dẫn đặc tả FR-21..24, viết mã tự động hóa Playwright để thực thi kiểm thử trên trình duyệt Google Chrome thực tế, và tự động xuất các báo cáo Bug Report theo chuẩn template. Tuy nhiên, AI có hạn chế ở việc tạo bằng chứng hình ảnh trực quan ban đầu (chụp ảnh toàn trang mà không tự động khoanh vùng highlight lỗi làm ảnh bị lặp lại). Sự giám sát và can thiệp của sinh viên là bắt buộc: sinh viên đã phát hiện sự lặp lại của bằng chứng, yêu cầu AI bổ sung CSS red-highlight overlay và badge lỗi trên từng phần tử HTML trước khi chụp lại. Khuyến nghị dùng AI để dựng framework automation và draft báo cáo, nhưng bắt buộc sinh viên phải kiểm tra trực quan từng ảnh bằng chứng và kết quả thực tế trên SUT.
+AI tỏ ra rất hiệu quả trong việc thiết kế draft GUI checklist 45 mục trích dẫn đặc tả FR-21..24, viết mã tự động hóa Playwright để thực thi kiểm thử trên trình duyệt Google Chrome thực tế, tự động xuất file Excel (.xlsx) được tô màu định dạng chuyên nghiệp, và tổng hợp báo cáo Test Summary Report. Tuy nhiên, AI có hạn chế về tính chính xác trong việc tự định dạng bằng chứng hình ảnh (chụp toàn trang không highlight) và tuân thủ định dạng báo cáo tiêu chuẩn của môn học nếu không có mẫu đối chiếu. Sự giám sát và điều chỉnh của sinh viên là bắt buộc: sinh viên đã phát hiện ảnh chụp bị lặp lại, yêu cầu khoanh viền đỏ phần tử lỗi, cung cấp mẫu HW2 chuẩn để đồng bộ báo cáo Test Summary, và loại bỏ các phần draft dư thừa khỏi bug report. Khuyến nghị sử dụng AI để hỗ trợ tự động hóa và tổng hợp số liệu, nhưng sinh viên phải trực tiếp định hướng cấu trúc báo cáo và duyệt lại toàn bộ sản phẩm đầu ra.
 
 ## 6. Mandatory Disclosure
 
-"Checklist kiểm thử GUI (45 mục), kịch bản tự động hóa Playwright (`run_gui_checklist.js`), việc thực thi Pass/Fail tự động, và 11 báo cáo lỗi Markdown được sinh ban đầu bởi Antigravity IDE (Claude Opus 4.6 Thinking & Gemini 3.6 Flash). Tôi đã kiểm tra kỹ lưỡng kết quả thực thi và phát hiện ảnh bằng chứng ban đầu bị lặp lại do thiếu visual highlight; tôi đã yêu cầu AI bổ sung viền khung đỏ và nhãn cảnh báo lỗi trên từng phần tử HTML bị lỗi trước khi chụp lại 18 file bằng chứng chuẩn xác. Báo cáo AI Audit chi tiết được đính kèm. Tôi xác nhận không sử dụng AI để tạo bất kỳ artifact nào thuộc danh mục cấm (danh sách người tham gia, ảnh chụp cross-platform với thông tin cá nhân, kết quả phiên usability)."
+"Checklist kiểm thử GUI (45 mục), kịch bản tự động hóa Playwright (`run_gui_checklist.js`), file Excel định dạng (`CHECKLIST.xlsx`), Báo cáo tổng kết kiểm thử (`TEST_SUMMARY.md`), và 13 báo cáo lỗi Markdown được sinh ban đầu với sự hỗ trợ của Antigravity IDE (Claude Opus 4.6 Thinking & Gemini 3.6 Flash). Tôi đã kiểm tra kỹ lưỡng kết quả thực thi, phát hiện và sửa đổi các hạn chế của AI (yêu cầu chèn highlight đỏ lên ảnh bằng chứng lỗi, cung cấp mẫu tiêu chuẩn HW02 để đồng bộ báo cáo Test Summary, và xóa bỏ phần draft không cần thiết khỏi bug report). Báo cáo AI Audit chi tiết được đính kèm. Tôi xác nhận không sử dụng AI để tạo bất kỳ artifact nào thuộc danh mục cấm (danh sách người tham gia, ảnh chụp cross-platform với thông tin cá nhân, kết quả phiên usability)."
 
 ## 7. Signature
 
@@ -228,7 +275,7 @@ AI tỏ ra rất hiệu quả trong việc thiết kế draft GUI checklist 45 m
 | Student ID | 23127148 |
 | Class / Cohort | 23KTPM3 |
 | Course | CSC13003 - Software Testing |
-| Instructor | |
+| Instructor | Dr. Lam Quang Vu / Dr. Tran Duy Hoang |
 | Date | 2026-07-31 |
 | Signature | Ân Tiến Nguyên An |
 
@@ -241,6 +288,7 @@ AI tỏ ra rất hiệu quả trong việc thiết kế draft GUI checklist 45 m
 | 1 | Antigravity IDE (Claude Opus 4.6 Thinking) | Task 1 GUI Checklist | Thiết kế checklist (Quên Mật Khẩu + Quản lý Đơn hàng) | 2026-07-30 | G9.2 | INCOMPLETE |
 | 2 | Antigravity IDE (Claude Opus 4.6 Thinking) | Task 1 GUI Checklist | Dịch tiếng Việt + xuất CSV | 2026-07-30 | G9.1 | VALID |
 | 3 | Antigravity IDE (Gemini 3.6 Flash) | Task 1 GUI Checklist | Thực thi Playwright + Chụp bằng chứng Highlight + Bug Reports | 2026-07-30 | G9.4 | INCOMPLETE |
+| 4 | Antigravity IDE (Gemini 3.6 Flash) | Task 1 GUI Checklist | Lập Test Summary (mẫu HW02) + Excel XLSX + Tinh chỉnh Bug Reports | 2026-07-31 | G9.3 | INCOMPLETE |
 
 ### Contribution Breakdown
 
@@ -250,7 +298,9 @@ AI tỏ ra rất hiệu quả trong việc thiết kế draft GUI checklist 45 m
 | Dịch tiếng Việt + CSV | 95% | 5% | AI dịch, sinh viên chỉnh format bảng |
 | Thực thi Playwright GUI Runner | 85% | 15% | AI viết script & chạy, sinh viên xác minh kết quả trên Chrome |
 | Kiểm tra & khoanh vùng bằng chứng lỗi | 40% | 60% | Sinh viên phát hiện ảnh lặp lại, chỉ đạo khoanh viền đỏ + badge |
-| Lập báo cáo lỗi Bug Reports | 90% | 10% | AI sinh 11 bug reports Markdown & GitHub drafts, sinh viên rà soát |
+| Xuất file Excel `CHECKLIST.xlsx` | 90% | 10% | AI viết script Python openpyxl tô màu bảng, sinh viên duyệt |
+| Lập báo cáo `TEST_SUMMARY.md` | 70% | 30% | Sinh viên cung cấp template HW02 chuẩn, AI tổng hợp chỉ số |
+| Tinh chỉnh Bug Reports (bỏ draft) | 80% | 20% | Sinh viên chỉ đạo xóa git issue draft, AI chạy script làm sạch |
 
 ### Compliance Checklist
 
