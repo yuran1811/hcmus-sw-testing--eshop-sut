@@ -14,7 +14,7 @@ Hỏi **sau khi** participant hoàn thành (hoặc hết thời gian) task scena
 ### 2. Error Recovery — Phục hồi lỗi
 > "Khi bạn nhập sai gì đó (email, OTP, mật khẩu), hệ thống phản hồi như thế nào? Bạn có hiểu vấn đề là gì và cách sửa không?"
 
-**Mục đích:** Kiểm tra chất lượng thông báo lỗi, liên quan BUG-FORGOT-005 (regex sai), BUG-FORGOT-007 (window.alert thay vì inline message).
+**Mục đích:** Kiểm tra chất lượng thông báo lỗi — participant có hiểu nguyên nhân lỗi và cách sửa không.
 
 ### 3. Speed — Tốc độ / Hiệu quả
 > "Bạn có thấy quá trình đặt lại mật khẩu nhanh không? Bước nào bạn cảm thấy mất thời gian nhất hoặc phải đợi lâu?"
@@ -24,7 +24,7 @@ Hỏi **sau khi** participant hoàn thành (hoặc hết thời gian) task scena
 ### 4. Trust — Độ tin tưởng
 > "Sau khi đổi mật khẩu xong, bạn có tự tin rằng mật khẩu đã được đổi thành công không? Tại sao?"
 
-**Mục đích:** Kiểm tra feedback confirmation (IA-04), liên quan BUG-FORGOT-008 (không redirect về login).
+**Mục đích:** Kiểm tra feedback confirmation (IA-04) — hệ thống có báo rõ ràng rằng mật khẩu đã đổi thành công không.
 
 ## Câu hỏi bổ sung (tùy chọn — hỏi nếu có thời gian)
 

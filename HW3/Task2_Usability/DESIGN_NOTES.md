@@ -4,7 +4,7 @@
 
 - **Flow:** Đăng nhập → Quên Mật Khẩu → Đặt lại Mật Khẩu (2 bước: email+OTP → mật khẩu mới) → Đăng nhập lại
 - **FR / IA liên quan:** FR-02 (Đăng nhập), FR-03 (Quên Mật Khẩu / Đặt lại Mật Khẩu) / IA-01 (General UI), IA-02 (Forms), IA-03 (Navigation), IA-04 (Feedback/State)
-- **Lý do chọn flow này:** Luồng xác thực là luồng cốt lõi cho bất kỳ ứng dụng e-commerce nào. Quy trình 2 bước (email → OTP+mật khẩu mới) có nhiều điểm tiềm ẩn gây nhầm lẫn cho người dùng không quen IT. Đồng thời luồng này đã được kiểm thử GUI ở Task 1 (phát hiện 8 bugs trên trang Forgot Password) — test usability sẽ xác minh xem các lỗi đó thực sự ảnh hưởng đến người dùng thật như thế nào.
+- **Lý do chọn flow này:** Các thành viên trong nhóm chia luồng khác nhau để không trùng lặp. Luồng xác thực (đăng nhập + quên mật khẩu 2 bước) là luồng cốt lõi với nhiều bước tương tác form, phù hợp để kiểm thử usability.
 
 ## Phân tách FR → Sub-goals
 
@@ -23,20 +23,6 @@
 3. Tài khoản test (`testuser@eshop.com`) đã tồn tại trên hệ thống
 4. Nếu SUT không gửi email thật, moderator sẽ cung cấp OTP từ backend console — đây là deviation kỹ thuật có ghi nhận, không coi là thất bại của participant
 5. Participant chưa từng sử dụng EShop trước phiên test
-
-## Mối liên hệ Task 1 → Task 2
-
-Task 1 GUI Checklist đã phát hiện 8 bugs trên trang Quên Mật Khẩu:
-- `BUG-FORGOT-001`: Thiếu thẻ `<h1>` (Minor)
-- `BUG-FORGOT-002`: Email dùng `type="text"` + thiếu dấu `*` (Minor)
-- `BUG-FORGOT-003`: Thiếu "Xác nhận mật khẩu" + thiếu step indicator (Major)
-- `BUG-FORGOT-004`: Nhãn OTP ghi "4 số" thay vì "6 số" (Minor)
-- `BUG-FORGOT-005`: Regex mật khẩu bắt `\s` thay vì ký tự đặc biệt (Critical)
-- `BUG-FORGOT-006`: Label thiếu `htmlFor` (Trivial)
-- `BUG-FORGOT-007`: Lỗi dùng `window.alert()` thay vì inline message (Major)
-- `BUG-FORGOT-008`: Không redirect về `/login` sau khi đổi mật khẩu (Major)
-
-Test usability sẽ cho thấy bugs nào **thực sự gây khó khăn cho người dùng thật** (ví dụ: BUG-FORGOT-005 regex sai có thể khiến participant không thể hoàn thành sub-goal 4).
 
 ## AI vs Human Authorship
 

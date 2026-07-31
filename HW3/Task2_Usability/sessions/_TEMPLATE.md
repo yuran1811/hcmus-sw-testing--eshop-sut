@@ -70,5 +70,4 @@ SUS Score: [tính theo công thức: câu lẻ (score-1), câu chẵn (5-score),
 
 - Điểm nghẽn chính: [Mô tả]
 - Điều hỗ trợ hoàn thành: [Mô tả]
-- Bug Task 1 nào ảnh hưởng thực tế: [Liên kết BUG-FORGOT-xxx nếu có]
 - Ghi chú cần xác minh, không phải quan sát: [Mô tả nếu có]
