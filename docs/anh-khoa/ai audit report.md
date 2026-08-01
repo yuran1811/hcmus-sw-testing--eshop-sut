@@ -388,7 +388,7 @@
   > > tiêu là người quen mua sắm trên điện thoại) — phải ghi vào phần hạn chế ở báo cáo Phase 3. Nếu
   > > muốn test trên điện thoại thật, cần expose dev server ra LAN trước khi chạy phiên.
   >
-  > ---
+  > ***
   >
   > ## Mục tiêu
   >
@@ -401,13 +401,13 @@
   > 3. **Trước khi bấm xác nhận thanh toán, người dùng có đối chiếu lại số tiền cuối cùng không?**
   >    → đo bằng quan sát hành vi (có quay lại nhìn/đọc to số tiền trước khi bấm) + câu hỏi mở nhóm Trust.
   >
-  > *Vì sao chọn 3 câu này:* câu 1 đo hiệu quả tổng thể (effectiveness), câu 2 nhắm vào một điểm nghi
+  > _Vì sao chọn 3 câu này:_ câu 1 đo hiệu quả tổng thể (effectiveness), câu 2 nhắm vào một điểm nghi
   > ngờ cụ thể của thiết kế — ô nhập mã giảm giá nằm ở **trang Checkout** chứ không nằm ở trang Giỏ
   > hàng, trong khi tên flow và thói quen từ Shopee/Lazada khiến người dùng dễ tìm ở Giỏ hàng trước.
   > Câu 3 nhắm vào sự tin tưởng vào con số cuối cùng — màn hình Checkout cho phép **sửa trực tiếp ô
   > "Tổng tiền thanh toán"**, nên việc người dùng có kiểm chứng lại hay không là một tín hiệu đáng đo.
   >
-  > ---
+  > ***
   >
   > ## Task scenario
   >
@@ -416,7 +416,7 @@
   > > Hãy tìm một sản phẩm phù hợp với ngân sách, xem kỹ thông tin sản phẩm trước khi quyết định, rồi
   > > hoàn tất việc đặt hàng có sử dụng mã giảm giá đó.
   >
-  > **Vì sao kịch bản dừng ở đây:** kịch bản nêu *mục tiêu* (mua phụ kiện, có ngân sách, có mã giảm
+  > **Vì sao kịch bản dừng ở đây:** kịch bản nêu _mục tiêu_ (mua phụ kiện, có ngân sách, có mã giảm
   > giá) và để người tham gia tự tìm đường. Không có câu nào chỉ ra phải bấm nút nào, vào trang nào,
   > hay nhập mã ở đâu — nếu chỉ ra thì chính câu hỏi mục tiêu số 2 sẽ không còn đo được gì.
   >
@@ -424,7 +424,7 @@
   > phẩm hợp lệ** (Tai nghe AirPods Pro 2 — 6.000.000 ₫ và Bàn phím cơ Keychron Q1 — 4.000.000 ₫) và
   > 3 sản phẩm vượt ngân sách (28–45 triệu). Người tham gia phải thật sự lọc, không có đường đi duy nhất.
   >
-  > ---
+  > ***
   >
   > ## Điều kiện
   >
@@ -457,23 +457,23 @@
   >
   > Đã kiểm chứng trực tiếp qua API `POST /api/apply-coupon` trước khi viết kế hoạch này:
   >
-  > | Mã | Loại | Kết quả với đơn 30.000.000 ₫ | Dùng được trong kịch bản? |
-  > | --- | --- | --- | --- |
-  > | `VIP100` | fixed 100.000 ₫, đơn tối thiểu 300.000 ₫, tối đa 2 lần/người | giảm đúng 100.000 ₫ → còn 29.900.000 ₫ | ✅ **Dùng mã này** |
-  > | `BIGBUY` | fixed 50.000 ₫, đơn tối thiểu 500.000 ₫, tối đa 1 lần/người | giảm đúng 50.000 ₫ | Dự phòng |
-  > | `SAVE10` | percent 10%, đơn tối thiểu 300.000 ₫ | **tổng tiền tăng lên 300.000.000 ₫** trong khi vẫn báo "Áp dụng thành công! Giảm 10%" | ❌ **Không dùng** |
-  > | `EXPIRED` | percent 20%, đã hết hạn | bị từ chối đúng: "Mã giảm giá đã hết hạn" | ❌ Không dùng |
+  > | Mã        | Loại                                                         | Kết quả với đơn 30.000.000 ₫                                                          | Dùng được trong kịch bản? |
+  > | --------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------- | ------------------------- |
+  > | `VIP100`  | fixed 100.000 ₫, đơn tối thiểu 300.000 ₫, tối đa 2 lần/người | giảm đúng 100.000 ₫ → còn 29.900.000 ₫                                                | ✅ **Dùng mã này**        |
+  > | `BIGBUY`  | fixed 50.000 ₫, đơn tối thiểu 500.000 ₫, tối đa 1 lần/người  | giảm đúng 50.000 ₫                                                                    | Dự phòng                  |
+  > | `SAVE10`  | percent 10%, đơn tối thiểu 300.000 ₫                         | **tổng tiền tăng lên 300.000.000 ₫** trong khi vẫn báo "Áp dụng thành công! Giảm 10%" | ❌ **Không dùng**         |
+  > | `EXPIRED` | percent 20%, đã hết hạn                                      | bị từ chối đúng: "Mã giảm giá đã hết hạn"                                             | ❌ Không dùng             |
   >
   > `SAVE10` bị lỗi tính toán nghiêm trọng ở backend. Nếu đưa mã này vào kịch bản, cả 7 phiên sẽ bị
   > một lỗi **chức năng** chi phối và nghiên cứu sẽ không còn đo được **usability của flow** nữa. Lỗi
   > này cần được ghi nhận riêng thành bug report chức năng, không nhập chung vào nghiên cứu usability.
   >
-  > > **Ranh giới quan trọng khi chấm "Thành công":** điều kiện thành công là *áp được mã và tới màn
-  > > hình xác nhận*, **không** phải *số tiền giảm đúng*. Tính đúng/sai của số tiền là kiểm thử chức
+  > > **Ranh giới quan trọng khi chấm "Thành công":** điều kiện thành công là _áp được mã và tới màn
+  > > hình xác nhận_, **không** phải _số tiền giảm đúng_. Tính đúng/sai của số tiền là kiểm thử chức
   > > năng; nếu đặt nó làm tiêu chí thành công thì mọi phiên đều "thất bại" vì lỗi backend chứ không
   > > phải vì vấn đề usability.
   >
-  > ---
+  > ***
   >
   > ## Công cụ đánh giá (Instrument)
   >
@@ -484,18 +484,18 @@
   >
   > Nội dung 10 item (lấy nguyên văn từ `instruments_reference.md`):
   >
-  > | # | Nội dung item | Điểm (1–5) |
-  > | --- | --- | --- |
-  > | 1 | Tôi nghĩ tôi sẽ muốn dùng hệ thống này thường xuyên. | |
-  > | 2 | Tôi thấy hệ thống này phức tạp một cách không cần thiết. | |
-  > | 3 | Tôi thấy hệ thống này dễ sử dụng. | |
-  > | 4 | Tôi nghĩ mình cần người rành kỹ thuật hỗ trợ mới dùng được hệ thống này. | |
-  > | 5 | Tôi thấy các chức năng trong hệ thống này được tích hợp tốt với nhau. | |
-  > | 6 | Tôi thấy hệ thống này có quá nhiều điểm thiếu nhất quán. | |
-  > | 7 | Tôi nghĩ hầu hết mọi người sẽ học cách dùng hệ thống này rất nhanh. | |
-  > | 8 | Tôi thấy hệ thống này rất cồng kềnh, bất tiện khi dùng. | |
-  > | 9 | Tôi cảm thấy rất tự tin khi dùng hệ thống này. | |
-  > | 10 | Tôi cần học nhiều thứ trước khi có thể bắt đầu dùng hệ thống này. | |
+  > | #   | Nội dung item                                                            | Điểm (1–5) |
+  > | --- | ------------------------------------------------------------------------ | ---------- |
+  > | 1   | Tôi nghĩ tôi sẽ muốn dùng hệ thống này thường xuyên.                     |            |
+  > | 2   | Tôi thấy hệ thống này phức tạp một cách không cần thiết.                 |            |
+  > | 3   | Tôi thấy hệ thống này dễ sử dụng.                                        |            |
+  > | 4   | Tôi nghĩ mình cần người rành kỹ thuật hỗ trợ mới dùng được hệ thống này. |            |
+  > | 5   | Tôi thấy các chức năng trong hệ thống này được tích hợp tốt với nhau.    |            |
+  > | 6   | Tôi thấy hệ thống này có quá nhiều điểm thiếu nhất quán.                 |            |
+  > | 7   | Tôi nghĩ hầu hết mọi người sẽ học cách dùng hệ thống này rất nhanh.      |            |
+  > | 8   | Tôi thấy hệ thống này rất cồng kềnh, bất tiện khi dùng.                  |            |
+  > | 9   | Tôi cảm thấy rất tự tin khi dùng hệ thống này.                           |            |
+  > | 10  | Tôi cần học nhiều thứ trước khi có thể bắt đầu dùng hệ thống này.        |            |
   >
   > **Công thức tính điểm** (chỉ áp dụng ở Phase 3, không quy đổi tại chỗ để tránh sai số cộng dồn):
   >
@@ -510,18 +510,18 @@
   > Hỏi **sau** khi điền SUS. Giọng trung lập — không có câu nào gợi sẵn câu trả lời hay ám chỉ rằng
   > có vấn đề tồn tại. Mỗi nhóm có 2 câu; nếu hết giờ, hỏi ít nhất câu đầu của mỗi nhóm.
   >
-  > | Nhóm | Câu hỏi |
-  > | --- | --- |
-  > | **Clarity** | 1. Ở bước nhập mã giảm giá, bạn tìm thấy chỗ nhập mã bằng cách nào? |
-  > | | 2. Khi xem trang thông tin chi tiết của sản phẩm, những gì hiển thị ở đó có đủ để bạn quyết định mua chưa? |
-  > | **Error recovery** | 1. Nếu lúc nãy bạn muốn đổi sang một sản phẩm khác sau khi đã thêm vào giỏ, bạn sẽ làm thế nào? |
-  > | | 2. Trong lúc thao tác, có lúc nào bạn nghĩ mình vừa làm sai một bước không? Lúc đó bạn đã làm gì tiếp theo? |
-  > | **Speed** | 1. Từ lúc bắt đầu tìm sản phẩm đến lúc đặt xong, bạn thấy mất nhiều thời gian hơn hay ít hơn so với bạn hình dung ban đầu? |
-  > | | 2. Có bước nào bạn thấy mình phải lặp lại thao tác nhiều lần không? |
-  > | **Trust** | 1. Số tiền cuối cùng hiển thị trước khi bấm xác nhận — bạn có đối chiếu lại với giá sản phẩm không? Vì sao? |
-  > | | 2. Nếu đây là tiền thật của bạn, bạn có bấm "Xác Nhận Thanh Toán" ở màn hình đó không? |
+  > | Nhóm               | Câu hỏi                                                                                                                    |
+  > | ------------------ | -------------------------------------------------------------------------------------------------------------------------- |
+  > | **Clarity**        | 1. Ở bước nhập mã giảm giá, bạn tìm thấy chỗ nhập mã bằng cách nào?                                                        |
+  > |                    | 2. Khi xem trang thông tin chi tiết của sản phẩm, những gì hiển thị ở đó có đủ để bạn quyết định mua chưa?                 |
+  > | **Error recovery** | 1. Nếu lúc nãy bạn muốn đổi sang một sản phẩm khác sau khi đã thêm vào giỏ, bạn sẽ làm thế nào?                            |
+  > |                    | 2. Trong lúc thao tác, có lúc nào bạn nghĩ mình vừa làm sai một bước không? Lúc đó bạn đã làm gì tiếp theo?                |
+  > | **Speed**          | 1. Từ lúc bắt đầu tìm sản phẩm đến lúc đặt xong, bạn thấy mất nhiều thời gian hơn hay ít hơn so với bạn hình dung ban đầu? |
+  > |                    | 2. Có bước nào bạn thấy mình phải lặp lại thao tác nhiều lần không?                                                        |
+  > | **Trust**          | 1. Số tiền cuối cùng hiển thị trước khi bấm xác nhận — bạn có đối chiếu lại với giá sản phẩm không? Vì sao?                |
+  > |                    | 2. Nếu đây là tiền thật của bạn, bạn có bấm "Xác Nhận Thanh Toán" ở màn hình đó không?                                     |
   >
-  > ---
+  > ***
   >
   > ## Checklist trước phiên
   >
@@ -548,7 +548,7 @@
   > - [ ] **Không tập trước flow** cho người tham gia; không cho họ xem người khác làm.
   > - [ ] Đóng các tab nhạy cảm trên máy trước khi ghi màn hình.
   >
-  > ---
+  > ***
   >
   > ## Kịch bản mở đầu (moderator đọc cho người tham gia)
   >
@@ -580,7 +580,7 @@
   >
   > **Chỉ bắt đầu sau khi nhận được đồng ý rõ ràng cho việc ghi hình/ghi âm.**
   >
-  > ---
+  > ***
   >
   > ## Cách giao task scenario
   >
@@ -602,7 +602,7 @@
   >    ngay trước đó, và kết quả sau can thiệp — mỗi lần như vậy tính là 1 `intervention` và phiên
   >    không còn được tính `SUCCESS_UNASSISTED`.
   >
-  > ---
+  > ***
   >
   > ## Liên kết
   >
@@ -611,14 +611,14 @@
   > - Định nghĩa Outcome/Error/Wrong turn/Hesitation/Intervention: xem `session_log_template.md` trong skill,
   >   áp dụng thống nhất cho cả 8 phiên.
   >
-  > ---
+  > ***
   >
   > ## Trạng thái tài liệu
   >
   > Đây là **Phase 1 — Plan**. Chưa chạy phiên nào, chưa có dữ liệu quan sát.
   > Phase 2 (Conduct) và Phase 3 (Analyse) chỉ được thực hiện sau khi các phiên thật đã diễn ra.
   >
-  > ---
+  > ***
   >
   > **File: `tests/usability/U-01/recruitment-tracker.md`**
   >
@@ -634,7 +634,7 @@
   > - Người điều phối: nlhakhoa23@clc.fitus.edu.vn
   > - Số lượng cần tuyển: **7 người chính (P01–P07) + 1 người pilot (P00) = 8 người**
   >
-  > ---
+  > ***
   >
   > ## Hồ sơ mục tiêu (target profile)
   >
@@ -648,64 +648,64 @@
   >   không bị "nghề nghiệp hoá".
   > - **Bắt buộc loại trừ:** sinh viên đang học môn này / đang làm cùng bài tập HW03 (theo quy định của đề).
   >
-  > ---
+  > ***
   >
   > ## Câu hỏi sàng lọc (screener)
   >
   > Hỏi trước khi hẹn lịch. Ghi lại câu trả lời vào cột "Hồ sơ" ở bảng dưới.
   >
-  > 1. Bạn bao nhiêu tuổi? *(Đạt: 18–35)*
+  > 1. Bạn bao nhiêu tuổi? _(Đạt: 18–35)_
   > 2. Trong 6 tháng qua, bạn đã tự đặt hàng online bao nhiêu lần? Trên ứng dụng/trang nào?
-  >    *(Đạt: ≥ 1 lần, có nêu được tên sàn như Shopee/Lazada/Tiki)*
+  >    _(Đạt: ≥ 1 lần, có nêu được tên sàn như Shopee/Lazada/Tiki)_
   > 3. Bạn đã từng dùng mã giảm giá khi mua hàng online chưa?
-  >    *(Ghi nhận — không loại, nhưng dùng để hiểu bối cảnh khi phân tích)*
+  >    _(Ghi nhận — không loại, nhưng dùng để hiểu bối cảnh khi phân tích)_
   > 4. Bạn đã từng dùng trang EShop này bao giờ chưa?
-  >    *(Trả lời "Rồi" thì **loại** — nghiên cứu cần người dùng mới)*
+  >    _(Trả lời "Rồi" thì **loại** — nghiên cứu cần người dùng mới)_
   > 5. Bạn có đang học môn Kiểm thử phần mềm hoặc đang làm bài tập HW03 này không?
-  >    *(Trả lời "Có" thì **loại** — theo quy định chống gian lận của đề)*
+  >    _(Trả lời "Có" thì **loại** — theo quy định chống gian lận của đề)_
   > 6. Bạn có làm việc trong lĩnh vực IT hoặc kiểm thử phần mềm không?
-  >    *(Trả lời "Có" thì vẫn nhận được nhưng **ưu tiên thấp**; ghi rõ vào cột Hồ sơ)*
+  >    _(Trả lời "Có" thì vẫn nhận được nhưng **ưu tiên thấp**; ghi rõ vào cột Hồ sơ)_
   > 7. Bạn có đồng ý cho ghi màn hình và ghi âm buổi kiểm thử không?
-  >    *(Trả lời "Không" thì **loại** — không có bằng chứng thì phiên không dùng được)*
+  >    _(Trả lời "Không" thì **loại** — không có bằng chứng thì phiên không dùng được)_
   >
-  > ---
+  > ***
   >
   > ## Quy ước che thông tin liên hệ
   >
   > Giữ lại phần đầu và **2 số cuối**, che **4 số ở giữa**.
   >
-  > | Loại | Ví dụ gốc | Ghi vào bảng |
-  > | --- | --- | --- |
-  > | Số điện thoại / Zalo | `0912345678` | `0912****78` |
-  > | Email | `nguyenvanan@gmail.com` | `nguy****an@gmail.com` |
+  > | Loại                 | Ví dụ gốc               | Ghi vào bảng           |
+  > | -------------------- | ----------------------- | ---------------------- |
+  > | Số điện thoại / Zalo | `0912345678`            | `0912****78`           |
+  > | Email                | `nguyenvanan@gmail.com` | `nguy****an@gmail.com` |
   >
   > > Chỉ ghi **một** kênh liên hệ đã che cho mỗi người — đủ để TA xác minh, không thu thập thừa.
   > > Bản đầy đủ chưa che (nếu cần cho việc liên hệ) giữ riêng, **không commit vào repo**.
   >
-  > ---
+  > ***
   >
   > ## Người tham gia
   >
-  > | # | Vai trò | Họ tên | Kênh liên hệ | Thông tin liên hệ (đã che) | Hồ sơ (tuổi/nghề nghiệp/mức quen thuộc) | Ngày hẹn | Đồng ý ghi hình (Y/N) |
-  > | --- | --- | --- | --- | --- | --- | --- | --- |
-  > | 0 | P00 (Pilot) | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | 1 | P01 | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | 2 | P02 | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | 3 | P03 | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | 4 | P04 | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | 5 | P05 | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | 6 | P06 | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | 7 | P07 | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | #   | Vai trò     | Họ tên        | Kênh liên hệ  | Thông tin liên hệ (đã che) | Hồ sơ (tuổi/nghề nghiệp/mức quen thuộc) | Ngày hẹn      | Đồng ý ghi hình (Y/N) |
+  > | --- | ----------- | ------------- | ------------- | -------------------------- | --------------------------------------- | ------------- | --------------------- |
+  > | 0   | P00 (Pilot) | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP              | CHƯA THU THẬP                           | CHƯA THU THẬP | CHƯA THU THẬP         |
+  > | 1   | P01         | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP              | CHƯA THU THẬP                           | CHƯA THU THẬP | CHƯA THU THẬP         |
+  > | 2   | P02         | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP              | CHƯA THU THẬP                           | CHƯA THU THẬP | CHƯA THU THẬP         |
+  > | 3   | P03         | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP              | CHƯA THU THẬP                           | CHƯA THU THẬP | CHƯA THU THẬP         |
+  > | 4   | P04         | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP              | CHƯA THU THẬP                           | CHƯA THU THẬP | CHƯA THU THẬP         |
+  > | 5   | P05         | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP              | CHƯA THU THẬP                           | CHƯA THU THẬP | CHƯA THU THẬP         |
+  > | 6   | P06         | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP              | CHƯA THU THẬP                           | CHƯA THU THẬP | CHƯA THU THẬP         |
+  > | 7   | P07         | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP              | CHƯA THU THẬP                           | CHƯA THU THẬP | CHƯA THU THẬP         |
   >
   > ## Người đã liên hệ nhưng bị loại
   >
   > > Giữ vết minh bạch cho quá trình tuyển chọn — ghi lý do loại thay vì xoá dòng.
   >
-  > | # | Kênh liên hệ (đã che) | Lý do bị loại (theo câu screener số mấy) |
-  > | --- | --- | --- |
-  > | — | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | #   | Kênh liên hệ (đã che) | Lý do bị loại (theo câu screener số mấy) |
+  > | --- | --------------------- | ---------------------------------------- |
+  > | —   | CHƯA THU THẬP         | CHƯA THU THẬP                            |
   >
-  > ---
+  > ***
   >
   > ## Ghi chú
   >
@@ -717,7 +717,7 @@
   > - Nhắc lại quy định của đề: người tham gia **phải ở ngoài lớp học**; TA có thể gọi ngẫu nhiên 2
   >   người để xác minh.
   >
-  > ---
+  > ***
   >
   > **File: `tests/usability/U-01/sessions/P00-pilot.md`**
   >
@@ -727,18 +727,18 @@
   > > phiên pilot thật. Không suy đoán, không điền sẵn nội dung "hợp lý" — mọi dòng phải bắt nguồn từ
   > > quan sát thực tế (ghi chú tay, video, hoặc bản ghi âm của chính phiên này).
   >
-  > **Mục đích của phiên pilot:** phát hiện lỗi trong **kịch bản và công cụ**, *không* phải để tạo dữ
+  > **Mục đích của phiên pilot:** phát hiện lỗi trong **kịch bản và công cụ**, _không_ phải để tạo dữ
   > liệu cho báo cáo. Kết quả phiên này **không được đưa vào số liệu tổng hợp ở Phase 3** — chỉ ghi
   > chú trong báo cáo rằng đã chạy pilot và đã sửa những gì.
   >
-  > ---
+  > ***
   >
   > ## Metadata
   >
   > - Ngày/giờ: CHƯA THU THẬP
   > - Người tham gia: P00 (Pilot) — khớp hồ sơ mục tiêu, **không** thuộc nhóm 7 người chính
   > - Thiết bị, OS, trình duyệt: CHƯA THU THẬP
-  > - Đồng thuận: CHƯA THU THẬP *(ghi rõ hình thức: đã ký / bằng lời)*
+  > - Đồng thuận: CHƯA THU THẬP _(ghi rõ hình thức: đã ký / bằng lời)_
   > - Timebox: 10 phút
   > - Deviation: CHƯA THU THẬP
   >
@@ -750,11 +750,11 @@
   > - [ ] Ghi màn hình + ghi âm đang chạy
   > - [ ] Mã `VIP100` đã viết sẵn ra giấy/ghi chú
   >
-  > ---
+  > ***
   >
   > ## Kết quả
   >
-  > - Outcome: CHƯA THU THẬP *(`SUCCESS_UNASSISTED` | `SUCCESS_ASSISTED` | `FAIL` | `ABANDONED`)*
+  > - Outcome: CHƯA THU THẬP _(`SUCCESS_UNASSISTED` | `SUCCESS_ASSISTED` | `FAIL` | `ABANDONED`)_
   > - Thời lượng (giây): CHƯA THU THẬP
   > - Số error: CHƯA THU THẬP
   > - Số wrong turn: CHƯA THU THẬP
@@ -764,14 +764,14 @@
   >
   > **Định nghĩa dùng để đếm (giữ nhất quán giữa các phiên):**
   >
-  > | Thuật ngữ | Định nghĩa |
-  > | --- | --- |
-  > | Error | Hành động cho kết quả trái mục tiêu mà hệ thống không ngăn được (VD: thêm nhầm sản phẩm vượt ngân sách vào giỏ và tiến hành thanh toán) |
-  > | Wrong turn | Điều hướng sang màn hình không tiến gần mục tiêu, tự sửa được, chưa đến mức là error (VD: mở trang Giỏ hàng để tìm ô nhập mã giảm giá rồi tự quay ra) |
-  > | Hesitation ≥ 5s | Dừng lại không thao tác từ 5 giây trở lên, có biểu hiện phân vân — ghi lại mốc thời gian |
-  > | Intervention | Moderator nói/làm gì đó để giúp người tham gia thoát khỏi bế tắc — ghi nguyên văn, trạng thái trước đó và kết quả |
+  > | Thuật ngữ       | Định nghĩa                                                                                                                                            |
+  > | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+  > | Error           | Hành động cho kết quả trái mục tiêu mà hệ thống không ngăn được (VD: thêm nhầm sản phẩm vượt ngân sách vào giỏ và tiến hành thanh toán)               |
+  > | Wrong turn      | Điều hướng sang màn hình không tiến gần mục tiêu, tự sửa được, chưa đến mức là error (VD: mở trang Giỏ hàng để tìm ô nhập mã giảm giá rồi tự quay ra) |
+  > | Hesitation ≥ 5s | Dừng lại không thao tác từ 5 giây trở lên, có biểu hiện phân vân — ghi lại mốc thời gian                                                              |
+  > | Intervention    | Moderator nói/làm gì đó để giúp người tham gia thoát khỏi bế tắc — ghi nguyên văn, trạng thái trước đó và kết quả                                     |
   >
-  > ---
+  > ***
   >
   > ## Timeline quan sát
   >
@@ -779,15 +779,15 @@
   > > nói ra**, không diễn giải lại.
   >
   > | Thời gian | Stage/FR | Mục tiêu | Hành động quan sát được | Phản hồi hệ thống | Tác động | Quote nguyên văn |
-  > | --- | --- | --- | --- | --- | --- | --- |
-  > | | | | | | | |
-  > | | | | | | | |
-  > | | | | | | | |
+  > | --------- | -------- | -------- | ----------------------- | ----------------- | -------- | ---------------- |
+  > |           |          |          |                         |                   |          |                  |
+  > |           |          |          |                         |                   |          |                  |
+  > |           |          |          |                         |                   |          |                  |
   >
-  > *Gợi ý các stage để đối chiếu (không bắt buộc theo thứ tự này — người tham gia tự chọn đường đi):*
+  > _Gợi ý các stage để đối chiếu (không bắt buộc theo thứ tự này — người tham gia tự chọn đường đi):_
   > `FR-05 tìm/lọc sản phẩm` · `FR-06 xem chi tiết` · `FR-07 thêm & xem giỏ hàng` · `FR-09 áp mã giảm giá` · `FR-08 xác nhận thanh toán`
   >
-  > ---
+  > ***
   >
   > ## Can thiệp của moderator
   >
@@ -795,42 +795,42 @@
   >
   > CHƯA THU THẬP
   >
-  > ---
+  > ***
   >
   > ## Thang đo sau phiên — SUS
   >
   > Ghi **điểm thô** từng item (1 = Hoàn toàn không đồng ý → 5 = Hoàn toàn đồng ý).
   > **Không quy đổi tại chỗ** — việc quy đổi thực hiện ở Phase 3 để tránh sai số cộng dồn.
   >
-  > | # | Nội dung item | Điểm (1–5) |
-  > | --- | --- | --- |
-  > | 1 | Tôi nghĩ tôi sẽ muốn dùng hệ thống này thường xuyên. | |
-  > | 2 | Tôi thấy hệ thống này phức tạp một cách không cần thiết. | |
-  > | 3 | Tôi thấy hệ thống này dễ sử dụng. | |
-  > | 4 | Tôi nghĩ mình cần người rành kỹ thuật hỗ trợ mới dùng được hệ thống này. | |
-  > | 5 | Tôi thấy các chức năng trong hệ thống này được tích hợp tốt với nhau. | |
-  > | 6 | Tôi thấy hệ thống này có quá nhiều điểm thiếu nhất quán. | |
-  > | 7 | Tôi nghĩ hầu hết mọi người sẽ học cách dùng hệ thống này rất nhanh. | |
-  > | 8 | Tôi thấy hệ thống này rất cồng kềnh, bất tiện khi dùng. | |
-  > | 9 | Tôi cảm thấy rất tự tin khi dùng hệ thống này. | |
-  > | 10 | Tôi cần học nhiều thứ trước khi có thể bắt đầu dùng hệ thống này. | |
+  > | #   | Nội dung item                                                            | Điểm (1–5) |
+  > | --- | ------------------------------------------------------------------------ | ---------- |
+  > | 1   | Tôi nghĩ tôi sẽ muốn dùng hệ thống này thường xuyên.                     |            |
+  > | 2   | Tôi thấy hệ thống này phức tạp một cách không cần thiết.                 |            |
+  > | 3   | Tôi thấy hệ thống này dễ sử dụng.                                        |            |
+  > | 4   | Tôi nghĩ mình cần người rành kỹ thuật hỗ trợ mới dùng được hệ thống này. |            |
+  > | 5   | Tôi thấy các chức năng trong hệ thống này được tích hợp tốt với nhau.    |            |
+  > | 6   | Tôi thấy hệ thống này có quá nhiều điểm thiếu nhất quán.                 |            |
+  > | 7   | Tôi nghĩ hầu hết mọi người sẽ học cách dùng hệ thống này rất nhanh.      |            |
+  > | 8   | Tôi thấy hệ thống này rất cồng kềnh, bất tiện khi dùng.                  |            |
+  > | 9   | Tôi cảm thấy rất tự tin khi dùng hệ thống này.                           |            |
+  > | 10  | Tôi cần học nhiều thứ trước khi có thể bắt đầu dùng hệ thống này.        |            |
   >
-  > ---
+  > ***
   >
   > ## Câu hỏi mở (probe questions)
   >
-  > | Nhóm | Câu hỏi | Trả lời |
-  > | --- | --- | --- |
-  > | Clarity | Ở bước nhập mã giảm giá, bạn tìm thấy chỗ nhập mã bằng cách nào? | |
-  > | Clarity | Khi xem trang thông tin chi tiết của sản phẩm, những gì hiển thị ở đó có đủ để bạn quyết định mua chưa? | |
-  > | Error recovery | Nếu lúc nãy bạn muốn đổi sang một sản phẩm khác sau khi đã thêm vào giỏ, bạn sẽ làm thế nào? | |
-  > | Error recovery | Trong lúc thao tác, có lúc nào bạn nghĩ mình vừa làm sai một bước không? Lúc đó bạn đã làm gì tiếp theo? | |
-  > | Speed | Từ lúc bắt đầu tìm sản phẩm đến lúc đặt xong, bạn thấy mất nhiều thời gian hơn hay ít hơn so với bạn hình dung ban đầu? | |
-  > | Speed | Có bước nào bạn thấy mình phải lặp lại thao tác nhiều lần không? | |
-  > | Trust | Số tiền cuối cùng hiển thị trước khi bấm xác nhận — bạn có đối chiếu lại với giá sản phẩm không? Vì sao? | |
-  > | Trust | Nếu đây là tiền thật của bạn, bạn có bấm "Xác Nhận Thanh Toán" ở màn hình đó không? | |
+  > | Nhóm           | Câu hỏi                                                                                                                 | Trả lời |
+  > | -------------- | ----------------------------------------------------------------------------------------------------------------------- | ------- |
+  > | Clarity        | Ở bước nhập mã giảm giá, bạn tìm thấy chỗ nhập mã bằng cách nào?                                                        |         |
+  > | Clarity        | Khi xem trang thông tin chi tiết của sản phẩm, những gì hiển thị ở đó có đủ để bạn quyết định mua chưa?                 |         |
+  > | Error recovery | Nếu lúc nãy bạn muốn đổi sang một sản phẩm khác sau khi đã thêm vào giỏ, bạn sẽ làm thế nào?                            |         |
+  > | Error recovery | Trong lúc thao tác, có lúc nào bạn nghĩ mình vừa làm sai một bước không? Lúc đó bạn đã làm gì tiếp theo?                |         |
+  > | Speed          | Từ lúc bắt đầu tìm sản phẩm đến lúc đặt xong, bạn thấy mất nhiều thời gian hơn hay ít hơn so với bạn hình dung ban đầu? |         |
+  > | Speed          | Có bước nào bạn thấy mình phải lặp lại thao tác nhiều lần không?                                                        |         |
+  > | Trust          | Số tiền cuối cùng hiển thị trước khi bấm xác nhận — bạn có đối chiếu lại với giá sản phẩm không? Vì sao?                |         |
+  > | Trust          | Nếu đây là tiền thật của bạn, bạn có bấm "Xác Nhận Thanh Toán" ở màn hình đó không?                                     |         |
   >
-  > ---
+  > ***
   >
   > ## Tóm tắt của researcher
   >
@@ -838,7 +838,7 @@
   > - Điều hỗ trợ hoàn thành: CHƯA THU THẬP
   > - Ghi chú cần xác minh, không phải quan sát trực tiếp: CHƯA THU THẬP
   >
-  > ---
+  > ***
   >
   > # Checklist riêng của pilot — "đã đổi gì sau pilot"
   >
@@ -847,51 +847,51 @@
   >
   > ## A. Kịch bản task scenario
   >
-  > | # | Cần kiểm tra | Phát hiện ở pilot | Quyết định | Nội dung đã sửa |
-  > | --- | --- | --- | --- | --- |
-  > | A1 | Người tham gia có hiểu ngay mục tiêu sau khi nghe đọc 1 lần không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | A2 | Kịch bản có vô tình **gợi ý các bước** (nói lộ chỗ nhập mã, tên nút) không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | A3 | Ràng buộc "dưới 10 triệu" có tạo ra lựa chọn thật không, hay người tham gia chọn ngay không cần cân nhắc? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | A4 | Có từ ngữ nào trong kịch bản gây khó hiểu / phải hỏi lại không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | A5 | Cách đưa mã `VIP100` (viết ra giấy) có tự nhiên không, hay làm người tham gia tưởng phải dùng ngay lập tức? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | #   | Cần kiểm tra                                                                                                | Phát hiện ở pilot | Quyết định    | Nội dung đã sửa |
+  > | --- | ----------------------------------------------------------------------------------------------------------- | ----------------- | ------------- | --------------- |
+  > | A1  | Người tham gia có hiểu ngay mục tiêu sau khi nghe đọc 1 lần không?                                          | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
+  > | A2  | Kịch bản có vô tình **gợi ý các bước** (nói lộ chỗ nhập mã, tên nút) không?                                 | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
+  > | A3  | Ràng buộc "dưới 10 triệu" có tạo ra lựa chọn thật không, hay người tham gia chọn ngay không cần cân nhắc?   | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
+  > | A4  | Có từ ngữ nào trong kịch bản gây khó hiểu / phải hỏi lại không?                                             | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
+  > | A5  | Cách đưa mã `VIP100` (viết ra giấy) có tự nhiên không, hay làm người tham gia tưởng phải dùng ngay lập tức? | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
   >
   > ## B. Timebox và nhịp phiên
   >
-  > | # | Cần kiểm tra | Phát hiện ở pilot | Quyết định | Nội dung đã sửa |
-  > | --- | --- | --- | --- | --- |
-  > | B1 | Thời gian thực tế hoàn thành task là bao nhiêu? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | B2 | 10 phút là quá dài, quá ngắn, hay vừa? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | B3 | Phần SUS + câu hỏi mở mất bao lâu? Tổng buổi có vượt dự kiến không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | #   | Cần kiểm tra                                                        | Phát hiện ở pilot | Quyết định    | Nội dung đã sửa |
+  > | --- | ------------------------------------------------------------------- | ----------------- | ------------- | --------------- |
+  > | B1  | Thời gian thực tế hoàn thành task là bao nhiêu?                     | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
+  > | B2  | 10 phút là quá dài, quá ngắn, hay vừa?                              | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
+  > | B3  | Phần SUS + câu hỏi mở mất bao lâu? Tổng buổi có vượt dự kiến không? | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
   >
   > ## C. Công cụ và môi trường
   >
-  > | # | Cần kiểm tra | Phát hiện ở pilot | Quyết định | Nội dung đã sửa |
-  > | --- | --- | --- | --- | --- |
-  > | C1 | Ghi màn hình có bắt được toàn bộ thao tác không? Có tiếng rõ không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | C2 | Đồng hồ bấm giờ và cách đánh dấu mốc thời gian có dùng được trong lúc vừa quan sát vừa ghi chú không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | C3 | **Mã `VIP100` còn hiệu lực khi tới bước checkout không?** (giới hạn 2 lần/người — nếu báo hết lượt nghĩa là quy trình reseed chưa đúng) | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | C4 | Quy trình restart backend để reseed có thực sự xoá `coupon_usage` không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | C5 | Ảnh sản phẩm (tải từ domain ngoài) có hiện đủ trong suốt phiên không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | C6 | Start state có được khôi phục đúng và nhanh giữa các phiên không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | #   | Cần kiểm tra                                                                                                                            | Phát hiện ở pilot | Quyết định    | Nội dung đã sửa |
+  > | --- | --------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | ------------- | --------------- |
+  > | C1  | Ghi màn hình có bắt được toàn bộ thao tác không? Có tiếng rõ không?                                                                     | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
+  > | C2  | Đồng hồ bấm giờ và cách đánh dấu mốc thời gian có dùng được trong lúc vừa quan sát vừa ghi chú không?                                   | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
+  > | C3  | **Mã `VIP100` còn hiệu lực khi tới bước checkout không?** (giới hạn 2 lần/người — nếu báo hết lượt nghĩa là quy trình reseed chưa đúng) | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
+  > | C4  | Quy trình restart backend để reseed có thực sự xoá `coupon_usage` không?                                                                | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
+  > | C5  | Ảnh sản phẩm (tải từ domain ngoài) có hiện đủ trong suốt phiên không?                                                                   | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
+  > | C6  | Start state có được khôi phục đúng và nhanh giữa các phiên không?                                                                       | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
   >
   > ## D. SUS và câu hỏi mở
   >
-  > | # | Cần kiểm tra | Phát hiện ở pilot | Quyết định | Nội dung đã sửa |
-  > | --- | --- | --- | --- | --- |
-  > | D1 | Có item SUS nào người tham gia đọc xong phải hỏi lại nghĩa không? (ghi rõ item số mấy) | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | D2 | Người tham gia có hiểu thang 1–5 theo đúng chiều không (không nhầm ngược)? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | D3 | Câu hỏi mở nào bị trả lời cụt lủn "không có gì" — cần diễn đạt lại? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | D4 | Có câu hỏi nào vô tình **dẫn dắt** (khiến người tham gia đoán ý moderator) không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | #   | Cần kiểm tra                                                                           | Phát hiện ở pilot | Quyết định    | Nội dung đã sửa |
+  > | --- | -------------------------------------------------------------------------------------- | ----------------- | ------------- | --------------- |
+  > | D1  | Có item SUS nào người tham gia đọc xong phải hỏi lại nghĩa không? (ghi rõ item số mấy) | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
+  > | D2  | Người tham gia có hiểu thang 1–5 theo đúng chiều không (không nhầm ngược)?             | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
+  > | D3  | Câu hỏi mở nào bị trả lời cụt lủn "không có gì" — cần diễn đạt lại?                    | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
+  > | D4  | Có câu hỏi nào vô tình **dẫn dắt** (khiến người tham gia đoán ý moderator) không?      | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
   >
   > ## E. Vai trò moderator
   >
-  > | # | Cần kiểm tra | Phát hiện ở pilot | Quyết định | Nội dung đã sửa |
-  > | --- | --- | --- | --- | --- |
-  > | E1 | Có lúc nào moderator lỡ gợi ý/xác nhận đúng-sai không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | E2 | Ngưỡng can thiệp (~60 giây kẹt) có hợp lý không? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
-  > | E3 | Việc vừa quan sát vừa ghi timeline có kịp không, hay cần người ghi chú thứ hai? | CHƯA THU THẬP | CHƯA THU THẬP | CHƯA THU THẬP |
+  > | #   | Cần kiểm tra                                                                    | Phát hiện ở pilot | Quyết định    | Nội dung đã sửa |
+  > | --- | ------------------------------------------------------------------------------- | ----------------- | ------------- | --------------- |
+  > | E1  | Có lúc nào moderator lỡ gợi ý/xác nhận đúng-sai không?                          | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
+  > | E2  | Ngưỡng can thiệp (~60 giây kẹt) có hợp lý không?                                | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
+  > | E3  | Việc vừa quan sát vừa ghi timeline có kịp không, hay cần người ghi chú thứ hai? | CHƯA THU THẬP     | CHƯA THU THẬP | CHƯA THU THẬP   |
   >
-  > ---
+  > ***
   >
   > ## Kết luận pilot
   >
@@ -905,8 +905,7 @@
   > > Sau khi chốt, **không được đổi kịch bản giữa chừng** trong 7 phiên chính — nếu buộc phải đổi,
   > > ghi rõ đổi từ phiên nào và cân nhắc loại các phiên trước đó khỏi phần tổng hợp định lượng.
   >
-  > ---
-  >
+  > ***
 
 - **Đánh giá:** Valid
 - **Suy luận:** File do AI sinh ra khá tốt và đầy đủ
@@ -939,108 +938,108 @@
   >
   > ## IA-01 — General UI standards
   >
-  > | ID | Category | Status | Notes |
-  > | --- | --- | --- | --- |
-  > | PRODDETAIL-VIS-01 | Visual | Failed | Ảnh gốc `naturalWidth×Height = 300×300` nhưng render 455×455 px (phóng 152%) → chữ "iPhone 15" trên ảnh nhoè thấy rõ trong screenshot. → `BUG-PRODDETAIL-010` |
-  > | PRODDETAIL-VIS-02 | Visual | Failed | Hiện `30,000,000 ₫` (dấu phẩy) vì `Number(price).toLocaleString()` không truyền locale nên bám theo locale trình duyệt. → `BUG-PRODDETAIL-008` |
-  > | PRODDETAIL-VIS-03 | Visual | Passed | Chuỗi render `30,000,000 ₫`: `₫` sau phần số, cách đúng 1 khoảng trắng, nằm chung `<p>` nên cùng `font-size: 24px` và màu `rgb(220,38,38)`. |
-  > | PRODDETAIL-VIS-04 | Visual | Failed | Thẻ mô tả có class `flex-grow` nên cao 225 px dù chỉ chứa 1 dòng chữ ~24 px → sinh ~200 px trắng thừa giữa mô tả và "Số lượng:". Các khối khác chỉ cách nhau 16–32 px. → `BUG-PRODDETAIL-010` |
-  > | PRODDETAIL-VIS-05 | Visual | Passed | Nhãn: top 463 + h 24 → tâm 475. Ô nhập: top 454 + h 42 → tâm 475. Hai tâm trùng khít (container dùng `items-center`). |
-  > | PRODDETAIL-VIS-06 | Visual | Passed | Ô nhập 80×42 px, nút 184,3×48 px → tỉ lệ chiều cao 1 : 1,14. Cả hai cùng `border-radius: 4px`. |
-  > | PRODDETAIL-VIS-07 | Visual | Passed | Mock API trả tên 102 ký tự: `<h1>` xuống 4 dòng, `right` 1191 < card `right` 1216, `bottom` 249 < giá `top` 265 → không tràn, không đè. |
-  > | PRODDETAIL-VIS-08 | Visual | Passed | Mock API trả mô tả 675 ký tự: `scrollHeight` = `clientHeight` (không cắt cụt), `overflow: visible`, `bottom` 553 < card `bottom` 708. |
-  > | PRODDETAIL-VIS-09 | Visual | Passed | Chặn `placehold.co` (`route.abort`): `naturalWidth` = 0, hiện chữ alt "iPhone 15 Pro Max"; 2 cột vẫn 455/455 px cùng hàng y=105, cột phải giữ nguyên x=736. |
-  > | PRODDETAIL-VIS-10 | Visual | Failed | `document.title` = `frontend-web` (chuỗi mặc định của Vite) trên mọi sản phẩm, không hề chứa tên sản phẩm. → `BUG-PRODDETAIL-010` |
-  > | PRODDETAIL-VIS-11 | Visual | Passed | Cả 3 trang: `border-radius: 4px`, viền `1px solid rgb(229,231,235)`, shadow `rgba(0,0,0,0.05) 0 1px 2px 0`, nền `rgb(255,255,255)`. |
-  > | PRODDETAIL-VIS-12 | Visual | Passed | Chữ `rgb(55,65,81)` trên nền `rgb(255,255,255)` → tỉ lệ tương phản ≈ 10,3 : 1, vượt xa ngưỡng WCAG AA 4,5 : 1. |
-  > | PRODDETAIL-VIS-13 | Visual | Passed | Chạy bằng `emulateMedia({colorScheme:'dark'})`: app không khai báo dark mode nên giữ nguyên card trắng / `<h1>` đen / mô tả `rgb(55,65,81)` — không sinh cặp màu trùng nền. |
-  > | PRODDETAIL-VIS-14 | Visual | Passed | Sau `dir=rtl`: 2 cột đảo chỗ (ảnh x=736, thông tin x=249), không chồng lấn, nút vẫn trong card, `scrollWidth` = `clientWidth` = 1440. |
-  > | PRODDETAIL-RES-01 | Responsive | Passed | Card rộng 992 px, 2 cột đều 455 px cùng hàng y=105 (mỗi cột ≈ 46% card, phần còn lại là padding + gap 32 px). |
-  > | PRODDETAIL-RES-02 | Responsive | Passed | Vẫn 2 cột 327/327 px cùng hàng y=105; cột trái `right` 368 < cột phải `x` 400 → không chồng lấn. |
-  > | PRODDETAIL-RES-03 | Responsive | Passed | Chuyển đúng 1 cột: ảnh y=105 (670×670), khối thông tin y=807; khoảng cách 32 px — bằng `gap-8` của layout, không bất thường. |
-  > | PRODDETAIL-RES-04 | Responsive | Passed | `document.documentElement.scrollWidth` = `clientWidth` = 390 → không có thanh cuộn ngang. |
-  > | PRODDETAIL-RES-05 | Responsive | Passed | Nút x=41 → right 225,3 nằm trọn trong card (16 → 374), thẳng lề trái với khối "Số lượng". **Lưu ý:** `.bug-mobile-hidden` có đặt `margin-right:-100px` ở ≤640 px nhưng nút dùng `self-start` (rộng theo nội dung) nên chưa gây lệch — rủi ro tiềm ẩn nếu đổi sang `w-full`. |
-  > | PRODDETAIL-RES-06 | Responsive | Passed | Mô phỏng bằng viewport tương đương 960×600 CSS px (1440÷1,5): vẫn 2 cột 415,5 px, không chồng lấn, `scrollWidth` = `clientWidth` = 945. Chưa test bằng Ctrl+= thật (Playwright không có API zoom trình duyệt). |
-  > | PRODDETAIL-RES-07 | Responsive | Passed | 844×390: quay lại 2 cột 357,5 px, không cuộn ngang. Nút ở y=414,5 (dưới nếp gấp 390 px) nhưng trang cuộn dọc tới được. |
-  > | PRODDETAIL-COM-01 | Compatibility | Not Run | Playwright MCP trong phiên này chỉ lái được Chromium; sandbox chặn `require('playwright')` nên không khởi chạy được Firefox 128 để đối chiếu. Cần chạy tay hoặc cấu hình MCP thêm Firefox. |
-  > | PRODDETAIL-COM-02 | Compatibility | Not Run | Cùng lý do COM-01 — thiếu vế Firefox 128. |
-  > | PRODDETAIL-COM-03 | Compatibility | Not Run | Trên Chromium dấu tiếng Việt hiển thị đúng ở mọi vị trí (đã quan sát qua screenshot), nhưng item yêu cầu **cả hai** trình duyệt nên chưa đủ căn cứ kết luận. |
-  > | PRODDETAIL-COM-04 | Compatibility | Failed | Context `en-US` → `30,000,000 ₫`; context `vi-VN` → `30.000.000 ₫`. Chuỗi giá đổi theo locale trình duyệt thay vì cố định chuẩn vi-VN. → `BUG-PRODDETAIL-008` |
+  > | ID                | Category      | Status  | Notes                                                                                                                                                                                                                                                                       |
+  > | ----------------- | ------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  > | PRODDETAIL-VIS-01 | Visual        | Failed  | Ảnh gốc `naturalWidth×Height = 300×300` nhưng render 455×455 px (phóng 152%) → chữ "iPhone 15" trên ảnh nhoè thấy rõ trong screenshot. → `BUG-PRODDETAIL-010`                                                                                                               |
+  > | PRODDETAIL-VIS-02 | Visual        | Failed  | Hiện `30,000,000 ₫` (dấu phẩy) vì `Number(price).toLocaleString()` không truyền locale nên bám theo locale trình duyệt. → `BUG-PRODDETAIL-008`                                                                                                                              |
+  > | PRODDETAIL-VIS-03 | Visual        | Passed  | Chuỗi render `30,000,000 ₫`: `₫` sau phần số, cách đúng 1 khoảng trắng, nằm chung `<p>` nên cùng `font-size: 24px` và màu `rgb(220,38,38)`.                                                                                                                                 |
+  > | PRODDETAIL-VIS-04 | Visual        | Failed  | Thẻ mô tả có class `flex-grow` nên cao 225 px dù chỉ chứa 1 dòng chữ ~24 px → sinh ~200 px trắng thừa giữa mô tả và "Số lượng:". Các khối khác chỉ cách nhau 16–32 px. → `BUG-PRODDETAIL-010`                                                                               |
+  > | PRODDETAIL-VIS-05 | Visual        | Passed  | Nhãn: top 463 + h 24 → tâm 475. Ô nhập: top 454 + h 42 → tâm 475. Hai tâm trùng khít (container dùng `items-center`).                                                                                                                                                       |
+  > | PRODDETAIL-VIS-06 | Visual        | Passed  | Ô nhập 80×42 px, nút 184,3×48 px → tỉ lệ chiều cao 1 : 1,14. Cả hai cùng `border-radius: 4px`.                                                                                                                                                                              |
+  > | PRODDETAIL-VIS-07 | Visual        | Passed  | Mock API trả tên 102 ký tự: `<h1>` xuống 4 dòng, `right` 1191 < card `right` 1216, `bottom` 249 < giá `top` 265 → không tràn, không đè.                                                                                                                                     |
+  > | PRODDETAIL-VIS-08 | Visual        | Passed  | Mock API trả mô tả 675 ký tự: `scrollHeight` = `clientHeight` (không cắt cụt), `overflow: visible`, `bottom` 553 < card `bottom` 708.                                                                                                                                       |
+  > | PRODDETAIL-VIS-09 | Visual        | Passed  | Chặn `placehold.co` (`route.abort`): `naturalWidth` = 0, hiện chữ alt "iPhone 15 Pro Max"; 2 cột vẫn 455/455 px cùng hàng y=105, cột phải giữ nguyên x=736.                                                                                                                 |
+  > | PRODDETAIL-VIS-10 | Visual        | Failed  | `document.title` = `frontend-web` (chuỗi mặc định của Vite) trên mọi sản phẩm, không hề chứa tên sản phẩm. → `BUG-PRODDETAIL-010`                                                                                                                                           |
+  > | PRODDETAIL-VIS-11 | Visual        | Passed  | Cả 3 trang: `border-radius: 4px`, viền `1px solid rgb(229,231,235)`, shadow `rgba(0,0,0,0.05) 0 1px 2px 0`, nền `rgb(255,255,255)`.                                                                                                                                         |
+  > | PRODDETAIL-VIS-12 | Visual        | Passed  | Chữ `rgb(55,65,81)` trên nền `rgb(255,255,255)` → tỉ lệ tương phản ≈ 10,3 : 1, vượt xa ngưỡng WCAG AA 4,5 : 1.                                                                                                                                                              |
+  > | PRODDETAIL-VIS-13 | Visual        | Passed  | Chạy bằng `emulateMedia({colorScheme:'dark'})`: app không khai báo dark mode nên giữ nguyên card trắng / `<h1>` đen / mô tả `rgb(55,65,81)` — không sinh cặp màu trùng nền.                                                                                                 |
+  > | PRODDETAIL-VIS-14 | Visual        | Passed  | Sau `dir=rtl`: 2 cột đảo chỗ (ảnh x=736, thông tin x=249), không chồng lấn, nút vẫn trong card, `scrollWidth` = `clientWidth` = 1440.                                                                                                                                       |
+  > | PRODDETAIL-RES-01 | Responsive    | Passed  | Card rộng 992 px, 2 cột đều 455 px cùng hàng y=105 (mỗi cột ≈ 46% card, phần còn lại là padding + gap 32 px).                                                                                                                                                               |
+  > | PRODDETAIL-RES-02 | Responsive    | Passed  | Vẫn 2 cột 327/327 px cùng hàng y=105; cột trái `right` 368 < cột phải `x` 400 → không chồng lấn.                                                                                                                                                                            |
+  > | PRODDETAIL-RES-03 | Responsive    | Passed  | Chuyển đúng 1 cột: ảnh y=105 (670×670), khối thông tin y=807; khoảng cách 32 px — bằng `gap-8` của layout, không bất thường.                                                                                                                                                |
+  > | PRODDETAIL-RES-04 | Responsive    | Passed  | `document.documentElement.scrollWidth` = `clientWidth` = 390 → không có thanh cuộn ngang.                                                                                                                                                                                   |
+  > | PRODDETAIL-RES-05 | Responsive    | Passed  | Nút x=41 → right 225,3 nằm trọn trong card (16 → 374), thẳng lề trái với khối "Số lượng". **Lưu ý:** `.bug-mobile-hidden` có đặt `margin-right:-100px` ở ≤640 px nhưng nút dùng `self-start` (rộng theo nội dung) nên chưa gây lệch — rủi ro tiềm ẩn nếu đổi sang `w-full`. |
+  > | PRODDETAIL-RES-06 | Responsive    | Passed  | Mô phỏng bằng viewport tương đương 960×600 CSS px (1440÷1,5): vẫn 2 cột 415,5 px, không chồng lấn, `scrollWidth` = `clientWidth` = 945. Chưa test bằng Ctrl+= thật (Playwright không có API zoom trình duyệt).                                                              |
+  > | PRODDETAIL-RES-07 | Responsive    | Passed  | 844×390: quay lại 2 cột 357,5 px, không cuộn ngang. Nút ở y=414,5 (dưới nếp gấp 390 px) nhưng trang cuộn dọc tới được.                                                                                                                                                      |
+  > | PRODDETAIL-COM-01 | Compatibility | Not Run | Playwright MCP trong phiên này chỉ lái được Chromium; sandbox chặn `require('playwright')` nên không khởi chạy được Firefox 128 để đối chiếu. Cần chạy tay hoặc cấu hình MCP thêm Firefox.                                                                                  |
+  > | PRODDETAIL-COM-02 | Compatibility | Not Run | Cùng lý do COM-01 — thiếu vế Firefox 128.                                                                                                                                                                                                                                   |
+  > | PRODDETAIL-COM-03 | Compatibility | Not Run | Trên Chromium dấu tiếng Việt hiển thị đúng ở mọi vị trí (đã quan sát qua screenshot), nhưng item yêu cầu **cả hai** trình duyệt nên chưa đủ căn cứ kết luận.                                                                                                                |
+  > | PRODDETAIL-COM-04 | Compatibility | Failed  | Context `en-US` → `30,000,000 ₫`; context `vi-VN` → `30.000.000 ₫`. Chuỗi giá đổi theo locale trình duyệt thay vì cố định chuẩn vi-VN. → `BUG-PRODDETAIL-008`                                                                                                               |
   >
   > ## IA-02 — Forms
   >
-  > | ID | Category | Status | Notes |
-  > | --- | --- | --- | --- |
-  > | PRODDETAIL-VAL-01 | Validation | Failed | `-1` được nhận, không có thông báo lỗi nào; giỏ hàng nhận số lượng `-1`, thành tiền **-30.000.000 ₫**, tổng tạm tính âm. → `BUG-PRODDETAIL-002` |
-  > | PRODDETAIL-VAL-02 | Validation | Failed | `0` được nhận, không báo lỗi; giỏ hàng tạo dòng với số lượng `0`, thành tiền `0 ₫`. → `BUG-PRODDETAIL-002` |
+  > | ID                | Category   | Status | Notes                                                                                                                                                                                                                             |
+  > | ----------------- | ---------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  > | PRODDETAIL-VAL-01 | Validation | Failed | `-1` được nhận, không có thông báo lỗi nào; giỏ hàng nhận số lượng `-1`, thành tiền **-30.000.000 ₫**, tổng tạm tính âm. → `BUG-PRODDETAIL-002`                                                                                   |
+  > | PRODDETAIL-VAL-02 | Validation | Failed | `0` được nhận, không báo lỗi; giỏ hàng tạo dòng với số lượng `0`, thành tiền `0 ₫`. → `BUG-PRODDETAIL-002`                                                                                                                        |
   > | PRODDETAIL-VAL-03 | Validation | Failed | Trình duyệt đã đánh dấu `validity.valid = false` (stepMismatch) nhưng UI **không** đọc tới và không báo gì; `parseInt("1.5")` âm thầm cắt còn `1` rồi thêm vào giỏ — người dùng mất dữ liệu mà không biết. → `BUG-PRODDETAIL-002` |
-  > | PRODDETAIL-VAL-04 | Validation | Failed | Xoá trắng → `parseInt("")` = `NaN`; giỏ hàng hiển thị số lượng `NaN`, thành tiền `NaN ₫`, tổng tạm tính `NaN ₫`. → `BUG-PRODDETAIL-002` |
-  > | PRODDETAIL-VAL-05 | Validation | Failed | Vế đầu đạt (ô nhập chặn chữ), **vế sau không đạt**: giá trị bị xoá thành rỗng chứ không giữ lại `1` trước đó → submit tiếp tạo `NaN` trong giỏ. → `BUG-PRODDETAIL-002` |
-  > | PRODDETAIL-VAL-06 | Validation | Failed | `2e3` được nhận, không báo lỗi. `valueAsNumber` = 2000 nhưng `parseInt("2e3")` = **2** → giỏ nhận 2. Sai lệch giữa giá trị người dùng thấy và giá trị hệ thống dùng. → `BUG-PRODDETAIL-002` |
-  > | PRODDETAIL-VAL-07 | Validation | Failed | Không có giới hạn tối đa: giỏ nhận 999.999.999, thành tiền **29.999.999.970.000.000 ₫**. → `BUG-PRODDETAIL-002` |
-  > | PRODDETAIL-VAL-08 | Validation | Failed | DOM thực tế: `<input class="border p-2 w-20 rounded" type="number" value="1">` — không có `min`, `max`, `step`, cũng không có `id`/`name`. → `BUG-PRODDETAIL-002` |
-  > | PRODDETAIL-VAL-09 | Validation | Failed | Từ `1` nhấn mũi tên giảm (ArrowDown) → giá trị về `0`; do thiếu `min="1"` nên trình duyệt không có mốc chặn. → `BUG-PRODDETAIL-002` |
-  > | PRODDETAIL-VAL-10 | Validation | Failed | Dán `-5` được nhận nguyên vẹn, không báo lỗi; giỏ hàng nhận `-5`, thành tiền **-150.000.000 ₫**. → `BUG-PRODDETAIL-002` |
-  > | PRODDETAIL-FUN-01 | Functional | Failed | Lần bấm đầu tiên `handleAddToCart` chỉ chạy `setClickCount(1); return` → nhãn vẫn là "Thêm vào giỏ hàng" và trang Giỏ hàng báo "Giỏ hàng của bạn đang trống". → `BUG-PRODDETAIL-001` |
-  > | PRODDETAIL-FUN-02 | Functional | Failed | 2 lần bấm chỉ tạo **1** dòng giỏ hàng (số lượng 1). Lần bấm đầu bị nuốt, lần thứ hai mới thực sự thêm. → `BUG-PRODDETAIL-001` |
-  > | PRODDETAIL-FUN-03 | Functional | Failed | Double-click (2 lần bấm) chỉ ghi nhận **1** lượt thêm — không thừa nhưng **thiếu** so với số lần bấm thực tế, nên vẫn lệch khỏi ER. → `BUG-PRODDETAIL-001` |
-  > | PRODDETAIL-FUN-04 | Functional | Failed | 2 lượt thêm tạo **2 dòng riêng biệt** cùng tên "iPhone 15 Pro Max", mỗi dòng số lượng 1. `addToCart` luôn `setCart([...cart, {...}])`, không hề gộp theo `id`. → `BUG-PRODDETAIL-003` |
-  > | PRODDETAIL-FUN-05 | Functional | Passed | Giỏ hàng hiển thị số lượng `3`, thành tiền `90.000.000 ₫` = 30.000.000 × 3. Đúng ER. |
-  > | PRODDETAIL-FUN-06 | Functional | Passed | Nhấn Enter: URL không đổi, không tải lại trang, giá trị `5` được giữ nguyên, không thêm vào giỏ. Nhánh "không làm gì" — hợp lệ vì input không nằm trong `<form>`. |
-  > | PRODDETAIL-FUN-07 | Functional | Passed | Đo thực tế: nhãn "Đã thêm" xuất hiện sau 35 ms và hiển thị **2003 ms** rồi trở về nhãn gốc — đủ để đọc 2 chữ. |
+  > | PRODDETAIL-VAL-04 | Validation | Failed | Xoá trắng → `parseInt("")` = `NaN`; giỏ hàng hiển thị số lượng `NaN`, thành tiền `NaN ₫`, tổng tạm tính `NaN ₫`. → `BUG-PRODDETAIL-002`                                                                                           |
+  > | PRODDETAIL-VAL-05 | Validation | Failed | Vế đầu đạt (ô nhập chặn chữ), **vế sau không đạt**: giá trị bị xoá thành rỗng chứ không giữ lại `1` trước đó → submit tiếp tạo `NaN` trong giỏ. → `BUG-PRODDETAIL-002`                                                            |
+  > | PRODDETAIL-VAL-06 | Validation | Failed | `2e3` được nhận, không báo lỗi. `valueAsNumber` = 2000 nhưng `parseInt("2e3")` = **2** → giỏ nhận 2. Sai lệch giữa giá trị người dùng thấy và giá trị hệ thống dùng. → `BUG-PRODDETAIL-002`                                       |
+  > | PRODDETAIL-VAL-07 | Validation | Failed | Không có giới hạn tối đa: giỏ nhận 999.999.999, thành tiền **29.999.999.970.000.000 ₫**. → `BUG-PRODDETAIL-002`                                                                                                                   |
+  > | PRODDETAIL-VAL-08 | Validation | Failed | DOM thực tế: `<input class="border p-2 w-20 rounded" type="number" value="1">` — không có `min`, `max`, `step`, cũng không có `id`/`name`. → `BUG-PRODDETAIL-002`                                                                 |
+  > | PRODDETAIL-VAL-09 | Validation | Failed | Từ `1` nhấn mũi tên giảm (ArrowDown) → giá trị về `0`; do thiếu `min="1"` nên trình duyệt không có mốc chặn. → `BUG-PRODDETAIL-002`                                                                                               |
+  > | PRODDETAIL-VAL-10 | Validation | Failed | Dán `-5` được nhận nguyên vẹn, không báo lỗi; giỏ hàng nhận `-5`, thành tiền **-150.000.000 ₫**. → `BUG-PRODDETAIL-002`                                                                                                           |
+  > | PRODDETAIL-FUN-01 | Functional | Failed | Lần bấm đầu tiên `handleAddToCart` chỉ chạy `setClickCount(1); return` → nhãn vẫn là "Thêm vào giỏ hàng" và trang Giỏ hàng báo "Giỏ hàng của bạn đang trống". → `BUG-PRODDETAIL-001`                                              |
+  > | PRODDETAIL-FUN-02 | Functional | Failed | 2 lần bấm chỉ tạo **1** dòng giỏ hàng (số lượng 1). Lần bấm đầu bị nuốt, lần thứ hai mới thực sự thêm. → `BUG-PRODDETAIL-001`                                                                                                     |
+  > | PRODDETAIL-FUN-03 | Functional | Failed | Double-click (2 lần bấm) chỉ ghi nhận **1** lượt thêm — không thừa nhưng **thiếu** so với số lần bấm thực tế, nên vẫn lệch khỏi ER. → `BUG-PRODDETAIL-001`                                                                        |
+  > | PRODDETAIL-FUN-04 | Functional | Failed | 2 lượt thêm tạo **2 dòng riêng biệt** cùng tên "iPhone 15 Pro Max", mỗi dòng số lượng 1. `addToCart` luôn `setCart([...cart, {...}])`, không hề gộp theo `id`. → `BUG-PRODDETAIL-003`                                             |
+  > | PRODDETAIL-FUN-05 | Functional | Passed | Giỏ hàng hiển thị số lượng `3`, thành tiền `90.000.000 ₫` = 30.000.000 × 3. Đúng ER.                                                                                                                                              |
+  > | PRODDETAIL-FUN-06 | Functional | Passed | Nhấn Enter: URL không đổi, không tải lại trang, giá trị `5` được giữ nguyên, không thêm vào giỏ. Nhánh "không làm gì" — hợp lệ vì input không nằm trong `<form>`.                                                                 |
+  > | PRODDETAIL-FUN-07 | Functional | Passed | Đo thực tế: nhãn "Đã thêm" xuất hiện sau 35 ms và hiển thị **2003 ms** rồi trở về nhãn gốc — đủ để đọc 2 chữ.                                                                                                                     |
   >
   > ## IA-03 — Navigation
   >
-  > | ID | Category | Status | Notes |
-  > | --- | --- | --- | --- |
-  > | PRODDETAIL-NAV-01 | Navigation | Passed | Bấm logo → URL `http://localhost:5173/`, trang Home render đủ 5 link sản phẩm. |
-  > | PRODDETAIL-NAV-02 | Navigation | Passed | Bấm "Giỏ hàng" → `/cart`; sản phẩm đã thêm hiển thị đúng tên, giá `30,000,000 ₫`, số lượng và thành tiền. |
-  > | PRODDETAIL-NAV-03 | Navigation | Failed | Cuộn Home tới `scrollY` = 118 rồi mở chi tiết, bấm Back → về đúng `/` nhưng `scrollY` = **0**, mất vị trí cuộn. → `BUG-PRODDETAIL-012` |
-  > | PRODDETAIL-NAV-04 | Navigation | Passed | Forward → đúng `/product/1`, `<h1>` "iPhone 15 Pro Max", giá và mô tả hiển thị đầy đủ. |
-  > | PRODDETAIL-NAV-05 | Navigation | Passed | Mở `/product/2` trong browser context hoàn toàn mới → "Samsung Galaxy S24 Ultra", giá `28,000,000 ₫`, ảnh có alt đúng. Không cần qua Home. |
-  > | PRODDETAIL-NAV-06 | Navigation | Failed | Hiện `Sản phẩm không tồn tại (Lỗi trắng trang do data rỗng)` — ngôn ngữ debug nội bộ; `main` không chứa bất kỳ thẻ `<a>` nào nên không có lối quay lại. → `BUG-PRODDETAIL-005` |
-  > | PRODDETAIL-NAV-07 | Navigation | Failed | Không trắng trang và không crash (vế an toàn đạt), nhưng hiện đúng chuỗi debug như NAV-06 → vẫn vi phạm vế "không hiển thị lỗi kỹ thuật". → `BUG-PRODDETAIL-005` |
-  > | PRODDETAIL-NAV-08 | Navigation | Failed | Truy vấn `main a` trả về mảng rỗng — không breadcrumb, không link "Quay lại danh sách". Chỉ còn logo ở header (ngoài phạm vi nội dung). → `BUG-PRODDETAIL-005` |
-  > | PRODDETAIL-NAV-09 | Navigation | Failed | Trước F5 nút đã hiện "Đã thêm"; sau F5 giỏ hàng trống hoàn toàn. `localStorage` và `sessionStorage` đều rỗng — giỏ chỉ nằm trong `useState`. → `BUG-PRODDETAIL-006` |
+  > | ID                | Category   | Status | Notes                                                                                                                                                                                         |
+  > | ----------------- | ---------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  > | PRODDETAIL-NAV-01 | Navigation | Passed | Bấm logo → URL `http://localhost:5173/`, trang Home render đủ 5 link sản phẩm.                                                                                                                |
+  > | PRODDETAIL-NAV-02 | Navigation | Passed | Bấm "Giỏ hàng" → `/cart`; sản phẩm đã thêm hiển thị đúng tên, giá `30,000,000 ₫`, số lượng và thành tiền.                                                                                     |
+  > | PRODDETAIL-NAV-03 | Navigation | Failed | Cuộn Home tới `scrollY` = 118 rồi mở chi tiết, bấm Back → về đúng `/` nhưng `scrollY` = **0**, mất vị trí cuộn. → `BUG-PRODDETAIL-012`                                                        |
+  > | PRODDETAIL-NAV-04 | Navigation | Passed | Forward → đúng `/product/1`, `<h1>` "iPhone 15 Pro Max", giá và mô tả hiển thị đầy đủ.                                                                                                        |
+  > | PRODDETAIL-NAV-05 | Navigation | Passed | Mở `/product/2` trong browser context hoàn toàn mới → "Samsung Galaxy S24 Ultra", giá `28,000,000 ₫`, ảnh có alt đúng. Không cần qua Home.                                                    |
+  > | PRODDETAIL-NAV-06 | Navigation | Failed | Hiện `Sản phẩm không tồn tại (Lỗi trắng trang do data rỗng)` — ngôn ngữ debug nội bộ; `main` không chứa bất kỳ thẻ `<a>` nào nên không có lối quay lại. → `BUG-PRODDETAIL-005`                |
+  > | PRODDETAIL-NAV-07 | Navigation | Failed | Không trắng trang và không crash (vế an toàn đạt), nhưng hiện đúng chuỗi debug như NAV-06 → vẫn vi phạm vế "không hiển thị lỗi kỹ thuật". → `BUG-PRODDETAIL-005`                              |
+  > | PRODDETAIL-NAV-08 | Navigation | Failed | Truy vấn `main a` trả về mảng rỗng — không breadcrumb, không link "Quay lại danh sách". Chỉ còn logo ở header (ngoài phạm vi nội dung). → `BUG-PRODDETAIL-005`                                |
+  > | PRODDETAIL-NAV-09 | Navigation | Failed | Trước F5 nút đã hiện "Đã thêm"; sau F5 giỏ hàng trống hoàn toàn. `localStorage` và `sessionStorage` đều rỗng — giỏ chỉ nằm trong `useState`. → `BUG-PRODDETAIL-006`                           |
   > | PRODDETAIL-NAV-10 | Navigation | Failed | Đăng nhập `test@eshop.com` thành công: header hiện "Chào, Test User" ✓ và giỏ hàng còn nguyên ✓, nhưng bị đưa về `/` thay vì quay lại `/product/1` → **mất ngữ cảnh**. → `BUG-PRODDETAIL-012` |
   >
   > ## IA-04 — Feedback / state
   >
-  > | ID | Category | Status | Notes |
-  > | --- | --- | --- | --- |
-  > | PRODDETAIL-FDB-01 | Feedback | Failed | Làm chậm API 4 giây: trạng thái tải là đúng `<div>Đang tải...</div>` — **0** spinner/skeleton/progressbar, **0** phần tử có `animation`. Chỉ là chữ thuần. → `BUG-PRODDETAIL-004` |
-  > | PRODDETAIL-FDB-02 | Feedback | Failed | Mô phỏng backend chết (`route.abort('connectionrefused')`): sau **30 giây** màn hình vẫn kẹt ở "Đang tải...", 0 nút, 0 thông báo lỗi. `.catch()` chỉ gọi `console.error` nên `product` mãi là `null`. → `BUG-PRODDETAIL-004` |
-  > | PRODDETAIL-FDB-03 | Feedback | Failed | Nguyên văn hiển thị: `Sản phẩm không tồn tại (Lỗi trắng trang do data rỗng)` — phần trong ngoặc là ghi chú debug của lập trình viên bị lộ ra người dùng cuối. → `BUG-PRODDETAIL-005` |
-  > | PRODDETAIL-FDB-04 | Feedback | Failed | So sánh `document.body.innerHTML` trước và sau 2 giây kể từ lần bấm: **giống hệt nhau**. Không nhãn đổi, không toast, không badge — người dùng bấm xong không thấy bất kỳ thay đổi nào. → `BUG-PRODDETAIL-001` |
-  > | PRODDETAIL-FDB-05 | Feedback | Failed | Xác nhận duy nhất là nhãn **bên trong chính nút vừa bấm**; không toast, không thay đổi nào ở header hay vùng khác của trang. Mắt rời khỏi nút là bỏ lỡ. → `BUG-PRODDETAIL-009` |
-  > | PRODDETAIL-FDB-06 | Feedback | Failed | Trong lúc xử lý: `disabled` = `false`, không `aria-busy`, không `aria-disabled`. Nút luôn bấm được, bỏ ngỏ double-submit. → `BUG-PRODDETAIL-009` |
-  > | PRODDETAIL-FDB-07 | Feedback | Failed | Sau khi thêm thành công, text của link header vẫn đúng chuỗi `Giỏ hàng`, không chứa chữ số nào — không có badge đếm. → `BUG-PRODDETAIL-009` |
-  > | PRODDETAIL-USB-01 | Usability | Passed | Nhãn là "Thêm vào giỏ hàng" — mô tả rõ hành động, không dùng "Submit"/"OK"/icon trần. Xét riêng về mặt chữ nghĩa thì đạt. |
-  > | PRODDETAIL-USB-02 | Usability | Failed | Toàn bộ text của `main` là "iPhone 15 Pro Max / 30,000,000 ₫ / Điện thoại cao cấp của Apple / Số lượng: / Thêm vào giỏ hàng" — không có bất kỳ thông tin tồn kho nào. → `BUG-PRODDETAIL-011` |
-  > | PRODDETAIL-USB-03 | Usability | Failed | `main` chỉ có đúng **1** nút ("Thêm vào giỏ hàng") và **0** link — bắt buộc phải qua trang Giỏ hàng mới tới được thanh toán. → `BUG-PRODDETAIL-011` |
-  > | PRODDETAIL-USB-04 | Usability | Failed | Nhãn hứa "Thêm vào giỏ hàng" nhưng **lần bấm đầu tiên không thêm gì cả** (chỉ tăng `clickCount`). Nhãn không khớp hành vi thực tế. → `BUG-PRODDETAIL-001` |
-  > | PRODDETAIL-USB-05 | Usability | Failed | Không có khối sản phẩm liên quan/cùng danh mục; `main` không chứa link nào dù dữ liệu đã có sẵn trường `category_id`. → `BUG-PRODDETAIL-011` |
-  > | PRODDETAIL-ACC-01 | Accessibility | Failed | DOM: `<label>Số lượng:</label>` không có `for`, `<input>` không có `id`. Bấm vào nhãn → `document.activeElement` vẫn là `BODY`, con trỏ không nhảy vào ô nhập. → `BUG-PRODDETAIL-007` |
-  > | PRODDETAIL-ACC-02 | Accessibility | Passed | Thứ tự Tab đo được: EShop → Giỏ hàng → Đăng nhập → Đăng ký → ô số lượng → nút "Thêm vào giỏ hàng" → hết. Đúng trình tự đọc (footer không có phần tử focus được nên không xuất hiện). |
-  > | PRODDETAIL-ACC-03 | Accessibility | Passed | Cả hai phần tử giữ vòng focus mặc định của trình duyệt: `outline-style: auto`, `outline-color: rgb(16,16,16)` — không bị `outline: none` ghi đè. |
-  > | PRODDETAIL-ACC-04 | Accessibility | Passed | Cả `Enter` và `Space` đều kích hoạt nút và thêm được sản phẩm vào giỏ, kết quả giống hệt bấm chuột. |
-  > | PRODDETAIL-ACC-05 | Accessibility | Passed | `alt` = "iPhone 15 Pro Max" — mô tả đúng sản phẩm, không rỗng, không phải tên file. |
-  > | PRODDETAIL-ACC-06 | Accessibility | Failed | `document.documentElement.lang` = `"en"` trong khi 100% nội dung hiển thị là tiếng Việt → screen reader đọc sai ngữ điệu. → `BUG-PRODDETAIL-007` |
+  > | ID                | Category      | Status | Notes                                                                                                                                                                                                                                                                                              |
+  > | ----------------- | ------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  > | PRODDETAIL-FDB-01 | Feedback      | Failed | Làm chậm API 4 giây: trạng thái tải là đúng `<div>Đang tải...</div>` — **0** spinner/skeleton/progressbar, **0** phần tử có `animation`. Chỉ là chữ thuần. → `BUG-PRODDETAIL-004`                                                                                                                  |
+  > | PRODDETAIL-FDB-02 | Feedback      | Failed | Mô phỏng backend chết (`route.abort('connectionrefused')`): sau **30 giây** màn hình vẫn kẹt ở "Đang tải...", 0 nút, 0 thông báo lỗi. `.catch()` chỉ gọi `console.error` nên `product` mãi là `null`. → `BUG-PRODDETAIL-004`                                                                       |
+  > | PRODDETAIL-FDB-03 | Feedback      | Failed | Nguyên văn hiển thị: `Sản phẩm không tồn tại (Lỗi trắng trang do data rỗng)` — phần trong ngoặc là ghi chú debug của lập trình viên bị lộ ra người dùng cuối. → `BUG-PRODDETAIL-005`                                                                                                               |
+  > | PRODDETAIL-FDB-04 | Feedback      | Failed | So sánh `document.body.innerHTML` trước và sau 2 giây kể từ lần bấm: **giống hệt nhau**. Không nhãn đổi, không toast, không badge — người dùng bấm xong không thấy bất kỳ thay đổi nào. → `BUG-PRODDETAIL-001`                                                                                     |
+  > | PRODDETAIL-FDB-05 | Feedback      | Failed | Xác nhận duy nhất là nhãn **bên trong chính nút vừa bấm**; không toast, không thay đổi nào ở header hay vùng khác của trang. Mắt rời khỏi nút là bỏ lỡ. → `BUG-PRODDETAIL-009`                                                                                                                     |
+  > | PRODDETAIL-FDB-06 | Feedback      | Failed | Trong lúc xử lý: `disabled` = `false`, không `aria-busy`, không `aria-disabled`. Nút luôn bấm được, bỏ ngỏ double-submit. → `BUG-PRODDETAIL-009`                                                                                                                                                   |
+  > | PRODDETAIL-FDB-07 | Feedback      | Failed | Sau khi thêm thành công, text của link header vẫn đúng chuỗi `Giỏ hàng`, không chứa chữ số nào — không có badge đếm. → `BUG-PRODDETAIL-009`                                                                                                                                                        |
+  > | PRODDETAIL-USB-01 | Usability     | Passed | Nhãn là "Thêm vào giỏ hàng" — mô tả rõ hành động, không dùng "Submit"/"OK"/icon trần. Xét riêng về mặt chữ nghĩa thì đạt.                                                                                                                                                                          |
+  > | PRODDETAIL-USB-02 | Usability     | Failed | Toàn bộ text của `main` là "iPhone 15 Pro Max / 30,000,000 ₫ / Điện thoại cao cấp của Apple / Số lượng: / Thêm vào giỏ hàng" — không có bất kỳ thông tin tồn kho nào. → `BUG-PRODDETAIL-011`                                                                                                       |
+  > | PRODDETAIL-USB-03 | Usability     | Failed | `main` chỉ có đúng **1** nút ("Thêm vào giỏ hàng") và **0** link — bắt buộc phải qua trang Giỏ hàng mới tới được thanh toán. → `BUG-PRODDETAIL-011`                                                                                                                                                |
+  > | PRODDETAIL-USB-04 | Usability     | Failed | Nhãn hứa "Thêm vào giỏ hàng" nhưng **lần bấm đầu tiên không thêm gì cả** (chỉ tăng `clickCount`). Nhãn không khớp hành vi thực tế. → `BUG-PRODDETAIL-001`                                                                                                                                          |
+  > | PRODDETAIL-USB-05 | Usability     | Failed | Không có khối sản phẩm liên quan/cùng danh mục; `main` không chứa link nào dù dữ liệu đã có sẵn trường `category_id`. → `BUG-PRODDETAIL-011`                                                                                                                                                       |
+  > | PRODDETAIL-ACC-01 | Accessibility | Failed | DOM: `<label>Số lượng:</label>` không có `for`, `<input>` không có `id`. Bấm vào nhãn → `document.activeElement` vẫn là `BODY`, con trỏ không nhảy vào ô nhập. → `BUG-PRODDETAIL-007`                                                                                                              |
+  > | PRODDETAIL-ACC-02 | Accessibility | Passed | Thứ tự Tab đo được: EShop → Giỏ hàng → Đăng nhập → Đăng ký → ô số lượng → nút "Thêm vào giỏ hàng" → hết. Đúng trình tự đọc (footer không có phần tử focus được nên không xuất hiện).                                                                                                               |
+  > | PRODDETAIL-ACC-03 | Accessibility | Passed | Cả hai phần tử giữ vòng focus mặc định của trình duyệt: `outline-style: auto`, `outline-color: rgb(16,16,16)` — không bị `outline: none` ghi đè.                                                                                                                                                   |
+  > | PRODDETAIL-ACC-04 | Accessibility | Passed | Cả `Enter` và `Space` đều kích hoạt nút và thêm được sản phẩm vào giỏ, kết quả giống hệt bấm chuột.                                                                                                                                                                                                |
+  > | PRODDETAIL-ACC-05 | Accessibility | Passed | `alt` = "iPhone 15 Pro Max" — mô tả đúng sản phẩm, không rỗng, không phải tên file.                                                                                                                                                                                                                |
+  > | PRODDETAIL-ACC-06 | Accessibility | Failed | `document.documentElement.lang` = `"en"` trong khi 100% nội dung hiển thị là tiếng Việt → screen reader đọc sai ngữ điệu. → `BUG-PRODDETAIL-007`                                                                                                                                                   |
   > | PRODDETAIL-ACC-07 | Accessibility | Failed | **Phương pháp thay thế:** chưa chạy NVDA/Narrator thật (nằm ngoài khả năng của Playwright MCP); kết luận dựa trên DOM — trang có **0** vùng `aria-live` / `role=status` / `role=alert`, nên việc nhãn nút đổi thành "Đã thêm" chắc chắn không được screen reader thông báo. → `BUG-PRODDETAIL-007` |
-  > | PRODDETAIL-ACC-08 | Accessibility | Failed | Ở 390×844: nút 184,3×48 px (đạt) nhưng ô số lượng chỉ 80×**42** px — cạnh ngắn dưới ngưỡng 44 px. Khoảng cách dọc giữa hai vùng chạm là 16 px. → `BUG-PRODDETAIL-007` |
-  > | PRODDETAIL-ACC-09 | Accessibility | Passed | Toàn trang có đúng 1 heading: `<h1>iPhone 15 Pro Max</h1>`. Không nhảy cấp, phù hợp với trang chi tiết một sản phẩm không chia mục con. |
+  > | PRODDETAIL-ACC-08 | Accessibility | Failed | Ở 390×844: nút 184,3×48 px (đạt) nhưng ô số lượng chỉ 80×**42** px — cạnh ngắn dưới ngưỡng 44 px. Khoảng cách dọc giữa hai vùng chạm là 16 px. → `BUG-PRODDETAIL-007`                                                                                                                              |
+  > | PRODDETAIL-ACC-09 | Accessibility | Passed | Toàn trang có đúng 1 heading: `<h1>iPhone 15 Pro Max</h1>`. Không nhảy cấp, phù hợp với trang chi tiết một sản phẩm không chia mục con.                                                                                                                                                            |
   >
   > ## Mục 6 mới — Kết quả thực thi (2026-07-29)
   >
   > ### Tổng hợp theo aspect
   >
-  > | Aspect | Tổng | Passed | Failed | Not Run | Tỉ lệ Failed |
-  > | --- | --- | --- | --- | --- | --- |
-  > | IA-01 — General UI standards | 25 | 17 | 5 | 3 | 20% |
-  > | IA-02 — Forms | 17 | 3 | 14 | 0 | 82% |
-  > | IA-03 — Navigation | 10 | 4 | 6 | 0 | 60% |
-  > | IA-04 — Feedback / state | 21 | 6 | 15 | 0 | 71% |
-  > | **Total** | **73** | **30** | **40** | **3** | **55%** |
+  > | Aspect                       | Tổng   | Passed | Failed | Not Run | Tỉ lệ Failed |
+  > | ---------------------------- | ------ | ------ | ------ | ------- | ------------ |
+  > | IA-01 — General UI standards | 25     | 17     | 5      | 3       | 20%          |
+  > | IA-02 — Forms                | 17     | 3      | 14     | 0       | 82%          |
+  > | IA-03 — Navigation           | 10     | 4      | 6      | 0       | 60%          |
+  > | IA-04 — Feedback / state     | 21     | 6      | 15     | 0       | 71%          |
+  > | **Total**                    | **73** | **30** | **40** | **3**   | **55%**      |
   >
   > ### Môi trường thực thi
   >
@@ -1052,23 +1051,23 @@
   >
   > ### Item không chạy được và lý do
   >
-  > | ID | Lý do |
-  > | --- | --- |
+  > | ID     | Lý do                                                                                                                                                     |
+  > | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
   > | COM-01 | Cần đối chiếu Chrome 126 ↔ Firefox 128. Playwright MCP phiên này chỉ lái Chromium; sandbox chặn `require('playwright')` nên không khởi chạy được Firefox. |
-  > | COM-02 | Cùng lý do trên (so sánh spinner của `input[type=number]` giữa 2 trình duyệt). |
-  > | COM-03 | Dấu tiếng Việt đã xác nhận đúng trên Chromium nhưng thiếu vế Firefox 128. |
+  > | COM-02 | Cùng lý do trên (so sánh spinner của `input[type=number]` giữa 2 trình duyệt).                                                                            |
+  > | COM-03 | Dấu tiếng Việt đã xác nhận đúng trên Chromium nhưng thiếu vế Firefox 128.                                                                                 |
   >
   > ### Item chạy bằng phương pháp thay thế
   >
-  > | ID | Phương pháp thay thế |
-  > | --- | --- |
-  > | RES-06 | Mô phỏng zoom 150% bằng viewport tương đương 960×600 CSS px thay cho Ctrl+= thật. |
-  > | VIS-13 | `emulateMedia({colorScheme:'dark'})` thay cho việc đổi dark mode ở cấp hệ điều hành. |
-  > | FDB-02 | `route.abort('connectionrefused')` mô phỏng backend chết thay cho việc tắt tiến trình cổng 3000. |
-  > | ACC-07 | Kiểm chứng qua DOM (đếm vùng `aria-live`/`role=status`) thay cho việc chạy NVDA/Narrator thật. |
+  > | ID        | Phương pháp thay thế                                                                              |
+  > | --------- | ------------------------------------------------------------------------------------------------- |
+  > | RES-06    | Mô phỏng zoom 150% bằng viewport tương đương 960×600 CSS px thay cho Ctrl+= thật.                 |
+  > | VIS-13    | `emulateMedia({colorScheme:'dark'})` thay cho việc đổi dark mode ở cấp hệ điều hành.              |
+  > | FDB-02    | `route.abort('connectionrefused')` mô phỏng backend chết thay cho việc tắt tiến trình cổng 3000.  |
+  > | ACC-07    | Kiểm chứng qua DOM (đếm vùng `aria-live`/`role=status`) thay cho việc chạy NVDA/Narrator thật.    |
   > | VIS-07/08 | Mock response API để tạo tên 102 ký tự và mô tả 675 ký tự (dữ liệu seed không có bản ghi đủ dài). |
   >
-  > ---
+  > ***
   >
   > # Phần 2 — 12 bug report (`tests/bug-reports/product-detail/`)
   >
@@ -1080,6 +1079,7 @@
   > **Environment:** Chromium (Playwright MCP) 1440×900 · Windows 11 · http://localhost:5173/product/1 · nhánh `hw3/23127211`, commit `ff96609`
   >
   > **Steps to reproduce:**
+  >
   > 1. Mở trang `http://localhost:5173/product/1` (tải mới hoàn toàn, không dùng điều hướng SPA)
   > 2. Giữ nguyên ô "Số lượng" ở giá trị mặc định `1`
   > 3. Bấm nút "Thêm vào giỏ hàng" **đúng một lần**
@@ -1101,16 +1101,16 @@
   >
   > **Actual result —** không có bất kỳ validation nào, cả 10 kịch bản đều được chấp nhận:
   >
-  > | Giá trị nhập | Số lượng vào giỏ | Thành tiền hiển thị | Ghi chú |
-  > | --- | --- | --- | --- |
-  > | `-1` | `-1` | **-30.000.000 ₫** | Tổng tạm tính âm |
-  > | `0` | `0` | `0 ₫` | Dòng rác trong giỏ |
-  > | `1.5` | `1` | `30.000.000 ₫` | `parseInt` âm thầm cắt còn 1 |
-  > | (rỗng) | `NaN` | **`NaN ₫`** | Tổng tạm tính cũng thành `NaN ₫` |
-  > | `abc` | `NaN` | **`NaN ₫`** | Ô chặn chữ nhưng xoá luôn giá trị cũ |
-  > | `2e3` | `2` | `60.000.000 ₫` | `valueAsNumber`=2000 nhưng `parseInt("2e3")`=2 |
-  > | `999999999` | `999999999` | **29.999.999.970.000.000 ₫** | Không có giới hạn tối đa |
-  > | `-5` (paste) | `-5` | **-150.000.000 ₫** | Dán cũng không bị chặn |
+  > | Giá trị nhập | Số lượng vào giỏ | Thành tiền hiển thị          | Ghi chú                                        |
+  > | ------------ | ---------------- | ---------------------------- | ---------------------------------------------- |
+  > | `-1`         | `-1`             | **-30.000.000 ₫**            | Tổng tạm tính âm                               |
+  > | `0`          | `0`              | `0 ₫`                        | Dòng rác trong giỏ                             |
+  > | `1.5`        | `1`              | `30.000.000 ₫`               | `parseInt` âm thầm cắt còn 1                   |
+  > | (rỗng)       | `NaN`            | **`NaN ₫`**                  | Tổng tạm tính cũng thành `NaN ₫`               |
+  > | `abc`        | `NaN`            | **`NaN ₫`**                  | Ô chặn chữ nhưng xoá luôn giá trị cũ           |
+  > | `2e3`        | `2`              | `60.000.000 ₫`               | `valueAsNumber`=2000 nhưng `parseInt("2e3")`=2 |
+  > | `999999999`  | `999999999`      | **29.999.999.970.000.000 ₫** | Không có giới hạn tối đa                       |
+  > | `-5` (paste) | `-5`             | **-150.000.000 ₫**           | Dán cũng không bị chặn                         |
   >
   > Bổ sung: VAL-08 — DOM là `<input class="border p-2 w-20 rounded" type="number" value="1">`, không có `min`/`max`/`step`. VAL-09 — từ `1` bấm mũi tên giảm về `0`. VAL-03 — trình duyệt đã set `validity.valid = false` nhưng ứng dụng không đọc tới.
   >
@@ -1167,9 +1167,10 @@
   > **Severity / Priority:** Major / P2
   >
   > **Actual result:**
+  >
   > - **ACC-01 — Nhãn rời rạc.** `<label>Số lượng:</label>` không có `for`, `<input>` không có `id`. Bấm vào nhãn → `document.activeElement` vẫn là `BODY`.
   > - **ACC-06 — Sai ngôn ngữ.** `document.documentElement.lang` = `"en"` trong khi 100% nội dung là tiếng Việt.
-  > - **ACC-07 — Không có thông báo cho screen reader.** Trang có **0** vùng `aria-live` / `role=status` / `role=alert`. *Ghi chú phương pháp:* chưa chạy NVDA/Narrator thật, kết luận dựa trên việc đếm live region trong DOM.
+  > - **ACC-07 — Không có thông báo cho screen reader.** Trang có **0** vùng `aria-live` / `role=status` / `role=alert`. _Ghi chú phương pháp:_ chưa chạy NVDA/Narrator thật, kết luận dựa trên việc đếm live region trong DOM.
   > - **ACC-08 — Vùng chạm dưới chuẩn.** Ở 390×844: nút 184,3×48 px (đạt), ô nhập số lượng 80×**42** px (không đạt ngưỡng 44 px). Khoảng cách dọc giữa hai vùng chạm 16 px.
   >
   > **Evidence:** `BUG-PRODDETAIL-007-mobile-touch-target.png`
@@ -1201,6 +1202,7 @@
   > **Severity / Priority:** Minor / P3
   >
   > **Actual result:**
+  >
   > - **VIS-01 — Ảnh phóng 152%.** Ảnh gốc 300×300 px render ở 455×455 px; ở viewport 767 px còn nặng hơn — render 670×670 px (phóng 2,23×). Chữ "iPhone 15" trên ảnh nhoè thấy rõ.
   > - **VIS-04 — Khoảng trắng thừa ~200 px.** `<p class="text-gray-700 mb-6 flex-grow">` giãn ra chiếm hết chiều cao dư của cột — đo được 225 px dù chỉ chứa 1 dòng chữ ~24 px.
   > - **VIS-10 — Tiêu đề tab mặc định.** `document.title` = `frontend-web` trên mọi sản phẩm.
@@ -1229,7 +1231,7 @@
   >
   > **Phát hiện ngoài phạm vi checklist:** khi chạy NAV-10 nhận thấy cả hai ô của form đăng nhập đều là `type="text"` — ô mật khẩu **không được che dấu**. Thuộc màn hình Login, cần lập bug riêng cho module LOGIN.
   >
-  > ---
+  > ***
   >
   > # Phần 3 — Screenshot bằng chứng (`tests/bug-reports/screenshots/`)
   >
@@ -1240,4 +1242,214 @@
   - **Không tự nhận đã chạy thứ không chạy được:** COM-01/02/03 giữ `Not Run` với lý do rõ ràng (không mở được Firefox), thay vì suy đoán kết quả từ Chromium.
   - **Ghi rõ phương pháp thay thế:** 5 item (RES-06, VIS-13, FDB-02, ACC-07, VIS-07/08) chạy bằng cách mô phỏng thay vì thao tác gốc, và điều này được ghi thẳng vào cột Notes lẫn mục 6 — người đọc biết chỗ nào cần xác nhận lại bằng tay.
   - **Phân biệt được lỗi thật với lỗi trông có vẻ là lỗi:** RES-05 để `Passed` dù class `.bug-mobile-hidden` có `margin-right:-100px`, vì đo thực tế cho thấy `self-start` khiến nó chưa gây lệch; rủi ro tiềm ẩn được ghi vào Notes thay vì báo fail sai.
+- **Sửa:** Không cần sửa
+
+---
+
+**AI Audit Report Item**
+
+- **Công cụ AI:** Claude Code (Claude Opus 5 — `claude-opus-5`)
+- **Thời gian:** 2026-08-01 14:06:46
+- **Nội dung prompt:**
+  > Sử dụng skill @.agents/skills/cross-platform-testing-tracker/SKILL.md để chọn ra các test case cần chạy lại, sao đó tạo 1 file checklist ghi nội dung vào nhé
+  >
+  > 3 nền tảng sẽ sử dụng là Chrome, Firefox và expose localhost ra internet để dùng safari trên điện thoại nhé
+  >
+  > Sau khi hoàn tất, sử dụng skill @.agents/skills/ai-audit-logger/SKILL.md để lưu lại toàn bộ audit
+- **AI output:**
+
+  > Chạy skill `cross-platform-testing-tracker`: lọc 73 item của checklist Task 1 xuống 20 item nhạy nền tảng, dựng ma trận 3 nền tảng (Chrome/Firefox/Safari iOS qua ngrok). Đã kiểm chứng bằng script: 20/20 ID trích dẫn đều truy vết được về checklist gốc. Nội dung đầy đủ file `tests/cross-platform/platform-matrix.md`:
+  >
+  > # Platform Matrix — Product Detail (EShop SUT)
+  >
+  > - **Platform 1:** Chrome 126 — Windows 11, desktop, cửa sổ 1440×900
+  > - **Platform 2:** Firefox 128 — Windows 11, desktop, cửa sổ 1440×900
+  > - **Platform 3:** Safari — iOS trên iPhone thật, truy cập qua ngrok (expose `localhost:5173` ra internet)
+  > - **SUT URL khi test:** P1/P2 dùng `http://localhost:5173/product/1` · P3 dùng URL ngrok trỏ về cùng máy
+  > - **Checklist nguồn:** [`../checklist/product-detail/checklist_product-detail.md`](../checklist/product-detail/checklist_product-detail.md) (73 item)
+  > - **Trạng thái:** chưa chạy — toàn bộ ô kết quả là `Not Run`
+  >
+  > > Bộ 3 này phủ trọn cả ba engine trình duyệt: **Blink** (Chrome), **Gecko** (Firefox), **WebKit**
+  > > (Safari). Thêm nữa Platform 3 là thiết bị **cảm ứng thật**, nên bắt được cả nhóm lỗi chỉ xuất
+  > > hiện khi không có chuột và không có hover.
+  >
+  > ***
+  >
+  > ## ⚠️ Hai việc phải xử lý TRƯỚC khi chạy Platform 3
+  >
+  > **1. Backend đang hard-code `localhost:3000` ở 13 chỗ trong 7 file.**
+  >
+  > Mở ngrok chỉ expose frontend (cổng 5173). Khi iPhone tải trang, đoạn JS chạy trên **điện thoại** sẽ
+  > gọi `http://localhost:3000` — mà `localhost` lúc đó là chính chiếc iPhone, không phải máy bạn. Kết
+  > quả: trang load nhưng **không có sản phẩm nào hiện ra**, mọi item đều Blocked.
+  >
+  > Phải chọn một trong hai cách trước khi test:
+  >
+  > - Tunnel luôn cổng 3000 bằng một ngrok thứ hai, rồi đổi 13 chỗ đó sang URL ngrok của backend; hoặc
+  > - Cấu hình `server.proxy` trong `frontend-web/vite.config.js` cho `/api` → `http://localhost:3000`,
+  >   rồi đổi 13 URL tuyệt đối thành đường dẫn tương đối `/api/...` (cách này gọn hơn về lâu dài).
+  >
+  > Ngoài ra `vite.config.js` cần thêm `server.allowedHosts` chứa domain ngrok, nếu không Vite chặn request.
+  >
+  > **2. Đề yêu cầu ảnh chụp thấy "SUT's localhost URL", nhưng qua ngrok thanh địa chỉ sẽ hiện domain ngrok.**
+  >
+  > Cách xử lý an toàn: ngoài ảnh chụp màn hình iPhone, chụp thêm **cửa sổ terminal đang chạy ngrok**
+  > thể hiện dòng `Forwarding https://<...>.ngrok-free.dev -> http://localhost:5173`. Hai ảnh đi kèm
+  > nhau chứng minh được đây đúng là instance localhost của bạn chứ không phải bản deploy công khai.
+  >
+  > ***
+  >
+  > ## Bước 2 — Cơ sở lọc item
+  >
+  > Không chạy lại cả 73 item trên 3 nền tảng. Phần lớn item chạy **cùng một đoạn JavaScript** nên đổi
+  > engine không sinh thêm phát hiện nào — tốn công mà không tăng độ phủ lỗi.
+  >
+  > ### Nhóm được giữ lại
+  >
+  > | Category            | Trong checklist | Giữ lại | Vì sao nhạy nền tảng                                                          |
+  > | ------------------- | --------------- | ------- | ----------------------------------------------------------------------------- |
+  > | `VIS` Visual        | 14              | 10      | Render font, box-shadow, ảnh hỏng, dark mode khác nhau theo engine và theo OS |
+  > | `RES` Responsive    | 7               | 4       | Viewport thật của thiết bị khác hẳn viewport giả lập bằng cách kéo cửa sổ     |
+  > | `COM` Compatibility | 4               | 4       | Category sinh ra đúng cho mục đích này                                        |
+  > | `ACC` Accessibility | 9               | 2       | Chỉ 2 item phụ thuộc nền tảng: viền focus mặc định và vùng chạm               |
+  > | **Tổng**            | **73**          | **20**  |                                                                               |
+  >
+  > ### Nhóm bị loại — kèm lý do
+  >
+  > | Item bị loại                             | Lý do loại                                                                                                                                       |
+  > | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+  > | `VIS-04` khoảng trắng dọc do `flex-grow` | Flexbox render nhất quán giữa các engine hiện đại, lợi ích thấp                                                                                  |
+  > | `VIS-08` mô tả dài > 500 ký tự           | Trùng cơ chế xuống dòng với `VIS-07`, giữ một item là đủ                                                                                         |
+  > | `VIS-10` tiêu đề tab trình duyệt         | `document.title` do JS đặt, không phụ thuộc engine chút nào                                                                                      |
+  > | `VIS-14` bố cục RTL                      | Hành vi `dir="rtl"` nhất quán giữa các engine; app lại không hỗ trợ RTL nên kết quả giống nhau ở cả 3 nơi                                        |
+  > | `RES-01`, `RES-02`, `RES-03`             | Đổi viewport trên desktop cho kết quả như nhau ở mọi engine; giá trị thật nằm ở `RES-04`/`RES-05` chạy trên thiết bị thật                        |
+  > | Toàn bộ `VAL` (10 item)                  | Validation chạy cùng một đoạn JS — đổi trình duyệt không đổi kết quả                                                                             |
+  > | Toàn bộ `FUN` (7 item)                   | Đã rà: không item nào chạm browser API (không date picker, không upload file, không camera/QR), nên không đủ điều kiện thuộc nhóm "FUN chạm API" |
+  > | Toàn bộ `NAV` (10 item)                  | Routing của React Router, hành vi giống nhau mọi trình duyệt                                                                                     |
+  > | Toàn bộ `FDB` (7 item)                   | Logic trạng thái ứng dụng, không phụ thuộc engine                                                                                                |
+  > | Toàn bộ `USB` (5 item)                   | Đánh giá tính khả dụng, không phải khác biệt nền tảng                                                                                            |
+  > | `ACC-01/02/04/05/06/07/09`               | Thuộc tính DOM và ngữ nghĩa (`for`, `alt`, `lang`, heading) — giống nhau ở mọi nền tảng                                                          |
+  >
+  > ***
+  >
+  > ## Kết quả
+  >
+  > Ký hiệu ô: `Not Run` → chưa chạy · `Passed` / `Failed` / `Blocked` + tên file ảnh khi đã chạy thật ·
+  > `N/A` → không áp dụng trên nền tảng đó (đã nêu lý do ở chú thích dưới bảng).
+  >
+  > | ID                | Item (rút gọn từ checklist Task 1)                                   | P1 Chrome | P2 Firefox | P3 Safari iOS |
+  > | ----------------- | -------------------------------------------------------------------- | --------- | ---------- | ------------- |
+  > | PRODDETAIL-VIS-01 | Ảnh gốc 300×300 render ở 455×455 — kiểm tra độ nét                   | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-VIS-02 | Dấu phân tách hàng nghìn của giá theo chuẩn VN                       | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-VIS-03 | Vị trí và khoảng cách ký hiệu `₫` so với phần số                     | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-VIS-05 | Nhãn "Số lượng:" căn giữa trục dọc với ô nhập                        | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-VIS-06 | Chiều cao ô nhập số lượng so với nút "Thêm vào giỏ hàng"             | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-VIS-07 | Tên sản phẩm dài > 60 ký tự xuống dòng trong cột phải                | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-VIS-09 | Chặn ảnh ngoài — hiển thị `alt`, bố cục 2 cột không lệch             | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-VIS-11 | Bo góc / viền / đổ bóng card so với Home và Cart                     | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-VIS-12 | Tương phản chữ mô tả xám trên nền trắng                              | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-VIS-13 | Bật dark mode của hệ điều hành rồi tải lại trang                     | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-RES-04 | Viewport 390×844 — không có thanh cuộn ngang                         | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-RES-05 | Vị trí nút "Thêm vào giỏ hàng" ở bề rộng ≤ 640px                     | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-RES-06 | Zoom trang lên 150%                                                  | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-RES-07 | Xoay ngang (landscape)                                               | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-COM-01 | So sánh bố cục, cỡ chữ, màu sắc, vị trí phần tử giữa các trình duyệt | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-COM-02 | Nút tăng/giảm (spinner) của ô `input[type=number]`                   | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-COM-03 | Hiển thị dấu tiếng Việt ở tên, mô tả, nhãn                           | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-COM-04 | Chuỗi giá khi đổi ngôn ngữ ưu tiên của trình duyệt                   | Not Run   | Not Run    | Not Run       |
+  > | PRODDETAIL-ACC-03 | Viền focus nhìn thấy rõ khi Tab vào ô nhập và nút                    | Not Run   | Not Run    | N/A ¹         |
+  > | PRODDETAIL-ACC-08 | Vùng chạm nút và ô nhập tối thiểu 44px                               | N/A ²     | N/A ²      | Not Run       |
+  >
+  > ¹ iOS Safari không có điều hướng bằng phím Tab nếu không gắn bàn phím ngoài — item này chỉ có nghĩa trên desktop.
+  > ² P1/P2 dùng chuột, không phải thiết bị cảm ứng — tiêu chuẩn vùng chạm 44px chỉ có nghĩa thật trên P3.
+  >
+  > **Số item thực chạy:** P1 = 19 · P2 = 19 · P3 = 19
+  >
+  > ***
+  >
+  > ## Item nên bổ sung riêng cho iOS Safari
+  >
+  > Hai item dưới đây **không có trong checklist Task 1** vì checklist đó xây trên desktop. Chúng nhắm
+  > vào hành vi chỉ tồn tại ở WebKit/iOS. Nếu dùng, thêm vào checklist gốc trước rồi mới điền vào đây,
+  > để giữ mạch truy vết.
+  >
+  > | ID đề xuất          | Item                                                         | Vì sao chỉ có ở iOS Safari                                                                                                                            |
+  > | ------------------- | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+  > | `PRODDETAIL-COM-05` | Chạm vào ô "Số lượng" và quan sát trang có tự phóng to không | iOS Safari tự zoom trang khi focus vào input có `font-size` < 16px — lỗi kinh điển của WebKit, không tồn tại trên Chrome/Firefox                      |
+  > | `PRODDETAIL-COM-06` | Chạm vào ô "Số lượng" và quan sát loại bàn phím ảo hiện lên  | `input[type=number]` trên iOS mở bàn phím số không có dấu trừ — người dùng không nhập được giá trị âm, khiến kết quả `VAL-01` khác hẳn so với desktop |
+  >
+  > ***
+  >
+  > ## Quy ước ảnh chụp
+  >
+  > Mỗi ảnh phải thấy đủ **ba** thứ trong cùng khung hình:
+  >
+  > 1. Tên trình duyệt / OS / thiết bị
+  > 2. URL của SUT trên thanh địa chỉ (với P3, kèm thêm ảnh terminal ngrok như đã nêu ở trên)
+  > 3. Watermark `23127211@hcmus.edu.vn`
+  >
+  > **Đặt tên file:** `<platform-slug>_<checklist-ID>_<mô-tả-ngắn>.png`
+  >
+  > ```
+  > chrome-win11_PRODDETAIL-COM-02_number-spinner.png
+  > firefox-win11_PRODDETAIL-COM-02_number-spinner.png
+  > safari-ios_PRODDETAIL-RES-05_addtocart-offset.png
+  > ```
+  >
+  > Chỉ chụp ảnh cho ô `Failed` — giống quy tắc ở Task 1.
+  >
+  > ### Lệnh chèn watermark
+  >
+  > ```bash
+  > python .agents/skills/cross-platform-testing-tracker/scripts/watermark_screenshot.py \
+  >   tests/cross-platform/screenshots/raw \
+  >   --student-id 23127211 \
+  >   --output-dir tests/cross-platform/screenshots/final
+  > ```
+  >
+  > > **Bắt buộc truyền `--student-id`.** Nếu bỏ qua, script rơi về một email mặc định ở domain khác —
+  > > tiện để thử render nhưng **sai định dạng nộp bài**. Kiểm tra lại MSSV trước khi chạy hàng loạt.
+  >
+  > ***
+  >
+  > ## Phân loại defect sau khi điền xong
+  >
+  > | ID  | Fail trên    | Phân loại                                                                                  |
+  > | --- | ------------ | ------------------------------------------------------------------------------------------ |
+  > |     | 1/3 platform | **Cross-platform defect thật** — log bug riêng, ghi rõ engine nào tái hiện                 |
+  > |     | 2/3 platform | Cross-platform defect — thường do 2 engine chia sẻ đặc điểm; ghi rõ engine nào không dính  |
+  > |     | 3/3 platform | Defect chung — đáng lẽ đã nằm trong bug list Task 1, **không** tính là phát hiện mới ở đây |
+  >
+  > Với mỗi bug platform-specific, dùng `bug_report_template.md` của skill `gui-checklist-builder` và
+  > điền trường `Environment` bằng đúng nền tảng/trình duyệt/OS/viewport tái hiện được, kèm câu trả lời
+  > rõ ràng cho câu hỏi _"có tái hiện trên 2 nền tảng còn lại không"_.
+  >
+  > ***
+  >
+  > ## Tóm tắt
+  >
+  > > Điền sau khi chạy xong cả 3 nền tảng.
+  >
+  > - Platform đã test: CHƯA CHẠY
+  > - Số item test / platform: CHƯA CHẠY
+  > - Pass rate mỗi platform: CHƯA CHẠY
+  > - Bug platform-specific tìm được: CHƯA CHẠY
+  >
+  > ***
+  >
+  > ## Dự đoán nơi có khả năng ra defect cao nhất
+  >
+  > Không phải kết quả test — chỉ là gợi ý thứ tự ưu tiên chạy, dựa trên những gì đã đọc được từ source
+  > và đo được trên desktop ở Task 1. **Vẫn phải chạy thật mới biết Pass hay Fail.**
+  >
+  > | Item                             | Vì sao đáng chạy trước                                                                                                              |
+  > | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+  > | `COM-02` spinner ô số lượng      | iOS Safari không render spinner cho `input[type=number]`, Firefox và Chrome lại render khác nhau — nhiều khả năng lệch cả 3         |
+  > | `COM-04` chuỗi giá theo locale   | `Number(price).toLocaleString()` không truyền locale nên phụ thuộc thẳng vào cài đặt ngôn ngữ của từng máy/thiết bị                 |
+  > | `RES-05` vị trí nút ở ≤ 640px    | `.bug-mobile-hidden { margin-right: -100px }` chỉ kích hoạt dưới 640px; trên iPhone thật là lần đầu điều kiện này gặp viewport thật |
+  > | `VIS-06` chiều cao ô nhập vs nút | iOS Safari áp style mặc định cho form control khác hẳn desktop                                                                      |
+  > | `VIS-09` ảnh hỏng                | Mỗi engine vẽ ảnh lỗi và chữ `alt` một kiểu khác nhau                                                                               |
+
+- **Đánh giá:** Valid
+- **Suy luận:** File do AI sinh ra khá tốt và đầy đủ
 - **Sửa:** Không cần sửa
