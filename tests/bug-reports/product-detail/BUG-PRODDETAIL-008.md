@@ -56,6 +56,33 @@ Lỗi này lặp lại ở trang Giỏ hàng (cột "Giá", "Thành tiền", "T�
 
 - Screenshot (giá hiển thị `30,000,000 ₫` với dấu phẩy): ![BUG-PRODDETAIL-008-comma](../screenshots/BUG-PRODDETAIL-008-price-comma-format.png)
 
+## Xác nhận lại trên thiết bị thật (Task 3 — Cross-Platform)
+
+Bug này ban đầu được phát hiện bằng cách **giả lập** locale qua hai browser context của Playwright.
+Ở Task 3 nó được tái hiện lại trên **thiết bị thật của người dùng thật**, nâng mức độ tin cậy của
+bằng chứng từ "mô phỏng" lên "quan sát trực tiếp".
+
+| Nền tảng | OS / Thiết bị | Locale thiết bị | Chuỗi giá quan sát được | Đúng chuẩn vi-VN? |
+| --- | --- | --- | --- | --- |
+| Chrome 126 | Windows 11 | Tiếng Anh | `30,000,000 ₫` | ❌ |
+| Firefox 128 | Windows 11 | Tiếng Anh | `30,000,000 ₫` | ❌ |
+| Safari | iOS, iPhone thật | Tiếng Việt | `30.000.000 ₫` | ✅ |
+| Safari | iOS, **cùng chiếc iPhone đó** | Đổi sang tiếng Anh | `30,000,000 ₫` | ❌ |
+
+Hai dòng cuối là bằng chứng mạnh nhất: **cùng một thiết bị, cùng một trang, chỉ đổi cài đặt ngôn
+ngữ của máy** thì chuỗi giá đổi theo — xác nhận trực tiếp rằng định dạng bám theo locale của thiết
+bị chứ không được cố định trong ứng dụng.
+
+Bug này fail trên **2/3** nền tảng (chỉ "đúng" ở P3 khi máy đang để tiếng Việt, và đó là đúng do
+may mắn trùng locale chứ không phải do ứng dụng kiểm soát).
+
+**Evidence bổ sung:**
+
+- Chrome — dấu phẩy: ![chrome-comma](../../task03/screenshots/chrome/chrome-win11_PRODDETAIL-COM-04_price-comma-en-locale.png)
+- Firefox — dấu phẩy: ![firefox-comma](../../task03/screenshots/firefox/firefox-win11_PRODDETAIL-COM-04_price-comma-en-locale.png)
+- Safari iOS, máy để tiếng Việt — dấu chấm: ![safari-dot](../../task03/screenshots/safari/safari-ios_PRODDETAIL-COM-04_price-dot-vi-locale.png)
+- Safari iOS, cùng máy sau khi đổi sang tiếng Anh — dấu phẩy: ![safari-comma](../../task03/screenshots/safari/safari-ios_PRODDETAIL-COM-04_price-comma-en-locale.png)
+
 ## Notes
 
 Cách sửa: thay bằng `Number(product.price).toLocaleString('vi-VN')`, hoặc tốt hơn là `new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)` để chuẩn hoá cả ký hiệu tiền tệ. Nên tách thành một helper dùng chung cho cả Home, Product Detail, Cart và Checkout.
