@@ -33,21 +33,21 @@ Recovery chỉ dùng để đánh giá phần sau, không biến thất bại tr
 
 ## Sau pilot
 
-| Thành phần | Observation | Quyết định | Lý do |
-| ---------- | ----------- | ---------- | ----- |
-| Scenario   |             |            |       |
-| Data card  |             |            |       |
-| Instrument |             |            |       |
-| Timing     |             |            |       |
-| Recording  |             |            |       |
-| Recovery   |             |            |       |
+| Thành phần | Observation                                                                                                       | Quyết định                                                                                                                                                  | Lý do                                                                                                                                 |
+| ---------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Scenario   | Hoạt động bình thường theo hướng mục tiêu, kích thích người dùng tự thao tác.                                     | Giữ nguyên kịch bản.                                                                                                                                        | Kịch bản phản ánh đúng nhu cầu thực tế và không bị lộ bước cụ thể.                                                                    |
+| Data card  | Người dùng hiểu rõ nhiệm vụ tự điền email và tự tạo mật khẩu.                                                     | Giữ nguyên thẻ dữ liệu.                                                                                                                                     | Đảm bảo an toàn thông tin và dễ hiểu cho người dùng.                                                                                  |
+| Instrument | Các câu hỏi SUS và câu hỏi mở rõ ràng, người dùng trả lời chính xác cảm xúc khi gặp lỗi.                          | Giữ nguyên bộ công cụ đo lường.                                                                                                                             | Đo lường khách quan được trải nghiệm thực tế bao gồm cả khi gặp lỗi hệ thống.                                                         |
+| Timing     | Người dùng mất nhiều thời gian do cố gắng đăng ký nhiều lần với mật khẩu hợp lệ nhưng vẫn lỗi.                    | Đặt giới hạn thời gian (timebox) cho bước đăng ký là tối đa 3 phút hoặc sau 3 lần thử.                                                                      | Tránh người dùng nản lòng quá sớm và dành thời gian đánh giá các bước tiếp theo.                                                      |
+| Recording  | Video và audio ghi lại rõ ràng thao tác nhập mật khẩu và thông báo lỗi.                                           | Giữ nguyên thiết lập ghi hình.                                                                                                                              | Đảm bảo thu thập đầy đủ bằng chứng kiểm thử (evidence).                                                                               |
+| Recovery   | Chưa có sẵn tài khoản kiểm thử hoạt động được để vượt qua lỗi đăng ký, làm gián đoạn việc test tiếp các bước sau. | Chuẩn bị sẵn tài khoản test: `test@eshop.com` / `Test1234!` cho người dùng đăng nhập khi gặp lỗi. Sau mỗi phiên, khôi phục tài khoản về trạng thái ban đầu. | Giúp người dùng bỏ qua bước đăng ký lỗi để tiếp tục đánh giá phần mua hàng/checkout, đồng thời đảm bảo môi trường sạch cho người sau. |
 
 ## Gate trước P01
 
-[] Scenario vẫn goal-oriented và không lộ bước cụ thể.
-[] Participant hiểu dữ liệu demo và không dùng dữ liệu thật.
-[] SUS giữ nguyên 10 item; 4 câu hỏi mở vẫn trung lập.
-[] Recovery hoạt động được nếu participant bị kẹt.
-[] Video và note truy vết được, không lộ PII.
+[x] Scenario vẫn goal-oriented và không lộ bước cụ thể.
+[x] Participant hiểu dữ liệu demo và không dùng dữ liệu thật.
+[x] SUS giữ nguyên 10 item; 4 câu hỏi mở vẫn trung lập.
+[x] Recovery hoạt động được nếu participant bị kẹt. (Chuẩn bị sẵn tài khoản test)
+[x] Video và note truy vết được, không lộ PII.
 
-Kết luận sau pilot: `<Ready / Not ready>`
+Kết luận sau pilot: `Ready (Sau khi chuẩn bị sẵn tài khoản test cho recovery)`

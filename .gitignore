@@ -1,4 +1,4 @@
 node_modules/
 backend/database.sqlite
 docs/requirement/
-
+tests/usability-tests/U-001/3_sessions/mp4/
