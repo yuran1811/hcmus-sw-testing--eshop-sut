@@ -27,6 +27,7 @@ Mỗi dòng trong bảng audit đại diện cho một artifact do AI sinh ra (m
 | **Tool:** Antigravity IDE (Claude Opus 4.6 Thinking & Gemini 3.6 Flash) **Time:** 10:55 31/07/2026 **Prompt:** "Oke nhờ bạn tạo folder Task2_Usability và 2 skill nhé" | Khởi tạo bộ khung thư mục `HW3/Task2_Usability/` (gồm `test-plan.md`, `DESIGN_NOTES.md`, `instruments/scale.md`, `instruments/probes.md`, `participants/roster.md`, `sessions/_TEMPLATE.md`, `pilot/`) và cập nhật 2 Agent Skills (`usability-writer`, `usability-runner`) được hiệu chuẩn cho EShop SUT. | INCOMPLETE | ISTQB FL 5.1 (Test Planning) & HW03 Task 2 Spec (§Phase 1 Plan & Prepare): Kế hoạch đánh giá Usability ban đầu chỉ là khung mẫu. Sinh viên phải chọn luồng end-to-end cụ thể, điền kịch bản task scenario hướng mục tiêu (goal-only), chạy thử nghiệm Pilot và tự tuyển 7 người dùng thật ngoài lớp. AI không được tự bịa thông tin người dùng hay kết quả phỏng vấn. | Sinh viên tiếp nhận bộ khung thư mục và 2 agent skills, chuẩn bị chọn luồng E2E trên EShop, hoàn thiện scenario, thực hiện chạy thử Pilot và tự tuyển 7 người dùng thật ngoài lớp để thu thập dữ liệu thực tế. |
 | **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 09:11 02/08/2026 **Prompt:** "Hãy giúp tôi hoàn thành báo cáo kiểm thử Cross-Platform cho Task 3 của HW3. Bạn hãy thực hiện các bước sau: 1. Đọc nội dung file danh sách checklist tại: CHECKLIST.md ... 2. Tạo mới hoặc cập nhật file báo cáo tại: Report.md..." | Tạo mới báo cáo `Report.md` tại `HW3/Task3_CrossPlatform/Report.md` chứa thông tin cá nhân sinh viên, thiết lập môi trường, bảng ma trận kết quả (đầy đủ 45 checklist items dạng bảng Markdown có kết quả mặc định là `Not Run`), nhật ký ảnh chụp bằng chứng, phân loại lỗi và cấu trúc phần tóm tắt. | VALID | ISTQB FL 5.2 (Test Execution & Reporting) & Spec HW03 Task 3 (Cross-Platform): Báo cáo chéo nền tảng phải phản ánh đúng kết quả thực thi và liên kết chính xác các checklist items từ Task 1 làm nền tảng. AI đã trích xuất tự động và điền chính xác cấu trúc bảng. | Chấp nhận nguyên trạng. |
 | **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 09:24 02/08/2026 **Prompt:** "Tôi nhận ra là task 3 phải test manual cho nên là pick ra 1 vài test case để làm thôi, không cần làm hết 45. Miễn sao test được cross platform" | Cập nhật lại file `Report.md` lọc và rút gọn bảng ma trận kết quả (Platform Matrix) từ 45 items xuống còn 15 items tiêu biểu, nhạy cảm với việc render giao diện, độ tương thích responsive, khả năng truy cập phím Tab và các hộp thoại native của trình duyệt. | VALID | ISTQB FL 5.2.1 (Test Execution) & 5.1 (Test Design): Trong kiểm thử thực tế và thủ công (manual testing), việc lựa chọn một tập hợp con tối ưu (test suite reduction/filtering) gồm các ca kiểm thử nhạy cảm với môi trường (environment-sensitive) giúp tối ưu hóa thời gian và nguồn lực mà vẫn đảm bảo độ bao phủ các khía cạnh khác biệt của trình duyệt. AI đã thực hiện lọc chính xác 15 items phù hợp và cập nhật cấu trúc báo cáo. | Chấp nhận nguyên trạng. |
+| **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 10:11 02/08/2026 **Prompt:** "Kiểm tra lại hết evidences của 3 platforms Chrome, Firefox, Safari sử dụng trên Browser stack sau đó cập nhật vào Report.md... Bạn hiểu không screenshot là phải ứng với test cases ở trên chứ, thế hãy chỉnh lại số test cases của task 3 cho phù hợp" | Cập nhật báo cáo `Report.md`, điền kết quả ma trận kèm tên file ảnh bằng chứng, sửa lỗi đường dẫn ảnh Safari, lọc ma trận từ 15 xuống 10 items để khớp chính xác với 4 ảnh chụp màn hình, cập nhật bảng phân loại (3 lỗi) và tóm tắt thống kê (7 Pass, 3 Fail, 70% Pass rate). | INCOMPLETE | ISTQB FL 5.2.1 (Test Execution) & 5.2.2 (Test Log): Ma trận kết quả phải khớp trực quan với bằng chứng hình ảnh (screenshot) thu được. AI ban đầu điền kết quả cho các case không có ảnh bằng chứng trực tiếp. Sinh viên phát hiện và chỉ đạo lọc xuống 10 cases. | Sinh viên kiểm tra, chỉ ra việc ảnh bằng chứng phải khớp test cases, chọn phương án lọc ma trận xuống 10 items có ảnh đối chiếu trực tiếp và yêu cầu điền tên file ảnh bằng chứng vào từng ô kết quả. |
 
 ---
 
@@ -408,14 +409,56 @@ Cập nhật file báo cáo [Report.md](file:///d:/Project/Testing/hcmus-sw-test
 
 ---
 
+### Artifact #8 -- Cập nhật kết quả kiểm thử Cross-Platform & Lọc ma trận theo bằng chứng
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.5 Flash) |
+| **Date/Time** | 2026-08-02 10:11:00 +07:00 |
+| **Task** | Cập nhật kết quả kiểm thử chéo trình duyệt, sửa lỗi đường dẫn ảnh Safari, lọc ma trận còn 10 items để khớp bằng chứng hình ảnh |
+| **Feature / Module** | Task 3 Cross-Platform / Báo cáo hoàn thiện |
+| **Bloom-AI Level** | G9.3 (Analyse) -- Phân tích mối liên hệ giữa các test cases và ảnh chụp bằng chứng thực tế, điều chỉnh số lượng và dữ liệu ma trận khớp 100% với bằng chứng thực tế |
+| **Verdict** | INCOMPLETE |
+
+#### (1) Prompt (verbatim)
+
+```text
+Kiểm tra lại hết evidences của 3 platforms Chrome, Firefox, Safari sử dụng trên Browser stack sau đó cập nhật vào Report.md
+... [Sinh viên hỏi về lý do lỗi type="email" ở GUI-FORGOT-IA02-01 và được giải thích] ...
+Bạn hiểu không screenshot là phải ứng với test cases ở trên chứ, thế hãy chỉnh lại số test cases của task 3 cho phù hợp
+```
+
+#### (2) AI Output
+
+- Cập nhật [Report.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task3_CrossPlatform/Report.md):
+  - Lọc bảng ma trận từ 15 items xuống còn **10 items** có thể đối chiếu trực quan bằng hình ảnh.
+  - Điền trạng thái kiểm thử kèm tên file ảnh bằng chứng cụ thể vào từng ô ma trận (ví dụ: `Pass (Chrome/forgot-password.png)`).
+  - Sửa lỗi đường dẫn ảnh Safari bước 2 thành `Safari/forgotpassword-step2.png`.
+  - Cập nhật số liệu thống kê thành 10 test cases (7 Pass, 3 Fail, đạt 70%) và cập nhật bảng phân loại (gồm 3 lỗi).
+  - Hoàn thiện phần nhận xét và kết luận tương thích chéo trình duyệt.
+
+#### (3)-(5) Review
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | INCOMPLETE |
+| **Reasoning** | ISTQB FL 5.2.1 (Test Execution) & 5.2.2 (Test Log): Dữ liệu ma trận và kết quả kiểm thử trong báo cáo phải hoàn toàn khớp và có bằng chứng trực quan đi kèm. AI ban đầu điền kết quả cho các case không có ảnh bằng chứng. Sinh viên phát hiện bất hợp lý, yêu cầu rút gọn còn 10 items có bằng chứng rõ ràng và bổ sung tên file ảnh vào từng ô. |
+| **Student Fix** | Sinh viên kiểm tra, chỉ đạo AI lọc bớt các case không có bằng chứng hình ảnh trực tiếp (như Tab order, nút tag HTML, API error), thống nhất danh sách 10 test cases có ảnh đối chiếu và yêu cầu điền đường dẫn ảnh cụ thể vào từng ô kết quả. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-08-02 |
+| **Quality rating** | Excellent |
+| **Issues found** | Không có |
+
+---
+
 ## 4. Summary of AI Accuracy
 
 | Metric | Count | Percentage |
 | --- | ---: | ---: |
-| **Total AI-generated artifacts audited** | 7 | 100% |
-| **VALID (correct, accepted as-is)** | 3 | 42.9% |
+| **Total AI-generated artifacts audited** | 8 | 100% |
+| **VALID (correct, accepted as-is)** | 3 | 37.5% |
 | **INVALID (wrong; rejected)** | 0 | 0.0% |
-| **INCOMPLETE (acceptable after edits)** | 4 | 57.1% |
+| **INCOMPLETE (acceptable after edits)** | 5 | 62.5% |
 
 ## 5. Conclusion -- When should AI be used (or not)?
 
@@ -425,7 +468,7 @@ Tuy nhiên, AI có hạn chế về tính chính xác trong việc tự định 
 
 ## 6. Mandatory Disclosure
 
-"Checklist kiểm thử GUI (45 mục), kịch bản tự động hóa Playwright (`run_gui_checklist.js`), file Excel định dạng (`CHECKLIST.xlsx`), Báo cáo tổng kết kiểm thử (`TEST_SUMMARY.md`), 13 báo cáo lỗi Markdown, bộ khung kế hoạch Usability (`HW3/Task2_Usability/`), 2 Agent Skills (`usability-writer`, `usability-runner`), và khung báo cáo kiểm thử Cross-Platform + phiên bản rút gọn 15 items (`Report.md`) được sinh ban đầu với sự hỗ trợ của Antigravity IDE (Claude Opus 4.6 Thinking, Gemini 3.6 Flash, & Gemini 3.5 Flash). Tôi đã kiểm tra kỹ lưỡng kết quả thực thi, phát hiện và sửa đổi các hạn chế của AI (yêu cầu chèn highlight đỏ lên ảnh bằng chứng lỗi, cung cấp mẫu tiêu chuẩn HW02 để đồng bộ báo cáo Test Summary, xóa bỏ phần draft không cần thiết khỏi bug report, tự hoàn thiện kịch bản usability, và kiểm tra cấu trúc bảng ma trận cross-platform). Báo cáo AI Audit chi tiết được đính kèm. Tôi xác nhận không sử dụng AI để tạo bất kỳ artifact nào thuộc danh mục cấm (danh sách người tham gia, ảnh chụp cross-platform với thông tin cá nhân, kết quả phiên usability)."
+"Checklist kiểm thử GUI (45 mục), kịch bản tự động hóa Playwright (`run_gui_checklist.js`), file Excel định dạng (`CHECKLIST.xlsx`), Báo cáo tổng kết kiểm thử (`TEST_SUMMARY.md`), 13 báo cáo lỗi Markdown, bộ khung kế hoạch Usability (`HW3/Task2_Usability/`), 2 Agent Skills (`usability-writer`, `usability-runner`), và khung báo cáo kiểm thử Cross-Platform + phiên bản rút gọn 10 items (`Report.md`) được sinh ban đầu với sự hỗ trợ của Antigravity IDE (Claude Opus 4.6 Thinking, Gemini 3.6 Flash, & Gemini 3.5 Flash). Tôi đã kiểm tra kỹ lưỡng kết quả thực thi, phát hiện và sửa đổi các hạn chế của AI (yêu cầu chèn highlight đỏ lên ảnh bằng chứng lỗi, cung cấp mẫu tiêu chuẩn HW02 để đồng bộ báo cáo Test Summary, xóa bỏ phần draft không cần thiết khỏi bug report, tự hoàn thiện kịch bản usability, và kiểm tra cấu trúc bảng ma trận cross-platform lọc còn 10 items). Báo cáo AI Audit chi tiết được đính kèm. Tôi xác nhận không sử dụng AI để tạo bất kỳ artifact nào thuộc danh mục cấm (danh sách người tham gia, ảnh chụp cross-platform với thông tin cá nhân, kết quả phiên usability)."
 
 ## 7. Signature
 
@@ -452,6 +495,7 @@ Tuy nhiên, AI có hạn chế về tính chính xác trong việc tự định 
 | 5 | Antigravity IDE (Claude Opus 4.6 Thinking & Gemini 3.6 Flash) | Task 2 Usability Evaluation | Khởi tạo cấu trúc `HW3/Task2_Usability/` + Hiệu chuẩn 2 Agent Skills cho EShop SUT | 2026-07-31 | G9.4 | INCOMPLETE |
 | 6 | Antigravity IDE (Gemini 3.5 Flash) | Task 3 Cross-platform | Thiết kế ma trận kết quả và cấu trúc Báo cáo kiểm thử Cross-Platform (`Report.md`) | 2026-08-02 | G9.2 | VALID |
 | 7 | Antigravity IDE (Gemini 3.5 Flash) | Task 3 Cross-platform | Lọc danh sách 15 items cross-platform & cập nhật Report.md | 2026-08-02 | G9.2 | VALID |
+| 8 | Antigravity IDE (Gemini 3.5 Flash) | Task 3 Cross-platform | Cập nhật kết quả, sửa path ảnh, lọc ma trận còn 10 items theo bằng chứng | 2026-08-02 | G9.3 | INCOMPLETE |
 
 ### Contribution Breakdown
 
@@ -461,13 +505,14 @@ Tuy nhiên, AI có hạn chế về tính chính xác trong việc tự định 
 | Dịch tiếng Việt + CSV | 95% | 5% | AI dịch, sinh viên chỉnh format bảng |
 | Thực thi Playwright GUI Runner | 85% | 15% | AI viết script & chạy, sinh viên xác minh kết quả trên Chrome |
 | Kiểm tra & khoanh vùng bằng chứng lỗi | 40% | 60% | Sinh viên phát hiện ảnh lặp lại, chỉ đạo khoanh viền đỏ + badge |
-| Xuất file Excel `CHECKLIST.xlsx` | 90% | 10% | AI viết script Python openpyxl tô màu bảng, sinh viên duyệt |
+| Xt file Excel `CHECKLIST.xlsx` | 90% | 10% | AI viết script Python openpyxl tô màu bảng, sinh viên duyệt |
 | Lập báo cáo `TEST_SUMMARY.md` | 70% | 30% | Sinh viên cung cấp template HW02 chuẩn, AI tổng hợp chỉ số |
 | Tinh chỉnh Bug Reports (bỏ draft) | 80% | 20% | Sinh viên chỉ đạo xóa git issue draft, AI chạy script làm sạch |
 | Khởi tạo bộ khung `HW3/Task2_Usability/` | 85% | 15% | AI tạo các file template mẫu, sinh viên duyệt định hướng 3 pha |
 | Hiệu chuẩn 2 Agent Skills (`usability-*`) | 90% | 10% | AI biên soạn skill rules & references cho EShop, sinh viên xác nhận |
 | Thiết kế ma trận & cấu trúc Report.md (draft 45 mục) | 95% | 5% | AI trích xuất tự động và tạo khung, sinh viên duyệt |
 | Lọc danh sách 15 items cross-platform & cập nhật Report.md | 95% | 5% | AI viết script lọc và cập nhật, sinh viên chỉ đạo |
+| Cập nhật kết quả và lọc ma trận Cross-Platform còn 10 items | 80% | 20% | Sinh viên phát hiện bất hợp lý giữa số ảnh và test cases, chỉ đạo AI rút gọn còn 10 items có bằng chứng trực tiếp |
 
 ### Compliance Checklist
 
