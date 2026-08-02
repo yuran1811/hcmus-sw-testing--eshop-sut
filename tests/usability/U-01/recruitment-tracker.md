@@ -24,11 +24,11 @@
 | 0   | P00 (Pilot) | Nguyễn Trần Lan Viên | Điện thoại   | 0327\*\*\*\*18             | 20 tuổi, sinh viên IT, thường xuyên mua sắm online          | 29/07/2026 | Y                     |
 | 1   | P01         | Lê Mỹ Bảo Châu       | Điện thoại   | 0358\*\*\*\*23             | 23 tuổi, BA, thường xuyên mua sắm online                    | 30/07/2026 | Y                     |
 | 2   | P02         | Trần Anh Khoa        | Điện thoại   | 0373\*\*\*\*43             | 21 tuổi, sinh viên cơ kỹ thuật, thường xuyên mua sắm online | 30/07/2026 | Y                     |
-| 3   | P03         | Mạch Quốc Tấn        | Điện thoại   | 0934\*\*\*\*28             | 21 tuổi, sinh viên IT, thường xuyên mua sắm online          | 02/08/2026 | Bằng lời              |
-| 4   | P04         | Ân Tiến Nguyên An    | Điện thoại   | 0868\*\*\*\*17             | 21 tuổi, sinh viên IT, thường xuyên mua sắm online          | 02/08/2026 | Bằng lời              |
-| 5   | P05         | Nguyễn Tuấn Anh      | Điện thoại   | 0365\*\*\*\*74             | 21 tuổi, sinh viên IT, thường xuyên mua sắm online          | 02/08/2026 | Bằng lời              |
-| 6   | P06         | Nguyễn Huy Quân      | Điện thoại   | 0909\*\*\*\*79             | 21 tuổi, sinh viên IT, thường xuyên mua sắm online          | 01/08/2026 | Bằng lời              |
-| 7   | P07         | Ngô Nguyễn Thế Khoa  | Điện thoại   | 0382\*\*\*\*17             | 21 tuổi, sinh viên IT, thường xuyên mua sắm online          | 02/08/2026 | Bằng lời              |
+| 3   | P03         | Mạch Quốc Tấn        | Điện thoại   | 0934\*\*\*\*28             | 21 tuổi, sinh viên IT, thường xuyên mua sắm online          | 02/08/2026 | Y                     |
+| 4   | P04         | Ân Tiến Nguyên An    | Điện thoại   | 0868\*\*\*\*17             | 21 tuổi, sinh viên IT, thường xuyên mua sắm online          | 02/08/2026 | Y                     |
+| 5   | P05         | Nguyễn Tuấn Anh      | Điện thoại   | 0365\*\*\*\*74             | 21 tuổi, sinh viên IT, thường xuyên mua sắm online          | 02/08/2026 | Y                     |
+| 6   | P06         | Nguyễn Huy Quân      | Điện thoại   | 0909\*\*\*\*79             | 21 tuổi, sinh viên IT, thường xuyên mua sắm online          | 01/08/2026 | Y                     |
+| 7   | P07         | Ngô Nguyễn Thế Khoa  | Điện thoại   | 0382\*\*\*\*17             | 21 tuổi, sinh viên IT, thường xuyên mua sắm online          | 02/08/2026 | Y                     |
 
 ## Ghi chú
 
