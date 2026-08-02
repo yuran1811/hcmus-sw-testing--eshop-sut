@@ -78,10 +78,14 @@ may mắn trùng locale chứ không phải do ứng dụng kiểm soát).
 
 **Evidence bổ sung:**
 
-- Chrome — dấu phẩy: ![chrome-comma](../../task03/screenshots/chrome/chrome-win11_PRODDETAIL-COM-04_price-comma-en-locale.png)
-- Firefox — dấu phẩy: ![firefox-comma](../../task03/screenshots/firefox/firefox-win11_PRODDETAIL-COM-04_price-comma-en-locale.png)
-- Safari iOS, máy để tiếng Việt — dấu chấm: ![safari-dot](../../task03/screenshots/safari/safari-ios_PRODDETAIL-COM-04_price-dot-vi-locale.png)
-- Safari iOS, cùng máy sau khi đổi sang tiếng Anh — dấu phẩy: ![safari-comma](../../task03/screenshots/safari/safari-ios_PRODDETAIL-COM-04_price-comma-en-locale.png)
+- Chrome — dấu phẩy: ![chrome-comma](../screenshots/BUG-PRODDETAIL-008-chrome-price-comma-en-locale.png)
+- Firefox — dấu phẩy: ![firefox-comma](../screenshots/BUG-PRODDETAIL-008-firefox-price-comma-en-locale.png)
+- Safari iOS, máy để tiếng Việt — dấu chấm: ![safari-dot](../screenshots/BUG-PRODDETAIL-008-safari-ios-price-dot-vi-locale.png)
+- Safari iOS, cùng máy sau khi đổi sang tiếng Anh — dấu phẩy: ![safari-comma](../screenshots/BUG-PRODDETAIL-008-safari-ios-price-comma-en-locale.png)
+
+> Bốn ảnh trên là bản sao của bằng chứng Task 3, đặt trong `tests/bug-reports/screenshots/` để bug
+> report tự chứa đủ bằng chứng. Bản gốc kèm ngữ cảnh ma trận nền tảng nằm ở
+> `tests/task03/screenshots/` (mục `PRODDETAIL-COM-04`).
 
 ## Notes
 

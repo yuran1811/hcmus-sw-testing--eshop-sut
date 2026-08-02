@@ -72,9 +72,9 @@ Hệ quả cộng dồn với các bug đã biết:
 
 ## Evidence
 
-- Chrome — spinner hai mũi tên: ![chrome-spinner](../../task03/screenshots/chrome/chrome-win11_PRODDETAIL-COM-02_spinner-arrows.png)
-- Firefox — spinner dạng chevron: ![firefox-spinner](../../task03/screenshots/firefox/firefox-win11_PRODDETAIL-COM-02_spinner-chevron.png)
-- Safari iOS — không có spinner: ![safari-spinner-missing](../../task03/screenshots/safari/safari-ios_PRODDETAIL-COM-02_spinner-missing.png)
+- Chrome — spinner hai mũi tên: ![chrome-spinner](../screenshots/BUG-PRODDETAIL-013-chrome-spinner-arrows.png)
+- Firefox — spinner dạng chevron: ![firefox-spinner](../screenshots/BUG-PRODDETAIL-013-firefox-spinner-chevron.png)
+- Safari iOS — không có spinner: ![safari-spinner-missing](../screenshots/BUG-PRODDETAIL-013-safari-ios-spinner-missing.png)
 
 ## Notes
 
