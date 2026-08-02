@@ -41,7 +41,7 @@ Mỗi thư mục `U-XYZ` sẽ tuân thủ cấu trúc tài liệu hóa tiêu chu
 - **Mục tiêu**: Đánh giá luồng trải nghiệm mua sắm cơ bản khép kín trên bản deploy công khai.
 - **Phạm vi**: 1 luồng end-to-end: Đăng ký → Đăng nhập → Tìm kiếm & Xem sản phẩm → Thêm giỏ hàng → Thanh toán (Checkout).
 - **Phương pháp**: Moderated think-aloud, đo SUS và 4 câu hỏi mở rộng với 7 phiên kiểm thử chính thức (+ 1 phiên pilot).
-- **Trạng thái**: `Phase 1 draft` (đã sẵn sàng kịch bản/pilot, chuẩn bị chạy các phiên thật).
+- **Trạng thái**: `Completed` — 7 phiên chính thức đã chạy xong; báo cáo tổng hợp, bug index và bug file đã hoàn thành.
 
 _(Đợt đánh giá `U-002`, `U-XYZ` tiếp theo sẽ được cập nhật tại đây khi được khởi tạo)._
 

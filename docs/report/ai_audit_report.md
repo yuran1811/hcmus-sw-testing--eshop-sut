@@ -104,6 +104,21 @@
 
 ---
 
+## Entry 6
+
+- **Tool:** OpenAI Codex (GPT-5)
+- **Date/time:** 2026-08-02 20:58
+- **Task context:** Task 2 Phase 3 — Tổng hợp 7 usability sessions, hoàn thiện report/evidence và tạo file-first bug drafts
+- **Prompt used (verbatim):**
+  > đọc tests\usability-tests\U-001\1_plan-prep tests\usability-tests\U-001\2_session-guide tests\usability-tests\U-001\3_sessions và hoàn thành tests\usability-tests\U-001\4_reports-synthesis tests\usability-tests\U-001\5_evidence, tôi nghĩ là nên tạo danh sách bug giống tests\bug-reports
+- **AI output (verbatim or faithful summary if very long):**
+  > Agent đọc plan, guide và toàn bộ P01–P07; kiểm tra lại công thức SUS; nhóm 12 findings có timestamp; hoàn thiện usability evaluation report (Markdown + PDF), scores summary, findings synthesis và evidence matrix. Agent tạo 8 bug draft file-first cho F01/F02/F03/F05/F06/F07/F08/F09; tái sử dụng và thêm backlink cho 3 bug Home hiện hữu để tránh duplicate; không tạo GitHub Issue. Agent cũng ghi rõ sai lệch tuyển chọn P06, giới hạn evidence và các gate còn cần sinh viên review.
+- **What the student changed/kept from this output:**
+  - Giữ cấu trúc gọn gồm một report (`usability_evaluation_report.md`), một `bug_index.md` và các bug standalone.
+  - Xóa các file PDF thừa và các mục không cần thiết.
+
+---
+
 ## Hướng Dẫn Cross-Check Trước Submission
 
 Theo skill `ai-audit-report`, trước khi nộp, đối chiếu:
@@ -114,4 +129,4 @@ Theo skill `ai-audit-report`, trước khi nộp, đối chiếu:
 - [ ] Mỗi bug report draft (nếu có) có entry riêng
 - [ ] Không có bước AI-assisted nào mà không có entry tương ứng ở đây
 
-_Tài liệu theo format skill `ai-audit-report` — Phiên bản: 1.3 — Cập nhật: 2026-07-31_
+_Tài liệu theo format skill `ai-audit-report` — Phiên bản: 1.4 — Cập nhật: 2026-08-02_
