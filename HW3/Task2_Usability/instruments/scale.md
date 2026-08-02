@@ -1,48 +1,26 @@
-# Thang đo SUS (System Usability Scale)
+# Usability Scale — SUS (System Usability Scale)
 
-## Giới thiệu
+## Lựa chọn thang đo
+Sử dụng SUS (System Usability Scale, Brooke 1996) thay vì UEQ-S vì:
+- SUS phù hợp với đánh giá 1 luồng tác vụ cụ thể (task-based), trong khi UEQ-S thiên về trải nghiệm cảm xúc tổng thể của sản phẩm.
+- SUS có ngưỡng chuẩn hoá rộng rãi (Acceptability Range, Adjective Rating) giúp so sánh kết quả dễ dàng hơn với benchmark ngành.
+- Số lượng câu hỏi ít (10 câu), phù hợp với thời lượng session ngắn và participant không chuyên IT.
 
-SUS là thang đo tiêu chuẩn gồm 10 câu hỏi, đánh giá mức độ khả dụng tổng thể của hệ thống. Người tham gia trả lời sau mỗi phiên test trên thang Likert 5 mức.
+## 10 câu hỏi SUS (bản dịch tiếng Việt)
+1. Tôi nghĩ rằng tôi muốn sử dụng chức năng này thường xuyên.
+2. Tôi thấy chức năng này phức tạp một cách không cần thiết.
+3. Tôi thấy chức năng này dễ sử dụng.
+4. Tôi nghĩ tôi cần có sự hỗ trợ của người có chuyên môn kỹ thuật để sử dụng chức năng này.
+5. Tôi thấy các chức năng trong hệ thống này được tích hợp khá tốt với nhau.
+6. Tôi thấy có quá nhiều sự thiếu nhất quán trong hệ thống này.
+7. Tôi tưởng tượng rằng hầu hết mọi người sẽ học cách sử dụng chức năng này rất nhanh.
+8. Tôi thấy chức năng này rất khó sử dụng (cồng kềnh).
+9. Tôi cảm thấy rất tự tin khi sử dụng chức năng này.
+10. Tôi cần phải học nhiều thứ trước khi có thể sử dụng thành thạo chức năng này.
 
-## Hướng dẫn cho participant
+Thang điểm: 1 (Hoàn toàn không đồng ý) đến 5 (Hoàn toàn đồng ý).
 
-> Dựa trên trải nghiệm vừa rồi, hãy đánh giá mỗi câu dưới đây theo mức từ 1 (Hoàn toàn không đồng ý) đến 5 (Hoàn toàn đồng ý). Đừng suy nghĩ quá lâu — hãy trả lời theo cảm nhận đầu tiên.
-
-## 10 câu hỏi SUS
-
-| # | Câu hỏi (Vietnamese) | 1 | 2 | 3 | 4 | 5 |
-|---|---|---|---|---|---|---|
-| 1 | Tôi nghĩ tôi sẽ muốn sử dụng hệ thống này thường xuyên. | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 2 | Tôi thấy hệ thống này phức tạp một cách không cần thiết. | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 3 | Tôi thấy hệ thống này dễ sử dụng. | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 4 | Tôi nghĩ tôi sẽ cần sự hỗ trợ của người có chuyên môn để sử dụng hệ thống này. | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 5 | Tôi thấy các chức năng trong hệ thống được tích hợp tốt với nhau. | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 6 | Tôi thấy có quá nhiều sự không nhất quán trong hệ thống này. | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 7 | Tôi nghĩ hầu hết mọi người sẽ học cách sử dụng hệ thống này rất nhanh. | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 8 | Tôi thấy hệ thống này rất rườm rà khi sử dụng. | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 9 | Tôi cảm thấy rất tự tin khi sử dụng hệ thống này. | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 10 | Tôi cần phải học nhiều thứ trước khi có thể bắt đầu sử dụng hệ thống này. | ☐ | ☐ | ☐ | ☐ | ☐ |
-
-## Công thức tính điểm SUS
-
-1. Câu lẻ (1, 3, 5, 7, 9 — câu tích cực): `contribution = score - 1`
-2. Câu chẵn (2, 4, 6, 8, 10 — câu tiêu cực): `contribution = 5 - score`
-3. `SUS = tổng contributions × 2.5`
-4. Kết quả nằm trong khoảng **0 – 100**
-
-## Bảng phiên dịch điểm SUS
-
-| Khoảng điểm | Đánh giá | Grade |
-|---|---|---|
-| 80.3+ | Xuất sắc | A |
-| 68 – 80.3 | Tốt | B |
-| 51 – 68 | Trung bình (OK) | C |
-| < 51 | Kém — cần cải thiện đáng kể | D/F |
-
-**Điểm trung bình toàn cầu:** ~68 (theo Sauro & Lewis).
-
-## Ghi chú
-
-- Báo cáo điểm SUS **từng participant** (P01-P07) và **điểm trung bình (mean)**.
-- Có thể báo thêm median nếu phân bố lệch.
-- Nếu chọn **UEQ-S** thay SUS, thay nội dung file này bằng 8 cặp đối nghĩa UEQ-S và công thức tính Pragmatic/Hedonic Quality.
+## Công thức tính điểm
+- Odd Item Sum = tổng (điểm - 1) của câu 1,3,5,7,9
+- Even Item Sum = tổng (5 - điểm) của câu 2,4,6,8,10
+- SUS Score = (Odd Item Sum + Even Item Sum) × 2.5

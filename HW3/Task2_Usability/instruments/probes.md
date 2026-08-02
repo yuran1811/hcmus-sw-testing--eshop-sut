@@ -1,31 +1,19 @@
-# Câu hỏi phỏng vấn đào sâu (Probe Questions)
+# Probe Questions
 
-Hỏi sau khi participant hoàn thành SUS/UEQ-S. Ghi lại câu trả lời nguyên văn.
+Hỏi sau khi participant hoàn thành task và điền xong thang SUS.
 
-## Câu hỏi bắt buộc (4 chủ đề theo HW03)
+## Clarity (Độ rõ ràng)
+- Trong lúc làm, có bước nào bạn thấy không rõ nên làm gì tiếp theo không?
+- Có label/nút bấm nào khiến bạn phân vân về ý nghĩa của nó không?
 
-### 1. Clarity (Độ rõ ràng)
+## Error Recovery (Khả năng phục hồi lỗi)
+- Bạn có gặp lỗi hoặc bấm nhầm chỗ nào không? Lúc đó bạn xử lý thế nào?
+- Hệ thống có cho bạn biết rõ ràng khi có gì đó sai không?
 
-> Có bước nào trong quá trình vừa rồi mà bạn không hiểu mình cần làm gì tiếp theo không? Nếu có, đó là chỗ nào?
+## Speed (Tốc độ)
+- Bạn cảm thấy quá trình này nhanh hay chậm so với kỳ vọng?
+- Có bước nào bạn thấy thừa thãi, mất thời gian không cần thiết?
 
-### 2. Error Recovery (Xử lý lỗi)
-
-> Bạn có gặp lỗi hoặc thông báo lỗi nào không? Nếu có, bạn có hiểu lỗi đó nghĩa là gì và biết cách sửa không?
-
-### 3. Speed (Tốc độ)
-
-> Có thao tác nào bạn cảm thấy mất quá nhiều thời gian hoặc hệ thống phản hồi chậm không?
-
-### 4. Trust (Độ tin cậy)
-
-> Bạn có tự tin rằng hệ thống đã thực hiện đúng những gì bạn muốn không? Có lúc nào bạn không chắc thao tác đã thành công chưa?
-
-## Câu hỏi mở (tùy chọn)
-
-### 5. Ấn tượng tổng thể
-
-> Nếu phải mô tả trải nghiệm vừa rồi bằng 3 từ, bạn sẽ chọn từ gì?
-
-### 6. Đề xuất cải thiện
-
-> Nếu bạn có thể thay đổi 1 thứ trên trang web này, bạn sẽ thay đổi gì?
+## Trust (Độ tin cậy)
+- Bạn có cảm thấy an tâm khi nhập thông tin cá nhân/mật khẩu mới không?
+- Bạn có tin là tài khoản của mình đã được bảo mật đúng cách sau khi đổi mật khẩu không?

@@ -1,22 +1,13 @@
-# Danh sách người tham gia (Participant Roster)
+# Participant Roster
 
-> **Lưu ý quan trọng:**
-> - Phải là **7 người thật**, **không thuộc lớp HW03**.
-> - Ưu tiên người **không thuộc ngành IT / không phải tester**.
-> - Che **4 chữ số giữa** của số điện thoại/Zalo (e.g. 090\*\*\*\*789).
-> - TA có thể gọi xác minh ngẫu nhiên **2 người** — giả mạo = **0 điểm Task 2**.
+| ID | Họ tên (viết tắt) | Kênh liên hệ (che 4 số giữa) | Loại | Độ tuổi | Xác nhận không thuộc lớp HW03 |
+|----|--------------------|-------------------------------|------|---------|-------------------------------|
+| P01 | [TODO] | [TODO] | [TODO: IT/Non-IT] | [TODO] | [TODO: Có/Không] |
+| P02 | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
+| P03 | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
+| P04 | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
+| P05 | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
+| P06 | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
+| P07 | [TODO] | [TODO] | [TODO] | [TODO] | [TODO] |
 
-| ID | Họ tên | Liên hệ (che 4 số giữa) | Hồ sơ (ngành/nghề, kinh nghiệm IT) | Đồng thuận | Ngày phiên test |
-|---|---|---|---|---|---|
-| P01 | | | | ☐ | |
-| P02 | | | | ☐ | |
-| P03 | | | | ☐ | |
-| P04 | | | | ☐ | |
-| P05 | | | | ☐ | |
-| P06 | | | | ☐ | |
-| P07 | | | | ☐ | |
-
-## Ghi chú
-
-- Pilot participant (nếu không nằm trong P01-P07): _____
-- Lý do chọn nhóm đối tượng này: _____
+Ghi chú: ưu tiên participant Non-IT/Non-tester để đảm bảo tính khách quan của phản hồi usability.

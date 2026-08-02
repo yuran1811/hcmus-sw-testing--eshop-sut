@@ -1,32 +1,7 @@
-# Ghi chú Pilot
+# Pilot Session — Notes & Kết quả
 
-> Điền sau khi chạy pilot session.
+## Vấn đề phát hiện
+[TODO: điền sau khi chạy pilot]
 
-## Metadata
-
-- Pilot participant: [Tên]
-- Ngày/giờ: [YYYY-MM-DD, HH:MM]
-- Thiết bị: [e.g. Laptop Windows, Chrome]
-- Thời gian hoàn thành: [phút:giây]
-
-## Quan sát
-
-### Participant có hiểu scenario không?
-[Có / Không — chi tiết]
-
-### Có bước nào kẹt vì lỗi SUT?
-[Mô tả nếu có]
-
-### Thời gian so với timebox
-[Phù hợp / Quá ngắn / Quá dài]
-
-### Vấn đề với instruments (SUS/probes)
-[Mô tả nếu có]
-
-## Thay đổi cần áp dụng trước sessions chính thức
-
-| # | Thay đổi | Lý do | Đã áp dụng |
-|---|---|---|---|
-| 1 | | | ☐ |
-| 2 | | | ☐ |
-| 3 | | | ☐ |
+## Thay đổi đã áp dụng trước khi chạy chính thức
+[TODO: điền sau khi chạy pilot]
