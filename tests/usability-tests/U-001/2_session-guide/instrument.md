@@ -8,7 +8,6 @@
 >
 > **Biểu mẫu khảo sát trực tuyến (Google Form)**: [Khảo sát Usability U-001](https://docs.google.com/forms/d/e/1FAIpQLSdt6lBw1MNP2KnIbLN36dPhVXyuGmH8aAE0sHla8HNIE6UUWA/viewform)
 
-
 ## SUS
 
 Hướng dẫn cho participant: khoanh mức từ 1 đến 5 theo cảm nhận của bạn, không suy nghĩ quá lâu.
@@ -38,13 +37,13 @@ SUS là điểm quy đổi, không phải phần trăm. Với `n=7`, báo đủ 
 
 | Người tham gia | Q1  | Q2  | Q3  | Q4  | Q5  | Q6  | Q7  | Q8  | Q9  | Q10 | Tổng SUS |
 | -------------- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | -------- |
-| P01            |     |     |     |     |     |     |     |     |     |     |          |
-| P02            |     |     |     |     |     |     |     |     |     |     |          |
-| P03            |     |     |     |     |     |     |     |     |     |     |          |
-| P04            |     |     |     |     |     |     |     |     |     |     |          |
-| P05            |     |     |     |     |     |     |     |     |     |     |          |
-| P06            |     |     |     |     |     |     |     |     |     |     |          |
-| P07            |     |     |     |     |     |     |     |     |     |     |          |
+| P01            | 2   | 1   | 5   | 5   | 4   | 5   | 4   | 1   | 3   | 3   | 57.5     |
+| P02            | 1   | 3   | 1   | 5   | 1   | 5   | 3   | 3   | 3   | 2   | 27.5     |
+| P03            | 2   | 3   | 2   | 4   | 2   | 4   | 3   | 4   | 2   | 3   | 32.5     |
+| P04            | 1   | 4   | 1   | 5   | 1   | 5   | 1   | 5   | 1   | 5   | 2.5      |
+| P05            | 2   | 2   | 4   | 1   | 4   | 3   | 4   | 2   | 4   | 2   | 70.0     |
+| P06            | 2   | 3   | 3   | 4   | 3   | 4   | 2   | 3   | 3   | 3   | 40.0     |
+| P07            | 3   | 1   | 5   | 1   | 3   | 4   | 3   | 1   | 4   | 2   | 72.5     |
 
 ## Câu hỏi mở
 
