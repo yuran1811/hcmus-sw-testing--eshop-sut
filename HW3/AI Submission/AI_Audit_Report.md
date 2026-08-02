@@ -29,6 +29,8 @@ Mỗi dòng trong bảng audit đại diện cho một artifact do AI sinh ra (m
 | **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 09:24 02/08/2026 **Prompt:** "Tôi nhận ra là task 3 phải test manual cho nên là pick ra 1 vài test case để làm thôi, không cần làm hết 45. Miễn sao test được cross platform" | Cập nhật lại file `Report.md` lọc và rút gọn bảng ma trận kết quả (Platform Matrix) từ 45 items xuống còn 15 items tiêu biểu, nhạy cảm với việc render giao diện, độ tương thích responsive, khả năng truy cập phím Tab và các hộp thoại native của trình duyệt. | VALID | ISTQB FL 5.2.1 (Test Execution) & 5.1 (Test Design): Trong kiểm thử thực tế và thủ công (manual testing), việc lựa chọn một tập hợp con tối ưu (test suite reduction/filtering) gồm các ca kiểm thử nhạy cảm với môi trường (environment-sensitive) giúp tối ưu hóa thời gian và nguồn lực mà vẫn đảm bảo độ bao phủ các khía cạnh khác biệt của trình duyệt. AI đã thực hiện lọc chính xác 15 items phù hợp và cập nhật cấu trúc báo cáo. | Chấp nhận nguyên trạng. |
 | **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 10:11 02/08/2026 **Prompt:** "Kiểm tra lại hết evidences của 3 platforms Chrome, Firefox, Safari sử dụng trên Browser stack sau đó cập nhật vào Report.md... Bạn hiểu không screenshot là phải ứng với test cases ở trên chứ, thế hãy chỉnh lại số test cases của task 3 cho phù hợp" | Cập nhật báo cáo `Report.md`, điền kết quả ma trận kèm tên file ảnh bằng chứng, sửa lỗi đường dẫn ảnh Safari, lọc ma trận từ 15 xuống 10 items để khớp chính xác với 4 ảnh chụp màn hình, cập nhật bảng phân loại (3 lỗi) và tóm tắt thống kê (7 Pass, 3 Fail, 70% Pass rate). | INCOMPLETE | ISTQB FL 5.2.1 (Test Execution) & 5.2.2 (Test Log): Ma trận kết quả phải khớp trực quan với bằng chứng hình ảnh (screenshot) thu được. AI ban đầu điền kết quả cho các case không có ảnh bằng chứng trực tiếp. Sinh viên phát hiện và chỉ đạo lọc xuống 10 cases. | Sinh viên kiểm tra, chỉ ra việc ảnh bằng chứng phải khớp test cases, chọn phương án lọc ma trận xuống 10 items có ảnh đối chiếu trực tiếp và yêu cầu điền tên file ảnh bằng chứng vào từng ô kết quả. |
 | **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 10:56 02/08/2026 **Prompt:** "Hãy điền nội dung đầy đủ vào các file sau theo đúng nội dung tôi cung cấp bên dưới. Không tạo thêm file/thư mục mới ngoài danh sách này. Giữ nguyên cấu trúc thư mục hiện có..." | Điền nội dung hoàn chỉnh của 11 file kế hoạch, công cụ, buổi pilot, kết quả SUS, findings và outline report cho Task 2 Usability Evaluation. | VALID | ISTQB FL 5.1 (Test Planning) & HW03 Task 2 Spec: Kế hoạch Usability ban đầu do AI sinh chỉ là khung xương mẫu. Sinh viên tiến hành phân tích độ bao phủ và tự viết lại toàn bộ nội dung chi tiết. AI thực thi cập nhật chuẩn xác theo yêu cầu. | Chấp nhận nguyên trạng. |
+| **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 10:40 02/08/2026 **Prompt:** "Giờ chỉ tôi cách set up mcp và cli của gsheet để cho bạn quyền tự ghi ở sheet online nè. Có thể tạo nhiều sheets khác nhau P01 -> P07... Nên nhớ là họ chưa làm sao có điểm đánh giá được, tôi muốn bạn tạo ra template sẵn trước cơ" | Khởi tạo trang tính Google Sheet online của dự án (Summary + P01..P07) với đầy đủ công thức liên kết tự động và các ô nhập liệu hoàn toàn trống cho 7 người dùng. | INCOMPLETE | ISTQB FL 5.1 (Test Planning) & HW03 Task 2: Các biểu mẫu đánh giá khả dụng ban đầu phải ở trạng thái trống để tránh bịa đặt kết quả trước khi test. API tích hợp bên thứ ba phải được tối ưu hóa để tuân thủ hạn mức băng thông (rate limit). | Sinh viên yêu cầu xóa các điểm giả lập cũ để tạo template sạch. AI đã tối ưu hóa gộp các request ghi để tránh lỗi API Quota 429 và xóa sạch dữ liệu cũ. |
+
 
 ---
 
@@ -512,21 +514,66 @@ Ghi đè nội dung đầy đủ cho 11 file tại các đường dẫn sau:
 | **Verdict** | VALID |
 | **Reasoning** | ISTQB FL 5.1 (Test Planning) & HW03 Task 2 Spec: Kế hoạch đánh giá Usability và các công cụ/biểu mẫu đi kèm phải được thiết kế rõ ràng và có nội dung thực tế (kịch bản goal-only, danh sách participant roster, v.v.). Do bộ khung cũ do AI sinh chưa phù hợp và đầy đủ, sinh viên đã tự soạn thảo lại chi tiết và cung cấp cho AI để cập nhật. AI đã thực thi ghi đè hoàn toàn chính xác nội dung của sinh viên vào 11 file. |
 | **Student Fix** | Chấp nhận nguyên trạng. Sinh viên đã kiểm tra lại 11 file và xác nhận nội dung chính xác theo bản cung cấp. |
-| **Reviewed by** | Ân Tiến Nguyên An |
+| **Reviewed by** | Ân Tiến Nguyen An |
 | **Review date** | 2026-08-02 |
 | **Quality rating** | Excellent |
 | **Issues found** | Không có |
 
 ---
 
+### Artifact #10 -- Thiết lập Google Sheet online mẫu trống kết nối qua API
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.5 Flash) |
+| **Date/Time** | 2026-08-02 10:40:31 +07:00 |
+| **Task** | Khởi tạo bảng tính Google Sheet online (Summary + P01..P07) kết nối qua Google Service Account |
+| **Feature / Module** | Task 2 Usability Evaluation / Data Collection Instruments |
+| **Bloom-AI Level** | G9.4 (Collaborate / Create) -- Phối hợp giữa sinh viên thiết lập Service Account Credentials và AI viết script gspread tự động tạo layout và liên kết các trang tính |
+| **Verdict** | INCOMPLETE |
+
+#### (1) Prompt (verbatim)
+
+**Prompt (verbatim):**
+
+```text
+Giờ chỉ tôi cách set up mcp và cli của gsheet để cho bạn quyền tự ghi ở sheet online nè. Có thể tạo nhiều sheets khác nhau P01 -> P07
+...
+https://docs.google.com/spreadsheets/d/1lFcv1rZwiWe-7lHntObhGopbR7dUTdNMjesM39hmyJs/edit?usp=sharing
+...
+Nên nhớ là họ chưa làm sao có điểm đánh giá được, tôi muốn bạn tạo ra template sẵn trước cơ
+```
+
+#### (2) AI Output
+
+- Script [initialize_gsheet.py](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/scripts/initialize_gsheet.py) kết nối Google API để tự động hóa xây dựng trang tính.
+- Khởi tạo 1 trang `Summary` tổng hợp liên kết trực tiếp bằng công thức tới 7 trang con `P01` đến `P07`. Các trang con chứa câu hỏi SUS và timeline quan sát hoàn toàn trống để sinh viên nhập liệu.
+
+Đầu ra trực tuyến tại: [Google Sheet - Testing](https://docs.google.com/spreadsheets/d/1lFcv1rZwiWe-7lHntObhGopbR7dUTdNMjesM39hmyJs/edit?usp=sharing)
+
+#### (3)-(5) Review
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | INCOMPLETE |
+| **Reasoning** | ISTQB FL 5.1 (Test Planning) & HW03 Task 2 Spec: Mẫu thu thập dữ liệu độ khả dụng không được chứa dữ liệu giả lập trước khi bắt đầu thử nghiệm. Hơn nữa, việc tích hợp API Google Sheets bị giới hạn bởi quota 60 write requests/minute. AI ban đầu điền điểm giả lập và thực hiện quá nhiều cuộc gọi API đơn lẻ, dẫn đến lỗi API Quota Exceeded (429). |
+| **Student Fix** | Sinh viên yêu cầu loại bỏ hoàn toàn các điểm giả lập để tạo template sạch. AI đã cập nhật script `initialize_gsheet.py` gộp tất cả các thao tác cập nhật của mỗi sheet thành một request 2D duy nhất để giảm tải từ 50 xuống 8 API write requests, giải quyết hoàn toàn lỗi Quota 429 và bàn giao template trống. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-08-02 |
+| **Quality rating** | Excellent |
+| **Issues found** | Lỗi Quota Exceeded (429) ở lần chạy đầu tiên; chứa điểm giả lập mặc định. Đã được sinh viên phát hiện và AI sửa lỗi hoàn chỉnh. |
+
+---
+
+
 ## 4. Summary of AI Accuracy
 
 | Metric | Count | Percentage |
 | --- | ---: | ---: |
-| **Total AI-generated artifacts audited** | 9 | 100% |
-| **VALID (correct, accepted as-is)** | 4 | 44.4% |
+| **Total AI-generated artifacts audited** | 10 | 100% |
+| **VALID (correct, accepted as-is)** | 4 | 40.0% |
 | **INVALID (wrong; rejected)** | 0 | 0.0% |
-| **INCOMPLETE (acceptable after edits)** | 5 | 55.6% |
+| **INCOMPLETE (acceptable after edits)** | 6 | 60.0% |
 
 ## 5. Conclusion -- When should AI be used (or not)?
 
@@ -536,7 +583,8 @@ Tuy nhiên, AI có hạn chế về tính chính xác trong việc tự định 
 
 ## 6. Mandatory Disclosure
 
-"Checklist kiểm thử GUI (45 mục), kịch bản tự động hóa Playwright (`run_gui_checklist.js`), file Excel định dạng (`CHECKLIST.xlsx`), Báo cáo tổng kết kiểm thử (`TEST_SUMMARY.md`), 13 báo cáo lỗi Markdown, bộ khung kế hoạch Usability (`HW3/Task2_Usability/`), 2 Agent Skills (`usability-writer`, `usability-runner`), và khung báo cáo kiểm thử Cross-Platform + phiên bản rút gọn 10 items (`Report.md`) được sinh ban đầu với sự hỗ trợ của Antigravity IDE (Claude Opus 4.6 Thinking, Gemini 3.6 Flash, & Gemini 3.5 Flash). Tôi đã kiểm tra kỹ lưỡng kết quả thực thi, phát hiện và sửa đổi các hạn chế của AI (yêu cầu chèn highlight đỏ lên ảnh bằng chứng lỗi, cung cấp mẫu tiêu chuẩn HW02 để đồng bộ báo cáo Test Summary, xóa bỏ phần draft không cần thiết khỏi bug report, tự hoàn thiện toàn bộ kế hoạch và biểu mẫu usability 11 files ghi đè khung mẫu sơ sài của AI, và kiểm tra cấu trúc bảng ma trận cross-platform lọc còn 10 items). Báo cáo AI Audit chi tiết được đính kèm. Tôi xác nhận không sử dụng AI để tạo bất kỳ artifact nào thuộc danh mục cấm (danh sách người tham gia, ảnh chụp cross-platform với thông tin cá nhân, kết quả phiên usability)."
+"Checklist kiểm thử GUI (45 mục), kịch bản tự động hóa Playwright (`run_gui_checklist.js`), file Excel định dạng (`CHECKLIST.xlsx`), Báo cáo tổng kết kiểm thử (`TEST_SUMMARY.md`), 13 báo cáo lỗi Markdown, bộ khung kế hoạch Usability (`HW3/Task2_Usability/`), 2 Agent Skills (`usability-writer`, `usability-runner`), khung báo cáo kiểm thử Cross-Platform (`Report.md`), và bảng tính tự động hóa thu thập dữ liệu Google Sheets online (`initialize_gsheet.py` + `SUS_Template_GoogleSheets.csv`) được sinh ban đầu với sự hỗ trợ của Antigravity IDE (Claude Opus 4.6 Thinking, Gemini 3.6 Flash, & Gemini 3.5 Flash). Tôi đã kiểm tra kỹ lưỡng kết quả thực thi, phát hiện và sửa đổi các hạn chế của AI (yêu cầu chèn highlight đỏ lên ảnh bằng chứng lỗi, cung cấp mẫu tiêu chuẩn HW02 để đồng bộ báo cáo Test Summary, xóa bỏ phần draft không cần thiết khỏi bug report, tự hoàn thiện toàn bộ kế hoạch và biểu mẫu usability 11 files ghi đè khung mẫu sơ sài của AI, kiểm tra cấu trúc bảng ma trận cross-platform lọc còn 10 items, phát hiện lỗi API Quota 429 và chỉ đạo gộp request ghi Google Sheet, loại bỏ điểm giả lập). Báo cáo AI Audit chi tiết được đính kèm. Tôi xác nhận không sử dụng AI để tạo bất kỳ artifact nào thuộc danh mục cấm (danh sách người tham gia, ảnh chụp cross-platform với thông tin cá nhân, kết quả phiên usability)."
+
 
 ## 7. Signature
 
@@ -565,6 +613,7 @@ Tuy nhiên, AI có hạn chế về tính chính xác trong việc tự định 
 | 7 | Antigravity IDE (Gemini 3.5 Flash) | Task 3 Cross-platform | Lọc danh sách 15 items cross-platform & cập nhật Report.md | 2026-08-02 | G9.2 | VALID |
 | 8 | Antigravity IDE (Gemini 3.5 Flash) | Task 3 Cross-platform | Cập nhật kết quả, sửa path ảnh, lọc ma trận còn 10 items theo bằng chứng | 2026-08-02 | G9.3 | INCOMPLETE |
 | 9 | Antigravity IDE (Gemini 3.5 Flash) | Task 2 Usability Evaluation | Điền nội dung chi tiết 11 file Usability | 2026-08-02 | G9.3 | VALID |
+| 10 | Antigravity IDE (Gemini 3.5 Flash) | Task 2 Usability Evaluation | Khởi tạo Google Sheets mẫu trống trực tuyến | 2026-08-02 | G9.4 | INCOMPLETE |
 
 ### Contribution Breakdown
 
@@ -583,6 +632,7 @@ Tuy nhiên, AI có hạn chế về tính chính xác trong việc tự định 
 | Lọc danh sách 15 items cross-platform & cập nhật Report.md | 95% | 5% | AI viết script lọc và cập nhật, sinh viên chỉ đạo |
 | Cập nhật kết quả và lọc ma trận Cross-Platform còn 10 items | 80% | 20% | Sinh viên phát hiện bất hợp lý giữa số ảnh và test cases, chỉ đạo AI rút gọn còn 10 items có bằng chứng trực tiếp |
 | Điền nội dung chi tiết 11 file Usability (Task 2) | 10% | 90% | Sinh viên tự soạn thảo nội dung chất lượng cao, AI hỗ trợ ghi đè ghi nhận |
+| Khởi tạo Google Sheets mẫu trống trực tuyến | 85% | 15% | AI viết script kết nối API và công thức, sinh viên cài đặt Service Account và yêu cầu sửa blank template |
 
 ### Compliance Checklist
 
