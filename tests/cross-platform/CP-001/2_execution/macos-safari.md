@@ -7,10 +7,6 @@
 - Công cụ kiểm thử từ xa / Tunnel:
 - Email overlay:
 
-## Ghi nhận quan sát (Observations)
-
-- 
-
 ## Lỗi phát hiện (Issues)
 
 - 
