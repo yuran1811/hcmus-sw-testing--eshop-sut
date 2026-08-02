@@ -6,7 +6,7 @@
 - FR liên quan: FR-05 (tìm kiếm & danh sách sản phẩm), FR-06 (xem chi tiết sản phẩm), FR-07 (giỏ hàng), FR-09 (mã giảm giá), FR-08 (thanh toán)
 - Timebox: **3 phút/người** *(điều chỉnh sau pilot — xem mục "Điều chỉnh sau pilot")*
 - Người điều phối: nlhakhoa23@clc.fitus.edu.vn
-- Thiết bị/trình duyệt test chính: Laptop Windows 11, Chrome 126, cửa sổ 1440×900
+- Thiết bị/trình duyệt: không giới hạn cụ thể — mỗi người tham gia dùng thiết bị/trình duyệt quen thuộc của họ
 - Số phiên: 7 người chính (P01–P07) + 1 pilot (P00 — đã chạy)
 - Hình thức: Moderated, in-person, think-aloud
 - Phiên bản kịch bản: **v2 (sau pilot)** — áp dụng thống nhất cho cả P01–P07
@@ -34,19 +34,14 @@ Câu 3 nhắm vào sự tin tưởng vào con số cuối cùng — màn hình C
 
 ## Task scenario
 
-> Bạn đang muốn mua một món phụ kiện công nghệ **dưới 10 triệu đồng** để tự thưởng cho mình.
+> Bạn đang muốn mua một món phụ kiện công nghệ để tự thưởng cho mình.
 > Bạn vừa nhận được mã giảm giá **VIP100** từ chương trình khuyến mãi của EShop.
-> Hãy tìm một sản phẩm phù hợp với ngân sách, xem kỹ thông tin sản phẩm trước khi quyết định, rồi
+> Hãy tìm một sản phẩm bạn thấy phù hợp, xem kỹ thông tin sản phẩm trước khi quyết định, rồi
 > hoàn tất việc đặt hàng có sử dụng mã giảm giá đó.
 
 **Vì sao kịch bản dừng ở đây:** kịch bản nêu _mục tiêu_ (mua phụ kiện, có ngân sách, có mã giảm
 giá) và để người tham gia tự tìm đường. Không có câu nào chỉ ra phải bấm nút nào, vào trang nào,
 hay nhập mã ở đâu — nếu chỉ ra thì chính câu hỏi mục tiêu số 2 sẽ không còn đo được gì.
-
-**Ràng buộc tạo ra điểm quyết định thật:** với ngân sách dưới 10 triệu, danh mục hiện có **2 sản
-phẩm hợp lệ** (Tai nghe AirPods Pro 2 — 6.000.000 ₫ và Bàn phím cơ Keychron Q1 — 4.000.000 ₫) và
-3 sản phẩm vượt ngân sách (28–45 triệu). Người tham gia phải thật sự lọc, không có đường đi duy nhất.
-
 ---
 
 ## Điều kiện
@@ -256,16 +251,9 @@ hỏi dẫn dắt (D4), moderator không lỡ gợi ý (E1), một người vừ
 Con số này chỉ dùng để xác nhận **công thức và phiếu SUS chạy đúng**. Theo quy định ở Step 5 của
 skill, **P00 không được đưa vào số liệu tổng hợp Phase 3**.
 
-### Hai điểm còn mở — cần chốt trước khi chạy P01
+### Một điểm còn mở — cần chốt trước khi chạy P01
 
-1. **Ngân sách trong kịch bản: 10 triệu hay 50 triệu?**
-   Test plan (mục Task scenario) ghi **"dưới 10 triệu"**, nhưng dòng A3 trong file pilot lại ghi
-   **"dưới 50 triệu"**. Đây là khác biệt có ảnh hưởng thật: với mốc 10 triệu chỉ có **2/5 sản phẩm**
-   hợp lệ (AirPods 6 triệu, Keychron 4 triệu) nên người tham gia buộc phải lọc; với mốc 50 triệu thì
-   **cả 5/5 sản phẩm** đều hợp lệ và bước lọc biến mất — đúng như A3 đã ghi nhận là ràng buộc
-   *không* tạo ra lựa chọn thật. Hiện test plan vẫn giữ **10 triệu**; nếu pilot thực tế chạy bằng
-   50 triệu thì phải sửa lại đây cho khớp trước khi chạy P01.
-2. **Câu Clarity 1 chưa moi được thông tin cần.**
+1. **Câu Clarity 1 chưa moi được thông tin cần.**
    Người pilot trả lời `"Nhập vào ô"` — đó là mô tả *thao tác*, không trả lời được *làm cách nào
    tìm ra chỗ nhập*, trong khi đây chính là dữ liệu cho **mục tiêu số 2**. Đề xuất thêm một câu hỏi
    đuôi trung lập khi gặp câu trả lời kiểu này:

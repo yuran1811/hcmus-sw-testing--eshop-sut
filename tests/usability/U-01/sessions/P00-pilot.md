@@ -96,7 +96,7 @@ Ghi **điểm thô** từng item (1 = Hoàn toàn không đồng ý → 5 = Hoà
 
 ## Tóm tắt của researcher
 
-- Điểm nghẽn chính: Không
+- Điểm nghẽn chính: Phải bấm nút thêm giỏ hàng 2 lần hệ thống mới phản hồi
 - Điều hỗ trợ hoàn thành: Không
 - Ghi chú cần xác minh, không phải quan sát trực tiếp: Không
 
