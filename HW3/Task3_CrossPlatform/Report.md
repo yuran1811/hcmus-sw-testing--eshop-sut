@@ -4,7 +4,7 @@
 
 - **Họ và tên:** Ân Tiến Nguyên An
 - **Mã số sinh viên (MSSV):** 23127148
-- **Email:** 23127148@student.hcmus.edu.vn
+- **Email:** atnan23@clc.fitus.edu.vn
 
 ## Thiết lập môi trường và nền tảng kiểm thử
 
