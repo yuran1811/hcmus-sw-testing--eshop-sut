@@ -28,6 +28,7 @@ Mỗi dòng trong bảng audit đại diện cho một artifact do AI sinh ra (m
 | **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 09:11 02/08/2026 **Prompt:** "Hãy giúp tôi hoàn thành báo cáo kiểm thử Cross-Platform cho Task 3 của HW3. Bạn hãy thực hiện các bước sau: 1. Đọc nội dung file danh sách checklist tại: CHECKLIST.md ... 2. Tạo mới hoặc cập nhật file báo cáo tại: Report.md..." | Tạo mới báo cáo `Report.md` tại `HW3/Task3_CrossPlatform/Report.md` chứa thông tin cá nhân sinh viên, thiết lập môi trường, bảng ma trận kết quả (đầy đủ 45 checklist items dạng bảng Markdown có kết quả mặc định là `Not Run`), nhật ký ảnh chụp bằng chứng, phân loại lỗi và cấu trúc phần tóm tắt. | VALID | ISTQB FL 5.2 (Test Execution & Reporting) & Spec HW03 Task 3 (Cross-Platform): Báo cáo chéo nền tảng phải phản ánh đúng kết quả thực thi và liên kết chính xác các checklist items từ Task 1 làm nền tảng. AI đã trích xuất tự động và điền chính xác cấu trúc bảng. | Chấp nhận nguyên trạng. |
 | **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 09:24 02/08/2026 **Prompt:** "Tôi nhận ra là task 3 phải test manual cho nên là pick ra 1 vài test case để làm thôi, không cần làm hết 45. Miễn sao test được cross platform" | Cập nhật lại file `Report.md` lọc và rút gọn bảng ma trận kết quả (Platform Matrix) từ 45 items xuống còn 15 items tiêu biểu, nhạy cảm với việc render giao diện, độ tương thích responsive, khả năng truy cập phím Tab và các hộp thoại native của trình duyệt. | VALID | ISTQB FL 5.2.1 (Test Execution) & 5.1 (Test Design): Trong kiểm thử thực tế và thủ công (manual testing), việc lựa chọn một tập hợp con tối ưu (test suite reduction/filtering) gồm các ca kiểm thử nhạy cảm với môi trường (environment-sensitive) giúp tối ưu hóa thời gian và nguồn lực mà vẫn đảm bảo độ bao phủ các khía cạnh khác biệt của trình duyệt. AI đã thực hiện lọc chính xác 15 items phù hợp và cập nhật cấu trúc báo cáo. | Chấp nhận nguyên trạng. |
 | **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 10:11 02/08/2026 **Prompt:** "Kiểm tra lại hết evidences của 3 platforms Chrome, Firefox, Safari sử dụng trên Browser stack sau đó cập nhật vào Report.md... Bạn hiểu không screenshot là phải ứng với test cases ở trên chứ, thế hãy chỉnh lại số test cases của task 3 cho phù hợp" | Cập nhật báo cáo `Report.md`, điền kết quả ma trận kèm tên file ảnh bằng chứng, sửa lỗi đường dẫn ảnh Safari, lọc ma trận từ 15 xuống 10 items để khớp chính xác với 4 ảnh chụp màn hình, cập nhật bảng phân loại (3 lỗi) và tóm tắt thống kê (7 Pass, 3 Fail, 70% Pass rate). | INCOMPLETE | ISTQB FL 5.2.1 (Test Execution) & 5.2.2 (Test Log): Ma trận kết quả phải khớp trực quan với bằng chứng hình ảnh (screenshot) thu được. AI ban đầu điền kết quả cho các case không có ảnh bằng chứng trực tiếp. Sinh viên phát hiện và chỉ đạo lọc xuống 10 cases. | Sinh viên kiểm tra, chỉ ra việc ảnh bằng chứng phải khớp test cases, chọn phương án lọc ma trận xuống 10 items có ảnh đối chiếu trực tiếp và yêu cầu điền tên file ảnh bằng chứng vào từng ô kết quả. |
+| **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 10:56 02/08/2026 **Prompt:** "Hãy điền nội dung đầy đủ vào các file sau theo đúng nội dung tôi cung cấp bên dưới. Không tạo thêm file/thư mục mới ngoài danh sách này. Giữ nguyên cấu trúc thư mục hiện có..." | Điền nội dung hoàn chỉnh của 11 file kế hoạch, công cụ, buổi pilot, kết quả SUS, findings và outline report cho Task 2 Usability Evaluation. | VALID | ISTQB FL 5.1 (Test Planning) & HW03 Task 2 Spec: Kế hoạch Usability ban đầu do AI sinh chỉ là khung xương mẫu. Sinh viên tiến hành phân tích độ bao phủ và tự viết lại toàn bộ nội dung chi tiết. AI thực thi cập nhật chuẩn xác theo yêu cầu. | Chấp nhận nguyên trạng. |
 
 ---
 
@@ -451,24 +452,91 @@ Bạn hiểu không screenshot là phải ứng với test cases ở trên chứ
 
 ---
 
+### Artifact #9 -- Điền nội dung chi tiết 11 file Usability Evaluation (Task 2) do sinh viên biên soạn
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.5 Flash) |
+| **Date/Time** | 2026-08-02 10:56:15 +07:00 |
+| **Task** | Điền nội dung đầy đủ cho 11 file kế hoạch và biểu mẫu Usability Evaluation (Task 2) do sinh viên biên soạn, ghi đè khung mẫu ban đầu |
+| **Feature / Module** | Task 2 Usability Evaluation / Finalizing Plan & Templates |
+| **Bloom-AI Level** | G9.3 (Analyse) -- Sinh viên phân tích và sửa đổi toàn bộ nội dung kế hoạch usability không phù hợp do AI tạo trước đó, tự soạn thảo nội dung chất lượng cao. |
+| **Verdict** | VALID |
+
+#### (1) Prompt (verbatim)
+
+**Prompt (verbatim):**
+
+```text
+Hãy điền nội dung đầy đủ vào các file sau theo đúng nội dung tôi cung cấp bên dưới. Không tạo thêm file/thư mục mới ngoài danh sách này. Giữ nguyên cấu trúc thư mục hiện có. 
+
+=== 1. plan/objectives.md ===
+Nội dung:
+# Objectives
+
+Mục tiêu của bài usability evaluation này là đánh giá luồng "Đăng nhập → Quên mật khẩu → Đăng nhập lại" trên hệ thống [TODO: tên SUT], nhằm trả lời các câu hỏi sau:
+
+1. Người dùng có tự tìm được lối vào chức năng "Quên mật khẩu" mà không cần gợi ý không? (Discoverability)
+2. Người dùng có gặp trở ngại/nghẽn (bottleneck) ở bước nào trong luồng reset mật khẩu (nhập email, nhận mã, nhập mật khẩu mới, đăng nhập lại)?
+3. Người dùng có hiểu rõ thông báo lỗi khi nhập sai (email không tồn tại, mã hết hạn, mật khẩu không đạt yêu cầu) không?
+4. Người dùng cảm thấy tự tin/an tâm (trust) đến mức nào khi thực hiện thao tác đổi mật khẩu?
+5. Thời gian hoàn thành toàn bộ luồng trung bình là bao lâu, có bước nào gây chậm trễ bất thường không?
+
+Các câu hỏi trên sẽ được trả lời qua: quan sát trực tiếp (Phase 2), điểm SUS định lượng, và probe questions định tính (Phase 3).
+...
+=== 11. report.md ===
+Nội dung (khung để export PDF sau này, chỉ điền outline, KHÔNG điền nội dung chi tiết vì chưa có số liệu):
+...
+Sau khi hoàn tất tất cả 11 mục trên, in ra danh sách các file đã chỉnh sửa để tôi xác nhận. Không đụng vào assets/screenshots (để trống, sẽ bổ sung sau khi có ảnh chụp bug thật).
+```
+
+#### (2) AI Output
+
+Ghi đè nội dung đầy đủ cho 11 file tại các đường dẫn sau:
+- [plan/objectives.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/plan/objectives.md)
+- [plan/scenario.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/plan/scenario.md)
+- [instruments/scale.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/instruments/scale.md)
+- [instruments/probes.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/instruments/probes.md)
+- [participants/roster.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/participants/roster.md)
+- [pilot/pilot-plan.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/pilot/pilot-plan.md)
+- [pilot/pilot-notes.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/pilot/pilot-notes.md)
+- [results/sus-scores.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/results/sus-scores.md)
+- [results/findings.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/results/findings.md)
+- 7 file session: từ [session-P01.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/sessions/session-P01.md) đến [session-P07.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/sessions/session-P07.md)
+- [report.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/report.md)
+
+#### (3)-(5) Review
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | VALID |
+| **Reasoning** | ISTQB FL 5.1 (Test Planning) & HW03 Task 2 Spec: Kế hoạch đánh giá Usability và các công cụ/biểu mẫu đi kèm phải được thiết kế rõ ràng và có nội dung thực tế (kịch bản goal-only, danh sách participant roster, v.v.). Do bộ khung cũ do AI sinh chưa phù hợp và đầy đủ, sinh viên đã tự soạn thảo lại chi tiết và cung cấp cho AI để cập nhật. AI đã thực thi ghi đè hoàn toàn chính xác nội dung của sinh viên vào 11 file. |
+| **Student Fix** | Chấp nhận nguyên trạng. Sinh viên đã kiểm tra lại 11 file và xác nhận nội dung chính xác theo bản cung cấp. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-08-02 |
+| **Quality rating** | Excellent |
+| **Issues found** | Không có |
+
+---
+
 ## 4. Summary of AI Accuracy
 
 | Metric | Count | Percentage |
 | --- | ---: | ---: |
-| **Total AI-generated artifacts audited** | 8 | 100% |
-| **VALID (correct, accepted as-is)** | 3 | 37.5% |
+| **Total AI-generated artifacts audited** | 9 | 100% |
+| **VALID (correct, accepted as-is)** | 4 | 44.4% |
 | **INVALID (wrong; rejected)** | 0 | 0.0% |
-| **INCOMPLETE (acceptable after edits)** | 5 | 62.5% |
+| **INCOMPLETE (acceptable after edits)** | 5 | 55.6% |
 
 ## 5. Conclusion -- When should AI be used (or not)?
 
 AI tỏ ra rất hiệu quả trong việc thiết kế draft GUI checklist 45 mục trích dẫn đặc tả FR-21..24, viết mã tự động hóa Playwright để thực thi kiểm thử trên trình duyệt Google Chrome thực tế, tự động xuất file Excel (.xlsx) được tô màu định dạng chuyên nghiệp, tổng hợp báo cáo Test Summary Report, và xây dựng bộ khung thư mục Usability Evaluation (`HW3/Task2_Usability/`) kèm 2 Agent Skills chuyên biệt cho EShop SUT. 
 
-Tuy nhiên, AI có hạn chế về tính chính xác trong việc tự định dạng bằng chứng hình ảnh (chụp toàn trang không highlight), tuân thủ định dạng báo cáo tiêu chuẩn của môn học nếu không có mẫu đối chiếu, và đặc biệt **không thể thay thế con người trong các hoạt động đánh giá độ khả dụng thực tế** (tuyển người dùng thật, ghi nhận cảm xúc/phản hồi thực sự). Sự giám sát và điều chỉnh của sinh viên là bắt buộc: sinh viên đã phát hiện ảnh chụp bị lặp lại, yêu cầu khoanh viền đỏ phần tử lỗi, cung cấp mẫu HW2 chuẩn để đồng bộ báo cáo Test Summary, loại bỏ các phần draft dư thừa khỏi bug report, và sẽ tự điều phối 7 phiên phỏng vấn người dùng thật cho Task 2. Khuyến nghị sử dụng AI để hỗ trợ tự động hóa, thiết kế bộ khung và tổng hợp số liệu, nhưng sinh viên phải trực tiếp điều phối kiểm thử và duyệt lại toàn bộ sản phẩm đầu ra.
+Tuy nhiên, AI có hạn chế về tính chính xác trong việc tự định dạng bằng chứng hình ảnh (chụp toàn trang không highlight), tuân thủ định dạng báo cáo tiêu chuẩn của môn học nếu không có mẫu đối chiếu, và đặc biệt **không thể thay thế con người trong các hoạt động đánh giá độ khả dụng thực tế** (tuyển người dùng thật, ghi nhận cảm xúc/phản hồi thực sự). Sự giám sát và điều chỉnh của sinh viên là bắt buộc: sinh viên đã phát hiện ảnh chụp bị lặp lại, yêu cầu khoanh viền đỏ phần tử lỗi, cung cấp mẫu HW2 chuẩn để đồng bộ báo cáo Test Summary, loại bỏ các phần draft dư thừa khỏi bug report, tự viết lại toàn bộ nội dung chi tiết kế hoạch và các biểu mẫu usability (11 files) để ghi đè khung mẫu sơ sài của AI, và sẽ tự điều phối 7 phiên phỏng vấn người dùng thật cho Task 2. Khuyến nghị sử dụng AI để hỗ trợ tự động hóa, thiết kế bộ khung và tổng hợp số liệu, nhưng sinh viên phải trực tiếp điều phối kiểm thử và duyệt lại toàn bộ sản phẩm đầu ra.
 
 ## 6. Mandatory Disclosure
 
-"Checklist kiểm thử GUI (45 mục), kịch bản tự động hóa Playwright (`run_gui_checklist.js`), file Excel định dạng (`CHECKLIST.xlsx`), Báo cáo tổng kết kiểm thử (`TEST_SUMMARY.md`), 13 báo cáo lỗi Markdown, bộ khung kế hoạch Usability (`HW3/Task2_Usability/`), 2 Agent Skills (`usability-writer`, `usability-runner`), và khung báo cáo kiểm thử Cross-Platform + phiên bản rút gọn 10 items (`Report.md`) được sinh ban đầu với sự hỗ trợ của Antigravity IDE (Claude Opus 4.6 Thinking, Gemini 3.6 Flash, & Gemini 3.5 Flash). Tôi đã kiểm tra kỹ lưỡng kết quả thực thi, phát hiện và sửa đổi các hạn chế của AI (yêu cầu chèn highlight đỏ lên ảnh bằng chứng lỗi, cung cấp mẫu tiêu chuẩn HW02 để đồng bộ báo cáo Test Summary, xóa bỏ phần draft không cần thiết khỏi bug report, tự hoàn thiện kịch bản usability, và kiểm tra cấu trúc bảng ma trận cross-platform lọc còn 10 items). Báo cáo AI Audit chi tiết được đính kèm. Tôi xác nhận không sử dụng AI để tạo bất kỳ artifact nào thuộc danh mục cấm (danh sách người tham gia, ảnh chụp cross-platform với thông tin cá nhân, kết quả phiên usability)."
+"Checklist kiểm thử GUI (45 mục), kịch bản tự động hóa Playwright (`run_gui_checklist.js`), file Excel định dạng (`CHECKLIST.xlsx`), Báo cáo tổng kết kiểm thử (`TEST_SUMMARY.md`), 13 báo cáo lỗi Markdown, bộ khung kế hoạch Usability (`HW3/Task2_Usability/`), 2 Agent Skills (`usability-writer`, `usability-runner`), và khung báo cáo kiểm thử Cross-Platform + phiên bản rút gọn 10 items (`Report.md`) được sinh ban đầu với sự hỗ trợ của Antigravity IDE (Claude Opus 4.6 Thinking, Gemini 3.6 Flash, & Gemini 3.5 Flash). Tôi đã kiểm tra kỹ lưỡng kết quả thực thi, phát hiện và sửa đổi các hạn chế của AI (yêu cầu chèn highlight đỏ lên ảnh bằng chứng lỗi, cung cấp mẫu tiêu chuẩn HW02 để đồng bộ báo cáo Test Summary, xóa bỏ phần draft không cần thiết khỏi bug report, tự hoàn thiện toàn bộ kế hoạch và biểu mẫu usability 11 files ghi đè khung mẫu sơ sài của AI, và kiểm tra cấu trúc bảng ma trận cross-platform lọc còn 10 items). Báo cáo AI Audit chi tiết được đính kèm. Tôi xác nhận không sử dụng AI để tạo bất kỳ artifact nào thuộc danh mục cấm (danh sách người tham gia, ảnh chụp cross-platform với thông tin cá nhân, kết quả phiên usability)."
 
 ## 7. Signature
 
@@ -496,6 +564,7 @@ Tuy nhiên, AI có hạn chế về tính chính xác trong việc tự định 
 | 6 | Antigravity IDE (Gemini 3.5 Flash) | Task 3 Cross-platform | Thiết kế ma trận kết quả và cấu trúc Báo cáo kiểm thử Cross-Platform (`Report.md`) | 2026-08-02 | G9.2 | VALID |
 | 7 | Antigravity IDE (Gemini 3.5 Flash) | Task 3 Cross-platform | Lọc danh sách 15 items cross-platform & cập nhật Report.md | 2026-08-02 | G9.2 | VALID |
 | 8 | Antigravity IDE (Gemini 3.5 Flash) | Task 3 Cross-platform | Cập nhật kết quả, sửa path ảnh, lọc ma trận còn 10 items theo bằng chứng | 2026-08-02 | G9.3 | INCOMPLETE |
+| 9 | Antigravity IDE (Gemini 3.5 Flash) | Task 2 Usability Evaluation | Điền nội dung chi tiết 11 file Usability | 2026-08-02 | G9.3 | VALID |
 
 ### Contribution Breakdown
 
@@ -513,6 +582,7 @@ Tuy nhiên, AI có hạn chế về tính chính xác trong việc tự định 
 | Thiết kế ma trận & cấu trúc Report.md (draft 45 mục) | 95% | 5% | AI trích xuất tự động và tạo khung, sinh viên duyệt |
 | Lọc danh sách 15 items cross-platform & cập nhật Report.md | 95% | 5% | AI viết script lọc và cập nhật, sinh viên chỉ đạo |
 | Cập nhật kết quả và lọc ma trận Cross-Platform còn 10 items | 80% | 20% | Sinh viên phát hiện bất hợp lý giữa số ảnh và test cases, chỉ đạo AI rút gọn còn 10 items có bằng chứng trực tiếp |
+| Điền nội dung chi tiết 11 file Usability (Task 2) | 10% | 90% | Sinh viên tự soạn thảo nội dung chất lượng cao, AI hỗ trợ ghi đè ghi nhận |
 
 ### Compliance Checklist
 
