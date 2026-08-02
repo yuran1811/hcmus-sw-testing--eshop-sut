@@ -1,6 +1,6 @@
 # Cross-Browser / Cross-Platform Testing – HW03 (MSSV: 23127115)
 
-**Yêu cầu:** mỗi ảnh chụp phải hiện rõ trình duyệt/OS/thiết bị, URL localhost của SUT, và overlay username dạng `23127115@hcmus.edu.vn`.
+**Yêu cầu:** mỗi ảnh chụp phải hiện rõ trình duyệt/OS/thiết bị, URL localhost của SUT, và overlay username dạng `mqtan23@clc.fitus.edu.vn`.
 
 | #            | Nền tảng             | Trình duyệt/Thiết bị             | Công cụ (BrowserStack/LambdaTest/thiết bị thật) | File ảnh                                           | Ghi chú lỗi phát hiện (nếu có) |
 | ------------ | -------------------- | -------------------------------- | ----------------------------------------------- | -------------------------------------------------- | ------------------------------ |
@@ -11,7 +11,7 @@
 
 **Checklist trước khi nộp ảnh:**
 
-- [ ] Mỗi ảnh có overlay `23127115@hcmus.edu.vn`
+- [ ] Mỗi ảnh có overlay `mqtan23@clc.fitus.edu.vn`
 - [ ] Mỗi ảnh hiện rõ tên trình duyệt/OS/thiết bị
 - [ ] Mỗi ảnh hiện URL localhost của SUT
 - [ ] Đủ tối thiểu 3 nền tảng khác nhau
