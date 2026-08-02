@@ -9,13 +9,20 @@ assignees: ""
 
 HOME-GUI-IA03-022
 
+## Also observed by Usability Finding
+
+[F04 — Sessions P01, P02, P03, P04, P05, P06](../../../../usability-tests/U-001/4_reports-synthesis/usability_evaluation_report.md#5-findings)
+
 ## Requirement liên quan
 
 FR-23
 
 ## Severity / Priority
 
-Minor / P3
+Major / P1
+
+Re-triaged from Minor/P3 after 6/7 usability sessions showed that the missing
+badge/feedback caused uncertainty or repeated clicks.
 
 ## Environment
 
@@ -45,3 +52,4 @@ document.querySelector('a[href="/cart"]')?.textContent;
 ## Evidence
 
 - ![Evidence 1](BUG-HOME-GUI-IA03-022_01.png)
+- [U-001 bug index & evidence — F04](../../../../usability-tests/U-001/5_evidence/bug_index.md#finding-evidence)

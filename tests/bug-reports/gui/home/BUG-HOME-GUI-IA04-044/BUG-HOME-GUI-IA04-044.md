@@ -9,6 +9,10 @@ assignees: ""
 
 HOME-GUI-IA04-044
 
+## Also observed by Usability Finding
+
+[F10 — Sessions P03, P04, P06](../../../../usability-tests/U-001/4_reports-synthesis/usability_evaluation_report.md#5-findings)
+
 ## Requirement liên quan
 
 N/A
@@ -45,3 +49,4 @@ Open DevTools > Network, set throttling to `Slow 3G`, then reload Home and watch
 ## Evidence
 
 - ![Evidence 1](BUG-HOME-GUI-IA04-044_01.png)
+- [U-001 bug index & evidence — F10](../../../../usability-tests/U-001/5_evidence/bug_index.md#finding-evidence)
