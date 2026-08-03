@@ -51,3 +51,7 @@ document.querySelector('.border.rounded.shadow-sm')?.className;
 
 - **Ảnh chụp card khi hover (Chrome):** ![Evidence 1](BUG-HOME-GUI-IA04-038_01.png)
 - **Ảnh chụp card bình thường để so sánh:** ![Evidence 2](BUG-HOME-GUI-IA04-038_02.png)
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/191

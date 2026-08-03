@@ -57,3 +57,7 @@ document.querySelector('a[href="/cart"]')?.textContent;
 - **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA03-022_01.png)
 - **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA03-022_02.png)
 - [U-001 bug index & evidence — F04](../../../../usability-tests/U-001/5_evidence/bug_index.md#finding-evidence)
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/181

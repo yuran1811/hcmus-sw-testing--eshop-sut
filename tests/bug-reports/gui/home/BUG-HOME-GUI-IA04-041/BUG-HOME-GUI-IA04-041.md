@@ -49,3 +49,7 @@ Open DevTools > Network, set throttling to `Offline`, then reload Home.
 
 - **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA04-041_01.png)
 - **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA04-041_02.png)
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/192

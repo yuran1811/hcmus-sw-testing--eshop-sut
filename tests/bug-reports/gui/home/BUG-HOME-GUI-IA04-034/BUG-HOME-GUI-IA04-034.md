@@ -50,3 +50,7 @@ document.querySelectorAll('img:not([alt]), img[alt=""]').length
 - **HOME-GUI-IA04-034 (Ảnh 1: Home page với product grid):**
 - **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA04-034_01.png)
 - **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA04-034_02.png)
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/188

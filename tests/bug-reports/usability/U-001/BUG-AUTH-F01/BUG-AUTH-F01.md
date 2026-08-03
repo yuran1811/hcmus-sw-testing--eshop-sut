@@ -63,3 +63,7 @@ New
 ## GitHub Issue
 
 Not yet filed
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/194

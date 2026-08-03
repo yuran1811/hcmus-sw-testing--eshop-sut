@@ -53,3 +53,7 @@ Hình ảnh sản phẩm phải hiển thị đúng tỷ lệ khung hình gốc,
 ## Evidence
 
 - **Ảnh chụp danh sách sản phẩm bị biến dạng tỷ lệ trên Mobile:** ![Evidence 1](BUG-HOME-GUI-IA04-037_01.png)
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/190
