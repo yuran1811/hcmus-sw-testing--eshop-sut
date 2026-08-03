@@ -31,3 +31,11 @@ Trường email trên trang đăng nhập dùng `type="text"` thay vì `type="em
 // Spec yêu cầu:
 <input type="email" placeholder="Email" />
 ```
+
+## Screenshots
+
+**Email input type="text" — không có HTML5 email validation:**
+
+![Email Input Type](../playwright-tests/screenshots/FR02/DT-FR02-email-input-type.png)
+
+*Playwright script: `playwright-tests/fr02-login.spec.js` — Test case DT-FR02-14*

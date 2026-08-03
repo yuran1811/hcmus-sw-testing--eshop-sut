@@ -30,3 +30,11 @@ Hiển thị toàn bộ orders dạng flat list, không có controls.
 ## Ghi chú
 
 Đây là thiếu sót tính năng (UX improvement), không phải lỗi nghiêm trọng.
+
+## Screenshots
+
+**Web Order History (mobile viewport 390×844) — flat list, không có filter/sort/search controls:**
+
+![Mobile Order History No Filter](../playwright-tests/screenshots/Mobile/MOB-02-profile-orders.png)
+
+*Playwright script: `playwright-tests/mobile-order-history.spec.js` (mobile viewport 390×844)*

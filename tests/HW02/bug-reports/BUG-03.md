@@ -41,3 +41,15 @@ Trường mật khẩu trên trang đăng nhập dùng `type="text"` thay vì `t
 ## Impact
 
 Nghiêm trọng: mật khẩu bị lộ với bất kỳ ai nhìn vào màn hình người dùng.
+
+## Screenshots
+
+**Password input với type="text" — ký tự nhập vào hiển thị dạng text thô:**
+
+![Password Plaintext Input](../playwright-tests/screenshots/FR02/DT-FR02-password-input-type.png)
+
+**So sánh login form (email và password đều dùng type="text"):**
+
+![Login Form](../playwright-tests/screenshots/FR02/DT-FR02-login-form.png)
+
+*Playwright script: `playwright-tests/fr02-login.spec.js` — Test case DT-FR02 BUG-03*

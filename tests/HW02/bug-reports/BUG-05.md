@@ -48,3 +48,19 @@ if (match) { ... }
 ## Ghi chú
 
 Đây là intentional bug trong SUT demo để sinh viên phát hiện. Trong môi trường production, không bao giờ lưu mật khẩu plaintext.
+
+## Screenshots
+
+**Login form — nhận mật khẩu dưới dạng plaintext trước khi so sánh:**
+
+![Login Form](../playwright-tests/screenshots/FR02/DT-FR02-01-before-submit.png)
+
+**DB Evidence — mật khẩu lưu raw trong cột `password`:**
+```bash
+sqlite3 backend/database.sqlite "SELECT email, password FROM users LIMIT 3"
+# admin@eshop.com|Admin123!
+# test@eshop.com|Test1234!
+# (plaintext, không hash)
+```
+
+*Code review: `backend/server.js:22-29` (register) và `server.js:46` (login)*

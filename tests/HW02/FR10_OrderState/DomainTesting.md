@@ -194,7 +194,43 @@ if (order.status === "delivered" || order.status === "canceled") {
 
 ---
 
-## 8. AI Gap Analysis
+## 8. Screenshots từ Playwright
+
+**FR-10 Normal Flow — pending → confirmed → shipping → delivered:**
+
+Đơn hàng ở trạng thái **pending** (admin thấy nút Xác nhận + Hủy):
+![Pending Order](../playwright-tests/screenshots/FR10/FR10-01-pending-order.png)
+
+Sau khi admin **Xác nhận** → confirmed:
+![Confirmed](../playwright-tests/screenshots/FR10/FR10-02-confirmed.png)
+
+Sau khi admin **Giao hàng** → shipping:
+![Shipping](../playwright-tests/screenshots/FR10/FR10-03-shipping.png)
+
+Sau khi admin **Hoàn thành** → delivered (final state, không còn action buttons):
+![Delivered Final](../playwright-tests/screenshots/FR10/FR10-05-delivered-final-state.png)
+
+**BUG-06 — Canceled order bị chuyển thành Delivered (sai):**
+
+Admin panel hiển thị đơn đã hủy trước khi gọi API:
+![Canceled Order](../playwright-tests/screenshots/FR10/BUG06-01-canceled-order-admin.png)
+
+Sau khi gọi `PUT /api/admin/orders/:id/status { status: "delivered" }` — đơn chuyển thành "Đã giao":
+![Status Now Delivered](../playwright-tests/screenshots/FR10/BUG06-03-status-now-delivered.png)
+
+**BUG-07 — User cancel được đơn đang shipping:**
+
+Web UI — đơn ở trạng thái shipping (UI ẩn nút Hủy đúng cách):
+![Shipping Web UI](../playwright-tests/screenshots/FR10/BUG07-01-shipping-order-web.png)
+
+Sau khi user bypass UI, gọi API trực tiếp → đơn bị hủy:
+![After Cancel Shipping](../playwright-tests/screenshots/FR10/BUG07-03-after-cancel.png)
+
+*Playwright script: `playwright-tests/fr10-screenshots.spec.js` + `fr10-fr18-orders.spec.js`*
+
+---
+
+## 9. AI Gap Analysis
 
 **AI phát hiện được:**
 - Ma trận chuyển đổi đầy đủ (valid/invalid transitions)

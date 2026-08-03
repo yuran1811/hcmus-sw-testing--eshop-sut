@@ -88,6 +88,25 @@
 
 ---
 
+## 4. Screenshots từ Playwright
+
+**BVA-FR02-01 → 03 — Lockout behavior (BUG-01 — attempts tăng +2):**
+
+Lần sai 1 (attempts lên 2, phải là 1):
+![Lockout Attempt 1](../playwright-tests/screenshots/FR02/DT-FR02-lockout-attempt-1.png)
+
+Lần sai 2 (tài khoản bị lock, phải đợi đến lần 3):
+![Lockout Attempt 2](../playwright-tests/screenshots/FR02/DT-FR02-lockout-attempt-2.png)
+
+**BVA-FR02-06 → 08 — Lockout time 180s thay vì 30s (BUG-02):**
+
+Tài khoản bị lock, login với đúng password nhận HTTP 403:
+![Locked Response](../playwright-tests/screenshots/FR02/DT-FR02-10-locked-response.png)
+
+*Ngày thực thi: 2026-06-27 | Playwright script: `playwright-tests/fr02-login.spec.js`*
+
+---
+
 ## 4. AI Gap Analysis — BVA
 
 **AI phát hiện được:**
