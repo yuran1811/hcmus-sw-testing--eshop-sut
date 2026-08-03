@@ -25,7 +25,10 @@ Re-triaged from Minor/P3 after 6/7 usability sessions showed that the missing ba
 
 ## Environment
 
-Browser: Google Chrome / Microsoft Edge, OS: Windows, URL: `http://localhost:5173`
+- Browser: Google Chrome (Windows 11)
+- Browser: Mozilla Firefox (Windows 11)
+
+URL: `http://localhost:5173` (hoặc local Metro Bundler với di động)
 
 ## Steps to reproduce
 

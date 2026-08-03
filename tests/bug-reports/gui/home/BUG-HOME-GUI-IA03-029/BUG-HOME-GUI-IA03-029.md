@@ -19,7 +19,11 @@ Minor / P3
 
 ## Environment
 
-Browser: Google Chrome / Microsoft Edge, OS: Windows, URL: `http://localhost:5173`
+- Browser: Google Chrome (Windows 11)
+- Browser: Mozilla Firefox (Windows 11)
+- Device: Samsung Galaxy S9+ (Android 10) / App: Expo Go (React Native)
+
+URL: `http://localhost:5173` (hoặc local Metro Bundler với di động)
 
 ## Steps to reproduce
 
@@ -45,3 +49,4 @@ Footer không có link điều hướng nào.
 
 - **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA03-029_01.png)
 - **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA03-029_02.png)
+- **Ảnh chụp lỗi trên Expo Go (Android):** ![Evidence 3](BUG-HOME-GUI-IA03-029_03.png)
