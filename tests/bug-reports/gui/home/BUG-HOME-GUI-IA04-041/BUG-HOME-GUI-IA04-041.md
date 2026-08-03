@@ -3,6 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: '[BUG][Home] Không có thông báo lỗi rõ ràng khi request thất bại'
 assignees: ''
+labels: "type: bug, module: product, severity: major, priority: P1, status: new, found-by: test-case, type: gui-issue, screen: home"
 ---
 
 ## Found by Test Case

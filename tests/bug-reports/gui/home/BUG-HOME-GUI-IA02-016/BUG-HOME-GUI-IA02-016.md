@@ -3,6 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: "[BUG][Home] Từ khóa tìm kiếm render HTML thay vì text thuần"
 assignees: ""
+labels: "type: bug, module: product, severity: major, priority: P1, status: new, found-by: test-case, type: gui-issue, screen: home"
 ---
 
 ## Found by Test Case

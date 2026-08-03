@@ -3,6 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: "[BUG][Auth] Trang đăng nhập dùng tiêu đề và nhãn của đăng ký"
 assignees: ""
+labels: "type: bug, module: auth, severity: major, priority: P1, status: new, found-by: usability-test, type: usability-issue"
 ---
 
 ## Found by Test Case

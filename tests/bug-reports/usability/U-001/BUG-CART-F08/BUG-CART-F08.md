@@ -3,6 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: "[BUG][Cart] Guest cart bị mất trong quá trình authentication recovery"
 assignees: ""
+labels: "type: bug, module: cart, severity: major, priority: P2, status: new, found-by: usability-test, type: usability-issue"
 ---
 
 ## Found by Test Case

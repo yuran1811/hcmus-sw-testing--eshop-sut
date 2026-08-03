@@ -3,6 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: "[BUG][Home] Nút đăng xuất hiển thị sai nhãn"
 assignees: ""
+labels: "type: bug, module: product, severity: minor, priority: P2, status: new, found-by: test-case, type: gui-issue, screen: home"
 ---
 
 ## Found by Test Case

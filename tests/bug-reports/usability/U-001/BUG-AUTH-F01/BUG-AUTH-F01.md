@@ -3,6 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: "[BUG][Auth] Mật khẩu hợp lệ theo FR-01 bị từ chối khi đăng ký"
 assignees: ""
+labels: "type: bug, module: auth, severity: blocker, priority: P0, status: new, found-by: usability-test, type: usability-issue"
 ---
 
 ## Found by Test Case

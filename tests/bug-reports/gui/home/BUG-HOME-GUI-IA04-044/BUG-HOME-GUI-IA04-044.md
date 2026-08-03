@@ -3,6 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: "[BUG][Home] Request chậm không có phản hồi chờ rõ ràng"
 assignees: ""
+labels: "type: bug, module: product, severity: major, priority: P1, status: new, found-by: test-case, type: gui-issue, screen: home"
 ---
 
 ## Found by Test Case

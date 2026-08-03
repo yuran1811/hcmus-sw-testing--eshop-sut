@@ -3,6 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: "[BUG][Checkout] Giỏ hàng vẫn còn sau khi thanh toán thành công"
 assignees: ""
+labels: "type: bug, module: checkout, severity: major, priority: P1, status: new, found-by: usability-test, type: usability-issue"
 ---
 
 ## Found by Test Case

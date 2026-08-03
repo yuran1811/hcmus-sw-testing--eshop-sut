@@ -3,6 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: "[BUG][Cart] Cho phép thêm sản phẩm với số lượng 0 hoặc âm"
 assignees: ""
+labels: "type: bug, module: cart, severity: major, priority: P1, status: new, found-by: usability-test, type: usability-issue"
 ---
 
 ## Found by Test Case

@@ -3,6 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: "[BUG][Home] Đường dẫn không tồn tại không được xử lý bằng trang 404"
 assignees: ""
+labels: "type: bug, module: product, severity: major, priority: P2, status: new, found-by: test-case, type: gui-issue, screen: home"
 ---
 
 ## Found by Test Case

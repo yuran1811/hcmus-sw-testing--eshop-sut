@@ -3,6 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: "[BUG][Home] Navbar không có active state cho Trang Chủ"
 assignees: ""
+labels: "type: bug, module: product, severity: minor, priority: P3, status: new, found-by: test-case, type: gui-issue, screen: home"
 ---
 
 ## Found by Test Case

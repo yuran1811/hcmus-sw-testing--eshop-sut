@@ -3,6 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: "[BUG][Checkout] Client có thể sửa và quyết định tổng tiền đơn hàng"
 assignees: ""
+labels: "type: bug, module: checkout, severity: critical, priority: P0, status: new, found-by: usability-test, type: usability-issue"
 ---
 
 ## Found by Test Case
