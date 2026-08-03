@@ -1,0 +1,106 @@
+[
+  {
+    "tcId": "DT-FR02-01",
+    "description": "Đăng nhập thành công (user)",
+    "expected": "HTTP 200 + JWT",
+    "actual": "HTTP 200, token=true",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR02-02",
+    "description": "Đăng nhập thành công (admin)",
+    "expected": "HTTP 200 + role=admin",
+    "actual": "HTTP 200, role=admin",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR02-05",
+    "description": "Sai password lần 1 — kiểm tra attempts",
+    "expected": "HTTP 401, attempts=1",
+    "actual": "HTTP 401, attempts=4 (bug: tăng +2 không phải +1)",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR02-06/07",
+    "description": "Sai password lần 2 → tài khoản BỊ LOCK (sớm hơn spec)",
+    "expected": "Lần 2: không lock, lần 3 mới lock",
+    "actual": "Lần 2: locked=true, DB: 4|2026-06-27T06:44:39.732Z",
+    "status": "FAIL",
+    "bug": "BUG-01"
+  },
+  {
+    "tcId": "DT-FR02-10",
+    "description": "Đăng nhập khi bị lock (đúng password)",
+    "expected": "HTTP 403, \"Tài khoản đã bị khóa\"",
+    "actual": "HTTP 403, msg: \"Tài khoản đã bị khóa. Vui lòng thử lại sau.\"",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR02-09",
+    "description": "Thời gian lockout",
+    "expected": "locked_until = now + 30s (spec)",
+    "actual": "locked_until = now + 180s (impl: ~180s)",
+    "status": "FAIL",
+    "bug": "BUG-02"
+  },
+  {
+    "tcId": "DT-FR02-05b",
+    "description": "Email không tồn tại",
+    "expected": "HTTP 401",
+    "actual": "HTTP 401: \"Invalid email or password\"",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR02-11",
+    "description": "Email uppercase (TEST@ESHOP.COM)",
+    "expected": "HTTP 401 (case-sensitive) hoặc 200 (case-insensitive)",
+    "actual": "HTTP 401",
+    "status": "INFO",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR02-14 (BUG-04)",
+    "description": "Email input type attribute",
+    "expected": "type=\"email\"",
+    "actual": "type=\"text\"",
+    "status": "FAIL",
+    "bug": "BUG-04"
+  },
+  {
+    "tcId": "DT-FR02 (BUG-03)",
+    "description": "Password input type attribute",
+    "expected": "type=\"password\" (ẩn ký tự)",
+    "actual": "type=\"null\" (ẩn đúng)",
+    "status": "FAIL",
+    "bug": "BUG-03"
+  },
+  {
+    "tcId": "UI-FR02-01",
+    "description": "Login form screenshot",
+    "expected": "Form hiển thị đúng",
+    "actual": "Screenshot captured",
+    "status": "INFO",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR02-01 (UI)",
+    "description": "Login thành công qua UI",
+    "expected": "Chuyển về trang chủ",
+    "actual": "URL sau login: http://localhost:5173/",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-FR02-10 (UI)",
+    "description": "Tài khoản bị lock sau 2 lần sai (bug: haẽ là 3)",
+    "expected": "Lock sau 3 lần sai",
+    "actual": "DB: 4|2026-06-27T06:44:47.478Z | Screenshot captured",
+    "status": "FAIL",
+    "bug": "BUG-01"
+  }
+]

@@ -1,0 +1,146 @@
+[
+  {
+    "tcId": "DT-MOB-02",
+    "desc": "GET /api/orders/my-orders (authenticated)",
+    "expected": "HTTP 200, array",
+    "actual": "HTTP 200, 5 orders",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-MOB-06",
+    "desc": "Orders sắp xếp mới nhất trước (DESC)",
+    "expected": "id DESC",
+    "actual": "First id: 51, Last: 47, Sorted: true",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-MOB-01",
+    "desc": "GET /api/orders/my-orders (no token)",
+    "expected": "HTTP 401",
+    "actual": "HTTP 401",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-MOB-07",
+    "desc": "User B không thấy orders của User A",
+    "expected": "0 orders cho user mới",
+    "actual": "User B thấy 0 orders",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-MOB-08",
+    "desc": "User cancel khi pending",
+    "expected": "HTTP 200",
+    "actual": "HTTP 200: Order canceled successfully",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-MOB-09",
+    "desc": "User cancel khi confirmed",
+    "expected": "HTTP 200",
+    "actual": "HTTP 200: Order canceled successfully",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-MOB-13 ★",
+    "desc": "User cancel khi shipping (spec: không cho)",
+    "expected": "HTTP 400, \"Cannot cancel\"",
+    "actual": "HTTP 200, DB after: canceled",
+    "status": "FAIL",
+    "bug": "BUG-11 + BUG-07"
+  },
+  {
+    "tcId": "DT-MOB-11",
+    "desc": "User cancel khi delivered",
+    "expected": "HTTP 400",
+    "actual": "HTTP 400: Cannot cancel this order.",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-MOB-12",
+    "desc": "User cancel khi already canceled",
+    "expected": "HTTP 400",
+    "actual": "HTTP 400: Cannot cancel this order.",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "BVA-MOB-01",
+    "desc": "0 đơn hàng — empty state",
+    "expected": "HTTP 200, []",
+    "actual": "HTTP 200, count=0",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "BVA-MOB-02",
+    "desc": "1 đơn hàng (boundary)",
+    "expected": "HTTP 200, [1 order]",
+    "actual": "count=1, id=52",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "BVA-MOB-05",
+    "desc": "total_amount = 0",
+    "expected": "Order có total=0 được lưu",
+    "actual": "Found: true, amount: 0",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "BVA-MOB-06",
+    "desc": "total_amount = 999,999,999₫",
+    "expected": "Lưu và trả về đúng",
+    "actual": "Found: true, amount: 999999999",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-MOB-22 (BUG-13)",
+    "desc": "API_URL hardcoded trong mobile App.js",
+    "expected": "Dùng env var hoặc config",
+    "actual": "const API_URL = \"http://192.168.10.13:3000/api\"; // IP LAN để chạy được trên iOS/Android và thiết bị thật",
+    "status": "FAIL",
+    "bug": "BUG-13"
+  },
+  {
+    "tcId": "DT-MOB-05 (Web)",
+    "desc": "Web: danh sách đơn hàng hiển thị",
+    "expected": "Thấy danh sách orders",
+    "actual": "Order visible: true",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-MOB-18 (Web)",
+    "desc": "Status hiển thị tiếng Việt",
+    "expected": "Chờ xác nhận / Đã xác nhận / Đang giao",
+    "actual": "Found Vietnamese: true",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-MOB-08 (Web)",
+    "desc": "Nút Hủy hiển thị cho pending/confirmed orders",
+    "expected": "Ít nhất 1 nút hủy",
+    "actual": "Số nút hủy: 3",
+    "status": "PASS",
+    "bug": "—"
+  },
+  {
+    "tcId": "DT-MOB-08b (Web)",
+    "desc": "Click Hủy → cancel pending order",
+    "expected": "status=canceled",
+    "actual": "DB: pending",
+    "status": "FAIL",
+    "bug": "—"
+  }
+]
