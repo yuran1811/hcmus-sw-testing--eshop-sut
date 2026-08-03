@@ -4,17 +4,18 @@
 Chạy thử scenario với 1 participant trước khi triển khai 7 session chính thức, nhằm phát hiện:
 - Task scenario có gây hiểu nhầm không.
 - Flow có bug/lỗi kỹ thuật chặn tiến trình không.
-- Thời gian ước tính cho 1 session có hợp lý không (dự kiến [TODO] phút).
+- Thời gian ước tính cho 1 session có hợp lý không (dự kiến 30 phút).
 
 ## Thời gian dự kiến
-[TODO: ngày giờ chạy pilot]
+- Ngày thực hiện: 01/08/2026
+- Thời lượng dự kiến: 30 phút
 
 ## Participant pilot
-[TODO: người tham gia pilot — nên là người ngoài 7 participant chính thức nếu có thể, hoặc 1 trong 7 người và tính luôn là session đầu nếu không phát sinh vấn đề]
+- P01 (Nguyễn Thiên Phúc) - Được chọn làm đối tượng chạy pilot. Do phát hiện lỗi nghiêm trọng chặn tiến trình nhưng không thể sửa mã nguồn SUT, kết quả phiên này vẫn được giữ lại làm dữ liệu chính thức cho P01 để phân tích trải nghiệm.
 
 ## Checklist quan sát khi chạy pilot
-- [ ] Scenario có rõ nghĩa, không cần giải thích thêm không?
-- [ ] Participant có tự tìm ra chức năng "Quên mật khẩu" không?
-- [ ] Có bug kỹ thuật nào chặn hoàn thành task không (OTP không gửi, link reset lỗi...)?
-- [ ] Probe questions có dễ hiểu, participant trả lời được không?
-- [ ] Thời lượng thực tế so với dự kiến chênh lệch bao nhiêu?
+- [x] Scenario có rõ nghĩa, không cần giải thích thêm không? (Đạt)
+- [x] Participant có tự tìm ra chức năng "Quên mật khẩu" không? (Đạt, dễ tìm thấy ở trang Login)
+- [x] Có bug kỹ thuật nào chặn hoàn thành task không (OTP không gửi, link reset lỗi...)? (Có - Lỗi Regex mật khẩu bắt buộc khoảng trắng chặn đứng bước thiết lập mật khẩu mới)
+- [x] Probe questions có dễ hiểu, participant trả lời được không? (Đạt, phản hồi tốt)
+- [x] Thời lượng thực tế so với dự kiến chênh lệch bao nhiêu? (Đạt, dao động khoảng 30 phút)

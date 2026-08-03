@@ -2,17 +2,18 @@
 
 | Participant | SUS Score |
 |-------------|-----------|
-| P01 | [TODO] |
-| P02 | [TODO] |
-| P03 | [TODO] |
-| P04 | [TODO] |
-| P05 | [TODO] |
-| P06 | [TODO] |
-| P07 | [TODO] |
-| **Trung bình** | **[TODO]** |
+| P01 | 12.5 |
+| P02 | 47.5 |
+| P03 | 62.5 |
+| P04 | 37.5 |
+| P05 | 47.5 |
+| P06 | 42.5 |
+| P07 | 77.5 |
+| **Trung bình** | **46.79** |
 
 ## Adjective Rating
-[TODO: tra theo điểm trung bình — Worst Imaginable / Poor / OK / Good / Excellent / Best Imaginable]
+- **Poor (Hạng D)** (Tra cứu theo điểm trung bình 46.79. Điểm SUS trung bình dưới 51 được xếp vào hạng Poor).
 
 ## Acceptability Range
-[TODO: tra theo điểm trung bình — Not Acceptable / Marginal / Acceptable]
+- **Not Acceptable (Không thể chấp nhận)** (Tra cứu theo điểm trung bình 46.79. Điểm SUS trung bình dưới 50 thuộc phạm vi không thể chấp nhận được đối với tính khả dụng của sản phẩm).
+
