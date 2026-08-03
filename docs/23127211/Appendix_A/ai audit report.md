@@ -606,8 +606,8 @@
   >
   > ## Liên kết
   >
-  > - Danh sách người tham gia: [`recruitment-tracker.md`](recruitment-tracker.md)
-  > - Kế hoạch & kết quả pilot: [`sessions/P00-pilot.md`](sessions/P00-pilot.md)
+  > - Danh sách người tham gia: [`recruitment-tracker.md`](../recruitment-tracker.md)
+  > - Kế hoạch & kết quả pilot: [`sessions/P00-pilot.md`](../sessions/P00-pilot.md)
   > - Định nghĩa Outcome/Error/Wrong turn/Hesitation/Intervention: xem `session_log_template.md` trong skill,
   >   áp dụng thống nhất cho cả 8 phiên.
   >
@@ -1266,7 +1266,7 @@
   > - **Platform 2:** Firefox 128 — Windows 11, desktop, cửa sổ 1440×900
   > - **Platform 3:** Safari — iOS trên iPhone thật, truy cập qua ngrok (expose `localhost:5173` ra internet)
   > - **SUT URL khi test:** P1/P2 dùng `http://localhost:5173/product/1` · P3 dùng URL ngrok trỏ về cùng máy
-  > - **Checklist nguồn:** [`../checklist/product-detail/checklist_product-detail.md`](../checklist/product-detail/checklist_product-detail.md) (73 item)
+  > - **Checklist nguồn:** [`../checklist/product-detail/checklist_product-detail.md`](../../checklist/product-detail/checklist_product-detail.md) (73 item)
   > - **Trạng thái:** chưa chạy — toàn bộ ô kết quả là `Not Run`
   >
   > > Bộ 3 này phủ trọn cả ba engine trình duyệt: **Blink** (Chrome), **Gecko** (Firefox), **WebKit**
