@@ -37,10 +37,11 @@ Footer không có link điều hướng nào.
 
 ## Console / Repro
 
-```text
+```javascript
 [...document.querySelectorAll('footer a')].map((a) => ({ text: a.textContent.trim(), href: a.href }))
 ```
 
 ## Evidence
 
-- ![Evidence 1](BUG-HOME-GUI-IA03-029_01.png)
+- **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA03-029_01.png)
+- **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA03-029_02.png)

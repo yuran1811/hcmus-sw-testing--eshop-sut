@@ -29,15 +29,20 @@ Browser: Google Chrome / Microsoft Edge, OS: Windows, URL: `http://localhost:517
 
 ## Expected result
 
-Mỗi ảnh sản phẩm phải có `alt` mô tả rõ nội dung ảnh để hỗ trợ screen reader và
-trợ năng.
+Mỗi ảnh sản phẩm phải có `alt` mô tả rõ nội dung ảnh để hỗ trợ screen reader và trợ năng.
 
 ## Actual result
 
-Ảnh sản phẩm đang dùng `alt=""`, nên người dùng dùng screen reader không nhận
-được mô tả nào cho hình ảnh.
+Ảnh sản phẩm đang dùng `alt=""`, nên người dùng dùng screen reader không nhận được mô tả nào cho hình ảnh.
+
+## Console / Repro
+
+```javascript
+document.querySelectorAll('img:not([alt]), img[alt=""]').length
+```
 
 ## Evidence
 
 - **HOME-GUI-IA04-034 (Ảnh 1: Home page với product grid):**
-  ![Evidence 1](BUG-HOME-GUI-IA04-034_01.png)
+- **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA04-034_01.png)
+- **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA04-034_02.png)

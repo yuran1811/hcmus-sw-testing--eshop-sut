@@ -29,8 +29,7 @@ Browser: Google Chrome / Microsoft Edge, OS: Windows, URL: `http://localhost:517
 
 ## Expected result
 
-Trang phải hiển thị empty state thân thiện với icon/hình minh họa và thông
-điệp rõ ràng.
+Trang phải hiển thị empty state thân thiện với icon/hình minh họa và thông điệp rõ ràng.
 
 ## Actual result
 
@@ -38,7 +37,7 @@ Không có empty state thân thiện như yêu cầu.
 
 ## Console / Repro
 
-```text
+```javascript
 const input = document.querySelector('input[type="text"]');
 input.value = 'zzzz-not-found-123';
 input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -47,4 +46,5 @@ input.closest('form').requestSubmit();
 
 ## Evidence
 
-- ![Evidence 1](BUG-HOME-GUI-IA04-032_01.png)
+- **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA04-032_01.png)
+- **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA04-032_02.png)

@@ -37,10 +37,11 @@ Hệ thống phải hiển thị trang 404 thân thiện và có đường quay 
 
 ## Console / Repro
 
-```text
+```javascript
 location.href = '/does-not-exist';
 ```
 
 ## Evidence
 
-- ![Evidence 1](BUG-HOME-GUI-IA03-048_01.png)
+- **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA03-048_01.png)
+- **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA03-048_02.png)

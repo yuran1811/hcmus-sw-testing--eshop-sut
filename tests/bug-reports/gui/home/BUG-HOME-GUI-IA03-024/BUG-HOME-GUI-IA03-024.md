@@ -37,10 +37,11 @@ Trang Home đang có nhiều hơn một thẻ `h1`.
 
 ## Console / Repro
 
-```text
+```javascript
 document.querySelectorAll('h1').length
 ```
 
 ## Evidence
 
-- ![Evidence 1](BUG-HOME-GUI-IA03-024_01.png)
+- **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA03-024_01.png)
+- **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA03-024_02.png)

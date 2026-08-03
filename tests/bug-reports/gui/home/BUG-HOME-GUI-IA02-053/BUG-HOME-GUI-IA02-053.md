@@ -37,7 +37,7 @@ Khoảng trắng đầu/cuối chưa được xử lý ổn định như mong mu
 
 ## Console / Repro
 
-```text
+```javascript
 const input = document.querySelector('input[type="text"]');
 input.value = '  iPhone  ';
 input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -46,4 +46,5 @@ input.closest('form').requestSubmit();
 
 ## Evidence
 
-- ![Evidence 1](BUG-HOME-GUI-IA02-053_01.png)
+- **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA02-053_01.png)
+- **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA02-053_02.png)

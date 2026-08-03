@@ -37,11 +37,12 @@ Trạng thái hover/visited/active chưa đủ rõ để phân biệt một các
 
 ## Console / Repro
 
-```text
+```javascript
 const cart = document.querySelector('a[href="/cart"]');
 getComputedStyle(cart).textDecorationLine;
 ```
 
 ## Evidence
 
-- ![Evidence 1](BUG-HOME-GUI-IA01-049_01.png)
+- **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA01-049_01.png)
+- **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA01-049_02.png)

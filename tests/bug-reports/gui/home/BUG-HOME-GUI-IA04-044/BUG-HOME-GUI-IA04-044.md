@@ -33,8 +33,7 @@ Browser: Google Chrome / Microsoft Edge, OS: Windows, URL: `http://localhost:517
 
 ## Expected result
 
-Khi request chậm, Home phải cho người dùng thấy trạng thái chờ hoặc lỗi rõ
-ràng.
+Khi request chậm, Home phải cho người dùng thấy trạng thái chờ hoặc lỗi rõ ràng.
 
 ## Actual result
 
@@ -42,11 +41,12 @@ Trang không hiển thị phản hồi chờ rõ ràng cho request chậm.
 
 ## Console / Repro
 
-```text
+```javascript
 Open DevTools > Network, set throttling to `Slow 3G`, then reload Home and watch for feedback.
 ```
 
 ## Evidence
 
-- ![Evidence 1](BUG-HOME-GUI-IA04-044_01.png)
+- **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA04-044_01.png)
+- **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA04-044_02.png)
 - [U-001 bug index & evidence — F10](../../../../usability-tests/U-001/5_evidence/bug_index.md#finding-evidence)

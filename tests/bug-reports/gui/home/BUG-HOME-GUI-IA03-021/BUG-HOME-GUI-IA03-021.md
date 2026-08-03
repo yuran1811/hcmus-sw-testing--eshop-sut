@@ -37,10 +37,11 @@ Navbar không có active state rõ ràng cho mục Trang Chủ.
 
 ## Console / Repro
 
-```text
+```javascript
 document.querySelector('a[aria-current="page"]')?.textContent
 ```
 
 ## Evidence
 
-- ![Evidence 1](BUG-HOME-GUI-IA03-021_01.png)
+- **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA03-021_01.png)
+- **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA03-021_02.png)

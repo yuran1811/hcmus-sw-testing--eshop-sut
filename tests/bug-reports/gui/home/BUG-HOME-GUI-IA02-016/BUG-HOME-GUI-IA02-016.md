@@ -33,12 +33,11 @@ Từ khóa phải được hiển thị an toàn dưới dạng text thuần, kh
 
 ## Actual result
 
-Trang render nội dung HTML từ chuỗi tìm kiếm, nên markup không được xử lý an
-toàn như text thuần.
+Trang render nội dung HTML từ chuỗi tìm kiếm, nên markup không được xử lý an toàn như text thuần.
 
 ## Console / Repro
 
-```text
+```javascript
 const input = document.querySelector('input[type="text"]');
 input.value = '<b>test</b>';
 input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -47,4 +46,5 @@ input.closest('form').requestSubmit();
 
 ## Evidence
 
-- ![Evidence 1](BUG-HOME-GUI-IA02-016_01.png)
+- **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA02-016_01.png)
+- **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA02-016_02.png)

@@ -1,8 +1,8 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: "[BUG][Home] Không có thông báo lỗi rõ ràng khi request thất bại"
-assignees: ""
+title: '[BUG][Home] Không có thông báo lỗi rõ ràng khi request thất bại'
+assignees: ''
 ---
 
 ## Found by Test Case
@@ -29,8 +29,7 @@ Browser: Google Chrome / Microsoft Edge, OS: Windows, URL: `http://localhost:517
 
 ## Expected result
 
-Trang phải hiển thị thông báo lỗi rõ ràng thay vì để người dùng nhìn thấy màn
-hình trống.
+Trang phải hiển thị thông báo lỗi rõ ràng thay vì để người dùng nhìn thấy màn hình trống.
 
 ## Actual result
 
@@ -38,10 +37,11 @@ Không có thông báo lỗi rõ ràng khi request sản phẩm thất bại.
 
 ## Console / Repro
 
-```text
+```javascript
 Open DevTools > Network, set throttling to `Offline`, then reload Home.
 ```
 
 ## Evidence
 
-- ![Evidence 1](BUG-HOME-GUI-IA04-041_01.png)
+- **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA04-041_01.png)
+- **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA04-041_02.png)

@@ -37,10 +37,11 @@ Placeholder chỉ là `Tìm kiếm...`, chưa nói rõ người dùng đang tìm
 
 ## Console / Repro
 
-```text
+```javascript
 document.querySelector('input[type="text"]')?.placeholder
 ```
 
 ## Evidence
 
-- ![Evidence 1](BUG-HOME-GUI-IA02-013_01.png)
+- **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA02-013_01.png)
+- **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA02-013_02.png)

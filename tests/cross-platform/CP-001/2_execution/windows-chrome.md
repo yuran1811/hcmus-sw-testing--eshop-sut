@@ -34,4 +34,4 @@ Phát hiện 19 lỗi giao diện (được ghi nhận chi tiết tại các bá
 ## Danh sách ảnh chụp màn hình tham chiếu (Screenshot references)
 
 - **Ảnh Trang chủ (Phần trên):** [chrome_home_1.png](../3_screenshots/windows-chrome/chrome_home_1.png)
-- **Ảnh Trang chủ (Phần dưới / Tìm kiếm):** [chrome_home_2.png](../3_screenshots/windows-chrome/chrome_home_2.png)
+- **Ảnh Trang chủ (Phần dưới):** [chrome_home_2.png](../3_screenshots/windows-chrome/chrome_home_2.png)

@@ -37,11 +37,12 @@ Nút đang hiển thị là `Thoát`, không khớp nhãn yêu cầu.
 
 ## Console / Repro
 
-```text
+```javascript
 localStorage.getItem('token');
 document.querySelector('button.bg-red-500')?.textContent;
 ```
 
 ## Evidence
 
-- ![Evidence 1](BUG-HOME-GUI-IA03-023_01.png)
+- **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA03-023_01.png)
+- **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA03-023_02.png)

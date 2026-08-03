@@ -37,10 +37,11 @@ Title vẫn là `frontend-web`, chưa đủ rõ cho người dùng nhận diện
 
 ## Console / Repro
 
-```text
+```javascript
 document.title
 ```
 
 ## Evidence
 
-- ![Evidence 1](BUG-HOME-GUI-IA01-052_01.png)
+- **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA01-052_01.png)
+- **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA01-052_02.png)

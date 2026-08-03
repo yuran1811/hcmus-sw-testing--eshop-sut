@@ -21,8 +21,7 @@ FR-23
 
 Major / P1
 
-Re-triaged from Minor/P3 after 6/7 usability sessions showed that the missing
-badge/feedback caused uncertainty or repeated clicks.
+Re-triaged from Minor/P3 after 6/7 usability sessions showed that the missing badge/feedback caused uncertainty or repeated clicks.
 
 ## Environment
 
@@ -44,12 +43,13 @@ Header không hiển thị badge số lượng trên link Giỏ hàng.
 
 ## Console / Repro
 
-```text
+```javascript
 [...document.querySelectorAll('button')].find((b) => b.textContent.includes('Thêm vào giỏ'))?.click();
 document.querySelector('a[href="/cart"]')?.textContent;
 ```
 
 ## Evidence
 
-- ![Evidence 1](BUG-HOME-GUI-IA03-022_01.png)
+- **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA03-022_01.png)
+- **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA03-022_02.png)
 - [U-001 bug index & evidence — F04](../../../../usability-tests/U-001/5_evidence/bug_index.md#finding-evidence)

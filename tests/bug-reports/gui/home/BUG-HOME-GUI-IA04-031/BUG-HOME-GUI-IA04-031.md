@@ -41,11 +41,12 @@ Không có loading state rõ ràng khi danh sách sản phẩm đang tải.
 
 ## Console / Repro
 
-```text
+```javascript
 Open DevTools > Network, set throttling to `Slow 3G`, then reload Home.
 ```
 
 ## Evidence
 
-- ![Evidence 1](BUG-HOME-GUI-IA04-031_01.png)
+- **Ảnh chụp lỗi trên Google Chrome:** ![Evidence 1](BUG-HOME-GUI-IA04-031_01.png)
+- **Ảnh chụp lỗi trên Firefox:** ![Evidence 2](BUG-HOME-GUI-IA04-031_02.png)
 - [U-001 bug index & evidence — F10](../../../../usability-tests/U-001/5_evidence/bug_index.md#finding-evidence)
