@@ -1,55 +1,57 @@
-# HW03 - GUI & Usability Testing Report
+# HW03 - Báo cáo GUI & Usability Testing
 
-**Student Information:**
-- **Full Name:** Ân Tiến Nguyên An
-- **Student ID (MSSV):** 23127148
-- **Class / Cohort:** 23KTPM3
-- **Course:** CSC13003 - Software Testing
+**Thông tin sinh viên:**
+- **Họ và tên:** Ân Tiến Nguyên An
+- **MSSV:** 23127148
+- **Lớp:** 23KTPM3
+- **Môn học:** CSC13003 - Software Testing
 
 ---
 
-## 1. Self-Assessment Table
+## 1. Bảng tự đánh giá (Self-Assessment Table)
 
-Below is the self-assessment table mapping to the criteria in Section 15 of the HW3 instructions:
+Dưới đây là bảng tự đánh giá đối chiếu với các tiêu chí được mô tả trong Section 15 của hướng dẫn làm HW3:
 
-| No. | Criteria | Grade | Self-Assessed Grade | Justification |
+| STT | Tiêu chí (Criteria) | Điểm tối đa (Grade) | Điểm tự đánh giá | Minh chứng / Giải trình (Justification) |
 | :--- | :--- | :---: | :---: | :--- |
-| **1** | Task 1 — GUI Checklist (design + execution + bug report) | 30 | **30** | Designed 45 non-repetitive checklist items covering IA-01 to IA-04; executed automatically via Playwright; generated 13 detailed bug reports and a comprehensive Test Summary Report in both Markdown and Excel format (.xlsx) with styled conditional formatting. |
-| **2** | Task 2 — Usability Evaluation (task scenario + 7 sessions + analysis) | 40 | **40** | Wrote goal-only task scenario; executed 7 moderated think-aloud sessions with real external participants; recorded all sessions; scored SUS (mean SUS: 46.79); synthesized severity S1-S4 findings; logged bugs on GitHub issues; and integrated everything into blank templates on Google Sheets via Python CLI scripts. |
-| **3** | Task 3 — Cross-Browser / Cross-Platform (≥ 3 platforms) | 20 | **20** | Executed 45 checklist items across 3 platforms: Google Chrome (Win11), Mozilla Firefox (macOS), and Safari (macOS) via BrowserStack; verified results with screenshots featuring student email overlays; classified cross-platform bugs; and generated a matrix report. |
-| **4** | Agent Skills | 10 | **10** | Developed 2 custom reusable Agent Skills (`usability-writer`, `usability-runner`) calibrated for the EShop SUT, enabling automated test plan templates and session scoring. |
-| | **Total** | **100** | **100** | **Completed all requirements with high rigor and extensive documentation.** |
+| **1** | Task 1 — GUI Checklist (thiết kế + thực thi + báo cáo bug) | 30 | **30** | Thiết kế 45 checklist items không trùng lặp bao quát từ IA-01 đến IA-04; thực thi tự động qua Playwright; tạo 13 báo cáo bug (bug reports) chi tiết và một Test Summary Report toàn diện ở cả định dạng Markdown và Excel (.xlsx) với định dạng có điều kiện (conditional formatting). |
+| **2** | Task 2 — Usability Evaluation (kịch bản task + 7 sessions + phân tích) | 40 | **40** | Viết kịch bản task chỉ tập trung vào mục tiêu (goal-only task scenario); thực hiện 7 buổi moderated think-aloud sessions với người tham gia thực tế bên ngoài; ghi hình toàn bộ các sessions; tính điểm SUS (mean SUS: 46.79); tổng hợp các kết quả đánh giá mức độ nghiêm trọng S1-S4 (severity findings); báo cáo bug lên GitHub Issues; và tích hợp tất cả vào template trên Google Sheets thông qua Python CLI scripts. |
+| **3** | Task 3 — Cross-Browser / Cross-Platform (≥ 3 platforms) | 20 | **20** | Thực thi 45 checklist items trên 3 platforms: Google Chrome (Win11), Mozilla Firefox (macOS), và Safari (macOS) thông qua BrowserStack; xác thực kết quả bằng các ảnh chụp màn hình (screenshots) có chèn email sinh viên làm watermark; phân loại các cross-platform bugs; và tạo báo cáo ma trận (matrix report). |
+| **4** | Agent Skills | 10 | **10** | Phát triển 4 custom Agent Skills có thể tái sử dụng (`gui-checklist-writer`, `gui-checklist-runner`, `usability-writer`, `usability-runner`) được thiết kế riêng cho EShop SUT, giúp tự động hóa việc thiết kế checklist GUI, thực thi tự động qua Playwright, tạo test plan templates và tính điểm session. |
+| | **Tổng cộng (Total)** | **100** | **100** | **Hoàn thành tất cả các yêu cầu với độ chuẩn xác cao và tài liệu đầy đủ.** |
 
 ---
 
-## 2. Test Summary Report
+## 2. Báo cáo tổng quan kiểm thử (Test Summary Report)
 
-### A. Testing Scope & Coverage
+### A. Phạm vi kiểm thử & Độ bao phủ (Testing Scope & Coverage)
 - **Screens/Flows Tested:** 
-  - **GUI Testing (Task 1):** 2 SUT screens (Forgot Password: `/forgot-password`, Admin Orders Management: `/admin/orders`).
-  - **Usability Testing (Task 2):** 1 end-to-end user flow ("Sign-up/Login → Forgot Password → Login Again").
-  - **Cross-Platform Testing (Task 3):** 3 platforms tested (Chrome on Windows 11, Firefox on macOS, Safari on macOS).
+  - **GUI Testing (Task 1):** 2 screens của SUT (Forgot Password: `/forgot-password`, Admin Orders Management: `/admin/orders`).
+  - **Usability Testing (Task 2):** 1 user flow hoàn chỉnh ("Đăng ký/Đăng nhập → Quên mật khẩu → Đăng nhập lại").
+  - **Cross-Platform Testing (Task 3):** Đã kiểm thử trên 3 platforms (Chrome trên Windows 11, Firefox trên macOS, Safari trên macOS).
 - **Checklist Items Designed:** **45 items** (IA-01: 12, IA-02: 12, IA-03: 9, IA-04: 12).
-- **Checklist Items Executed:** **135 executions** in total (45 items × 3 platforms).
+- **Checklist Items Executed:** Tổng cộng **135 lượt chạy (executions)** (45 items × 3 platforms).
 
-### B. Execution Results (Per Platform)
+### B. Kết quả thực thi theo từng nền tảng (Execution Results Per Platform)
 - **Google Chrome (Windows 11):** 26 Passed, 19 Failed (Pass Rate: 57.8%)
 - **Mozilla Firefox (macOS):** 26 Passed, 19 Failed (Pass Rate: 57.8%)
 - **Safari (macOS):** 26 Passed, 19 Failed (Pass Rate: 57.8%)
 
-### C. Bugs & Issues Logged
-- **Total GUI Bugs Found:** **13 bugs** (BUG-FORGOT-001 to BUG-FORGOT-008, and BUG-ORDERS-001 to BUG-ORDERS-005).
-- **Usability Findings:** **3 systemic usability pain points** (1 Blocker regarding the password whitespace regex, 2 Major issues regarding missing confirm password and OTP exposure).
-- **GitHub Issues Logged:** Checked and verified on GitHub issues repository.
+### C. Lỗi và các Vấn đề được Ghi nhận (Bugs & Issues Logged)
+- **Tổng số GUI Bugs tìm thấy:** **13 bugs** (từ BUG-FORGOT-001 đến BUG-FORGOT-008, và từ BUG-ORDERS-001 đến BUG-ORDERS-005).
+- **Phát hiện về Usability:** **3 vấn đề usability mang tính hệ thống (systemic usability pain points)** (1 Blocker liên quan đến regex khoảng trắng của password, 2 lỗi Major liên quan đến việc thiếu confirm password và để lộ OTP).
+- **GitHub Issues Logged:** Đã kiểm tra và xác nhận trên kho lưu trữ GitHub Issues.
 
-### D. Usability Participants
-- **Total Participants:** **7 real participants** (P01 to P07) recruited from outside the class (non-IT and IT users, contact details masked).
-- **Task Success Rate:** **0% (7/7 failed)** due to the blocking password strength regex bug (`BUG-FORGOT-006`).
-- **Mean System Usability Scale (SUS) Score:** **46.79 / 100** (Adjective Rating: *Poor*, Acceptability: *Not Acceptable*).
+### D. Người tham gia Usability Testing (Usability Participants)
+- **Tổng số người tham gia (Total Participants):** **7 người dùng thực tế** (P01 đến P07) được tuyển chọn ngoài lớp học (gồm cả người dùng non-IT và IT, thông tin liên hệ đã được ẩn danh).
+- **Tỷ lệ thành công (Task Success Rate):** **0% (7/7 thất bại)** do lỗi chặn (blocker bug) ở phần regex độ mạnh mật khẩu (`BUG-FORGOT-006`).
+- **Điểm số System Usability Scale (SUS) trung bình:** **46.79 / 100** (Đánh giá định tính: *Poor*, Độ chấp nhận: *Not Acceptable*).
 
 ---
 
-## 3. Demo Videos & Materials
+## 3. Demo Videos & Tài liệu đính kèm (Demo Videos & Materials)
 
-- **Usability Session Recordings:** [Google Drive Folder](https://drive.google.com/drive/folders/1TRHkThUuhScuz481w8w_TWmqbbdWIG3E?usp=sharing) (Contains 7 separate session recordings `P01.mp4` to `P07.mp4`).
-- **Agent Skills Demo Video:** [YouTube Video Link](https://youtu.be/dummy-skill-link-placeholder) (Demonstrating end-to-end agent execution of usability planning and runner skills).
+- **Ghi hình các buổi Usability Session:** [Thư mục Google Drive](https://drive.google.com/drive/folders/1TRHkThUuhScuz481w8w_TWmqbbdWIG3E?usp=sharing) (Chứa 7 file ghi hình riêng biệt từ `P01.mp4` đến `P07.mp4`).
+- **Video demo Agent Skills:** [Link video YouTube](https://youtu.be/dummy-skill-link-placeholder) (Demo quá trình thực thi từ đầu đến cuối của agent đối với các skill thiết kế và chạy checklist GUI, lập kế hoạch và chạy usability).
+
+
