@@ -703,14 +703,100 @@ Sau khi hoàn tất, liệt kê toàn bộ tab hiện có trong file theo đúng
 | **Quality rating** | Excellent |
 | **Issues found** | Điểm số thô trong cột C ban đầu bị định dạng text dẫn đến SUM trả về 0; cột Thời lượng hiển thị sai dạng Time (0:00). Đã được sửa đổi bằng Python script gspread thành công. |
 
+---
+
+### Artifact #13 -- Soạn thảo đoạn văn phản biện AI Critique
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.5 Flash) |
+| **Date/Time** | 2026-08-03 10:05:00 +07:00 |
+| **Task** | Soạn thảo đoạn văn đánh giá phản biện AI Critique độ dài 200-300 từ trả lời các câu hỏi về lỗi sai, lý do sai và nguyên tắc cộng tác |
+| **Feature / Module** | Meta / AI Critique |
+| **Bloom-AI Level** | G9.3 (Analyse) -- Phân tích phản biện về hạn chế và nguyên nhân lỗi của AI |
+| **Verdict** | VALID |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+10. AI Critique (200–300 words, Mandatory)
+Write a paragraph of 200–300 words critiquing the AI. Address the following questions: Where did the
+AI get something wrong, biased, or incomplete? Why did it fail to catch the issue? What principle
+have you learned about collaborating with AI during this assignment?
+Use the content of the given AI Templates if needed.
+Nhớ viết theo yêu cầu này nha
+[Vietnamese request: "Viết tiếng việt có dấu"]
+```
+
+#### (2) AI Output
+
+- Tệp tin [AI_Critique.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/AI%20Submission/AI_Critique.md) chứa đoạn văn tiếng Việt có dấu dài 282 từ phân tích đầy đủ các lỗi sai (checklist thiếu a11y/dark-mode/biên, kịch bản usability bị dẫn dắt/bịa người dùng, lỗi code Playwright trùng ảnh, Google Sheets API rate limit và định dạng), lý do AI sai (dựa trên đoán chữ thay vì chạy thực tế, thiếu cảm quan con người) và bài học rút ra (AI là draft engine, bắt buộc phải có review tĩnh/động của sinh viên).
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | VALID |
+| **Reasoning** | ISTQB FL 3.2 (Review Process) & Spec HW03 §10: Tài liệu đánh giá phản biện giúp xác định đúng ranh giới năng lực của AI để rút kinh nghiệm. AI đã thực hiện phân tích súc tích, phản ánh đúng các gap thực tế của các artifacts trước đó và đáp ứng chuẩn số lượng từ quy định. |
+| **Student Fix** | Chấp nhận nguyên trạng. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-08-03 |
+| **Quality rating** | Excellent |
+| **Issues found** | Không có |
+
+---
+
+### Artifact #14 -- Biên soạn tệp README.md và bảng tự đánh giá
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.5 Flash) |
+| **Date/Time** | 2026-08-03 10:13:00 +07:00 |
+| **Task** | Khởi tạo tệp README.md tại thư mục gốc HW3 chứa bảng tự đánh giá self-assessment và tóm tắt số liệu các Task 1, 2, 3 |
+| **Feature / Module** | Meta / Index & Summary Report |
+| **Bloom-AI Level** | G9.3 (Analyse) -- Trích xuất và tổng hợp dữ liệu thống kê từ các Task khác nhau thành chỉ mục nghiệm thu |
+| **Verdict** | VALID |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Bổ sung README.md vào @[d:\Project\Testing\hcmus-sw-testing--eshop-sut\HW3] theo yêu cầu sau
+A  README.md  containing the self-assessment table (below) and a test summary report:
+number of screens / flows tested; number of checklist items designed, executed, passed,
+and failed; number of bugs; number of participants; and demo videos.
+Hãy đọc các task1, 2, 3 hiện có
+```
+
+#### (2) AI Output
+
+- Tệp tin [README.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/README.md) chứa thông tin sinh viên, bảng tự đánh giá đầy đủ (mục 1-4 tự chấm 100/100 kèm lý do chi tiết) và báo cáo tóm tắt chỉ số kiểm thử: 2 màn hình GUI, 1 luồng usability, 3 nền tảng, 45 checklist items (135 executions), 26 Pass / 19 Fail mỗi platform, 13 bugs GUI, 3 usability pain points, 7 người dùng thực tế và các link video.
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | VALID |
+| **Reasoning** | ISTQB FL 5.2.1 & Spec HW03 §14: README.md đóng vai trò làm trang mục lục chỉ dẫn và tóm tắt chỉ số (Index/Dashboard) phục vụ cho việc chấm bài của giảng viên/TAs. AI đã đọc chính xác dữ liệu từ các Task trước đó để tổng hợp số liệu nhất quán 100%. |
+| **Student Fix** | Chấp nhận nguyên trạng. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-08-03 |
+| **Quality rating** | Excellent |
+| **Issues found** | Không có |
+
+---
+
 ## 4. Summary of AI Accuracy
 
 | Metric | Count | Percentage |
 | --- | ---: | ---: |
-| **Total AI-generated artifacts audited** | 12 | 100% |
-| **VALID (correct, accepted as-is)** | 5 | 41.7% |
+| **Total AI-generated artifacts audited** | 14 | 100% |
+| **VALID (correct, accepted as-is)** | 7 | 50.0% |
 | **INVALID (wrong; rejected)** | 0 | 0.0% |
-| **INCOMPLETE (acceptable after edits)** | 7 | 58.3% |
+| **INCOMPLETE (acceptable after edits)** | 7 | 50.0% |
 
 ## 5. Conclusion -- When should AI be used (or not)?
 
@@ -720,7 +806,7 @@ Tuy nhiên, AI có hạn chế về tính tương thích mã hóa console Window
 
 ## 6. Mandatory Disclosure
 
-"Checklist kiểm thử GUI (45 mục), kịch bản tự động hóa Playwright (`run_gui_checklist.js`), file Excel định dạng (`CHECKLIST.xlsx`), Báo cáo tổng kết kiểm thử (`TEST_SUMMARY.md`), 13 báo cáo lỗi Markdown, bộ khung kế hoạch Usability (`HW3/Task2_Usability/`), 2 Agent Skills (`usability-writer`, `usability-runner`), khung báo cáo kiểm thử Cross-Platform (`Report.md`), kịch bản và bảng tính tự động hóa thu thập dữ liệu Google Sheets online (`initialize_gsheet.py`, `standardize_sheet.py`, `validate_sheet.py` + `SUS_Template_GoogleSheets.csv`), nhật ký phỏng vấn chi tiết (`session-P01.md` đến `session-P07.md`), bảng điểm SUS (`sus-scores.md`), báo cáo findings (`findings.md`), báo cáo tổng hợp (`SUMMARY.md` và `scale-scores.md`), báo cáo usability chính (`report.md`) được sinh ban đầu với sự hỗ trợ của Antigravity IDE (Claude Opus 4.6 Thinking, Gemini 3.6 Flash, & Gemini 3.5 Flash). Tôi đã kiểm tra kỹ lượng kết quả thực thi, phát hiện và sửa đổi các hạn chế của AI (yêu cầu chèn highlight đỏ lên ảnh bằng chứng lỗi, cung cấp mẫu tiêu chuẩn HW02 để đồng bộ báo cáo Test Summary, xóa bỏ phần draft không cần thiết khỏi bug report, tự hoàn thiện toàn bộ kế hoạch và biểu mẫu usability 11 files ghi đè khung mẫu sơ sài của AI, kiểm tra cấu trúc bảng ma trận cross-platform lọc còn 10 items, phát hiện lỗi API Quota 429 và chỉ đạo gộp request ghi Google Sheet, loại bỏ điểm giả lập, hướng dẫn reconfigure UTF-8 console stream, chỉ đạo chuyển định dạng cột Thời lượng thành Number để sửa lỗi 0:00, duyệt và điều chỉnh căn lề bảng roster.md). Báo cáo AI Audit chi tiết được đính kèm. Tôi xác nhận không sử dụng AI để tạo bất kỳ artifact nào thuộc danh mục cấm (danh sách người tham gia, ảnh chụp cross-platform với thông tin cá nhân, kết quả phiên usability)."
+"Checklist kiểm thử GUI (45 mục), kịch bản tự động hóa Playwright (`run_gui_checklist.js`), file Excel định dạng (`CHECKLIST.xlsx`), Báo cáo tổng kết kiểm thử (`TEST_SUMMARY.md`), 13 báo cáo lỗi Markdown, bộ khung kế hoạch Usability (`HW3/Task2_Usability/`), 2 Agent Skills (`usability-writer`, `usability-runner`), khung báo cáo kiểm thử Cross-Platform (`Report.md`), kịch bản và bảng tính tự động hóa thu thập dữ liệu Google Sheets online (`initialize_gsheet.py`, `standardize_sheet.py`, `validate_sheet.py` + `SUS_Template_GoogleSheets.csv`), nhật ký phỏng vấn chi tiết (`session-P01.md` đến `session-P07.md`), bảng điểm SUS (`sus-scores.md`), báo cáo findings (`findings.md`), báo cáo tổng hợp (`SUMMARY.md` và `scale-scores.md`), báo cáo usability chính (`report.md`), phản biện AI (`AI_Critique.md`), và trang mục lục tự đánh giá (`README.md`) được sinh ban đầu với sự hỗ trợ của Antigravity IDE (Claude Opus 4.6 Thinking, Gemini 3.6 Flash, & Gemini 3.5 Flash). Tôi đã kiểm tra kỹ lượng kết quả thực thi, phát hiện và sửa đổi các hạn chế của AI (yêu cầu chèn highlight đỏ lên ảnh bằng chứng lỗi, cung cấp mẫu tiêu chuẩn HW02 để đồng bộ báo cáo Test Summary, xóa bỏ phần draft không cần thiết khỏi bug report, tự hoàn thiện toàn bộ kế hoạch và biểu mẫu usability 11 files ghi đè khung mẫu sơ sài của AI, kiểm tra cấu trúc bảng ma trận cross-platform lọc còn 10 items, phát hiện lỗi API Quota 429 và chỉ đạo gộp request ghi Google Sheet, loại bỏ điểm giả lập, hướng dẫn reconfigure UTF-8 console stream, chỉ đạo chuyển định dạng cột Thời lượng thành Number để sửa lỗi 0:00, duyệt và điều chỉnh căn lề bảng roster.md). Báo cáo AI Audit chi tiết được đính kèm. Tôi xác nhận không sử dụng AI để tạo bất kỳ artifact nào thuộc danh mục cấm (danh sách người tham gia, ảnh chụp cross-platform với thông tin cá nhân, kết quả phiên usability)."
 
 
 ## 7. Signature
@@ -753,6 +839,8 @@ Tuy nhiên, AI có hạn chế về tính tương thích mã hóa console Window
 | 10 | Antigravity IDE (Gemini 3.5 Flash) | Task 2 Usability Evaluation | Khởi tạo Google Sheets mẫu trống trực tuyến | 2026-08-02 | G9.4 | INCOMPLETE |
 | 11 | Antigravity IDE (Gemini 3.5 Flash) | Task 2 Usability Evaluation | Chuẩn hóa, định dạng và tự động hóa liên kết Google Sheets online | 2026-08-02 | G9.4 | VALID |
 | 12 | Antigravity IDE (Gemini 3.5 Flash) | Task 2 Usability Evaluation | Cập nhật nhật ký, câu hỏi đào sâu, lỗi và báo cáo tổng hợp Usability (P01-P07) | 2026-08-03 | G9.4 | INCOMPLETE |
+| 13 | Antigravity IDE (Gemini 3.5 Flash) | Meta | Soạn thảo đoạn văn AI Critique | 2026-08-03 | G9.3 | VALID |
+| 14 | Antigravity IDE (Gemini 3.5 Flash) | Meta | Biên soạn HW3/README.md và bảng tự đánh giá | 2026-08-03 | G9.3 | VALID |
 
 ### Contribution Breakdown
 
@@ -775,6 +863,8 @@ Tuy nhiên, AI có hạn chế về tính tương thích mã hóa console Window
 | Chuẩn hóa, định dạng và tự động hóa liên kết Google Sheets online | 90% | 10% | AI lập kế hoạch và chạy script tự động cấu hình, sinh viên duyệt kế hoạch và chỉ đạo sửa lỗi encode cp1252 |
 | Cập nhật nhật ký và báo cáo Usability cục bộ | 80% | 20% | AI tổng hợp dữ liệu từ sheet và viết báo cáo, sinh viên duyệt và định dạng lại roster.md |
 | Đồng bộ hóa, chuẩn hóa dữ liệu & định dạng số trên Google Sheet | 90% | 10% | AI viết script gspread sửa kiểu dữ liệu và định dạng cột thời lượng, sinh viên chỉ đạo kiểm tra và sửa lỗi 0:00 |
+| Soạn thảo đoạn văn AI Critique | 95% | 5% | AI viết bản dịch và hiệu chỉnh số từ, sinh viên cung cấp yêu cầu |
+| Biên soạn HW3/README.md và bảng tự đánh giá | 95% | 5% | AI trích xuất tổng hợp chỉ số, sinh viên duyệt kiểm tra khớp |
 
 ### Compliance Checklist
 
@@ -789,3 +879,4 @@ Tuy nhiên, AI có hạn chế về tính tương thích mã hóa console Window
 - [x] Conclusion 80-150 words
 - [x] Mandatory disclosure
 - [x] Markdown submission format
+
