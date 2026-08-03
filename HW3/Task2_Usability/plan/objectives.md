@@ -1,6 +1,6 @@
 # Objectives
 
-Mục tiêu của bài usability evaluation này là đánh giá luồng "Đăng nhập → Quên mật khẩu → Đăng nhập lại" trên hệ thống [TODO: tên SUT], nhằm trả lời các câu hỏi sau:
+Mục tiêu của bài usability evaluation này là đánh giá luồng "Đăng nhập → Quên mật khẩu → Đăng nhập lại" trên hệ thống EShop, nhằm trả lời các câu hỏi sau:
 
 1. Người dùng có tự tìm được lối vào chức năng "Quên mật khẩu" mà không cần gợi ý không? (Discoverability)
 2. Người dùng có gặp trở ngại/nghẽn (bottleneck) ở bước nào trong luồng reset mật khẩu (nhập email, nhận mã, nhập mật khẩu mới, đăng nhập lại)?

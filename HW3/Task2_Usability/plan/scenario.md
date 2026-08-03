@@ -4,7 +4,7 @@
 "Bạn có một tài khoản trên hệ thống này, nhưng đã lâu không đăng nhập nên không nhớ chính xác mật khẩu. Bạn cần lấy lại quyền truy cập vào tài khoản của mình để tiếp tục sử dụng."
 
 ## Nhiệm vụ giao cho participant
-"Hãy đăng nhập vào tài khoản email [TODO: điền email test], mật khẩu bạn thử nhưng bị báo sai. Hãy tìm cách lấy lại quyền truy cập và đăng nhập thành công vào tài khoản đó."
+"Hãy đăng nhập vào tài khoản email admin@eshop.com (hoặc email được cấp), mật khẩu bạn thử nhưng bị báo sai. Hãy tìm cách lấy lại quyền truy cập và đăng nhập thành công vào tài khoản đó."
 
 ## Câu nhắc think-aloud (đọc trước khi bắt đầu)
 "Trong lúc làm, hãy nói to bất cứ điều gì bạn đang nghĩ — kể cả khi bạn thấy khó hiểu, phân vân, hay không chắc nên bấm vào đâu. Chúng tôi đang test sản phẩm, không phải test bạn, nên không có câu trả lời đúng/sai."
