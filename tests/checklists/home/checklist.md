@@ -51,7 +51,7 @@
 | 15  | HOME-GUI-IA02-015 | Nhấn Enter trong ô tìm kiếm kích hoạt tìm kiếm (keyboard submit)                                 | FR-21 Tab Order                    | Passed     |                       |
 | 16  | HOME-GUI-IA02-016 | Từ khóa tìm kiếm có chứa ký tự HTML (VD: `<b>test</b>`) được hiển thị an toàn, không render HTML | SEC-04, FR-05                      | Failed     | BUG-HOME-GUI-IA02-016 |
 | 17  | HOME-GUI-IA02-017 | Thanh tìm kiếm có outline/border rõ ràng khi được focus (focus indicator hiển thị)               | WCAG 2.1 SC 2.4.7                  | Passed     |                       |
-| 18  | HOME-GUI-IA02-018 | Khi xóa toàn bộ nội dung thanh tìm kiếm, danh sách sản phẩm reset về trạng thái toàn bộ ban đầu  | FR-05                              | Passed     |                       |
+| 18  | HOME-GUI-IA02-018 | Khi xóa toàn bộ nội dung thanh tìm kiếm, danh sách sản phẩm reset về trạng thái toàn bộ ban đầu  | FR-05                              | Failed     | BUG-HOME-GUI-IA02-018 |
 | 19  | HOME-GUI-IA02-019 | Thanh tìm kiếm có thể điều hướng đến và kích hoạt chỉ bằng bàn phím (Tab + Enter)                | FR-21 Tab Order                    | Passed     |                       |
 | 20  | HOME-GUI-IA02-020 | Ô tìm kiếm không bị clip/overflow trên viewport mobile (≤ 375px)                                 | Platform convention                | Passed     |                       |
 
@@ -89,7 +89,7 @@
 | 35  | HOME-GUI-IA04-035 | Giá sản phẩm hiển thị đúng định dạng: có ký hiệu `₫` và dấu phân cách hàng nghìn (FR-05)                       | FR-05, FR-21                           | Failed     | BUG-HOME-GUI-IA04-035 |
 | 36  | HOME-GUI-IA04-036 | Tên sản phẩm dài không bị overflow ra ngoài card (có truncate với ellipsis hoặc wrap phù hợp)                  | Nielsen #8 Aesthetic                   | Passed     |                       |
 | 37  | HOME-GUI-IA04-037 | Ảnh sản phẩm không bị biến dạng tỷ lệ (distort) — aspect ratio được bảo toàn (FR-05)                           | FR-05                                  | Passed     |                       |
-| 38  | HOME-GUI-IA04-038 | Khi hover trên product card, có phản hồi trực quan (shadow nổi, màu đổi, hoặc scale nhẹ)                       | Nielsen #1 Visibility                  | Passed     |                       |
+| 38  | HOME-GUI-IA04-038 | Khi hover trên product card, có phản hồi trực quan (shadow nổi, màu đổi, hoặc scale nhẹ)                       | Nielsen #1 Visibility                  | Failed     | BUG-HOME-GUI-IA04-038 |
 | 39  | HOME-GUI-IA04-039 | Từ khóa tìm kiếm chứa `<script>alert(1)</script>` không thực thi JavaScript (XSS prevention)                   | SEC-04, FR-05                          | Passed     |                       |
 | 40  | HOME-GUI-IA04-040 | Khi header là sticky, nội dung page scroll phía dưới không bị che khuất bởi header                             | Platform convention                    | Passed     |                       |
 | 41  | HOME-GUI-IA04-041 | Khi mạng chậm/lỗi (offline), trang hiển thị thông báo lỗi thay vì màn hình trắng                               | Nielsen #9 Help users recognize errors | Failed     | BUG-HOME-GUI-IA04-041 |
@@ -131,11 +131,11 @@
 | IA Aspect            | Số Item | Passed | Failed | N/A   | Blocked |
 | -------------------- | ------- | ------ | ------ | ----- | ------- |
 | IA-01 General UI     | 12      | 8      | 4      | 0     | 0       |
-| IA-02 Forms          | 8       | 5      | 3      | 0     | 0       |
+| IA-02 Forms          | 8       | 4      | 4      | 0     | 0       |
 | IA-03 Navigation     | 10      | 4      | 6      | 0     | 0       |
 | IA-04 Feedback/State | 11      | 5      | 6      | 0     | 0       |
 | Student-added        | 13      | 7      | 6      | 0     | 0       |
-| **TỔNG**             | **54**  | **35** | **19** | **0** | **0**   |
+| **TỔNG**             | **54**  | **34** | **21** | **0** | **0**   |
 
 ---
 

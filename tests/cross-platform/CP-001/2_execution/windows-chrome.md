@@ -9,7 +9,7 @@
 
 ## Lỗi phát hiện (Issues)
 
-Phát hiện 19 lỗi giao diện (được ghi nhận chi tiết tại các báo cáo lỗi GUI của Task 1):
+Phát hiện 21 lỗi giao diện (được ghi nhận chi tiết tại các báo cáo lỗi GUI của Task 1):
 
 - [**BUG-HOME-GUI-IA01-010**](../../../bug-reports/gui/home/BUG-HOME-GUI-IA01-010/BUG-HOME-GUI-IA01-010.md): [BUG][Home] Giá sản phẩm không dùng ký hiệu đồng nhất
 - [**BUG-HOME-GUI-IA01-049**](../../../bug-reports/gui/home/BUG-HOME-GUI-IA01-049/BUG-HOME-GUI-IA01-049.md): [BUG][Home] Trạng thái hover/visited/active chưa đủ phân biệt
@@ -17,6 +17,7 @@ Phát hiện 19 lỗi giao diện (được ghi nhận chi tiết tại các bá
 - [**BUG-HOME-GUI-IA01-054**](../../../bug-reports/gui/home/BUG-HOME-GUI-IA01-054/BUG-HOME-GUI-IA01-054.md): [BUG][Home] Thuộc tính lang của HTML chưa khớp ngôn ngữ hiển thị
 - [**BUG-HOME-GUI-IA02-013**](../../../bug-reports/gui/home/BUG-HOME-GUI-IA02-013/BUG-HOME-GUI-IA02-013.md): [BUG][Home] Placeholder ô tìm kiếm chưa đủ rõ
 - [**BUG-HOME-GUI-IA02-016**](../../../bug-reports/gui/home/BUG-HOME-GUI-IA02-016/BUG-HOME-GUI-IA02-016.md): [BUG][Home] Từ khóa tìm kiếm render HTML thay vì text thuần
+- [**BUG-HOME-GUI-IA02-018**](../../../bug-reports/gui/home/BUG-HOME-GUI-IA02-018/BUG-HOME-GUI-IA02-018.md): [BUG][Home] Xóa ô tìm kiếm không tự động reset danh sách sản phẩm
 - [**BUG-HOME-GUI-IA02-053**](../../../bug-reports/gui/home/BUG-HOME-GUI-IA02-053/BUG-HOME-GUI-IA02-053.md): [BUG][Home] Search chưa ổn định với khoảng trắng đầu/cuối
 - [**BUG-HOME-GUI-IA03-021**](../../../bug-reports/gui/home/BUG-HOME-GUI-IA03-021/BUG-HOME-GUI-IA03-021.md): [BUG][Home] Navbar không có active state cho Trang Chủ
 - [**BUG-HOME-GUI-IA03-022**](../../../bug-reports/gui/home/BUG-HOME-GUI-IA03-022/BUG-HOME-GUI-IA03-022.md): [BUG][Home] Link Giỏ hàng không hiển thị badge số lượng
@@ -28,6 +29,7 @@ Phát hiện 19 lỗi giao diện (được ghi nhận chi tiết tại các bá
 - [**BUG-HOME-GUI-IA04-032**](../../../bug-reports/gui/home/BUG-HOME-GUI-IA04-032/BUG-HOME-GUI-IA04-032.md): [BUG][Home] Không có empty state thân thiện khi không có kết quả
 - [**BUG-HOME-GUI-IA04-034**](../../../bug-reports/gui/home/BUG-HOME-GUI-IA04-034/BUG-HOME-GUI-IA04-034.md): [BUG][Home] Ảnh sản phẩm không có alt text mô tả
 - [**BUG-HOME-GUI-IA04-035**](../../../bug-reports/gui/home/BUG-HOME-GUI-IA04-035/BUG-HOME-GUI-IA04-035.md): [BUG][Home] Giá sản phẩm chưa hiển thị đúng ký hiệu đồng
+- [**BUG-HOME-GUI-IA04-038**](../../../bug-reports/gui/home/BUG-HOME-GUI-IA04-038/BUG-HOME-GUI-IA04-038.md): [BUG][Home] Product card không có hover effect trực quan
 - [**BUG-HOME-GUI-IA04-041**](../../../bug-reports/gui/home/BUG-HOME-GUI-IA04-041/BUG-HOME-GUI-IA04-041.md): [BUG][Home] Không có thông báo lỗi rõ ràng khi request thất bại
 - [**BUG-HOME-GUI-IA04-044**](../../../bug-reports/gui/home/BUG-HOME-GUI-IA04-044/BUG-HOME-GUI-IA04-044.md): [BUG][Home] Request chậm không có phản hồi chờ rõ ràng
 
