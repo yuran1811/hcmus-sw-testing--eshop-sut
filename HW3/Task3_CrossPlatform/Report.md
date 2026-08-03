@@ -39,7 +39,7 @@
 | GUI-FORGOT-IA02-07 | Quên Mật Khẩu | Vị trí thông báo lỗi | Thông báo lỗi xác thực xuất hiện phía trên nút submit, không phải phía dưới | Fail (Chrome/user-not-found.png) | Fail (Firefox/user-not-found.png) | Fail (Safari/user-not-found.png) |
 | GUI-FORGOT-IA02-08 | Quên Mật Khẩu | Mật khẩu không khớp | Khi xác nhận mật khẩu không khớp mật khẩu mới, thông báo lỗi rõ ràng được hiển thị | Fail (Chrome/forgot-password-step2.png) | Fail (Firefox/forgot-password-step2.png) | Fail (Safari/forgot-password-step2.png) |
 | GUI-FORGOT-IA02-09 | Quên Mật Khẩu | Liên kết nhãn | Nhấp vào nhãn văn bản sẽ focus vào ô nhập tương ứng | Fail (Chrome/forgot-password.png) | Fail (Firefox/forgot-password.png) | Fail (Safari/forgot-password.png) |
-| GUI-FORGOT-IA02-10 | Quên Mật Khẩu | Độ mạnh mật khẩu | Thông báo lỗi mật khẩu yếu liệt kê đúng yêu cầu: chữ hoa, chữ thường, chữ số, và ký tự đặc biệt (`@$!%*?&`) | Fail (Chrome/forgot-password-step2.png) | Fail (Firefox/forgot-password-step2.png) | Fail (Safari/forgot-password-step2.png) |
+| GUI-FORGOT-IA02-10 | Quên Mật Khẩu | Độ mạnh mật khẩu | Thông báo lỗi mật khẩu yếu liệt kê đúng yêu cầu: chữ hoa, chữ thường, chữ số, và ký tự đặc biệt (`@$!%*?&`) | Fail (Chrome/forgot-password-step2-weak-password.png) | Fail (Firefox/forgot-password-step2-weak-password.png) | Fail (Safari/forgot-password-step2-weak-password.png) |
 | GUI-FORGOT-IA03-01 | Quên Mật Khẩu | Highlight thanh điều hướng | Thanh điều hướng header không highlight sai mục nào (vì Quên Mật Khẩu không nằm trong menu chính), hoặc highlight đúng nếu có | Pass (Chrome/forgot-password.png) | Pass (Firefox/forgot-password.png) | Pass (Safari/forgot-password.png) |
 | GUI-FORGOT-IA03-02 | Quên Mật Khẩu | Nhãn đăng xuất | Nếu người dùng đã đăng nhập, nút đăng xuất có nhãn "Đăng xuất" (không phải "Thoát") | Pass (Chrome/forgot-password.png) | Pass (Firefox/forgot-password.png) | Pass (Safari/forgot-password.png) |
 | GUI-FORGOT-IA03-03 | Quên Mật Khẩu | Quay lại đăng nhập (Bước 1) | Bước 1 cung cấp link hoặc nút để quay lại trang Đăng nhập | Pass (Chrome/forgot-password.png) | Pass (Firefox/forgot-password.png) | Pass (Safari/forgot-password.png) |
@@ -54,9 +54,9 @@
 | GUI-ORDERS-IA01-02 | Quản lý Đơn hàng | Định dạng tiền tệ | Cột tổng tiền hiển thị giá với phân cách hàng nghìn và ký hiệu `₫` | Pass (Chrome/admin-orders.png) | Pass (Firefox/admin-orders.png) | Pass (Safari/admin-orders.png) |
 | GUI-ORDERS-IA01-03 | Quản lý Đơn hàng | Nhãn trạng thái tiếng Việt | Badge trạng thái đơn hàng hiển thị tiếng Việt: "Chờ xác nhận", "Đã xác nhận", "Đang giao", "Đã giao", "Đã hủy" | Pass (Chrome/admin-orders.png) | Pass (Firefox/admin-orders.png) | Pass (Safari/admin-orders.png) |
 | GUI-ORDERS-IA01-04 | Quản lý Đơn hàng | Cấu trúc bảng | Bảng đơn hàng sử dụng đúng cấu trúc `<table>`, `<thead>`, `<tbody>` với ô tiêu đề trong `<th>` | Pass (Chrome/admin-orders.png) | Pass (Firefox/admin-orders.png) | Pass (Safari/admin-orders.png) |
-| GUI-ORDERS-IA01-05 | Quản lý Đơn hàng | Hiển thị địa chỉ giao hàng | Địa chỉ giao hàng hiển thị dưới dạng văn bản thuần đã escape, không render HTML thô | Fail (Chrome/admin-orders.png) | Fail (Firefox/admin-orders.png) | Fail (Safari/admin-orders.png) |
+| GUI-ORDERS-IA01-05 | Quản lý Đơn hàng | Hiển thị địa chỉ giao hàng | Địa chỉ giao hàng hiển thị dưới dạng văn bản thuần đã escape, không render HTML thô | Fail (Chrome/admin-orders-xss.png) | Fail (Firefox/admin-orders-xss.png) | Fail (Safari/admin-orders-xss.png) |
 | GUI-ORDERS-IA02-01 | Quản lý Đơn hàng | Nút hành động là phần tử form | Các nút thay đổi trạng thái là thẻ `<button>` thực sự (không phải `<div>` hoặc `<span>`) để hỗ trợ bàn phím | Pass (Chrome/admin-orders.png) | Pass (Firefox/admin-orders.png) | Pass (Safari/admin-orders.png) |
-| GUI-ORDERS-IA02-02 | Quản lý Đơn hàng | Trạng thái vô hiệu cho đơn kết thúc | Đơn hàng ở trạng thái kết thúc "Đã giao" hoặc "Đã hủy" không hiển thị nút thay đổi trạng thái | Pass (Chrome/admin-orders.png) | Pass (Firefox/admin-orders.png) | Pass (Safari/admin-orders.png) |
+| GUI-ORDERS-IA02-02 | Quản lý Đơn hàng | Trạng thái vô hiệu cho đơn kết thúc | Đơn hàng ở trạng thái kết thúc "Đã giao" hoặc "Đã hủy" không hiển thị nút thay đổi trạng thái | Pass (Chrome/admin-orders-canceled-state.png) | Pass (Firefox/admin-orders-canceled-state.png) | Pass (Safari/admin-orders-canceled-state.png) |
 | GUI-ORDERS-IA03-01 | Quản lý Đơn hàng | Tab sidebar đang chọn | Mục "Đơn hàng" trên sidebar được highlight (ví dụ: màu chữ khác) khi tab đơn hàng đang hoạt động | Pass (Chrome/admin-orders.png) | Pass (Firefox/admin-orders.png) | Pass (Safari/admin-orders.png) |
 | GUI-ORDERS-IA03-02 | Quản lý Đơn hàng | Nhãn đăng xuất | Mục đăng xuất trên sidebar có nhãn "Đăng xuất" (không phải "Thoát" hay tiếng Anh "Logout") | Pass (Chrome/admin-orders.png) | Pass (Firefox/admin-orders.png) | Pass (Safari/admin-orders.png) |
 | GUI-ORDERS-IA03-03 | Quản lý Đơn hàng | Chuyển tab | Nhấn bất kỳ mục sidebar nào khác (Dashboard, Danh mục, Sản phẩm, v.v.) sẽ chuyển khỏi trang đơn hàng mà không mất dữ liệu hoặc lỗi | Pass (Chrome/admin-orders.png) | Pass (Firefox/admin-orders.png) | Pass (Safari/admin-orders.png) |
@@ -64,7 +64,7 @@
 | GUI-ORDERS-IA04-01 | Quản lý Đơn hàng | Chỉ báo đang tải | Trong khi đang lấy dữ liệu đơn hàng từ API, hiển thị spinner hoặc skeleton loading | Fail (Chrome/admin-orders.png) | Fail (Firefox/admin-orders.png) | Fail (Safari/admin-orders.png) |
 | GUI-ORDERS-IA04-02 | Quản lý Đơn hàng | Trạng thái trống | Khi không có đơn hàng nào, hiển thị thông báo trạng thái trống (và tùy chọn hình minh họa) thay vì bảng rỗng | Fail (Chrome/admin-orders.png) | Fail (Firefox/admin-orders.png) | Fail (Safari/admin-orders.png) |
 | GUI-ORDERS-IA04-03 | Quản lý Đơn hàng | Phân biệt màu trạng thái | Mỗi badge trạng thái đơn hàng sử dụng màu riêng biệt, phù hợp ngữ nghĩa (ví dụ: đỏ cho đã hủy, xanh lá cho đã giao) | Pass (Chrome/admin-orders.png) | Pass (Firefox/admin-orders.png) | Pass (Safari/admin-orders.png) |
-| GUI-ORDERS-IA04-04 | Quản lý Đơn hàng | Chặn chuyển Đã hủy → Đã giao | Đơn hàng ở trạng thái "Đã hủy" (canceled) KHÔNG hiển thị nút "Đánh dấu Đã giao" — đã hủy là trạng thái kết thúc | Pass (Chrome/admin-orders.png) | Pass (Firefox/admin-orders.png) | Pass (Safari/admin-orders.png) |
+| GUI-ORDERS-IA04-04 | Quản lý Đơn hàng | Chặn chuyển Đã hủy → Đã giao | Đơn hàng ở trạng thái "Đã hủy" (canceled) KHÔNG hiển thị nút "Đánh dấu Đã giao" — đã hủy là trạng thái kết thúc | Pass (Chrome/admin-orders-canceled-state.png) | Pass (Firefox/admin-orders-canceled-state.png) | Pass (Safari/admin-orders-canceled-state.png) |
 | GUI-ORDERS-IA04-05 | Quản lý Đơn hàng | Xác nhận trước khi chuyển trạng thái | Nhấn nút thay đổi trạng thái (ví dụ: "Hủy", "Hoàn thành") hiển thị hộp thoại xác nhận trước khi thực hiện | Fail (Chrome/admin-orders.png) | Fail (Firefox/admin-orders.png) | Fail (Safari/admin-orders.png) |
 | GUI-ORDERS-IA04-06 | Quản lý Đơn hàng | Phản hồi thành công | Sau khi thay đổi trạng thái thành công, dòng trong bảng cập nhật trạng thái mới mà không cần tải lại trang | Pass (Chrome/admin-orders.png) | Pass (Firefox/admin-orders.png) | Pass (Safari/admin-orders.png) |
 | GUI-ORDERS-IA04-07 | Quản lý Đơn hàng | Phản hồi lỗi | Khi thay đổi trạng thái thất bại (ví dụ: chuyển trạng thái không hợp lệ bị API từ chối), thông báo lỗi rõ ràng được hiển thị | Fail (Chrome/admin-orders.png) | Fail (Firefox/admin-orders.png) | Fail (Safari/admin-orders.png) |
@@ -79,19 +79,28 @@ Dưới đây là danh sách các tệp ảnh chụp màn hình tương ứng v�
 - **Quên Mật Khẩu (Bước 1 - Tĩnh):** `Chrome/forgot-password.png` (minh chứng cho `GUI-FORGOT-IA01-03`, `GUI-FORGOT-IA01-05`, `GUI-FORGOT-IA01-07`, `GUI-FORGOT-IA02-01`)
 - **Quên Mật Khẩu (Bước 1 - Popup lỗi):** `Chrome/user-not-found.png` (minh chứng cho `GUI-FORGOT-IA02-07`)
 - **Quên Mật Khẩu (Bước 2 - Nhập OTP):** `Chrome/forgot-password-step2.png` (minh chứng cho `GUI-FORGOT-IA01-06`)
-- **Quản lý Đơn hàng Admin (`/admin/orders`):** `Chrome/admin-orders.png` (minh chứng cho `GUI-ORDERS-IA01-02`, `GUI-ORDERS-IA01-04`, `GUI-ORDERS-IA01-05`, `GUI-ORDERS-IA04-03`)
+- **Quên Mật Khẩu (Bước 2 - Lỗi mật khẩu yếu):** `Chrome/forgot-password-step2-weak-password.png` (minh chứng cho `GUI-FORGOT-IA02-10`)
+- **Quản lý Đơn hàng Admin (`/admin/orders`):** `Chrome/admin-orders.png` (minh chứng cho `GUI-ORDERS-IA01-02`, `GUI-ORDERS-IA01-04`, `GUI-ORDERS-IA04-03`)
+- **Quản lý Đơn hàng Admin (Lỗ hổng XSS):** `Chrome/admin-orders-xss.png` (minh chứng cho `GUI-ORDERS-IA01-05`)
+- **Quản lý Đơn hàng Admin (Đơn đã hủy):** `Chrome/admin-orders-canceled-state.png` (minh chứng cho `GUI-ORDERS-IA02-02`, `GUI-ORDERS-IA04-04`)
 
 ### 2. Platform 2: Mozilla Firefox (macOS Sonoma via BrowserStack)
 - **Quên Mật Khẩu (Bước 1 - Tĩnh):** `Firefox/forgot-password.png` (minh chứng cho `GUI-FORGOT-IA01-03`, `GUI-FORGOT-IA01-05`, `GUI-FORGOT-IA01-07`, `GUI-FORGOT-IA02-01`)
 - **Quên Mật Khẩu (Bước 1 - Popup lỗi):** `Firefox/user-not-found.png` (minh chứng cho `GUI-FORGOT-IA02-07`)
 - **Quên Mật Khẩu (Bước 2 - Nhập OTP):** `Firefox/forgot-password-step2.png` (minh chứng cho `GUI-FORGOT-IA01-06`)
-- **Quản lý Đơn hàng Admin (`/admin/orders`):** `Firefox/admin-orders.png` (minh chứng cho `GUI-ORDERS-IA01-02`, `GUI-ORDERS-IA01-04`, `GUI-ORDERS-IA01-05`, `GUI-ORDERS-IA04-03`)
+- **Quên Mật Khẩu (Bước 2 - Lỗi mật khẩu yếu):** `Firefox/forgot-password-step2-weak-password.png` (minh chứng cho `GUI-FORGOT-IA02-10`)
+- **Quản lý Đơn hàng Admin (`/admin/orders`):** `Firefox/admin-orders.png` (minh chứng cho `GUI-ORDERS-IA01-02`, `GUI-ORDERS-IA01-04`, `GUI-ORDERS-IA04-03`)
+- **Quản lý Đơn hàng Admin (Lỗ hổng XSS):** `Firefox/admin-orders-xss.png` (minh chứng cho `GUI-ORDERS-IA01-05`)
+- **Quản lý Đơn hàng Admin (Đơn đã hủy):** `Firefox/admin-orders-canceled-state.png` (minh chứng cho `GUI-ORDERS-IA02-02`, `GUI-ORDERS-IA04-04`)
 
 ### 3. Platform 3: Safari (macOS Sequoia via BrowserStack)
 - **Quên Mật Khẩu (Bước 1 - Tĩnh):** `Safari/forgot-password.png` (minh chứng cho `GUI-FORGOT-IA01-03`, `GUI-FORGOT-IA01-05`, `GUI-FORGOT-IA01-07`, `GUI-FORGOT-IA02-01`)
 - **Quên Mật Khẩu (Bước 1 - Popup lỗi):** `Safari/user-not-found.png` (minh chứng cho `GUI-FORGOT-IA02-07`)
 - **Quên Mật Khẩu (Bước 2 - Nhập OTP):** `Safari/forgotpassword-step2.png` (minh chứng cho `GUI-FORGOT-IA01-06`)
-- **Quản lý Đơn hàng Admin (`/admin/orders`):** `Safari/admin-orders.png` (minh chứng cho `GUI-ORDERS-IA01-02`, `GUI-ORDERS-IA01-04`, `GUI-ORDERS-IA01-05`, `GUI-ORDERS-IA04-03`)
+- **Quên Mật Khẩu (Bước 2 - Lỗi mật khẩu yếu):** `Safari/forgot-password-step2-weak-password.png` (minh chứng cho `GUI-FORGOT-IA02-10`)
+- **Quản lý Đơn hàng Admin (`/admin/orders`):** `Safari/admin-orders.png` (minh chứng cho `GUI-ORDERS-IA01-02`, `GUI-ORDERS-IA01-04`, `GUI-ORDERS-IA04-03`)
+- **Quản lý Đơn hàng Admin (Lỗ hổng XSS):** `Safari/admin-orders-xss.png` (minh chứng cho `GUI-ORDERS-IA01-05`)
+- **Quản lý Đơn hàng Admin (Đơn đã hủy):** `Safari/admin-orders-canceled-state.png` (minh chứng cho `GUI-ORDERS-IA02-02`, `GUI-ORDERS-IA04-04`)
 
 ---
 
