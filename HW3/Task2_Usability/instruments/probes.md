@@ -1,19 +1,19 @@
 # Probe Questions
 
-Hỏi sau khi participant hoàn thành task và điền xong thang SUS.
+Bộ câu hỏi đào sâu (Probe Questions) được sử dụng ngay sau khi người dùng hoàn thành nhiệm vụ và điền xong bảng đánh giá định lượng SUS.
 
-## Clarity (Độ rõ ràng)
-- Trong lúc làm, có bước nào bạn thấy không rõ nên làm gì tiếp theo không?
-- Có label/nút bấm nào khiến bạn phân vân về ý nghĩa của nó không?
+## 1. Clarity (Sự rõ ràng)
+- **Q1:** Bạn có hiểu mình cần phải làm gì ở mỗi bước không? Bước nào rõ ràng/mù mờ nhất?
+- **Q2:** Bước nào rõ ràng nhất và bước nào mơ hồ/khó hiểu nhất với bạn?
 
-## Error Recovery (Khả năng phục hồi lỗi)
-- Bạn có gặp lỗi hoặc bấm nhầm chỗ nào không? Lúc đó bạn xử lý thế nào?
-- Hệ thống có cho bạn biết rõ ràng khi có gì đó sai không?
+## 2. Error Recovery (Sửa lỗi)
+- **Q3:** Khi nhập sai (email, OTP, pass), hệ thống phản hồi ra sao?
+- **Q4:** Bạn có hiểu rõ nội dung thông báo lỗi đó và biết cách sửa cho đúng không?
 
-## Speed (Tốc độ)
-- Bạn cảm thấy quá trình này nhanh hay chậm so với kỳ vọng?
-- Có bước nào bạn thấy thừa thãi, mất thời gian không cần thiết?
+## 3. Speed (Tốc độ)
+- **Q5:** Bạn có thấy quá trình đặt lại mật khẩu diễn ra nhanh không?
+- **Q6:** Bước nào trong luồng này làm bạn tốn thời gian nhiều nhất?
 
-## Trust (Độ tin cậy)
-- Bạn có cảm thấy an tâm khi nhập thông tin cá nhân/mật khẩu mới không?
-- Bạn có tin là tài khoản của mình đã được bảo mật đúng cách sau khi đổi mật khẩu không?
+## 4. Trust (Độ tin cậy)
+- **Q7:** Đổi mật khẩu xong, bạn có tin rằng mật khẩu của mình đã thực sự được đổi thành công không?
+- **Q8:** Tại sao bạn lại tin tưởng hoặc nghi ngờ điều đó?
