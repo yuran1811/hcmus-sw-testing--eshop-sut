@@ -36,7 +36,8 @@ Mobile Registration / Functional / Boundary Value Analysis (3-point / 2-point)
 
 ## BVA Coverage
 
-Password length Min boundary, B = 8, covered by 3-Point and 2-Point
+- Password length Min boundary, B = 8, covered by 3-Point and 2-Point.
+- Confirm Password: điểm quan hệ danh nghĩa là nội dung khớp chính xác, với chênh lệch độ dài tham chiếu `R = 0`. Đây không phải biên số của equality và cùng độ dài chưa đủ để kết luận khớp; TC-MOBILE-REGISTER-013 phủ trường hợp cùng độ dài nhưng khác nội dung.
 
 ## Status / Related bugs
 
