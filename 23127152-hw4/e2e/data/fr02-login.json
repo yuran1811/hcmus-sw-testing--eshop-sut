@@ -1,0 +1,93 @@
+[
+  {
+    "id": "FR02-TC01", "type": "positive",
+    "description": "Đăng nhập thành công với tài khoản user hợp lệ",
+    "resetFirst": true, "lockFirst": false,
+    "input": { "email": "test@eshop.com", "password": "Test1234!" },
+    "expected": { "apiStatus": 200, "uiOutcome": "home" }
+  },
+  {
+    "id": "FR02-TC02", "type": "positive",
+    "description": "Đăng nhập thành công với tài khoản admin",
+    "resetFirst": false, "lockFirst": false,
+    "input": { "email": "admin@eshop.com", "password": "Admin123!" },
+    "expected": { "apiStatus": 200, "uiOutcome": "home" }
+  },
+  {
+    "id": "FR02-TC03", "type": "positive",
+    "description": "Đăng nhập thành công reset login_attempts về 0 (precondition: 1 lần sai trước đó)",
+    "resetFirst": true, "oneFailedAttemptFirst": true,
+    "input": { "email": "test@eshop.com", "password": "Test1234!" },
+    "expected": { "apiStatus": 200, "uiOutcome": "home", "attemptsResetTo": 0 }
+  },
+  {
+    "id": "FR02-TC04", "type": "negative",
+    "description": "Sai mật khẩu với email tồn tại",
+    "resetFirst": true, "lockFirst": false,
+    "input": { "email": "test@eshop.com", "password": "WrongPass" },
+    "expected": { "apiStatus": 401, "uiOutcome": "errorShown", "attemptsIncrementSpec": 1 }
+  },
+  {
+    "id": "FR02-TC05", "type": "negative",
+    "description": "Đăng nhập với email không tồn tại",
+    "resetFirst": false, "lockFirst": false,
+    "input": { "email": "notfound@test.com", "password": "AnyPass123" },
+    "expected": { "apiStatus": 401, "uiOutcome": "errorShown" }
+  },
+  {
+    "id": "FR02-TC06", "type": "negative",
+    "description": "Mật khẩu đúng nhưng sai hoa/thường (case-sensitive)",
+    "resetFirst": true, "lockFirst": false,
+    "input": { "email": "test@eshop.com", "password": "test1234!" },
+    "expected": { "apiStatus": 401, "uiOutcome": "errorShown" }
+  },
+  {
+    "id": "FR02-TC07", "type": "edge",
+    "description": "Sai mật khẩu đúng 3 lần liên tiếp kích hoạt khóa tài khoản",
+    "resetFirst": true, "threeFailsViaUI": true,
+    "input": { "email": "test@eshop.com", "password": "WrongPass" },
+    "expected": { "apiStatus": 401, "lockedAfter3rd": true }
+  },
+  {
+    "id": "FR02-TC08", "type": "edge",
+    "description": "Đăng nhập khi tài khoản đang bị khóa, dùng đúng password",
+    "resetFirst": true, "lockFirst": true,
+    "input": { "email": "test@eshop.com", "password": "Test1234!" },
+    "expected": { "apiStatus": 403, "uiOutcome": "errorShown" }
+  },
+  {
+    "id": "FR02-TC09", "type": "edge",
+    "description": "Đăng nhập khi tài khoản đang bị khóa, dùng sai password",
+    "resetFirst": true, "lockFirst": true,
+    "input": { "email": "test@eshop.com", "password": "WrongPass" },
+    "expected": { "apiStatus": 403, "uiOutcome": "errorShown" }
+  },
+  {
+    "id": "FR02-TC10", "type": "negative",
+    "description": "Đăng nhập với email rỗng",
+    "resetFirst": false, "lockFirst": false, "clientBlockedRequired": true,
+    "input": { "email": "", "password": "Test1234!" },
+    "expected": { "blockedFieldIndex": 0 }
+  },
+  {
+    "id": "FR02-TC11", "type": "negative",
+    "description": "Đăng nhập với password rỗng",
+    "resetFirst": false, "lockFirst": false, "clientBlockedRequired": true,
+    "input": { "email": "test@eshop.com", "password": "" },
+    "expected": { "blockedFieldIndex": 1 }
+  },
+  {
+    "id": "FR02-TC12", "type": "edge",
+    "description": "Email sai định dạng thiếu ký tự @",
+    "resetFirst": false, "lockFirst": false,
+    "input": { "email": "notanemail", "password": "Test1234!" },
+    "expected": { "apiStatus": 401, "uiOutcome": "errorShown" }
+  },
+  {
+    "id": "FR02-TC13", "type": "edge",
+    "description": "Email chứa khoảng trắng ở giữa",
+    "resetFirst": false, "lockFirst": false,
+    "input": { "email": "test @eshop.com", "password": "Test1234!" },
+    "expected": { "apiStatus": 401, "uiOutcome": "errorShown" }
+  }
+]
