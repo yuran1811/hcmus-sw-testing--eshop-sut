@@ -1,12 +1,12 @@
-# TC-CATEGORY-009: Xóa danh mục thất bại khi danh mục đang chứa sản phẩm liên kết
+# TC-CATEGORY-009: Chính sách xóa danh mục đang được sản phẩm tham chiếu
 
 ## Requirement ID
 
-FR-14
+FR-14, FR-15
 
 ## Module / Test type / Technique
 
-Quản lý Danh mục / Functional / Domain Testing (Equivalence Partitioning)
+Quản lý Danh mục / Characterization-State Integrity / Domain Testing (Equivalence Partitioning)
 
 ## Preconditions
 
@@ -26,15 +26,19 @@ Quản lý Danh mục / Functional / Domain Testing (Equivalence Partitioning)
 2. Tìm danh mục ID = 1 (đang chứa sản phẩm)
 3. Bấm nút Xóa tương ứng với danh mục đó
 4. Xác nhận hành động xóa trong dialog (nếu có)
+5. Kiểm tra category, product liên kết và khóa tham chiếu trong DB/API sau request.
 
 ## Expected result
 
-- Hệ thống từ chối xóa và hiển thị thông báo lỗi (ví dụ: Không thể xóa danh mục đang có sản phẩm liên kết hoặc trả về mã lỗi HTTP 400/409/500 do ràng buộc khóa ngoại SQLite)
-- Danh mục và các sản phẩm liên kết vẫn tồn tại trong hệ thống
+- README chưa chốt restrict/cascade/reassign policy. Hai nhánh hợp lệ là:
+  - Từ chối `400/409`, giữ nguyên category và product; hoặc
+  - Xóa `200/204` theo policy có tài liệu, đồng thời cascade/reassign tham chiếu một cách nguyên tử và nhất quán với FR-15.
+- Không để product trỏ tới category không còn tồn tại, không `500`/raw SQLite error và không partial state.
+- Test **Fail** nếu category bị xóa nhưng product liên kết trở thành bản ghi mồ côi.
 
 ## EC / Partition Covered
 
-EC9 (Xóa danh mục — Danh mục đang chứa sản phẩm) + OC7 (Lỗi ràng buộc dữ liệu / Conflict)
+EC9 (Category được product tham chiếu — policy gap) + OC7 (reference-integrity policy)
 
 ## Status / Related bugs
 
