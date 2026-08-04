@@ -1,4 +1,4 @@
-# TC-PLAS-BVA-003: Tìm kiếm với từ khóa vượt quá độ dài tối đa cho phép (256 ký tự)
+# TC-PLAS-BVA-003: Tìm kiếm ngay trên biên độ bền tham chiếu 255 ký tự
 
 ## Requirement ID
 
@@ -6,7 +6,7 @@ FR-05
 
 ## Module / Test type / Technique
 
-Product List & Search / Functional / Boundary Value Analysis (3-Point + 2-Point BVA)
+Product List & Search / Robustness / 3-Point Reference Analysis (`R = 255`)
 
 ## Preconditions
 
@@ -25,15 +25,18 @@ Product List & Search / Functional / Boundary Value Analysis (3-Point + 2-Point 
 2. Nhập từ khóa dài đúng 256 ký tự vào thanh tìm kiếm.
 3. Bấm nút Tìm kiếm (hoặc nhấn Enter).
 4. Quan sát phản hồi của hệ thống (kiểm tra xem hệ thống có tự động cắt chuỗi, giới hạn nhập, hoặc báo lỗi không).
+5. Kiểm tra phần hiển thị từ khóa, chiều rộng trang và thanh cuộn ngang ở viewport desktop/mobile.
 
 ## Expected result
 
-- Hệ thống xử lý an toàn: Hoặc thanh tìm kiếm giới hạn độ dài ở mức 255 ký tự (không cho phép gõ ký tự thứ 256), hoặc hệ thống gửi đi và tự động cắt chuỗi về 255 ký tự, hoặc trả về lỗi validation hợp lệ (HTTP 400).
+- Vì FR-05 không đặt giới hạn tối đa, hệ thống ưu tiên nhận và xử lý đủ 256 ký tự; nếu sản phẩm không khớp thì hiển thị empty state phù hợp.
+- Chỉ chấp nhận cắt/chặn ở 255 khi giới hạn đó được tài liệu hóa và giao diện thông báo rõ ràng; không được cắt âm thầm.
 - Hệ thống không bị crash (không lỗi HTTP 500).
+- Dù xử lý theo policy nào, chuỗi không làm tràn viewport, kéo dài trang theo chiều ngang hoặc phá vỡ lưới/header.
 
 ## BVA Coverage
 
-Độ dài từ khóa tìm kiếm: Max length boundary (B = 255), điểm kiểm thử B + 1 = 256 ký tự. Kỹ thuật áp dụng: 3-Point + 2-Point BVA.
+Độ dài từ khóa tìm kiếm: mốc độ bền `R = 255`, điểm `R + 1 = 256`. Đây là 3-point robustness reference, không phải giới hạn/BVA chính thức trong SRS.
 
 ## Status / Related bugs
 

@@ -6,7 +6,7 @@ FR-05
 
 ## Module / Test type / Technique
 
-Product List & Search / Functional / Boundary Value Analysis (3-Point + 2-Point BVA)
+Product List & Search / Functional / Boundary Value Analysis (Natural Minimum, one-sided 3-Point)
 
 ## Preconditions
 
@@ -33,7 +33,7 @@ Product List & Search / Functional / Boundary Value Analysis (3-Point + 2-Point 
 
 ## BVA Coverage
 
-Số lượng sản phẩm trong DB: Min count boundary (B = 0), điểm kiểm thử B. Kỹ thuật áp dụng: 3-Point + 2-Point BVA.
+Số lượng sản phẩm trong DB: natural minimum `B = 0`, điểm kiểm thử B. Đây là one-sided 3-Point BVA; `B-1 = -1` bất khả thi nên không tuyên bố có cặp 2-Point executable.
 
 ## Status / Related bugs
 

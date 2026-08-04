@@ -10,7 +10,7 @@ Product List & Search / Functional / Boundary Value Analysis (3-Point BVA)
 
 ## Preconditions
 
-- Cơ sở dữ liệu EShop đã có sản phẩm tên "MacBook Pro M3" (giá 45.000.000 ₫).
+- Fixture kiểm thử có sản phẩm tên đúng một ký tự `"M"` (giá 45.000.000 ₫) và sản phẩm không liên quan "Tai nghe AirPods Pro 2".
 - Người dùng đang ở trang chủ EShop.
 
 ## Test data
@@ -28,7 +28,7 @@ Product List & Search / Functional / Boundary Value Analysis (3-Point BVA)
 
 ## Expected result
 
-- Lưới sản phẩm hiển thị sản phẩm "MacBook Pro M3". Sản phẩm "Tai nghe AirPods Pro 2" không hiển thị.
+- Lưới sản phẩm hiển thị đúng sản phẩm `"M"`. Sản phẩm "Tai nghe AirPods Pro 2" không hiển thị. Fixture exact-name giúp kết quả không phụ thuộc policy exact/contains chưa được FR-05 chốt.
 - Sản phẩm hiển thị đúng thông tin: ảnh (alt text), tên, giá (đơn vị: ₫, phân cách hàng nghìn).
 - Chỉ có đúng 1 thẻ `<h1>` duy nhất trên trang.
 
