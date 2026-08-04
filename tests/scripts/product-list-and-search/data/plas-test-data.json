@@ -1,0 +1,193 @@
+{
+  "test_cases": [
+    {
+      "tc_id": "TC-PLAS-001",
+      "description": "Xem toàn bộ danh sách sản phẩm thành công khi search rỗng",
+      "search_keyword": "",
+      "expected_count": 5,
+      "check_h1": true,
+      "check_alt": true,
+      "check_price_symbol": true
+    },
+    {
+      "tc_id": "TC-PLAS-002",
+      "description": "Tìm kiếm sản phẩm theo tên chính xác hợp lệ",
+      "search_keyword": "MacBook Pro M3",
+      "expected_count": 1,
+      "expected_title": "MacBook Pro M3"
+    },
+    {
+      "tc_id": "TC-PLAS-003",
+      "description": "Tìm kiếm với từ khóa không tồn tại",
+      "search_keyword": "NonExistentProduct99999",
+      "expected_count": 0,
+      "expect_empty_state": true
+    },
+    {
+      "tc_id": "TC-PLAS-004",
+      "description": "Tìm kiếm từ khóa Tiếng Việt có dấu",
+      "search_keyword": "Bàn phím",
+      "expected_count": 1,
+      "expected_title": "Bàn phím cơ Keychron Q1"
+    },
+    {
+      "tc_id": "TC-PLAS-005",
+      "description": "Tìm kiếm với mã độc XSS / script HTML",
+      "search_keyword": "<script>alert('XSS')</script>",
+      "check_xss_safe": true
+    },
+    {
+      "tc_id": "TC-PLAS-006",
+      "description": "Tìm kiếm từ khóa cực dài 300 ký tự A",
+      "search_keyword_length": 300,
+      "check_no_crash": true
+    },
+    {
+      "tc_id": "TC-PLAS-007",
+      "description": "Kiểm tra hiển thị chi tiết thẻ sản phẩm (ảnh, tên, giá)",
+      "search_keyword": "Samsung Galaxy S24 Ultra",
+      "expected_count": 1,
+      "expected_title": "Samsung Galaxy S24 Ultra"
+    },
+    {
+      "tc_id": "TC-PLAS-008",
+      "description": "Tìm kiếm không phân biệt hoa thường",
+      "search_keyword": "macbook pro m3",
+      "expected_count": 1,
+      "expected_title": "MacBook Pro M3"
+    },
+    {
+      "tc_id": "TC-PLAS-009",
+      "description": "Tìm kiếm một phần tên sản phẩm (partial match)",
+      "search_keyword": "Galaxy",
+      "expected_count": 1,
+      "expected_title": "Samsung Galaxy S24 Ultra"
+    },
+    {
+      "tc_id": "TC-PLAS-010",
+      "description": "Tìm kiếm từ khóa có khoảng trắng thừa ở đầu/cuối",
+      "search_keyword": "  iPhone 15  ",
+      "expected_count": 1,
+      "expected_title": "iPhone 15 Pro Max"
+    },
+    {
+      "tc_id": "TC-PLAS-011",
+      "description": "Tìm kiếm chỉ chứa khoảng trắng",
+      "search_keyword": "   ",
+      "expected_count": 5
+    },
+    {
+      "tc_id": "TC-PLAS-012",
+      "description": "Nhấn nút Tìm kiếm mà không nhập từ khóa",
+      "search_keyword": "",
+      "expected_count": 5
+    },
+    {
+      "tc_id": "TC-PLAS-013",
+      "description": "Nhấn phím Enter trên ô nhập liệu để tìm kiếm",
+      "search_keyword": "AirPods",
+      "use_enter_key": true,
+      "expected_count": 1,
+      "expected_title": "Tai nghe AirPods Pro 2"
+    },
+    {
+      "tc_id": "TC-PLAS-014",
+      "description": "Kiểm tra khi xóa từ khóa trong ô tìm kiếm và tìm lại",
+      "search_keyword": "AirPods",
+      "then_clear": true,
+      "expected_count": 5
+    },
+    {
+      "tc_id": "TC-PLAS-015",
+      "description": "Kiểm tra nút Xem chi tiết sản phẩm",
+      "search_keyword": "Keychron",
+      "click_detail": true
+    },
+    {
+      "tc_id": "TC-PLAS-016",
+      "description": "Kiểm tra nút Thêm vào giỏ hàng sản phẩm",
+      "search_keyword": "AirPods",
+      "click_add_to_cart": true
+    },
+    {
+      "tc_id": "TC-PLAS-017",
+      "description": "Kiểm tra điều hướng logo EShop về trang chủ",
+      "click_logo": true
+    },
+    {
+      "tc_id": "TC-PLAS-018",
+      "description": "Kiểm tra hiển thị tổng số sản phẩm bên dưới",
+      "search_keyword": "",
+      "check_footer_count": true
+    },
+    {
+      "tc_id": "TC-PLAS-019",
+      "description": "Kiểm tra chỉ báo trạng thái đang tải",
+      "search_keyword": "",
+      "check_loading_state": true
+    },
+    {
+      "tc_id": "TC-PLAS-BVA-001",
+      "description": "Tìm kiếm từ khóa 1 ký tự (Biên dưới tối thiểu)",
+      "search_keyword": "i",
+      "expected_count": 2
+    },
+    {
+      "tc_id": "TC-PLAS-BVA-002",
+      "description": "Tìm kiếm từ khóa 255 ký tự (Biên trên tiêu chuẩn)",
+      "search_keyword_length": 255,
+      "check_no_crash": true
+    },
+    {
+      "tc_id": "TC-PLAS-BVA-003",
+      "description": "Tìm kiếm từ khóa 256 ký tự (Biên trên vượt 1 ký tự)",
+      "search_keyword_length": 256,
+      "check_no_crash": true
+    },
+    {
+      "tc_id": "TC-PLAS-BVA-004",
+      "description": "Tìm kiếm bằng ký tự đặc biệt SQL/Injection",
+      "search_keyword": "' OR '1'='1",
+      "check_sql_safe": true
+    },
+    {
+      "tc_id": "TC-PLAS-BVA-005",
+      "description": "Kiểm tra duy trì đúng 1 thẻ h1 duy nhất",
+      "search_keyword": "iPhone",
+      "check_h1": true
+    },
+    {
+      "tc_id": "TC-PLAS-BVA-006",
+      "description": "Tìm kiếm từ khóa độ dài 0 ký tự",
+      "search_keyword": "",
+      "expected_count": 5
+    },
+    {
+      "tc_id": "TC-PLAS-BVA-007",
+      "description": "Tìm kiếm từ khóa độ dài 2 ký tự",
+      "search_keyword": "S2",
+      "expected_count": 1,
+      "expected_title": "Samsung Galaxy S24 Ultra"
+    },
+    {
+      "tc_id": "TC-PLAS-BVA-008",
+      "description": "Tìm kiếm từ khóa độ dài 254 ký tự",
+      "search_keyword_length": 254,
+      "check_no_crash": true
+    },
+    {
+      "tc_id": "TC-PLAS-BVA-009",
+      "description": "Tìm kiếm từ khóa ký tự số (15)",
+      "search_keyword": "15",
+      "expected_count": 1,
+      "expected_title": "iPhone 15 Pro Max"
+    },
+    {
+      "tc_id": "TC-PLAS-BVA-010",
+      "description": "Tìm kiếm từ khóa kết hợp chữ, số và khoảng trắng",
+      "search_keyword": "Galaxy S24",
+      "expected_count": 1,
+      "expected_title": "Samsung Galaxy S24 Ultra"
+    }
+  ]
+}
