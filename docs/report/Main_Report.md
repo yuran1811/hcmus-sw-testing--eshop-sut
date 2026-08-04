@@ -1,4 +1,4 @@
-# BÁO CÁO (MAIN REPORT) — HW02
+# BÁO CÁO (MAIN REPORT) — HW04
 
 ## THÔNG TIN SINH VIÊN
 
@@ -7,7 +7,7 @@
 - **Lớp:** 23KTPM3
 - **Môn học:** CS423 / CSC15003 – Kiểm thử Phần mềm (Tích hợp AI · 2026)
 - **Học kỳ:** Học kỳ 3 (Năm 3) – Năm học 2025-2026
-- **Bài tập:** Homework 02 - Domain Testing & Boundary Value Analysis
+- **Bài tập:** Homework 04 - Automation Testing
 - **Hệ thống kiểm thử (SUT):** EShop (https://github.com/ttbhanh/eshop-sut)
 - **Ngày hoàn thành:** 29/06/2026
 

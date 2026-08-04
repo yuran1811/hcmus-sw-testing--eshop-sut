@@ -1,4 +1,4 @@
-# HW02 - Domain Testing & Boundary Value Analysis
+# HW04 - Automation Testing
 
 ## 1. Thông tin cá nhân
 
