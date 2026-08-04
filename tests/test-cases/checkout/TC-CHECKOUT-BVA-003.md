@@ -1,4 +1,4 @@
-# TC-CHECKOUT-BVA-003: Thanh toán đơn hàng thất bại khi tổng tiền client gửi nhiều hơn máy chủ tính đúng 1 đơn vị
+# TC-CHECKOUT-BVA-003: Xử lý an toàn khi tổng tiền client cao hơn máy chủ đúng 1 đơn vị
 
 ## Requirement ID
 
@@ -31,8 +31,8 @@ Checkout / Functional / Boundary Value Analysis (3-point + 2-point)
 
 ## Expected result
 
-- API phản hồi với mã trạng thái `400 Bad Request` và thông báo lỗi tổng tiền không chính xác.
-- Không có đơn hàng nào được tạo trong cơ sở dữ liệu (hoặc tổng tiền được lưu là 10.000.000 ₫, không được lưu 10.000.001 ₫).
+- Hợp lệ nếu API từ chối bằng `400 Bad Request`, không tạo đơn và không thay đổi giỏ; **hoặc** chấp nhận checkout nhưng bỏ qua giá trị client, tự tính/lưu đúng `10000000`, tạo đúng order items và xóa giỏ nhất quán.
+- Test **Fail** nếu đơn hàng lưu `10000001`, tin dữ liệu giá/item phía client, hoặc để lại trạng thái order/cart dở dang.
 
 ## BVA Coverage
 

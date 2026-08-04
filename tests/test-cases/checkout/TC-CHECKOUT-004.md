@@ -1,4 +1,4 @@
-# TC-CHECKOUT-004: Thanh toán đơn hàng thất bại khi tổng tiền client gửi không khớp với máy chủ tính toán
+# TC-CHECKOUT-004: Xử lý an toàn khi tổng tiền client gửi không khớp với máy chủ tính toán
 
 ## Requirement ID
 
@@ -31,14 +31,15 @@ Checkout / Functional / Domain Testing (Equivalence Partitioning)
 
 ## Expected result
 
-- API phản hồi với mã trạng thái `400 Bad Request` và thông báo lỗi không khớp tổng tiền (ví dụ: `"Total amount mismatch"`).
-- Hoặc nếu chấp nhận tạo đơn hàng, tổng tiền lưu trong cơ sở dữ liệu của đơn hàng đó bắt buộc phải là `10000000` (tính lại từ giỏ hàng), không được lưu giá trị `1000` do client gửi lên.
-- Trình tự khuyên dùng: Từ chối yêu cầu thanh toán không hợp lệ với mã `400 Bad Request`.
+- Hợp lệ theo FR-08 nếu hệ thống chọn một trong hai nhánh an toàn:
+  - Từ chối bằng `400 Bad Request`, không tạo đơn và không thay đổi giỏ; hoặc
+  - Chấp nhận checkout nhưng bỏ qua giá trị client, tự tính và lưu đúng `total_amount = 10000000`, tạo đúng order items rồi xóa giỏ một cách nhất quán.
+- Test **Fail** nếu đơn hàng lưu `total_amount = 1000`, dùng item/price giả từ client, hoặc để lại trạng thái order/cart dở dang.
 
 ## EC / Partition Covered
 
 - EC7 (Client-sent total_amount mismatches server total)
-- OC4 (Error - Total Mismatch)
+- OC4 (Safe handling - reject mismatch or use server-authoritative total)
 
 ## Status / Related bugs
 
