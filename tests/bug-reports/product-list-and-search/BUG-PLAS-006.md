@@ -41,4 +41,4 @@ Hệ thống chỉ hiển thị một màn hình trắng tinh (blank screen) kh�
 ## Evidence
 
 - **TC-PLAS-006 (Không có loading indicator - Màn hình trắng):**
-  ![Evidence](../screenshots/product-list-and-search/TC-PLAS-006a.png)
+  ![Evidence](./screenshots/TC-PLAS-006a.png)

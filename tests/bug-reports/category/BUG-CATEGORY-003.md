@@ -40,4 +40,4 @@ Hệ thống cho phép thêm danh mục thành công (trả về HTTP 201 Create
 ## Evidence
 
 - **TC-CATEGORY-008 (User thường tạo thành công danh mục):**
-  ![Evidence](../screenshots/category/TC-CATEGORY-008.png)
+  ![Evidence](./screenshots/TC-CATEGORY-008.png)

@@ -41,8 +41,8 @@ API phản hồi thành công và tạo một đơn hàng mới lưu vào cơ s�
 ## Evidence
 
 - **TC-CHECKOUT-004 (Ảnh 1: Thêm sản phẩm vào giỏ hàng):**
-  ![Evidence 1](../screenshots/checkout/TC-CHECKOUT-004a.png)
+  ![Evidence 1](./screenshots/TC-CHECKOUT-004a.png)
 - **TC-CHECKOUT-004 (Ảnh 2: Đặt order thành công với tổng tiền bị sửa thành 1000):**
-  ![Evidence 2](../screenshots/checkout/TC-CHECKOUT-004b.png)
+  ![Evidence 2](./screenshots/TC-CHECKOUT-004b.png)
 - **TC-CHECKOUT-004 (Ảnh 3: Đơn hàng lưu thành công trong DB với giá 1000):**
-  ![Evidence 3](../screenshots/checkout/TC-CHECKOUT-004c.png)
+  ![Evidence 3](./screenshots/TC-CHECKOUT-004c.png)

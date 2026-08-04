@@ -42,6 +42,6 @@ Hệ thống không báo lỗi, tạo thành công một danh mục mới có t�
 ## Evidence
 
 - **TC-CATEGORY-002 (Không báo lỗi, thêm thành công danh mục tên rỗng):**
-  ![Evidence](../screenshots/category/TC-CATEGORY-002.png)
+  ![Evidence](./screenshots/TC-CATEGORY-002.png)
 - **TC-CATEGORY-003 (Không báo lỗi, thêm thành công danh mục chỉ chứa khoảng trắng):**
-  ![Evidence](../screenshots/category/TC-CATEGORY-003.png)
+  ![Evidence](./screenshots/TC-CATEGORY-003.png)

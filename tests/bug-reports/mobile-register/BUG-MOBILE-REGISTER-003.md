@@ -43,6 +43,6 @@ Hệ thống vẫn đăng ký tài khoản thành công mà không cần Email.
 ## Evidence
 
 - **TC-MOBILE-REGISTER-003a (Gửi request POST thành công không có Email):**
-  ![Evidence 1](../screenshots/mobile-register/TC-MOBILE-REGISTER-003a.png)
+  ![Evidence 1](./screenshots/TC-MOBILE-REGISTER-003a.png)
 - **TC-MOBILE-REGISTER-003b (Giao diện báo đăng ký thành công):**
-  ![Evidence 2](../screenshots/mobile-register/TC-MOBILE-REGISTER-003b.png)
+  ![Evidence 2](./screenshots/TC-MOBILE-REGISTER-003b.png)

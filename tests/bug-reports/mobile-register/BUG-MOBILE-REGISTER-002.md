@@ -43,6 +43,6 @@ Hệ thống vẫn thực hiện đăng ký thành công tài khoản (lưu vào
 ## Evidence
 
 - **TC-MOBILE-REGISTER-002a (Đăng ký thành công không có Họ Tên):**
-  ![Evidence 1](../screenshots/mobile-register/TC-MOBILE-REGISTER-002a.png)
+  ![Evidence 1](./screenshots/TC-MOBILE-REGISTER-002a.png)
 - **TC-MOBILE-REGISTER-002b (Đăng nhập thành công và hiển thị giao diện chào thiếu Họ Tên):**
-  ![Evidence 2](../screenshots/mobile-register/TC-MOBILE-REGISTER-002b.png)
+  ![Evidence 2](./screenshots/TC-MOBILE-REGISTER-002b.png)

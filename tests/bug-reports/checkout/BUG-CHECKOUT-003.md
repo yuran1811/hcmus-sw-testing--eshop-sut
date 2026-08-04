@@ -41,8 +41,8 @@ API phản hồi thành công và một đơn hàng mới với `total_amount = 
 ## Evidence
 
 - **TC-CHECKOUT-003 (Ảnh 1: Reset DB và lấy token):**
-  ![Evidence 1](../screenshots/checkout/TC-CHECKOUT-003a.png)
+  ![Evidence 1](./screenshots/TC-CHECKOUT-003a.png)
 - **TC-CHECKOUT-003 (Ảnh 2: Tạo thành công đơn hàng):**
-  ![Evidence 2](../screenshots/checkout/TC-CHECKOUT-003b.png)
+  ![Evidence 2](./screenshots/TC-CHECKOUT-003b.png)
 - **TC-CHECKOUT-003 (Ảnh 3: DB chứa order với amount là 0):**
-  ![Evidence 3](../screenshots/checkout/TC-CHECKOUT-003c.png)
+  ![Evidence 3](./screenshots/TC-CHECKOUT-003c.png)

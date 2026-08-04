@@ -34,15 +34,15 @@ Browser: Google Chrome / Microsoft Edge, OS: Windows, URL: http://localhost:5173
 
 ## Expected result
 
-Chuỗi từ khóa hiển thị được ngắt dòng tự động hoặc rút gọn có dấu ba chấm (CSS `word-break: break-word` hoặc `text-overflow: ellipsis`) để không làm tràn khung giao diện và kéo dài trang chủ theo chiều ngang. Hệ thống nên giới hạn độ dài ký tự nhập ở ô input (ví dụ: `maxlength="255"`).
+Khi hệ thống chấp nhận và phản chiếu từ khóa dài, chuỗi phải được ngắt dòng hoặc rút gọn an toàn để không tràn khung và không tạo thanh cuộn ngang. FR-05 không quy định độ dài tối đa; `255/256` chỉ là dữ liệu robustness tham chiếu, nên việc không có `maxlength=255` tự nó không phải lỗi.
 
 ## Actual result
 
-Dòng chữ kết quả tìm kiếm không được ngắt dòng, bị tràn ra ngoài biên giao diện chính của trang chủ, tạo ra thanh cuộn ngang gây vỡ bố cục giao diện. Hệ thống hoàn toàn không giới hạn số lượng ký tự nhập vào ô tìm kiếm.
+Dòng chữ kết quả tìm kiếm được phản chiếu nhưng không ngắt/rút gọn, tràn khỏi biên giao diện chính và tạo thanh cuộn ngang gây vỡ bố cục.
 
 ## Evidence
 
 - **TC-PLAS-BVA-002 (Vỡ giao diện khi từ khóa quá dài - 255 ký tự):**
-  ![Evidence 1](../screenshots/product-list-and-search/TC-PLAS-BVA-002.png)
+  ![Evidence 1](./screenshots/TC-PLAS-BVA-002.png)
 - **TC-PLAS-BVA-003 (Vỡ giao diện khi từ khóa quá dài - 256 ký tự):**
-  ![Evidence 2](../screenshots/product-list-and-search/TC-PLAS-BVA-003.png)
+  ![Evidence 2](./screenshots/TC-PLAS-BVA-003.png)

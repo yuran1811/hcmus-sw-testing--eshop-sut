@@ -43,6 +43,6 @@ Hệ thống vẫn đăng ký tài khoản thành công mà không báo lỗi g�
 ## Evidence
 
 - **TC-MOBILE-REGISTER-004a (Gửi request POST đăng ký thành công với Email sai định dạng):**
-  ![Evidence 1](../screenshots/mobile-register/TC-MOBILE-REGISTER-004a.png)
+  ![Evidence 1](./screenshots/TC-MOBILE-REGISTER-004a.png)
 - **TC-MOBILE-REGISTER-004b (Giao diện hiển thị đăng ký thành công):**
-  ![Evidence 2](../screenshots/mobile-register/TC-MOBILE-REGISTER-004b.png)
+  ![Evidence 2](./screenshots/TC-MOBILE-REGISTER-004b.png)

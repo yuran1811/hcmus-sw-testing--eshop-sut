@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: "[BUG][Quản lý Danh mục] Vẫn xóa được danh mục đang có sản phẩm liên kết (Vi phạm ràng buộc khóa ngoại)"
+title: "[BUG][Quản lý Danh mục] Xóa category nhưng để lại sản phẩm tham chiếu mồ côi"
 labels: "type: bug, module: category, severity: critical, priority: P1, status: new, found-by: test-case"
 assignees: ""
 ---
@@ -29,15 +29,14 @@ Browser: Google Chrome / Microsoft Edge, OS: Windows, URL: http://localhost:5174
 
 ## Expected result
 
-- Hệ thống từ chối yêu cầu xóa danh mục và trả về mã lỗi phù hợp (HTTP 400/409/500).
-- Hiển thị thông báo lỗi ràng buộc khóa ngoại (ví dụ: không thể xóa danh mục chứa sản phẩm).
-- Danh mục không bị xóa khỏi hệ thống.
+- README chưa chốt restrict/cascade/reassign. Hệ thống có thể từ chối `400/409` và giữ nguyên dữ liệu, hoặc xóa thành công theo policy cascade/reassign có tài liệu.
+- Sau request không được có product trỏ tới category không tồn tại; thao tác phải nguyên tử, không raw DB error/`500` hoặc partial state.
 
 ## Actual result
 
-Hệ thống cho phép xóa danh mục thành công (trả về HTTP 200 OK hoặc 204 No Content), khiến các sản phẩm liên kết trước đó trỏ tới một danh mục không còn tồn tại trong database (vi phạm tính toàn vẹn dữ liệu).
+Hệ thống xóa category thành công nhưng không cascade/reassign các sản phẩm liên kết, khiến chúng trỏ tới category không còn tồn tại. Bug là dangling reference, không phải việc hệ thống chọn delete thay vì restrict.
 
 ## Evidence
 
 - **TC-CATEGORY-009 (Xóa thành công danh mục có sản phẩm liên kết):**
-  ![Evidence](../screenshots/category/TC-CATEGORY-009.png)
+  ![Evidence](./screenshots/TC-CATEGORY-009.png)

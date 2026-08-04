@@ -40,12 +40,12 @@ Giá sản phẩm hiển thị đơn vị là `VND` (Ví dụ: `30.000.000 VND`)
 ## Evidence
 
 - **TC-PLAS-001 (Xem danh sách):**
-  ![Evidence 1](../screenshots/product-list-and-search/TC-PLAS-001.png)
+  ![Evidence 1](./screenshots/TC-PLAS-001.png)
 - **TC-PLAS-002 (Tìm kiếm):**
-  ![Evidence 2](../screenshots/product-list-and-search/TC-PLAS-002.png)
+  ![Evidence 2](./screenshots/TC-PLAS-002.png)
 - **TC-PLAS-004 (Tìm kiếm có dấu):**
-  ![Evidence 3](../screenshots/product-list-and-search/TC-PLAS-004.png)
+  ![Evidence 3](./screenshots/TC-PLAS-004.png)
 - **TC-PLAS-BVA-001 (Tìm kiếm 1 ký tự):**
-  ![Evidence 4](../screenshots/product-list-and-search/TC-PLAS-BVA-001.png)
+  ![Evidence 4](./screenshots/TC-PLAS-BVA-001.png)
 - **TC-PLAS-BVA-005 (Database chỉ có 1 sản phẩm):**
-  ![Evidence 5](../screenshots/product-list-and-search/TC-PLAS-BVA-005b.png)
+  ![Evidence 5](./screenshots/TC-PLAS-BVA-005b.png)

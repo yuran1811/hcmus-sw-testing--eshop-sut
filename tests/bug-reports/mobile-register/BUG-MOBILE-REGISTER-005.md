@@ -43,6 +43,6 @@ Hệ thống vẫn thực hiện đăng ký tài khoản thành công mà không
 ## Evidence
 
 - **TC-MOBILE-REGISTER-005a (Gửi request POST thành công với Email đã tồn tại):**
-  ![Evidence 1](../screenshots/mobile-register/TC-MOBILE-REGISTER-005a.png)
+  ![Evidence 1](./screenshots/TC-MOBILE-REGISTER-005a.png)
 - **TC-MOBILE-REGISTER-005b (Giao diện báo đăng ký thành công):**
-  ![Evidence 2](../screenshots/mobile-register/TC-MOBILE-REGISTER-005b.png)
+  ![Evidence 2](./screenshots/TC-MOBILE-REGISTER-005b.png)

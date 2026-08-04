@@ -39,4 +39,4 @@ Chỉ hiển thị 3 trường nhập liệu: Họ Tên, Email, Mật khẩu. Ho
 ## Evidence
 
 - **TC-MOBILE-REGISTER-001:**
-  ![Evidence 1](../screenshots/mobile-register/TC-MOBILE-REGISTER-001.png)
+  ![Evidence 1](./screenshots/TC-MOBILE-REGISTER-001.png)

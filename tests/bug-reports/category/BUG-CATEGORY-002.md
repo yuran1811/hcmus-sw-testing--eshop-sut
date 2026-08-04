@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: "[BUG][Quản lý Danh mục] Xóa danh mục không tồn tại trả về thành công thay vì lỗi 404 Not Found"
+title: "[BUG][Quản lý Danh mục] Báo xóa thành công record không tồn tại thay vì phản hồi missing/idempotent trung thực"
 labels: "type: bug, module: category, severity: minor, priority: P2, status: new, found-by: test-case"
 assignees: ""
 ---
@@ -29,14 +29,14 @@ Browser: Google Chrome / Microsoft Edge, OS: Windows, URL: http://localhost:5174
 
 ## Expected result
 
-- Hệ thống trả về HTTP 404 Not Found.
-- Response body chứa thông báo lỗi danh mục không tìm thấy.
+- FR-14 không chốt status code. Hệ thống có thể trả `404/410`, hoặc `200/204` idempotent nếu contract có tài liệu.
+- Trong mọi trường hợp không được tuyên bố sai rằng một record vừa bị xóa; affected/deleted count phải là `0` nếu được trả về và dữ liệu không thay đổi.
 
 ## Actual result
 
-Hệ thống không báo lỗi, trả về HTTP 200 OK (hoặc 204 No Content) báo xóa thành công.
+Hệ thống trả thành công và thông báo như thể đã xóa category, dù ID không tồn tại. Bug nằm ở false-success semantics, không nằm riêng ở việc status khác `404`.
 
 ## Evidence
 
-- **TC-CATEGORY-006 (Không báo lỗi 404 khi xóa ID không tồn tại):**
-  ![Evidence](../screenshots/category/TC-CATEGORY-006.png)
+- **TC-CATEGORY-006 (Phản hồi false-success khi xóa ID không tồn tại):**
+  ![Evidence](./screenshots/TC-CATEGORY-006.png)

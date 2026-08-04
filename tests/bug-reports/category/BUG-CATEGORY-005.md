@@ -39,4 +39,4 @@ Hệ thống cho phép xóa danh mục thành công (trả về HTTP 200 OK ho�
 ## Evidence
 
 - **TC-CATEGORY-011 (User thường xóa thành công danh mục):**
-  ![Evidence](../screenshots/category/TC-CATEGORY-011.png)
+  ![Evidence](./screenshots/TC-CATEGORY-011.png)

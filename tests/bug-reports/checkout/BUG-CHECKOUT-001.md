@@ -41,12 +41,12 @@ Giỏ hàng của người dùng được xóa sạch (GET `/api/cart` trả v�
 ## Evidence
 
 - **TC-CHECKOUT-001 (Ảnh 1: Giỏ hàng có đồ):**
-  ![Evidence 1](../screenshots/checkout/TC-CHECKOUT-001a.png)
+  ![Evidence 1](./screenshots/TC-CHECKOUT-001a.png)
 - **TC-CHECKOUT-001 (Ảnh 2: Qua trang thanh toán):**
-  ![Evidence 2](../screenshots/checkout/TC-CHECKOUT-001b.png)
+  ![Evidence 2](./screenshots/TC-CHECKOUT-001b.png)
 - **TC-CHECKOUT-001 (Ảnh 3: Thanh toán thành công):**
-  ![Evidence 3](../screenshots/checkout/TC-CHECKOUT-001c.png)
+  ![Evidence 3](./screenshots/TC-CHECKOUT-001c.png)
 - **TC-CHECKOUT-001 (Ảnh 4: Quay lại vẫn thấy đồ trong giỏ):**
-  ![Evidence 4](../screenshots/checkout/TC-CHECKOUT-001d.png)
+  ![Evidence 4](./screenshots/TC-CHECKOUT-001d.png)
 - **TC-CHECKOUT-001 (Ảnh 5: Minh chứng order đang pending):**
-  ![Evidence 5](../screenshots/checkout/TC-CHECKOUT-001e.png)
+  ![Evidence 5](./screenshots/TC-CHECKOUT-001e.png)
