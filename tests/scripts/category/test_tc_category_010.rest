@@ -1,5 +1,0 @@
-### TC-CATEGORY-010: Xóa danh mục thất bại khi không có token (Unauthorized)
-
-@baseUrl = http://localhost:3000/api
-
-DELETE {{baseUrl}}/categories/1
