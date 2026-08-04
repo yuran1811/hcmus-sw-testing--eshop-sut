@@ -1,0 +1,42 @@
+{
+  "studentId": "23127152",
+  "ranAt": "2026-07-27T08:16:28.678Z",
+  "featureCount": 1,
+  "browsers": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "cells": [
+    {
+      "feature": "fr02-login",
+      "browser": "chromium",
+      "exitCode": 1,
+      "status": "FAIL",
+      "reportPath": "/Users/tuananhnguyen/Documents/Uni/Testing/hcmus-sw-testing--eshop-sut/e2e/reports/html/fr02-login/chromium/index.html",
+      "label": "Run by: 23127152 | fr02-login | chromium",
+      "labelVerified": true,
+      "labelNote": "ok"
+    },
+    {
+      "feature": "fr02-login",
+      "browser": "firefox",
+      "exitCode": 1,
+      "status": "FAIL",
+      "reportPath": "/Users/tuananhnguyen/Documents/Uni/Testing/hcmus-sw-testing--eshop-sut/e2e/reports/html/fr02-login/firefox/index.html",
+      "label": "Run by: 23127152 | fr02-login | firefox",
+      "labelVerified": true,
+      "labelNote": "ok"
+    },
+    {
+      "feature": "fr02-login",
+      "browser": "webkit",
+      "exitCode": 1,
+      "status": "FAIL",
+      "reportPath": "/Users/tuananhnguyen/Documents/Uni/Testing/hcmus-sw-testing--eshop-sut/e2e/reports/html/fr02-login/webkit/index.html",
+      "label": "Run by: 23127152 | fr02-login | webkit",
+      "labelVerified": true,
+      "labelNote": "ok"
+    }
+  ]
+}
