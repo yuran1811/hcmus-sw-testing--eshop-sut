@@ -1,0 +1,362 @@
+{
+  "users": {
+    "userA": {
+      "email": "user_a@eshop.test",
+      "password": "Password123!",
+      "name": "User A Test"
+    },
+    "userB": {
+      "email": "user_b@eshop.test",
+      "password": "Password123!",
+      "name": "User B Test"
+    },
+    "invalid": {
+      "email": "notexist@eshop.test",
+      "password": "wrongpassword"
+    }
+  },
+  "products": {
+    "airpods": {
+      "id": 4,
+      "name": "Tai nghe AirPods Pro 2",
+      "price": 6000000,
+      "quantity": 1
+    },
+    "keychron": {
+      "id": 5,
+      "name": "Bàn phím cơ Keychron Q1",
+      "price": 4000000,
+      "quantity": 1
+    }
+  },
+  "tc_api": [
+    {
+      "tc_id": "TC-CHECKOUT-001",
+      "description": "Thanh toán đơn hàng thành công với thông tin hợp lệ",
+      "type": "positive",
+      "technique": "Equivalence Partitioning",
+      "cart_items": [
+        { "id": 4, "name": "Tai nghe AirPods Pro 2", "price": 6000000, "quantity": 1 },
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": {
+        "total_amount": 10000000,
+        "shipping_address": "123 Le Loi, Quan 1, TP.HCM"
+      },
+      "expected_status": 200,
+      "expected_message_contains": "Checkout successful",
+      "expected_order_status": "pending",
+      "expected_cart_empty": true,
+      "expected_total_in_db": 10000000
+    },
+    {
+      "tc_id": "TC-CHECKOUT-002",
+      "description": "Thanh toán thất bại khi token không hợp lệ",
+      "type": "negative",
+      "technique": "Equivalence Partitioning",
+      "invalid_token": "Bearer invalid-token-12345",
+      "payload": { "total_amount": 200000, "shipping_address": "Test Addr" },
+      "expected_status": 401,
+      "expected_cart_unchanged": true
+    },
+    {
+      "tc_id": "TC-CHECKOUT-002B",
+      "description": "Thanh toán thất bại khi không có token (no Authorization header)",
+      "type": "negative",
+      "technique": "Equivalence Partitioning",
+      "no_auth": true,
+      "payload": { "total_amount": 200000, "shipping_address": "Test Addr" },
+      "expected_status": 401
+    },
+    {
+      "tc_id": "TC-CHECKOUT-003",
+      "description": "Thanh toán thất bại khi giỏ hàng trống",
+      "type": "negative",
+      "technique": "Equivalence Partitioning",
+      "cart_items": [],
+      "payload": { "total_amount": 0, "shipping_address": "Test Addr" },
+      "expected_status": 400,
+      "expected_cart_unchanged": true
+    },
+    {
+      "tc_id": "TC-CHECKOUT-004",
+      "description": "Xử lý an toàn khi total_amount client không khớp server",
+      "type": "negative",
+      "technique": "Equivalence Partitioning",
+      "cart_items": [
+        { "id": 4, "name": "Tai nghe AirPods Pro 2", "price": 6000000, "quantity": 1 },
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": { "total_amount": 1000, "shipping_address": "123 Le Loi" },
+      "expected_status_oneOf": [400, 200],
+      "if_200_expected_total_in_db": 10000000,
+      "must_not_persist_total": 1000
+    },
+    {
+      "tc_id": "TC-CHECKOUT-005",
+      "description": "Thanh toán thành công với địa chỉ giao hàng thông thường",
+      "type": "positive",
+      "technique": "Equivalence Partitioning",
+      "cart_items": [
+        { "id": 4, "name": "Tai nghe AirPods Pro 2", "price": 6000000, "quantity": 1 },
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": {
+        "total_amount": 10000000,
+        "shipping_address": "123 Le Loi, Quan 1, TP.HCM"
+      },
+      "expected_status": 200,
+      "expected_address_in_order": "123 Le Loi, Quan 1, TP.HCM",
+      "expected_cart_empty": true
+    },
+    {
+      "tc_id": "TC-CHECKOUT-006",
+      "description": "Thanh toán với địa chỉ Unicode, dấu tiếng Việt và dấu câu hợp lệ",
+      "type": "positive",
+      "technique": "Equivalence Partitioning",
+      "cart_items": [
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": {
+        "total_amount": 4000000,
+        "shipping_address": "Số 12/3, Đường Nguyễn Huệ, P. Bến Nghé, Q.1, TP. Hồ Chí Minh"
+      },
+      "expected_status": 200,
+      "expected_address_in_order": "Số 12/3, Đường Nguyễn Huệ, P. Bến Nghé, Q.1, TP. Hồ Chí Minh",
+      "expected_cart_empty": true
+    },
+    {
+      "tc_id": "TC-CHECKOUT-007",
+      "description": "Địa chỉ chứa HTML/XSS phải được xử lý an toàn",
+      "type": "security",
+      "technique": "Equivalence Partitioning",
+      "cart_items": [
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": {
+        "total_amount": 4000000,
+        "shipping_address": "<img src=x onerror=alert('CHECKOUT-XSS')>"
+      },
+      "expected_status_oneOf": [200, 400],
+      "if_200_no_script_execution": true
+    },
+    {
+      "tc_id": "TC-CHECKOUT-008A",
+      "description": "Hành vi khi bỏ qua thuộc tính shipping_address (omitted)",
+      "type": "characterization",
+      "technique": "Equivalence Partitioning",
+      "cart_items": [
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": { "total_amount": 4000000 },
+      "expected_status_oneOf": [200, 400],
+      "must_not_500": true
+    },
+    {
+      "tc_id": "TC-CHECKOUT-008B",
+      "description": "Hành vi khi shipping_address là JSON null",
+      "type": "characterization",
+      "technique": "Equivalence Partitioning",
+      "cart_items": [
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": { "total_amount": 4000000, "shipping_address": null },
+      "expected_status_oneOf": [200, 400],
+      "must_not_500": true
+    },
+    {
+      "tc_id": "TC-CHECKOUT-009",
+      "description": "Hành vi với địa chỉ chỉ chứa khoảng trắng",
+      "type": "characterization",
+      "technique": "Equivalence Partitioning",
+      "cart_items": [
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": { "total_amount": 4000000, "shipping_address": "   " },
+      "expected_status_oneOf": [200, 400],
+      "must_not_500": true
+    },
+    {
+      "tc_id": "TC-CHECKOUT-013",
+      "description": "Backend tự tính tổng khi client không gửi total_amount",
+      "type": "positive",
+      "technique": "Equivalence Partitioning",
+      "cart_items": [
+        { "id": 4, "name": "Tai nghe AirPods Pro 2", "price": 6000000, "quantity": 1 },
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": { "shipping_address": "123 Le Loi, Quan 1, TP.HCM" },
+      "expected_status_oneOf": [200, 400],
+      "if_200_expected_total_must_not_be_zero": true,
+      "must_not_500": true
+    },
+    {
+      "tc_id": "TC-CHECKOUT-014",
+      "description": "Backend không tin danh sách và giá sản phẩm bị giả mạo từ client",
+      "type": "security",
+      "technique": "Equivalence Partitioning",
+      "cart_items": [
+        { "id": 4, "name": "Tai nghe AirPods Pro 2", "price": 6000000, "quantity": 1 },
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "forged_payload": {
+        "items": [{ "id": 4, "name": "Tai nghe AirPods Pro 2", "price": 1, "quantity": 1 }],
+        "total_amount": 1,
+        "shipping_address": "123 Le Loi"
+      },
+      "must_not_persist_total": 1,
+      "expected_status_oneOf": [200, 400],
+      "if_200_expected_total_in_db": 10000000
+    }
+  ],
+  "tc_bva": [
+    {
+      "tc_id": "TC-CHECKOUT-BVA-001",
+      "description": "Giỏ hàng đúng 1 sản phẩm (cực tiểu biên - valid)",
+      "technique": "BVA 3-point",
+      "cart_items": [
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": { "total_amount": 4000000, "shipping_address": "123 Le Loi" },
+      "expected_status": 200,
+      "expected_total_in_db": 4000000,
+      "expected_cart_empty": true
+    },
+    {
+      "tc_id": "TC-CHECKOUT-BVA-002",
+      "description": "total_amount = server_total - 1 (biên B-1, invalid mismatch)",
+      "technique": "BVA 3-point",
+      "cart_items": [
+        { "id": 4, "name": "Tai nghe AirPods Pro 2", "price": 6000000, "quantity": 1 },
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": { "total_amount": 9999999, "shipping_address": "123 Le Loi" },
+      "expected_status_oneOf": [400, 200],
+      "must_not_persist_total": 9999999,
+      "if_200_expected_total_in_db": 10000000
+    },
+    {
+      "tc_id": "TC-CHECKOUT-BVA-003",
+      "description": "total_amount = server_total + 1 (biên B+1, invalid mismatch)",
+      "technique": "BVA 3-point",
+      "cart_items": [
+        { "id": 4, "name": "Tai nghe AirPods Pro 2", "price": 6000000, "quantity": 1 },
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": { "total_amount": 10000001, "shipping_address": "123 Le Loi" },
+      "expected_status_oneOf": [400, 200],
+      "must_not_persist_total": 10000001,
+      "if_200_expected_total_in_db": 10000000
+    },
+    {
+      "tc_id": "TC-CHECKOUT-BVA-004",
+      "description": "shipping_address = empty string (length 0, R-1)",
+      "technique": "BVA Length Reference R=1",
+      "cart_items": [
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": { "total_amount": 4000000, "shipping_address": "" },
+      "expected_status_oneOf": [200, 400],
+      "must_not_500": true
+    },
+    {
+      "tc_id": "TC-CHECKOUT-BVA-005",
+      "description": "shipping_address = 1 ký tự (length = R, tại mốc tham chiếu)",
+      "technique": "BVA Length Reference R=1",
+      "cart_items": [
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": { "total_amount": 4000000, "shipping_address": "A" },
+      "expected_status_oneOf": [200, 400],
+      "must_not_500": true
+    },
+    {
+      "tc_id": "TC-CHECKOUT-BVA-006",
+      "description": "shipping_address = 2 ký tự (length = R+1, ngay trên mốc)",
+      "technique": "BVA Length Reference R=1",
+      "cart_items": [
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": { "total_amount": 4000000, "shipping_address": "AB" },
+      "expected_status_oneOf": [200, 400],
+      "must_not_500": true
+    },
+    {
+      "tc_id": "TC-CHECKOUT-BVA-007A",
+      "description": "shipping_address 499 ký tự (R-1 quanh mốc robustness 500)",
+      "technique": "BVA Robustness Reference R=500",
+      "address_length": 499,
+      "cart_items": [
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "expected_status_oneOf": [200, 400],
+      "must_not_500": true
+    },
+    {
+      "tc_id": "TC-CHECKOUT-BVA-007B",
+      "description": "shipping_address 500 ký tự (R, mốc robustness)",
+      "technique": "BVA Robustness Reference R=500",
+      "address_length": 500,
+      "cart_items": [
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "expected_status_oneOf": [200, 400],
+      "must_not_500": true
+    },
+    {
+      "tc_id": "TC-CHECKOUT-BVA-007C",
+      "description": "shipping_address 501 ký tự (R+1, ngay trên mốc robustness)",
+      "technique": "BVA Robustness Reference R=500",
+      "address_length": 501,
+      "cart_items": [
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "expected_status_oneOf": [200, 400],
+      "must_not_500": true
+    }
+  ],
+  "tc_type_variants": [
+    {
+      "tc_id": "TC-CHECKOUT-010A",
+      "description": "shipping_address là Number (type mismatch)",
+      "cart_items": [
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": { "total_amount": 4000000, "shipping_address": 12345 },
+      "expected_status_oneOf": [200, 400],
+      "must_not_500": true,
+      "must_not_persist_object_string": "[object Object]"
+    },
+    {
+      "tc_id": "TC-CHECKOUT-010B",
+      "description": "shipping_address là Boolean (type mismatch)",
+      "cart_items": [
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": { "total_amount": 4000000, "shipping_address": true },
+      "expected_status_oneOf": [200, 400],
+      "must_not_500": true
+    },
+    {
+      "tc_id": "TC-CHECKOUT-010C",
+      "description": "shipping_address là Object (type mismatch)",
+      "cart_items": [
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": { "total_amount": 4000000, "shipping_address": { "line": "123 Le Loi" } },
+      "expected_status_oneOf": [200, 400],
+      "must_not_500": true,
+      "must_not_persist_object_string": "[object Object]"
+    },
+    {
+      "tc_id": "TC-CHECKOUT-010D",
+      "description": "shipping_address là Array (type mismatch)",
+      "cart_items": [
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "payload": { "total_amount": 4000000, "shipping_address": ["123 Le Loi"] },
+      "expected_status_oneOf": [200, 400],
+      "must_not_500": true
+    }
+  ]
+}

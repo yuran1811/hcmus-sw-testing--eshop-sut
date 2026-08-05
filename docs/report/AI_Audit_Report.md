@@ -13,3 +13,15 @@
 - **AI output (summary):**
   > Tạo toàn bộ bộ kịch bản tự động hóa Playwright cho FR-05 bao gồm: Page Object Model (`ProductListPage.ts`), file dữ liệu kiểm thử JSON (`plas-test-data.json`), kịch bản test suite 13 test cases (`product-list-and-search.spec.ts`), cấu hình đa trình duyệt Chromium/Firefox/WebKit & tag chứng thực MSSV 23127115 (`playwright.config.ts`), và tài liệu hướng dẫn `README.md`.
 - **What the student changed/kept from this output:** Giữ nguyên toàn bộ mã nguồn Playwright, file cấu hình và tài liệu hướng dẫn.
+
+---
+
+### Entry 2
+- **Tool:** Claude Sonnet 4.6 (Thinking) via Antigravity IDE
+- **Date/time:** 2026-08-05 12:15
+- **Task context:** Task 2 - Tạo Playwright automation scripts cho FR-08 Checkout
+- **Prompt used (verbatim):**
+  > sử dụng skill @playwright-ai-automation để tạo các script playwright cho tests/test-cases/checkout vào trong tests/scripts/checkout, viết readme đầy đủ để tôi có thể chạy được, sử dụng skill @ai-audit-report log lại trong docs/report/AI_Audit_Report.md
+- **AI output (summary):**
+  > Đọc và phân tích toàn bộ 22 test case FR-08 (TC-CHECKOUT-001 đến TC-CHECKOUT-015 và TC-CHECKOUT-BVA-001 đến BVA-007). Tạo bộ automation Playwright hoàn chỉnh gồm: Page Object Model (`CheckoutPage.ts`) chứa `CheckoutAPIHelper` (wrapper cho API calls) và `CheckoutWebPage` (UI locators); file dữ liệu `checkout-test-data.json` bao phủ tất cả test cases; 3 test spec (`checkout-api.spec.ts`, `checkout-ui.spec.ts`, `checkout-bva.spec.ts`) sử dụng 5 assertion patterns khác nhau; `playwright.config.ts` multi-browser (Chromium/Firefox/WebKit) với tag MSSV 23127115; `package.json` với scripts `test:api`, `test:ui`, `test:bva`; `README.md` đầy đủ hướng dẫn cài đặt và chạy test.
+- **What the student changed/kept from this output:** Giữ nguyên toàn bộ mã nguồn được tạo ra. Cần review locators trong `CheckoutWebPage` vì phụ thuộc vào markup thực tế của frontend (có thể cần điều chỉnh selector khi chạy thực tế).
