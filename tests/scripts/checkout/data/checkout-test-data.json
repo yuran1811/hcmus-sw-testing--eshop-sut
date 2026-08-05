@@ -1,9 +1,9 @@
 {
   "users": {
     "userA": {
-      "email": "user_a@eshop.test",
-      "password": "Password123!",
-      "name": "User A Test"
+      "email": "test@eshop.com",
+      "password": "Test1234!",
+      "name": "Test User"
     },
     "userB": {
       "email": "user_b@eshop.test",

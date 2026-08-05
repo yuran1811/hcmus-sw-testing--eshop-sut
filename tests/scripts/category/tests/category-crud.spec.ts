@@ -20,7 +20,7 @@ import { CategoryAPIHelper, Category } from '../pages/CategoryPage';
 const BASE_URL = 'http://localhost:3000';
 
 // ─── Shared credentials ───────────────────────────────────────────────────────
-const ADMIN = { email: 'admin_cat_test@eshop.test', password: 'Admin123!', name: 'Admin Category Tester' };
+const ADMIN = { email: 'admin@eshop.com', password: 'Admin123!', name: 'Admin User' };
 
 // ─── Suite ────────────────────────────────────────────────────────────────────
 test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {

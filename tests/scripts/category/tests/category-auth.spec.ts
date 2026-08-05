@@ -18,8 +18,8 @@ import { CategoryAPIHelper } from '../pages/CategoryPage';
 const BASE_URL = 'http://localhost:3000';
 
 // ─── Credentials ─────────────────────────────────────────────────────────────
-const ADMIN       = { email: 'admin_cat_test@eshop.test',  password: 'Admin123!', name: 'Admin Category Tester' };
-const NORMAL_USER = { email: 'user_cat_test@eshop.test',   password: 'User123!',  name: 'Normal User Tester' };
+const ADMIN       = { email: 'admin@eshop.com', password: 'Admin123!', name: 'Admin User' };
+const NORMAL_USER = { email: 'test@eshop.com',  password: 'Test1234!', name: 'Test User' };
 
 // ─── Suite ────────────────────────────────────────────────────────────────────
 test.describe('FR-14 Category Authorization — Equivalence Partitioning', () => {

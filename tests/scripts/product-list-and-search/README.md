@@ -1,113 +1,181 @@
-# Playwright Automation Test Suite — Product List & Search (FR-05)
+# Product List & Search (FR-05) — Playwright Automation Test Suite
 
-> **Môn học:** CS423 / CSC15003 — Kiểm thử Phần mềm (Software Testing)  
-> **Bài tập:** Homework 04 — Automation Testing  
-> **Sinh viên:** Mạch Quốc Tấn — **MSSV:** 23127115 — **Lớp:** 23KTPM3  
-> **Tính năng tự động hóa:** FR-05 Xem danh sách & Tìm kiếm sản phẩm (Product List & Search)  
-> **Package Manager:** `pnpm`  
-
----
-
-## 1. Tổng quan Dự án
-
-Thư mục này chứa toàn bộ kịch bản kiểm thử tự động hóa (Automation Test Suite) được chuyển đổi **100% (29/29 Test Cases)** từ tài liệu thiết kế sang Playwright TypeScript cho tính năng **Xem danh sách & Tìm kiếm sản phẩm (FR-05)** thuộc hệ thống **EShop SUT**.
-
-Các thông số dữ liệu kiểm thử (Test Data) đã được tham chiếu và đối sánh chính xác với file khởi tạo CSDL `backend/database.js`:
-- **5 Sản phẩm mẫu (Seed Data):**
-  1. `iPhone 15 Pro Max` (30.000.000 ₫ - Điện thoại)
-  2. `Samsung Galaxy S24 Ultra` (28.000.000 ₫ - Điện thoại)
-  3. `MacBook Pro M3` (45.000.000 ₫ - Laptop)
-  4. `Tai nghe AirPods Pro 2` (6.000.000 ₫ - Phụ kiện)
-  5. `Bàn phím cơ Keychron Q1` (4.000.000 ₫ - Phụ kiện)
+> **Student:** Mạch Quốc Tấn — MSSV: **23127115**  
+> **Assignment:** Homework 04 — Automation Testing  
+> **Feature:** FR-05 Product List & Search  
+> **Course:** CS423 / CSC15003 — Software Testing
 
 ---
 
-## 2. Cấu trúc Thư mục
+## Tổng quan
 
-```text
-tests/scripts/product-list-and-search/
-├── data/
-│   └── plas-test-data.json           # File chứa dữ liệu 29 test cases (Data-driven)
-├── pages/
-│   └── ProductListPage.ts            # Page Object Model chuẩn hóa locators & phương thức
-├── tests/
-│   └── product-list-and-search.spec.ts # Bộ kịch bản 29 Playwright test cases
-├── package.json                      # Quản lý dependencies & pnpm scripts
-├── pnpm-lock.yaml                    # pnpm lockfile
-├── playwright.config.ts              # Cấu hình 3 trình duyệt (Chromium/Firefox/WebKit) & HTML reporter tag MSSV
-├── tsconfig.json                     # Cấu hình TypeScript (passed pnpm exec tsc --noEmit)
-└── README.md                         # Hướng dẫn chi tiết thực thi
-```
+Bộ kiểm thử tự động này bao phủ toàn bộ **29 test case** cho tính năng Xem danh sách & Tìm kiếm sản phẩm (FR-05) của EShop SUT, được tổ chức thành 3 file spec:
+
+| File spec                | Test cases               | Kỹ thuật                                       |
+| ------------------------ | ------------------------ | ---------------------------------------------- |
+| `tests/plas-ep.spec.ts`  | TC-PLAS-001~006, 008~014 | Equivalence Partitioning, Functional, Security |
+| `tests/plas-ui.spec.ts`  | TC-PLAS-007, 015~019     | Web UI, Navigation, Card Details, Layout       |
+| `tests/plas-bva.spec.ts` | TC-PLAS-BVA-001~010      | Boundary Value Analysis                        |
+
+### Assertion patterns được dùng (≥ 3 loại theo yêu cầu đề)
+
+| Pattern | Loại                       | Ví dụ trong script                                                              |
+| ------- | -------------------------- | ------------------------------------------------------------------------------- |
+| 1       | Element visibility / state | `expect(plasPage.errorBox).not.toBeVisible()`, `toBeVisible()`                  |
+| 2       | Nội dung / giá trị trường  | `expect(titles[0]).toContain('MacBook Pro M3')`                                 |
+| 3       | Soft assertion             | `expect.soft(h1Count).toBe(1)`, `expect.soft(price.includes('₫')).toBeTruthy()` |
+| 4       | Network / Event assertion  | `page.on('dialog', ...)`                                                        |
+| 5       | Số lượng / count           | `expect(productCount).toBe(5)`, `toBeGreaterThan(0)`                            |
 
 ---
 
-## 3. Hướng dẫn Cài đặt & Thực thi với `pnpm`
+## Yêu cầu môi trường
 
-### 3.1. Điều kiện tiên quyết
-1. **Node.js** `>= 18.0.0` & **pnpm** `>= 8.0.0`.
-2. **Khởi chạy EShop SUT:**
-   - **Backend API:** `http://localhost:3000` (`cd backend && pnpm dev`)
-   - **Frontend Web:** `http://localhost:5173` (`cd frontend-web && pnpm dev`)
+| Phần mềm         | Phiên bản tối thiểu     |
+| ---------------- | ----------------------- |
+| Node.js          | ≥ 18.x                  |
+| npm / pnpm       | ≥ 9.x (hoặc pnpm ≥ 8.x) |
+| @playwright/test | ^1.49.1                 |
 
-### 3.2. Cài đặt Dependencies & Trình duyệt
-Mở terminal tại `tests/scripts/product-list-and-search`:
+### Dịch vụ cần chạy trước khi test
+
+| Dịch vụ          | URL mặc định            | Ghi chú            |
+| ---------------- | ----------------------- | ------------------ |
+| **Backend API**  | `http://localhost:3000` | Express.js backend |
+| **Frontend Web** | `http://localhost:5173` | Vite frontend      |
+
+---
+
+## Cài đặt
+
 ```bash
-pnpm install
-pnpm exec playwright install
-```
+# 1. Di chuyển vào thư mục này
+cd tests/scripts/product-list-and-search
 
-### 3.3. Lệnh chạy Kiểm thử bằng `pnpm`
-- **Chạy tất cả 29 Test Cases:**
-  ```bash
-  pnpm test
-  ```
-- **Chạy Đa trình duyệt (Chromium, Firefox, WebKit - 3 Browsers):**
-  ```bash
-  pnpm test:all
-  ```
-- **Chạy từng trình duyệt đơn:**
-  ```bash
-  pnpm test:chromium
-  pnpm test:firefox
-  pnpm test:webkit
-  ```
-- **Xem Báo cáo HTML (kèm Tag MSSV 23127115):**
-  ```bash
-  pnpm report
-  ```
+# 2. Cài đặt dependencies
+npm install
+
+# 3. Cài browser binaries (lần đầu)
+npx playwright install
+```
 
 ---
 
-## 4. Danh sách 29 Test Cases Tự động hóa
+## Chạy test
 
-| STT | Test Case ID | Tên Kịch bản / Mô tả | Dữ liệu kiểm thử | Loại kiểm thử |
-|---|---|---|---|---|
-| 1 | **TC-PLAS-001** | Xem toàn bộ danh sách sản phẩm thành công khi search rỗng | `""` | Positive |
-| 2 | **TC-PLAS-002** | Tìm kiếm sản phẩm theo tên chính xác hợp lệ | `"MacBook Pro M3"` | Positive |
-| 3 | **TC-PLAS-003** | Tìm kiếm với từ khóa không tồn tại | `"NonExistentProduct99999"` | Negative |
-| 4 | **TC-PLAS-004** | Tìm kiếm từ khóa Tiếng Việt có dấu | `"Bàn phím"` | Positive |
-| 5 | **TC-PLAS-005** | Tìm kiếm với mã độc XSS / script HTML | `"<script>alert('XSS')</script>"` | Security |
-| 6 | **TC-PLAS-006** | Tìm kiếm từ khóa cực dài 300 ký tự | `"A"*300` | Edge Case |
-| 7 | **TC-PLAS-007** | Kiểm tra hiển thị chi tiết thẻ sản phẩm | `"Samsung Galaxy S24 Ultra"` | Positive |
-| 8 | **TC-PLAS-008** | Tìm kiếm không phân biệt hoa thường | `"macbook pro m3"` | Positive |
-| 9 | **TC-PLAS-009** | Tìm kiếm một phần tên sản phẩm (partial match) | `"Galaxy"` | Positive |
-| 10 | **TC-PLAS-010** | Tìm kiếm từ khóa có khoảng trắng thừa | `"  iPhone 15  "` | Positive |
-| 11 | **TC-PLAS-011** | Tìm kiếm chỉ chứa khoảng trắng | `"   "` | Edge Case |
-| 12 | **TC-PLAS-012** | Nhấn nút Tìm kiếm mà không nhập từ khóa | `""` | Positive |
-| 13 | **TC-PLAS-013** | Nhấn phím Enter trên ô nhập liệu để tìm kiếm | `"AirPods"` + Enter | Event |
-| 14 | **TC-PLAS-014** | Xóa từ khóa trong ô tìm kiếm và tìm lại | Clear search | Function |
-| 15 | **TC-PLAS-015** | Kiểm tra nút Xem chi tiết sản phẩm | Click "Xem chi tiết" | Navigation |
-| 16 | **TC-PLAS-016** | Kiểm tra nút Thêm vào giỏ hàng | Click "Thêm vào giỏ" | Function |
-| 17 | **TC-PLAS-017** | Kiểm tra điều hướng logo EShop về trang chủ | Click Logo | Navigation |
-| 18 | **TC-PLAS-018** | Kiểm tra hiển thị tổng số sản phẩm bên dưới | `"Hiển thị 5 sản phẩm"` | UI Spec |
-| 19 | **TC-PLAS-019** | Kiểm tra chỉ báo trạng thái đang tải | Loading state | UI Spec |
-| 20 | **TC-PLAS-BVA-001** | Tìm kiếm từ khóa 1 ký tự (Biên dưới tối thiểu) | `"i"` | BVA |
-| 21 | **TC-PLAS-BVA-002** | Tìm kiếm từ khóa 255 ký tự (Biên trên tiêu chuẩn) | `"A"*255` | BVA |
-| 22 | **TC-PLAS-BVA-003** | Tìm kiếm từ khóa 256 ký tự (Biên trên vượt ngưỡng) | `"A"*256` | BVA |
-| 23 | **TC-PLAS-BVA-004** | Tìm kiếm bằng ký tự đặc biệt SQL Injection | `"' OR '1'='1"` | Security/BVA |
-| 24 | **TC-PLAS-BVA-005** | Kiểm tra duy trì đúng 1 thẻ `<h1>` duy nhất | `"iPhone"` | UI Spec |
-| 25 | **TC-PLAS-BVA-006** | Tìm kiếm từ khóa độ dài 0 ký tự | `""` | BVA |
-| 26 | **TC-PLAS-BVA-007** | Tìm kiếm từ khóa độ dài 2 ký tự | `"S2"` | BVA |
-| 27 | **TC-PLAS-BVA-008** | Tìm kiếm từ khóa độ dài 254 ký tự | `"A"*254` | BVA |
-| 28 | **TC-PLAS-BVA-009** | Tìm kiếm từ khóa ký tự số | `"15"` | BVA |
-| 29 | **TC-PLAS-BVA-010** | Tìm kiếm từ khóa kết hợp chữ, số và khoảng trắng | `"Galaxy S24"` | BVA |
+### Chạy toàn bộ (3 browsers: Chromium, Firefox, WebKit)
+
+```bash
+npm test
+# hoặc
+npx playwright test
+```
+
+### Chạy theo browser riêng lẻ
+
+```bash
+npm run test:chromium       # Chỉ Chromium
+npm run test:firefox        # Chỉ Firefox
+npm run test:webkit         # Chỉ WebKit (Safari engine)
+```
+
+### Chạy theo nhóm test
+
+```bash
+npm run test:ep             # Equivalence Partitioning tests (TC-001 → TC-014)
+npm run test:ui             # UI & Navigation tests (TC-007, TC-015 → TC-019)
+npm run test:bva            # BVA tests (BVA-001 → BVA-010)
+```
+
+### Xem HTML Report
+
+```bash
+npm run report
+# hoặc
+npx playwright show-report
+```
+
+Report tại `playwright-report/index.html`.  
+Tiêu đề report: **"EShop Product List & Search Automation — Run by: 23127115 (Mạch Quốc Tấn)"** kèm ISO timestamp.
+
+---
+
+## Cấu trúc thư mục
+
+```
+tests/scripts/product-list-and-search/
+├── package.json                      # Dependencies & npm scripts
+├── playwright.config.ts              # Multi-browser config, student metadata
+├── tsconfig.json                     # TypeScript config
+│
+├── pages/
+│   └── ProductListPage.ts            # Page Object Model (Locators & helper actions)
+│
+├── data/
+│   └── plas-test-data.json           # File chứa dữ liệu 29 test cases
+│
+├── tests/
+│   ├── plas-ep.spec.ts               # Equivalence Partitioning & Security (13 TC)
+│   ├── plas-ui.spec.ts               # Web UI & Navigation (6 TC)
+│   └── plas-bva.spec.ts              # Boundary Value Analysis (10 TC)
+│
+└── playwright-report/                # (tự sinh sau khi chạy)
+    └── index.html
+```
+
+---
+
+## Dữ liệu sản phẩm mẫu (Seed Data)
+
+Các thông số dữ liệu kiểm thử được đối sánh chính xác với `backend/database.js`:
+
+1. `iPhone 15 Pro Max` (30.000.000 ₫ - Điện thoại)
+2. `Samsung Galaxy S24 Ultra` (28.000.000 ₫ - Điện thoại)
+3. `MacBook Pro M3` (45.000.000 ₫ - Laptop)
+4. `Tai nghe AirPods Pro 2` (6.000.000 ₫ - Phụ kiện)
+5. `Bàn phím cơ Keychron Q1` (4.000.000 ₫ - Phụ kiện)
+
+---
+
+## Kết quả mong đợi & Bugs đã biết
+
+| Test ID         | Expected                                  | Status   | Bug                                      |
+| --------------- | ----------------------------------------- | -------- | ---------------------------------------- |
+| TC-PLAS-001     | 5 items + 1 `<h1>` + ₫ symbol             | **Fail** | BUG-PLAS-001, BUG-PLAS-002, BUG-PLAS-003 |
+| TC-PLAS-002     | 1 item "MacBook Pro M3"                   | Pass     | —                                        |
+| TC-PLAS-003     | 0 items + empty state message             | **Fail** | BUG-PLAS-004                             |
+| TC-PLAS-004     | 1 item "Bàn phím cơ Keychron Q1"          | Pass     | —                                        |
+| TC-PLAS-005     | Safe XSS, no alert                        | Pass     | —                                        |
+| TC-PLAS-006     | No crash on 300 chars                     | Pass     | —                                        |
+| TC-PLAS-007     | Card image + title + price visible        | Pass     | —                                        |
+| TC-PLAS-008     | Case insensitive match                    | Pass     | —                                        |
+| TC-PLAS-009     | Partial name match                        | Pass     | —                                        |
+| TC-PLAS-010     | Trimmed whitespace search                 | Pass     | —                                        |
+| TC-PLAS-011     | Whitespace search returns 5 items         | Pass     | —                                        |
+| TC-PLAS-012     | Empty search returns 5 items              | Pass     | —                                        |
+| TC-PLAS-013     | Enter key triggers search                 | Pass     | —                                        |
+| TC-PLAS-014     | Clear search restores 5 items             | Pass     | —                                        |
+| TC-PLAS-015     | Detail button navigates to `/product/:id` | Pass     | —                                        |
+| TC-PLAS-016     | Add to cart button functional             | Pass     | —                                        |
+| TC-PLAS-017     | Logo navigates to home                    | Pass     | —                                        |
+| TC-PLAS-018     | Footer displays total count               | Pass     | —                                        |
+| TC-PLAS-019     | Page loads cleanly                        | Pass     | —                                        |
+| TC-PLAS-BVA-001 | 1 char "i" returns 2 items                | Pass     | —                                        |
+| TC-PLAS-BVA-002 | 255 chars search no crash                 | Pass     | —                                        |
+| TC-PLAS-BVA-003 | 256 chars search no crash                 | Pass     | —                                        |
+| TC-PLAS-BVA-004 | SQL injection safe                        | Pass     | —                                        |
+| TC-PLAS-BVA-005 | Single `<h1>` tag maintained              | **Fail** | BUG-PLAS-001                             |
+| TC-PLAS-BVA-006 | 0 char search returns 5 items             | Pass     | —                                        |
+| TC-PLAS-BVA-007 | 2 char "S2" returns 1 item                | Pass     | —                                        |
+| TC-PLAS-BVA-008 | 254 chars search no crash                 | Pass     | —                                        |
+| TC-PLAS-BVA-009 | Numeric search "15" returns 1 item        | Pass     | —                                        |
+| TC-PLAS-BVA-010 | Alphanumeric "Galaxy S24" returns 1 item  | Pass     | —                                        |
+
+---
+
+## Tham khảo thêm
+
+- [Playwright Docs](https://playwright.dev/docs/intro)
+- [Test Cases Product List & Search](../../test-cases/product-list-and-search/)
+- [Bug Reports](../../../docs/report/Bug_Report.md)
+- [AI Audit Report](../../../docs/report/AI_Audit_Report.md)

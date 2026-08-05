@@ -2,8 +2,17 @@ import { Page, Locator } from '@playwright/test';
 
 /**
  * Page Object Model for Product List & Search Page (FR-05)
- * EShop SUT
+ * EShop SUT — Web UI Automation
+ *
+ * Student: Mạch Quốc Tấn - 23127115
  */
+
+export interface ProductItem {
+  title: string;
+  price: string;
+  imageAlt: string | null;
+}
+
 export class ProductListPage {
   readonly page: Page;
   readonly searchInput: Locator;
@@ -19,6 +28,7 @@ export class ProductListPage {
   readonly logoLink: Locator;
   readonly detailButtons: Locator;
   readonly addToCartButtons: Locator;
+  readonly emptyStateText: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -35,18 +45,19 @@ export class ProductListPage {
     this.logoLink = page.locator('header a:has-text("EShop")');
     this.detailButtons = page.locator('.grid > div.border a:has-text("Xem chi tiết")');
     this.addToCartButtons = page.locator('.grid > div.border button:has-text("Thêm vào giỏ")');
+    this.emptyStateText = page.locator('text=Không tìm thấy sản phẩm').or(page.locator('.empty-state'));
   }
 
   /**
    * Navigate to home page
    */
-  async goto() {
-    await this.page.goto('/');
+  async goto(baseURL = 'http://localhost:5173') {
+    await this.page.goto(baseURL);
     await this.page.waitForLoadState('domcontentloaded');
   }
 
   /**
-   * Perform a search action
+   * Perform search by filling input and clicking button
    */
   async search(keyword: string) {
     await this.searchInput.fill(keyword);
@@ -55,7 +66,7 @@ export class ProductListPage {
   }
 
   /**
-   * Clear search input
+   * Clear search input and trigger search
    */
   async clearSearch() {
     await this.searchInput.fill('');
@@ -73,14 +84,14 @@ export class ProductListPage {
   }
 
   /**
-   * Get total count of product cards displayed
+   * Get count of product cards displayed
    */
   async getProductCount(): Promise<number> {
     return await this.productCards.count();
   }
 
   /**
-   * Get total count of <h1> tags on the page
+   * Get count of <h1> tags on current page
    */
   async getH1Count(): Promise<number> {
     return await this.h1Headers.count();

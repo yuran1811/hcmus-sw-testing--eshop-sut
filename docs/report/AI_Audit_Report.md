@@ -37,3 +37,15 @@
 - **AI output (summary):**
   > Đọc và phân tích toàn bộ 28 test case FR-14 (TC-CATEGORY-001 đến TC-CATEGORY-020 và TC-CATEGORY-BVA-001 đến BVA-008). Tạo bộ automation Playwright hoàn chỉnh gồm: Page Object Model (`CategoryPage.ts`) chứa `CategoryAPIHelper` (wrapper cho toàn bộ Category API calls); file dữ liệu `category-test-data.json` bao phủ tất cả 28 test cases; 4 test spec (`category-crud.spec.ts`, `category-auth.spec.ts`, `category-security.spec.ts`, `category-bva.spec.ts`) sử dụng 5 assertion patterns; `playwright.config.ts` multi-browser (Chromium/Firefox/WebKit) với tag MSSV 23127115; `package.json` với scripts `test:crud`, `test:auth`, `test:security`, `test:bva`; `README.md` đầy đủ hướng dẫn cài đặt và chạy test.
 - **What the student changed/kept from this output:** Giữ nguyên toàn bộ mã nguồn được tạo ra. Lưu ý: nếu backend không tự gán `role='admin'` khi đăng ký, cần seed thủ công qua SQLite (đã có hướng dẫn trong README).
+
+---
+
+### Entry 4
+- **Tool:** Gemini 3.6 Flash via Antigravity IDE
+- **Date/time:** 2026-08-05 16:25
+- **Task context:** Task 4 - Đồng bộ & Cập nhật Playwright automation scripts cho FR-05 Product List & Search
+- **Prompt used (verbatim):**
+  > sử dụng skill @playwright-ai-automation để tạo các script playwright cho tests/test-cases/product-list-and-search vào trong tests/scripts/product-list-and-search, viết readme đầy đủ để tôi có thể chạy được, sử dụng skill @ai-audit-report log lại trong docs/report/AI_Audit_Report.md, hiện tôi đã viết, nhưng bạn xem và cập nhật giống với tests/scripts/checkout và tests/scripts/category
+- **AI output (summary):**
+  > Đánh giá và tái cấu trúc toàn bộ 29 test case FR-05 để đồng bộ cấu trúc 100% với `checkout` và `category`. Tách 1 file spec đơn lẻ thành 3 file spec chuyên biệt (`plas-ep.spec.ts`, `plas-ui.spec.ts`, `plas-bva.spec.ts`) áp dụng chuẩn 5 assertion patterns; nâng cấp Page Object Model (`ProductListPage.ts`) và cấu hình `playwright.config.ts` với `PW_TEST_HTML_REPORT_TITLE` & tag chứng thực MSSV 23127115; bổ sung scripts `test:ep`, `test:ui`, `test:bva` trong `package.json`; viết lại `README.md` theo chuẩn chung.
+- **What the student changed/kept from this output:** Giữ nguyên toàn bộ cấu trúc và mã nguồn Playwright đã được refactor.

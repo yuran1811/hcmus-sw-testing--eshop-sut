@@ -17,7 +17,7 @@ import { test, expect } from '@playwright/test';
 import { CategoryAPIHelper, Category } from '../pages/CategoryPage';
 
 const BASE_URL = 'http://localhost:3000';
-const ADMIN = { email: 'admin_cat_test@eshop.test', password: 'Admin123!', name: 'Admin Category Tester' };
+const ADMIN = { email: 'admin@eshop.com', password: 'Admin123!', name: 'Admin User' };
 
 test.describe('FR-14 Category Security — XSS & SQL Injection', () => {
 

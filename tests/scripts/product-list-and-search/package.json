@@ -9,12 +9,16 @@
     "test:firefox": "playwright test --project=firefox",
     "test:webkit": "playwright test --project=webkit",
     "test:all": "playwright test --project=chromium --project=firefox --project=webkit",
+    "test:ep": "playwright test tests/plas-ep.spec.ts",
+    "test:ui": "playwright test tests/plas-ui.spec.ts",
+    "test:bva": "playwright test tests/plas-bva.spec.ts",
     "report": "playwright show-report"
   },
   "keywords": [
     "playwright",
     "automation-testing",
     "eshop",
+    "product-list-and-search",
     "hw04"
   ],
   "author": "Mạch Quốc Tấn (23127115)",

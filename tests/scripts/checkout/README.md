@@ -3,7 +3,7 @@
 > **Student:** Mạch Quốc Tấn — MSSV: **23127115**  
 > **Assignment:** Homework 04 — Automation Testing  
 > **Feature:** FR-08 Checkout  
-> **Course:** CS423 / CSC15003 — Software Testing  
+> **Course:** CS423 / CSC15003 — Software Testing
 
 ---
 
@@ -11,37 +11,37 @@
 
 Bộ kiểm thử tự động này bao phủ toàn bộ **22 test case** cho tính năng Checkout (FR-08) của EShop SUT, được tổ chức thành 3 file spec:
 
-| File spec | Test cases | Kỹ thuật |
-|---|---|---|
-| `tests/checkout-api.spec.ts` | TC-CHECKOUT-001 → 015 | Equivalence Partitioning |
-| `tests/checkout-ui.spec.ts` | TC-CHECKOUT-011, 012 | EP (Web UI) |
-| `tests/checkout-bva.spec.ts` | TC-CHECKOUT-BVA-001 → 007 | Boundary Value Analysis |
+| File spec                    | Test cases                | Kỹ thuật                 |
+| ---------------------------- | ------------------------- | ------------------------ |
+| `tests/checkout-api.spec.ts` | TC-CHECKOUT-001 → 015     | Equivalence Partitioning |
+| `tests/checkout-ui.spec.ts`  | TC-CHECKOUT-011, 012      | EP (Web UI)              |
+| `tests/checkout-bva.spec.ts` | TC-CHECKOUT-BVA-001 → 007 | Boundary Value Analysis  |
 
 ### Assertion patterns được dùng (≥ 3 loại theo yêu cầu đề)
 
-| Pattern | Loại | Ví dụ trong script |
-|---|---|---|
-| 1 | Trạng thái HTTP / phần tử | `expect(resp.status()).toBe(200)`, `toBeVisible()`, `toBeDisabled()` |
-| 2 | Nội dung / giá trị trường | `toContain('Checkout successful')`, `toBe('pending')` |
-| 3 | Soft assertion | `expect.soft(order.total_amount).toBe(10000000)` |
-| 4 | Mạng / API response | `request.post(...)`, kiểm tra `status()` và `json()` |
-| 5 | Số lượng / đếm phần tử | `toHaveLength(0)`, `toHaveLength(2)` |
+| Pattern | Loại                      | Ví dụ trong script                                                   |
+| ------- | ------------------------- | -------------------------------------------------------------------- |
+| 1       | Trạng thái HTTP / phần tử | `expect(resp.status()).toBe(200)`, `toBeVisible()`, `toBeDisabled()` |
+| 2       | Nội dung / giá trị trường | `toContain('Checkout successful')`, `toBe('pending')`                |
+| 3       | Soft assertion            | `expect.soft(order.total_amount).toBe(10000000)`                     |
+| 4       | Mạng / API response       | `request.post(...)`, kiểm tra `status()` và `json()`                 |
+| 5       | Số lượng / đếm phần tử    | `toHaveLength(0)`, `toHaveLength(2)`                                 |
 
 ---
 
 ## Yêu cầu môi trường
 
-| Phần mềm | Phiên bản tối thiểu |
-|---|---|
-| Node.js | ≥ 18.x |
-| npm | ≥ 9.x (hoặc pnpm ≥ 8.x) |
-| @playwright/test | ^1.49.1 |
+| Phần mềm         | Phiên bản tối thiểu     |
+| ---------------- | ----------------------- |
+| Node.js          | ≥ 18.x                  |
+| npm              | ≥ 9.x (hoặc pnpm ≥ 8.x) |
+| @playwright/test | ^1.49.1                 |
 
 ### Dịch vụ cần chạy trước khi test
 
-| Dịch vụ | URL mặc định | Ghi chú |
-|---|---|---|
-| **Backend API** | `http://localhost:3000` | Express.js backend |
+| Dịch vụ          | URL mặc định            | Ghi chú                              |
+| ---------------- | ----------------------- | ------------------------------------ |
+| **Backend API**  | `http://localhost:3000` | Express.js backend                   |
 | **Frontend Web** | `http://localhost:5173` | Vite frontend (chỉ cần cho UI tests) |
 
 ---
@@ -135,10 +135,10 @@ tests/scripts/checkout/
 
 Bộ test sẽ tự **đăng ký** hai tài khoản khi khởi chạy (nếu chưa tồn tại):
 
-| Tài khoản | Email | Password |
-|---|---|---|
-| User A | `user_a@eshop.test` | `Password123!` |
-| User B | `user_b@eshop.test` | `Password123!` |
+| Tài khoản | Email               | Password       |
+| --------- | ------------------- | -------------- |
+| User A    | `user_a@eshop.test` | `Password123!` |
+| User B    | `user_b@eshop.test` | `Password123!` |
 
 > **Lưu ý:** Nếu backend đã có tài khoản trùng email, bước đăng ký sẽ bỏ qua (ignore 400) và tiến hành đăng nhập bình thường.
 
@@ -172,30 +172,30 @@ Nếu muốn dùng tài khoản có sẵn, chỉnh sửa file `data/checkout-tes
 
 ## Kết quả mong đợi và bugs đã biết
 
-| Test ID | Expected | Status | Bug |
-|---|---|---|---|
-| TC-CHECKOUT-001 | 200 + cart cleared | **FAIL** | BUG-CHECKOUT-001, 002 |
-| TC-CHECKOUT-002 | 401 Unauthorized | Pass | — |
-| TC-CHECKOUT-003 | 400 Empty cart | **FAIL** | BUG-CHECKOUT-003 |
-| TC-CHECKOUT-004 | 400 or 200 w/ server total | **FAIL** | BUG-CHECKOUT-004 |
-| TC-CHECKOUT-005 | 200 + address preserved | Not Run | — |
-| TC-CHECKOUT-006 | 200 + Unicode address OK | Not Run | — |
-| TC-CHECKOUT-007 | XSS safe (no alert) | Not Run | — |
-| TC-CHECKOUT-008 | 200 or 400, no 500 | Not Run | — |
-| TC-CHECKOUT-009 | 200 or 400, no 500 | Not Run | — |
-| TC-CHECKOUT-010 | 200 or 400, no `[object Object]` | Not Run | — |
-| TC-CHECKOUT-011 | All product rows visible | Not Run | — |
-| TC-CHECKOUT-012 | Total read-only, backend enforces | Not Run | — |
-| TC-CHECKOUT-013 | 200, backend computes total | Not Run | — |
-| TC-CHECKOUT-014 | Forged items rejected | Not Run | — |
-| TC-CHECKOUT-015 | Only actor's cart cleared | Not Run | — |
-| TC-CHECKOUT-BVA-001 | 200 + 1-item cart success | **FAIL** | BUG-CHECKOUT-001 |
-| TC-CHECKOUT-BVA-002 | 400 or 200 w/ server total | **FAIL** | BUG-CHECKOUT-004 |
-| TC-CHECKOUT-BVA-003 | 400 or 200 w/ server total | **FAIL** | BUG-CHECKOUT-004 |
-| TC-CHECKOUT-BVA-004 | No 500; 200 or 400 | Not Run | — |
-| TC-CHECKOUT-BVA-005 | No 500; 200 or 400 | Not Run | — |
-| TC-CHECKOUT-BVA-006 | No 500, no truncation | Not Run | — |
-| TC-CHECKOUT-BVA-007 (A/B/C) | No 500, no truncation | Not Run | — |
+| Test ID                     | Expected                          | Status   | Bug                   |
+| --------------------------- | --------------------------------- | -------- | --------------------- |
+| TC-CHECKOUT-001             | 200 + cart cleared                | **FAIL** | BUG-CHECKOUT-001, 002 |
+| TC-CHECKOUT-002             | 401 Unauthorized                  | Pass     | —                     |
+| TC-CHECKOUT-003             | 400 Empty cart                    | **FAIL** | BUG-CHECKOUT-003      |
+| TC-CHECKOUT-004             | 400 or 200 w/ server total        | **FAIL** | BUG-CHECKOUT-004      |
+| TC-CHECKOUT-005             | 200 + address preserved           | Not Run  | —                     |
+| TC-CHECKOUT-006             | 200 + Unicode address OK          | Not Run  | —                     |
+| TC-CHECKOUT-007             | XSS safe (no alert)               | Not Run  | —                     |
+| TC-CHECKOUT-008             | 200 or 400, no 500                | Not Run  | —                     |
+| TC-CHECKOUT-009             | 200 or 400, no 500                | Not Run  | —                     |
+| TC-CHECKOUT-010             | 200 or 400, no `[object Object]`  | Not Run  | —                     |
+| TC-CHECKOUT-011             | All product rows visible          | Not Run  | —                     |
+| TC-CHECKOUT-012             | Total read-only, backend enforces | Not Run  | —                     |
+| TC-CHECKOUT-013             | 200, backend computes total       | Not Run  | —                     |
+| TC-CHECKOUT-014             | Forged items rejected             | Not Run  | —                     |
+| TC-CHECKOUT-015             | Only actor's cart cleared         | Not Run  | —                     |
+| TC-CHECKOUT-BVA-001         | 200 + 1-item cart success         | **FAIL** | BUG-CHECKOUT-001      |
+| TC-CHECKOUT-BVA-002         | 400 or 200 w/ server total        | **FAIL** | BUG-CHECKOUT-004      |
+| TC-CHECKOUT-BVA-003         | 400 or 200 w/ server total        | **FAIL** | BUG-CHECKOUT-004      |
+| TC-CHECKOUT-BVA-004         | No 500; 200 or 400                | Not Run  | —                     |
+| TC-CHECKOUT-BVA-005         | No 500; 200 or 400                | Not Run  | —                     |
+| TC-CHECKOUT-BVA-006         | No 500, no truncation             | Not Run  | —                     |
+| TC-CHECKOUT-BVA-007 (A/B/C) | No 500, no truncation             | Not Run  | —                     |
 
 ---
 

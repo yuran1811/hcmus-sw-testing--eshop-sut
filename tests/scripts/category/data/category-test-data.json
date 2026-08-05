@@ -1,14 +1,14 @@
 {
   "users": {
     "admin": {
-      "email": "admin_cat_test@eshop.test",
+      "email": "admin@eshop.com",
       "password": "Admin123!",
-      "name": "Admin Category Tester"
+      "name": "Admin User"
     },
     "normalUser": {
-      "email": "user_cat_test@eshop.test",
-      "password": "User123!",
-      "name": "Normal User Tester"
+      "email": "test@eshop.com",
+      "password": "Test1234!",
+      "name": "Test User"
     }
   },
   "tc_crud": [
