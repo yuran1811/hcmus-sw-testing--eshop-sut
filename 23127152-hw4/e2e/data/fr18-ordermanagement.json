@@ -1,0 +1,69 @@
+[
+  {
+    "id": "FR18-TC01", "type": "positive",
+    "description": "Admin xem danh sách đơn hàng, thấy đúng ID / người đặt / tổng tiền của đơn vừa tạo",
+    "kind": "listShowsOrder", "amount": 422001
+  },
+  {
+    "id": "FR18-TC02", "type": "negative",
+    "description": "Client Admin Panel chặn đúng user thường khi cố xem tab Đơn hàng (role check phía UI, dù backend vẫn không check — xem BUG-14)",
+    "kind": "roleBypassLogin"
+  },
+  {
+    "id": "FR18-TC03", "type": "negative",
+    "description": "Truy cập Admin Panel khi chưa đăng nhập → không thấy tab Đơn hàng, chỉ thấy form Login",
+    "kind": "unauthGate"
+  },
+  {
+    "id": "FR18-TC04", "type": "positive",
+    "description": "Admin cập nhật trạng thái đơn pending sang confirmed (bấm Xác nhận)",
+    "kind": "adminClick", "amount": 422004, "preAdvance": [],
+    "clickButton": "Xác nhận", "expectedLabelAfter": "Đã xác nhận"
+  },
+  {
+    "id": "FR18-TC05", "type": "positive",
+    "description": "Admin cập nhật trạng thái đơn shipping sang delivered (bấm Hoàn thành)",
+    "kind": "adminClick", "amount": 422005, "preAdvance": ["confirmed", "shipping"],
+    "clickButton": "Hoàn thành", "expectedLabelAfter": "Đã giao"
+  },
+  {
+    "id": "FR18-TC06", "type": "edge",
+    "description": "UI Admin chỉ hiện đúng 2 nút hành động cho đơn confirmed (Giao hàng, Hủy)",
+    "kind": "buttonSet", "amount": 422006, "preAdvance": ["confirmed"],
+    "expectedButtons": ["Giao hàng", "Hủy"]
+  },
+  {
+    "id": "FR18-TC07", "type": "edge",
+    "description": "UI Admin KHÔNG hiện nút hành động nào cho đơn delivered (final state)",
+    "kind": "noButtons", "amount": 422007, "preAdvance": ["confirmed", "shipping", "delivered"]
+  },
+  {
+    "id": "FR18-TC08", "type": "edge",
+    "description": "UI Admin cho đơn canceled chỉ hiện đúng 1 nút \"Đánh dấu Đã giao\" (bề mặt của BUG-06 — final state bị lọt)",
+    "kind": "buttonSet", "amount": 422008, "preAdvance": ["canceled"],
+    "expectedButtons": ["Đánh dấu Đã giao"]
+  },
+  {
+    "id": "FR18-TC09", "type": "positive",
+    "description": "Dashboard \"Tổng số đơn hàng\" tăng đúng +1 sau khi đặt 1 đơn mới qua Checkout UI",
+    "kind": "orderCountDelta", "amount": 422009, "expectedCountDelta": 1
+  },
+  {
+    "id": "FR18-TC10", "type": "edge",
+    "description": "Dashboard tính đúng doanh thu khi 1 đơn chuyển sang delivered (BUG-09 đã biết)",
+    "kind": "revenueDelta", "amount": 422010, "deliver": true, "extraPendingAmount": 0,
+    "expectedRevenueDelta": 422010
+  },
+  {
+    "id": "FR18-TC11", "type": "edge",
+    "description": "Dashboard chỉ tính doanh thu đơn delivered, bỏ qua đơn pending song song (BUG-09 đã biết)",
+    "kind": "revenueDelta", "amount": 422011, "deliver": true, "extraPendingAmount": 150000,
+    "expectedRevenueDelta": 422011
+  },
+  {
+    "id": "FR18-TC12", "type": "edge",
+    "description": "Dashboard doanh thu không đổi khi chỉ thêm đơn pending (không delivered)",
+    "kind": "revenueDelta", "amount": 0, "deliver": false, "extraPendingAmount": 175000,
+    "expectedRevenueDelta": 0
+  }
+]
