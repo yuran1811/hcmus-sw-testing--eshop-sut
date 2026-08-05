@@ -1,0 +1,35 @@
+[
+  {
+    "id": "FR01-SMOKE-01",
+    "type": "positive",
+    "description": "Đăng ký thành công với thông tin hợp lệ",
+    "input": {
+      "name": "Nguyen Van A",
+      "email": "e2e.newuser+{{ts}}@eshop.com",
+      "password": "Passw0rd Test"
+    },
+    "expected": { "httpStatus": 200, "redirectTo": "/login" }
+  },
+  {
+    "id": "FR01-SMOKE-02",
+    "type": "negative",
+    "description": "Đăng ký thất bại vì email đã tồn tại (seeded user)",
+    "input": {
+      "name": "Existing User",
+      "email": "test@eshop.com",
+      "password": "Passw0rd Test"
+    },
+    "expected": { "httpStatusNot": 200, "errorVisible": true }
+  },
+  {
+    "id": "FR01-SMOKE-03",
+    "type": "edge",
+    "description": "Password không thỏa quy tắc client (thiếu ký tự khoảng trắng) bị chặn trước khi gọi API",
+    "input": {
+      "name": "Weak Pass User",
+      "email": "e2e.weakpass+{{ts}}@eshop.com",
+      "password": "Password1"
+    },
+    "expected": { "clientBlocked": true, "errorText": "Mật khẩu quá yếu" }
+  }
+]
