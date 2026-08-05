@@ -1,0 +1,48 @@
+{
+  "feature": "FR-01 - Dang ky tai khoan",
+  "notes": "Token {{unique}} duoc thay bang chuoi duy nhat luc chay de thoa precondition 'email chua ton tai trong he thong'.",
+  "cases": [
+    {
+      "id": "TC-REGISTER-001",
+      "title": "Dang ky thanh cong voi du lieu hop le (mat khau cham bien duoi 8 ky tu)",
+      "input": {
+        "name": "Nguyễn Văn A",
+        "email": "nguyenvana01+{{unique}}@gmail.com",
+        "password": "Abcd123!"
+      },
+      "expected": {
+        "kind": "redirect",
+        "redirectPath": "/login",
+        "accountCreated": true
+      }
+    },
+    {
+      "id": "TC-REGISTER-002",
+      "title": "Ho Ten de trong",
+      "input": {
+        "name": "",
+        "email": "nguyenvana02+{{unique}}@gmail.com",
+        "password": "Abcd123!"
+      },
+      "expected": {
+        "kind": "fieldInvalid",
+        "field": "Họ Tên",
+        "accountCreated": false
+      }
+    },
+    {
+      "id": "TC-REGISTER-003",
+      "title": "Email sai dinh dang",
+      "input": {
+        "name": "Nguyễn Văn A",
+        "email": "nguyenvana03@",
+        "password": "Abcd123!"
+      },
+      "expected": {
+        "kind": "errorBanner",
+        "contains": "email",
+        "accountCreated": false
+      }
+    }
+  ]
+}
