@@ -1,0 +1,90 @@
+[
+  {
+    "id": "FR10-TC01", "type": "positive",
+    "description": "Admin chuyển đơn từ pending sang confirmed (bấm nút Xác nhận)",
+    "kind": "adminClick", "amount": 411001, "preAdvance": [],
+    "clickButton": "Xác nhận", "expectedLabelAfter": "Đã xác nhận"
+  },
+  {
+    "id": "FR10-TC02", "type": "positive",
+    "description": "Admin chuyển đơn từ confirmed sang shipping (bấm nút Giao hàng)",
+    "kind": "adminClick", "amount": 411002, "preAdvance": ["confirmed"],
+    "clickButton": "Giao hàng", "expectedLabelAfter": "Đang giao"
+  },
+  {
+    "id": "FR10-TC03", "type": "positive",
+    "description": "Admin chuyển đơn từ shipping sang delivered (bấm nút Hoàn thành)",
+    "kind": "adminClick", "amount": 411003, "preAdvance": ["confirmed", "shipping"],
+    "clickButton": "Hoàn thành", "expectedLabelAfter": "Đã giao"
+  },
+  {
+    "id": "FR10-TC04", "type": "positive",
+    "description": "User tự hủy đơn đang ở trạng thái pending (trang Profile)",
+    "kind": "userCancel", "amount": 411004, "preAdvance": [],
+    "expectedLabelAfter": "Đã hủy"
+  },
+  {
+    "id": "FR10-TC05", "type": "positive",
+    "description": "User tự hủy đơn đang ở trạng thái confirmed (trang Profile)",
+    "kind": "userCancel", "amount": 411005, "preAdvance": ["confirmed"],
+    "expectedLabelAfter": "Đã hủy"
+  },
+  {
+    "id": "FR10-TC06", "type": "edge",
+    "description": "UI Admin chỉ hiện đúng 2 nút hành động cho đơn pending (Xác nhận, Hủy)",
+    "kind": "buttonSet", "amount": 411006, "preAdvance": [],
+    "expectedButtons": ["Xác nhận", "Hủy"]
+  },
+  {
+    "id": "FR10-TC07", "type": "edge",
+    "description": "UI Admin chỉ hiện đúng 2 nút hành động cho đơn confirmed (Giao hàng, Hủy)",
+    "kind": "buttonSet", "amount": 411007, "preAdvance": ["confirmed"],
+    "expectedButtons": ["Giao hàng", "Hủy"]
+  },
+  {
+    "id": "FR10-TC08", "type": "edge",
+    "description": "UI Admin chỉ hiện đúng 1 nút hành động cho đơn shipping (Hoàn thành)",
+    "kind": "buttonSet", "amount": 411008, "preAdvance": ["confirmed", "shipping"],
+    "expectedButtons": ["Hoàn thành"]
+  },
+  {
+    "id": "FR10-TC09", "type": "edge",
+    "description": "UI Admin KHÔNG hiện nút hành động nào cho đơn delivered (final state)",
+    "kind": "noButtons", "amount": 411009, "preAdvance": ["confirmed", "shipping", "delivered"]
+  },
+  {
+    "id": "FR10-TC10", "type": "edge",
+    "description": "BUG-06: UI Admin cho đơn canceled bấm được nút \"Đánh dấu Đã giao\" (final state bị lọt)",
+    "kind": "adminClick", "amount": 411010, "preAdvance": ["canceled"],
+    "clickButton": "Đánh dấu Đã giao", "expectedLabelAfterSpec": "Đã hủy",
+    "expectedLabelAfterActual": "Đã giao"
+  },
+  {
+    "id": "FR10-TC11", "type": "edge",
+    "description": "UI Admin cho đơn canceled chỉ có đúng 1 nút \"Đánh dấu Đã giao\" (đối chứng — chính là bề mặt của BUG-06)",
+    "kind": "buttonSet", "amount": 411011, "preAdvance": ["canceled"],
+    "expectedButtons": ["Đánh dấu Đã giao"]
+  },
+  {
+    "id": "FR10-TC12", "type": "edge",
+    "description": "BUG-07: trang Profile vẫn hiện nút \"Hủy đơn\" cho đơn đang shipping, bấm được và thành công",
+    "kind": "userCancel", "amount": 411012, "preAdvance": ["confirmed", "shipping"],
+    "expectedLabelAfterSpec": "Đang giao", "expectedLabelAfterActual": "Đã hủy"
+  },
+  {
+    "id": "FR10-TC13", "type": "edge",
+    "description": "Trang Profile KHÔNG hiện nút \"Hủy đơn\" cho đơn đã delivered (đối chứng đúng)",
+    "kind": "cancelButtonPresence", "amount": 411013, "preAdvance": ["confirmed", "shipping", "delivered"],
+    "expectVisible": false
+  },
+  {
+    "id": "FR10-TC14", "type": "negative",
+    "description": "Client Admin Panel chặn đúng user thường (role check phía UI, dù backend vẫn không check — xem BUG-14)",
+    "kind": "roleBypassLogin"
+  },
+  {
+    "id": "FR10-TC15", "type": "negative",
+    "description": "Truy cập Admin Panel khi chưa đăng nhập → về lại form Login (đúng hành vi)",
+    "kind": "unauthGate"
+  }
+]
