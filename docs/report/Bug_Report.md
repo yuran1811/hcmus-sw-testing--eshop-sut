@@ -56,73 +56,43 @@ Danh sách tổng hợp các lỗi tìm thấy trong quá trình kiểm thử:
    - **Linked Test Case**: TC-CHECKOUT-004, TC-CHECKOUT-BVA-002, TC-CHECKOUT-BVA-003
    - **GitHub Issue**: [#79](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/79)
 
-10. **[BUG-MOBILE-REGISTER-001](../../tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-001.md)** - [BUG][Mobile Registration] Form đăng ký trên Mobile thiếu trường xác nhận mật khẩu
-   - **Module**: Mobile Registration (Đăng ký trên Mobile) | **Requirement**: FR-01 (Đăng ký tài khoản)
-   - **Severity**: Major | **Priority**: P1 | **Status**: New
-   - **Linked Test Case**: TC-MOBILE-REGISTER-001, TC-MOBILE-REGISTER-002, TC-MOBILE-REGISTER-003, TC-MOBILE-REGISTER-004, TC-MOBILE-REGISTER-005, TC-MOBILE-REGISTER-006, TC-MOBILE-REGISTER-007, TC-MOBILE-REGISTER-008, TC-MOBILE-REGISTER-009, TC-MOBILE-REGISTER-010, TC-MOBILE-REGISTER-011, TC-MOBILE-REGISTER-012, TC-MOBILE-REGISTER-013, TC-MOBILE-REGISTER-BVA-001, TC-MOBILE-REGISTER-BVA-002
-   - **GitHub Issue**: [#132](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/132)
-
-11. **[BUG-MOBILE-REGISTER-002](../../tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-002.md)** - [BUG][Mobile Registration] Hệ thống vẫn cho phép đăng ký tài khoản khi bỏ trống Họ Tên
-   - **Module**: Mobile Registration (Đăng ký trên Mobile) | **Requirement**: FR-01 (Đăng ký tài khoản)
-   - **Severity**: Major | **Priority**: P1 | **Status**: New
-   - **Linked Test Case**: TC-MOBILE-REGISTER-002
-   - **GitHub Issue**: [#133](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/133)
-
-12. **[BUG-MOBILE-REGISTER-003](../../tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-003.md)** - [BUG][Mobile Registration] Hệ thống vẫn cho phép đăng ký tài khoản khi bỏ trống Email
-   - **Module**: Mobile Registration (Đăng ký trên Mobile) | **Requirement**: FR-01 (Đăng ký tài khoản)
-   - **Severity**: Major | **Priority**: P1 | **Status**: New
-   - **Linked Test Case**: TC-MOBILE-REGISTER-003
-   - **GitHub Issue**: [#134](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/134)
-
-13. **[BUG-MOBILE-REGISTER-004](../../tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-004.md)** - [BUG][Mobile Registration] Hệ thống vẫn cho phép đăng ký tài khoản khi nhập Email sai định dạng
-   - **Module**: Mobile Registration (Đăng ký trên Mobile) | **Requirement**: FR-01 (Đăng ký tài khoản)
-   - **Severity**: Major | **Priority**: P1 | **Status**: New
-   - **Linked Test Case**: TC-MOBILE-REGISTER-004
-   - **GitHub Issue**: [#135](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/135)
-
-14. **[BUG-MOBILE-REGISTER-005](../../tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-005.md)** - [BUG][Mobile Registration] Hệ thống vẫn cho phép đăng ký tài khoản với Email đã tồn tại
-   - **Module**: Mobile Registration (Đăng ký trên Mobile) | **Requirement**: FR-01 (Đăng ký tài khoản)
-   - **Severity**: Major | **Priority**: P1 | **Status**: New
-   - **Linked Test Case**: TC-MOBILE-REGISTER-005
-   - **GitHub Issue**: [#136](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/136)
-
-15. **[BUG-PLAS-001](../../tests/bug-reports/product-list-and-search/BUG-PLAS-001.md)** - [BUG][Product List & Search] Trang chủ chứa 2 thẻ <h1>
+10. **[BUG-PLAS-001](../../tests/bug-reports/product-list-and-search/BUG-PLAS-001.md)** - [BUG][Product List & Search] Trang chủ chứa 2 thẻ <h1>
    - **Module**: Product List & Search (Xem danh sách & Tìm kiếm sản phẩm) | **Requirement**: FR-05 (Xem danh sách & Tìm kiếm sản phẩm)
    - **Severity**: Minor | **Priority**: P2 | **Status**: New
    - **Linked Test Case**: TC-PLAS-001, TC-PLAS-002, TC-PLAS-004, TC-PLAS-005, TC-PLAS-006, TC-PLAS-007, TC-PLAS-BVA-001, TC-PLAS-BVA-005
    - **GitHub Issue**: [#80](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/80)
 
-16. **[BUG-PLAS-002](../../tests/bug-reports/product-list-and-search/BUG-PLAS-002.md)** - [BUG][Product List & Search] Hình ảnh sản phẩm thiếu thuộc tính alt mô tả
+11. **[BUG-PLAS-002](../../tests/bug-reports/product-list-and-search/BUG-PLAS-002.md)** - [BUG][Product List & Search] Hình ảnh sản phẩm thiếu thuộc tính alt mô tả
    - **Module**: Product List & Search (Xem danh sách & Tìm kiếm sản phẩm) | **Requirement**: FR-05 (Xem danh sách & Tìm kiếm sản phẩm)
    - **Severity**: Minor | **Priority**: P2 | **Status**: New
    - **Linked Test Case**: TC-PLAS-001, TC-PLAS-002, TC-PLAS-004, TC-PLAS-BVA-001, TC-PLAS-BVA-005
    - **GitHub Issue**: [#81](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/81)
 
-17. **[BUG-PLAS-003](../../tests/bug-reports/product-list-and-search/BUG-PLAS-003.md)** - [BUG][Product List & Search] Giá sản phẩm hiển thị đơn vị VND thay vì ký hiệu ₫
+12. **[BUG-PLAS-003](../../tests/bug-reports/product-list-and-search/BUG-PLAS-003.md)** - [BUG][Product List & Search] Giá sản phẩm hiển thị đơn vị VND thay vì ký hiệu ₫
    - **Module**: Product List & Search (Xem danh sách & Tìm kiếm sản phẩm) | **Requirement**: FR-05 (Xem danh sách & Tìm kiếm sản phẩm)
    - **Severity**: Major | **Priority**: P1 | **Status**: New
    - **Linked Test Case**: TC-PLAS-001, TC-PLAS-002, TC-PLAS-004, TC-PLAS-BVA-001, TC-PLAS-BVA-005
    - **GitHub Issue**: [#82](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/82)
 
-18. **[BUG-PLAS-004](../../tests/bug-reports/product-list-and-search/BUG-PLAS-004.md)** - [BUG][Product List & Search] Không hiển thị thông báo empty state khi hệ thống trống hoặc tìm kiếm không khớp sản phẩm nào
+13. **[BUG-PLAS-004](../../tests/bug-reports/product-list-and-search/BUG-PLAS-004.md)** - [BUG][Product List & Search] Không hiển thị thông báo empty state khi hệ thống trống hoặc tìm kiếm không khớp sản phẩm nào
    - **Module**: Product List & Search (Xem danh sách & Tìm kiếm sản phẩm) | **Requirement**: FR-05 (Xem danh sách & Tìm kiếm sản phẩm)
    - **Severity**: Minor | **Priority**: P2 | **Status**: New
    - **Linked Test Case**: TC-PLAS-003, TC-PLAS-BVA-004
    - **GitHub Issue**: [#83](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/83)
 
-19. **[BUG-PLAS-005](../../tests/bug-reports/product-list-and-search/BUG-PLAS-005.md)** - [BUG][Product List & Search] Hiển thị lỗi hệ thống thô (raw exception/stack trace) thay vì thông báo không tìm thấy sản phẩm khi tìm kiếm chuỗi đặc biệt
+14. **[BUG-PLAS-005](../../tests/bug-reports/product-list-and-search/BUG-PLAS-005.md)** - [BUG][Product List & Search] Hiển thị lỗi hệ thống thô (raw exception/stack trace) thay vì thông báo không tìm thấy sản phẩm khi tìm kiếm chuỗi đặc biệt
    - **Module**: Product List & Search (Xem danh sách & Tìm kiếm sản phẩm) | **Requirement**: FR-05 (Xem danh sách & Tìm kiếm sản phẩm)
    - **Severity**: Major | **Priority**: P1 | **Status**: New
    - **Linked Test Case**: TC-PLAS-005
    - **GitHub Issue**: [#84](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/84)
 
-20. **[BUG-PLAS-006](../../tests/bug-reports/product-list-and-search/BUG-PLAS-006.md)** - [BUG][Product List & Search] Không hiển thị chỉ báo loading (loading indicator) khi tải dữ liệu sản phẩm bị chậm
+15. **[BUG-PLAS-006](../../tests/bug-reports/product-list-and-search/BUG-PLAS-006.md)** - [BUG][Product List & Search] Không hiển thị chỉ báo loading (loading indicator) khi tải dữ liệu sản phẩm bị chậm
    - **Module**: Product List & Search (Xem danh sách & Tìm kiếm sản phẩm) | **Requirement**: FR-05 (Xem danh sách & Tìm kiếm sản phẩm)
    - **Severity**: Minor | **Priority**: P2 | **Status**: New
    - **Linked Test Case**: TC-PLAS-006
    - **GitHub Issue**: [#85](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/85)
 
-21. **[BUG-PLAS-007](../../tests/bug-reports/product-list-and-search/BUG-PLAS-007.md)** - [BUG][Product List & Search] Vỡ giao diện, tràn dòng và kéo dài trang chủ khi hiển thị chuỗi kết quả tìm kiếm quá dài (255 ký tự)
+16. **[BUG-PLAS-007](../../tests/bug-reports/product-list-and-search/BUG-PLAS-007.md)** - [BUG][Product List & Search] Vỡ giao diện, tràn dòng và kéo dài trang chủ khi hiển thị chuỗi kết quả tìm kiếm quá dài (255 ký tự)
    - **Module**: Product List & Search (Xem danh sách & Tìm kiếm sản phẩm) | **Requirement**: FR-05 (Xem danh sách & Tìm kiếm sản phẩm)
    - **Severity**: Cosmetic | **Priority**: P3 | **Status**: New
    - **Linked Test Case**: TC-PLAS-BVA-002, TC-PLAS-BVA-003

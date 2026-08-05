@@ -12,10 +12,10 @@
 
 | Chỉ số                          | Số lượng | Tỷ lệ |
 | ------------------------------- | -------- | ----- |
-| **Tổng số Test Cases thiết kế** | 109      | 100%  |
-| **Tổng số Test Cases đã chạy**  | 47       | 43.1% |
-| **Số lượng Pass**               | 8        | 17.0% |
-| **Số lượng Fail**               | 39       | 83.0% |
+| **Tổng số Test Cases thiết kế** | 79       | 100%  |
+| **Tổng số Test Cases đã chạy**  | 32       | 40.5% |
+| **Số lượng Pass**               | 8        | 25.0% |
+| **Số lượng Fail**               | 24       | 75.0% |
 
 ## 3. Thống kê theo tính năng (Feature-wise Summary)
 
@@ -23,7 +23,6 @@
 | ---------------------------------- | ------------ | -------- | ------- | ---- | ---- | ---------- |
 | **Quản lý Danh mục (Category)**    | FR-14        | 28       | 13      | 7    | 6    | 53.8%      |
 | **Thanh toán (Checkout)**          | FR-08        | 22       | 7       | 1    | 6    | 14.3%      |
-| **Đăng ký tài khoản Mobile**       | FR-01, FR-20 | 30       | 15      | 0    | 15   | 0.0%       |
 | **Xem & Tìm kiếm sản phẩm (PLAS)** | FR-05        | 29       | 12      | 0    | 12   | 0.0%       |
 
 ## 4. Danh sách tài liệu liên quan

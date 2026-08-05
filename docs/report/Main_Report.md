@@ -30,15 +30,14 @@
 - **Feature A (Pool A - Product):** Product list and search (FR-05) - Xem danh sách & Tìm kiếm sản phẩm
 - **Feature B (Pool B - Checkout):** Checkout (FR-08) - Thanh toán đơn hàng
 - **Feature C (Pool C - Web Admin):** Category management (CRUD) (FR-14) - Quản lý Danh mục
-- **Feature D (Pool D - Mobile):** Account registration (FR-01, FR-20) - Đăng ký tài khoản trên ứng dụng Mobile
 
 ### 1.2. Thống kê số liệu kiểm thử
 
-- **Tổng số Test Cases thiết kế:** 47
-- **Tổng số Test Cases đã chạy:** 47 (tỷ lệ 100%)
-- **Số lượng Pass:** 8 (tỷ lệ 17.0%)
-- **Số lượng Fail:** 39 (tỷ lệ 83.0%)
-- **Tổng số lỗi phát hiện:** 21 lỗi (bao gồm 5 lỗi ở Category, 4 lỗi ở Checkout, 5 lỗi ở Mobile Register và 7 lỗi ở Product List & Search).
+- **Tổng số Test Cases thiết kế:** 32
+- **Tổng số Test Cases đã chạy:** 32 (tỷ lệ 100%)
+- **Số lượng Pass:** 8 (tỷ lệ 25.0%)
+- **Số lượng Fail:** 24 (tỷ lệ 75.0%)
+- **Tổng số lỗi phát hiện:** 16 lỗi (bao gồm 5 lỗi ở Category, 4 lỗi ở Checkout và 7 lỗi ở Product List & Search).
 
 ### 1.3. Thống kê chi tiết theo tính năng
 
@@ -46,7 +45,6 @@
 | ---------------------------------- | ------------ | ------- | ---- | ---- | ---------- | ------ |
 | **Quản lý Danh mục (Category)**    | FR-14        | 13      | 7    | 6    | 53.8%      | 5      |
 | **Thanh toán (Checkout)**          | FR-08        | 7       | 1    | 6    | 14.3%      | 4      |
-| **Đăng ký tài khoản Mobile**       | FR-01, FR-20 | 15      | 0    | 15   | 0.0%       | 5      |
 | **Xem & Tìm kiếm sản phẩm (PLAS)** | FR-05        | 12      | 0    | 12   | 0.0%       | 7      |
 
 ---
@@ -469,132 +467,6 @@ Nominal values: name = Điện tử, Token = JWT Admin, category_id = 1 (khi c�
 
 ---
 
-## Feature: Đăng ký Mobile (FR-01 / FR-20)
-
-### B1: Identify Input & Output Variables — Đăng ký Mobile
-
-#### Input Variables
-
-| #   | Variable Name | Data Type | Constraints                                            | Source  |
-| --- | ------------- | --------- | ------------------------------------------------------ | ------- |
-| 1   | Full Name     | String    | Bắt buộc                                               | UI Form |
-| 2   | Email         | String    | Bắt buộc, email format, duy nhất                       | UI Form |
-| 3   | Password      | String    | Bắt buộc, >=8 ký tự, 1 hoa, 1 thường, 1 số, 1 đặc biệt | UI Form |
-| 4   | Confirm Pwd   | String    | Bắt buộc, phải khớp với Password                       | UI Form |
-
-#### Output Variables
-
-| #   | Variable Name | Data Type | Description                                                    |
-| --- | ------------- | --------- | -------------------------------------------------------------- |
-| 1   | UI State      | UI        | Thành công chuyển hướng login, Thất bại hiển thị lỗi trên form |
-| 2   | DB State      | DB        | User được tạo trong hệ thống khi đăng ký hợp lệ                |
-
-### B2: Identify Value Domains — Đăng ký Mobile
-
-#### Input Variable: Full Name
-
-| #   | Domain Type | Equivalence Class | Expected |
-| --- | ----------- | ----------------- | -------- |
-| EC1 | Valid       | Có nhập dữ liệu   | Accept   |
-| EC2 | Invalid     | Bỏ trống          | Reject   |
-
-#### Input Variable: Email
-
-| #   | Domain Type | Equivalence Class        | Expected |
-| --- | ----------- | ------------------------ | -------- |
-| EC3 | Valid       | Email hợp lệ và duy nhất | Accept   |
-| EC4 | Invalid     | Bỏ trống                 | Reject   |
-| EC5 | Invalid     | Sai định dạng email      | Reject   |
-| EC6 | Invalid     | Email đã tồn tại         | Reject   |
-
-#### Input Variable: Password
-
-| #    | Domain Type | Equivalence Class       | Expected |
-| ---- | ----------- | ----------------------- | -------- |
-| EC7  | Valid       | Khớp mọi điều kiện      | Accept   |
-| EC8  | Invalid     | Bỏ trống                | Reject   |
-| EC9  | Invalid     | Nhỏ hơn 8 ký tự         | Reject   |
-| EC10 | Invalid     | Không có chữ hoa        | Reject   |
-| EC11 | Invalid     | Không có chữ thường     | Reject   |
-| EC12 | Invalid     | Không có số             | Reject   |
-| EC13 | Invalid     | Không có ký tự đặc biệt | Reject   |
-
-#### Input Variable: Confirm Pwd
-
-| #    | Domain Type | Equivalence Class       | Expected |
-| ---- | ----------- | ----------------------- | -------- |
-| EC14 | Valid       | Khớp với Password       | Accept   |
-| EC15 | Invalid     | Bỏ trống                | Reject   |
-| EC16 | Invalid     | Không khớp với Password | Reject   |
-
-#### Output Variables
-
-| #   | Domain Type | Equivalence Class      | Triggered By                     |
-| --- | ----------- | ---------------------- | -------------------------------- |
-| OC1 | Valid       | Thành công             | Tất cả valid (EC1,3,7,14)        |
-| OC2 | Error       | Validation Error UI    | EC2, EC4, EC5, EC8..EC13, EC15.. |
-| OC3 | Error       | Trùng lặp Email UI/API | EC6                              |
-
-### B3: Select Representative Values — Đăng ký Mobile
-
-- EC1: "Nguyen Van A"
-- EC2: ""
-- EC3: "newuser@gmail.com"
-- EC4: ""
-- EC5: "invalid-email"
-- EC6: "test@eshop.com"
-- EC7: "Test1234!"
-- EC8: ""
-- EC9: "Te1!abc" (7 char)
-- EC10: "test1234!"
-- EC11: "TEST1234!"
-- EC12: "TestPass!"
-- EC13: "Test12345"
-- EC14: Khớp với mật khẩu trên
-- EC15: ""
-- EC16: Không khớp (ví dụ "Test1234@")
-
-### B4: Enumerate Partition Scenarios — Đăng ký Mobile
-
-Nominal values: Full Name = Nguyen Van A, Email = newuser@gmail.com, Password = Test1234!, Confirm = Test1234!
-
-| #   | Partition | Tested Variable | Test Value       | Output |
-| --- | --------- | --------------- | ---------------- | ------ |
-| 1   | EC1...    | All Valid       | Nominal          | OC1    |
-| 2   | EC2       | Full Name       | ""               | OC2    |
-| 3   | EC4       | Email           | ""               | OC2    |
-| 4   | EC5       | Email           | "invalid-email"  | OC2    |
-| 5   | EC6       | Email           | "test@eshop.com" | OC3    |
-| 6   | EC8       | Password        | ""               | OC2    |
-| 7   | EC9       | Password        | "Te1!abc"        | OC2    |
-| 8   | EC10      | Password        | "test1234!"      | OC2    |
-| 9   | EC11      | Password        | "TEST1234!"      | OC2    |
-| 10  | EC12      | Password        | "TestPass!"      | OC2    |
-| 11  | EC13      | Password        | "Test12345"      | OC2    |
-| 12  | EC15      | Confirm Pwd     | ""               | OC2    |
-| 13  | EC16      | Confirm Pwd     | "Test1234@"      | OC2    |
-
-### B5: Consolidate into Test Cases — Đăng ký Mobile
-
-#### Final Test Case Summary
-
-| #   | TC ID                                                                                   | Description         | Technique | EC/OC Covered            | Expected |
-| --- | --------------------------------------------------------------------------------------- | ------------------- | --------- | ------------------------ | -------- |
-| 1   | [TC-MOBILE-REGISTER-001](../../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-001.md) | Hợp lệ              | DT        | EC1, EC3, EC7, EC14, OC1 | Pass     |
-| 2   | [TC-MOBILE-REGISTER-002](../../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-002.md) | Name trống          | DT        | EC2, OC2                 | Fail     |
-| 3   | [TC-MOBILE-REGISTER-003](../../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-003.md) | Email trống         | DT        | EC4, OC2                 | Fail     |
-| 4   | [TC-MOBILE-REGISTER-004](../../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-004.md) | Email sai định dạng | DT        | EC5, OC2                 | Fail     |
-| 5   | [TC-MOBILE-REGISTER-005](../../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-005.md) | Email trùng         | DT        | EC6, OC3                 | Fail     |
-| 6   | [TC-MOBILE-REGISTER-006](../../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-006.md) | Mật khẩu trống      | DT        | EC8, OC2                 | Fail     |
-| 7   | [TC-MOBILE-REGISTER-007](../../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-007.md) | Mật khẩu < 8        | DT        | EC9, OC2                 | Fail     |
-| 8   | [TC-MOBILE-REGISTER-008](../../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-008.md) | Không chữ hoa       | DT        | EC10, OC2                | Fail     |
-| 9   | [TC-MOBILE-REGISTER-009](../../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-009.md) | Không chữ thường    | DT        | EC11, OC2                | Fail     |
-| 10  | [TC-MOBILE-REGISTER-010](../../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-010.md) | Không số            | DT        | EC12, OC2                | Fail     |
-| 11  | [TC-MOBILE-REGISTER-011](../../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-011.md) | Không ký tự ĐB      | DT        | EC13, OC2                | Fail     |
-| 12  | [TC-MOBILE-REGISTER-012](../../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-012.md) | Xác nhận trống      | DT        | EC15, OC2                | Fail     |
-| 13  | [TC-MOBILE-REGISTER-013](../../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-013.md) | Xác nhận sai        | DT        | EC16, OC2                | Fail     |
-
----
 
 ## Phần III: Áp dụng kỹ thuật kiểm thử Phân tích giá trị biên (Boundary Value Analysis)
 
@@ -798,54 +670,9 @@ Nominal values: Token = JWT Admin
 | 1   | [TC-CATEGORY-BVA-001](../../tests/test-cases/category/TC-CATEGORY-BVA-001.md) | Name đúng 1 ký tự | 3-Point + 2-Point | Min, B   | Accept   |
 | 2   | [TC-CATEGORY-BVA-002](../../tests/test-cases/category/TC-CATEGORY-BVA-002.md) | Name 2 ký tự      | 3-Point only      | Min, B+1 | Accept   |
 
----
-
-## Feature: Đăng ký Mobile (FR-01 / FR-20)
-
-### BVA Step 1: Identify Boundary Points
-
-| #   | Variable        | Boundary Description | Boundary Value (B) | Valid Side          | Invalid Side            |
-| --- | --------------- | -------------------- | -----------------: | ------------------- | ----------------------- |
-| 1   | Độ dài Password | Chiều dài tối thiểu  |                  8 | B (8 ký tự) = valid | B-1 (7 ký tự) = invalid |
-
-### BVA Step 2: 3-Point BVA Scenarios
-
-| #   | Boundary     | Test Point | Variable Tested | Test Value | Other Variables | Expected Result |
-| --- | ------------ | ---------- | --------------- | ---------- | --------------- | --------------- |
-| 1   | pass Min = 8 | B-1        | password        | 7 chars    | all nominal     | Reject          |
-| 2   | pass Min = 8 | B          | password        | 8 chars    | all nominal     | Accept          |
-| 3   | pass Min = 8 | B+1        | password        | 9 chars    | all nominal     | Accept          |
-
-### BVA Step 3: 2-Point BVA Scenarios
-
-| #   | Boundary     | Test Point    | Variable Tested | Test Value | Other Variables | Expected Result |
-| --- | ------------ | ------------- | --------------- | ---------- | --------------- | --------------- |
-| 1   | pass Min = 8 | B (valid)     | password        | 8 chars    | all nominal     | Accept          |
-| 2   | pass Min = 8 | B-1 (invalid) | password        | 7 chars    | all nominal     | Reject          |
-
-### BVA Step 4: Consolidate BVA Test Cases
-
-#### Overlap Between 3-Point and 2-Point
-
-| 3-Point Scenario # | 2-Point Scenario # | Variable | Test Value | Overlap Reason                   |
-| ------------------ | ------------------ | -------- | ---------- | -------------------------------- |
-| #2 (B at min)      | #1 (B valid)       | password | 8 chars    | Same value, same expected result |
-| #1 (B-1 at min)    | #2 (B-1 invalid)   | password | 7 chars    | Same value, same expected result |
-
-#### Overlap with Domain Testing TCs
-
-| BVA Scenario #  | DT Test Case           | Variable | Test Value | Overlap Reason                                 |
-| --------------- | ---------------------- | -------- | ---------- | ---------------------------------------------- |
-| #1 (B-1 at min) | TC-MOBILE-REGISTER-007 | password | 7 chars    | Same test data and expected result (< 8 chars) |
-
-#### Final BVA Test Case Summary
-
-| #   | TC ID                                                                                           | Description   | Technique(s)      | Boundary | Expected |
-| --- | ----------------------------------------------------------------------------------------------- | ------------- | ----------------- | -------- | -------- |
-| 1   | [TC-MOBILE-REGISTER-BVA-001](../../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-BVA-001.md) | Độ dài đúng 8 | 3-Point + 2-Point | Min, B   | Accept   |
-| 2   | [TC-MOBILE-REGISTER-BVA-002](../../tests/test-cases/mobile-register/TC-MOBILE-REGISTER-BVA-002.md) | Độ dài đúng 9 | 3-Point only      | Min, B+1 | Accept   |
 
 ---
+
 
 ## Phần IV: Báo cáo lỗi chi tiết (Bug Report & GitHub Issues)
 
@@ -1021,16 +848,15 @@ Trong bài tập lần này, với chiến lượt sử dụng AI first - Human 
 | **Sản phẩm #2:** Thực thi TC và báo cáo kết quả (FR-05)          | Gemini 3.5 Flash & `test-run-reporter` | 15:03 28/06/2026 | `INCOMPLETE` | Yêu cầu AI tách BUG-PLAS-005 thành 2 lỗi (H1 và SQLite), loại bỏ link BUG-PLAS-001 không chính xác ở BVA-002. |
 | **Sản phẩm #3:** Thiết kế TC cho FR-08 (Thanh toán)              | Gemini 3.5 Flash                       | 15:30 28/06/2026 | `INCOMPLETE` | Loại bỏ các bước nhập địa chỉ giao hàng do AI tự suy diễn thêm (Checkout của SUT lấy thông tin mặc định).     |
 | **Sản phẩm #4:** Thiết kế TC cho FR-14 (Quản lý Danh mục)        | Gemini 3.1 Pro                         | 19:25 28/06/2026 | `INCOMPLETE` | Bổ sung thêm các ca kiểm thử xóa danh mục có sản phẩm liên kết (vi phạm ràng buộc khóa ngoại DB).             |
-| **Sản phẩm #5:** Thiết kế TC cho FR-01/FR-20 (Đăng ký Mobile)    | Gemini 3.1 Pro                         | 00:18 29/06/2026 | `VALID`      | Giữ nguyên các ca kiểm thử do AI đã bao phủ đầy đủ và chính xác tất cả các trường hợp theo nghiệp vụ.         |
 
 ### 5.3. Thống kê độ chính xác của AI
 
 | Chỉ số                                            | Số lượng | Tỷ lệ |
 | :------------------------------------------------ | :------- | :---- |
-| **Tổng số sản phẩm do AI tạo ra được kiểm tra**   | 5        | 100%  |
-| **VALID (đúng, chấp nhận nguyên bản)**            | 1        | 20%   |
+| **Tổng số sản phẩm do AI tạo ra được kiểm tra**   | 4        | 100%  |
+| **VALID (đúng, chấp nhận nguyên bản)**            | 0        | 0%    |
 | **INVALID (sai; bị từ chối)**                     | 0        | 0%    |
-| **INCOMPLETE (chấp nhận được sau khi chỉnh sửa)** | 4        | 80%   |
+| **INCOMPLETE (chấp nhận được sau khi chỉnh sửa)** | 4        | 100%  |
 
 ### 5.4. Phân tích khoảng chênh lệch (AI Gap Analysis)
 

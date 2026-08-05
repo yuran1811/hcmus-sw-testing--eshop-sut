@@ -25,19 +25,18 @@
 - **Feature A (Pool A - Product):** Product list and search (FR-05)
 - **Feature B (Pool B - Checkout):** Checkout (FR-08)
 - **Feature C (Pool C - Web Admin):** Category management (CRUD) (FR-14)
-- **Feature D (Pool D - Mobile):** Account registration (FR-01)
 
 ### 3.2. Số liệu tổng quan
 
-- **Tổng số tính năng kiểm thử:** 4
-- **Tổng số Test Cases đã thiết kế và chạy:** 47
-- **Tổng số lỗi (Bugs) tìm thấy:** 21
+- **Tổng số tính năng kiểm thử:** 3
+- **Tổng số Test Cases đã chạy:** 32
+- **Tổng số lỗi (Bugs) tìm thấy:** 16
 
 ### 3.3. Trạng thái thực thi (Execution Status)
 
-- Toàn bộ 47/47 Test Cases đã được thực thi hoàn tất.
+- Toàn bộ 32/32 Test Cases đã được thực thi hoàn tất.
 - Chi tiết số lượng Pass/Fail xem tại các file bảng Test Run tương ứng trong thư mục `tests/test-runs/`.
-- Danh sách 21 lỗi được báo cáo chi tiết trong file `Bug_Report.md`.
+- Danh sách 16 lỗi được báo cáo chi tiết trong file `Bug_Report.md`.
 
 ### 3.4. Tài nguyên bổ sung (Demo Videos / Skills)
 
