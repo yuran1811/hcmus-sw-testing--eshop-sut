@@ -1,0 +1,17 @@
+{
+  "name": "eshop-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "description": "HW04 - Automation Testing (Playwright) for the EShop SUT - Run by 23127211",
+  "scripts": {
+    "test": "playwright test",
+    "test:register": "playwright test specs/register.spec.ts",
+    "list": "playwright test --list",
+    "report": "playwright show-report reports/html/latest"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.0",
+    "@types/node": "22.20.1",
+    "typescript": "5.9.3"
+  }
+}

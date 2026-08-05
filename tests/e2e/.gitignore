@@ -1,0 +1,6 @@
+# Artifact tam cua tung lan chay (trace, screenshot, video)
+test-results/
+
+# Thu muc report mac dinh khi chay local; cac report chinh thuc duoc ghi vao
+# reports/html/<REPORT_NAME> va co commit vao repo theo yeu cau HW04.
+reports/html/latest/
