@@ -1,0 +1,57 @@
+[
+  {
+    "id": "TC-XXX-001",
+    "description": "Ca thành công với dữ liệu hợp lệ",
+    "type": "positive",
+    "input": {
+      "field1": "giá trị hợp lệ",
+      "field2": "giá trị hợp lệ"
+    },
+    "expected": {
+      "outcome": "success",
+      "url": "/",
+      "message": "Nội dung xác nhận hiển thị sau khi thành công"
+    }
+  },
+  {
+    "id": "TC-XXX-002",
+    "description": "Ca lỗi khi dữ liệu không hợp lệ",
+    "type": "negative",
+    "input": {
+      "field1": "giá trị sai",
+      "field2": ""
+    },
+    "expected": {
+      "outcome": "error",
+      "message": "Thông báo lỗi chính xác như đặc tả",
+      "stayOnPage": true
+    }
+  },
+  {
+    "id": "TC-XXX-003",
+    "description": "Ca biên: giá trị đúng bằng giới hạn dưới",
+    "type": "edge",
+    "input": {
+      "field1": "giá trị tại biên",
+      "field2": "1"
+    },
+    "expected": {
+      "outcome": "success",
+      "message": "Hệ thống chấp nhận giá trị tại biên"
+    }
+  },
+  {
+    "id": "TC-XXX-004",
+    "description": "Ca biên: giá trị vượt giới hạn 1 đơn vị",
+    "type": "edge",
+    "input": {
+      "field1": "giá trị vượt biên",
+      "field2": "0"
+    },
+    "expected": {
+      "outcome": "error",
+      "message": "Thông báo từ chối giá trị ngoài biên",
+      "stayOnPage": true
+    }
+  }
+]
