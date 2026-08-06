@@ -16,11 +16,12 @@
 
 import { test, expect } from '@playwright/test';
 import { CategoryAPIHelper, Category } from '../pages/CategoryPage';
+import testData from '../data/category-test-data.json';
 
 const BASE_URL = 'http://localhost:3000';
 
 // ─── Shared credentials ───────────────────────────────────────────────────────
-const ADMIN = { email: 'admin@eshop.com', password: 'Admin123!', name: 'Admin User' };
+const ADMIN = testData.users.admin;
 
 // ─── Suite ────────────────────────────────────────────────────────────────────
 test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
@@ -217,27 +218,16 @@ test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
     expect(countAfter).toBe(countBefore);
   });
 
-  // ──────────────────────────────────────────────────────────────────────────
-  // TC-CATEGORY-013: name null hoặc sai kiểu dữ liệu — data-driven
-  // ──────────────────────────────────────────────────────────────────────────
-  const typeVariants = [
-    { tcId: 'TC-CATEGORY-013-1', label: 'null',    val: null },
-    { tcId: 'TC-CATEGORY-013-2', label: 'Number',  val: 123 },
-    { tcId: 'TC-CATEGORY-013-3', label: 'Boolean', val: true },
-    { tcId: 'TC-CATEGORY-013-4', label: 'Array',   val: [] },
-    { tcId: 'TC-CATEGORY-013-5', label: 'Object',  val: { text: 'Gia dụng' } },
-  ] as const;
-
-  for (const variant of typeVariants) {
-    test(`${variant.tcId}: name = ${variant.label} → từ chối với 400 (EC10/EC11)`, async ({ request }) => {
+  for (const variant of testData.tc_type_variants) {
+    test(`${variant.tc_id}: ${variant.description} → từ chối với ${variant.expected_status}`, async ({ request }) => {
       const api = new CategoryAPIHelper(request, BASE_URL);
       const countBefore = await api.getCategoryCount(adminToken);
 
       // [Pattern 4] — Network: POST with invalid type
-      const resp = await api.createCategoryRaw(adminToken, { name: variant.val });
+      const resp = await api.createCategoryRaw(adminToken, { name: variant.name });
 
       // [Pattern 1] — Status 400
-      expect(resp.status()).toBe(400);
+      expect(resp.status()).toBe(variant.expected_status);
 
       // [Pattern 3] — Count unchanged
       const countAfter = await api.getCategoryCount(adminToken);
@@ -305,25 +295,19 @@ test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
     if (id2Body.id) await api.cleanupCategory(adminToken, id2Body.id);
   });
 
-  // ──────────────────────────────────────────────────────────────────────────
-  // TC-CATEGORY-019: category_id sai cú pháp (abc, 1.5)
-  // ──────────────────────────────────────────────────────────────────────────
-  const syntaxIds = [
-    { tcId: 'TC-CATEGORY-019-1', label: 'chuỗi "abc"', id: 'abc' },
-    { tcId: 'TC-CATEGORY-019-2', label: 'số thực "1.5"', id: '1.5' },
-  ] as const;
+  const syntaxIds = testData.tc_characterization.filter(tc => tc.tc_id.startsWith('TC-CATEGORY-019'));
 
   for (const variant of syntaxIds) {
-    test(`${variant.tcId}: DELETE với ID sai cú pháp (${variant.label}) — không xóa, không 500 (EC17)`, async ({ request }) => {
+    test(`${variant.tc_id}: DELETE với ID sai cú pháp (${variant.delete_id}) — không xóa, không 500 (EC17)`, async ({ request }) => {
       const api = new CategoryAPIHelper(request, BASE_URL);
       const countBefore = await api.getCategoryCount(adminToken);
 
       // [Pattern 4] — Network: DELETE with bad ID
-      const resp = await api.deleteCategory(adminToken, variant.id);
+      const resp = await api.deleteCategory(adminToken, variant.delete_id);
 
       // [Pattern 1] — Must not 500; must be 400 or 404
       expect(resp.status()).not.toBe(500);
-      expect.soft([400, 404]).toContain(resp.status());
+      expect.soft(variant.expected_status_oneOf).toContain(resp.status());
 
       // [Pattern 3] — Count unchanged
       const countAfter = await api.getCategoryCount(adminToken);

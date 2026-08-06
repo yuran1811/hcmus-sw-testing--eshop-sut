@@ -16,9 +16,10 @@
 
 import { test, expect } from '@playwright/test';
 import { CategoryAPIHelper, Category } from '../pages/CategoryPage';
+import testData from '../data/category-test-data.json';
 
 const BASE_URL = 'http://localhost:3000';
-const ADMIN = { email: 'admin@eshop.com', password: 'Admin123!', name: 'Admin User' };
+const ADMIN = testData.users.admin;
 
 test.describe('FR-14 Category — BVA (Boundary Value Analysis)', () => {
 
@@ -34,12 +35,13 @@ test.describe('FR-14 Category — BVA (Boundary Value Analysis)', () => {
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CATEGORY-BVA-001: Tên 1 ký tự (Boundary Min B) — phải được chấp nhận', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tcData = testData.tc_bva.find(tc => tc.tc_id === 'TC-CATEGORY-BVA-001')!;
 
     // [Pattern 4] — Network: POST name="A"
-    const resp = await api.createCategory(adminToken, 'A');
+    const resp = await api.createCategory(adminToken, tcData.name!);
 
     // [Pattern 1] — Status 200 or 201
-    expect([200, 201]).toContain(resp.status());
+    expect(tcData.expected_status_oneOf).toContain(resp.status());
 
     const body = await resp.json() as { id?: number };
     const id = body.id;
@@ -48,7 +50,7 @@ test.describe('FR-14 Category — BVA (Boundary Value Analysis)', () => {
     if (id) {
       const list = await api.getCategoryList(adminToken);
       const found = list.find((c) => c.id === id);
-      expect.soft(found?.name).toBe('A');
+      expect.soft(found?.name).toBe(tcData.name);
 
       // Cleanup
       await api.cleanupCategory(adminToken, id);
@@ -60,12 +62,13 @@ test.describe('FR-14 Category — BVA (Boundary Value Analysis)', () => {
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CATEGORY-BVA-002: Tên 2 ký tự (B+1 tại biên Min) — phải được chấp nhận', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tcData = testData.tc_bva.find(tc => tc.tc_id === 'TC-CATEGORY-BVA-002')!;
 
     // [Pattern 4] — Network: POST name="AB"
-    const resp = await api.createCategory(adminToken, 'AB');
+    const resp = await api.createCategory(adminToken, tcData.name!);
 
     // [Pattern 1] — Status 200 or 201
-    expect([200, 201]).toContain(resp.status());
+    expect(tcData.expected_status_oneOf).toContain(resp.status());
 
     const body = await resp.json() as { id?: number };
     const id = body.id;
@@ -74,10 +77,10 @@ test.describe('FR-14 Category — BVA (Boundary Value Analysis)', () => {
       // [Pattern 2] — Name 'AB' preserved
       const list = await api.getCategoryList(adminToken);
       const found = list.find((c) => c.id === id);
-      expect.soft(found?.name).toBe('AB');
+      expect.soft(found?.name).toBe(tcData.name);
 
       // [Pattern 2] — Length must not be silently truncated
-      expect.soft(found?.name.length).toBe(2);
+      expect.soft(found?.name.length).toBe(tcData.name!.length);
 
       await api.cleanupCategory(adminToken, id);
     }
@@ -88,10 +91,11 @@ test.describe('FR-14 Category — BVA (Boundary Value Analysis)', () => {
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CATEGORY-BVA-003: DELETE với ID = 0 (R-1) — không xóa gì, không 500', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tcData = testData.tc_bva.find(tc => tc.tc_id === 'TC-CATEGORY-BVA-003')!;
     const countBefore = await api.getCategoryCount(adminToken);
 
     // [Pattern 4] — Network: DELETE id=0
-    const resp = await api.deleteCategory(adminToken, 0);
+    const resp = await api.deleteCategory(adminToken, tcData.delete_id!);
 
     // [Pattern 1] — Must not 500
     expect(resp.status()).not.toBe(500);

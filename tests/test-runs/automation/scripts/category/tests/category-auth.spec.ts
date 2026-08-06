@@ -14,12 +14,13 @@
 
 import { test, expect } from '@playwright/test';
 import { CategoryAPIHelper } from '../pages/CategoryPage';
+import testData from '../data/category-test-data.json';
 
 const BASE_URL = 'http://localhost:3000';
 
 // ─── Credentials ─────────────────────────────────────────────────────────────
-const ADMIN       = { email: 'admin@eshop.com', password: 'Admin123!', name: 'Admin User' };
-const NORMAL_USER = { email: 'test@eshop.com',  password: 'Test1234!', name: 'Test User' };
+const ADMIN       = testData.users.admin;
+const NORMAL_USER = testData.users.normalUser;
 
 // ─── Suite ────────────────────────────────────────────────────────────────────
 test.describe('FR-14 Category Authorization — Equivalence Partitioning', () => {
@@ -121,35 +122,19 @@ test.describe('FR-14 Category Authorization — Equivalence Partitioning', () =>
   // ──────────────────────────────────────────────────────────────────────────
   // TC-CATEGORY-018: Token sai chữ ký hoặc hết hạn — data-driven
   // ──────────────────────────────────────────────────────────────────────────
-  const invalidTokenVariants = [
-    {
-      tcId: 'TC-CATEGORY-018-1',
-      label: 'token sai chữ ký',
-      authHeader: 'Bearer invalid.token.signature',
-      categoryName: 'Token sai',
-    },
-    {
-      tcId: 'TC-CATEGORY-018-2',
-      label: 'token hết hạn (expired JWT)',
-      // A syntactically valid but expired JWT (exp = 1700000001, long past)
-      authHeader: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBlc2hvcC52biIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDAwMDAwMCwiZXhwIjoxNzAwMDAwMDAxfQ.INVALID_EXPIRED',
-      categoryName: 'Token hết hạn',
-    },
-  ] as const;
-
-  for (const variant of invalidTokenVariants) {
-    test(`${variant.tcId}: Từ chối tạo danh mục với ${variant.label} (EC16)`, async ({ request }) => {
+  for (const variant of testData.tc_invalid_token) {
+    test(`${variant.tc_id}: ${variant.description} (EC16)`, async ({ request }) => {
       const api = new CategoryAPIHelper(request, BASE_URL);
       const countBefore = await api.getCategoryCount(adminToken);
 
       // [Pattern 4] — Network: POST with invalid/expired token
       const resp = await api.createCategoryWithRawAuth(
-        variant.authHeader,
-        { name: variant.categoryName }
+        variant.auth_header,
+        { name: variant.name }
       );
 
       // [Pattern 1] — Status 401 or 403
-      expect([401, 403]).toContain(resp.status());
+      expect(variant.expected_status_oneOf).toContain(resp.status());
 
       // [Pattern 3] — No category created
       const countAfter = await api.getCategoryCount(adminToken);
