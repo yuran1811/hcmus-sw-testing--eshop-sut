@@ -1,0 +1,13 @@
+{
+  "name": "eshop-hw04-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "test": "playwright test",
+    "test:list": "playwright test --list"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.0"
+  }
+}
