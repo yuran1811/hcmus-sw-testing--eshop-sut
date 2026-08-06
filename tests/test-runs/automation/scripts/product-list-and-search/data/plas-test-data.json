@@ -148,6 +148,7 @@
       "tc_id": "TC-PLAS-BVA-004",
       "description": "Tìm kiếm bằng ký tự đặc biệt SQL/Injection",
       "search_keyword": "' OR '1'='1",
+      "expected_count": 0,
       "check_sql_safe": true
     },
     {

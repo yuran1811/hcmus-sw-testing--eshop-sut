@@ -15,6 +15,7 @@
 
 import { test, expect } from '@playwright/test';
 import { ProductListPage } from '../pages/ProductListPage';
+import testData from '../data/plas-test-data.json';
 
 test.describe('FR-05 Product List & Search — UI & Navigation', () => {
 
@@ -29,18 +30,19 @@ test.describe('FR-05 Product List & Search — UI & Navigation', () => {
   // TC-PLAS-007: Kiểm tra hiển thị chi tiết thẻ sản phẩm (ảnh, tên, giá)
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-PLAS-007: Kiểm tra hiển thị chi tiết thẻ sản phẩm (ảnh, tên, giá)', async () => {
-    await plasPage.search('Samsung Galaxy S24 Ultra');
+    const tc = testData.test_cases.find(c => c.tc_id === 'TC-PLAS-007')!;
+    await plasPage.search(tc.search_keyword!);
 
     // [Pattern 5] — Count = 1
     const count = await plasPage.getProductCount();
-    expect(count).toBe(1);
+    expect(count).toBe(tc.expected_count);
 
     // [Pattern 1] — Product image is visible
     await expect(plasPage.productImages.first()).toBeVisible();
 
     // [Pattern 3] — Title & price check
     const titles = await plasPage.getProductTitles();
-    expect(titles[0]).toContain('Samsung Galaxy S24 Ultra');
+    expect(titles[0]).toContain(tc.expected_title!);
 
     const prices = await plasPage.getProductPrices();
     expect(prices[0]).toBeTruthy();
@@ -50,7 +52,8 @@ test.describe('FR-05 Product List & Search — UI & Navigation', () => {
   // TC-PLAS-015: Kiểm tra nút Xem chi tiết sản phẩm
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-PLAS-015: Kiểm tra nút Xem chi tiết sản phẩm — điều hướng đến trang detail', async ({ page }) => {
-    await plasPage.search('Keychron');
+    const tc = testData.test_cases.find(c => c.tc_id === 'TC-PLAS-015')!;
+    await plasPage.search(tc.search_keyword!);
     expect(await plasPage.getProductCount()).toBeGreaterThan(0);
 
     // Click "Xem chi tiết"
@@ -65,7 +68,8 @@ test.describe('FR-05 Product List & Search — UI & Navigation', () => {
   // TC-PLAS-016: Kiểm tra nút Thêm vào giỏ hàng sản phẩm
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-PLAS-016: Kiểm tra nút Thêm vào giỏ hàng sản phẩm', async () => {
-    await plasPage.search('AirPods');
+    const tc = testData.test_cases.find(c => c.tc_id === 'TC-PLAS-016')!;
+    await plasPage.search(tc.search_keyword!);
 
     // [Pattern 1] — Button is visible and clickable
     await expect(plasPage.addToCartButtons.first()).toBeVisible();
@@ -76,6 +80,7 @@ test.describe('FR-05 Product List & Search — UI & Navigation', () => {
   // TC-PLAS-017: Kiểm tra điều hướng logo EShop về trang chủ
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-PLAS-017: Kiểm tra điều hướng logo EShop về trang chủ', async ({ page }) => {
+    const tc = testData.test_cases.find(c => c.tc_id === 'TC-PLAS-017')!;
     // Perform search first
     await plasPage.search('MacBook');
 
@@ -92,6 +97,7 @@ test.describe('FR-05 Product List & Search — UI & Navigation', () => {
   // TC-PLAS-018: Kiểm tra hiển thị tổng số sản phẩm bên dưới
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-PLAS-018: Kiểm tra hiển thị tổng số sản phẩm bên dưới (Footer count)', async ({ page }) => {
+    const tc = testData.test_cases.find(c => c.tc_id === 'TC-PLAS-018')!;
     // [Pattern 1] — Footer product count indicator check
     const footerCount = page.locator('text=Hiển thị 5 sản phẩm').or(page.locator('h1.text-center.text-gray-400'));
     await expect(footerCount.first()).toBeVisible();
@@ -101,6 +107,7 @@ test.describe('FR-05 Product List & Search — UI & Navigation', () => {
   // TC-PLAS-019: Kiểm tra chỉ báo trạng thái đang tải
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-PLAS-019: Kiểm tra chỉ báo trạng thái đang tải — page loads cleanly', async ({ page }) => {
+    const tc = testData.test_cases.find(c => c.tc_id === 'TC-PLAS-019')!;
     // Reload page and check page loads completely without permanent loading spinners
     await page.reload();
     await page.waitForLoadState('domcontentloaded');
