@@ -15,6 +15,7 @@
 
 import { test, expect } from '@playwright/test';
 import { CheckoutAPIHelper, CartItem } from '../pages/CheckoutPage';
+import testDataRaw from '../data/checkout-test-data.json';
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -22,7 +23,9 @@ interface User { email: string; password: string; name: string }
 interface TestData {
   users: { userA: User };
   products: { airpods: CartItem; keychron: CartItem };
+  tc_bva: any[];
 }
+const testData = testDataRaw as unknown as TestData;
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -63,38 +66,29 @@ test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
   // TC-CHECKOUT-BVA-001: Giỏ hàng đúng 1 sản phẩm (cực tiểu biên, valid)
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CHECKOUT-BVA-001: Checkout với đúng 1 sản phẩm trong giỏ (boundary min = 1)', async ({ request }) => {
-    const testData = (await import('../data/checkout-test-data.json')) as unknown as TestData;
+    const tc = testData.tc_bva.find(c => c.tc_id === 'TC-CHECKOUT-BVA-001')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
 
-    // Prepare: exactly 1 item
     await prepareCart(api, token, [testData.products.keychron]);
 
-    // [Pattern 4] — Network: checkout
-    const resp = await api.checkout(token, {
-      total_amount: 4000000,
-      shipping_address: '123 Le Loi, Quan 1, TP.HCM',
-    });
+    const resp = await api.checkout(token, tc.payload);
 
-    // [Pattern 1] — Status must be 200 (valid boundary: 1 item)
-    expect(resp.status()).toBe(200);
+    expect(resp.status()).toBe(tc.expected_status);
 
     const body = await resp.json() as { orderId?: number; message?: string };
-    // [Pattern 2] — Message contains success indicator
     expect.soft(body.message).toContain('Checkout successful');
     expect(body.orderId).toBeTruthy();
 
-    // [Pattern 5] — Cart must be empty after checkout
     const cartResp = await api.getCart(token);
     const cartItems = await cartResp.json() as unknown[];
     expect(cartItems).toHaveLength(0);
 
-    // [Pattern 2] — Verify order in DB
     if (body.orderId) {
       const orderResp = await api.getOrder(token, body.orderId);
       if (orderResp.ok()) {
         const order = await orderResp.json() as { total_amount?: number; status?: string };
-        expect.soft(order.total_amount).toBe(4000000);
+        expect.soft(order.total_amount).toBe(tc.expected_total_in_db);
         expect.soft(order.status).toBe('pending');
       }
     }
@@ -104,23 +98,15 @@ test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
   // TC-CHECKOUT-BVA-002: total_amount = server_total - 1 (biên B-1, invalid)
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CHECKOUT-BVA-002: total_amount = server_total - 1 (biên dưới lệch 1 đơn vị)', async ({ request }) => {
-    const testData = (await import('../data/checkout-test-data.json')) as unknown as TestData;
+    const tc = testData.tc_bva.find(c => c.tc_id === 'TC-CHECKOUT-BVA-002')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
     await prepareCart(api, token, [testData.products.airpods, testData.products.keychron]);
 
-    const serverTotal = 10000000;
-    const clientTotal = serverTotal - 1; // = 9,999,999
+    const resp = await api.checkout(token, tc.payload);
 
-    // [Pattern 4] — Network: send B-1 total
-    const resp = await api.checkout(token, {
-      total_amount: clientTotal,
-      shipping_address: '123 Le Loi',
-    });
-
-    // [Pattern 1] — Must be 400 or 200 with corrected total
     const status = resp.status();
-    expect([400, 200]).toContain(status);
+    expect(tc.expected_status_oneOf).toContain(status);
     expect(status).not.toBe(500);
 
     if (status === 200) {
@@ -129,9 +115,8 @@ test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
         const orderResp = await api.getOrder(token, body.orderId);
         if (orderResp.ok()) {
           const order = await orderResp.json() as { total_amount?: number };
-          // [Pattern 2] — Must not persist the mismatched B-1 value
-          expect(order.total_amount).not.toBe(clientTotal);
-          expect.soft(order.total_amount).toBe(serverTotal);
+          expect(order.total_amount).not.toBe(tc.payload.total_amount);
+          expect.soft(order.total_amount).toBe(tc.if_200_expected_total_in_db);
         }
       }
     }
@@ -141,23 +126,15 @@ test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
   // TC-CHECKOUT-BVA-003: total_amount = server_total + 1 (biên B+1, invalid)
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CHECKOUT-BVA-003: total_amount = server_total + 1 (biên trên lệch 1 đơn vị)', async ({ request }) => {
-    const testData = (await import('../data/checkout-test-data.json')) as unknown as TestData;
+    const tc = testData.tc_bva.find(c => c.tc_id === 'TC-CHECKOUT-BVA-003')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
     await prepareCart(api, token, [testData.products.airpods, testData.products.keychron]);
 
-    const serverTotal = 10000000;
-    const clientTotal = serverTotal + 1; // = 10,000,001
+    const resp = await api.checkout(token, tc.payload);
 
-    // [Pattern 4] — Network: send B+1 total
-    const resp = await api.checkout(token, {
-      total_amount: clientTotal,
-      shipping_address: '123 Le Loi',
-    });
-
-    // [Pattern 1] — Must be 400 or 200 with corrected total
     const status = resp.status();
-    expect([400, 200]).toContain(status);
+    expect(tc.expected_status_oneOf).toContain(status);
     expect(status).not.toBe(500);
 
     if (status === 200) {
@@ -166,9 +143,8 @@ test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
         const orderResp = await api.getOrder(token, body.orderId);
         if (orderResp.ok()) {
           const order = await orderResp.json() as { total_amount?: number };
-          // [Pattern 2] — Must not persist the B+1 over-reported value
-          expect(order.total_amount).not.toBe(clientTotal);
-          expect.soft(order.total_amount).toBe(serverTotal);
+          expect(order.total_amount).not.toBe(tc.payload.total_amount);
+          expect.soft(order.total_amount).toBe(tc.if_200_expected_total_in_db);
         }
       }
     }
@@ -178,40 +154,30 @@ test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
   // TC-CHECKOUT-BVA-004: shipping_address = empty string (length 0 = R-1)
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CHECKOUT-BVA-004: shipping_address chuỗi rỗng (length 0 = R-1 quanh mốc 1)', async ({ request }) => {
-    const testData = (await import('../data/checkout-test-data.json')) as unknown as TestData;
+    const tc = testData.tc_bva.find(c => c.tc_id === 'TC-CHECKOUT-BVA-004')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
     await prepareCart(api, token, [testData.products.keychron]);
 
-    // [Pattern 4] — Network: empty-string address
-    const resp = await api.checkout(token, {
-      total_amount: 4000000,
-      shipping_address: '',
-    });
+    const resp = await api.checkout(token, tc.payload);
 
-    // [Pattern 1] — Must not be 500; 200 or 400 both acceptable
     expect(resp.status()).not.toBe(500);
-    expect([200, 400]).toContain(resp.status());
+    expect(tc.expected_status_oneOf).toContain(resp.status());
   });
 
   // ──────────────────────────────────────────────────────────────────────────
   // TC-CHECKOUT-BVA-005: shipping_address = 1 char (length = R)
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CHECKOUT-BVA-005: shipping_address 1 ký tự (length = R, tại mốc tham chiếu)', async ({ request }) => {
-    const testData = (await import('../data/checkout-test-data.json')) as unknown as TestData;
+    const tc = testData.tc_bva.find(c => c.tc_id === 'TC-CHECKOUT-BVA-005')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
     await prepareCart(api, token, [testData.products.keychron]);
 
-    // [Pattern 4] — Network: 1-char address
-    const resp = await api.checkout(token, {
-      total_amount: 4000000,
-      shipping_address: 'A',
-    });
+    const resp = await api.checkout(token, tc.payload);
 
-    // [Pattern 1] — Must not 500
     expect(resp.status()).not.toBe(500);
-    expect([200, 400]).toContain(resp.status());
+    expect(tc.expected_status_oneOf).toContain(resp.status());
 
     if (resp.status() === 200) {
       const body = await resp.json() as { orderId?: number };
@@ -219,8 +185,7 @@ test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
         const orderResp = await api.getOrder(token, body.orderId);
         if (orderResp.ok()) {
           const order = await orderResp.json() as { shipping_address?: string };
-          // [Pattern 2] — Address stored exactly as 'A'
-          expect.soft(order.shipping_address).toBe('A');
+          expect.soft(order.shipping_address).toBe(tc.payload.shipping_address);
         }
       }
     }
@@ -230,20 +195,15 @@ test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
   // TC-CHECKOUT-BVA-006: shipping_address = 2 chars (length = R+1)
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CHECKOUT-BVA-006: shipping_address 2 ký tự (length = R+1, ngay trên mốc)', async ({ request }) => {
-    const testData = (await import('../data/checkout-test-data.json')) as unknown as TestData;
+    const tc = testData.tc_bva.find(c => c.tc_id === 'TC-CHECKOUT-BVA-006')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
     await prepareCart(api, token, [testData.products.keychron]);
 
-    // [Pattern 4] — Network: 2-char address
-    const resp = await api.checkout(token, {
-      total_amount: 4000000,
-      shipping_address: 'AB',
-    });
+    const resp = await api.checkout(token, tc.payload);
 
-    // [Pattern 1] — Must not 500; behavior must be deterministic
     expect(resp.status()).not.toBe(500);
-    expect([200, 400]).toContain(resp.status());
+    expect(tc.expected_status_oneOf).toContain(resp.status());
 
     if (resp.status() === 200) {
       const body = await resp.json() as { orderId?: number };
@@ -251,8 +211,7 @@ test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
         const orderResp = await api.getOrder(token, body.orderId);
         if (orderResp.ok()) {
           const order = await orderResp.json() as { shipping_address?: string };
-          // [Pattern 2] — No silent truncation at length transition from 1→2
-          expect.soft(order.shipping_address).toBe('AB');
+          expect.soft(order.shipping_address).toBe(tc.payload.shipping_address);
         }
       }
     }
@@ -270,22 +229,18 @@ test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
 
   for (const iter of robustnessIterations) {
     test(`TC-CHECKOUT-BVA-007${iter.id}: shipping_address ${iter.label} ký tự — không crash, không silent truncation`, async ({ request }) => {
-      const testData = (await import('../data/checkout-test-data.json')) as unknown as TestData;
       const api = new CheckoutAPIHelper(request, BASE_URL);
       const token = await ensureUserAndLogin(api, testData.users.userA);
       await prepareCart(api, token, [testData.products.keychron]);
 
-      // Generate exact-length string
       const longAddress = 'A'.repeat(iter.len);
-      expect(longAddress.length).toBe(iter.len); // Pre-condition sanity check
+      expect(longAddress.length).toBe(iter.len);
 
-      // [Pattern 4] — Network: send long address
       const resp = await api.checkout(token, {
         total_amount: 4000000,
         shipping_address: longAddress,
       });
 
-      // [Pattern 1] — Must not 500 or crash
       expect(resp.status()).not.toBe(500);
       expect([200, 400]).toContain(resp.status());
 
@@ -296,9 +251,7 @@ test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
           if (orderResp.ok()) {
             const order = await orderResp.json() as { shipping_address?: string };
             if (order.shipping_address) {
-              // [Pattern 2] — If stored, length must not be silently truncated
               expect.soft(order.shipping_address.length).toBe(iter.len);
-              // Must not have been coerced to "[object Object]"
               expect.soft(order.shipping_address).not.toBe('[object Object]');
             }
           }

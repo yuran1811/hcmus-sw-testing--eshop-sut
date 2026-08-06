@@ -15,6 +15,7 @@
 import { test, expect } from '@playwright/test';
 import { CheckoutWebPage } from '../pages/CheckoutPage';
 import { CheckoutAPIHelper, CartItem } from '../pages/CheckoutPage';
+import testDataRaw from '../data/checkout-test-data.json';
 
 const API_BASE = 'http://localhost:3000';
 const WEB_BASE = 'http://localhost:5173';
@@ -24,6 +25,7 @@ interface TestData {
   users: { userA: User };
   products: { airpods: CartItem; keychron: CartItem };
 }
+const testData = testDataRaw as unknown as TestData;
 
 // ─── Local helpers ────────────────────────────────────────────────────────────
 
@@ -63,7 +65,6 @@ test.describe('FR-08 Checkout — Web UI Tests (Equivalence Partitioning)', () =
   let tokenA: string;
 
   test.beforeAll(async ({ request }) => {
-    const testData = (await import('../data/checkout-test-data.json')) as unknown as TestData;
     const api = new CheckoutAPIHelper(request, API_BASE);
     tokenA = await ensureUserAndGetToken(api, testData.users.userA);
   });
@@ -72,7 +73,6 @@ test.describe('FR-08 Checkout — Web UI Tests (Equivalence Partitioning)', () =
   // TC-CHECKOUT-011: Trang Checkout hiển thị đầy đủ mọi dòng sản phẩm
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CHECKOUT-011: Trang Checkout hiển thị đầy đủ tên, đơn giá, số lượng các sản phẩm', async ({ page, request }) => {
-    const testData = (await import('../data/checkout-test-data.json')) as unknown as TestData;
     const api = new CheckoutAPIHelper(request, API_BASE);
 
     // Setup cart with 2 AirPods and 1 Keychron
@@ -114,7 +114,6 @@ test.describe('FR-08 Checkout — Web UI Tests (Equivalence Partitioning)', () =
   // TC-CHECKOUT-012: Tổng tiền là giá trị tự động và không thể chỉnh sửa
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CHECKOUT-012: Điều khiển tổng tiền là read-only và backend không tin giá trị client sửa', async ({ page, request }) => {
-    const testData = (await import('../data/checkout-test-data.json')) as unknown as TestData;
     const api = new CheckoutAPIHelper(request, API_BASE);
 
     const cartItems: CartItem[] = [
