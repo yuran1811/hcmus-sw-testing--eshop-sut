@@ -49,3 +49,39 @@
 - **AI output (summary):**
   > Đánh giá và tái cấu trúc toàn bộ 29 test case FR-05 để đồng bộ cấu trúc 100% với `checkout` và `category`. Tách 1 file spec đơn lẻ thành 3 file spec chuyên biệt (`plas-ep.spec.ts`, `plas-ui.spec.ts`, `plas-bva.spec.ts`) áp dụng chuẩn 5 assertion patterns; nâng cấp Page Object Model (`ProductListPage.ts`) và cấu hình `playwright.config.ts` với `PW_TEST_HTML_REPORT_TITLE` & tag chứng thực MSSV 23127115; bổ sung scripts `test:ep`, `test:ui`, `test:bva` trong `package.json`; viết lại `README.md` theo chuẩn chung.
 - **What the student changed/kept from this output:** Giữ nguyên toàn bộ cấu trúc và mã nguồn Playwright đã được refactor.
+
+---
+
+### Entry 5
+- **Tool:** Gemini 3.5 Flash via Antigravity Agent
+- **Date/time:** 2026-08-06 23:58
+- **Task context:** Refactor toàn bộ test suite Category sang mô hình Data-Driven Testing (loại bỏ hoàn toàn hardcoded values)
+- **Prompt used (verbatim):**
+  > sửa hết các code cứng liên quan đén category
+- **AI output (summary):**
+  > Thực hiện quét và thay thế toàn bộ giá trị viết cứng (tokens, edge cases, Unicode payloads, SQL injection payloads) trong 4 file test spec của Category: `category-auth.spec.ts`, `category-bva.spec.ts`, `category-crud.spec.ts`, và `category-security.spec.ts`. Dữ liệu chạy test hiện tại được load động 100% từ file cấu hình `category-test-data.json`.
+- **What the student changed/kept from this output:** Giữ nguyên toàn bộ cấu trúc code refactor, khởi chạy backend local server để chạy nghiệm thu tự động.
+
+---
+
+### Entry 6
+- **Tool:** Gemini 3.5 Flash via Antigravity Agent
+- **Date/time:** 2026-08-07 00:35
+- **Task context:** Refactor toàn bộ test suite Product List & Search (PLAS) sang mô hình Data-Driven Testing (loại bỏ hoàn toàn hardcoded values)
+- **Prompt used (verbatim):**
+  > kiểm tra xem cái nào còn đang viết cứng dữ liệu thì hãy sửa lại (cho phần product search)
+- **AI output (summary):**
+  > Thực hiện quét các file kịch bản tìm kiếm `plas-bva.spec.ts`, `plas-ep.spec.ts`, và `plas-ui.spec.ts`. Thay đổi toàn bộ các từ khóa tìm kiếm viết cứng, số lượng kỳ vọng và tiêu đề sản phẩm để lấy động từ `plas-test-data.json`.
+- **What the student changed/kept from this output:** Giữ nguyên code refactor, bổ sung thêm khóa `expected_count` vào file dữ liệu JSON cho các ca đặc biệt để khớp hoàn hảo với logic kiểm thử.
+
+---
+
+### Entry 7
+- **Tool:** Gemini 3.5 Flash via Antigravity Agent
+- **Date/time:** 2026-08-07 00:55
+- **Task context:** Refactor toàn bộ kịch bản Checkout sang mô hình Data-Driven Testing (loại bỏ hoàn toàn hardcoded values)
+- **Prompt used (verbatim):**
+  > sửa nốt các phần dữ liệu viết cứng của suite checkout sang nạp động từ file JSON
+- **AI output (summary):**
+  > Chuyển đổi toàn bộ địa chỉ giao hàng và tổng tiền giả định trong `checkout-api.spec.ts`, `checkout-bva.spec.ts`, và `checkout-ui.spec.ts` sang việc truy xuất động thông qua cấu trúc `tc_api` và `tc_bva` của file `checkout-test-data.json`.
+- **What the student changed/kept from this output:** Giữ nguyên toàn bộ mã nguồn refactor và chạy kiểm thử tự động trên local server để nghiệm thu sự tương thích.
