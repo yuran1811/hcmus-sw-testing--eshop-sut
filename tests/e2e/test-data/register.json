@@ -1,6 +1,12 @@
 {
   "feature": "FR-01 - Dang ky tai khoan",
-  "notes": "Token {{unique}} duoc thay bang chuoi duy nhat luc chay de thoa precondition 'email chua ton tai trong he thong'.",
+  "notes": "Token {{unique}} duoc thay bang chuoi duy nhat luc chay de thoa precondition 'email chua ton tai trong he thong'. Chi cac email hop le va co the dan den tao tai khoan moi dung {{unique}}; case dung email co dinh (TC-REGISTER-004) va email sai dinh dang (TC-REGISTER-003) giu nguyen tinh trang.",
+  "knownIssues": [
+    "TC-REGISTER-001, 015, 016, 017: frontend Register.jsx dung flawedStrongPasswordRegex yeu cau co khoang trang va cam moi ky tu dac biet trong tap @$!%*?& - moi mat khau hop le theo FR-01 deu bi chan, kha nang cao ca 4 case nay se FAIL khi chay that. Day la bug can bao cao, khong sua expected de che giau.",
+    "TC-REGISTER-013, 014: form dang ky (Register.jsx) khong co truong 'Xac nhan mat khau' nhu FR-01 yeu cau. Khong the automate thao tac dien field vi field khong ton tai - da doi assertion sang kiem tra su ton tai cua field.",
+    "TC-REGISTER-004: bang users khong co rang buoc UNIQUE tren email va backend /api/register khong kiem tra trung truoc khi INSERT - kha nang cao khong nhan duoc loi 'da ton tai' nhu ky vong.",
+    "TC-REGISTER-017: khong the dang ky qua UI do bug regex mat khau (issue dau tien), nen goi thang API /api/register + /api/login + /api/users/me de kiem tra SEC-01. GET /api/users/me tra ve nguyen truong password - server.js dung so sanh plaintext truc tiep o /api/login (user.password === password) nen gan nhu chac chan SEC-01 dang bi vi pham."
+  ],
   "cases": [
     {
       "id": "TC-REGISTER-001",
@@ -42,6 +48,201 @@
         "kind": "errorBanner",
         "contains": "email",
         "accountCreated": false
+      }
+    },
+    {
+      "id": "TC-REGISTER-004",
+      "title": "Email da duoc dang ky (trung)",
+      "input": {
+        "name": "Nguyễn Văn A",
+        "email": "test@eshop.com",
+        "password": "Abcd123!"
+      },
+      "expected": {
+        "kind": "errorBanner",
+        "contains": "tồn tại",
+        "accountCreated": false
+      }
+    },
+    {
+      "id": "TC-REGISTER-005",
+      "title": "Email de trong",
+      "input": {
+        "name": "Nguyễn Văn A",
+        "email": "",
+        "password": "Abcd123!"
+      },
+      "expected": {
+        "kind": "fieldInvalid",
+        "field": "Email",
+        "accountCreated": false
+      }
+    },
+    {
+      "id": "TC-REGISTER-006",
+      "title": "Mat khau it hon 8 ky tu (bien duoi khong hop le)",
+      "input": {
+        "name": "Nguyễn Văn A",
+        "email": "nguyenvana06+{{unique}}@gmail.com",
+        "password": "Aa1!aa2"
+      },
+      "expected": {
+        "kind": "errorBanner",
+        "contains": "mật khẩu",
+        "accountCreated": false
+      }
+    },
+    {
+      "id": "TC-REGISTER-007",
+      "title": "Mat khau thieu chu hoa",
+      "input": {
+        "name": "Nguyễn Văn A",
+        "email": "nguyenvana07+{{unique}}@gmail.com",
+        "password": "abcd123!"
+      },
+      "expected": {
+        "kind": "errorBanner",
+        "contains": "mật khẩu",
+        "accountCreated": false
+      }
+    },
+    {
+      "id": "TC-REGISTER-008",
+      "title": "Mat khau thieu chu thuong",
+      "input": {
+        "name": "Nguyễn Văn A",
+        "email": "nguyenvana08+{{unique}}@gmail.com",
+        "password": "ABCD123!"
+      },
+      "expected": {
+        "kind": "errorBanner",
+        "contains": "mật khẩu",
+        "accountCreated": false
+      }
+    },
+    {
+      "id": "TC-REGISTER-009",
+      "title": "Mat khau thieu chu so",
+      "input": {
+        "name": "Nguyễn Văn A",
+        "email": "nguyenvana09+{{unique}}@gmail.com",
+        "password": "Abcdefg!"
+      },
+      "expected": {
+        "kind": "errorBanner",
+        "contains": "mật khẩu",
+        "accountCreated": false
+      }
+    },
+    {
+      "id": "TC-REGISTER-010",
+      "title": "Mat khau khong co ky tu dac biet",
+      "input": {
+        "name": "Nguyễn Văn A",
+        "email": "nguyenvana10+{{unique}}@gmail.com",
+        "password": "Abcd1234"
+      },
+      "expected": {
+        "kind": "errorBanner",
+        "contains": "mật khẩu",
+        "accountCreated": false
+      }
+    },
+    {
+      "id": "TC-REGISTER-011",
+      "title": "Mat khau co ky tu dac biet nam ngoai tap cho phep",
+      "input": {
+        "name": "Nguyễn Văn A",
+        "email": "nguyenvana11+{{unique}}@gmail.com",
+        "password": "Abcd1234#"
+      },
+      "expected": {
+        "kind": "errorBanner",
+        "contains": "mật khẩu",
+        "accountCreated": false
+      }
+    },
+    {
+      "id": "TC-REGISTER-012",
+      "title": "Mat khau de trong",
+      "input": {
+        "name": "Nguyễn Văn A",
+        "email": "nguyenvana12+{{unique}}@gmail.com",
+        "password": ""
+      },
+      "expected": {
+        "kind": "fieldInvalid",
+        "field": "Mật khẩu",
+        "accountCreated": false
+      }
+    },
+    {
+      "id": "TC-REGISTER-013",
+      "title": "Xac nhan mat khau khong khop",
+      "input": {
+        "name": "Nguyễn Văn A",
+        "email": "nguyenvana13+{{unique}}@gmail.com",
+        "password": "Abcd123!",
+        "confirmPassword": "Abcd123@"
+      },
+      "expected": {
+        "kind": "confirmField",
+        "accountCreated": false
+      }
+    },
+    {
+      "id": "TC-REGISTER-014",
+      "title": "Xac nhan mat khau de trong",
+      "input": {
+        "name": "Nguyễn Văn A",
+        "email": "nguyenvana14+{{unique}}@gmail.com",
+        "password": "Abcd123!",
+        "confirmPassword": ""
+      },
+      "expected": {
+        "kind": "confirmField",
+        "accountCreated": false
+      }
+    },
+    {
+      "id": "TC-REGISTER-015",
+      "title": "BVA - Mat khau co dung 1 chu thuong (on-point bien duoi)",
+      "input": {
+        "name": "Nguyễn Văn A",
+        "email": "bva.lower+{{unique}}@gmail.com",
+        "password": "ABCD12a!"
+      },
+      "expected": {
+        "kind": "redirect",
+        "redirectPath": "/login",
+        "accountCreated": true
+      }
+    },
+    {
+      "id": "TC-REGISTER-016",
+      "title": "BVA - Mat khau co dung 1 chu so (on-point bien duoi)",
+      "input": {
+        "name": "Nguyễn Văn A",
+        "email": "bva.digit+{{unique}}@gmail.com",
+        "password": "ABCDab1!"
+      },
+      "expected": {
+        "kind": "redirect",
+        "redirectPath": "/login",
+        "accountCreated": true
+      }
+    },
+    {
+      "id": "TC-REGISTER-017",
+      "title": "SEC-01 - Mat khau khong duoc luu plaintext trong CSDL",
+      "input": {
+        "name": "Nguyễn Văn A",
+        "email": "sec01.check+{{unique}}@gmail.com",
+        "password": "Abcd123!"
+      },
+      "expected": {
+        "kind": "dbHash",
+        "accountCreated": true
       }
     }
   ]
