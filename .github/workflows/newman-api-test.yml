@@ -1,0 +1,50 @@
+name: Newman API tests
+
+on:
+  push:
+    branches: [main, master, feature/*]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm ci
+
+      - name: Start SUT
+        working-directory: backend
+        run: |
+          nohup npm run dev > server.log 2>&1 &
+          for i in $(seq 1 30); do
+            curl -fsS http://127.0.0.1:3000/api/categories > /dev/null && break
+            sleep 1
+          done
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Run Newman
+        run: |
+          newman run Mini-Exercise/mini-categories.postman_collection.json \
+            -e Mini-Exercise/mini-local.postman_environment.json \
+            -d Mini-Exercise/mini-categories.data.json \
+            -r cli,json \
+            --reporter-json-export Mini-Exercise/mini-newman-report.json
+
+      - name: Upload Newman report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-report
+          path: Mini-Exercise/mini-newman-report.json

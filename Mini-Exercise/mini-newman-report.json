@@ -1,0 +1,1543 @@
+{
+  "collection": {
+    "item": [
+      {
+        "id": "756ffafa-39da-401c-bdd2-895b2f95257b",
+        "name": "GET Categories",
+        "request": {
+          "url": {
+            "path": [
+              "api",
+              "categories"
+            ],
+            "host": [
+              "{{baseUrl}}"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "method": "GET"
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "cd02ff50-3369-45b3-ae4d-d880766b9e5f",
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status code is \" + pm.variables.get(\"expected_status\"), () => {",
+                "    pm.response.to.have.status(parseInt(pm.variables.get(\"expected_status\")));",
+                "});",
+                "",
+                "pm.test(\"Content-Type is application/json\", () => {",
+                "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+                "});",
+                "",
+                "const tc = pm.variables.get(\"tc_id\");",
+                "if (tc === \"GET_CAT_04\") {",
+                "    pm.test(\"Schema matches categories list\", () => {",
+                "        const jsonData = pm.response.json();",
+                "        pm.expect(jsonData).to.be.an(\"array\");",
+                "        if (jsonData.length > 0) {",
+                "            pm.expect(jsonData[0]).to.have.any.keys(\"id\", \"name\", \"slug\");",
+                "        }",
+                "    });",
+                "}",
+                "if (tc === \"GET_CAT_05\") {",
+                "    pm.test(\"Response time is less than 500ms\", () => {",
+                "        pm.expect(pm.response.responseTime).to.be.below(500);",
+                "    });",
+                "}"
+              ],
+              "_lastExecutionId": "67a66262-722b-4e90-8d68-dd6b0f535b85"
+            }
+          }
+        ]
+      }
+    ],
+    "event": [
+      {
+        "listen": "prerequest",
+        "script": {
+          "id": "bab9834e-a7b2-4ebe-aa4f-c776d67b5526",
+          "type": "text/javascript",
+          "exec": [
+            "pm.request.headers.upsert({",
+            "  key: \"X-Student-Id\",",
+            "  value: pm.environment.get(\"studentId\")",
+            "});"
+          ],
+          "_lastExecutionId": "2a3ce9bc-fb95-4864-9b9c-39dead5ed336"
+        }
+      }
+    ],
+    "variable": [],
+    "info": {
+      "_postman_id": "ea94bbae-f817-4ffc-acf1-1abf042ec4e2",
+      "name": "Eshop - Categories API",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    }
+  },
+  "environment": {
+    "_": {
+      "postman_variable_scope": "environment"
+    },
+    "id": "67c538f8-f9e7-4904-9333-ea4409adb28b",
+    "name": "mini-local",
+    "values": [
+      {
+        "type": "any",
+        "value": "http://localhost:3000",
+        "key": "baseUrl"
+      },
+      {
+        "type": "any",
+        "value": "20127000",
+        "key": "studentId"
+      }
+    ]
+  },
+  "globals": {
+    "id": "830784c2-e546-43b1-8415-7847cba1d30a",
+    "values": []
+  },
+  "run": {
+    "stats": {
+      "iterations": {
+        "total": 5,
+        "pending": 0,
+        "failed": 0
+      },
+      "items": {
+        "total": 5,
+        "pending": 0,
+        "failed": 0
+      },
+      "scripts": {
+        "total": 10,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequests": {
+        "total": 5,
+        "pending": 0,
+        "failed": 0
+      },
+      "requests": {
+        "total": 5,
+        "pending": 0,
+        "failed": 0
+      },
+      "tests": {
+        "total": 5,
+        "pending": 0,
+        "failed": 0
+      },
+      "assertions": {
+        "total": 12,
+        "pending": 0,
+        "failed": 0
+      },
+      "testScripts": {
+        "total": 5,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequestScripts": {
+        "total": 5,
+        "pending": 0,
+        "failed": 0
+      }
+    },
+    "timings": {
+      "responseAverage": 9.8,
+      "responseMin": 4,
+      "responseMax": 26,
+      "responseSd": 8.255906976220118,
+      "dnsAverage": 0,
+      "dnsMin": 0,
+      "dnsMax": 0,
+      "dnsSd": 0,
+      "firstByteAverage": 0,
+      "firstByteMin": 0,
+      "firstByteMax": 0,
+      "firstByteSd": 0,
+      "started": 1786068499747,
+      "completed": 1786068500201
+    },
+    "executions": [
+      {
+        "cursor": {
+          "position": 0,
+          "iteration": 0,
+          "length": 1,
+          "cycles": 5,
+          "empty": false,
+          "eof": false,
+          "bof": true,
+          "cr": false,
+          "ref": "d5fef057-18bf-4ec4-82e8-9706448122e5",
+          "httpRequestId": "c7366243-fd10-44b0-9aa1-5f7cf8e2e274"
+        },
+        "item": {
+          "id": "756ffafa-39da-401c-bdd2-895b2f95257b",
+          "name": "GET Categories",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "categories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "cd02ff50-3369-45b3-ae4d-d880766b9e5f",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is \" + pm.variables.get(\"expected_status\"), () => {",
+                  "    pm.response.to.have.status(parseInt(pm.variables.get(\"expected_status\")));",
+                  "});",
+                  "",
+                  "pm.test(\"Content-Type is application/json\", () => {",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+                  "});",
+                  "",
+                  "const tc = pm.variables.get(\"tc_id\");",
+                  "if (tc === \"GET_CAT_04\") {",
+                  "    pm.test(\"Schema matches categories list\", () => {",
+                  "        const jsonData = pm.response.json();",
+                  "        pm.expect(jsonData).to.be.an(\"array\");",
+                  "        if (jsonData.length > 0) {",
+                  "            pm.expect(jsonData[0]).to.have.any.keys(\"id\", \"name\", \"slug\");",
+                  "        }",
+                  "    });",
+                  "}",
+                  "if (tc === \"GET_CAT_05\") {",
+                  "    pm.test(\"Response time is less than 500ms\", () => {",
+                  "        pm.expect(pm.response.responseTime).to.be.below(500);",
+                  "    });",
+                  "}"
+                ],
+                "_lastExecutionId": "67a66262-722b-4e90-8d68-dd6b0f535b85"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "api",
+              "categories"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "X-Student-Id",
+              "value": "20127000"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "a6ee2c00-bc0e-4f99-bfa2-fbee35373215",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET"
+        },
+        "response": {
+          "id": "172d26b8-a7bc-4a9f-851c-14b0e614ab5d",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "91"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"5b-vgo25Fu4VXEvRW0/sySNLrPEkOw\""
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 07 Aug 2026 02:08:19 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              91,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              49,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              196,
+              144,
+              105,
+              225,
+              187,
+              135,
+              110,
+              32,
+              116,
+              104,
+              111,
+              225,
+              186,
+              161,
+              105,
+              34,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              50,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              76,
+              97,
+              112,
+              116,
+              111,
+              112,
+              34,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              51,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              80,
+              104,
+              225,
+              187,
+              165,
+              32,
+              107,
+              105,
+              225,
+              187,
+              135,
+              110,
+              34,
+              125,
+              93
+            ]
+          },
+          "cookie": [],
+          "responseTime": 26,
+          "responseSize": 91
+        },
+        "id": "756ffafa-39da-401c-bdd2-895b2f95257b",
+        "assertions": [
+          {
+            "assertion": "Status code is 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Content-Type is application/json",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "b928c6dd-8403-41a2-9bfc-b05f83b1ed3f",
+          "length": 1,
+          "cycles": 5,
+          "position": 0,
+          "iteration": 1,
+          "cr": true,
+          "httpRequestId": "a0657fc6-acc0-438a-a793-4c5cd3630602"
+        },
+        "item": {
+          "id": "756ffafa-39da-401c-bdd2-895b2f95257b",
+          "name": "GET Categories",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "categories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "cd02ff50-3369-45b3-ae4d-d880766b9e5f",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is \" + pm.variables.get(\"expected_status\"), () => {",
+                  "    pm.response.to.have.status(parseInt(pm.variables.get(\"expected_status\")));",
+                  "});",
+                  "",
+                  "pm.test(\"Content-Type is application/json\", () => {",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+                  "});",
+                  "",
+                  "const tc = pm.variables.get(\"tc_id\");",
+                  "if (tc === \"GET_CAT_04\") {",
+                  "    pm.test(\"Schema matches categories list\", () => {",
+                  "        const jsonData = pm.response.json();",
+                  "        pm.expect(jsonData).to.be.an(\"array\");",
+                  "        if (jsonData.length > 0) {",
+                  "            pm.expect(jsonData[0]).to.have.any.keys(\"id\", \"name\", \"slug\");",
+                  "        }",
+                  "    });",
+                  "}",
+                  "if (tc === \"GET_CAT_05\") {",
+                  "    pm.test(\"Response time is less than 500ms\", () => {",
+                  "        pm.expect(pm.response.responseTime).to.be.below(500);",
+                  "    });",
+                  "}"
+                ],
+                "_lastExecutionId": "67a66262-722b-4e90-8d68-dd6b0f535b85"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "api",
+              "categories"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "X-Student-Id",
+              "value": "20127000"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "a21b2bc7-207c-4ba1-acd1-d0713bd62cd0",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET"
+        },
+        "response": {
+          "id": "c9c4e0d4-64e4-474d-bcb8-07445a6819cd",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "91"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"5b-vgo25Fu4VXEvRW0/sySNLrPEkOw\""
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 07 Aug 2026 02:08:19 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              91,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              49,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              196,
+              144,
+              105,
+              225,
+              187,
+              135,
+              110,
+              32,
+              116,
+              104,
+              111,
+              225,
+              186,
+              161,
+              105,
+              34,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              50,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              76,
+              97,
+              112,
+              116,
+              111,
+              112,
+              34,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              51,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              80,
+              104,
+              225,
+              187,
+              165,
+              32,
+              107,
+              105,
+              225,
+              187,
+              135,
+              110,
+              34,
+              125,
+              93
+            ]
+          },
+          "cookie": [],
+          "responseTime": 8,
+          "responseSize": 91
+        },
+        "id": "756ffafa-39da-401c-bdd2-895b2f95257b",
+        "assertions": [
+          {
+            "assertion": "Status code is 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Content-Type is application/json",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "2eb76d34-6938-4fc3-b9aa-4d9fc00a3bcc",
+          "length": 1,
+          "cycles": 5,
+          "position": 0,
+          "iteration": 2,
+          "cr": true,
+          "httpRequestId": "a9c39857-dab4-4155-ae58-4a84447da1c9"
+        },
+        "item": {
+          "id": "756ffafa-39da-401c-bdd2-895b2f95257b",
+          "name": "GET Categories",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "categories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "cd02ff50-3369-45b3-ae4d-d880766b9e5f",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is \" + pm.variables.get(\"expected_status\"), () => {",
+                  "    pm.response.to.have.status(parseInt(pm.variables.get(\"expected_status\")));",
+                  "});",
+                  "",
+                  "pm.test(\"Content-Type is application/json\", () => {",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+                  "});",
+                  "",
+                  "const tc = pm.variables.get(\"tc_id\");",
+                  "if (tc === \"GET_CAT_04\") {",
+                  "    pm.test(\"Schema matches categories list\", () => {",
+                  "        const jsonData = pm.response.json();",
+                  "        pm.expect(jsonData).to.be.an(\"array\");",
+                  "        if (jsonData.length > 0) {",
+                  "            pm.expect(jsonData[0]).to.have.any.keys(\"id\", \"name\", \"slug\");",
+                  "        }",
+                  "    });",
+                  "}",
+                  "if (tc === \"GET_CAT_05\") {",
+                  "    pm.test(\"Response time is less than 500ms\", () => {",
+                  "        pm.expect(pm.response.responseTime).to.be.below(500);",
+                  "    });",
+                  "}"
+                ],
+                "_lastExecutionId": "67a66262-722b-4e90-8d68-dd6b0f535b85"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "api",
+              "categories"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "X-Student-Id",
+              "value": "20127000"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "c6793c9a-dae0-43a8-b356-943435d7b51a",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET"
+        },
+        "response": {
+          "id": "e62c089c-fc9f-4e27-9712-d3742fdc9f2a",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "91"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"5b-vgo25Fu4VXEvRW0/sySNLrPEkOw\""
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 07 Aug 2026 02:08:20 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              91,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              49,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              196,
+              144,
+              105,
+              225,
+              187,
+              135,
+              110,
+              32,
+              116,
+              104,
+              111,
+              225,
+              186,
+              161,
+              105,
+              34,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              50,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              76,
+              97,
+              112,
+              116,
+              111,
+              112,
+              34,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              51,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              80,
+              104,
+              225,
+              187,
+              165,
+              32,
+              107,
+              105,
+              225,
+              187,
+              135,
+              110,
+              34,
+              125,
+              93
+            ]
+          },
+          "cookie": [],
+          "responseTime": 7,
+          "responseSize": 91
+        },
+        "id": "756ffafa-39da-401c-bdd2-895b2f95257b",
+        "assertions": [
+          {
+            "assertion": "Status code is 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Content-Type is application/json",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "16ff6fd2-de6f-4b66-9573-6aa537ff5fdf",
+          "length": 1,
+          "cycles": 5,
+          "position": 0,
+          "iteration": 3,
+          "cr": true,
+          "httpRequestId": "3326e984-3c7e-46be-8577-71c096d919c5"
+        },
+        "item": {
+          "id": "756ffafa-39da-401c-bdd2-895b2f95257b",
+          "name": "GET Categories",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "categories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "cd02ff50-3369-45b3-ae4d-d880766b9e5f",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is \" + pm.variables.get(\"expected_status\"), () => {",
+                  "    pm.response.to.have.status(parseInt(pm.variables.get(\"expected_status\")));",
+                  "});",
+                  "",
+                  "pm.test(\"Content-Type is application/json\", () => {",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+                  "});",
+                  "",
+                  "const tc = pm.variables.get(\"tc_id\");",
+                  "if (tc === \"GET_CAT_04\") {",
+                  "    pm.test(\"Schema matches categories list\", () => {",
+                  "        const jsonData = pm.response.json();",
+                  "        pm.expect(jsonData).to.be.an(\"array\");",
+                  "        if (jsonData.length > 0) {",
+                  "            pm.expect(jsonData[0]).to.have.any.keys(\"id\", \"name\", \"slug\");",
+                  "        }",
+                  "    });",
+                  "}",
+                  "if (tc === \"GET_CAT_05\") {",
+                  "    pm.test(\"Response time is less than 500ms\", () => {",
+                  "        pm.expect(pm.response.responseTime).to.be.below(500);",
+                  "    });",
+                  "}"
+                ],
+                "_lastExecutionId": "67a66262-722b-4e90-8d68-dd6b0f535b85"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "api",
+              "categories"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "X-Student-Id",
+              "value": "20127000"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "f418cd23-48d3-4b15-b549-71e06187f224",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET"
+        },
+        "response": {
+          "id": "6919d2b2-a43d-442e-a1c5-50f8cb3c859f",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "91"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"5b-vgo25Fu4VXEvRW0/sySNLrPEkOw\""
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 07 Aug 2026 02:08:20 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              91,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              49,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              196,
+              144,
+              105,
+              225,
+              187,
+              135,
+              110,
+              32,
+              116,
+              104,
+              111,
+              225,
+              186,
+              161,
+              105,
+              34,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              50,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              76,
+              97,
+              112,
+              116,
+              111,
+              112,
+              34,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              51,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              80,
+              104,
+              225,
+              187,
+              165,
+              32,
+              107,
+              105,
+              225,
+              187,
+              135,
+              110,
+              34,
+              125,
+              93
+            ]
+          },
+          "cookie": [],
+          "responseTime": 4,
+          "responseSize": 91
+        },
+        "id": "756ffafa-39da-401c-bdd2-895b2f95257b",
+        "assertions": [
+          {
+            "assertion": "Status code is 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Content-Type is application/json",
+            "skipped": false
+          },
+          {
+            "assertion": "Schema matches categories list",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "4f206cbe-21e2-4f09-a72a-2166bfa4b010",
+          "length": 1,
+          "cycles": 5,
+          "position": 0,
+          "iteration": 4,
+          "cr": true,
+          "httpRequestId": "54f85edc-4224-40af-87ed-e51b342d6916"
+        },
+        "item": {
+          "id": "756ffafa-39da-401c-bdd2-895b2f95257b",
+          "name": "GET Categories",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "categories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "cd02ff50-3369-45b3-ae4d-d880766b9e5f",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is \" + pm.variables.get(\"expected_status\"), () => {",
+                  "    pm.response.to.have.status(parseInt(pm.variables.get(\"expected_status\")));",
+                  "});",
+                  "",
+                  "pm.test(\"Content-Type is application/json\", () => {",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+                  "});",
+                  "",
+                  "const tc = pm.variables.get(\"tc_id\");",
+                  "if (tc === \"GET_CAT_04\") {",
+                  "    pm.test(\"Schema matches categories list\", () => {",
+                  "        const jsonData = pm.response.json();",
+                  "        pm.expect(jsonData).to.be.an(\"array\");",
+                  "        if (jsonData.length > 0) {",
+                  "            pm.expect(jsonData[0]).to.have.any.keys(\"id\", \"name\", \"slug\");",
+                  "        }",
+                  "    });",
+                  "}",
+                  "if (tc === \"GET_CAT_05\") {",
+                  "    pm.test(\"Response time is less than 500ms\", () => {",
+                  "        pm.expect(pm.response.responseTime).to.be.below(500);",
+                  "    });",
+                  "}"
+                ],
+                "_lastExecutionId": "67a66262-722b-4e90-8d68-dd6b0f535b85"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "api",
+              "categories"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "X-Student-Id",
+              "value": "20127000"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "7146508c-2901-4724-9f4a-42637aca727d",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET"
+        },
+        "response": {
+          "id": "7f8e89be-05a9-4571-8b80-998a0082e749",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "91"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"5b-vgo25Fu4VXEvRW0/sySNLrPEkOw\""
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 07 Aug 2026 02:08:20 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              91,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              49,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              196,
+              144,
+              105,
+              225,
+              187,
+              135,
+              110,
+              32,
+              116,
+              104,
+              111,
+              225,
+              186,
+              161,
+              105,
+              34,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              50,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              76,
+              97,
+              112,
+              116,
+              111,
+              112,
+              34,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              51,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              80,
+              104,
+              225,
+              187,
+              165,
+              32,
+              107,
+              105,
+              225,
+              187,
+              135,
+              110,
+              34,
+              125,
+              93
+            ]
+          },
+          "cookie": [],
+          "responseTime": 4,
+          "responseSize": 91
+        },
+        "id": "756ffafa-39da-401c-bdd2-895b2f95257b",
+        "assertions": [
+          {
+            "assertion": "Status code is 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Content-Type is application/json",
+            "skipped": false
+          },
+          {
+            "assertion": "Response time is less than 500ms",
+            "skipped": false
+          }
+        ]
+      }
+    ],
+    "transfers": {
+      "responseTotal": 455
+    },
+    "failures": [],
+    "error": null
+  }
+}

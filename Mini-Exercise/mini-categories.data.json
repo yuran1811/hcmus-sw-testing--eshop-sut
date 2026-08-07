@@ -1,0 +1,32 @@
+[
+  {
+    "tc_id": "GET_CAT_01",
+    "description": "Lay danh sach danh muc hop le",
+    "query_param": "",
+    "expected_status": 200
+  },
+  {
+    "tc_id": "GET_CAT_02",
+    "description": "Truyen query param khong anh huong",
+    "query_param": "?extra=true",
+    "expected_status": 200
+  },
+  {
+    "tc_id": "GET_CAT_03",
+    "description": "Kiem tra accept header hop le",
+    "query_param": "",
+    "expected_status": 200
+  },
+  {
+    "tc_id": "GET_CAT_04",
+    "description": "Kiem tra schema kieu du lieu tra ve",
+    "query_param": "",
+    "expected_status": 200
+  },
+  {
+    "tc_id": "GET_CAT_05",
+    "description": "Kiem tra response time phai nhanh",
+    "query_param": "",
+    "expected_status": 200
+  }
+]
