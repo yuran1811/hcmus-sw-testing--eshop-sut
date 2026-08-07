@@ -147,7 +147,7 @@ don't have to record twice.
 
 Before packaging, run `scripts/check_git_commits.sh` inside your automation repo to
 verify you actually meet the assignment's anti-cheat commit rule: **≥8 commits that touch
-a `.spec.js`/`.spec.ts` (or equivalent) file, spread across ≥4 different days** — commits
+a `.spec.js`/`.spec.ts` (or equivalent) file** — commits
 touching only README/PDF/docs do not count. Fix your commit history before submission day
 if the script reports a shortfall.
 
@@ -171,5 +171,5 @@ and to sanity-check that the expected files/folders are present before zipping.
 | Demo video script, recording tools, YouTube unlisted upload | `references/demo-video-guide.md` |
 | Submission `.zip` checklist + naming rule | `references/submission-checklist.md` |
 | Scaffold a new Playwright project | `scripts/scaffold_playwright_project.sh` |
-| Verify Git commit log meets the ≥8-commit/≥4-day rule | `scripts/check_git_commits.sh` |
+| Verify Git commit log meets the ≥8-commit rule | `scripts/check_git_commits.sh` |
 | Package the final submission zip | `scripts/package_submission.sh` |

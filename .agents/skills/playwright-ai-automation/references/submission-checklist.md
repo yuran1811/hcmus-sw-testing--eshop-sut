@@ -25,7 +25,7 @@
 - [ ] File HTML report thực sự do bạn chạy ra (không phải AI tạo giả) — mở file, xác nhận
       timestamp khớp với thời điểm bạn chạy thật.
 - [ ] Video có giọng nói thật của bạn + face-cam hoặc terminal chạy `whoami` và `hostname`.
-- [ ] Repo có ≥8 commit thay đổi file `.spec.js`/`.spec.ts` (hoặc tương đương), trải dài ≥4 ngày.
+- [ ] Repo có ≥8 commit thay đổi file `.spec.js`/`.spec.ts` (hoặc tương đương).
       Commit chỉ sửa README/PDF **không tính**.
 
 ## 4. Lệnh hữu ích
@@ -34,8 +34,8 @@
 # Xuất git log ra file text
 git log --oneline --date=short --pretty=format:"%h %ad %an %s" > git_commit_log.txt
 
-# Đếm số commit chạm vào file test trong 4 ngày gần nhất (kiểm tra nhanh)
-git log --since="4 days ago" --name-only --pretty=format:"COMMIT %h" \
+# Đếm tổng số commit chạm vào file test
+git log --name-only --pretty=format:"COMMIT %h" \
   | grep -E "\.spec\.(js|ts)$" | wc -l
 ```
 

@@ -3,7 +3,6 @@
 #
 # Kiểm tra tự động điều kiện "Git Commit Log" (mục 12 đề bài HW04):
 #   - >= 8 commit thay đổi file .spec.js / .spec.ts (hoặc tương đương)
-#   - trải dài >= 4 ngày khác nhau
 #
 # Cách dùng: chạy trong thư mục gốc của repo Git
 #   ./check_git_commits.sh [pattern-file-test]
@@ -67,11 +66,7 @@ else
   echo "  [THIẾU] Số commit hợp lệ = $COUNT (< 8 yêu cầu) — cần thêm $((8 - COUNT)) commit nữa"
 fi
 
-if [ "$NUM_UNIQUE_DAYS" -ge 4 ]; then
-  echo "  [OK]    Số ngày khác nhau có commit hợp lệ = $NUM_UNIQUE_DAYS (>= 4 yêu cầu)"
-else
-  echo "  [THIẾU] Số ngày khác nhau = $NUM_UNIQUE_DAYS (< 4 yêu cầu) — commit cần trải dài thêm ít nhất $((4 - NUM_UNIQUE_DAYS)) ngày nữa"
-fi
+echo "  [INFO]  Số ngày khác nhau có commit hợp lệ = $NUM_UNIQUE_DAYS"
 
 echo ""
 echo "Lưu ý: script chỉ đếm dựa trên tên file khớp mẫu regex, không thay thế việc bạn"

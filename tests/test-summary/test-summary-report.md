@@ -28,7 +28,7 @@
 ## 4. Danh sách tài liệu liên quan
 
 - **[Ma trận truy vết (Traceability Matrix)](./traceability-matrix.md)**
-- **[Báo cáo lỗi (Bug Report)](../../docs/report/Bug_Report.md)**
+- **[Báo cáo lỗi (Bug Report)](../../docs/report/manual/Bug_Report.md)**
 - **Báo cáo chi tiết kỹ thuật:**
   - [Domain Testing Report](../../docs/report/Domain_Testing_Report.md)
   - [Boundary Value Analysis Report](../../docs/report/Boundary_Value_Analysis_Report.md)

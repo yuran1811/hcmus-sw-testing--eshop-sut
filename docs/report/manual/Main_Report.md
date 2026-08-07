@@ -191,26 +191,26 @@ Nominal values for other variables: `Product Count` = 3 (multiple products exist
 
 | Scenario(s) Merged                                         | Reason                                                              | Resulting TC                                                              |
 | ---------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| Scenario #1 + Scenario #7 + Scenario #11 + OC1 + OC2 + OC4 | Identical test data and output (view all products with empty query) | [TC-PLAS-001](../../tests/test-cases/product-list-and-search/TC-PLAS-001.md) |
-| Scenario #2                                                | Matches specific query and filters list                             | [TC-PLAS-002](../../tests/test-cases/product-list-and-search/TC-PLAS-002.md) |
-| Scenario #3                                                | Handles non-matching queries, shows empty state                     | [TC-PLAS-003](../../tests/test-cases/product-list-and-search/TC-PLAS-003.md) |
-| Scenario #4                                                | Handles Vietnamese search accents                                   | [TC-PLAS-004](../../tests/test-cases/product-list-and-search/TC-PLAS-004.md) |
-| Scenario #5 + OC3                                          | Handles HTML script block queries safely (XSS protection)           | [TC-PLAS-005](../../tests/test-cases/product-list-and-search/TC-PLAS-005.md) |
-| Scenario #10                                               | Captures system behavior when loading data                          | [TC-PLAS-006](../../tests/test-cases/product-list-and-search/TC-PLAS-006.md) |
-| OC4                                                        | Verification of single H1 tag constraints                           | [TC-PLAS-007](../../tests/test-cases/product-list-and-search/TC-PLAS-007.md) |
+| Scenario #1 + Scenario #7 + Scenario #11 + OC1 + OC2 + OC4 | Identical test data and output (view all products with empty query) | [TC-PLAS-001](../../../tests/test-cases/product-list-and-search/TC-PLAS-001.md) |
+| Scenario #2                                                | Matches specific query and filters list                             | [TC-PLAS-002](../../../tests/test-cases/product-list-and-search/TC-PLAS-002.md) |
+| Scenario #3                                                | Handles non-matching queries, shows empty state                     | [TC-PLAS-003](../../../tests/test-cases/product-list-and-search/TC-PLAS-003.md) |
+| Scenario #4                                                | Handles Vietnamese search accents                                   | [TC-PLAS-004](../../../tests/test-cases/product-list-and-search/TC-PLAS-004.md) |
+| Scenario #5 + OC3                                          | Handles HTML script block queries safely (XSS protection)           | [TC-PLAS-005](../../../tests/test-cases/product-list-and-search/TC-PLAS-005.md) |
+| Scenario #10                                               | Captures system behavior when loading data                          | [TC-PLAS-006](../../../tests/test-cases/product-list-and-search/TC-PLAS-006.md) |
+| OC4                                                        | Verification of single H1 tag constraints                           | [TC-PLAS-007](../../../tests/test-cases/product-list-and-search/TC-PLAS-007.md) |
 | Scenario #6, #8, #9                                        | These boundaries are handled under Boundary Value Analysis (BVA)    | Represented in BVA TCs                                                    |
 
 #### Final Test Case Summary
 
 | #   | TC ID                                                                     | Description                                                            | Technique | EC/OC Covered                 | Expected                                                           |
 | --- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------- | --------- | ----------------------------- | ------------------------------------------------------------------ |
-| 1   | [TC-PLAS-001](../../tests/test-cases/product-list-and-search/TC-PLAS-001.md) | Xem toàn bộ danh sách sản phẩm thành công                              | DT        | EC2, EC7, EC11, OC1, OC2, OC4 | Pass - Grid displays all products with correct format and 1 H1 tag |
-| 2   | [TC-PLAS-002](../../tests/test-cases/product-list-and-search/TC-PLAS-002.md) | Tìm kiếm sản phẩm bằng từ khóa hợp lệ có kết quả                       | DT        | EC1, EC7, EC11, OC1, OC2, OC4 | Pass - Grid shows only matching products                           |
-| 3   | [TC-PLAS-003](../../tests/test-cases/product-list-and-search/TC-PLAS-003.md) | Tìm kiếm sản phẩm bằng từ khóa không khớp với sản phẩm nào             | DT        | EC3, EC7, EC11, OC4           | Pass - Empty state displayed                                       |
-| 4   | [TC-PLAS-004](../../tests/test-cases/product-list-and-search/TC-PLAS-004.md) | Tìm kiếm sản phẩm bằng từ khóa có dấu tiếng Việt và ký tự đặc biệt     | DT        | EC4, EC7, EC11, OC1, OC2, OC4 | Pass - Correct matching for accents                                |
-| 5   | [TC-PLAS-005](../../tests/test-cases/product-list-and-search/TC-PLAS-005.md) | Tìm kiếm sản phẩm bằng từ khóa chứa mã độc HTML/XSS (Hiển thị an toàn) | DT        | EC5, EC7, EC11, OC3, OC4      | Pass - Rendered safely as plain text, no script execution          |
-| 6   | [TC-PLAS-006](../../tests/test-cases/product-list-and-search/TC-PLAS-006.md) | Kiểm tra trạng thái tải dữ liệu (Loading State)                        | DT        | EC10, EC7, OC4                | Pass - Loading indicator displays while fetching                   |
-| 7   | [TC-PLAS-007](../../tests/test-cases/product-list-and-search/TC-PLAS-007.md) | Kiểm tra cấu trúc thẻ H1 duy nhất trên trang chủ                       | DT        | EC11, OC4                     | Pass - Exactly one H1 tag exists on page                           |
+| 1   | [TC-PLAS-001](../../../tests/test-cases/product-list-and-search/TC-PLAS-001.md) | Xem toàn bộ danh sách sản phẩm thành công                              | DT        | EC2, EC7, EC11, OC1, OC2, OC4 | Pass - Grid displays all products with correct format and 1 H1 tag |
+| 2   | [TC-PLAS-002](../../../tests/test-cases/product-list-and-search/TC-PLAS-002.md) | Tìm kiếm sản phẩm bằng từ khóa hợp lệ có kết quả                       | DT        | EC1, EC7, EC11, OC1, OC2, OC4 | Pass - Grid shows only matching products                           |
+| 3   | [TC-PLAS-003](../../../tests/test-cases/product-list-and-search/TC-PLAS-003.md) | Tìm kiếm sản phẩm bằng từ khóa không khớp với sản phẩm nào             | DT        | EC3, EC7, EC11, OC4           | Pass - Empty state displayed                                       |
+| 4   | [TC-PLAS-004](../../../tests/test-cases/product-list-and-search/TC-PLAS-004.md) | Tìm kiếm sản phẩm bằng từ khóa có dấu tiếng Việt và ký tự đặc biệt     | DT        | EC4, EC7, EC11, OC1, OC2, OC4 | Pass - Correct matching for accents                                |
+| 5   | [TC-PLAS-005](../../../tests/test-cases/product-list-and-search/TC-PLAS-005.md) | Tìm kiếm sản phẩm bằng từ khóa chứa mã độc HTML/XSS (Hiển thị an toàn) | DT        | EC5, EC7, EC11, OC3, OC4      | Pass - Rendered safely as plain text, no script execution          |
+| 6   | [TC-PLAS-006](../../../tests/test-cases/product-list-and-search/TC-PLAS-006.md) | Kiểm tra trạng thái tải dữ liệu (Loading State)                        | DT        | EC10, EC7, OC4                | Pass - Loading indicator displays while fetching                   |
+| 7   | [TC-PLAS-007](../../../tests/test-cases/product-list-and-search/TC-PLAS-007.md) | Kiểm tra cấu trúc thẻ H1 duy nhất trên trang chủ                       | DT        | EC11, OC4                     | Pass - Exactly one H1 tag exists on page                           |
 
 ---
 
@@ -339,19 +339,19 @@ Nominal values for other variables: `Authorization` = Valid Token, `Cart State` 
 
 | Scenario(s) Merged                            | Reason                                                          | Resulting TC                                                       |
 | --------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------ |
-| Scenario #1 + Scenario #4 + Scenario #6 + OC1 | Trùng test data và expected output cho luồng chính hợp lệ       | [TC-CHECKOUT-001](../../tests/test-cases/checkout/TC-CHECKOUT-001.md) |
-| Scenario #2 + Scenario #3 + OC2               | Kiểm thử bảo mật/phân quyền (chưa đăng nhập hoặc sai token)     | [TC-CHECKOUT-002](../../tests/test-cases/checkout/TC-CHECKOUT-002.md) |
-| Scenario #5 + OC3                             | Kiểm thử nghiệp vụ ngăn chặn giỏ hàng rỗng                      | [TC-CHECKOUT-003](../../tests/test-cases/checkout/TC-CHECKOUT-003.md) |
-| Scenario #7 + OC4                             | Kiểm thử tính an toàn/giá tiền không cho phép client tự sửa giá | [TC-CHECKOUT-004](../../tests/test-cases/checkout/TC-CHECKOUT-004.md) |
+| Scenario #1 + Scenario #4 + Scenario #6 + OC1 | Trùng test data và expected output cho luồng chính hợp lệ       | [TC-CHECKOUT-001](../../../tests/test-cases/checkout/TC-CHECKOUT-001.md) |
+| Scenario #2 + Scenario #3 + OC2               | Kiểm thử bảo mật/phân quyền (chưa đăng nhập hoặc sai token)     | [TC-CHECKOUT-002](../../../tests/test-cases/checkout/TC-CHECKOUT-002.md) |
+| Scenario #5 + OC3                             | Kiểm thử nghiệp vụ ngăn chặn giỏ hàng rỗng                      | [TC-CHECKOUT-003](../../../tests/test-cases/checkout/TC-CHECKOUT-003.md) |
+| Scenario #7 + OC4                             | Kiểm thử tính an toàn/giá tiền không cho phép client tự sửa giá | [TC-CHECKOUT-004](../../../tests/test-cases/checkout/TC-CHECKOUT-004.md) |
 
 #### Final Test Case Summary
 
 | #   | TC ID                                                              | Description                                                              | Technique | EC/OC Covered      | Expected                                   |
 | --- | ------------------------------------------------------------------ | ------------------------------------------------------------------------ | --------- | ------------------ | ------------------------------------------ |
-| 1   | [TC-CHECKOUT-001](../../tests/test-cases/checkout/TC-CHECKOUT-001.md) | Thanh toán đơn hàng thành công với thông tin hợp lệ                      | DT        | EC1, EC4, EC6, OC1 | Pass - Đơn hàng pending, giỏ hàng được xóa |
-| 2   | [TC-CHECKOUT-002](../../tests/test-cases/checkout/TC-CHECKOUT-002.md) | Thanh toán đơn hàng thất bại khi chưa đăng nhập hoặc token không hợp lệ  | DT        | EC2, EC3, OC2      | Fail - Trả về mã lỗi 401                   |
-| 3   | [TC-CHECKOUT-003](../../tests/test-cases/checkout/TC-CHECKOUT-003.md) | Thanh toán đơn hàng thất bại khi giỏ hàng trống                          | DT        | EC5, OC3           | Fail - Trả về mã lỗi 400                   |
-| 4   | [TC-CHECKOUT-004](../../tests/test-cases/checkout/TC-CHECKOUT-004.md) | Thanh toán đơn hàng thất bại khi tổng tiền client gửi không khớp máy chủ | DT        | EC7, OC4           | Fail - Trả về mã lỗi 400                   |
+| 1   | [TC-CHECKOUT-001](../../../tests/test-cases/checkout/TC-CHECKOUT-001.md) | Thanh toán đơn hàng thành công với thông tin hợp lệ                      | DT        | EC1, EC4, EC6, OC1 | Pass - Đơn hàng pending, giỏ hàng được xóa |
+| 2   | [TC-CHECKOUT-002](../../../tests/test-cases/checkout/TC-CHECKOUT-002.md) | Thanh toán đơn hàng thất bại khi chưa đăng nhập hoặc token không hợp lệ  | DT        | EC2, EC3, OC2      | Fail - Trả về mã lỗi 401                   |
+| 3   | [TC-CHECKOUT-003](../../../tests/test-cases/checkout/TC-CHECKOUT-003.md) | Thanh toán đơn hàng thất bại khi giỏ hàng trống                          | DT        | EC5, OC3           | Fail - Trả về mã lỗi 400                   |
+| 4   | [TC-CHECKOUT-004](../../../tests/test-cases/checkout/TC-CHECKOUT-004.md) | Thanh toán đơn hàng thất bại khi tổng tiền client gửi không khớp máy chủ | DT        | EC7, OC4           | Fail - Trả về mã lỗi 400                   |
 
 ---
 
@@ -453,17 +453,17 @@ Nominal values: name = Điện tử, Token = JWT Admin, category_id = 1 (khi c�
 
 | #   | TC ID                                                              | Description                 | Technique | EC/OC Covered | Expected |
 | --- | ------------------------------------------------------------------ | --------------------------- | --------- | ------------- | -------- |
-| 1   | [TC-CATEGORY-001](../../tests/test-cases/category/TC-CATEGORY-001.md) | Thêm danh mục thành công    | DT        | EC1, OC1      | Pass     |
-| 2   | [TC-CATEGORY-002](../../tests/test-cases/category/TC-CATEGORY-002.md) | Thêm thất bại (tên rỗng)    | DT        | EC2, OC2      | Fail     |
-| 3   | [TC-CATEGORY-003](../../tests/test-cases/category/TC-CATEGORY-003.md) | Thêm thất bại (whitespace)  | DT        | EC3, OC2      | Fail     |
-| 4   | [TC-CATEGORY-004](../../tests/test-cases/category/TC-CATEGORY-004.md) | Xem danh sách danh mục      | DT        | EC6, OC3      | Pass     |
-| 5   | [TC-CATEGORY-005](../../tests/test-cases/category/TC-CATEGORY-005.md) | Xóa danh mục thành công     | DT        | EC7, OC4      | Pass     |
-| 6   | [TC-CATEGORY-006](../../tests/test-cases/category/TC-CATEGORY-006.md) | Xóa danh mục (ID sai)       | DT        | EC8, OC5      | Fail     |
-| 7   | [TC-CATEGORY-007](../../tests/test-cases/category/TC-CATEGORY-007.md) | Lỗi xác thực (Auth missing) | DT        | EC4, OC6      | Fail     |
-| 8   | [TC-CATEGORY-008](../../tests/test-cases/category/TC-CATEGORY-008.md) | Lỗi phân quyền (User token) | DT        | EC5, OC6      | Fail     |
-| 9   | [TC-CATEGORY-009](../../tests/test-cases/category/TC-CATEGORY-009.md) | Xóa danh mục có sản phẩm    | DT        | EC9, OC7      | Fail     |
-| 10  | [TC-CATEGORY-010](../../tests/test-cases/category/TC-CATEGORY-010.md) | Xóa không có token (401)    | DT        | EC4, OC6      | Fail     |
-| 11  | [TC-CATEGORY-011](../../tests/test-cases/category/TC-CATEGORY-011.md) | Xóa dùng token user (403)   | DT        | EC5, OC6      | Fail     |
+| 1   | [TC-CATEGORY-001](../../../tests/test-cases/category/TC-CATEGORY-001.md) | Thêm danh mục thành công    | DT        | EC1, OC1      | Pass     |
+| 2   | [TC-CATEGORY-002](../../../tests/test-cases/category/TC-CATEGORY-002.md) | Thêm thất bại (tên rỗng)    | DT        | EC2, OC2      | Fail     |
+| 3   | [TC-CATEGORY-003](../../../tests/test-cases/category/TC-CATEGORY-003.md) | Thêm thất bại (whitespace)  | DT        | EC3, OC2      | Fail     |
+| 4   | [TC-CATEGORY-004](../../../tests/test-cases/category/TC-CATEGORY-004.md) | Xem danh sách danh mục      | DT        | EC6, OC3      | Pass     |
+| 5   | [TC-CATEGORY-005](../../../tests/test-cases/category/TC-CATEGORY-005.md) | Xóa danh mục thành công     | DT        | EC7, OC4      | Pass     |
+| 6   | [TC-CATEGORY-006](../../../tests/test-cases/category/TC-CATEGORY-006.md) | Xóa danh mục (ID sai)       | DT        | EC8, OC5      | Fail     |
+| 7   | [TC-CATEGORY-007](../../../tests/test-cases/category/TC-CATEGORY-007.md) | Lỗi xác thực (Auth missing) | DT        | EC4, OC6      | Fail     |
+| 8   | [TC-CATEGORY-008](../../../tests/test-cases/category/TC-CATEGORY-008.md) | Lỗi phân quyền (User token) | DT        | EC5, OC6      | Fail     |
+| 9   | [TC-CATEGORY-009](../../../tests/test-cases/category/TC-CATEGORY-009.md) | Xóa danh mục có sản phẩm    | DT        | EC9, OC7      | Fail     |
+| 10  | [TC-CATEGORY-010](../../../tests/test-cases/category/TC-CATEGORY-010.md) | Xóa không có token (401)    | DT        | EC4, OC6      | Fail     |
+| 11  | [TC-CATEGORY-011](../../../tests/test-cases/category/TC-CATEGORY-011.md) | Xóa dùng token user (403)   | DT        | EC5, OC6      | Fail     |
 
 ---
 
@@ -531,8 +531,8 @@ Nominal values for other variables: `Product Count` = 3, `search` = `"MacBook Pr
 
 | BVA Scenario #          | DT Test Case                                                              | Variable | Test Value    | Overlap Reason                                                   |
 | ----------------------- | ------------------------------------------------------------------------- | -------- | ------------- | ---------------------------------------------------------------- |
-| 3-Point #2 / 2-Point #1 | [TC-PLAS-001](../../tests/test-cases/product-list-and-search/TC-PLAS-001.md) | search   | `""`          | Trùng dữ liệu kiểm thử xem tất cả sản phẩm                       |
-| 3-Point #1 / 2-Point #2 | [TC-PLAS-001](../../tests/test-cases/product-list-and-search/TC-PLAS-001.md) | search   | N/A (Omitted) | Bản chất giống với truyền query trống hoặc bỏ qua tham số search |
+| 3-Point #2 / 2-Point #1 | [TC-PLAS-001](../../../tests/test-cases/product-list-and-search/TC-PLAS-001.md) | search   | `""`          | Trùng dữ liệu kiểm thử xem tất cả sản phẩm                       |
+| 3-Point #1 / 2-Point #2 | [TC-PLAS-001](../../../tests/test-cases/product-list-and-search/TC-PLAS-001.md) | search   | N/A (Omitted) | Bản chất giống với truyền query trống hoặc bỏ qua tham số search |
 
 Các kịch bản BVA còn lại không trùng lắp sẽ được chuyển thành các Test Case BVA mới.
 
@@ -540,11 +540,11 @@ Các kịch bản BVA còn lại không trùng lắp sẽ được chuyển thà
 
 | #   | TC ID                                                                             | Description                                                      | Technique(s)      | Boundary            | Expected                                           |
 | --- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------- | ----------------- | ------------------- | -------------------------------------------------- |
-| 1   | [TC-PLAS-BVA-001](../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-001.md) | Tìm kiếm với từ khóa có độ dài tối thiểu + 1 (1 ký tự)           | 3-Point           | Min length, B + 1   | Hiển thị sản phẩm chứa chữ khớp ("MacBook Pro M3") |
-| 2   | [TC-PLAS-BVA-002](../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-002.md) | Tìm kiếm với từ khóa có độ dài tối đa cho phép (255 ký tự)       | 3-Point + 2-Point | Max length, B       | Không crash, hiển thị empty state                  |
-| 3   | [TC-PLAS-BVA-003](../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-003.md) | Tìm kiếm với từ khóa vượt quá độ dài tối đa cho phép (256 ký tự) | 3-Point + 2-Point | Max length, B + 1   | Không crash, tự động cắt chuỗi hoặc chặn nhập      |
-| 4   | [TC-PLAS-BVA-004](../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-004.md) | Kiểm tra hiển thị khi cơ sở dữ liệu trống (0 sản phẩm)           | 3-Point + 2-Point | Min DB count, B     | Hiển thị thông báo empty state                     |
-| 5   | [TC-PLAS-BVA-005](../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-005.md) | Kiểm tra hiển thị khi cơ sở dữ liệu có đúng 1 sản phẩm           | 3-Point           | Min DB count, B + 1 | Hiển thị lưới chứa đúng 1 thẻ sản phẩm             |
+| 1   | [TC-PLAS-BVA-001](../../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-001.md) | Tìm kiếm với từ khóa có độ dài tối thiểu + 1 (1 ký tự)           | 3-Point           | Min length, B + 1   | Hiển thị sản phẩm chứa chữ khớp ("MacBook Pro M3") |
+| 2   | [TC-PLAS-BVA-002](../../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-002.md) | Tìm kiếm với từ khóa có độ dài tối đa cho phép (255 ký tự)       | 3-Point + 2-Point | Max length, B       | Không crash, hiển thị empty state                  |
+| 3   | [TC-PLAS-BVA-003](../../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-003.md) | Tìm kiếm với từ khóa vượt quá độ dài tối đa cho phép (256 ký tự) | 3-Point + 2-Point | Max length, B + 1   | Không crash, tự động cắt chuỗi hoặc chặn nhập      |
+| 4   | [TC-PLAS-BVA-004](../../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-004.md) | Kiểm tra hiển thị khi cơ sở dữ liệu trống (0 sản phẩm)           | 3-Point + 2-Point | Min DB count, B     | Hiển thị thông báo empty state                     |
+| 5   | [TC-PLAS-BVA-005](../../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-005.md) | Kiểm tra hiển thị khi cơ sở dữ liệu có đúng 1 sản phẩm           | 3-Point           | Min DB count, B + 1 | Hiển thị lưới chứa đúng 1 thẻ sản phẩm             |
 
 ---
 
@@ -606,8 +606,8 @@ Nominal values for other variables: `Authorization` = Valid Token, `Cart State` 
 
 | BVA Scenario #          | DT Test Case                                                       | Variable        | Test Value | Overlap Reason                                         |
 | ----------------------- | ------------------------------------------------------------------ | --------------- | ---------- | ------------------------------------------------------ |
-| 3-Point #1 / 2-Point #2 | [TC-CHECKOUT-003](../../tests/test-cases/checkout/TC-CHECKOUT-003.md) | Cart Item count | 0          | Đã được bao phủ trong ca kiểm thử giỏ hàng trống       |
-| 3-Point #5 / 2-Point #3 | [TC-CHECKOUT-001](../../tests/test-cases/checkout/TC-CHECKOUT-001.md) | total_amount    | 10000000   | Đã được bao phủ bởi ca kiểm thử thành công luồng chính |
+| 3-Point #1 / 2-Point #2 | [TC-CHECKOUT-003](../../../tests/test-cases/checkout/TC-CHECKOUT-003.md) | Cart Item count | 0          | Đã được bao phủ trong ca kiểm thử giỏ hàng trống       |
+| 3-Point #5 / 2-Point #3 | [TC-CHECKOUT-001](../../../tests/test-cases/checkout/TC-CHECKOUT-001.md) | total_amount    | 10000000   | Đã được bao phủ bởi ca kiểm thử thành công luồng chính |
 
 Các kịch bản BVA còn lại không trùng lắp sẽ được chuyển thành các Test Case BVA mới.
 
@@ -615,9 +615,9 @@ Các kịch bản BVA còn lại không trùng lắp sẽ được chuyển thà
 
 | #   | TC ID                                                                      | Description                                                                | Technique(s)      | Boundary                   | Expected                            |
 | --- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ----------------- | -------------------------- | ----------------------------------- |
-| 1   | [TC-CHECKOUT-BVA-001](../../tests/test-cases/checkout/TC-CHECKOUT-BVA-001.md) | Thanh toán đơn hàng thành công khi giỏ hàng có đúng 1 sản phẩm             | 3-Point + 2-Point | Giỏ hàng = 1 sản phẩm (B)  | Pass - Đơn hàng được tạo thành công |
-| 2   | [TC-CHECKOUT-BVA-002](../../tests/test-cases/checkout/TC-CHECKOUT-BVA-002.md) | Thanh toán đơn hàng thất bại khi tổng tiền client gửi ít hơn máy chủ 1đ    | 3-Point + 2-Point | total_amount = T - 1 (B-1) | Fail - Trả về mã lỗi 400            |
-| 3   | [TC-CHECKOUT-BVA-003](../../tests/test-cases/checkout/TC-CHECKOUT-BVA-003.md) | Thanh toán đơn hàng thất bại khi tổng tiền client gửi nhiều hơn máy chủ 1đ | 3-Point + 2-Point | total_amount = T + 1 (B+1) | Fail - Trả về mã lỗi 400            |
+| 1   | [TC-CHECKOUT-BVA-001](../../../tests/test-cases/checkout/TC-CHECKOUT-BVA-001.md) | Thanh toán đơn hàng thành công khi giỏ hàng có đúng 1 sản phẩm             | 3-Point + 2-Point | Giỏ hàng = 1 sản phẩm (B)  | Pass - Đơn hàng được tạo thành công |
+| 2   | [TC-CHECKOUT-BVA-002](../../../tests/test-cases/checkout/TC-CHECKOUT-BVA-002.md) | Thanh toán đơn hàng thất bại khi tổng tiền client gửi ít hơn máy chủ 1đ    | 3-Point + 2-Point | total_amount = T - 1 (B-1) | Fail - Trả về mã lỗi 400            |
+| 3   | [TC-CHECKOUT-BVA-003](../../../tests/test-cases/checkout/TC-CHECKOUT-BVA-003.md) | Thanh toán đơn hàng thất bại khi tổng tiền client gửi nhiều hơn máy chủ 1đ | 3-Point + 2-Point | total_amount = T + 1 (B+1) | Fail - Trả về mã lỗi 400            |
 
 ---
 
@@ -667,8 +667,8 @@ Nominal values: Token = JWT Admin
 
 | #   | TC ID                                                                      | Description       | Technique(s)      | Boundary | Expected |
 | --- | -------------------------------------------------------------------------- | ----------------- | ----------------- | -------- | -------- |
-| 1   | [TC-CATEGORY-BVA-001](../../tests/test-cases/category/TC-CATEGORY-BVA-001.md) | Name đúng 1 ký tự | 3-Point + 2-Point | Min, B   | Accept   |
-| 2   | [TC-CATEGORY-BVA-002](../../tests/test-cases/category/TC-CATEGORY-BVA-002.md) | Name 2 ký tự      | 3-Point only      | Min, B+1 | Accept   |
+| 1   | [TC-CATEGORY-BVA-001](../../../tests/test-cases/category/TC-CATEGORY-BVA-001.md) | Name đúng 1 ký tự | 3-Point + 2-Point | Min, B   | Accept   |
+| 2   | [TC-CATEGORY-BVA-002](../../../tests/test-cases/category/TC-CATEGORY-BVA-002.md) | Name 2 ký tự      | 3-Point only      | Min, B+1 | Accept   |
 
 
 ---
@@ -678,138 +678,138 @@ Nominal values: Token = JWT Admin
 
 Danh sách tổng hợp các lỗi tìm thấy trong quá trình kiểm thử:
 
-1. **[BUG-CATEGORY-001](../../tests/bug-reports/category/BUG-CATEGORY-001.md)** - [BUG][Quản lý Danh mục] Thêm thành công danh mục có tên rỗng hoặc chỉ chứa khoảng trắng
+1. **[BUG-CATEGORY-001](../../../tests/bug-reports/manual/category/BUG-CATEGORY-001.md)** - [BUG][Quản lý Danh mục] Thêm thành công danh mục có tên rỗng hoặc chỉ chứa khoảng trắng
    - **Module**: Quản lý Danh mục (Category) | **Requirement**: FR-14 (Quản lý Danh mục)
    - **Severity**: Major | **Priority**: P1 | **Status**: New
    - **Linked Test Case**: TC-CATEGORY-002, TC-CATEGORY-003
    - **GitHub Issue**: [#125](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/125)
 
-2. **[BUG-CATEGORY-002](../../tests/bug-reports/category/BUG-CATEGORY-002.md)** - [BUG][Quản lý Danh mục] Xóa danh mục không tồn tại trả về thành công thay vì lỗi 404 Not Found
+2. **[BUG-CATEGORY-002](../../../tests/bug-reports/manual/category/BUG-CATEGORY-002.md)** - [BUG][Quản lý Danh mục] Xóa danh mục không tồn tại trả về thành công thay vì lỗi 404 Not Found
    - **Module**: Quản lý Danh mục (Category) | **Requirement**: FR-14 (Quản lý Danh mục)
    - **Severity**: Minor | **Priority**: P2 | **Status**: New
    - **Linked Test Case**: TC-CATEGORY-006
    - **GitHub Issue**: [#126](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/126)
 
-3. **[BUG-CATEGORY-003](../../tests/bug-reports/category/BUG-CATEGORY-003.md)** - [BUG][Quản lý Danh mục] Người dùng có vai trò thường vẫn thêm mới được danh mục (Bypass Access Control)
+3. **[BUG-CATEGORY-003](../../../tests/bug-reports/manual/category/BUG-CATEGORY-003.md)** - [BUG][Quản lý Danh mục] Người dùng có vai trò thường vẫn thêm mới được danh mục (Bypass Access Control)
    - **Module**: Quản lý Danh mục (Category) | **Requirement**: FR-12 (Kiểm soát truy cập), FR-14 (Quản lý Danh mục)
    - **Severity**: Major | **Priority**: P1 | **Status**: New
    - **Linked Test Case**: TC-CATEGORY-008
    - **GitHub Issue**: [#127](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/127)
 
-4. **[BUG-CATEGORY-004](../../tests/bug-reports/category/BUG-CATEGORY-004.md)** - [BUG][Quản lý Danh mục] Vẫn xóa được danh mục đang có sản phẩm liên kết (Vi phạm ràng buộc khóa ngoại)
+4. **[BUG-CATEGORY-004](../../../tests/bug-reports/manual/category/BUG-CATEGORY-004.md)** - [BUG][Quản lý Danh mục] Vẫn xóa được danh mục đang có sản phẩm liên kết (Vi phạm ràng buộc khóa ngoại)
    - **Module**: Quản lý Danh mục (Category) | **Requirement**: FR-14 (Quản lý Danh mục)
    - **Severity**: Critical | **Priority**: P1 | **Status**: New
    - **Linked Test Case**: TC-CATEGORY-009
    - **GitHub Issue**: [#128](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/128)
 
-5. **[BUG-CATEGORY-005](../../tests/bug-reports/category/BUG-CATEGORY-005.md)** - [BUG][Quản lý Danh mục] Người dùng có vai trò thường vẫn xóa được danh mục (Bypass Access Control)
+5. **[BUG-CATEGORY-005](../../../tests/bug-reports/manual/category/BUG-CATEGORY-005.md)** - [BUG][Quản lý Danh mục] Người dùng có vai trò thường vẫn xóa được danh mục (Bypass Access Control)
    - **Module**: Quản lý Danh mục (Category) | **Requirement**: FR-12 (Kiểm soát truy cập), FR-14 (Quản lý Danh mục)
    - **Severity**: Critical | **Priority**: P1 | **Status**: New
    - **Linked Test Case**: TC-CATEGORY-011
    - **GitHub Issue**: [#129](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/129)
 
-6. **[BUG-CHECKOUT-001](../../tests/bug-reports/checkout/BUG-CHECKOUT-001.md)** - [BUG][Checkout] Giỏ hàng không bị xóa sau khi thanh toán thành công
+6. **[BUG-CHECKOUT-001](../../../tests/bug-reports/manual/checkout/BUG-CHECKOUT-001.md)** - [BUG][Checkout] Giỏ hàng không bị xóa sau khi thanh toán thành công
    - **Module**: Checkout (Thanh toán) | **Requirement**: FR-08 (Thanh toán)
    - **Severity**: Major | **Priority**: P1 | **Status**: New
    - **Linked Test Case**: TC-CHECKOUT-001, TC-CHECKOUT-BVA-001
    - **GitHub Issue**: [#76](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/76)
 
-7. **[BUG-CHECKOUT-002](../../tests/bug-reports/checkout/BUG-CHECKOUT-002.md)** - [BUG][Checkout] Hệ thống (Frontend) không gọi API của cart
+7. **[BUG-CHECKOUT-002](../../../tests/bug-reports/manual/checkout/BUG-CHECKOUT-002.md)** - [BUG][Checkout] Hệ thống (Frontend) không gọi API của cart
    - **Module**: Checkout (Thanh toán) | **Requirement**: FR-08 (Thanh toán)
    - **Severity**: Major | **Priority**: P2 | **Status**: New
    - **Linked Test Case**: TC-CHECKOUT-001
    - **GitHub Issue**: [#77](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/77)
 
-8. **[BUG-CHECKOUT-003](../../tests/bug-reports/checkout/BUG-CHECKOUT-003.md)** - [BUG][Checkout] Thanh toán thành công và tạo đơn hàng dù giỏ hàng đang trống
+8. **[BUG-CHECKOUT-003](../../../tests/bug-reports/manual/checkout/BUG-CHECKOUT-003.md)** - [BUG][Checkout] Thanh toán thành công và tạo đơn hàng dù giỏ hàng đang trống
    - **Module**: Checkout (Thanh toán) | **Requirement**: FR-08 (Thanh toán)
    - **Severity**: Major | **Priority**: P1 | **Status**: New
    - **Linked Test Case**: TC-CHECKOUT-003
    - **GitHub Issue**: [#78](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/78)
 
-9. **[BUG-CHECKOUT-004](../../tests/bug-reports/checkout/BUG-CHECKOUT-004.md)** - [BUG][Checkout] Thanh toán thành công với total_amount không khớp với tổng tiền giỏ hàng
+9. **[BUG-CHECKOUT-004](../../../tests/bug-reports/manual/checkout/BUG-CHECKOUT-004.md)** - [BUG][Checkout] Thanh toán thành công với total_amount không khớp với tổng tiền giỏ hàng
    - **Module**: Checkout (Thanh toán) | **Requirement**: FR-08 (Thanh toán)
    - **Severity**: Critical | **Priority**: P0 | **Status**: New
    - **Linked Test Case**: TC-CHECKOUT-004, TC-CHECKOUT-BVA-002, TC-CHECKOUT-BVA-003
    - **GitHub Issue**: [#79](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/79)
 
-10. **[BUG-MOBILE-REGISTER-001](../../tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-001.md)** - [BUG][Mobile Registration] Form đăng ký trên Mobile thiếu trường xác nhận mật khẩu
+10. **[BUG-MOBILE-REGISTER-001](../../../tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-001.md)** - [BUG][Mobile Registration] Form đăng ký trên Mobile thiếu trường xác nhận mật khẩu
 
 - **Module**: Mobile Registration (Đăng ký trên Mobile) | **Requirement**: FR-01 (Đăng ký tài khoản)
 - **Severity**: Major | **Priority**: P1 | **Status**: New
 - **Linked Test Case**: TC-MOBILE-REGISTER-001, TC-MOBILE-REGISTER-002, TC-MOBILE-REGISTER-003, TC-MOBILE-REGISTER-004, TC-MOBILE-REGISTER-005, TC-MOBILE-REGISTER-006, TC-MOBILE-REGISTER-007, TC-MOBILE-REGISTER-008, TC-MOBILE-REGISTER-009, TC-MOBILE-REGISTER-010, TC-MOBILE-REGISTER-011, TC-MOBILE-REGISTER-012, TC-MOBILE-REGISTER-013, TC-MOBILE-REGISTER-BVA-001, TC-MOBILE-REGISTER-BVA-002
 - **GitHub Issue**: [#132](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/132)
 
-11. **[BUG-MOBILE-REGISTER-002](../../tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-002.md)** - [BUG][Mobile Registration] Hệ thống vẫn cho phép đăng ký tài khoản khi bỏ trống Họ Tên
+11. **[BUG-MOBILE-REGISTER-002](../../../tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-002.md)** - [BUG][Mobile Registration] Hệ thống vẫn cho phép đăng ký tài khoản khi bỏ trống Họ Tên
 
 - **Module**: Mobile Registration (Đăng ký trên Mobile) | **Requirement**: FR-01 (Đăng ký tài khoản)
 - **Severity**: Major | **Priority**: P1 | **Status**: New
 - **Linked Test Case**: TC-MOBILE-REGISTER-002
 - **GitHub Issue**: [#133](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/133)
 
-12. **[BUG-MOBILE-REGISTER-003](../../tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-003.md)** - [BUG][Mobile Registration] Hệ thống vẫn cho phép đăng ký tài khoản khi bỏ trống Email
+12. **[BUG-MOBILE-REGISTER-003](../../../tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-003.md)** - [BUG][Mobile Registration] Hệ thống vẫn cho phép đăng ký tài khoản khi bỏ trống Email
 
 - **Module**: Mobile Registration (Đăng ký trên Mobile) | **Requirement**: FR-01 (Đăng ký tài khoản)
 - **Severity**: Major | **Priority**: P1 | **Status**: New
 - **Linked Test Case**: TC-MOBILE-REGISTER-003
 - **GitHub Issue**: [#134](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/134)
 
-13. **[BUG-MOBILE-REGISTER-004](../../tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-004.md)** - [BUG][Mobile Registration] Hệ thống vẫn cho phép đăng ký tài khoản khi nhập Email sai định dạng
+13. **[BUG-MOBILE-REGISTER-004](../../../tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-004.md)** - [BUG][Mobile Registration] Hệ thống vẫn cho phép đăng ký tài khoản khi nhập Email sai định dạng
 
 - **Module**: Mobile Registration (Đăng ký trên Mobile) | **Requirement**: FR-01 (Đăng ký tài khoản)
 - **Severity**: Major | **Priority**: P1 | **Status**: New
 - **Linked Test Case**: TC-MOBILE-REGISTER-004
 - **GitHub Issue**: [#135](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/135)
 
-14. **[BUG-MOBILE-REGISTER-005](../../tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-005.md)** - [BUG][Mobile Registration] Hệ thống vẫn cho phép đăng ký tài khoản với Email đã tồn tại
+14. **[BUG-MOBILE-REGISTER-005](../../../tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-005.md)** - [BUG][Mobile Registration] Hệ thống vẫn cho phép đăng ký tài khoản với Email đã tồn tại
 
 - **Module**: Mobile Registration (Đăng ký trên Mobile) | **Requirement**: FR-01 (Đăng ký tài khoản)
 - **Severity**: Major | **Priority**: P1 | **Status**: New
 - **Linked Test Case**: TC-MOBILE-REGISTER-005
 - **GitHub Issue**: [#136](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/136)
 
-15. **[BUG-PLAS-001](../../tests/bug-reports/product-list-and-search/BUG-PLAS-001.md)** - [BUG][Product List & Search] Trang chủ chứa 2 thẻ <h1>
+15. **[BUG-PLAS-001](../../../tests/bug-reports/product-list-and-search/BUG-PLAS-001.md)** - [BUG][Product List & Search] Trang chủ chứa 2 thẻ <h1>
 
 - **Module**: Product List & Search (Xem danh sách & Tìm kiếm sản phẩm) | **Requirement**: FR-05 (Xem danh sách & Tìm kiếm sản phẩm)
 - **Severity**: Minor | **Priority**: P2 | **Status**: New
 - **Linked Test Case**: TC-PLAS-001, TC-PLAS-002, TC-PLAS-004, TC-PLAS-005, TC-PLAS-006, TC-PLAS-007, TC-PLAS-BVA-001, TC-PLAS-BVA-005
 - **GitHub Issue**: [#80](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/80)
 
-16. **[BUG-PLAS-002](../../tests/bug-reports/product-list-and-search/BUG-PLAS-002.md)** - [BUG][Product List & Search] Hình ảnh sản phẩm thiếu thuộc tính alt mô tả
+16. **[BUG-PLAS-002](../../../tests/bug-reports/product-list-and-search/BUG-PLAS-002.md)** - [BUG][Product List & Search] Hình ảnh sản phẩm thiếu thuộc tính alt mô tả
 
 - **Module**: Product List & Search (Xem danh sách & Tìm kiếm sản phẩm) | **Requirement**: FR-05 (Xem danh sách & Tìm kiếm sản phẩm)
 - **Severity**: Minor | **Priority**: P2 | **Status**: New
 - **Linked Test Case**: TC-PLAS-001, TC-PLAS-002, TC-PLAS-004, TC-PLAS-BVA-001, TC-PLAS-BVA-005
 - **GitHub Issue**: [#81](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/81)
 
-17. **[BUG-PLAS-003](../../tests/bug-reports/product-list-and-search/BUG-PLAS-003.md)** - [BUG][Product List & Search] Giá sản phẩm hiển thị đơn vị VND thay vì ký hiệu ₫
+17. **[BUG-PLAS-003](../../../tests/bug-reports/product-list-and-search/BUG-PLAS-003.md)** - [BUG][Product List & Search] Giá sản phẩm hiển thị đơn vị VND thay vì ký hiệu ₫
 
 - **Module**: Product List & Search (Xem danh sách & Tìm kiếm sản phẩm) | **Requirement**: FR-05 (Xem danh sách & Tìm kiếm sản phẩm)
 - **Severity**: Major | **Priority**: P1 | **Status**: New
 - **Linked Test Case**: TC-PLAS-001, TC-PLAS-002, TC-PLAS-004, TC-PLAS-BVA-001, TC-PLAS-BVA-005
 - **GitHub Issue**: [#82](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/82)
 
-18. **[BUG-PLAS-004](../../tests/bug-reports/product-list-and-search/BUG-PLAS-004.md)** - [BUG][Product List & Search] Không hiển thị thông báo empty state khi hệ thống trống hoặc tìm kiếm không khớp sản phẩm nào
+18. **[BUG-PLAS-004](../../../tests/bug-reports/product-list-and-search/BUG-PLAS-004.md)** - [BUG][Product List & Search] Không hiển thị thông báo empty state khi hệ thống trống hoặc tìm kiếm không khớp sản phẩm nào
 
 - **Module**: Product List & Search (Xem danh sách & Tìm kiếm sản phẩm) | **Requirement**: FR-05 (Xem danh sách & Tìm kiếm sản phẩm)
 - **Severity**: Minor | **Priority**: P2 | **Status**: New
 - **Linked Test Case**: TC-PLAS-003, TC-PLAS-BVA-004
 - **GitHub Issue**: [#83](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/83)
 
-19. **[BUG-PLAS-005](../../tests/bug-reports/product-list-and-search/BUG-PLAS-005.md)** - [BUG][Product List & Search] Hiển thị lỗi hệ thống thô (raw exception/stack trace) thay vì thông báo không tìm thấy sản phẩm khi tìm kiếm chuỗi đặc biệt
+19. **[BUG-PLAS-005](../../../tests/bug-reports/product-list-and-search/BUG-PLAS-005.md)** - [BUG][Product List & Search] Hiển thị lỗi hệ thống thô (raw exception/stack trace) thay vì thông báo không tìm thấy sản phẩm khi tìm kiếm chuỗi đặc biệt
 
 - **Module**: Product List & Search (Xem danh sách & Tìm kiếm sản phẩm) | **Requirement**: FR-05 (Xem danh sách & Tìm kiếm sản phẩm)
 - **Severity**: Major | **Priority**: P1 | **Status**: New
 - **Linked Test Case**: TC-PLAS-005
 - **GitHub Issue**: [#84](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/84)
 
-20. **[BUG-PLAS-006](../../tests/bug-reports/product-list-and-search/BUG-PLAS-006.md)** - [BUG][Product List & Search] Không hiển thị chỉ báo loading (loading indicator) khi tải dữ liệu sản phẩm bị chậm
+20. **[BUG-PLAS-006](../../../tests/bug-reports/product-list-and-search/BUG-PLAS-006.md)** - [BUG][Product List & Search] Không hiển thị chỉ báo loading (loading indicator) khi tải dữ liệu sản phẩm bị chậm
 
 - **Module**: Product List & Search (Xem danh sách & Tìm kiếm sản phẩm) | **Requirement**: FR-05 (Xem danh sách & Tìm kiếm sản phẩm)
 - **Severity**: Minor | **Priority**: P2 | **Status**: New
 - **Linked Test Case**: TC-PLAS-006
 - **GitHub Issue**: [#85](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/85)
 
-21. **[BUG-PLAS-007](../../tests/bug-reports/product-list-and-search/BUG-PLAS-007.md)** - [BUG][Product List & Search] Vỡ giao diện, tràn dòng và kéo dài trang chủ khi hiển thị chuỗi kết quả tìm kiếm quá dài (255 ký tự)
+21. **[BUG-PLAS-007](../../../tests/bug-reports/product-list-and-search/BUG-PLAS-007.md)** - [BUG][Product List & Search] Vỡ giao diện, tràn dòng và kéo dài trang chủ khi hiển thị chuỗi kết quả tìm kiếm quá dài (255 ký tự)
 
 - **Module**: Product List & Search (Xem danh sách & Tìm kiếm sản phẩm) | **Requirement**: FR-05 (Xem danh sách & Tìm kiếm sản phẩm)
 - **Severity**: Cosmetic | **Priority**: P3 | **Status**: New
