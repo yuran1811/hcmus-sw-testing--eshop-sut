@@ -136,3 +136,6 @@ test.describe('FR-18 — Admin Order Management (UI only)', () => {
     });
   }
 });
+
+// Delta-based assertions account for shared database state across concurrent tests
+
