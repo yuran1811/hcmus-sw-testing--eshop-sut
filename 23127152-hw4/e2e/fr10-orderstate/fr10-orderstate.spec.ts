@@ -118,3 +118,6 @@ test.describe('FR-10 — Order State Machine (UI only)', () => {
     });
   }
 });
+
+// Assertion pattern: verify state machine transitions via UI button visibility
+
