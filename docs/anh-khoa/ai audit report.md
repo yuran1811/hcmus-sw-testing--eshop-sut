@@ -644,3 +644,119 @@
   - Không có ảo giác locator: mọi selector đều bám theo cấu trúc DOM đã đọc thật (`div.grid > div`, `table tbody tr`, `input[type="number"]`, nhãn "Username"/"Sign In")
   - Suy luận đáng ghi nhận nhất: nhận ra nguy cơ **false pass** ở TC-CART-011 (click 1 lần không thêm gì → giỏ rỗng → trùng kỳ vọng "phải bị chặn") và xử lý bằng cách tách luồng seed, thay vì để test "xanh" một cách vô nghĩa
 - **Sửa:** Không cần sửa thêm; đã type-check (`tsc --noEmit`) và list-verify (39 tests) trước khi ghi log. Chưa chạy thật được trong môi trường sandbox vì `backend/node_modules` cài bằng pnpm phía Windows (native module `sqlite3` build cho Windows) trong khi shell là Linux/WSL → `invalid ELF header`. Phần chạy thật (bằng chứng thực thi theo mục 11 Anti-AI-Cheat) do sinh viên tự thực hiện.
+
+---
+
+**AI Audit Report Item**
+
+- **Công cụ AI:** Claude Code (Anthropic) — model `claude-opus-5`
+- **Thời gian:** 2026-08-07 22:13:49 +07:00
+- **Nội dung prompt:**
+
+  > (Nội dung file `prompt2.md` — PHẦN 3 Product CRUD Admin FR-15, gồm 3 prompt con chạy tuần tự)
+  >
+  > **Prompt 1/3 — Grounding + gap analysis:**
+  > Đọc 18 test case tests/test-cases/product/TC-PRODUCT-001.md → 018.md, đối chiếu với source thật: frontend-admin/src/App.jsx (phần activeTab === "products", dòng ~337-609) và các route /api/products, /api/categories trong backend/server.js.
+  > Việc QUAN TRỌNG NHẤT cần bạn tự verify (đừng tin tôi, đọc code thật): kiểm tra xem app.post("/api/products", ...), app.put("/api/products/:id", ...), app.delete("/api/products/:id", ...) trong server.js có middleware authenticateToken hay không — so với app.post("/api/categories", ...) ngay bên dưới CÓ authenticateToken. Nếu thiếu, đây là vi phạm FR-12/SEC-02/SEC-03 nghiêm trọng (ai cũng sửa/xóa được sản phẩm mà không cần đăng nhập), ảnh hưởng trực tiếp TC-PRODUCT-013 và 014.
+  > Tôi đã ghi nhận thêm vài điểm, bạn verify:
+  > - Input "Giá tiền" trong form không có thuộc tính required/min nào cả.
+  > - Không có ràng buộc độ dài cho input "Tên sản phẩm" (maxLength).
+  > - Nhánh sửa sản phẩm trong handleProductSubmit có đoạn `fakeMassUpdatedProducts = products.map(p => ({...p, name: productForm.name}))` — đổi TÊN của TẤT CẢ sản phẩm trong state cục bộ sau khi sửa 1 sản phẩm (chỉ là bug hiển thị phía client, mất khi fetchData() load lại — cần thiết kế test phân biệt được 2 trường hợp này, xem TC-PRODUCT-015).
+  > - Input file CSV import không có accept=".csv", code JS cũng không kiểm tra đuôi file.
+  > Form admin không có <label>, chỉ có placeholder ("Tên sản phẩm", "Giá tiền", "URL Ảnh", "Mô tả") — cần dùng getByPlaceholder(), không getByLabel().
+  > Tổng hợp bảng TC-ID | endpoint/element liên quan | có tuân thủ FR-15/FR-12 không (dựa trên code, không đoán). Chưa viết test.
+  >
+  > **Prompt 2/3 — Data-driven JSON:**
+  > Tạo tests/e2e/test-data/product.json theo đúng cấu trúc register.json. Expected theo đúng FR-15/FR-12/SEC-03 trong SRS. Case TC-PRODUCT-013/014 (không token / không phải admin) nên tách kind riêng ví dụ "apiAuthCheck" vì sẽ kiểm bằng gọi API trực tiếp (xem prompt 3), không qua form UI.
+  >
+  > **Prompt 3/3 — spec.ts:**
+  > Viết tests/e2e/specs/product.spec.ts đọc product.json.
+  > LƯU Ý CONFIG: frontend-admin chạy ở port 5174, nhưng playwright.config.ts hiện baseURL đang trỏ cứng http://localhost:5173 (frontend-web). Cần thêm 1 project riêng cho admin trong playwright.config.ts (baseURL 5174) HOẶC dùng page.goto('http://localhost:5174/...') tuyệt đối trong spec — chọn cách nào cũng nêu rõ lý do.
+  > Cần fixture đăng nhập admin thật (admin@eshop.com / Admin123!) qua form login của frontend-admin (không có route /login riêng, chính là màn hình khi chưa có token) trước khi thao tác CRUD.
+  > TC-PRODUCT-013/014: dùng request fixture gọi thẳng POST/PUT/DELETE http://localhost:3000/api/products (giống TC-REGISTER-017 trong register.spec.ts) — không token / token của user thường — assert phải nhận 401/403. Nếu server trả 200 (tạo/sửa/xóa thành công), đó chính là bug FR-12 đã nghi ngờ ở prompt 1, không phải lỗi test — giữ nguyên assertion theo đúng spec.
+  > TC-PRODUCT-015 (sửa 1 SP không ảnh hưởng SP khác): phải reload trang hoặc gọi lại GET /api/products sau khi sửa rồi mới assert, để không bị false-pass bởi bug hiển thị cục bộ đã nêu ở prompt 1.
+  > Tối thiểu 3 assertion pattern. Sau khi xong: npx tsc --noEmit -p tsconfig.json và npx playwright test --list specs/product.spec.ts, dán kết quả ra cho tôi xem.
+
+- **AI output:**
+
+  > **BƯỚC 1 — Gap analysis**
+  >
+  > _Verify điểm quan trọng nhất bằng cách liệt kê toàn bộ route kèm middleware (`grep -n 'app\.\(get\|post\|put\|delete\)(' backend/server.js`):_
+  >
+  > ```
+  > 167:app.post("/api/products", (req, res) => {          <- KHONG co authenticateToken
+  > 179:app.put("/api/products/:id", (req, res) => {       <- KHONG co authenticateToken
+  > 191:app.delete("/api/products/:id", (req, res) => {    <- KHONG co authenticateToken
+  > 249:app.post("/api/categories", authenticateToken, ...    <- CO
+  > 257:app.put("/api/categories/:id", authenticateToken, ... <- CO
+  > 269:app.delete("/api/categories/:id", authenticateToken,  <- CO
+  > ```
+  >
+  > → Nghi ngờ của người dùng **chính xác**: 3 endpoint ghi dữ liệu của sản phẩm hoàn toàn không có xác thực, trong khi 3 endpoint tương ứng của category ngay bên dưới thì có. Vi phạm FR-12 và SEC-02.
+  >
+  > **Phát hiện thêm một tầng nữa mà người dùng chưa nêu:** `server.js:100-110` — `authenticateToken` chỉ `jwt.verify()` chữ ký token rồi gán `req.user`, **không hề kiểm `role === 'admin'`**. Nghĩa là kể cả khi vá được lỗ hổng trên, token của user thường vẫn qua được. Toàn bộ `/api/admin/*` cũng dính lỗi này → vi phạm SEC-03, ảnh hưởng trực tiếp TC-PRODUCT-014.
+  >
+  > _Verify 4 điểm còn lại — đúng cả 4, kèm bổ sung:_
+  >
+  > | Điểm | Dẫn chứng | Kết luận |
+  > |---|---|---|
+  > | Giá không có required/min | `App.jsx:500-508` — `type="number"` trơn; backend `server.js:167-177` cũng không validate | đúng |
+  > | Tên không có maxLength | `App.jsx:491-499` — **có** `required` (nên TC-005 dự kiến PASS) nhưng không có maxLength; backend không giới hạn 255 | đúng, có bổ sung |
+  > | fakeMassUpdatedProducts | `App.jsx:110-114` | đúng |
+  > | CSV input không có accept | `App.jsx:356-384` | đúng |
+  >
+  > _Gap AI tìm thêm:_
+  > - `App.jsx:528-543` — `<select>` danh mục **không có option rỗng/placeholder**, state mặc định `category_id = 1`. Không thể tạo được trạng thái "không chọn danh mục" qua UI → TC-PRODUCT-011 phải đổi cách kiểm.
+  > - `App.jsx:500-508` — input giá `type="number"` không khai báo `step` nên HTML5 mặc định `step=1`; giá `0.01` sẽ bị chặn bởi constraint validation (stepMismatch) trước khi form submit → liên quan trực tiếp ghi chú "đặc tả còn mơ hồ về số nguyên hay số thực" trong chính TC-PRODUCT-016.
+  > - `App.jsx:590` — bảng render `{p.price} ₫` thô, không qua `toLocaleString()` → vi phạm FR-21 (phân cách hàng nghìn). Kiểm kèm trong TC-PRODUCT-017.
+  > - Danh mục "Thời trang" mà 18 test case dùng làm precondition **không tồn tại** trong seed `database.js` (chỉ có Điện thoại / Laptop / Phụ kiện) → ánh xạ sang "Phụ kiện" (id 3) và ghi rõ.
+  > - TC-PRODUCT-010 (giá = `abc`) **không thể thực hiện qua UI**: `input type="number"` không nhận ký tự không phải số, đặt `value='abc'` bằng JS cũng bị trình duyệt chuẩn hoá về chuỗi rỗng → kịch bản chỉ có nghĩa ở tầng API, chuyển sang `apiValidation`.
+  >
+  > **BƯỚC 2 — `tests/e2e/test-data/product.json`** (18/18 case, 14 mục `knownIssues`)
+  >
+  > 7 `kind` được thiết kế: `uiCreate`, `apiValidation`, `apiAuthCheck`, `categoryRequired`, `editIsolation`, `listIntegrity`, `deleteProduct`.
+  > Chuỗi tên dài (255/256 ký tự) khai báo bằng `nameLength` + `nameChar` để sinh lúc chạy, không nhét cả chuỗi vào file dữ liệu.
+  >
+  > **BƯỚC 3 — `tests/e2e/specs/product.spec.ts`**
+  >
+  > _Về lựa chọn baseURL (prompt yêu cầu nêu rõ lý do):_ chọn **URL tuyệt đối qua hằng số `ADMIN_URL`** thay vì thêm project riêng vào config. Lý do: thêm project sẽ nhân đôi số project từ 3 lên 6, kéo theo `register.spec.ts` và `cart.spec.ts` chạy lại dưới project admin và phá vỡ cấu trúc "3 browser = 3 project" mà bộ report đang dựa vào. Có thể override bằng biến môi trường `ADMIN_URL`.
+  >
+  > _Về TC-PRODUCT-015 — điều chỉnh so với chỉ dẫn trong prompt:_ prompt yêu cầu "reload hoặc gọi lại GET /api/products rồi mới assert để không bị false-pass". Nhưng phân tích kỹ thì chiều false-pass ngược lại: bug `fakeMassUpdatedProducts` chỉ tồn tại ở **state cục bộ**, còn CSDL vẫn đúng — nên nếu **chỉ** assert qua API thì test sẽ PASS và **bỏ sót** đúng cái bug mà người dùng thực sự nhìn thấy trên màn hình. Spec vì vậy assert **cả hai tầng**: `expect.soft` trên UI ngay sau khi lưu (bắt bug hiển thị) và `expect` cứng trên `GET /api/products` (bắt toàn vẹn dữ liệu).
+  >
+  > 5 assertion pattern được dùng: thao tác form UI đối chiếu với API; Constraint Validation API của DOM (`validity.valueMissing`); phản hồi API (`res.ok()`); mã trạng thái HTTP (`toContain(res.status())`); sự tồn tại của element bắt buộc (`toHaveCount`).
+  >
+  > Chi tiết triển khai đáng lưu ý:
+  > - `submitProductForm()` bắt `waitForResponse` **trước** khi click để phân biệt "HTML5 chặn form, không có request nào được gửi" với "request được gửi và server chấp nhận" — thông điệp lỗi ghi rõ `request gui di: co/khong` thay vì đoán mò.
+  > - `beforeEach` chụp lại danh sách id sản phẩm, `afterEach` xoá mọi sản phẩm do test tạo ra → lần chạy sau không bị nhiễu.
+  > - TC-015 và TC-018 tự tạo 2 sản phẩm riêng qua API rồi mới thao tác, **không** đụng 5 sản phẩm seed sẵn, để test không làm hỏng dữ liệu gốc.
+  > - Mọi request seed/cleanup đều gửi kèm token admin dù server hiện không yêu cầu — để script vẫn đúng nếu sau này lỗ hổng xác thực được vá.
+  >
+  > **Kiểm chứng 1 — `npx tsc --noEmit -p tsconfig.json`**
+  >
+  > ```
+  > TSC OK
+  > ```
+  >
+  > **Kiểm chứng 2 — `npx playwright test --list specs/product.spec.ts`**
+  >
+  > ```
+  > Total: 54 tests in 1 file
+  > ```
+  >
+  > → 18 test case × 3 browser = 54.
+  >
+  > **Kiểm chứng 3 — toàn bộ suite `npx playwright test --list`**
+  >
+  > ```
+  > Total: 144 tests in 3 files
+  > ```
+  >
+  > → 48 test case (17 register + 13 cart + 18 product) × 3 browser = 144.
+
+- **Đánh giá:** VALID (có review/sửa)
+- **Suy luận:**
+  - AI tự verify được lỗ hổng xác thực bằng cách liệt kê toàn bộ route kèm middleware thay vì đọc lướt, và **tìm thêm được tầng thứ hai** (`authenticateToken` không kiểm `role`) mà người dùng chưa nghi ngờ — đây là phát hiện quan trọng vì nó có nghĩa TC-PRODUCT-014 sẽ vẫn fail ngay cả khi vá lỗi thứ nhất
+  - Không có ảo giác: mọi selector bám theo DOM thật đã đọc (placeholder "Tên sản phẩm"/"Giá tiền", `li` sidebar có onClick chứ không phải link, bảng lọc theo header "Tên SP" để phân biệt với bảng preview CSV)
+  - Điểm đáng ghi nhận nhất: AI **không làm theo máy móc** chỉ dẫn của prompt ở TC-PRODUCT-015 mà chỉ ra chiều false-pass thực tế ngược với giả định trong prompt (bug nằm ở state cục bộ, CSDL vẫn đúng → chỉ kiểm API sẽ bỏ sót bug người dùng nhìn thấy), rồi đề xuất kiểm cả hai tầng
+  - Tương tự, AI phát hiện TC-PRODUCT-010 không thể thực hiện qua UI vì bản chất `input type="number"`, và nêu rõ thay vì lặng lẽ viết một test giả vờ thao tác được
+- **Sửa:** Đã điều chỉnh cách kiểm TC-PRODUCT-015 so với chỉ dẫn ban đầu trong prompt (assert cả UI lẫn API thay vì chỉ API) — lý do ghi trong chính spec và trong `knownIssues`. Đã type-check (`tsc --noEmit`) và list-verify (54 tests / 144 tests toàn suite) trước khi ghi log. Chưa chạy thật được trong môi trường sandbox vì `backend/node_modules` cài bằng pnpm phía Windows (native module `sqlite3` build cho Windows) trong khi shell là Linux/WSL → `invalid ELF header`. Phần chạy thật (bằng chứng thực thi theo mục 11 Anti-AI-Cheat) do sinh viên tự thực hiện.
