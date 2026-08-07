@@ -34,7 +34,7 @@ Bộ kiểm thử tự động này bao phủ toàn bộ **22 test case** cho t�
 | Phần mềm         | Phiên bản tối thiểu     |
 | ---------------- | ----------------------- |
 | Node.js          | ≥ 18.x                  |
-| npm              | ≥ 9.x (hoặc pnpm ≥ 8.x) |
+| pnpm             | ≥ 8.x                   |
 | @playwright/test | ^1.49.1                 |
 
 ### Dịch vụ cần chạy trước khi test
@@ -50,13 +50,13 @@ Bộ kiểm thử tự động này bao phủ toàn bộ **22 test case** cho t�
 
 ```bash
 # 1. Di chuyển vào thư mục này
-cd tests/scripts/checkout
+cd tests/test-runs/automation/scripts/checkout
 
 # 2. Cài đặt dependencies
-npm install
+pnpm install
 
 # 3. Cài browser binaries (lần đầu)
-npx playwright install
+pnpm exec playwright install
 ```
 
 ---
@@ -66,39 +66,39 @@ npx playwright install
 ### Chạy toàn bộ (3 browsers: Chromium, Firefox, WebKit)
 
 ```bash
-npm test
+pnpm test
 # hoặc
-npx playwright test
+pnpm exec playwright test
 ```
 
 ### Chạy theo browser riêng lẻ
 
 ```bash
-npm run test:chromium       # Chỉ Chromium
-npm run test:firefox        # Chỉ Firefox
-npm run test:webkit         # Chỉ WebKit (Safari engine)
+pnpm test:chromium       # Chỉ Chromium
+pnpm test:firefox        # Chỉ Firefox
+pnpm test:webkit         # Chỉ WebKit (Safari engine)
 ```
 
 ### Chạy theo file spec riêng lẻ
 
 ```bash
-npm run test:api            # Chỉ API tests (TC-001 → TC-015)
-npm run test:bva            # Chỉ BVA tests (BVA-001 → BVA-007)
-npm run test:ui             # Chỉ UI tests (TC-011, TC-012)
+pnpm test:api            # Chỉ API tests (TC-001 → TC-015)
+pnpm test:bva            # Chỉ BVA tests (BVA-001 → BVA-007)
+pnpm test:ui             # Chỉ UI tests (TC-011, TC-012)
 ```
 
 ### Chạy với output chi tiết
 
 ```bash
-npx playwright test --reporter=list,html
+pnpm exec playwright test --reporter=list,html
 ```
 
 ### Mở HTML Report
 
 ```bash
-npm run report
+pnpm report
 # hoặc
-npx playwright show-report
+pnpm exec playwright show-report
 ```
 
 Report được sinh ra tại `playwright-report/index.html`.  
@@ -109,8 +109,8 @@ Tiêu đề report sẽ hiển thị: **"Run by: 23127115 (Mạch Quốc Tấn)"
 ## Cấu trúc thư mục
 
 ```
-tests/scripts/checkout/
-├── package.json                      # Dependencies & npm scripts
+tests/test-runs/automation/scripts/checkout/
+├── package.json                      # Dependencies & pnpm scripts
 ├── playwright.config.ts              # Multi-browser config, student metadata
 ├── tsconfig.json                     # TypeScript config
 │

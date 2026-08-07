@@ -34,7 +34,7 @@ Bộ kiểm thử tự động này bao phủ toàn bộ **29 test case** cho t�
 | Phần mềm         | Phiên bản tối thiểu     |
 | ---------------- | ----------------------- |
 | Node.js          | ≥ 18.x                  |
-| npm / pnpm       | ≥ 9.x (hoặc pnpm ≥ 8.x) |
+| pnpm             | ≥ 8.x                   |
 | @playwright/test | ^1.49.1                 |
 
 ### Dịch vụ cần chạy trước khi test
@@ -50,13 +50,13 @@ Bộ kiểm thử tự động này bao phủ toàn bộ **29 test case** cho t�
 
 ```bash
 # 1. Di chuyển vào thư mục này
-cd tests/scripts/product-list-and-search
+cd tests/test-runs/automation/scripts/product-list-and-search
 
 # 2. Cài đặt dependencies
-npm install
+pnpm install
 
 # 3. Cài browser binaries (lần đầu)
-npx playwright install
+pnpm exec playwright install
 ```
 
 ---
@@ -66,33 +66,33 @@ npx playwright install
 ### Chạy toàn bộ (3 browsers: Chromium, Firefox, WebKit)
 
 ```bash
-npm test
+pnpm test
 # hoặc
-npx playwright test
+pnpm exec playwright test
 ```
 
 ### Chạy theo browser riêng lẻ
 
 ```bash
-npm run test:chromium       # Chỉ Chromium
-npm run test:firefox        # Chỉ Firefox
-npm run test:webkit         # Chỉ WebKit (Safari engine)
+pnpm test:chromium       # Chỉ Chromium
+pnpm test:firefox        # Chỉ Firefox
+pnpm test:webkit         # Chỉ WebKit (Safari engine)
 ```
 
 ### Chạy theo nhóm test
 
 ```bash
-npm run test:ep             # Equivalence Partitioning tests (TC-001 → TC-014)
-npm run test:ui             # UI & Navigation tests (TC-007, TC-015 → TC-019)
-npm run test:bva            # BVA tests (BVA-001 → BVA-010)
+pnpm test:ep             # Equivalence Partitioning tests (TC-001 → TC-014)
+pnpm test:ui             # UI & Navigation tests (TC-007, TC-015 → TC-019)
+pnpm test:bva            # BVA tests (BVA-001 → BVA-010)
 ```
 
 ### Xem HTML Report
 
 ```bash
-npm run report
+pnpm report
 # hoặc
-npx playwright show-report
+pnpm exec playwright show-report
 ```
 
 Report tại `playwright-report/index.html`.  
@@ -103,8 +103,8 @@ Tiêu đề report: **"EShop Product List & Search Automation — Run by: 231271
 ## Cấu trúc thư mục
 
 ```
-tests/scripts/product-list-and-search/
-├── package.json                      # Dependencies & npm scripts
+tests/test-runs/automation/scripts/product-list-and-search/
+├── package.json                      # Dependencies & pnpm scripts
 ├── playwright.config.ts              # Multi-browser config, student metadata
 ├── tsconfig.json                     # TypeScript config
 │
