@@ -115,3 +115,6 @@ test.describe('FR-02 — Login and Account Lockout', () => {
     });
   }
 });
+
+// Performance note: login lockout state persists across browser contexts
+
