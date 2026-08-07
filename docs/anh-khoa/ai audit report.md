@@ -539,3 +539,108 @@
   - AI tự phát hiện được 3 sai khác SUT-vs-SRS bằng cách đọc chéo `Register.jsx`/`server.js` thay vì chỉ dựa vào mô tả test case — không có ảo giác locator vì đã bám theo cấu trúc DOM thật đã đọc
   - Điểm AI ban đầu bỏ sót (do người dùng bổ sung trong quá trình review): thiết kế `confirmField`/`dbHash` là quyết định kiến trúc cần con người xác nhận hướng đi (assert tồn tại field thay vì cố thao tác field ảo; test API riêng cho case bảo mật) — AI đã tự đề xuất và giải thích rõ lý do thay vì âm thầm bỏ qua 3 case khó
 - **Sửa:** Không cần sửa thêm; đã type-check (`tsc --noEmit`) và list-verify (51 tests) trước khi ghi log. Còn phải chạy thật (cần cài Playwright browser + khởi động backend/frontend-web) để xác nhận số lượng pass/fail thực tế, sẽ log ở entry tiếp theo.
+
+---
+
+**AI Audit Report Item**
+
+- **Công cụ AI:** Claude Code (Anthropic) — model `claude-opus-5`
+- **Thời gian:** 2026-08-07 22:05:28 +07:00
+- **Nội dung prompt:**
+
+  > (Nội dung file `prompt1.md` — PHẦN 2 Cart FR-07, gồm 3 prompt con chạy tuần tự)
+  >
+  > **Prompt 1/3 — Grounding + gap analysis (chạy trước, chưa viết code):**
+  > Đọc 13 test case tests/test-cases/cart/TC-CART-001.md → 013.md, đối chiếu với source thật: frontend-web/src/pages/Cart.jsx, frontend-web/src/context/CartContext.jsx.
+  > Tôi đã đọc trước và ghi nhận vài điểm nghi ngờ, bạn verify lại và bổ sung nếu còn thiếu:
+  > - Cart.jsx chỉ có nút "Xóa", KHÔNG có nút +/- số lượng nào cả (TC-CART-003, 004, 005 giả định có nút này).
+  > - Nút "Xóa" gọi thẳng removeFromCart(index) trong onClick, không có dialog/window.confirm nào (TC-CART-007, 008 giả định có dialog xác nhận).
+  > - Label tổng tiền là "Tổng tạm tính" (dòng ~63), trong khi FR-07 yêu cầu đúng chữ "Tổng cộng" (TC-CART-006).
+  > - CartContext.addToCart() luôn push dòng mới (`[...cart, {...product, quantity}]`), không kiểm tra sản phẩm đã có trong giỏ để tăng số lượng (TC-CART-001, 002 sẽ fail nếu đúng vậy).
+  > - cart là React state thuần, không có localStorage/sessionStorage → F5 mất hết giỏ hàng (TC-CART-013).
+  > - Trạng thái giỏ rỗng chỉ có text, không có icon minh họa (TC-CART-009).
+  > Với mỗi gap, trích dẫn đúng số dòng trong file làm bằng chứng, không suy đoán thêm. Nếu cần, đọc luôn frontend-web/src/pages/ProductDetail.jsx để xem ô nhập số lượng trước khi "Thêm vào giỏ" (liên quan TC-CART-011). Tổng hợp thành bảng: TC-ID | có UI element tương ứng? | ghi chú. Chưa viết test.
+  >
+  > **Prompt 2/3 — Data-driven JSON:**
+  > Từ bảng gap analysis trên, tạo tests/e2e/test-data/cart.json theo đúng cấu trúc tests/e2e/test-data/register.json (feature, notes, knownIssues, mảng "cases" với id/title/input/expected). Expected PHẢI theo đúng FR-07 trong README.md (SRS) — không chỉnh theo hành vi hiện tại của Cart.jsx để che giấu bug, vì assertion fail chính là bằng chứng bug cho báo cáo.
+  > Với case mà UI không có element tương ứng (nút +/-, dialog xác nhận), dùng kind "elementMissing" (tương tự "confirmField" đã dùng ở register.spec.ts) thay vì mô tả một thao tác không thể thực hiện được.
+  >
+  > **Prompt 3/3 — spec.ts:**
+  > Viết tests/e2e/specs/cart.spec.ts đọc cart.json, tối thiểu 3 assertion pattern khác nhau (tham khảo register.spec.ts đã có 5 pattern: URL, DOM attribute, text content, network request, API response).
+  > Cần đăng nhập thật trước khi vào /cart (test@eshop.com / Test1234! qua /login thật, không mock), và cần thêm sản phẩm vào giỏ qua luồng thật (vào trang chủ → chi tiết sản phẩm → "Thêm vào giỏ hàng") thay vì set localStorage/state trực tiếp, vì cart không persist (xem gap ở trên) nên seed trực tiếp sẽ không phản ánh đúng hành vi thật.
+  > Case "elementMissing": assert locator toHaveCount(1) trước, KHÔNG click/fill vào locator rỗng (tránh timeout mù mờ 10-30s như đã tránh ở register).
+  > Sau khi viết xong: chạy npx tsc --noEmit -p tsconfig.json và npx playwright test --list specs/cart.spec.ts, dán kết quả ra cho tôi xem trước khi tôi chạy thật với backend/frontend đang bật
+
+- **AI output:**
+
+  > **BƯỚC 1 — Gap analysis (xác minh bằng đọc code, mọi claim có số dòng dẫn chứng)**
+  >
+  > _Xác nhận 6 điểm nghi ngờ của người dùng — đúng cả 6:_
+  >
+  > | # | Nghi ngờ | Dẫn chứng | Kết luận |
+  > |---|---|---|---|
+  > | 1 | Không có nút +/- | `Cart.jsx:47` — `<td>{item.quantity}</td>` là text thuần, không có `<button>` nào trong ô | đúng |
+  > | 2 | Xóa không có dialog | `Cart.jsx:50-56` — `onClick={() => removeFromCart(index)}` gọi thẳng, không `window.confirm` | đúng |
+  > | 3 | Label "Tổng tạm tính" | `Cart.jsx:63` — `Tổng tạm tính:` | đúng (FR-07 yêu cầu "Tổng cộng") |
+  > | 4 | addToCart luôn push dòng mới | `CartContext.jsx:8-10` — `setCart([...cart, {...product, quantity}])`, không tìm dòng trùng | đúng |
+  > | 5 | Không persist | `CartContext.jsx:6` — `useState([])` thuần, không localStorage, không `useEffect` lưu trữ | đúng |
+  > | 6 | Empty state không icon | `Cart.jsx:20-27` — chỉ `<h2>` + `<Link>`, không `<img>`/`<svg>` | đúng |
+  >
+  > _6 gap người dùng CHƯA nêu, AI tìm thêm:_
+  >
+  > | # | Gap | Dẫn chứng | Ảnh hưởng |
+  > |---|---|---|---|
+  > | 7 | **Nút "Thêm vào giỏ hàng" nuốt click đầu tiên** — `clickCount === 0` thì `return` không làm gì, phải bấm lần 2 mới thêm | `ProductDetail.jsx:21-31` | Nghiêm trọng nhất. Ảnh hưởng TC-001, 002, 011 và cả cách seed dữ liệu |
+  > | 8 | Cột tên là **"Giá"** chứ không phải "Đơn giá" | `Cart.jsx:36` | TC-001 |
+  > | 9 | Nút quay lại đổi nhãn thành **"← Mua tiếp"** khi giỏ có hàng (empty state thì lại đúng "Tiếp tục mua sắm") | `Cart.jsx:66-68` vs `Cart.jsx:24` | TC-010 — nhãn không nhất quán giữa 2 trạng thái |
+  > | 10 | Ô Số lượng **không có `min`/`required`**; `parseInt("")` = `NaN` | `ProductDetail.jsx:56-61` + `:27` | TC-011 — đúng cảnh báo NaN trong test case |
+  > | 11 | `/checkout` **không có guard nào** — vào thẳng URL vẫn render form dù chưa đăng nhập | `Checkout.jsx` (không có redirect), `App.jsx:58` route không bảo vệ | TC-012 vế cuối — vi phạm FR-08 |
+  > | 12 | `<label>Số lượng:</label>` không gắn `htmlFor`/`id` | `ProductDetail.jsx:55-61` | `getByLabel()` vô dụng, giống hệt register |
+  >
+  > Điểm 7 quan trọng nhất về mặt thiết kế test: nếu seed giỏ hàng qua trang chi tiết, TC-011 sẽ **false-pass** (click 1 lần không thêm gì → giỏ rỗng → trùng với kỳ vọng "phải bị chặn").
+  >
+  > **BƯỚC 2 — `tests/e2e/test-data/cart.json`** (13/13 case; đầy đủ `feature`, `notes`, `products`, `credentials`, `knownIssues` 14 mục, `cases`)
+  >
+  > Quyết định thiết kế dữ liệu chính:
+  > - Test case gốc dùng "Sản phẩm A" (100.000 ₫) / "Sản phẩm B" (50.000 ₫) là sản phẩm giả định, không có trong seed `database.js`. Ánh xạ sang sản phẩm thật: A = iPhone 15 Pro Max (id 1), B = Bàn phím cơ Keychron Q1 (id 5). Cố ý chọn 2 id **lẻ** vì `server.js:162` trả `price` dạng **string** cho id chẵn (`row.id % 2 === 0`) — tránh quirk này làm nhiễu kết quả.
+  > - Không hardcode giá tiền trong file dữ liệu: đơn giá lấy từ `GET /api/products/:id` lúc chạy, thành tiền và tổng cộng tính lại từ đó (vừa tránh lệch khi ai đó sửa seed, vừa tạo thêm 1 assertion pattern đối chiếu UI với API).
+  > - `TC-CART-001` giữ `clicks: 1` (đúng spec) để phơi bày bug clickCount; `TC-CART-011` cố ý `clicks: 2` để thực sự kích hoạt `addToCart` và kiểm đúng thứ cần kiểm (validation số lượng), nếu không sẽ FALSE PASS.
+  > - `TC-CART-002` seed qua nút "Thêm vào giỏ" ở trang chủ (`Home.jsx:97-102`) thay vì trang chi tiết — nút này gọi thẳng `addToCart` không qua `clickCount`, để bug tạo-dòng-trùng lộ ra trực tiếp thay vì bị bug clickCount che mất.
+  > - `TC-CART-012` và `TC-CART-013` đặt `requiresAuth: false` đúng theo Preconditions ghi trong 2 file test case đó (khách vãng lai), khác với mặc định đăng nhập của các case còn lại.
+  >
+  > **BƯỚC 3 — `tests/e2e/specs/cart.spec.ts`**
+  >
+  > Phát hiện quan trọng ảnh hưởng toàn bộ cách viết spec: vì giỏ hàng chỉ nằm trong React state, **mọi `page.goto()` đều là full reload và sẽ xoá sạch giỏ hàng**. Nên toàn bộ thao tác seed phải điều hướng bằng cách click link trong app (SPA navigation), không được dùng `page.goto()`. Riêng TC-CART-013 cố ý reload thật vì đó chính là thứ cần kiểm.
+  >
+  > 5 assertion pattern được dùng:
+  > 1. Đối chiếu UI với dữ liệu gốc lấy từ API (số dòng, số lượng, thành tiền, tổng cộng) — `assertLines()`
+  > 2. Assertion trên sự tồn tại của element bắt buộc theo spec (`toHaveCount`), không click vào locator rỗng
+  > 3. Assertion trên nội dung văn bản hiển thị (`getByText`, `toContainText`)
+  > 4. Assertion trên sự kiện trình duyệt (`page.on('dialog')`) cho TC-007/008
+  > 5. Assertion trên điều hướng (`toHaveURL`)
+  >
+  > Dùng `expect.soft()` cho các assertion về nhãn/icon để một lần chạy phơi bày được nhiều finding thay vì dừng ở lỗi đầu tiên.
+  > Hàm `formatMoney()` gọi `page.evaluate((n) => Number(n).toLocaleString(), value)` để định dạng tiền theo đúng locale của **browser đang chạy** — tính ở phía Node sẽ lệch locale giữa 3 browser.
+  > Helper `login()` lưu ý: `Login.jsx` đặt nhãn ô email là "Username", nút submit tên "Sign In" (không phải "Đăng nhập").
+  >
+  > **Kiểm chứng 1 — `npx tsc --noEmit -p tsconfig.json`** (chạy trên Node 20 qua nvm)
+  >
+  > ```
+  > TSC OK
+  > ```
+  >
+  > **Kiểm chứng 2 — `npx playwright test --list specs/cart.spec.ts`**
+  >
+  > ```
+  > Total: 39 tests in 1 file
+  > ```
+  >
+  > → 13 test case × 3 browser (chromium/firefox/webkit) = 39, đúng như kỳ vọng.
+
+- **Đánh giá:** VALID (có review/sửa)
+- **Suy luận:**
+  - Đúng format data-driven yêu cầu của HW04 (JSON tách rời, không hardcode dữ liệu lẫn giá tiền)
+  - AI tự verify được cả 6 điểm nghi ngờ của người dùng bằng số dòng cụ thể, và tìm thêm 6 gap người dùng chưa nêu — trong đó bug `clickCount` ở `ProductDetail.jsx:21-31` là phát hiện có giá trị nhất vì nó vừa là bug thật vừa làm hỏng thiết kế test nếu không biết
+  - Không có ảo giác locator: mọi selector đều bám theo cấu trúc DOM đã đọc thật (`div.grid > div`, `table tbody tr`, `input[type="number"]`, nhãn "Username"/"Sign In")
+  - Suy luận đáng ghi nhận nhất: nhận ra nguy cơ **false pass** ở TC-CART-011 (click 1 lần không thêm gì → giỏ rỗng → trùng kỳ vọng "phải bị chặn") và xử lý bằng cách tách luồng seed, thay vì để test "xanh" một cách vô nghĩa
+- **Sửa:** Không cần sửa thêm; đã type-check (`tsc --noEmit`) và list-verify (39 tests) trước khi ghi log. Chưa chạy thật được trong môi trường sandbox vì `backend/node_modules` cài bằng pnpm phía Windows (native module `sqlite3` build cho Windows) trong khi shell là Linux/WSL → `invalid ELF header`. Phần chạy thật (bằng chứng thực thi theo mục 11 Anti-AI-Cheat) do sinh viên tự thực hiện.
