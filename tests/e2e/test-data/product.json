@@ -1,0 +1,162 @@
+{
+  "feature": "FR-15 - Quan ly San pham (Admin CRUD)",
+  "notes": "Du lieu test tach roi khoi script theo yeu cau data-driven cua HW04. Token {{unique}} duoc thay bang chuoi duy nhat luc chay de moi lan chay khong dung ten san pham cu. Truong 'nameLength' dung de sinh chuoi dai (255/256 ky tu) ngay luc chay thay vi nhet ca chuoi vao file du lieu. Danh muc 'Thoi trang' trong test case goc khong ton tai trong seed cua database.js (chi co Dien thoai / Laptop / Phu kien) nen anh xa sang 'Phu kien' (id 3) - ghi ro de nguoi cham doi chieu duoc.",
+  "adminCredentials": { "email": "admin@eshop.com", "password": "Admin123!" },
+  "userCredentials": { "email": "test@eshop.com", "password": "Test1234!" },
+  "category": { "id": 3, "name": "Phụ kiện" },
+  "knownIssues": [
+    "server.js:167/179/191 - POST /api/products, PUT /api/products/:id, DELETE /api/products/:id KHONG co middleware authenticateToken, trong khi POST/PUT/DELETE /api/categories ngay ben duoi (server.js:249/257/269) deu co. Bat ky ai cung tao/sua/xoa duoc san pham ma khong can dang nhap. Vi pham FR-12 va SEC-02. Anh huong TC-PRODUCT-013.",
+    "server.js:100-110 - authenticateToken chi verify chu ky JWT, KHONG kiem role === 'admin'. Nghia la ngay ca khi vá duoc loi tren, token cua user thuong van qua duoc. Toan bo /api/admin/* cung dinh loi nay. Vi pham SEC-03. Anh huong TC-PRODUCT-014.",
+    "frontend-admin/src/App.jsx:500-508 - input 'Gia tien' khong co required, khong co min, khong co step. Backend server.js:167-177 cung khong validate gia. Hau qua: gia 0, gia am, gia rong deu luu duoc. Anh huong TC-PRODUCT-007/008/009.",
+    "App.jsx:491-499 - input 'Ten san pham' co required (chan duoc ten rong - TC-PRODUCT-005 du kien PASS) nhung KHONG co maxLength, backend cung khong gioi han 255 ky tu. Anh huong TC-PRODUCT-006.",
+    "App.jsx:500-508 - input 'Gia tien' la type='number' khong khai bao step nen HTML5 mac dinh step=1. Gia 0.01 se bi chan boi constraint validation cua trinh duyet (stepMismatch) truoc khi form submit. Anh huong TC-PRODUCT-016 - dung voi ghi chu 'dac ta con mo ho ve so nguyen hay so thuc' trong chinh file test case do.",
+    "App.jsx:528-543 - the <select> danh muc chi render cac category co san, KHONG co option rong/placeholder, va state mac dinh category_id = 1. Nghia la khong the tao duoc trang thai 'khong chon danh muc' qua UI. TC-PRODUCT-011 vi vay kiem su TON TAI cua option rong thay vi mo ta mot thao tac khong thuc hien duoc.",
+    "App.jsx:110-114 - nhanh sua san pham co fakeMassUpdatedProducts = products.map(p => ({...p, name: productForm.name})) roi setProducts(...): sau khi sua 1 san pham, TAT CA san pham trong bang deu bi doi ten tren giao dien. Day la bug hien thi phia client (CSDL van dung, mat khi fetchData() chay lai). TC-PRODUCT-015 vi vay kiem CA HAI tang: UI ngay sau khi luu (bat bug hien thi) va API GET /api/products (bat toan ven du lieu) - neu chi kiem API se FALSE PASS va bo sot bug ma nguoi dung thuc su nhin thay.",
+    "App.jsx:590 - bang san pham render {p.price} d tho, khong qua toLocaleString(). Vi pham FR-21 (luon dung ky hieu d voi dinh dang phan cach hang nghin). Kiem kem trong TC-PRODUCT-017.",
+    "TC-PRODUCT-010 (gia = 'abc') khong the thuc hien qua UI: input type='number' khong cho nhap ky tu khong phai so, dat value='abc' bang JS cung bi trinh duyet chuan hoa ve chuoi rong. Kich ban chi co y nghia o tang API nen chuyen sang goi thang POST /api/products - ghi ro de khong bi hieu la lam sai buoc trong test case goc.",
+    "TC-PRODUCT-012 (category_id = 999999) goi thang API vi UI chi cho chon tu danh sach co san. Bang products khong khai bao FOREIGN KEY (database.js:64-71) va server.js:167-177 khong validate category_id ton tai hay khong.",
+    "frontend-admin chay o cong 5174 nhung playwright.config.ts dat baseURL = 5173 (frontend-web). Spec nay dung URL tuyet doi qua hang so ADMIN_URL (co the doi bang bien moi truong ADMIN_URL) thay vi them project rieng vao config: them project se nhan doi so project tu 3 len 6, keo theo ca register.spec.ts va cart.spec.ts chay lai duoi project admin va pha vo cau truc '3 browser = 3 project' ma report dang dua vao.",
+    "Man hinh Admin khong co trang 'chi tiet san pham' rieng; bam 'Sua' se do du lieu san pham vao form. TC-PRODUCT-017 vi vay coi thao tac 'xem chi tiet' la bam 'Sua' va doi chieu gia tri da do vao form.",
+    "TC-PRODUCT-015 va TC-PRODUCT-018 tu tao 2 san pham rieng qua API roi moi thao tac, KHONG dung 5 san pham seed san, de test khong lam hong du lieu goc cua he thong.",
+    "Cac request seed/cleanup deu gui kem token admin du hien tai server khong yeu cau - de script van dung neu sau nay lo hong xac thuc duoc va."
+  ],
+  "cases": [
+    {
+      "id": "TC-PRODUCT-001",
+      "title": "Admin them san pham voi du lieu hop le - tao thanh cong",
+      "kind": "uiCreate",
+      "input": { "name": "Áo thun nam {{unique}}", "price": "150000" },
+      "expected": { "created": true }
+    },
+    {
+      "id": "TC-PRODUCT-002",
+      "title": "Ten san pham dung 255 ky tu (bien tren hop le)",
+      "kind": "uiCreate",
+      "input": { "nameLength": 255, "nameChar": "A", "price": "150000" },
+      "expected": { "created": true }
+    },
+    {
+      "id": "TC-PRODUCT-003",
+      "title": "Ten san pham 1 ky tu (bien duoi hop le)",
+      "kind": "uiCreate",
+      "input": { "nameLength": 1, "nameChar": "A", "price": "150000" },
+      "expected": { "created": true }
+    },
+    {
+      "id": "TC-PRODUCT-004",
+      "title": "Gia la so duong nho nhat (bien duoi hop le)",
+      "kind": "uiCreate",
+      "input": { "name": "Áo thun nam {{unique}}", "price": "1" },
+      "expected": { "created": true }
+    },
+    {
+      "id": "TC-PRODUCT-005",
+      "title": "Ten san pham de trong",
+      "kind": "uiCreate",
+      "input": { "name": "", "price": "150000" },
+      "expected": { "created": false, "fieldInvalid": "Tên sản phẩm" }
+    },
+    {
+      "id": "TC-PRODUCT-006",
+      "title": "Ten san pham vuot qua 255 ky tu (bien tren khong hop le)",
+      "kind": "uiCreate",
+      "input": { "nameLength": 256, "nameChar": "A", "price": "150000" },
+      "expected": { "created": false }
+    },
+    {
+      "id": "TC-PRODUCT-007",
+      "title": "Gia bang 0 (bien khong hop le)",
+      "kind": "uiCreate",
+      "input": { "name": "Áo thun nam {{unique}}", "price": "0" },
+      "expected": { "created": false }
+    },
+    {
+      "id": "TC-PRODUCT-008",
+      "title": "Gia la so am",
+      "kind": "uiCreate",
+      "input": { "name": "Áo thun nam {{unique}}", "price": "-1000" },
+      "expected": { "created": false }
+    },
+    {
+      "id": "TC-PRODUCT-009",
+      "title": "Gia de trong",
+      "kind": "uiCreate",
+      "input": { "name": "Áo thun nam {{unique}}", "price": "" },
+      "expected": { "created": false }
+    },
+    {
+      "id": "TC-PRODUCT-010",
+      "title": "Gia khong phai la so (sai kieu du lieu)",
+      "kind": "apiValidation",
+      "input": { "name": "Áo thun nam {{unique}}", "price": "abc", "useCategory": true },
+      "expected": { "rejected": true, "reason": "FR-15 yeu cau Gia phai la so duong hop le" }
+    },
+    {
+      "id": "TC-PRODUCT-011",
+      "title": "Khong chon Danh muc",
+      "kind": "categoryRequired",
+      "expected": {
+        "reason": "FR-15 yeu cau Danh muc la bat buoc, nen UI phai co trang thai 'chua chon' de nguoi dung co the bo trong"
+      }
+    },
+    {
+      "id": "TC-PRODUCT-012",
+      "title": "Danh muc khong ton tai trong he thong",
+      "kind": "apiValidation",
+      "input": { "name": "Áo thun nam {{unique}}", "price": "150000", "category_id": 999999 },
+      "expected": { "rejected": true, "reason": "FR-15 yeu cau Danh muc phai chon tu danh sach co san" }
+    },
+    {
+      "id": "TC-PRODUCT-013",
+      "title": "Them san pham khi khong co token (chua dang nhap)",
+      "kind": "apiAuthCheck",
+      "auth": "none",
+      "input": { "name": "Áo thun nam {{unique}}", "price": "150000", "useCategory": true },
+      "expected": { "statuses": [401], "reason": "FR-12 / SEC-02: API co tinh anh huong du lieu phai yeu cau JWT hop le" }
+    },
+    {
+      "id": "TC-PRODUCT-014",
+      "title": "Them san pham bang tai khoan khong phai Admin",
+      "kind": "apiAuthCheck",
+      "auth": "user",
+      "input": { "name": "Áo thun nam {{unique}}", "price": "150000", "useCategory": true },
+      "expected": { "statuses": [403], "reason": "FR-12 / SEC-03: token hop le nhung role != admin phai bi tu choi" }
+    },
+    {
+      "id": "TC-PRODUCT-015",
+      "title": "Sua mot san pham chi anh huong dung san pham do",
+      "kind": "editIsolation",
+      "seedProducts": [
+        { "key": "X", "name": "San pham X {{unique}}", "price": 150000 },
+        { "key": "Y", "name": "San pham Y {{unique}}", "price": 250000 }
+      ],
+      "input": { "editKey": "X", "newName": "San pham X da cap nhat {{unique}}", "newPrice": "200000" },
+      "expected": { "untouchedKey": "Y" }
+    },
+    {
+      "id": "TC-PRODUCT-016",
+      "title": "BVA - Gia la so thuc duong nho nhat (0.01) tai bien duoi > 0",
+      "kind": "uiCreate",
+      "input": { "name": "Áo thun nam {{unique}}", "price": "0.01" },
+      "expected": { "created": true }
+    },
+    {
+      "id": "TC-PRODUCT-017",
+      "title": "Xem (Read/List) san pham hien thi dung du lieu",
+      "kind": "listIntegrity",
+      "seedProducts": [{ "key": "X", "name": "San pham X {{unique}}", "price": 150000 }],
+      "expected": { "checkKey": "X" }
+    },
+    {
+      "id": "TC-PRODUCT-018",
+      "title": "Xoa (Delete) san pham thanh cong - loai khoi danh sach",
+      "kind": "deleteProduct",
+      "seedProducts": [
+        { "key": "X", "name": "San pham X {{unique}}", "price": 150000 },
+        { "key": "Y", "name": "San pham Y {{unique}}", "price": 250000 }
+      ],
+      "input": { "deleteKey": "X" },
+      "expected": { "untouchedKey": "Y" }
+    }
+  ]
+}
