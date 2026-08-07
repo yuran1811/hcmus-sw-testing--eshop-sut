@@ -1,0 +1,205 @@
+{
+  "feature": "FR-07 - Gio hang (Shopping Cart)",
+  "notes": "Du lieu test tach roi khoi script theo yeu cau data-driven cua HW04. Test case goc dung 'San pham A' (100.000 d) va 'San pham B' (50.000 d) la san pham gia dinh - khong ton tai trong seed cua database.js. Anh xa sang san pham that co san: A = iPhone 15 Pro Max (id 1), B = Ban phim co Keychron Q1 (id 5). Co y chon 2 id LE vi server.js:162 tra ve price dang STRING cho id chan (row.id % 2 === 0) - dung id le de tranh quirk nay lam nhieu ket qua. Spec KHONG hardcode gia tien: don gia duoc lay tu GET /api/products/:id luc chay, thanh tien va tong cong duoc tinh lai tu do (vua tranh lech khi ai do sua seed, vua tao them 1 assertion pattern doi chieu UI voi API).",
+  "products": {
+    "A": { "id": 1, "name": "iPhone 15 Pro Max" },
+    "B": { "id": 5, "name": "Bàn phím cơ Keychron Q1" }
+  },
+  "credentials": {
+    "email": "test@eshop.com",
+    "password": "Test1234!"
+  },
+  "knownIssues": [
+    "ProductDetail.jsx:21-31 - handleAddToCart co bien clickCount: lan bam dau tien chi setClickCount(1) roi return, KHONG them gi vao gio. Phai bam lan 2 moi thuc su goi addToCart. Day la bug nghiem trong nhat cua feature nay.",
+    "Hau qua cua bug tren voi thiet ke test: neu seed gio hang qua trang chi tiet bang 1 click, gio se rong - trung khop voi ky vong 'phai bi chan' cua TC-CART-011 va gay FALSE PASS. Vi vay TC-CART-011 co y dung clicks=2 de thuc su kich hoat addToCart va kiem dung dieu can kiem (validation so luong). Nguoc lai TC-CART-001 giu dung clicks=1 theo spec de phoi bay chinh bug clickCount nay.",
+    "CartContext.jsx:8-10 - addToCart luon push dong moi (setCart([...cart, {...product, quantity}])), khong tim dong trung de cong don so luong. TC-CART-002 vi vay seed qua nut 'Them vao gio' o trang chu (Home.jsx:97-102) - nut nay goi thang addToCart khong qua clickCount - de bug tao-dong-trung lo ra truc tiep thay vi bi bug clickCount che mat.",
+    "Cart.jsx:47 - o So luong la text thuan (<td>{item.quantity}</td>), khong co nut +/- nao. TC-CART-003/004/005 dung kind 'elementMissing': assert nut ton tai truoc, KHONG click vao locator rong de tranh timeout mu mo.",
+    "Cart.jsx:50-56 - nut Xoa goi thang removeFromCart(index), khong co window.confirm. TC-CART-007/008 se fail o buoc cho dialog xuat hien.",
+    "Cart.jsx:63 - nhan tong tien la 'Tong tam tinh', FR-07 yeu cau dung chu 'Tong cong'.",
+    "Cart.jsx:36 - ten cot la 'Gia', FR-07 yeu cau 'Don gia'.",
+    "Cart.jsx:66-68 - khi gio CO hang, nut quay lai co nhan '← Mua tiep'; nhung o empty state (Cart.jsx:24) lai dung nhan '_Tiep tuc mua sam'. Nhan khong nhat quan giua 2 trang thai, FR-07 yeu cau 'Tiep tuc mua sam'.",
+    "CartContext.jsx:6 - cart la useState([]) thuan, khong luu localStorage/sessionStorage. F5 mat sach gio hang (TC-CART-013).",
+    "Cart.jsx:20-27 - empty state chi co chu, khong co icon/hinh minh hoa nhu FR-24 yeu cau (TC-CART-009).",
+    "Checkout.jsx + App.jsx:58 - route /checkout KHONG co guard nao. Vao thang URL /checkout khi chua dang nhap van render form thanh toan. Vi pham FR-08, kiem o ve cuoi TC-CART-012.",
+    "ProductDetail.jsx:56-61 - o So luong khong co min/required; ProductDetail.jsx:27 dung parseInt(quantity) nen de trong se thanh NaN. Label 'So luong:' khong gan htmlFor/id nen getByLabel() vo dung.",
+    "Login.jsx - trang dang nhap dung nhan 'Username' cho o email, nut submit ten 'Sign In' (khong phai 'Dang nhap'), va o mat khau dung type='text' (lo mat khau). Ngoai pham vi FR-07 nhung anh huong cach viet helper dang nhap.",
+    "TC-CART-012 va TC-CART-013 chay o trang thai KHACH VANG LAI (requiresAuth=false) dung theo Preconditions ghi trong 2 file test case do, khac voi mac dinh dang nhap cua cac case con lai."
+  ],
+  "cases": [
+    {
+      "id": "TC-CART-001",
+      "title": "Them san pham chua co trong gio - tao dong moi",
+      "requiresAuth": true,
+      "setup": [{ "product": "A", "quantity": 1, "via": "detail", "clicks": 1 }],
+      "expected": {
+        "kind": "cartLines",
+        "lines": [{ "product": "A", "quantity": 1 }],
+        "requiredColumns": ["Sản phẩm", "Đơn giá", "Số lượng", "Thành tiền", "Thao tác"]
+      }
+    },
+    {
+      "id": "TC-CART-002",
+      "title": "Them lai san pham da co - tang so luong, khong tao dong trung",
+      "requiresAuth": true,
+      "setup": [
+        { "product": "A", "quantity": 1, "via": "home" },
+        { "product": "A", "quantity": 1, "via": "home" }
+      ],
+      "expected": {
+        "kind": "cartLines",
+        "lines": [{ "product": "A", "quantity": 2 }]
+      }
+    },
+    {
+      "id": "TC-CART-003",
+      "title": "Tang So luong bang nut '+' - Thanh tien & Tong cong cap nhat dung",
+      "requiresAuth": true,
+      "setup": [{ "product": "A", "quantity": 1, "via": "home" }],
+      "expected": {
+        "kind": "elementMissing",
+        "product": "A",
+        "controls": ["+"],
+        "reason": "FR-07 yeu cau cot So luong co nut +/- de chinh so luong ngay tren gio hang"
+      }
+    },
+    {
+      "id": "TC-CART-004",
+      "title": "Giam So luong bang nut '-' khi dang > 1 (cham bien duoi hop le = 1)",
+      "requiresAuth": true,
+      "setup": [{ "product": "A", "quantity": 2, "via": "detail", "clicks": 2 }],
+      "expected": {
+        "kind": "elementMissing",
+        "product": "A",
+        "controls": ["-"],
+        "reason": "FR-07 yeu cau cot So luong co nut +/- de chinh so luong ngay tren gio hang"
+      }
+    },
+    {
+      "id": "TC-CART-005",
+      "title": "Bam '-' khi So luong = 1 - chan vuot bien duoi (khong cho xuong 0)",
+      "requiresAuth": true,
+      "setup": [{ "product": "A", "quantity": 1, "via": "home" }],
+      "expected": {
+        "kind": "elementMissing",
+        "product": "A",
+        "controls": ["-"],
+        "reason": "Khong co nut '-' nen khong the kiem hanh vi chan bien duoi tai So luong = 1"
+      }
+    },
+    {
+      "id": "TC-CART-006",
+      "title": "Tong cong = tong Thanh tien nhieu dong; nhan dung 'Tong cong'",
+      "requiresAuth": true,
+      "setup": [
+        { "product": "A", "quantity": 1, "via": "home" },
+        { "product": "B", "quantity": 2, "via": "detail", "clicks": 2 }
+      ],
+      "expected": {
+        "kind": "totalLabel",
+        "label": "Tổng cộng",
+        "lines": [
+          { "product": "A", "quantity": 1 },
+          { "product": "B", "quantity": 2 }
+        ]
+      }
+    },
+    {
+      "id": "TC-CART-007",
+      "title": "Xoa san pham va xac nhan dialog - dong bi xoa, Tong cong cap nhat",
+      "requiresAuth": true,
+      "setup": [
+        { "product": "A", "quantity": 1, "via": "home" },
+        { "product": "B", "quantity": 1, "via": "home" }
+      ],
+      "expected": {
+        "kind": "confirmDialog",
+        "removeProduct": "A",
+        "dialogAction": "accept",
+        "remainingLines": [{ "product": "B", "quantity": 1 }]
+      }
+    },
+    {
+      "id": "TC-CART-008",
+      "title": "Xoa san pham nhung huy dialog - dong giu nguyen",
+      "requiresAuth": true,
+      "setup": [
+        { "product": "A", "quantity": 1, "via": "home" },
+        { "product": "B", "quantity": 1, "via": "home" }
+      ],
+      "expected": {
+        "kind": "confirmDialog",
+        "removeProduct": "A",
+        "dialogAction": "dismiss",
+        "remainingLines": [
+          { "product": "A", "quantity": 1 },
+          { "product": "B", "quantity": 1 }
+        ]
+      }
+    },
+    {
+      "id": "TC-CART-009",
+      "title": "Xoa het san pham - gio rong hien thi empty state",
+      "requiresAuth": true,
+      "setup": [{ "product": "A", "quantity": 1, "via": "home" }],
+      "expected": {
+        "kind": "emptyState",
+        "removeProduct": "A",
+        "messageContains": "trống"
+      }
+    },
+    {
+      "id": "TC-CART-010",
+      "title": "Bam 'Tiep tuc mua sam' - dieu huong ve trang chu",
+      "requiresAuth": true,
+      "setup": [{ "product": "A", "quantity": 1, "via": "home" }],
+      "expected": {
+        "kind": "navigate",
+        "linkName": "Tiếp tục mua sắm",
+        "urlPattern": "/$"
+      }
+    },
+    {
+      "id": "TC-CART-011",
+      "title": "BVA - Them vao gio voi So luong khong hop le (0 / am / rong) phai bi chan",
+      "requiresAuth": true,
+      "setup": [],
+      "expected": {
+        "kind": "quantityGuard",
+        "product": "A",
+        "datasets": [
+          { "label": "D1", "quantity": "0", "shouldAdd": false },
+          { "label": "D2", "quantity": "-1", "shouldAdd": false },
+          { "label": "D3", "quantity": "", "shouldAdd": false },
+          { "label": "D4", "quantity": "1", "shouldAdd": true }
+        ]
+      }
+    },
+    {
+      "id": "TC-CART-012",
+      "title": "Bam 'Tien hanh thanh toan' khi chua dang nhap - chan va dieu huong sang Dang nhap",
+      "requiresAuth": false,
+      "setup": [{ "product": "A", "quantity": 1, "via": "home" }],
+      "expected": {
+        "kind": "guestCheckout",
+        "redirectPattern": "/login$",
+        "preservedLines": [{ "product": "A", "quantity": 1 }]
+      }
+    },
+    {
+      "id": "TC-CART-013",
+      "title": "Gio hang phai duoc giu nguyen sau khi tai lai trang (F5)",
+      "requiresAuth": false,
+      "setup": [
+        { "product": "A", "quantity": 1, "via": "home" },
+        { "product": "B", "quantity": 2, "via": "detail", "clicks": 2 }
+      ],
+      "expected": {
+        "kind": "persistence",
+        "lines": [
+          { "product": "A", "quantity": 1 },
+          { "product": "B", "quantity": 2 }
+        ]
+      }
+    }
+  ]
+}
