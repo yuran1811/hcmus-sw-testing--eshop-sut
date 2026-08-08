@@ -1,19 +1,21 @@
-9d34568 docs(register): clarify role of register smoke tests
-761e449 docs(fr18): document delta-based assertion rationale
-8136df7 docs(fr10): add assertion pattern documentation
-aa61faa docs(fr02): add performance & isolation notes to login spec
-390ebcb chore: add .gitignore for e2e test artifacts
-2384a2b chore: setup Playwright configuration (3-browser, HTML reporter with anti-cheat banner)
-13b362c refactor: extract shared UI helpers for test reusability
-e5fe046 test(register): automate FR-01 register (3 data-driven cases, 3 browsers)
-1bb61f4 test(fr18): automate FR-18 order management (12 data-driven cases, 3 browsers)
-f5fbdb1 test(fr10): automate FR-10 order state machine (15 data-driven cases, 3 browsers)
-fd82f9e test(fr02): automate FR-02 login & account lockout (13 data-driven cases, 3 browsers)
-d73999f anhnguyen-hw4-setup
-46ef080 temp
-de4dacf test(hw02): add Playwright screenshots to all reports and bug reports
-30ac892 test(hw02): update AI audit report with session 4 execution results
-e529379 test(hw02): add domain testing & BVA reports for 4 features
+24efad7 submit
+3561966 finalize hw4
+6c7ea62 docs(register): clarify role of register smoke tests
+9536319 docs(fr18): document delta-based assertion rationale
+0c53e5a docs(fr10): add assertion pattern documentation
+b73798b docs(fr02): add performance & isolation notes to login spec
+08b4aef chore: add .gitignore for e2e test artifacts
+15f7636 chore: setup Playwright configuration (3-browser, HTML reporter with anti-cheat banner)
+a6f580c refactor: extract shared UI helpers for test reusability
+5c28a89 test(register): automate FR-01 register (3 data-driven cases, 3 browsers)
+f0911eb test(fr18): automate FR-18 order management (12 data-driven cases, 3 browsers)
+6eada90 test(fr10): automate FR-10 order state machine (15 data-driven cases, 3 browsers)
+a07959a test(fr02): automate FR-02 login & account lockout (13 data-driven cases, 3 browsers)
+5639d81 anhnguyen-hw4-setup
+be1cd74 temp
+7319921 test(hw02): add Playwright screenshots to all reports and bug reports
+e749ad1 test(hw02): update AI audit report with session 4 execution results
+67782cb test(hw02): add domain testing & BVA reports for 4 features
 d97f995 chore: approve sqlite3 build
 ea7fee4 chore: unused ci workflow
 3bc3b7c chore: create bug issue templates
