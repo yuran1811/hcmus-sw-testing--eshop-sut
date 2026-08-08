@@ -137,8 +137,17 @@ function productTable(page: Page): Locator {
   return page.locator('table').filter({ hasText: 'Tên SP' }).locator('tbody tr');
 }
 
+/**
+ * Da xac minh bang Playwright MCP: filter({ hasText: name }) khop CHUOI CON,
+ * khong phan biet hoa/thuong. Voi ten dai/co token {{unique}} thi gan nhu
+ * khong trung, nhung TC-PRODUCT-002/003 dung ten chi gom toan ky tu 'A' lap
+ * lai (bien tren/duoi cua do dai) - rieng TC-PRODUCT-003 (ten = "A") khop
+ * NHAM toi 5-6 dong khac trong bang (bat ky dong nao co chua chu 'a') thay vi
+ * dung 1 dong, khien assertion toHaveCount(1) fail SAI LY DO. Doi sang khop
+ * CHINH XAC noi dung o cell "Ten SP" de tranh dung chuoi con.
+ */
 function productRow(page: Page, name: string): Locator {
-  return productTable(page).filter({ hasText: name });
+  return productTable(page).filter({ has: page.getByRole('cell', { name, exact: true }) });
 }
 
 /** Form them/sua san pham - chi co placeholder, khong co <label> (App.jsx:483-566). */
