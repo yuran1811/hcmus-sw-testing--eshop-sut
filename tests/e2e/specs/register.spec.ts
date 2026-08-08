@@ -18,6 +18,15 @@ import path from 'node:path';
  *   con cach kiem tra field co ton tai hay khong (kind: confirmField).
  * - Case 017 (SEC-01) goi thang API thay vi qua UI, vi UI chan dang ky do
  *   bug regex noi tren.
+ * - Case 003/004 CUNG goi thang API (khong qua UI): da xac minh bang Playwright
+ *   MCP (dien form that) rang handleSubmit() chay flawedStrongPasswordRegex
+ *   TRUOC khi goi API, nen bat ky mat khau hop le nao theo FR-01 (co ky tu
+ *   thuoc @$!%*?&) deu bi chan tai day - khong bao gio toi duoc logic kiem
+ *   dinh dang/trung email ma 2 case nay thuc su muon kiem, khien assertion cu
+ *   (kind errorBanner) fail SAI LY DO (bao loi mat khau thay vi loi email).
+ *   Goi thang API de cach ly dung yeu cau dang kiem. TC-004 tu tao 1 email
+ *   tam roi dang ky trung chinh no, KHONG dung tai khoan dung chung
+ *   test@eshop.com (dang duoc cart.json/product.json dung de dang nhap).
  */
 
 type Expected =
@@ -25,7 +34,9 @@ type Expected =
   | { kind: 'fieldInvalid'; field: string; accountCreated: boolean }
   | { kind: 'errorBanner'; contains: string; accountCreated: boolean }
   | { kind: 'confirmField'; accountCreated: boolean }
-  | { kind: 'dbHash'; accountCreated: boolean };
+  | { kind: 'dbHash'; accountCreated: boolean }
+  | { kind: 'apiEmailFormat'; accountCreated: boolean }
+  | { kind: 'apiEmailDuplicate'; accountCreated: boolean };
 
 type RegisterCase = {
   id: string;
@@ -37,9 +48,13 @@ type RegisterCase = {
 const dataFile = path.join(__dirname, '..', 'test-data', 'register.json');
 const cases: RegisterCase[] = JSON.parse(readFileSync(dataFile, 'utf-8')).cases;
 
-// Case SEC-01 (dbHash) khong thao tac qua UI nen khong nam trong vong lap chinh.
-const uiCases = cases.filter((c) => c.expected.kind !== 'dbHash');
+// Cac case khong thao tac qua UI (bi chan boi bug mat khau hoac von la kiem
+// tang backend) nen khong nam trong vong lap chinh.
+const apiOnlyKinds = new Set(['dbHash', 'apiEmailFormat', 'apiEmailDuplicate']);
+const uiCases = cases.filter((c) => !apiOnlyKinds.has(c.expected.kind));
 const secCase = cases.find((c) => c.id === 'TC-REGISTER-017')!;
+const emailFormatCase = cases.find((c) => c.id === 'TC-REGISTER-003')!;
+const emailDuplicateCase = cases.find((c) => c.id === 'TC-REGISTER-004')!;
 
 const API_BASE = 'http://localhost:3000';
 
@@ -164,5 +179,53 @@ test.describe('FR-01 - Dang ky tai khoan', () => {
       me.password,
       'SEC-01: mat khau phai duoc bam (vi du bcrypt co tien to $2a$/$2b$/$2y$)',
     ).toMatch(/^\$2[aby]\$/);
+  });
+
+  test(`${emailFormatCase.id}: ${emailFormatCase.title}`, async ({ request }) => {
+    // Khong dung UI duoc (xem ghi chu dau file): mat khau hop le "Abcd123!"
+    // luon bi flawedStrongPasswordRegex chan truoc khi request toi API, nen
+    // goi thang API de kiem rieng yeu cau "email dung dinh dang" cua FR-01,
+    // tach biet voi bug mat khau da bao cao o case 001.
+    const res = await request.post(`${API_BASE}/api/register`, {
+      data: {
+        name: emailFormatCase.input.name,
+        email: emailFormatCase.input.email,
+        password: emailFormatCase.input.password,
+      },
+    });
+    expect(
+      res.ok(),
+      'FR-01: he thong phai tu choi dang ky khi email sai dinh dang (thieu domain)',
+    ).toBe(false);
+
+    const loginRes = await request.post(`${API_BASE}/api/login`, {
+      data: { email: emailFormatCase.input.email, password: emailFormatCase.input.password },
+    });
+    expect(
+      loginRes.ok(),
+      'Khong duoc co tai khoan nao dang nhap duoc voi email sai dinh dang',
+    ).toBe(false);
+  });
+
+  test(`${emailDuplicateCase.id}: ${emailDuplicateCase.title}`, async ({ request }, testInfo) => {
+    // Cung ly do khong dung UI duoc nhu case 003. KHONG dung tai khoan dung
+    // chung test@eshop.com (cart.json / product.json dang dung email nay de
+    // dang nhap) de tranh tao ban ghi trung lam sai lech dang nhap cua cac
+    // spec khac - thay vao do tu tao 1 email tam roi dang ky trung chinh no.
+    const unique = `${Date.now().toString(36)}${testInfo.project.name}`;
+    const email = emailDuplicateCase.input.email.replace('{{unique}}', unique);
+
+    const first = await request.post(`${API_BASE}/api/register`, {
+      data: { name: emailDuplicateCase.input.name, email, password: emailDuplicateCase.input.password },
+    });
+    expect(first.ok(), 'Dang ky lan dau voi email chua ton tai phai thanh cong').toBe(true);
+
+    const duplicate = await request.post(`${API_BASE}/api/register`, {
+      data: { name: emailDuplicateCase.input.name, email, password: emailDuplicateCase.input.password },
+    });
+    expect(
+      duplicate.ok(),
+      'FR-01: he thong phai tu choi dang ky khi email da ton tai, khong duoc tao ban ghi trung',
+    ).toBe(false);
   });
 });

@@ -4,7 +4,7 @@
   "knownIssues": [
     "TC-REGISTER-001, 015, 016, 017: frontend Register.jsx dung flawedStrongPasswordRegex yeu cau co khoang trang va cam moi ky tu dac biet trong tap @$!%*?& - moi mat khau hop le theo FR-01 deu bi chan, kha nang cao ca 4 case nay se FAIL khi chay that. Day la bug can bao cao, khong sua expected de che giau.",
     "TC-REGISTER-013, 014: form dang ky (Register.jsx) khong co truong 'Xac nhan mat khau' nhu FR-01 yeu cau. Khong the automate thao tac dien field vi field khong ton tai - da doi assertion sang kiem tra su ton tai cua field.",
-    "TC-REGISTER-004: bang users khong co rang buoc UNIQUE tren email va backend /api/register khong kiem tra trung truoc khi INSERT - kha nang cao khong nhan duoc loi 'da ton tai' nhu ky vong.",
+    "TC-REGISTER-003, 004: da xac minh bang Playwright MCP (dien form that) - vi handleSubmit() trong Register.jsx chay flawedStrongPasswordRegex TRUOC ca khi goi API, va MOI mat khau hop le theo FR-01 (co 1 trong cac ky tu @$!%*?&) chac chan bi regex loi nay tu choi (xem issue phia tren), nen 2 case nay KHONG BAO GIO toi duoc logic kiem tra dinh dang/trung email qua UI - luon dung o banner 'Mat khau qua yeu', che khuat hoan toan bug dinh dang/trung email can kiem. Da doi sang goi thang API /api/register (giong SEC-01/017) de cach ly dung yeu cau dang kiem. Rieng TC-004 (email trung) KHONG dung tai khoan dung chung test@eshop.com (vi cart.json/product.json dang dung chinh email nay de dang nhap) ma tu dang ky 1 email tam roi dang ky trung chinh no, tranh tao ban ghi trung lam sai lech dang nhap cua cac spec khac.",
     "TC-REGISTER-017: khong the dang ky qua UI do bug regex mat khau (issue dau tien), nen goi thang API /api/register + /api/login + /api/users/me de kiem tra SEC-01. GET /api/users/me tra ve nguyen truong password - server.js dung so sanh plaintext truc tiep o /api/login (user.password === password) nen gan nhu chac chan SEC-01 dang bi vi pham."
   ],
   "cases": [
@@ -38,29 +38,27 @@
     },
     {
       "id": "TC-REGISTER-003",
-      "title": "Email sai dinh dang",
+      "title": "Email sai dinh dang (kiem qua API - xem knownIssues)",
       "input": {
         "name": "Nguyễn Văn A",
         "email": "nguyenvana03@",
         "password": "Abcd123!"
       },
       "expected": {
-        "kind": "errorBanner",
-        "contains": "email",
+        "kind": "apiEmailFormat",
         "accountCreated": false
       }
     },
     {
       "id": "TC-REGISTER-004",
-      "title": "Email da duoc dang ky (trung)",
+      "title": "Email da duoc dang ky (trung, kiem qua API voi email tam - xem knownIssues)",
       "input": {
         "name": "Nguyễn Văn A",
-        "email": "test@eshop.com",
+        "email": "nguyenvana04+{{unique}}@gmail.com",
         "password": "Abcd123!"
       },
       "expected": {
-        "kind": "errorBanner",
-        "contains": "tồn tại",
+        "kind": "apiEmailDuplicate",
         "accountCreated": false
       }
     },
