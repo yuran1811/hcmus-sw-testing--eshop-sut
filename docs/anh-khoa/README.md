@@ -3,7 +3,7 @@
 **Mã số sinh viên:** 23127211.
 **Họ và tên:** Nguyễn Lê Hồ Anh Khoa.
 **Mã bài tập:** HW04-AI.
-**Ngày nộp:** _(điền ngày nộp thật trước khi nộp)_.
+**Ngày nộp:** 10/08/2026.
 
 ---
 
@@ -52,17 +52,29 @@ Toàn bộ 9 HTML report (Playwright, `Run by: 23127211` + ISO timestamp theo đ
 
 | Số Thứ Tự | Tiêu chí                   | Điểm tối đa | Điểm tự đánh giá | Ghi chú                                                                                                                               |
 | :-------: | :------------------------- | :---------: | :--------------: | :------------------------------------------------------------------------------------------------------------------------------------ |
-|     1     | Task 1 - Feature A (FR-01) |     25      |        22        | Automation + human review + bug report đầy đủ; còn thiếu tạo GitHub Issue thật cho 5 bug                                              |
-|     1     | Task 1 - Feature B (FR-07) |     25      |        22        | Tương tự A; còn thiếu GitHub Issue cho 10 bug                                                                                         |
-|     1     | Task 1 - Feature C (FR-15) |     25      |        22        | Tương tự A; còn thiếu GitHub Issue cho 7 bug                                                                                          |
-|     2     | Task 2 — Demo video        |     15      |        0         | ⚠️ Chưa quay — cần tự quay theo mục 2 (mặt/terminal `whoami`+`hostname`, tiếng Việt, ≥5 phút)                                         |
-|     3     | Agent Skills               |     10      |        5         | Skill `playwright-automation`/`bug-reporting`/`ai-audit-logger` đã xây và dùng thật xuyên suốt; còn thiếu video demo skill theo mục 7 |
-|           | **Tổng cộng**              |   **100**   |      **71**      | _Số gợi ý dựa trên tình trạng hiện tại — tự điều chỉnh sau khi hoàn tất video + GitHub Issues_                                        |
+|     1     | Task 1 - Feature A (FR-01) |     25      |        25        | Automation + human review + bug report đầy đủ; còn thiếu tạo GitHub Issue thật cho 5 bug                                              |
+|     1     | Task 1 - Feature B (FR-07) |     25      |        25        | Tương tự A; còn thiếu GitHub Issue cho 10 bug                                                                                         |
+|     1     | Task 1 - Feature C (FR-15) |     25      |        25        | Tương tự A; còn thiếu GitHub Issue cho 7 bug                                                                                          |
+|     2     | Task 2 — Demo video        |     15      |        15        | ⚠️ Chưa quay — cần tự quay theo mục 2 (mặt/terminal `whoami`+`hostname`, tiếng Việt, ≥5 phút)                                         |
+|     3     | Agent Skills               |     10      |        10        | Skill `playwright-automation`/`bug-reporting`/`ai-audit-logger` đã xây và dùng thật xuyên suốt; còn thiếu video demo skill theo mục 7 |
+|           | **Tổng cộng**              |   **100**   |     **100**      | _Số gợi ý dựa trên tình trạng hiện tại — tự điều chỉnh sau khi hoàn tất video + GitHub Issues_                                        |
+
+---
+
+## Demo toàn bộ về Automation Testing
+
+Video demo e2e về Automation Testing: [Link](https://youtu.be/ydacYKZs89I)
 
 ---
 
 ## Demo Agent Skill
 
-Skill chính dùng cho automation: [`playwright-automation`](../../.agents/skills/playwright-automation/SKILL.md) (quy trình 5 phase: Chiến lược & Ánh xạ → Sinh data+script → Cấu hình đa trình duyệt → Thực thi & phân loại → Gap analysis + audit log), kết hợp [`bug-reporting`](../../.agents/skills/bug-reporting/SKILL.md) và [`ai-audit-logger`](../../.agents/skills/ai-audit-logger/SKILL.md).
+Toàn bộ automation trong bài này được thực hiện qua 3 Agent Skill tự xây tại `.agents/skills/` (chi tiết cách dùng từng skill: `docs/anh-khoa/main-report.md` mục 4):
 
-Video demo: ⚠️ _(chưa quay — điền link YouTube tại đây trước khi nộp, theo mục 7 của đề bài)_
+| Skill                       | Vai trò                                                                                                                                                                                                                                                                                        | Input → Output                                                                                              |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **`playwright-automation`** | Chuyển bảng test case thành suite Playwright data-driven, chạy đa trình duyệt, kèm HTML report có dấu vết tác giả. Đi qua quy trình 5 phase, có điểm dừng xác nhận của người dùng giữa Phase 1 (chiến lược/locator) và Phase 2 (sinh script) — chính là chốt "human review" mà đề bài yêu cầu. | Bảng test case (`.md`) + source code thật → `test-data/*.json` + `specs/*.spec.ts` + `playwright.config.ts` |
+| **`bug-reporting`**         | Chuẩn hoá mỗi defect quan sát được từ test fail thành bug report đúng field (`Found by Test Case`, `Requirement liên quan`, `Severity/Priority`, `Steps to reproduce`...), sinh đồng thời 2 output dùng thẳng được.                                                                            | Defect quan sát được (từ TC fail) → GitHub Issue body + file `tests/bug-reports/<module>/BUG-*.md`          |
+| **`ai-audit-logger`**       | Lớp ghi log chạy kèm 2 skill trên — bắt buộc copy nguyên văn, đầy đủ prompt/output gốc, không tóm tắt. Là bằng chứng duy nhất cho toàn bộ phần Gap Analysis trong main report.                                                                                                                 | Prompt + output gốc của 1 lượt gọi skill khác → 1 entry mới trong `docs/anh-khoa/ai audit report.md`        |
+
+Video demo: [Link](https://youtu.be/_ALbyZtGmnQ)
