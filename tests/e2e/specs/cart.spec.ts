@@ -363,16 +363,25 @@ test.describe('FR-07 - Gio hang', () => {
             await addViaDetail(page, product, dataset.quantity, 2);
             await goCart(page);
 
+            // Dung .soft() vi day la vong lap qua 4 bo du lieu BVA (D1-D4) trong
+            // CUNG 1 test: expect() cung se nem loi va DUNG vong lap ngay o bo
+            // dau tien fail, khien D2/D3/D4 khong bao gio duoc kiem va bao cao.
+            // Da xac minh dieu nay bang cach chay that: khong co soft, run chi
+            // bao loi D1 roi dung, che khuat ket qua cua D2-D4.
             if (dataset.shouldAdd) {
-              await expect(
-                cartRows(page),
-                `${dataset.label}: So luong hop le phai tao dung 1 dong`,
-              ).toHaveCount(1);
+              await expect
+                .soft(
+                  cartRows(page),
+                  `${dataset.label}: So luong hop le phai tao dung 1 dong`,
+                )
+                .toHaveCount(1);
             } else {
-              await expect(
-                cartRows(page),
-                `${dataset.label}: So luong "${dataset.quantity}" khong hop le, khong duoc tao dong nao trong gio`,
-              ).toHaveCount(0);
+              await expect
+                .soft(
+                  cartRows(page),
+                  `${dataset.label}: So luong "${dataset.quantity}" khong hop le, khong duoc tao dong nao trong gio`,
+                )
+                .toHaveCount(0);
             }
 
             await expect

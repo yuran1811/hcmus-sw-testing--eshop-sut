@@ -23,7 +23,8 @@
     "Checkout.jsx + App.jsx:58 - route /checkout KHONG co guard nao. Vao thang URL /checkout khi chua dang nhap van render form thanh toan. Vi pham FR-08, kiem o ve cuoi TC-CART-012.",
     "ProductDetail.jsx:56-61 - o So luong khong co min/required; ProductDetail.jsx:27 dung parseInt(quantity) nen de trong se thanh NaN. Label 'So luong:' khong gan htmlFor/id nen getByLabel() vo dung.",
     "Login.jsx - trang dang nhap dung nhan 'Username' cho o email, nut submit ten 'Sign In' (khong phai 'Dang nhap'), va o mat khau dung type='text' (lo mat khau). Ngoai pham vi FR-07 nhung anh huong cach viet helper dang nhap.",
-    "TC-CART-012 va TC-CART-013 chay o trang thai KHACH VANG LAI (requiresAuth=false) dung theo Preconditions ghi trong 2 file test case do, khac voi mac dinh dang nhap cua cac case con lai."
+    "TC-CART-012 va TC-CART-013 chay o trang thai KHACH VANG LAI (requiresAuth=false) dung theo Preconditions ghi trong 2 file test case do, khac voi mac dinh dang nhap cua cac case con lai.",
+    "TC-CART-010: da xac minh bang Playwright MCP - nhan 'Tiep tuc mua sam' CHI xuat hien o empty state (Cart.jsx:24); khi gio CO hang nhan la '← Mua tiep' (khac hoan toan, xem issue nhan khong nhat quan o tren). TC-CART-010.md cho phep gio 'co the co hoac khong co san pham', va muc dich cua case la kiem HANH VI DIEU HUONG khi bam nut - nen setup duoc doi thanh gio RONG de tim dung link theo dung FR-07 va thuc su kiem duoc cu click->dieu huong; neu giu setup them 1 san pham (nhu ban dau) thi assertion 'link ton tai' se luon fail truoc, khong bao gio kiem duoc dieu huong ma TC nay muon kiem."
   ],
   "cases": [
     {
@@ -151,7 +152,7 @@
       "id": "TC-CART-010",
       "title": "Bam 'Tiep tuc mua sam' - dieu huong ve trang chu",
       "requiresAuth": true,
-      "setup": [{ "product": "A", "quantity": 1, "via": "home" }],
+      "setup": [],
       "expected": {
         "kind": "navigate",
         "linkName": "Tiếp tục mua sắm",
