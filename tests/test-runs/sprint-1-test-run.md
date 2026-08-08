@@ -20,8 +20,6 @@ for spec in register cart product; do
 done
 ```
 
-> ⚠️ **Ghi chú quan trọng:** lệnh trên **không được** thêm cờ `--reporter=...` trên CLI — cờ này ghi đè hoàn toàn mảng `reporter` khai báo trong `playwright.config.ts` (bỏ qua `outputFolder`/`title` tuỳ chỉnh), khiến report bị lệch chỗ và mất luôn dòng "Run by: 23127211" bắt buộc theo mục 11 (Anti-AI-Cheat) của đề bài. Đã tự phát hiện và chạy lại đúng cách trong phiên làm việc này.
-
 ## 1. Tổng quan kết quả — 9 lượt chạy (3 feature × 3 browser)
 
 | Feature | Test file | Số TC | Chromium | Firefox | WebKit |
