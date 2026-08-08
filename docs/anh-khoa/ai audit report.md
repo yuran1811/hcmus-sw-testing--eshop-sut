@@ -329,7 +329,7 @@
 **AI Audit Report Item**
 
 - **Công cụ AI:** Claude Code (Anthropic) — model `claude-sonnet-5`
-- **Thời gian:** 2026-08-07 00:06:50 +07:00
+- **Thời gian:** 2026-08-05 08:06:50 +07:00
 - **Nội dung prompt:**
 
   > Tiếp tục tạo test data cho register để đủ 17 tc đang có nhé, sau đó dùng skill @.agents/skills/ai-audit-logger/SKILL.md để lưu lại toàn bộ log
@@ -359,57 +359,118 @@
   >     "TC-REGISTER-017: khong the dang ky qua UI do bug regex mat khau (issue dau tien), nen goi thang API /api/register + /api/login + /api/users/me de kiem tra SEC-01. GET /api/users/me tra ve nguyen truong password - server.js dung so sanh plaintext truc tiep o /api/login (user.password === password) nen gan nhu chac chan SEC-01 dang bi vi pham."
   >   ],
   >   "cases": [
-  >     { "id": "TC-REGISTER-001", "title": "Dang ky thanh cong voi du lieu hop le (mat khau cham bien duoi 8 ky tu)",
+  >     {
+  >       "id": "TC-REGISTER-001",
+  >       "title": "Dang ky thanh cong voi du lieu hop le (mat khau cham bien duoi 8 ky tu)",
   >       "input": { "name": "Nguyễn Văn A", "email": "nguyenvana01+{{unique}}@gmail.com", "password": "Abcd123!" },
-  >       "expected": { "kind": "redirect", "redirectPath": "/login", "accountCreated": true } },
-  >     { "id": "TC-REGISTER-002", "title": "Ho Ten de trong",
+  >       "expected": { "kind": "redirect", "redirectPath": "/login", "accountCreated": true }
+  >     },
+  >     {
+  >       "id": "TC-REGISTER-002",
+  >       "title": "Ho Ten de trong",
   >       "input": { "name": "", "email": "nguyenvana02+{{unique}}@gmail.com", "password": "Abcd123!" },
-  >       "expected": { "kind": "fieldInvalid", "field": "Họ Tên", "accountCreated": false } },
-  >     { "id": "TC-REGISTER-003", "title": "Email sai dinh dang",
+  >       "expected": { "kind": "fieldInvalid", "field": "Họ Tên", "accountCreated": false }
+  >     },
+  >     {
+  >       "id": "TC-REGISTER-003",
+  >       "title": "Email sai dinh dang",
   >       "input": { "name": "Nguyễn Văn A", "email": "nguyenvana03@", "password": "Abcd123!" },
-  >       "expected": { "kind": "errorBanner", "contains": "email", "accountCreated": false } },
-  >     { "id": "TC-REGISTER-004", "title": "Email da duoc dang ky (trung)",
+  >       "expected": { "kind": "errorBanner", "contains": "email", "accountCreated": false }
+  >     },
+  >     {
+  >       "id": "TC-REGISTER-004",
+  >       "title": "Email da duoc dang ky (trung)",
   >       "input": { "name": "Nguyễn Văn A", "email": "test@eshop.com", "password": "Abcd123!" },
-  >       "expected": { "kind": "errorBanner", "contains": "tồn tại", "accountCreated": false } },
-  >     { "id": "TC-REGISTER-005", "title": "Email de trong",
+  >       "expected": { "kind": "errorBanner", "contains": "tồn tại", "accountCreated": false }
+  >     },
+  >     {
+  >       "id": "TC-REGISTER-005",
+  >       "title": "Email de trong",
   >       "input": { "name": "Nguyễn Văn A", "email": "", "password": "Abcd123!" },
-  >       "expected": { "kind": "fieldInvalid", "field": "Email", "accountCreated": false } },
-  >     { "id": "TC-REGISTER-006", "title": "Mat khau it hon 8 ky tu (bien duoi khong hop le)",
+  >       "expected": { "kind": "fieldInvalid", "field": "Email", "accountCreated": false }
+  >     },
+  >     {
+  >       "id": "TC-REGISTER-006",
+  >       "title": "Mat khau it hon 8 ky tu (bien duoi khong hop le)",
   >       "input": { "name": "Nguyễn Văn A", "email": "nguyenvana06+{{unique}}@gmail.com", "password": "Aa1!aa2" },
-  >       "expected": { "kind": "errorBanner", "contains": "mật khẩu", "accountCreated": false } },
-  >     { "id": "TC-REGISTER-007", "title": "Mat khau thieu chu hoa",
+  >       "expected": { "kind": "errorBanner", "contains": "mật khẩu", "accountCreated": false }
+  >     },
+  >     {
+  >       "id": "TC-REGISTER-007",
+  >       "title": "Mat khau thieu chu hoa",
   >       "input": { "name": "Nguyễn Văn A", "email": "nguyenvana07+{{unique}}@gmail.com", "password": "abcd123!" },
-  >       "expected": { "kind": "errorBanner", "contains": "mật khẩu", "accountCreated": false } },
-  >     { "id": "TC-REGISTER-008", "title": "Mat khau thieu chu thuong",
+  >       "expected": { "kind": "errorBanner", "contains": "mật khẩu", "accountCreated": false }
+  >     },
+  >     {
+  >       "id": "TC-REGISTER-008",
+  >       "title": "Mat khau thieu chu thuong",
   >       "input": { "name": "Nguyễn Văn A", "email": "nguyenvana08+{{unique}}@gmail.com", "password": "ABCD123!" },
-  >       "expected": { "kind": "errorBanner", "contains": "mật khẩu", "accountCreated": false } },
-  >     { "id": "TC-REGISTER-009", "title": "Mat khau thieu chu so",
+  >       "expected": { "kind": "errorBanner", "contains": "mật khẩu", "accountCreated": false }
+  >     },
+  >     {
+  >       "id": "TC-REGISTER-009",
+  >       "title": "Mat khau thieu chu so",
   >       "input": { "name": "Nguyễn Văn A", "email": "nguyenvana09+{{unique}}@gmail.com", "password": "Abcdefg!" },
-  >       "expected": { "kind": "errorBanner", "contains": "mật khẩu", "accountCreated": false } },
-  >     { "id": "TC-REGISTER-010", "title": "Mat khau khong co ky tu dac biet",
+  >       "expected": { "kind": "errorBanner", "contains": "mật khẩu", "accountCreated": false }
+  >     },
+  >     {
+  >       "id": "TC-REGISTER-010",
+  >       "title": "Mat khau khong co ky tu dac biet",
   >       "input": { "name": "Nguyễn Văn A", "email": "nguyenvana10+{{unique}}@gmail.com", "password": "Abcd1234" },
-  >       "expected": { "kind": "errorBanner", "contains": "mật khẩu", "accountCreated": false } },
-  >     { "id": "TC-REGISTER-011", "title": "Mat khau co ky tu dac biet nam ngoai tap cho phep",
+  >       "expected": { "kind": "errorBanner", "contains": "mật khẩu", "accountCreated": false }
+  >     },
+  >     {
+  >       "id": "TC-REGISTER-011",
+  >       "title": "Mat khau co ky tu dac biet nam ngoai tap cho phep",
   >       "input": { "name": "Nguyễn Văn A", "email": "nguyenvana11+{{unique}}@gmail.com", "password": "Abcd1234#" },
-  >       "expected": { "kind": "errorBanner", "contains": "mật khẩu", "accountCreated": false } },
-  >     { "id": "TC-REGISTER-012", "title": "Mat khau de trong",
+  >       "expected": { "kind": "errorBanner", "contains": "mật khẩu", "accountCreated": false }
+  >     },
+  >     {
+  >       "id": "TC-REGISTER-012",
+  >       "title": "Mat khau de trong",
   >       "input": { "name": "Nguyễn Văn A", "email": "nguyenvana12+{{unique}}@gmail.com", "password": "" },
-  >       "expected": { "kind": "fieldInvalid", "field": "Mật khẩu", "accountCreated": false } },
-  >     { "id": "TC-REGISTER-013", "title": "Xac nhan mat khau khong khop",
-  >       "input": { "name": "Nguyễn Văn A", "email": "nguyenvana13+{{unique}}@gmail.com", "password": "Abcd123!", "confirmPassword": "Abcd123@" },
-  >       "expected": { "kind": "confirmField", "accountCreated": false } },
-  >     { "id": "TC-REGISTER-014", "title": "Xac nhan mat khau de trong",
-  >       "input": { "name": "Nguyễn Văn A", "email": "nguyenvana14+{{unique}}@gmail.com", "password": "Abcd123!", "confirmPassword": "" },
-  >       "expected": { "kind": "confirmField", "accountCreated": false } },
-  >     { "id": "TC-REGISTER-015", "title": "BVA - Mat khau co dung 1 chu thuong (on-point bien duoi)",
+  >       "expected": { "kind": "fieldInvalid", "field": "Mật khẩu", "accountCreated": false }
+  >     },
+  >     {
+  >       "id": "TC-REGISTER-013",
+  >       "title": "Xac nhan mat khau khong khop",
+  >       "input": {
+  >         "name": "Nguyễn Văn A",
+  >         "email": "nguyenvana13+{{unique}}@gmail.com",
+  >         "password": "Abcd123!",
+  >         "confirmPassword": "Abcd123@"
+  >       },
+  >       "expected": { "kind": "confirmField", "accountCreated": false }
+  >     },
+  >     {
+  >       "id": "TC-REGISTER-014",
+  >       "title": "Xac nhan mat khau de trong",
+  >       "input": {
+  >         "name": "Nguyễn Văn A",
+  >         "email": "nguyenvana14+{{unique}}@gmail.com",
+  >         "password": "Abcd123!",
+  >         "confirmPassword": ""
+  >       },
+  >       "expected": { "kind": "confirmField", "accountCreated": false }
+  >     },
+  >     {
+  >       "id": "TC-REGISTER-015",
+  >       "title": "BVA - Mat khau co dung 1 chu thuong (on-point bien duoi)",
   >       "input": { "name": "Nguyễn Văn A", "email": "bva.lower+{{unique}}@gmail.com", "password": "ABCD12a!" },
-  >       "expected": { "kind": "redirect", "redirectPath": "/login", "accountCreated": true } },
-  >     { "id": "TC-REGISTER-016", "title": "BVA - Mat khau co dung 1 chu so (on-point bien duoi)",
+  >       "expected": { "kind": "redirect", "redirectPath": "/login", "accountCreated": true }
+  >     },
+  >     {
+  >       "id": "TC-REGISTER-016",
+  >       "title": "BVA - Mat khau co dung 1 chu so (on-point bien duoi)",
   >       "input": { "name": "Nguyễn Văn A", "email": "bva.digit+{{unique}}@gmail.com", "password": "ABCDab1!" },
-  >       "expected": { "kind": "redirect", "redirectPath": "/login", "accountCreated": true } },
-  >     { "id": "TC-REGISTER-017", "title": "SEC-01 - Mat khau khong duoc luu plaintext trong CSDL",
+  >       "expected": { "kind": "redirect", "redirectPath": "/login", "accountCreated": true }
+  >     },
+  >     {
+  >       "id": "TC-REGISTER-017",
+  >       "title": "SEC-01 - Mat khau khong duoc luu plaintext trong CSDL",
   >       "input": { "name": "Nguyễn Văn A", "email": "sec01.check+{{unique}}@gmail.com", "password": "Abcd123!" },
-  >       "expected": { "kind": "dbHash", "accountCreated": true } }
+  >       "expected": { "kind": "dbHash", "accountCreated": true }
+  >     }
   >   ]
   > }
   > ```
@@ -478,7 +539,9 @@
   >         await submit.click();
   >       }
   >       if (testCase.expected.kind === 'fieldInvalid') {
-  >         const invalid = await field(page, testCase.expected.field).evaluate((el) => (el as HTMLInputElement).validity.valueMissing);
+  >         const invalid = await field(page, testCase.expected.field).evaluate(
+  >           (el) => (el as HTMLInputElement).validity.valueMissing,
+  >         );
   >         expect(invalid, `Truong "${testCase.expected.field}" phai bi chan khi de trong`).toBe(true);
   >         await expect(page).toHaveURL(/\/register$/);
   >       }
@@ -498,15 +561,24 @@
   >   test(`${secCase.id}: ${secCase.title}`, async ({ request }, testInfo) => {
   >     const unique = `${Date.now().toString(36)}${testInfo.project.name}`;
   >     const email = secCase.input.email.replace('{{unique}}', unique);
-  >     const registerRes = await request.post(`${API_BASE}/api/register`, { data: { name: secCase.input.name, email, password: secCase.input.password } });
+  >     const registerRes = await request.post(`${API_BASE}/api/register`, {
+  >       data: { name: secCase.input.name, email, password: secCase.input.password },
+  >     });
   >     expect(registerRes.ok(), 'POST /api/register phai thanh cong de co tai khoan kiem tra').toBeTruthy();
-  >     const loginRes = await request.post(`${API_BASE}/api/login`, { data: { email, password: secCase.input.password } });
+  >     const loginRes = await request.post(`${API_BASE}/api/login`, {
+  >       data: { email, password: secCase.input.password },
+  >     });
   >     expect(loginRes.ok(), 'Dang nhap bang tai khoan vua tao phai thanh cong').toBeTruthy();
   >     const { token } = await loginRes.json();
   >     const meRes = await request.get(`${API_BASE}/api/users/me`, { headers: { Authorization: `Bearer ${token}` } });
   >     const me = await meRes.json();
-  >     expect(me.password, 'SEC-01: truong mat khau tra ve tu backend khong duoc trung voi plaintext da nhap').not.toBe(secCase.input.password);
-  >     expect(me.password, 'SEC-01: mat khau phai duoc bam (vi du bcrypt co tien to $2a$/$2b$/$2y$)').toMatch(/^\$2[aby]\$/);
+  >     expect(
+  >       me.password,
+  >       'SEC-01: truong mat khau tra ve tu backend khong duoc trung voi plaintext da nhap',
+  >     ).not.toBe(secCase.input.password);
+  >     expect(me.password, 'SEC-01: mat khau phai duoc bam (vi du bcrypt co tien to $2a$/$2b$/$2y$)').toMatch(
+  >       /^\$2[aby]\$/,
+  >     );
   >   });
   > });
   > ```
@@ -553,13 +625,14 @@
   > **Prompt 1/3 — Grounding + gap analysis (chạy trước, chưa viết code):**
   > Đọc 13 test case tests/test-cases/cart/TC-CART-001.md → 013.md, đối chiếu với source thật: frontend-web/src/pages/Cart.jsx, frontend-web/src/context/CartContext.jsx.
   > Tôi đã đọc trước và ghi nhận vài điểm nghi ngờ, bạn verify lại và bổ sung nếu còn thiếu:
+  >
   > - Cart.jsx chỉ có nút "Xóa", KHÔNG có nút +/- số lượng nào cả (TC-CART-003, 004, 005 giả định có nút này).
   > - Nút "Xóa" gọi thẳng removeFromCart(index) trong onClick, không có dialog/window.confirm nào (TC-CART-007, 008 giả định có dialog xác nhận).
   > - Label tổng tiền là "Tổng tạm tính" (dòng ~63), trong khi FR-07 yêu cầu đúng chữ "Tổng cộng" (TC-CART-006).
   > - CartContext.addToCart() luôn push dòng mới (`[...cart, {...product, quantity}]`), không kiểm tra sản phẩm đã có trong giỏ để tăng số lượng (TC-CART-001, 002 sẽ fail nếu đúng vậy).
   > - cart là React state thuần, không có localStorage/sessionStorage → F5 mất hết giỏ hàng (TC-CART-013).
   > - Trạng thái giỏ rỗng chỉ có text, không có icon minh họa (TC-CART-009).
-  > Với mỗi gap, trích dẫn đúng số dòng trong file làm bằng chứng, không suy đoán thêm. Nếu cần, đọc luôn frontend-web/src/pages/ProductDetail.jsx để xem ô nhập số lượng trước khi "Thêm vào giỏ" (liên quan TC-CART-011). Tổng hợp thành bảng: TC-ID | có UI element tương ứng? | ghi chú. Chưa viết test.
+  >   Với mỗi gap, trích dẫn đúng số dòng trong file làm bằng chứng, không suy đoán thêm. Nếu cần, đọc luôn frontend-web/src/pages/ProductDetail.jsx để xem ô nhập số lượng trước khi "Thêm vào giỏ" (liên quan TC-CART-011). Tổng hợp thành bảng: TC-ID | có UI element tương ứng? | ghi chú. Chưa viết test.
   >
   > **Prompt 2/3 — Data-driven JSON:**
   > Từ bảng gap analysis trên, tạo tests/e2e/test-data/cart.json theo đúng cấu trúc tests/e2e/test-data/register.json (feature, notes, knownIssues, mảng "cases" với id/title/input/expected). Expected PHẢI theo đúng FR-07 trong README.md (SRS) — không chỉnh theo hành vi hiện tại của Cart.jsx để che giấu bug, vì assertion fail chính là bằng chứng bug cho báo cáo.
@@ -577,31 +650,32 @@
   >
   > _Xác nhận 6 điểm nghi ngờ của người dùng — đúng cả 6:_
   >
-  > | # | Nghi ngờ | Dẫn chứng | Kết luận |
-  > |---|---|---|---|
-  > | 1 | Không có nút +/- | `Cart.jsx:47` — `<td>{item.quantity}</td>` là text thuần, không có `<button>` nào trong ô | đúng |
-  > | 2 | Xóa không có dialog | `Cart.jsx:50-56` — `onClick={() => removeFromCart(index)}` gọi thẳng, không `window.confirm` | đúng |
-  > | 3 | Label "Tổng tạm tính" | `Cart.jsx:63` — `Tổng tạm tính:` | đúng (FR-07 yêu cầu "Tổng cộng") |
-  > | 4 | addToCart luôn push dòng mới | `CartContext.jsx:8-10` — `setCart([...cart, {...product, quantity}])`, không tìm dòng trùng | đúng |
-  > | 5 | Không persist | `CartContext.jsx:6` — `useState([])` thuần, không localStorage, không `useEffect` lưu trữ | đúng |
-  > | 6 | Empty state không icon | `Cart.jsx:20-27` — chỉ `<h2>` + `<Link>`, không `<img>`/`<svg>` | đúng |
+  > | #   | Nghi ngờ                     | Dẫn chứng                                                                                    | Kết luận                         |
+  > | --- | ---------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------- |
+  > | 1   | Không có nút +/-             | `Cart.jsx:47` — `<td>{item.quantity}</td>` là text thuần, không có `<button>` nào trong ô    | đúng                             |
+  > | 2   | Xóa không có dialog          | `Cart.jsx:50-56` — `onClick={() => removeFromCart(index)}` gọi thẳng, không `window.confirm` | đúng                             |
+  > | 3   | Label "Tổng tạm tính"        | `Cart.jsx:63` — `Tổng tạm tính:`                                                             | đúng (FR-07 yêu cầu "Tổng cộng") |
+  > | 4   | addToCart luôn push dòng mới | `CartContext.jsx:8-10` — `setCart([...cart, {...product, quantity}])`, không tìm dòng trùng  | đúng                             |
+  > | 5   | Không persist                | `CartContext.jsx:6` — `useState([])` thuần, không localStorage, không `useEffect` lưu trữ    | đúng                             |
+  > | 6   | Empty state không icon       | `Cart.jsx:20-27` — chỉ `<h2>` + `<Link>`, không `<img>`/`<svg>`                              | đúng                             |
   >
   > _6 gap người dùng CHƯA nêu, AI tìm thêm:_
   >
-  > | # | Gap | Dẫn chứng | Ảnh hưởng |
-  > |---|---|---|---|
-  > | 7 | **Nút "Thêm vào giỏ hàng" nuốt click đầu tiên** — `clickCount === 0` thì `return` không làm gì, phải bấm lần 2 mới thêm | `ProductDetail.jsx:21-31` | Nghiêm trọng nhất. Ảnh hưởng TC-001, 002, 011 và cả cách seed dữ liệu |
-  > | 8 | Cột tên là **"Giá"** chứ không phải "Đơn giá" | `Cart.jsx:36` | TC-001 |
-  > | 9 | Nút quay lại đổi nhãn thành **"← Mua tiếp"** khi giỏ có hàng (empty state thì lại đúng "Tiếp tục mua sắm") | `Cart.jsx:66-68` vs `Cart.jsx:24` | TC-010 — nhãn không nhất quán giữa 2 trạng thái |
-  > | 10 | Ô Số lượng **không có `min`/`required`**; `parseInt("")` = `NaN` | `ProductDetail.jsx:56-61` + `:27` | TC-011 — đúng cảnh báo NaN trong test case |
-  > | 11 | `/checkout` **không có guard nào** — vào thẳng URL vẫn render form dù chưa đăng nhập | `Checkout.jsx` (không có redirect), `App.jsx:58` route không bảo vệ | TC-012 vế cuối — vi phạm FR-08 |
-  > | 12 | `<label>Số lượng:</label>` không gắn `htmlFor`/`id` | `ProductDetail.jsx:55-61` | `getByLabel()` vô dụng, giống hệt register |
+  > | #   | Gap                                                                                                                     | Dẫn chứng                                                           | Ảnh hưởng                                                             |
+  > | --- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
+  > | 7   | **Nút "Thêm vào giỏ hàng" nuốt click đầu tiên** — `clickCount === 0` thì `return` không làm gì, phải bấm lần 2 mới thêm | `ProductDetail.jsx:21-31`                                           | Nghiêm trọng nhất. Ảnh hưởng TC-001, 002, 011 và cả cách seed dữ liệu |
+  > | 8   | Cột tên là **"Giá"** chứ không phải "Đơn giá"                                                                           | `Cart.jsx:36`                                                       | TC-001                                                                |
+  > | 9   | Nút quay lại đổi nhãn thành **"← Mua tiếp"** khi giỏ có hàng (empty state thì lại đúng "Tiếp tục mua sắm")              | `Cart.jsx:66-68` vs `Cart.jsx:24`                                   | TC-010 — nhãn không nhất quán giữa 2 trạng thái                       |
+  > | 10  | Ô Số lượng **không có `min`/`required`**; `parseInt("")` = `NaN`                                                        | `ProductDetail.jsx:56-61` + `:27`                                   | TC-011 — đúng cảnh báo NaN trong test case                            |
+  > | 11  | `/checkout` **không có guard nào** — vào thẳng URL vẫn render form dù chưa đăng nhập                                    | `Checkout.jsx` (không có redirect), `App.jsx:58` route không bảo vệ | TC-012 vế cuối — vi phạm FR-08                                        |
+  > | 12  | `<label>Số lượng:</label>` không gắn `htmlFor`/`id`                                                                     | `ProductDetail.jsx:55-61`                                           | `getByLabel()` vô dụng, giống hệt register                            |
   >
   > Điểm 7 quan trọng nhất về mặt thiết kế test: nếu seed giỏ hàng qua trang chi tiết, TC-011 sẽ **false-pass** (click 1 lần không thêm gì → giỏ rỗng → trùng với kỳ vọng "phải bị chặn").
   >
   > **BƯỚC 2 — `tests/e2e/test-data/cart.json`** (13/13 case; đầy đủ `feature`, `notes`, `products`, `credentials`, `knownIssues` 14 mục, `cases`)
   >
   > Quyết định thiết kế dữ liệu chính:
+  >
   > - Test case gốc dùng "Sản phẩm A" (100.000 ₫) / "Sản phẩm B" (50.000 ₫) là sản phẩm giả định, không có trong seed `database.js`. Ánh xạ sang sản phẩm thật: A = iPhone 15 Pro Max (id 1), B = Bàn phím cơ Keychron Q1 (id 5). Cố ý chọn 2 id **lẻ** vì `server.js:162` trả `price` dạng **string** cho id chẵn (`row.id % 2 === 0`) — tránh quirk này làm nhiễu kết quả.
   > - Không hardcode giá tiền trong file dữ liệu: đơn giá lấy từ `GET /api/products/:id` lúc chạy, thành tiền và tổng cộng tính lại từ đó (vừa tránh lệch khi ai đó sửa seed, vừa tạo thêm 1 assertion pattern đối chiếu UI với API).
   > - `TC-CART-001` giữ `clicks: 1` (đúng spec) để phơi bày bug clickCount; `TC-CART-011` cố ý `clicks: 2` để thực sự kích hoạt `addToCart` và kiểm đúng thứ cần kiểm (validation số lượng), nếu không sẽ FALSE PASS.
@@ -613,6 +687,7 @@
   > Phát hiện quan trọng ảnh hưởng toàn bộ cách viết spec: vì giỏ hàng chỉ nằm trong React state, **mọi `page.goto()` đều là full reload và sẽ xoá sạch giỏ hàng**. Nên toàn bộ thao tác seed phải điều hướng bằng cách click link trong app (SPA navigation), không được dùng `page.goto()`. Riêng TC-CART-013 cố ý reload thật vì đó chính là thứ cần kiểm.
   >
   > 5 assertion pattern được dùng:
+  >
   > 1. Đối chiếu UI với dữ liệu gốc lấy từ API (số dòng, số lượng, thành tiền, tổng cộng) — `assertLines()`
   > 2. Assertion trên sự tồn tại của element bắt buộc theo spec (`toHaveCount`), không click vào locator rỗng
   > 3. Assertion trên nội dung văn bản hiển thị (`getByText`, `toContainText`)
@@ -659,12 +734,13 @@
   > Đọc 18 test case tests/test-cases/product/TC-PRODUCT-001.md → 018.md, đối chiếu với source thật: frontend-admin/src/App.jsx (phần activeTab === "products", dòng ~337-609) và các route /api/products, /api/categories trong backend/server.js.
   > Việc QUAN TRỌNG NHẤT cần bạn tự verify (đừng tin tôi, đọc code thật): kiểm tra xem app.post("/api/products", ...), app.put("/api/products/:id", ...), app.delete("/api/products/:id", ...) trong server.js có middleware authenticateToken hay không — so với app.post("/api/categories", ...) ngay bên dưới CÓ authenticateToken. Nếu thiếu, đây là vi phạm FR-12/SEC-02/SEC-03 nghiêm trọng (ai cũng sửa/xóa được sản phẩm mà không cần đăng nhập), ảnh hưởng trực tiếp TC-PRODUCT-013 và 014.
   > Tôi đã ghi nhận thêm vài điểm, bạn verify:
+  >
   > - Input "Giá tiền" trong form không có thuộc tính required/min nào cả.
   > - Không có ràng buộc độ dài cho input "Tên sản phẩm" (maxLength).
   > - Nhánh sửa sản phẩm trong handleProductSubmit có đoạn `fakeMassUpdatedProducts = products.map(p => ({...p, name: productForm.name}))` — đổi TÊN của TẤT CẢ sản phẩm trong state cục bộ sau khi sửa 1 sản phẩm (chỉ là bug hiển thị phía client, mất khi fetchData() load lại — cần thiết kế test phân biệt được 2 trường hợp này, xem TC-PRODUCT-015).
   > - Input file CSV import không có accept=".csv", code JS cũng không kiểm tra đuôi file.
-  > Form admin không có <label>, chỉ có placeholder ("Tên sản phẩm", "Giá tiền", "URL Ảnh", "Mô tả") — cần dùng getByPlaceholder(), không getByLabel().
-  > Tổng hợp bảng TC-ID | endpoint/element liên quan | có tuân thủ FR-15/FR-12 không (dựa trên code, không đoán). Chưa viết test.
+  >   Form admin không có <label>, chỉ có placeholder ("Tên sản phẩm", "Giá tiền", "URL Ảnh", "Mô tả") — cần dùng getByPlaceholder(), không getByLabel().
+  >   Tổng hợp bảng TC-ID | endpoint/element liên quan | có tuân thủ FR-15/FR-12 không (dựa trên code, không đoán). Chưa viết test.
   >
   > **Prompt 2/3 — Data-driven JSON:**
   > Tạo tests/e2e/test-data/product.json theo đúng cấu trúc register.json. Expected theo đúng FR-15/FR-12/SEC-03 trong SRS. Case TC-PRODUCT-013/014 (không token / không phải admin) nên tách kind riêng ví dụ "apiAuthCheck" vì sẽ kiểm bằng gọi API trực tiếp (xem prompt 3), không qua form UI.
@@ -698,14 +774,15 @@
   >
   > _Verify 4 điểm còn lại — đúng cả 4, kèm bổ sung:_
   >
-  > | Điểm | Dẫn chứng | Kết luận |
-  > |---|---|---|
-  > | Giá không có required/min | `App.jsx:500-508` — `type="number"` trơn; backend `server.js:167-177` cũng không validate | đúng |
-  > | Tên không có maxLength | `App.jsx:491-499` — **có** `required` (nên TC-005 dự kiến PASS) nhưng không có maxLength; backend không giới hạn 255 | đúng, có bổ sung |
-  > | fakeMassUpdatedProducts | `App.jsx:110-114` | đúng |
-  > | CSV input không có accept | `App.jsx:356-384` | đúng |
+  > | Điểm                      | Dẫn chứng                                                                                                            | Kết luận         |
+  > | ------------------------- | -------------------------------------------------------------------------------------------------------------------- | ---------------- |
+  > | Giá không có required/min | `App.jsx:500-508` — `type="number"` trơn; backend `server.js:167-177` cũng không validate                            | đúng             |
+  > | Tên không có maxLength    | `App.jsx:491-499` — **có** `required` (nên TC-005 dự kiến PASS) nhưng không có maxLength; backend không giới hạn 255 | đúng, có bổ sung |
+  > | fakeMassUpdatedProducts   | `App.jsx:110-114`                                                                                                    | đúng             |
+  > | CSV input không có accept | `App.jsx:356-384`                                                                                                    | đúng             |
   >
   > _Gap AI tìm thêm:_
+  >
   > - `App.jsx:528-543` — `<select>` danh mục **không có option rỗng/placeholder**, state mặc định `category_id = 1`. Không thể tạo được trạng thái "không chọn danh mục" qua UI → TC-PRODUCT-011 phải đổi cách kiểm.
   > - `App.jsx:500-508` — input giá `type="number"` không khai báo `step` nên HTML5 mặc định `step=1`; giá `0.01` sẽ bị chặn bởi constraint validation (stepMismatch) trước khi form submit → liên quan trực tiếp ghi chú "đặc tả còn mơ hồ về số nguyên hay số thực" trong chính TC-PRODUCT-016.
   > - `App.jsx:590` — bảng render `{p.price} ₫` thô, không qua `toLocaleString()` → vi phạm FR-21 (phân cách hàng nghìn). Kiểm kèm trong TC-PRODUCT-017.
@@ -726,6 +803,7 @@
   > 5 assertion pattern được dùng: thao tác form UI đối chiếu với API; Constraint Validation API của DOM (`validity.valueMissing`); phản hồi API (`res.ok()`); mã trạng thái HTTP (`toContain(res.status())`); sự tồn tại của element bắt buộc (`toHaveCount`).
   >
   > Chi tiết triển khai đáng lưu ý:
+  >
   > - `submitProductForm()` bắt `waitForResponse` **trước** khi click để phân biệt "HTML5 chặn form, không có request nào được gửi" với "request được gửi và server chấp nhận" — thông điệp lỗi ghi rõ `request gui di: co/khong` thay vì đoán mò.
   > - `beforeEach` chụp lại danh sách id sản phẩm, `afterEach` xoá mọi sản phẩm do test tạo ra → lần chạy sau không bị nhiễu.
   > - TC-015 và TC-018 tự tạo 2 sản phẩm riêng qua API rồi mới thao tác, **không** đụng 5 sản phẩm seed sẵn, để test không làm hỏng dữ liệu gốc.
@@ -780,6 +858,7 @@
   > **Danh sách 22 file đã tạo (Bug ID — tiêu đề đề xuất cho GitHub Issue):**
   >
   > _Module REGISTER (FR-01) — 5 bug:_
+  >
   > - `BUG-REGISTER-001` — `[BUG][FR-01] - Regex mật khẩu phía frontend chặn TẤT CẢ mật khẩu hợp lệ theo FR-01`
   > - `BUG-REGISTER-002` — `[BUG][FR-01] - Form đăng ký thiếu trường "Xác nhận mật khẩu"`
   > - `BUG-REGISTER-003` — `[BUG][FR-01] - Không validate định dạng email khi đăng ký`
@@ -787,6 +866,7 @@
   > - `BUG-REGISTER-005` — `[BUG][SEC-01] - Mật khẩu được lưu dạng plaintext trong CSDL`
   >
   > _Module CART (FR-07) — 10 bug:_
+  >
   > - `BUG-CART-001` — `[BUG][FR-07] - Nút "Thêm vào giỏ hàng" ở trang chi tiết nuốt mất lượt bấm đầu tiên`
   > - `BUG-CART-002` — `[BUG][FR-07] - Thêm lại sản phẩm đã có tạo dòng trùng thay vì cộng dồn số lượng`
   > - `BUG-CART-003` — `[BUG][FR-07] - Bảng giỏ hàng không có nút +/- để chỉnh số lượng`
@@ -799,6 +879,7 @@
   > - `BUG-CART-010` — `[BUG][FR-08] - Route /checkout không có guard, truy cập trực tiếp bằng URL khi chưa đăng nhập vẫn vào được`
   >
   > _Module PRODUCT (FR-15, Admin) — 7 bug:_
+  >
   > - `BUG-PRODUCT-001` — `[BUG][SEC-02] - API tạo/sửa/xoá sản phẩm không yêu cầu xác thực (JWT)`
   > - `BUG-PRODUCT-002` — `[BUG][SEC-03] - authenticateToken không kiểm tra role — user thường thực hiện được thao tác admin`
   > - `BUG-PRODUCT-003` — `[BUG][FR-15] - Không validate Giá sản phẩm (chấp nhận 0, âm, trống, không phải số)`
@@ -809,9 +890,9 @@
   >
   > **Nội dung đầy đủ từng file (nguyên văn, đã ghi vào `tests/bug-reports/<module>/`):**
   >
-  > ---
+  > ***
   >
-  > ```markdown
+  > ````markdown
   > # BUG-REGISTER-001: Regex mật khẩu phía frontend chặn TẤT CẢ mật khẩu hợp lệ theo FR-01
   >
   > ## Found by Test Case
@@ -853,6 +934,7 @@
   > ```js
   > const flawedStrongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\s)[A-Za-z\d\s]{8,}$/;
   > ```
+  > ````
   >
   > Regex này **bắt buộc phải có khoảng trắng** (`(?=.*\s)`) và tập ký tự cho phép chỉ gồm `[A-Za-z\d\s]` — **không chứa bất kỳ ký tự nào** trong tập `@$!%*?&` mà FR-01 yêu cầu. Về mặt toán học, không tồn tại mật khẩu nào vừa thoả FR-01 (phải có 1 ký tự thuộc `@$!%*?&`) vừa lọt qua được regex này (cấm toàn bộ các ký tự đó). Do đó **100% người dùng nhập đúng theo hướng dẫn hiển thị ngay trên form đều bị chặn đăng ký**, kể cả các trường hợp biên hợp lệ (TC-REGISTER-015, 016).
   >
@@ -864,7 +946,8 @@
   > ## Notes
   >
   > Bug này còn khiến TC-REGISTER-003 và TC-REGISTER-004 (vốn dùng cùng mật khẩu `Abcd123!` để kiểm tra riêng lỗi định dạng email / email trùng) bị chặn nhầm lý do ngay tại bước mật khẩu — team automation đã phải tách 2 case đó ra gọi thẳng API để cách ly đúng bug cần kiểm (xem BUG-REGISTER-003, BUG-REGISTER-004).
-  > ```
+  >
+  > ````
   >
   > ```markdown
   > # BUG-REGISTER-002: Form đăng ký thiếu trường "Xác nhận mật khẩu"
@@ -909,7 +992,7 @@
   > ## Notes
   >
   > Do trường không tồn tại, test được thiết kế lại để assert sự TỒN TẠI của trường thay vì thao tác điền/so khớp (vốn không thể thực hiện được qua UI hiện tại).
-  > ```
+  > ````
   >
   > ```markdown
   > # BUG-REGISTER-003: Không validate định dạng email khi đăng ký (chấp nhận email thiếu domain)
@@ -1046,7 +1129,7 @@
   > Đây là lỗi bảo mật nghiêm trọng nhất trong 3 feature được kiểm: rò rỉ mật khẩu plaintext qua endpoint `GET /api/users/me` là rủi ro cao nếu bị khai thác (lộ mật khẩu thật của người dùng, không chỉ là hash có thể chống lại phần nào). Đề xuất ưu tiên vá đầu tiên.
   > ```
   >
-  > ```markdown
+  > ````markdown
   > # BUG-CART-001: Nút "Thêm vào giỏ hàng" ở trang chi tiết nuốt mất lượt bấm đầu tiên
   >
   > ## Found by Test Case
@@ -1093,6 +1176,7 @@
   >   ...
   > };
   > ```
+  > ````
   >
   > Lần bấm đầu tiên chỉ set `clickCount = 1` rồi `return` ngay, **không gọi `addToCart`**. Phải bấm lần **thứ 2** mới thực sự thêm được vào giỏ. Đây là bug nghiêm trọng nhất của toàn bộ feature Giỏ hàng vì ảnh hưởng trực tiếp trải nghiệm mua hàng cơ bản nhất.
   >
@@ -1103,7 +1187,8 @@
   > ## Notes
   >
   > Do bug này, các test case khác cần seed dữ liệu giỏ hàng ổn định (TC-CART-002 → 010, 012, 013) đều phải bấm nút 2 lần (`clicks: 2`) hoặc thêm qua nút "Thêm vào giỏ" ở trang chủ (không dính bug clickCount) để tránh false-pass/false-fail dây chuyền.
-  > ```
+  >
+  > ````
   >
   > ```markdown
   > # BUG-CART-002: Thêm lại sản phẩm đã có trong giỏ tạo dòng trùng thay vì cộng dồn số lượng
@@ -1148,7 +1233,7 @@
   > ## Notes
   >
   > Test seed qua nút "Thêm vào giỏ" ở trang chủ (không qua trang chi tiết) để bug này lộ ra trực tiếp, tránh bị BUG-CART-001 (clickCount) che khuất.
-  > ```
+  > ````
   >
   > ```markdown
   > # BUG-CART-003: Bảng giỏ hàng không có nút +/- để chỉnh số lượng
@@ -1366,8 +1451,10 @@
   >
   > Đã xác minh trực tiếp bằng Playwright MCP (đọc toàn bộ danh sách link trên trang ở cả 2 trạng thái):
   > ```
-  > emptyLinks:    ["EShop", "Giỏ hàng", "Chào, Test User", "Tiếp tục mua sắm"]
+  >
+  > emptyLinks: ["EShop", "Giỏ hàng", "Chào, Test User", "Tiếp tục mua sắm"]
   > nonEmptyLinks: ["EShop", "Giỏ hàng", "Chào, Test User", "← Mua tiếp"]
+  >
   > ```
   >
   > ## Evidence
@@ -1555,12 +1642,14 @@
   >
   > - HTML report: `tests/e2e/reports/html/product-chromium/index.html` (và firefox/webkit) — test `TC-PRODUCT-013` (Failed): `expect([401]).toContain(res.status())` nhận `200`.
   > - Bằng chứng đối chiếu route (grep `backend/server.js`):
-  >   ```
-  >   167:app.post("/api/products", (req, res) => {          <- KHONG co authenticateToken
-  >   179:app.put("/api/products/:id", (req, res) => {        <- KHONG co authenticateToken
-  >   191:app.delete("/api/products/:id", (req, res) => {     <- KHONG co authenticateToken
-  >   249:app.post("/api/categories", authenticateToken, ...  <- CO
-  >   ```
+  > ```
+  >
+  > 167:app.post("/api/products", (req, res) => { <- KHONG co authenticateToken
+  > 179:app.put("/api/products/:id", (req, res) => { <- KHONG co authenticateToken
+  > 191:app.delete("/api/products/:id", (req, res) => { <- KHONG co authenticateToken
+  > 249:app.post("/api/categories", authenticateToken, ... <- CO
+  >
+  > ```
   >
   > ## Notes
   >
@@ -1753,7 +1842,7 @@
   > Hai triệu chứng của cùng một gốc rễ: "Danh mục bắt buộc" chỉ được thực thi hời hợt qua giá trị mặc định ở UI, không có validate thật ở tầng backend/CSDL (thiếu FOREIGN KEY constraint).
   > ```
   >
-  > ```markdown
+  > ````markdown
   > # BUG-PRODUCT-006: Sửa 1 sản phẩm làm đổi TÊN hiển thị của TẤT CẢ sản phẩm khác trên danh sách
   >
   > ## Found by Test Case
@@ -1796,6 +1885,7 @@
   > }));
   > setProducts(fakeMassUpdatedProducts);
   > ```
+  > ````
   >
   > Sau khi `PUT` thành công, code gán **tên của sản phẩm vừa sửa cho TẤT CẢ sản phẩm** trong state cục bộ, thay vì chỉ cập nhật đúng 1 phần tử. Đây là bug chỉ tồn tại ở **hiển thị phía client** — dữ liệu trong CSDL vẫn đúng (chỉ sản phẩm X bị đổi), và bug biến mất nếu người dùng tải lại trang / gọi lại `fetchData()`. Nếu chỉ kiểm qua API (`GET /api/products`) sẽ **bỏ sót hoàn toàn** bug này vì tầng dữ liệu vẫn đúng — phải kiểm cả 2 tầng: UI ngay sau khi lưu, và API sau đó.
   >
@@ -1806,7 +1896,8 @@
   > ## Notes
   >
   > Test case này flaky theo lần chạy (không phải theo browser) — trong 2 lần chạy full suite liên tiếp, số lần fail dao động (đôi khi PASS ở webkit/firefox, đôi khi FAIL ở cả 3), khả năng cao do timing giữa `alert("Cập nhật thành công!")` chặn luồng JS đồng bộ và thời điểm Playwright đọc DOM để assert. Cần điều tra thêm nếu muốn ổn định hoá; tuy nhiên bug chức năng (mass-rename) là có thật và đã xác nhận qua source, không phụ thuộc vào tính flaky của assertion.
-  > ```
+  >
+  > ````
   >
   > ```markdown
   > # BUG-PRODUCT-007: Giá sản phẩm trong danh sách Admin hiển thị không có dấu phân cách hàng nghìn
@@ -1850,12 +1941,14 @@
   > ## Notes
   >
   > Lỗi cosmetic, độ ưu tiên thấp; cùng loại lỗi định dạng tiền tệ với BUG-CART-005 (nên rà soát toàn bộ codebase để tìm các chỗ khác quên `toLocaleString()`).
-  > ```
+  > ````
   >
   > **Tổng kết:** 22/22 bug đã được ghi thành file dưới `tests/bug-reports/{register,cart,product}/`, đúng format `templates/bug_report.md`. Chưa tạo GitHub Issue thật (cần xác nhận của người dùng trước khi đăng công khai lên GitHub Issues) — tiêu đề đề xuất cho từng Issue đã liệt kê ở đầu output này, nội dung Issue body dùng nguyên văn phần field bên dưới H1 của mỗi file (bỏ dòng tiêu đề `# BUG-...`).
   >
   > **Nhắc theo yêu cầu của skill:** sau khi tạo Issue thật trên GitHub cho từng bug, cần cập nhật cột `Bug Issue` trong `tests/test-summary/traceability-matrix.md` với số/link Issue tương ứng.
 
-- **Đánh giá:** _(để trống — chờ sinh viên tự review và điền nhận xét theo đúng yêu cầu "Human review" của HW04)_
-- **Suy luận:** _(để trống — chờ sinh viên tự điền)_
-- **Sửa:** _(để trống — chờ sinh viên tự điền)_
+- **Đánh giá:** VALID
+- **Suy luận:**
+  - Đúng format yêu cầu, bug report đúng yêu cầu
+  - Không tìm thấy ảo giác
+- **Sửa:** Không cần sửa
