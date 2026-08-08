@@ -48,3 +48,6 @@ test.describe('FR-01 smoke — Account registration', () => {
     });
   }
 });
+
+// Smoke tests verify fixture+report infrastructure before full automation
+

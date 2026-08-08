@@ -1,0 +1,27 @@
+9d34568 docs(register): clarify role of register smoke tests
+761e449 docs(fr18): document delta-based assertion rationale
+8136df7 docs(fr10): add assertion pattern documentation
+aa61faa docs(fr02): add performance & isolation notes to login spec
+390ebcb chore: add .gitignore for e2e test artifacts
+2384a2b chore: setup Playwright configuration (3-browser, HTML reporter with anti-cheat banner)
+13b362c refactor: extract shared UI helpers for test reusability
+e5fe046 test(register): automate FR-01 register (3 data-driven cases, 3 browsers)
+1bb61f4 test(fr18): automate FR-18 order management (12 data-driven cases, 3 browsers)
+f5fbdb1 test(fr10): automate FR-10 order state machine (15 data-driven cases, 3 browsers)
+fd82f9e test(fr02): automate FR-02 login & account lockout (13 data-driven cases, 3 browsers)
+d73999f anhnguyen-hw4-setup
+46ef080 temp
+de4dacf test(hw02): add Playwright screenshots to all reports and bug reports
+30ac892 test(hw02): update AI audit report with session 4 execution results
+e529379 test(hw02): add domain testing & BVA reports for 4 features
+d97f995 chore: approve sqlite3 build
+ea7fee4 chore: unused ci workflow
+3bc3b7c chore: create bug issue templates
+3741bd9 chore: update templates
+b2dd8ab chore: prepare template
+8498ae5 chore: add sqlite3 as built deps
+7b2739c chore: add install in run server script
+31eb8f2 chore: add .gitignore and pnpm-lock.json
+e00dcc8 fix: correct
+85af3ba first upload
+2f9bf2b Initial commit
