@@ -1,0 +1,23 @@
+[
+  {
+    "id": "FR02-TC01",
+    "type": "positive",
+    "description": "Login thanh cong voi tai khoan hop le",
+    "input": { "email": "test@eshop.com", "password": "Test1234!" },
+    "expected": { "httpStatus": 200, "redirectTo": "/", "hasToken": true }
+  },
+  {
+    "id": "FR02-TC02",
+    "type": "negative",
+    "description": "Login sai mat khau",
+    "input": { "email": "test@eshop.com", "password": "wrongpass" },
+    "expected": { "httpStatus": 401, "errorMessage": "Invalid credentials" }
+  },
+  {
+    "id": "FR02-TC03",
+    "type": "edge",
+    "description": "Tai khoan bi khoa sau 5 lan sai lien tiep",
+    "input": { "email": "test@eshop.com", "password": "wrongpass", "attempts": 5 },
+    "expected": { "httpStatus": 423, "errorMessage": "Account locked" }
+  }
+]
