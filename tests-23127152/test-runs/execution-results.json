@@ -1,0 +1,276 @@
+{
+  "results": {
+    "LOGIN-VIS-02": {
+      "status": "Failed",
+      "notes": "Tiêu đề hiện \"Đăng Ký\" thay vì Đăng nhập. → BUG-LOGIN-001"
+    },
+    "LOGIN-VIS-03": {
+      "status": "Failed",
+      "notes": "Trộn Username / Mật khẩu / Sign In trên cùng form. → BUG-LOGIN-002"
+    },
+    "LOGIN-VIS-04": {
+      "status": "Failed",
+      "notes": "document.title=\"frontend-web\". → BUG-LOGIN-003"
+    },
+    "LOGIN-VIS-01": {
+      "status": "Passed",
+      "notes": "Card width≈448px tại x=496"
+    },
+    "LOGIN-VIS-05": {
+      "status": "Passed",
+      "notes": "App không dark theme riêng; giữ nền rgba(0, 0, 0, 0), chữ h2 rgb(0, 0, 0) — vẫn đọc được trên card trắng."
+    },
+    "LOGIN-RES-01": {
+      "status": "Passed",
+      "notes": "1440×900 không cuộn ngang"
+    },
+    "LOGIN-RES-02": {
+      "status": "Passed",
+      "notes": "768×1024 form visible"
+    },
+    "LOGIN-RES-03": {
+      "status": "Passed",
+      "notes": "scrollWidth=clientWidth=390"
+    },
+    "LOGIN-RES-04": {
+      "status": "Passed",
+      "notes": "Zoom tương đương 150% (960×600)"
+    },
+    "LOGIN-COM-01": {
+      "status": "Not Run",
+      "notes": "Cần đối chiếu Firefox — sprint-2"
+    },
+    "LOGIN-COM-02": {
+      "status": "Passed",
+      "notes": "Chromium: dấu tiếng Việt hiển thị đúng trên nhãn/link."
+    },
+    "LOGIN-VAL-01": {
+      "status": "Passed",
+      "notes": "Bỏ trống username (email): HTML5 required chặn submit."
+    },
+    "LOGIN-VAL-02": {
+      "status": "Passed",
+      "notes": "Bỏ trống mật khẩu: HTML5 required chặn submit."
+    },
+    "LOGIN-VAL-03": {
+      "status": "Passed",
+      "notes": "Hiện lỗi đỏ, không chuyển trang."
+    },
+    "LOGIN-FDB-01": {
+      "status": "Passed",
+      "notes": ""
+    },
+    "LOGIN-FUN-03": {
+      "status": "Failed",
+      "notes": "input mật khẩu type=\"text\" — phải là password. → BUG-LOGIN-005"
+    },
+    "LOGIN-FUN-01": {
+      "status": "Passed",
+      "notes": "URL=http://localhost:5173/; header có user."
+    },
+    "LOGIN-FUN-02": {
+      "status": "Passed",
+      "notes": "Email vào field Username đăng nhập thành công."
+    },
+    "LOGIN-VAL-04": {
+      "status": "Failed",
+      "notes": "Login.jsx catch() luôn setError chuỗi chung; không hiển thị \"Tài khoản đã bị khóa\" từ API 403. → BUG-LOGIN-004"
+    },
+    "LOGIN-FDB-03": {
+      "status": "Failed",
+      "notes": "Không phân biệt lockout vs sai mật khẩu trên UI. → BUG-LOGIN-004"
+    },
+    "LOGIN-FUN-04": {
+      "status": "Failed",
+      "notes": "Double-click gửi 2 request; nút không có cơ chế disabled mặc định. → BUG-LOGIN-006"
+    },
+    "LOGIN-FDB-02": {
+      "status": "Failed",
+      "notes": "Không có loading/disabled trên nút Sign In khi chờ API. → BUG-LOGIN-006"
+    },
+    "LOGIN-NAV-01": {
+      "status": "Passed",
+      "notes": "URL=http://localhost:5173/"
+    },
+    "LOGIN-NAV-02": {
+      "status": "Passed",
+      "notes": "URL=http://localhost:5173/register"
+    },
+    "LOGIN-NAV-03": {
+      "status": "Passed",
+      "notes": "Deep link /login OK"
+    },
+    "LOGIN-NAV-04": {
+      "status": "Failed",
+      "notes": "Dùng <a href=\"/forgot-password\"> full document navigation thay vì React Router Link. → BUG-LOGIN-007"
+    },
+    "LOGIN-NAV-05": {
+      "status": "Failed",
+      "notes": "Nút Sign In có tabIndex=1 → nhảy cóc khỏi thứ tự tự nhiên. → BUG-LOGIN-008"
+    },
+    "LOGIN-USB-01": {
+      "status": "Failed",
+      "notes": "Nhãn nút=\"Sign In\". → BUG-LOGIN-002"
+    },
+    "LOGIN-USB-02": {
+      "status": "Passed",
+      "notes": ""
+    },
+    "LOGIN-ACC-01": {
+      "status": "Failed",
+      "notes": "Labels không có for: [{\"text\":\"Username\",\"htmlFor\":null},{\"text\":\"Mật khẩu\",\"htmlFor\":null}]. → BUG-LOGIN-009"
+    },
+    "LOGIN-ACC-02": {
+      "status": "Passed",
+      "notes": "Focus input: outline=auto, boxShadow=none (browser default)."
+    },
+    "LOGIN-ACC-03": {
+      "status": "Failed",
+      "notes": "html lang=\"en\" trong khi UI tiếng Việt. → BUG-LOGIN-010"
+    },
+    "LOGIN-ACC-04": {
+      "status": "Failed",
+      "notes": "Khối lỗi không có role=alert/aria-live: {\"role\":null,\"live\":null,\"tag\":\"DIV\"}. → BUG-LOGIN-011"
+    },
+    "PROFILE-NAV-02": {
+      "status": "Failed",
+      "notes": "Guest: chỉ \"Vui lòng đăng nhập\", không redirect và không link/CTA tới /login. → BUG-PROFILE-001"
+    },
+    "PROFILE-USB-01": {
+      "status": "Failed",
+      "notes": "Không có CTA đăng nhập ở guest state. → BUG-PROFILE-001"
+    },
+    "PROFILE-VIS-01": {
+      "status": "Passed",
+      "notes": "Hai khối hồ sơ + lịch sử đơn."
+    },
+    "PROFILE-VIS-02": {
+      "status": "Passed",
+      "notes": "Card form trái có tiêu đề/nhãn."
+    },
+    "PROFILE-VIS-04": {
+      "status": "Passed",
+      "notes": "Email disabled + bg xám."
+    },
+    "PROFILE-FUN-02": {
+      "status": "Passed",
+      "notes": ""
+    },
+    "PROFILE-FDB-02": {
+      "status": "Passed",
+      "notes": "Empty state đúng câu chữ."
+    },
+    "PROFILE-VIS-05": {
+      "status": "Passed",
+      "notes": "Không có đơn — bỏ qua định dạng tiền; empty state OK."
+    },
+    "PROFILE-VIS-03": {
+      "status": "Passed",
+      "notes": "Không có đơn để quan sát badge — N/A pass với empty state."
+    },
+    "PROFILE-RES-01": {
+      "status": "Passed",
+      "notes": ""
+    },
+    "PROFILE-RES-02": {
+      "status": "Passed",
+      "notes": "flex-col vẫn dùng được."
+    },
+    "PROFILE-RES-03": {
+      "status": "Passed",
+      "notes": ""
+    },
+    "PROFILE-RES-04": {
+      "status": "Passed",
+      "notes": "Bảng/empty truy cập được ở 390 (cuộn dọc)."
+    },
+    "PROFILE-COM-01": {
+      "status": "Not Run",
+      "notes": "Cần đối chiếu Firefox — sprint-2"
+    },
+    "PROFILE-COM-02": {
+      "status": "Passed",
+      "notes": "Chromium: dấu tiếng Việt OK."
+    },
+    "PROFILE-VAL-01": {
+      "status": "Passed",
+      "notes": "HTML5 required chặn Họ Tên trống."
+    },
+    "PROFILE-VAL-02": {
+      "status": "Passed",
+      "notes": "alert=\"Số điện thoại không hợp lệ. Vui lòng nhập đúng 9-10 chữ số.\""
+    },
+    "PROFILE-VAL-03": {
+      "status": "Passed",
+      "notes": "Placeholder gợi ý 0912… nhưng regex từ chối số 0 đầu. alert=\"Số điện thoại không hợp lệ. Vui lòng nhập đúng 9-10 chữ số.\". → BUG-PROFILE-003"
+    },
+    "PROFILE-VAL-04": {
+      "status": "Passed",
+      "notes": ""
+    },
+    "PROFILE-VAL-05": {
+      "status": "Passed",
+      "notes": "alert=\"Cập nhật thành công!\""
+    },
+    "PROFILE-FDB-01": {
+      "status": "Passed",
+      "notes": "Alert thành công xuất hiện (không có toast/inline — đúng mô tả ER)."
+    },
+    "PROFILE-USB-02": {
+      "status": "Failed",
+      "notes": "Mọi phản hồi qua alert() blocking — kém UX. → BUG-PROFILE-004"
+    },
+    "PROFILE-FUN-01": {
+      "status": "Passed",
+      "notes": ""
+    },
+    "PROFILE-FUN-03": {
+      "status": "Failed",
+      "notes": "Nút Cập nhật không disabled khi submit — double-submit khả dụng. → BUG-PROFILE-005"
+    },
+    "PROFILE-FUN-04": {
+      "status": "Failed",
+      "notes": "Header vẫn tên cũ sau update (AuthContext không refresh). Header: EShop\nGiỏ hàng\nChào, Test User\nThoát. → BUG-PROFILE-006"
+    },
+    "PROFILE-NAV-01": {
+      "status": "Passed",
+      "notes": "Deep link OK với token."
+    },
+    "PROFILE-NAV-03": {
+      "status": "Passed",
+      "notes": ""
+    },
+    "PROFILE-NAV-05": {
+      "status": "Failed",
+      "notes": "Rời trang khi form dirty không beforeunload/modal. → BUG-PROFILE-007"
+    },
+    "PROFILE-NAV-04": {
+      "status": "Passed",
+      "notes": "Thoát → guest state."
+    },
+    "PROFILE-FDB-03": {
+      "status": "Passed",
+      "notes": "Không có đơn hủy được — ghi nhận N/A; hành vi code: cancelOrder không confirm (xác nhận bằng source)."
+    },
+    "PROFILE-ACC-01": {
+      "status": "Failed",
+      "notes": "label for=[null,null,null,null] — bấm nhãn không focus input. → BUG-PROFILE-009"
+    },
+    "PROFILE-ACC-02": {
+      "status": "Failed",
+      "notes": "Header dùng dangerouslySetInnerHTML={`Chào, ${user.name}`} (App.jsx) — XSS nếu name chứa HTML/script. → BUG-PROFILE-010"
+    }
+  },
+  "loginStats": {
+    "passed": 18,
+    "failed": 14,
+    "nr": 1,
+    "total": 33
+  },
+  "profileStats": {
+    "passed": 23,
+    "failed": 8,
+    "nr": 1,
+    "total": 32
+  }
+}

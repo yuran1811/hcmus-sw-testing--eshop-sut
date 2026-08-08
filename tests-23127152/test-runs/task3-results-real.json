@@ -1,0 +1,259 @@
+{
+  "OS_LABEL": "Darwin 25.5.0",
+  "capture": "cg-window-real-browser",
+  "ONLY": "both",
+  "results": {
+    "LOGIN-COM-01": {
+      "chrome": {
+        "status": "Passed",
+        "file": "chrome_LOGIN-COM-01_comLayout.png",
+        "notes": "main visible, h2=\"Đăng Ký\" | layout comparable vs Firefox (both rendered)",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Google Chrome (real) | macOS"
+      },
+      "firefox": {
+        "status": "Passed",
+        "file": "firefox_LOGIN-COM-01_comLayout.png",
+        "notes": "main visible, h2=\"Đăng Ký\" | layout comparable vs Chrome (both rendered)",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Firefox/Nightly (Playwright Firefox build) | macOS"
+      }
+    },
+    "LOGIN-COM-02": {
+      "chrome": {
+        "status": "Passed",
+        "file": "chrome_LOGIN-COM-02_viTextLogin.png",
+        "notes": "Dấu tiếng Việt OK",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Google Chrome (real) | macOS"
+      },
+      "firefox": {
+        "status": "Passed",
+        "file": "firefox_LOGIN-COM-02_viTextLogin.png",
+        "notes": "Dấu tiếng Việt OK",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Firefox/Nightly (Playwright Firefox build) | macOS"
+      }
+    },
+    "LOGIN-VIS-01": {
+      "chrome": {
+        "status": "Passed",
+        "file": "chrome_LOGIN-VIS-01_loginCard.png",
+        "notes": "form w=382 x=529",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Google Chrome (real) | macOS"
+      },
+      "firefox": {
+        "status": "Passed",
+        "file": "firefox_LOGIN-VIS-01_loginCard.png",
+        "notes": "form w=382 x=449",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Firefox/Nightly (Playwright Firefox build) | macOS"
+      }
+    },
+    "LOGIN-VIS-02": {
+      "chrome": {
+        "status": "Failed",
+        "file": "chrome_LOGIN-VIS-02_loginTitle.png",
+        "notes": "h2=\"Đăng Ký\"",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Google Chrome (real) | macOS"
+      },
+      "firefox": {
+        "status": "Failed",
+        "file": "firefox_LOGIN-VIS-02_loginTitle.png",
+        "notes": "h2=\"Đăng Ký\"",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Firefox/Nightly (Playwright Firefox build) | macOS"
+      }
+    },
+    "LOGIN-RES-01": {
+      "chrome": {
+        "status": "Passed",
+        "file": "chrome_LOGIN-RES-01_noHScroll.png",
+        "notes": "no horizontal scroll",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Google Chrome (real) | macOS"
+      },
+      "firefox": {
+        "status": "Passed",
+        "file": "firefox_LOGIN-RES-01_noHScroll.png",
+        "notes": "no horizontal scroll",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Firefox/Nightly (Playwright Firefox build) | macOS"
+      }
+    },
+    "LOGIN-RES-03": {
+      "chrome": {
+        "status": "Passed",
+        "file": "chrome_LOGIN-RES-03_noHScroll.png",
+        "notes": "no horizontal scroll",
+        "viewport": "430x920",
+        "capture": "cg-window-real-browser",
+        "label": "Google Chrome (real) | macOS"
+      },
+      "firefox": {
+        "status": "Passed",
+        "file": "firefox_LOGIN-RES-03_noHScroll.png",
+        "notes": "no horizontal scroll",
+        "viewport": "430x920",
+        "capture": "cg-window-real-browser",
+        "label": "Firefox/Nightly (Playwright Firefox build) | macOS"
+      }
+    },
+    "LOGIN-FUN-03": {
+      "chrome": {
+        "status": "Failed",
+        "file": "chrome_LOGIN-FUN-03_pwdType.png",
+        "notes": "password input type=\"text\"",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Google Chrome (real) | macOS"
+      },
+      "firefox": {
+        "status": "Failed",
+        "file": "firefox_LOGIN-FUN-03_pwdType.png",
+        "notes": "password input type=\"text\"",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Firefox/Nightly (Playwright Firefox build) | macOS"
+      }
+    },
+    "PROFILE-COM-01": {
+      "chrome": {
+        "status": "Passed",
+        "file": "chrome_PROFILE-COM-01_profileLayout.png",
+        "notes": "main visible, h2=\"Hồ sơ của bạn\" | layout comparable vs Firefox (both rendered)",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Google Chrome (real) | macOS"
+      },
+      "firefox": {
+        "status": "Passed",
+        "file": "firefox_PROFILE-COM-01_profileLayout.png",
+        "notes": "main visible, h2=\"Hồ sơ của bạn\" | layout comparable vs Chrome (both rendered)",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Firefox/Nightly (Playwright Firefox build) | macOS"
+      }
+    },
+    "PROFILE-COM-02": {
+      "chrome": {
+        "status": "Passed",
+        "file": "chrome_PROFILE-COM-02_viTextProfile.png",
+        "notes": "Dấu tiếng Việt OK",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Google Chrome (real) | macOS"
+      },
+      "firefox": {
+        "status": "Passed",
+        "file": "firefox_PROFILE-COM-02_viTextProfile.png",
+        "notes": "Dấu tiếng Việt OK",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Firefox/Nightly (Playwright Firefox build) | macOS"
+      }
+    },
+    "PROFILE-VIS-01": {
+      "chrome": {
+        "status": "Passed",
+        "file": "chrome_PROFILE-VIS-01_profileLayout.png",
+        "notes": "main visible, h2=\"Hồ sơ của bạn\"",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Google Chrome (real) | macOS"
+      },
+      "firefox": {
+        "status": "Passed",
+        "file": "firefox_PROFILE-VIS-01_profileLayout.png",
+        "notes": "main visible, h2=\"Hồ sơ của bạn\"",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Firefox/Nightly (Playwright Firefox build) | macOS"
+      }
+    },
+    "PROFILE-VIS-02": {
+      "chrome": {
+        "status": "Passed",
+        "file": "chrome_PROFILE-VIS-02_profileFormCard.png",
+        "notes": "form card visible",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Google Chrome (real) | macOS"
+      },
+      "firefox": {
+        "status": "Passed",
+        "file": "firefox_PROFILE-VIS-02_profileFormCard.png",
+        "notes": "form card visible",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Firefox/Nightly (Playwright Firefox build) | macOS"
+      }
+    },
+    "PROFILE-VIS-04": {
+      "chrome": {
+        "status": "Passed",
+        "file": "chrome_PROFILE-VIS-04_emailDisabled.png",
+        "notes": "email disabled",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Google Chrome (real) | macOS"
+      },
+      "firefox": {
+        "status": "Passed",
+        "file": "firefox_PROFILE-VIS-04_emailDisabled.png",
+        "notes": "email disabled",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Firefox/Nightly (Playwright Firefox build) | macOS"
+      }
+    },
+    "PROFILE-RES-01": {
+      "chrome": {
+        "status": "Passed",
+        "file": "chrome_PROFILE-RES-01_noHScroll.png",
+        "notes": "no horizontal scroll",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Google Chrome (real) | macOS"
+      },
+      "firefox": {
+        "status": "Passed",
+        "file": "firefox_PROFILE-RES-01_noHScroll.png",
+        "notes": "no horizontal scroll",
+        "viewport": "1440x960",
+        "capture": "cg-window-real-browser",
+        "label": "Firefox/Nightly (Playwright Firefox build) | macOS"
+      }
+    },
+    "PROFILE-RES-03": {
+      "chrome": {
+        "status": "Passed",
+        "file": "chrome_PROFILE-RES-03_noHScroll.png",
+        "notes": "no horizontal scroll",
+        "viewport": "430x920",
+        "capture": "cg-window-real-browser",
+        "label": "Google Chrome (real) | macOS"
+      },
+      "firefox": {
+        "status": "Passed",
+        "file": "firefox_PROFILE-RES-03_noHScroll.png",
+        "notes": "no horizontal scroll",
+        "viewport": "430x920",
+        "capture": "cg-window-real-browser",
+        "label": "Firefox/Nightly (Playwright Firefox build) | macOS"
+      }
+    }
+  }
+}

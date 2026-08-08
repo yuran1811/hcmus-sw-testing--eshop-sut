@@ -1,0 +1,262 @@
+[
+  {
+    "id": "BUG-LOGIN-001",
+    "title": "BUG-LOGIN-001: Tiêu đề trang Login hiển thị \"Đăng Ký\"",
+    "severity": "Major",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-LOGIN-001.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-LOGIN-001-wrong-title-dang-ky.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "login"
+    ]
+  },
+  {
+    "id": "BUG-LOGIN-002",
+    "title": "BUG-LOGIN-002: Ngôn ngữ form Login bị trộn EN/VI (Username, Sign In)",
+    "severity": "Major",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-LOGIN-002.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-LOGIN-002-mixed-language.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "login"
+    ]
+  },
+  {
+    "id": "BUG-LOGIN-003",
+    "title": "BUG-LOGIN-003: document.title mặc định frontend-web trên /login",
+    "severity": "Minor",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-LOGIN-003.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-LOGIN-003-default-title.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "login"
+    ]
+  },
+  {
+    "id": "BUG-LOGIN-004",
+    "title": "BUG-LOGIN-004: UI không hiển thị thông báo tài khoản bị khóa (lockout)",
+    "severity": "Major",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-LOGIN-004.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-LOGIN-004-lockout-generic-error.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "login"
+    ]
+  },
+  {
+    "id": "BUG-LOGIN-005",
+    "title": "BUG-LOGIN-005: Ô mật khẩu dùng type=text — hiện plaintext",
+    "severity": "Critical",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-LOGIN-005.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-LOGIN-005-password-plaintext.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "login"
+    ]
+  },
+  {
+    "id": "BUG-LOGIN-006",
+    "title": "BUG-LOGIN-006: Không chống double-submit / không loading khi đăng nhập",
+    "severity": "Major",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-LOGIN-006.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-LOGIN-006-no-submit-loading.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "login"
+    ]
+  },
+  {
+    "id": "BUG-LOGIN-007",
+    "title": "BUG-LOGIN-007: Link Quên mật khẩu dùng <a href> full reload",
+    "severity": "Minor",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-LOGIN-007.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-LOGIN-007-forgot-plain-anchor.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "login"
+    ]
+  },
+  {
+    "id": "BUG-LOGIN-008",
+    "title": "BUG-LOGIN-008: Nút Sign In có tabIndex=1 phá thứ tự Tab",
+    "severity": "Minor",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-LOGIN-008.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-LOGIN-008-tabindex-signin.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "login"
+    ]
+  },
+  {
+    "id": "BUG-LOGIN-009",
+    "title": "BUG-LOGIN-009: Label Username/Mật khẩu không gắn với input",
+    "severity": "Major",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-LOGIN-009.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-LOGIN-009-labels-not-associated.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "login"
+    ]
+  },
+  {
+    "id": "BUG-LOGIN-010",
+    "title": "BUG-LOGIN-010: html lang=en trong khi UI tiếng Việt",
+    "severity": "Minor",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-LOGIN-010.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-LOGIN-010-html-lang-en.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "login"
+    ]
+  },
+  {
+    "id": "BUG-LOGIN-011",
+    "title": "BUG-LOGIN-011: Thông báo lỗi login thiếu role=alert / aria-live",
+    "severity": "Minor",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-LOGIN-011.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-LOGIN-011-error-no-aria-live.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "login"
+    ]
+  },
+  {
+    "id": "BUG-PROFILE-001",
+    "title": "BUG-PROFILE-001: Guest /profile không có CTA/link đăng nhập",
+    "severity": "Major",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-PROFILE-001.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-PROFILE-001-guest-no-login-cta.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "profile"
+    ]
+  },
+  {
+    "id": "BUG-PROFILE-003",
+    "title": "BUG-PROFILE-003: Placeholder SĐT 0912… mâu thuẫn regex (không chấp nhận số 0 đầu)",
+    "severity": "Minor",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-PROFILE-003.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-PROFILE-003-phone-placeholder-mismatch.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "profile"
+    ]
+  },
+  {
+    "id": "BUG-PROFILE-004",
+    "title": "BUG-PROFILE-004: Mọi feedback Profile chỉ qua alert() blocking",
+    "severity": "Major",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-PROFILE-004.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-PROFILE-004-alert-only-feedback.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "profile"
+    ]
+  },
+  {
+    "id": "BUG-PROFILE-005",
+    "title": "BUG-PROFILE-005: Nút Cập nhật không disabled khi đang submit",
+    "severity": "Major",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-PROFILE-005.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-PROFILE-005-no-update-loading.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "profile"
+    ]
+  },
+  {
+    "id": "BUG-PROFILE-006",
+    "title": "BUG-PROFILE-006: Header không cập nhật tên sau khi sửa hồ sơ",
+    "severity": "Major",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-PROFILE-006.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-PROFILE-006-header-name-stale.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "profile"
+    ]
+  },
+  {
+    "id": "BUG-PROFILE-007",
+    "title": "BUG-PROFILE-007: Rời Profile khi form dirty không cảnh báo",
+    "severity": "Minor",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-PROFILE-007.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-PROFILE-007-no-unsaved-warning.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "profile"
+    ]
+  },
+  {
+    "id": "BUG-PROFILE-008",
+    "title": "BUG-PROFILE-008: Hủy đơn không có hộp thoại xác nhận",
+    "severity": "Major",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-PROFILE-008.md",
+    "screenshot": null,
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "profile"
+    ]
+  },
+  {
+    "id": "BUG-PROFILE-009",
+    "title": "BUG-PROFILE-009: Label form Profile không gắn input",
+    "severity": "Major",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-PROFILE-009.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-PROFILE-009-labels-not-associated.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "profile"
+    ]
+  },
+  {
+    "id": "BUG-PROFILE-010",
+    "title": "BUG-PROFILE-010: XSS qua dangerouslySetInnerHTML tên user ở header",
+    "severity": "Critical",
+    "body": "tests-23127152/bug-reports/github-issue-bodies/BUG-PROFILE-010.md",
+    "screenshot": "tests-23127152/bug-reports/screenshots/BUG-PROFILE-010-xss-dangerouslysetinnerhtml.png",
+    "labels": [
+      "bug",
+      "hw03",
+      "23127152",
+      "profile"
+    ]
+  }
+]

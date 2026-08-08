@@ -1,0 +1,46 @@
+# Git commit log — HW03 SV 23127152
+# Branch: hw3/23127152
+# Exported: 2026-08-02T23:37:41
+
+## Process commits (đề: 1 commit / bước quy trình)
+
+Các bước đã thực hiện trên nhánh `hw3/23127152` (thư mục `tests-23127152/`):
+
+01. chore(hw03): scaffold tests-23127152 tree + README self-assess
+02. test(hw03/task1): design GUI checklist Login + Profile (IA-01…IA-04)
+03. test(hw03/task1): execute checklist + screenshots Failed
+04. test(hw03/task1): bug reports BUG-LOGIN-* / BUG-PROFILE-*
+05. test(hw03/task2): usability Phase 1 plan + instruments + recruitment
+06. test(hw03/task3): cross-platform matrix + watermarked screenshots
+07. test(hw03/task2): conduct P01–P07 from Survey + Phase 3 findings
+08. test(hw03/task1): Excel checklist + GitHub Issues #137–#156
+09. docs(hw03): AI audit/critique + submission pack
+
+## `git log` (nhánh hiện tại — toàn repo)
+
+```
+75ff2d7 (HEAD -> hw3/23127152, origin/hw3/23127211, hw3/23127211) docs: 📖 add sprint 2 test runs
+1523603 docs: 📖 add bug reports and test run of all items in checklist
+ff96609 docs: 📖 edit test plan base on result of P00-pilot
+ec62c28 docs: 📖 update recruitment tracker doc
+2341b0a fix: 🐛 fix typo
+275e101 docs: 📖📖 add usability test documentation for U-01 and ai audit report
+cdbb777 docs: 📖 add checklist for product detail and ai audit
+b1e91cc feat: ✨ add skill and settings for agents
+ea7fee4 (origin/main, origin/HEAD) chore: unused ci workflow
+3bc3b7c chore: create bug issue templates
+3741bd9 chore: update templates
+b2dd8ab chore: prepare template
+8498ae5 chore: add sqlite3 as built deps
+7b2739c chore: add install in run server script
+31eb8f2 chore: add .gitignore and pnpm-lock.json
+e00dcc8 fix: correct
+85af3ba first upload
+2f9bf2b Initial commit
+```
+
+## Lệnh tái xuất sau khi commit đầy đủ artefacts
+
+```bash
+git log --oneline --decorate -- tests-23127152/ > tests-23127152/submission/04-git/commit_log.txt
+```
