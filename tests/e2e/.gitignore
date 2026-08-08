@@ -4,3 +4,11 @@ test-results/
 # Thu muc report mac dinh khi chay local; cac report chinh thuc duoc ghi vao
 # reports/html/<REPORT_NAME> va co commit vao repo theo yeu cau HW04.
 reports/html/latest/
+
+# Thu muc mac dinh cua Playwright khi lenh chay dung --reporter tren CLI (VD:
+# --reporter=list,html) - flag CLI se GHI DE hoan toan mang `reporter` khai
+# bao trong playwright.config.ts (bo qua outputFolder/title tuy chinh), nen
+# report se roi vao day thay vi reports/html/<REPORT_NAME>. Khong dung lam
+# report chinh thuc; chi chay `npx playwright test ...` KHONG kem --reporter
+# de config ap dung dung.
+playwright-report/
