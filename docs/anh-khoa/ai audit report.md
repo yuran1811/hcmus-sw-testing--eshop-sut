@@ -760,3 +760,1102 @@
   - Điểm đáng ghi nhận nhất: AI **không làm theo máy móc** chỉ dẫn của prompt ở TC-PRODUCT-015 mà chỉ ra chiều false-pass thực tế ngược với giả định trong prompt (bug nằm ở state cục bộ, CSDL vẫn đúng → chỉ kiểm API sẽ bỏ sót bug người dùng nhìn thấy), rồi đề xuất kiểm cả hai tầng
   - Tương tự, AI phát hiện TC-PRODUCT-010 không thể thực hiện qua UI vì bản chất `input type="number"`, và nêu rõ thay vì lặng lẽ viết một test giả vờ thao tác được
 - **Sửa:** Đã điều chỉnh cách kiểm TC-PRODUCT-015 so với chỉ dẫn ban đầu trong prompt (assert cả UI lẫn API thay vì chỉ API) — lý do ghi trong chính spec và trong `knownIssues`. Đã type-check (`tsc --noEmit`) và list-verify (54 tests / 144 tests toàn suite) trước khi ghi log. Chưa chạy thật được trong môi trường sandbox vì `backend/node_modules` cài bằng pnpm phía Windows (native module `sqlite3` build cho Windows) trong khi shell là Linux/WSL → `invalid ELF header`. Phần chạy thật (bằng chứng thực thi theo mục 11 Anti-AI-Cheat) do sinh viên tự thực hiện.
+
+---
+
+**AI Audit Report Item**
+
+- **Công cụ AI:** Claude Code (Anthropic) — model `claude-sonnet-5`
+- **Thời gian:** 2026-08-08 12:48:35 +07:00
+- **Nội dung prompt:**
+
+  > Sử dụng skill @.agents/skills/bug-reporting/SKILL.md hãy viết report cho tất cả các bug, sau đó lưu vào AI audit log nhé
+
+  (Bối cảnh trước đó trong cùng phiên: đã dùng Playwright MCP xác minh lại locator của cả 3 spec so với source thật và test case, sửa 4 lỗi script/dữ liệu thật, rồi chạy đủ 9 lượt — register/cart/product × chromium/firefox/webkit — với server thật đang chạy. Toàn bộ 22 bug dưới đây được rút ra từ kết quả 9 lượt chạy thật đó, cộng 1 bug phát hiện qua khảo sát thủ công bằng Playwright MCP ngoài phạm vi 48 test case gốc.)
+
+- **AI output:**
+
+  > Đã đọc `.agents/skills/bug-reporting/SKILL.md`, `templates/bug_report.md`, và ví dụ tham chiếu `references/BUG-PRODUCT-002.md` để bám đúng format. Tổng hợp **22 bug** riêng biệt từ kết quả 9 lượt chạy thật (register: 8/17 fail, cart: 12/13 fail, product: 10-11/18 fail tuỳ browser — số fail cao là có chủ đích, phản ánh đúng các gap giữa SUT và SRS, không phải lỗi script), nhóm theo module, mỗi bug tham chiếu đúng (các) Test Case đã phát hiện ra nó. Đã ghi từng bug thành 1 file Markdown riêng dưới `tests/bug-reports/<module>/BUG-<MODULE>-<NNN>.md` theo đúng cấu trúc field của `templates/bug_report.md`.
+  >
+  > **Danh sách 22 file đã tạo (Bug ID — tiêu đề đề xuất cho GitHub Issue):**
+  >
+  > _Module REGISTER (FR-01) — 5 bug:_
+  > - `BUG-REGISTER-001` — `[BUG][FR-01] - Regex mật khẩu phía frontend chặn TẤT CẢ mật khẩu hợp lệ theo FR-01`
+  > - `BUG-REGISTER-002` — `[BUG][FR-01] - Form đăng ký thiếu trường "Xác nhận mật khẩu"`
+  > - `BUG-REGISTER-003` — `[BUG][FR-01] - Không validate định dạng email khi đăng ký`
+  > - `BUG-REGISTER-004` — `[BUG][FR-01] - Không kiểm tra email trùng khi đăng ký`
+  > - `BUG-REGISTER-005` — `[BUG][SEC-01] - Mật khẩu được lưu dạng plaintext trong CSDL`
+  >
+  > _Module CART (FR-07) — 10 bug:_
+  > - `BUG-CART-001` — `[BUG][FR-07] - Nút "Thêm vào giỏ hàng" ở trang chi tiết nuốt mất lượt bấm đầu tiên`
+  > - `BUG-CART-002` — `[BUG][FR-07] - Thêm lại sản phẩm đã có tạo dòng trùng thay vì cộng dồn số lượng`
+  > - `BUG-CART-003` — `[BUG][FR-07] - Bảng giỏ hàng không có nút +/- để chỉnh số lượng`
+  > - `BUG-CART-004` — `[BUG][FR-07] - Xoá sản phẩm khỏi giỏ không có dialog xác nhận`
+  > - `BUG-CART-005` — `[BUG][FR-07] - Sai nhãn chữ trong bảng giỏ hàng ("Giá"/"Tổng tạm tính")`
+  > - `BUG-CART-006` — `[BUG][FR-24] - Trạng thái giỏ hàng rỗng thiếu icon/hình minh hoạ`
+  > - `BUG-CART-007` — `[BUG][FR-07] - Nhãn nút "quay lại mua sắm" không nhất quán giữa 2 trạng thái giỏ hàng`
+  > - `BUG-CART-008` — `[BUG][FR-06] - Ô Số lượng không chặn 0/âm/rỗng — tạo dòng giỏ hàng hiển thị NaN`
+  > - `BUG-CART-009` — `[BUG][FR-07] - Giỏ hàng bị mất hoàn toàn sau khi tải lại trang (F5)`
+  > - `BUG-CART-010` — `[BUG][FR-08] - Route /checkout không có guard, truy cập trực tiếp bằng URL khi chưa đăng nhập vẫn vào được`
+  >
+  > _Module PRODUCT (FR-15, Admin) — 7 bug:_
+  > - `BUG-PRODUCT-001` — `[BUG][SEC-02] - API tạo/sửa/xoá sản phẩm không yêu cầu xác thực (JWT)`
+  > - `BUG-PRODUCT-002` — `[BUG][SEC-03] - authenticateToken không kiểm tra role — user thường thực hiện được thao tác admin`
+  > - `BUG-PRODUCT-003` — `[BUG][FR-15] - Không validate Giá sản phẩm (chấp nhận 0, âm, trống, không phải số)`
+  > - `BUG-PRODUCT-004` — `[BUG][FR-15] - Tên sản phẩm không giới hạn độ dài tối đa 255 ký tự`
+  > - `BUG-PRODUCT-005` — `[BUG][FR-15] - Danh mục sản phẩm không thực sự bắt buộc (UI không cho bỏ trống, backend không kiểm tồn tại)`
+  > - `BUG-PRODUCT-006` — `[BUG][FR-15] - Sửa 1 sản phẩm làm đổi TÊN hiển thị của TẤT CẢ sản phẩm khác`
+  > - `BUG-PRODUCT-007` — `[BUG][FR-21] - Giá sản phẩm trong danh sách Admin hiển thị không có dấu phân cách hàng nghìn`
+  >
+  > **Nội dung đầy đủ từng file (nguyên văn, đã ghi vào `tests/bug-reports/<module>/`):**
+  >
+  > ---
+  >
+  > ```markdown
+  > # BUG-REGISTER-001: Regex mật khẩu phía frontend chặn TẤT CẢ mật khẩu hợp lệ theo FR-01
+  >
+  > ## Found by Test Case
+  >
+  > TC-REGISTER-001, TC-REGISTER-015, TC-REGISTER-016
+  >
+  > ## Requirement liên quan
+  >
+  > FR-01 (Đăng ký tài khoản — mật khẩu mạnh: tối thiểu 8 ký tự, có chữ hoa, chữ thường, số và ký tự đặc biệt trong tập `@$!%*?&`)
+  >
+  > ## Severity / Priority
+  >
+  > Critical / P1
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit (Playwright Desktop Chrome/Firefox/Safari) — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: http://localhost:5173/register (frontend-web), API: http://localhost:3000
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Mở trang Đăng ký (`/register`).
+  > 2. Nhập Họ Tên và Email hợp lệ.
+  > 3. Nhập Mật khẩu `Abcd123!` (đúng yêu cầu FR-01: ≥8 ký tự, có hoa/thường/số/ký tự đặc biệt thuộc tập cho phép).
+  > 4. Bấm "Đăng Ký".
+  >
+  > ## Expected result
+  >
+  > Tài khoản được tạo thành công, chuyển hướng sang trang Đăng nhập.
+  >
+  > ## Actual result
+  >
+  > Hệ thống từ chối với thông báo "Mật khẩu quá yếu! Phải dài tối thiểu 8 ký tự, gồm chữ hoa, chữ thường, số và KÝ TỰ ĐẶC BIỆT." Không có tài khoản nào được tạo.
+  >
+  > Nguyên nhân gốc (đã xác minh qua source): `frontend-web/src/pages/Register.jsx:15` dùng regex
+  >
+  > ```js
+  > const flawedStrongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\s)[A-Za-z\d\s]{8,}$/;
+  > ```
+  >
+  > Regex này **bắt buộc phải có khoảng trắng** (`(?=.*\s)`) và tập ký tự cho phép chỉ gồm `[A-Za-z\d\s]` — **không chứa bất kỳ ký tự nào** trong tập `@$!%*?&` mà FR-01 yêu cầu. Về mặt toán học, không tồn tại mật khẩu nào vừa thoả FR-01 (phải có 1 ký tự thuộc `@$!%*?&`) vừa lọt qua được regex này (cấm toàn bộ các ký tự đó). Do đó **100% người dùng nhập đúng theo hướng dẫn hiển thị ngay trên form đều bị chặn đăng ký**, kể cả các trường hợp biên hợp lệ (TC-REGISTER-015, 016).
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/register-chromium/index.html` (và `register-firefox`, `register-webkit`) — xem test `TC-REGISTER-001`, `TC-REGISTER-015`, `TC-REGISTER-016` (trạng thái Failed), có kèm trace/video/screenshot khi fail (`screenshot: 'only-on-failure'`, `trace: 'retain-on-failure'` theo `playwright.config.ts`).
+  > - Console log tại thời điểm fail: `expect(page).toHaveURL(/\/login$/)` — nhận được URL vẫn là `/register`.
+  >
+  > ## Notes
+  >
+  > Bug này còn khiến TC-REGISTER-003 và TC-REGISTER-004 (vốn dùng cùng mật khẩu `Abcd123!` để kiểm tra riêng lỗi định dạng email / email trùng) bị chặn nhầm lý do ngay tại bước mật khẩu — team automation đã phải tách 2 case đó ra gọi thẳng API để cách ly đúng bug cần kiểm (xem BUG-REGISTER-003, BUG-REGISTER-004).
+  > ```
+  >
+  > ```markdown
+  > # BUG-REGISTER-002: Form đăng ký thiếu trường "Xác nhận mật khẩu"
+  >
+  > ## Found by Test Case
+  >
+  > TC-REGISTER-013, TC-REGISTER-014
+  >
+  > ## Requirement liên quan
+  >
+  > FR-01 (Đăng ký tài khoản — phải có trường Xác nhận mật khẩu, hệ thống từ chối nếu hai trường không khớp)
+  >
+  > ## Severity / Priority
+  >
+  > Major / P2
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: http://localhost:5173/register
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Mở trang Đăng ký (`/register`).
+  > 2. Quan sát toàn bộ các trường trên form.
+  >
+  > ## Expected result
+  >
+  > Form có 4 trường: Họ Tên, Email, Mật khẩu, **Xác nhận mật khẩu**. Nếu Mật khẩu và Xác nhận mật khẩu không khớp (hoặc Xác nhận mật khẩu để trống), hệ thống hiển thị lỗi tương ứng và không tạo tài khoản.
+  >
+  > ## Actual result
+  >
+  > Form (`frontend-web/src/pages/Register.jsx:34-68`) chỉ có 3 trường: Họ Tên, Email, Mật khẩu. Không có trường "Xác nhận mật khẩu" nào trong DOM — không thể kiểm tra hành vi khớp/không khớp vì trường này không tồn tại.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/register-chromium/index.html` — test `TC-REGISTER-013`, `TC-REGISTER-014` (Failed): `expect(field(page, 'Xác nhận mật khẩu')).toHaveCount(1)` nhận count = 0.
+  > - Có thể xác minh trực tiếp bằng DevTools trên `http://localhost:5173/register`.
+  >
+  > ## Notes
+  >
+  > Do trường không tồn tại, test được thiết kế lại để assert sự TỒN TẠI của trường thay vì thao tác điền/so khớp (vốn không thể thực hiện được qua UI hiện tại).
+  > ```
+  >
+  > ```markdown
+  > # BUG-REGISTER-003: Không validate định dạng email khi đăng ký (chấp nhận email thiếu domain)
+  >
+  > ## Found by Test Case
+  >
+  > TC-REGISTER-003
+  >
+  > ## Requirement liên quan
+  >
+  > FR-01 (Đăng ký tài khoản — Email phải có định dạng hợp lệ `user@domain.com`)
+  >
+  > ## Severity / Priority
+  >
+  > Major / P2
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: http://localhost:5173/register, API: POST http://localhost:3000/api/register
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Gọi trực tiếp `POST /api/register` với `email: "nguyenvana03@"` (thiếu phần domain), `password` hợp lệ theo FR-01, `name` hợp lệ.
+  >    - (Không thể tái hiện qua UI bằng mật khẩu hợp lệ theo FR-01 vì bị BUG-REGISTER-001 chặn trước; script automation vì vậy gọi thẳng API để cách ly đúng lỗi cần kiểm — xem Notes.)
+  > 2. Quan sát status code và dữ liệu trong bảng `users`.
+  >
+  > ## Expected result
+  >
+  > Request bị từ chối (400/422 hoặc tương đương), không có tài khoản nào được tạo với email sai định dạng.
+  >
+  > ## Actual result
+  >
+  > Request thành công (`res.ok() === true`), tài khoản được tạo với email `"nguyenvana03@"`. Xác minh: input Email trong `Register.jsx:46-53` dùng `type="text"` (không phải `type="email"`, nên trình duyệt không tự validate định dạng), và `backend/server.js:20-30` (`POST /api/register`) thực hiện `INSERT` thẳng vào bảng `users` mà không có bất kỳ bước validate định dạng email nào ở cả hai tầng client và server.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/register-chromium/index.html` — test `TC-REGISTER-003: Email sai dinh dang (kiem qua API - xem knownIssues)` (Failed): `expect(res.ok()).toBe(false)` nhận `true`.
+  >
+  > ## Notes
+  >
+  > Ban đầu test case này được thiết kế thao tác qua UI, nhưng vì mật khẩu hợp lệ theo FR-01 luôn bị BUG-REGISTER-001 chặn trước, test đã được đổi sang gọi thẳng API để cô lập đúng lỗi validate email (không bị lỗi mật khẩu che khuất).
+  > ```
+  >
+  > ```markdown
+  > # BUG-REGISTER-004: Không kiểm tra email trùng khi đăng ký — cho phép tạo nhiều tài khoản cùng email
+  >
+  > ## Found by Test Case
+  >
+  > TC-REGISTER-004
+  >
+  > ## Requirement liên quan
+  >
+  > FR-01 (Đăng ký tài khoản — Email phải là duy nhất trong hệ thống)
+  >
+  > ## Severity / Priority
+  >
+  > Critical / P1
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: API: POST http://localhost:3000/api/register
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Gọi `POST /api/register` với một email tạm (chưa tồn tại) + mật khẩu hợp lệ → xác nhận tạo thành công (201/200).
+  > 2. Gọi lại `POST /api/register` với **cùng email đó** một lần nữa.
+  >
+  > ## Expected result
+  >
+  > Lần gọi thứ 2 bị từ chối với lỗi "Email đã tồn tại"; không tạo bản ghi trùng.
+  >
+  > ## Actual result
+  >
+  > Lần gọi thứ 2 vẫn thành công (`res.ok() === true`), tạo thêm một bản ghi `users` thứ hai với cùng địa chỉ email. Xác nhận qua source: bảng `users` (`backend/database.js`) không khai báo ràng buộc `UNIQUE` trên cột `email`, và `POST /api/register` (`backend/server.js:20-30`) không truy vấn kiểm tra trùng trước khi `INSERT`.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/register-chromium/index.html` — test `TC-REGISTER-004: Email da duoc dang ky (trung, ...)` (Failed): `expect(duplicate.ok()).toBe(false)` nhận `true`.
+  >
+  > ## Notes
+  >
+  > - Test dùng một email **tạm/riêng** (không phải tài khoản mặc định `test@eshop.com`) để không làm nhiễu dữ liệu đăng nhập dùng chung với các spec cart/product.
+  > - Hậu quả tiềm ẩn: đăng nhập bằng email trùng có thể trả về bản ghi không xác định (tuỳ thứ tự SQLite trả về), gây rủi ro bảo mật/toàn vẹn dữ liệu.
+  > ```
+  >
+  > ```markdown
+  > # BUG-REGISTER-005 (SEC-01): Mật khẩu được lưu dạng plaintext trong CSDL, không hash
+  >
+  > ## Found by Test Case
+  >
+  > TC-REGISTER-017 (SEC-01)
+  >
+  > ## Requirement liên quan
+  >
+  > FR-01 / SEC-01 (Mật khẩu phải được băm — bcrypt hoặc tương đương — không được lưu dạng plaintext)
+  >
+  > ## Severity / Priority
+  >
+  > Blocker / P0
+  >
+  > ## Environment
+  >
+  > - Browser: N/A (kiểm tra tầng API/CSDL)
+  > - OS: Windows 11
+  > - URL: API: POST http://localhost:3000/api/register, POST /api/login, GET /api/users/me
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Đăng ký tài khoản mới qua `POST /api/register` với mật khẩu `Abcd123!`.
+  > 2. Đăng nhập bằng tài khoản vừa tạo, lấy JWT token.
+  > 3. Gọi `GET /api/users/me` kèm token, đọc trường `password` trong response.
+  >
+  > ## Expected result
+  >
+  > Trường `password` trả về là chuỗi đã băm (ví dụ có tiền tố bcrypt `$2a$`/`$2b$`/`$2y$`), khác hoàn toàn với plaintext `Abcd123!` đã nhập.
+  >
+  > ## Actual result
+  >
+  > Trường `password` trả về **chính xác plaintext** `Abcd123!` — không hề được băm. Xác nhận qua source: `backend/server.js` — endpoint `/api/login` so sánh trực tiếp `user.password === password` (không dùng `bcrypt.compare` hay tương đương), và `POST /api/register` lưu thẳng `password` nhận từ request vào cột `password` mà không băm trước khi `INSERT`. `GET /api/users/me` (`server.js:112-116`) trả về nguyên object user từ CSDL, bao gồm cả trường `password` plaintext.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/register-chromium/index.html` (và firefox/webkit) — test `TC-REGISTER-017: SEC-01 - Mat khau khong duoc luu plaintext trong CSDL` (Failed): `expect(me.password).not.toBe(secCase.input.password)` thất bại (giá trị bằng nhau); `expect(me.password).toMatch(/^\$2[aby]\$/)` cũng thất bại.
+  >
+  > ## Notes
+  >
+  > Đây là lỗi bảo mật nghiêm trọng nhất trong 3 feature được kiểm: rò rỉ mật khẩu plaintext qua endpoint `GET /api/users/me` là rủi ro cao nếu bị khai thác (lộ mật khẩu thật của người dùng, không chỉ là hash có thể chống lại phần nào). Đề xuất ưu tiên vá đầu tiên.
+  > ```
+  >
+  > ```markdown
+  > # BUG-CART-001: Nút "Thêm vào giỏ hàng" ở trang chi tiết nuốt mất lượt bấm đầu tiên
+  >
+  > ## Found by Test Case
+  >
+  > TC-CART-001
+  >
+  > ## Requirement liên quan
+  >
+  > FR-06 / FR-07 (Nút "Thêm vào giỏ hàng" phải thêm sản phẩm vào giỏ ngay khi bấm)
+  >
+  > ## Severity / Priority
+  >
+  > Critical / P1
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: http://localhost:5173/product/:id
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Mở trang chủ, bấm "Xem chi tiết" một sản phẩm bất kỳ (ví dụ iPhone 15 Pro Max).
+  > 2. Để Số lượng mặc định = 1.
+  > 3. Bấm nút "Thêm vào giỏ hàng" đúng **1 lần**.
+  > 4. Mở trang Giỏ hàng.
+  >
+  > ## Expected result
+  >
+  > Giỏ hàng có đúng 1 dòng mới cho sản phẩm vừa thêm, Số lượng = 1.
+  >
+  > ## Actual result
+  >
+  > Giỏ hàng **trống** — không có dòng nào được thêm. Xác nhận qua source `frontend-web/src/pages/ProductDetail.jsx:21-31`:
+  >
+  > ```js
+  > const handleAddToCart = () => {
+  >   if (clickCount === 0) {
+  >     setClickCount(1);
+  >     return; // Không làm gì cả ở lần đầu tiên
+  >   }
+  >   addToCart(product, parseInt(quantity));
+  >   ...
+  > };
+  > ```
+  >
+  > Lần bấm đầu tiên chỉ set `clickCount = 1` rồi `return` ngay, **không gọi `addToCart`**. Phải bấm lần **thứ 2** mới thực sự thêm được vào giỏ. Đây là bug nghiêm trọng nhất của toàn bộ feature Giỏ hàng vì ảnh hưởng trực tiếp trải nghiệm mua hàng cơ bản nhất.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/cart-chromium/index.html` (và firefox/webkit) — test `TC-CART-001` (Failed): `expect(cartRows(page)).toHaveCount(1)` nhận count = 0; toàn bộ 5 cột bảng giỏ hàng cũng không tìm thấy vì bảng không render ở trạng thái giỏ rỗng.
+  >
+  > ## Notes
+  >
+  > Do bug này, các test case khác cần seed dữ liệu giỏ hàng ổn định (TC-CART-002 → 010, 012, 013) đều phải bấm nút 2 lần (`clicks: 2`) hoặc thêm qua nút "Thêm vào giỏ" ở trang chủ (không dính bug clickCount) để tránh false-pass/false-fail dây chuyền.
+  > ```
+  >
+  > ```markdown
+  > # BUG-CART-002: Thêm lại sản phẩm đã có trong giỏ tạo dòng trùng thay vì cộng dồn số lượng
+  >
+  > ## Found by Test Case
+  >
+  > TC-CART-002
+  >
+  > ## Requirement liên quan
+  >
+  > FR-07 (Giỏ hàng — thêm sản phẩm đã có trong giỏ phải tăng số lượng dòng hiện tại, không tạo dòng mới)
+  >
+  > ## Severity / Priority
+  >
+  > Major / P2
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: http://localhost:5173/
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Đăng nhập, ở trang chủ bấm "Thêm vào giỏ" cho sản phẩm A.
+  > 2. Bấm "Thêm vào giỏ" cho **cùng sản phẩm A** lần nữa.
+  > 3. Mở trang Giỏ hàng.
+  >
+  > ## Expected result
+  >
+  > Giỏ hàng có đúng **1 dòng** cho sản phẩm A, Số lượng = 2.
+  >
+  > ## Actual result
+  >
+  > Giỏ hàng có **2 dòng riêng biệt**, mỗi dòng Số lượng = 1. Xác nhận qua `frontend-web/src/context/CartContext.jsx:8-10`: `addToCart` luôn thực hiện `setCart([...cart, {...product, quantity}])` — push thẳng phần tử mới vào mảng, không tìm dòng có `product.id` trùng để cộng dồn số lượng.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/cart-chromium/index.html` — test `TC-CART-002` (Failed): `expect(cartRows(page)).toHaveCount(1)` nhận count = 2.
+  >
+  > ## Notes
+  >
+  > Test seed qua nút "Thêm vào giỏ" ở trang chủ (không qua trang chi tiết) để bug này lộ ra trực tiếp, tránh bị BUG-CART-001 (clickCount) che khuất.
+  > ```
+  >
+  > ```markdown
+  > # BUG-CART-003: Bảng giỏ hàng không có nút +/- để chỉnh số lượng
+  >
+  > ## Found by Test Case
+  >
+  > TC-CART-003, TC-CART-004, TC-CART-005
+  >
+  > ## Requirement liên quan
+  >
+  > FR-07 (Giỏ hàng — cột Số lượng phải có nút +/- để chỉnh trực tiếp trên giỏ hàng)
+  >
+  > ## Severity / Priority
+  >
+  > Major / P2
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: http://localhost:5173/cart
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Đăng nhập, thêm ít nhất 1 sản phẩm vào giỏ.
+  > 2. Mở trang Giỏ hàng, quan sát cột "Số lượng".
+  >
+  > ## Expected result
+  >
+  > Mỗi dòng sản phẩm có nút "+" để tăng và nút "-" để giảm số lượng (nút "-" bị vô hiệu/ẩn khi số lượng = 1 để chặn xuống 0).
+  >
+  > ## Actual result
+  >
+  > Cột "Số lượng" chỉ hiển thị **văn bản thuần**, không có bất kỳ nút bấm nào. Xác nhận qua `frontend-web/src/pages/Cart.jsx:47`: `<td>{item.quantity}</td>` — không có `<button>` nào trong ô này. Toàn bộ 3 hành vi liên quan (tăng, giảm, chặn xuống dưới 1) đều không thể thực hiện được qua UI.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/cart-chromium/index.html` — test `TC-CART-003`, `TC-CART-004`, `TC-CART-005` (Failed): `expect(row.getByRole('button', { name: '+' | '-' })).toHaveCount(1)` nhận count = 0.
+  >
+  > ## Notes
+  >
+  > Test chỉ assert sự tồn tại của nút, không thử click vào locator rỗng, để tránh timeout mù mờ và báo lỗi rõ ràng ngay tại bước phát hiện thiếu element.
+  > ```
+  >
+  > ```markdown
+  > # BUG-CART-004: Xoá sản phẩm khỏi giỏ không có dialog xác nhận
+  >
+  > ## Found by Test Case
+  >
+  > TC-CART-007, TC-CART-008
+  >
+  > ## Requirement liên quan
+  >
+  > FR-07 (Giỏ hàng — phải có dialog xác nhận trước khi xoá sản phẩm khỏi giỏ)
+  >
+  > ## Severity / Priority
+  >
+  > Major / P2
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: http://localhost:5173/cart
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Đăng nhập, thêm ít nhất 2 sản phẩm vào giỏ.
+  > 2. Bấm nút "Xóa" trên một dòng sản phẩm bất kỳ.
+  >
+  > ## Expected result
+  >
+  > Trình duyệt hiển thị dialog xác nhận ("Bạn có chắc muốn xoá?"); nếu người dùng huỷ (dismiss), sản phẩm phải **giữ nguyên** trong giỏ; nếu đồng ý (accept), sản phẩm mới bị xoá.
+  >
+  > ## Actual result
+  >
+  > Không có bất kỳ dialog xác nhận nào xuất hiện — sản phẩm bị xoá **ngay lập tức** bất kể ý định huỷ hay đồng ý. Xác nhận qua `frontend-web/src/pages/Cart.jsx:50-56`: `onClick={() => removeFromCart(index)}` gọi thẳng hàm xoá, không có `window.confirm()` hay dialog nào bao quanh.
+  >
+  > Hệ quả: kịch bản "bấm Xóa nhưng huỷ dialog → dòng phải giữ nguyên" (TC-CART-008) cũng fail thêm ở bước sau — vì không có dialog để "huỷ", sản phẩm luôn bị xoá, số dòng còn lại ít hơn kỳ vọng.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/cart-chromium/index.html` — test `TC-CART-007`, `TC-CART-008` (Failed): `expect.soft(dialogShown).toBe(true)` nhận `false`; ở TC-CART-008 còn thêm lỗi `expect(cartRows(page)).toHaveCount(2)` nhận 1 (sản phẩm vẫn bị xoá dù ý định là "huỷ").
+  >
+  > ## Notes
+  >
+  > Không có giải pháp workaround nào cho người dùng cuối — thao tác xoá là không thể hoàn tác qua UI hiện tại.
+  > ```
+  >
+  > ```markdown
+  > # BUG-CART-005: Sai nhãn chữ trong bảng giỏ hàng ("Giá" thay vì "Đơn giá", "Tổng tạm tính" thay vì "Tổng cộng")
+  >
+  > ## Found by Test Case
+  >
+  > TC-CART-001, TC-CART-006
+  >
+  > ## Requirement liên quan
+  >
+  > FR-07 (Giỏ hàng — bảng phải có cột "Đơn giá"; nhãn tổng tiền phải là "Tổng cộng")
+  >
+  > ## Severity / Priority
+  >
+  > Minor / P3
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: http://localhost:5173/cart
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Đăng nhập, thêm sản phẩm vào giỏ, mở trang Giỏ hàng.
+  > 2. Quan sát tiêu đề cột thứ 2 của bảng và nhãn tổng tiền phía dưới bảng.
+  >
+  > ## Expected result
+  >
+  > Tiêu đề cột là "Đơn giá"; nhãn tổng tiền là "Tổng cộng".
+  >
+  > ## Actual result
+  >
+  > Tiêu đề cột là **"Giá"** (`frontend-web/src/pages/Cart.jsx:36`); nhãn tổng tiền là **"Tổng tạm tính"** (`Cart.jsx:63`). Cả hai đều không khớp thuật ngữ SRS yêu cầu.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/cart-chromium/index.html` — test `TC-CART-001` (soft-fail trên cột "Đơn giá"), `TC-CART-006` (soft-fail trên nhãn "Tổng cộng").
+  >
+  > ## Notes
+  >
+  > Lỗi cosmetic, không ảnh hưởng chức năng, nhưng vi phạm thuật ngữ nhất quán theo SRS — nên sửa cùng đợt với BUG-CART-007 (nhãn nút quay lại cũng không nhất quán).
+  > ```
+  >
+  > ```markdown
+  > # BUG-CART-006: Trạng thái giỏ hàng rỗng thiếu icon/hình minh hoạ
+  >
+  > ## Found by Test Case
+  >
+  > TC-CART-009
+  >
+  > ## Requirement liên quan
+  >
+  > FR-24 (Empty state phải có icon/hình minh hoạ, không chỉ có chữ)
+  >
+  > ## Severity / Priority
+  >
+  > Minor / P3
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: http://localhost:5173/cart
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Đăng nhập, đảm bảo giỏ hàng trống (hoặc xoá hết sản phẩm trong giỏ).
+  > 2. Mở trang Giỏ hàng.
+  >
+  > ## Expected result
+  >
+  > Trạng thái rỗng hiển thị kèm icon hoặc hình minh hoạ, cùng với thông báo dạng chữ.
+  >
+  > ## Actual result
+  >
+  > Chỉ hiển thị `<h2>Giỏ hàng của bạn đang trống</h2>` và link "Tiếp tục mua sắm" — không có `<img>`/`<svg>` nào. Xác nhận qua `frontend-web/src/pages/Cart.jsx:20-27`.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/cart-chromium/index.html` — test `TC-CART-009` (soft-fail): `expect.soft(page.locator('main img, main svg')).not.toHaveCount(0)` nhận count = 0.
+  >
+  > ## Notes
+  >
+  > Lỗi cosmetic/UX, độ ưu tiên thấp nhất trong nhóm cart.
+  > ```
+  >
+  > ```markdown
+  > # BUG-CART-007: Nhãn nút "quay lại mua sắm" không nhất quán giữa 2 trạng thái giỏ hàng
+  >
+  > ## Found by Test Case
+  >
+  > Phát hiện qua khảo sát trực tiếp bằng Playwright MCP (điều hướng thật) khi rà soát lại TC-CART-010; không có trong danh sách 13 test case gốc.
+  >
+  > ## Requirement liên quan
+  >
+  > FR-07 (Giỏ hàng — nút quay lại mua sắm phải nhất quán, dùng nhãn "Tiếp tục mua sắm")
+  >
+  > ## Severity / Priority
+  >
+  > Minor / P3
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium (xác minh trực tiếp qua Playwright MCP)
+  > - OS: Windows 11
+  > - URL: http://localhost:5173/cart
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Đăng nhập, mở trang Giỏ hàng khi **giỏ đang trống** → quan sát nhãn nút quay lại.
+  > 2. Thêm 1 sản phẩm vào giỏ, mở lại trang Giỏ hàng khi **giỏ có hàng** → quan sát lại nhãn nút quay lại (nút "← Mua tiếp"/"Tiến hành thanh toán" ở góc dưới bảng).
+  >
+  > ## Expected result
+  >
+  > Nhãn nút quay lại trang chủ giống nhau ở cả 2 trạng thái: **"Tiếp tục mua sắm"**.
+  >
+  > ## Actual result
+  >
+  > - Giỏ **trống**: nút có nhãn đúng **"Tiếp tục mua sắm"** (`frontend-web/src/pages/Cart.jsx:24`).
+  > - Giỏ **có hàng**: nút đổi thành **"← Mua tiếp"** (`Cart.jsx:66-68`) — khác hoàn toàn về mặt văn bản.
+  >
+  > Đã xác minh trực tiếp bằng Playwright MCP (đọc toàn bộ danh sách link trên trang ở cả 2 trạng thái):
+  > ```
+  > emptyLinks:    ["EShop", "Giỏ hàng", "Chào, Test User", "Tiếp tục mua sắm"]
+  > nonEmptyLinks: ["EShop", "Giỏ hàng", "Chào, Test User", "← Mua tiếp"]
+  > ```
+  >
+  > ## Evidence
+  >
+  > - Xác minh trực tiếp qua Playwright MCP `browser_run_code_unsafe` (điều hướng thật, đọc `getByRole('link').allTextContents()`) trong phiên làm việc ngày 2026-08-08.
+  > - HTML report liên quan: `tests/e2e/reports/html/cart-chromium/index.html` — test `TC-CART-010` hiện PASS vì được thiết kế kiểm ở trạng thái giỏ rỗng (nơi nhãn đúng spec) để có thể kiểm được hành vi điều hướng; bug nhãn không nhất quán này vì vậy không tự động lộ ra qua assertion hiện có, mà được ghi nhận riêng qua khảo sát thủ công.
+  >
+  > ## Notes
+  >
+  > Vì TC-CART-010 (theo đúng Preconditions "giỏ có thể có hoặc không có sản phẩm") được thiết kế test ở trạng thái giỏ RỖNG để có thể thực sự kiểm được hành vi điều hướng (nhãn ở trạng thái có hàng không khớp spec nên sẽ luôn fail ngay bước tìm nút nếu test ở trạng thái đó), bug nhãn không nhất quán này hiện chưa có assertion tự động nào theo dõi liên tục. Khuyến nghị bổ sung 1 test case riêng (hoặc soft-assertion) kiểm tra nhãn ở TRẠNG THÁI CÓ HÀNG để tránh regressions trong tương lai.
+  > ```
+  >
+  > ```markdown
+  > # BUG-CART-008: Ô Số lượng ở trang chi tiết không chặn giá trị 0/âm/rỗng — tạo dòng giỏ hàng hiển thị NaN
+  >
+  > ## Found by Test Case
+  >
+  > TC-CART-011
+  >
+  > ## Requirement liên quan
+  >
+  > FR-06 / FR-07 (Ô Số lượng chỉ nhận số nguyên dương, tối thiểu 1; giỏ hàng không được hiển thị NaN)
+  >
+  > ## Severity / Priority
+  >
+  > Critical / P1
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: http://localhost:5173/product/:id
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Mở trang chi tiết một sản phẩm.
+  > 2. Lần lượt đặt ô Số lượng = `0`, `-1`, để trống (``), rồi bấm "Thêm vào giỏ hàng" (2 lần, để bù trừ BUG-CART-001).
+  > 3. Mở trang Giỏ hàng sau mỗi kịch bản.
+  >
+  > ## Expected result
+  >
+  > Cả 3 giá trị `0`, `-1`, rỗng đều **không hợp lệ** — không được tạo dòng nào trong giỏ hàng.
+  >
+  > ## Actual result
+  >
+  > Cả 3 giá trị đều **được chấp nhận**, tạo ra dòng trong giỏ hàng với dữ liệu hiển thị `NaN`. Xác nhận qua `frontend-web/src/pages/ProductDetail.jsx:56-61`: ô `<input type="number">` không có thuộc tính `min`/`required`; dòng 27 dùng `parseInt(quantity)` — với chuỗi rỗng `parseInt('')` trả về `NaN`, và giá trị `NaN`/số âm vẫn được truyền thẳng vào `addToCart()` mà không có bước validate nào.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/cart-chromium/index.html` — test `TC-CART-011` (Failed, 3 lỗi soft độc lập cho D1/D2/D3): `expect(cartRows(page)).toHaveCount(0)` nhận count = 1 cho cả 3 bộ dữ liệu; kèm nội dung bảng giỏ hàng thực tế ghi nhận được: `"...NaNNaN ₫...Tổng tạm tính: NaN ₫..."`.
+  >
+  > ## Notes
+  >
+  > Ban đầu vòng lặp kiểm 4 bộ dữ liệu (D1-D4) dùng assertion cứng nên dừng ngay ở D1, không kiểm được D2/D3/D4 trong cùng 1 lần chạy — đã sửa sang `expect.soft()` để báo cáo đầy đủ cả 4 kết quả trong 1 lần chạy duy nhất, nhờ đó phát hiện thêm rằng cả D2 (âm) và D3 (rỗng) cũng bị lỗi tương tự D1, không chỉ riêng D1.
+  > ```
+  >
+  > ```markdown
+  > # BUG-CART-009: Giỏ hàng bị mất hoàn toàn sau khi tải lại trang (F5)
+  >
+  > ## Found by Test Case
+  >
+  > TC-CART-013
+  >
+  > ## Requirement liên quan
+  >
+  > FR-07 (Giỏ hàng phải được giữ nguyên sau khi tải lại trang)
+  >
+  > ## Severity / Priority
+  >
+  > Major / P2
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: http://localhost:5173/cart
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Thêm ít nhất 2 sản phẩm vào giỏ hàng (không cần đăng nhập).
+  > 2. Mở trang Giỏ hàng, xác nhận các dòng sản phẩm hiển thị đúng.
+  > 3. Nhấn F5 (reload thật, không phải điều hướng SPA).
+  >
+  > ## Expected result
+  >
+  > Sau khi tải lại trang, giỏ hàng vẫn giữ nguyên các dòng sản phẩm đã thêm.
+  >
+  > ## Actual result
+  >
+  > Sau khi tải lại trang, giỏ hàng **rỗng hoàn toàn** — hiển thị "Giỏ hàng của bạn đang trống". Xác nhận qua `frontend-web/src/context/CartContext.jsx:6`: state giỏ hàng dùng `useState([])` thuần, không có `localStorage`/`sessionStorage` hay bất kỳ cơ chế lưu trữ bền vững nào — mọi `page reload` (full navigation) đều xoá sạch state trong bộ nhớ trình duyệt.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/cart-chromium/index.html` — test `TC-CART-013` (Failed): `expect(page.getByText('Giỏ hàng của bạn đang trống')).toHaveCount(0)` nhận count = 1 (ngược với kỳ vọng) ngay sau `page.reload()`.
+  >
+  > ## Notes
+  >
+  > Bug này còn ảnh hưởng gián tiếp đến toàn bộ cách thiết kế script automation của feature Giỏ hàng: mọi thao tác seed dữ liệu trong các test case khác đều phải điều hướng bằng cách click link trong ứng dụng (SPA navigation), tuyệt đối không được dùng `page.goto()` (vốn luôn là full reload), nếu không giỏ hàng sẽ bị xoá giữa chừng.
+  > ```
+  >
+  > ```markdown
+  > # BUG-CART-010: Route /checkout không có guard — truy cập trực tiếp bằng URL khi chưa đăng nhập vẫn vào được
+  >
+  > ## Found by Test Case
+  >
+  > TC-CART-012
+  >
+  > ## Requirement liên quan
+  >
+  > FR-08 (Checkout — phải chặn truy cập khi chưa đăng nhập)
+  >
+  > ## Severity / Priority
+  >
+  > Critical / P1
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: http://localhost:5173/checkout
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Đảm bảo **chưa đăng nhập** (khách vãng lai).
+  > 2. Gõ trực tiếp URL `http://localhost:5173/checkout` trên thanh địa chỉ (không qua nút "Tiến hành thanh toán" của giỏ hàng).
+  >
+  > ## Expected result
+  >
+  > Hệ thống chặn truy cập, chuyển hướng về trang Đăng nhập hoặc trang chủ; không hiển thị form thanh toán.
+  >
+  > ## Actual result
+  >
+  > Trang Checkout vẫn render đầy đủ form thanh toán (heading "Xác Nhận Đơn Hàng"). Xác nhận qua `frontend-web/src/App.jsx:58`: route `<Route path="/checkout" element={<Checkout />} />` không có bất kỳ wrapper/guard kiểm tra đăng nhập nào (không giống các route khác); `Checkout.jsx` cũng không tự kiểm tra `user`/`token` để redirect khi component mount.
+  >
+  > Lưu ý: nút "Tiến hành thanh toán" trên trang Giỏ hàng (`Cart.jsx:11-16`) CÓ chặn đúng (hiện `alert()` + `navigate('/login')`) — lỗ hổng chỉ nằm ở việc **route không có guard ở tầng router**, nên bất kỳ ai gõ thẳng URL đều bỏ qua được lớp chặn phía UI đó.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/cart-chromium/index.html` — test `TC-CART-012` (Failed ở bước cuối): `expect(page.getByRole('heading', { name: 'Xác Nhận Đơn Hàng' })).toHaveCount(0)` nhận count = 1 sau khi `page.goto('/checkout')` trực tiếp khi chưa đăng nhập.
+  >
+  > ## Notes
+  >
+  > Lỗ hổng kiểm soát truy cập (access control) — nên xếp cùng nhóm ưu tiên với BUG-PRODUCT-001/002 (thiếu guard endpoint) dù khác feature, vì cùng bản chất "chặn ở UI nhưng không chặn ở tầng route/logic thật".
+  > ```
+  >
+  > ```markdown
+  > # BUG-PRODUCT-001: API tạo/sửa/xoá sản phẩm không yêu cầu xác thực (JWT)
+  >
+  > ## Found by Test Case
+  >
+  > TC-PRODUCT-013
+  >
+  > ## Requirement liên quan
+  >
+  > FR-12 / SEC-02 (Access control — API có tính ảnh hưởng dữ liệu phải yêu cầu JWT hợp lệ)
+  >
+  > ## Severity / Priority
+  >
+  > Blocker / P0
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: API: POST http://localhost:3000/api/products (không kèm header Authorization)
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Gọi `POST /api/products` **không kèm** header `Authorization`, body gồm `name`, `price`, `category_id` hợp lệ.
+  > 2. Quan sát status code trả về và danh sách sản phẩm sau đó.
+  >
+  > ## Expected result
+  >
+  > Request bị từ chối với status `401 Unauthorized`; không có sản phẩm nào được tạo.
+  >
+  > ## Actual result
+  >
+  > Request trả về **status 200**, sản phẩm được tạo thành công dù không có bất kỳ token nào. Xác nhận qua `backend/server.js`: các route `POST /api/products` (dòng 167), `PUT /api/products/:id` (dòng 179), `DELETE /api/products/:id` (dòng 191) đều **không gắn middleware `authenticateToken`**, trong khi 3 route tương ứng của category ngay bên dưới (`POST/PUT/DELETE /api/categories`, dòng 249/257/269) đều có gắn middleware này. Bất kỳ ai — kể cả không đăng nhập — đều có thể tạo/sửa/xoá sản phẩm.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/product-chromium/index.html` (và firefox/webkit) — test `TC-PRODUCT-013` (Failed): `expect([401]).toContain(res.status())` nhận `200`.
+  > - Bằng chứng đối chiếu route (grep `backend/server.js`):
+  >   ```
+  >   167:app.post("/api/products", (req, res) => {          <- KHONG co authenticateToken
+  >   179:app.put("/api/products/:id", (req, res) => {        <- KHONG co authenticateToken
+  >   191:app.delete("/api/products/:id", (req, res) => {     <- KHONG co authenticateToken
+  >   249:app.post("/api/categories", authenticateToken, ...  <- CO
+  >   ```
+  >
+  > ## Notes
+  >
+  > Lỗ hổng nghiêm trọng nhất trong feature Quản lý Sản phẩm — nên vá ưu tiên cao nhất cùng BUG-PRODUCT-002.
+  > ```
+  >
+  > ```markdown
+  > # BUG-PRODUCT-002 (SEC-03): authenticateToken không kiểm tra role — user thường vẫn thực hiện được thao tác admin
+  >
+  > ## Found by Test Case
+  >
+  > TC-PRODUCT-014
+  >
+  > ## Requirement liên quan
+  >
+  > FR-12 / SEC-03 (Access control — token hợp lệ nhưng role khác admin phải bị từ chối với các thao tác admin)
+  >
+  > ## Severity / Priority
+  >
+  > Blocker / P0
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: API: POST http://localhost:3000/api/products (kèm token của user thường)
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Đăng nhập bằng tài khoản **user thường** (`test@eshop.com`, không phải admin), lấy JWT token.
+  > 2. Gọi `POST /api/products` kèm `Authorization: Bearer <token của user thường>`, body sản phẩm hợp lệ.
+  > 3. Quan sát status code trả về.
+  >
+  > ## Expected result
+  >
+  > Request bị từ chối với status `403 Forbidden` (token hợp lệ nhưng role không đủ quyền).
+  >
+  > ## Actual result
+  >
+  > Request trả về **status 200**, sản phẩm được tạo thành công bằng token của user thường. Xác nhận qua `backend/server.js:100-110`: middleware `authenticateToken` chỉ gọi `jwt.verify()` để kiểm tra **chữ ký** token hợp lệ rồi gán `req.user`, **không hề kiểm tra `req.user.role === 'admin'`** ở bất kỳ đâu trong middleware hay trong handler của route `/api/products`. Toàn bộ nhóm route `/api/admin/*` cũng chung lỗi này.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/product-chromium/index.html` — test `TC-PRODUCT-014` (Failed): `expect([403]).toContain(res.status())` nhận `200`.
+  >
+  > ## Notes
+  >
+  > Lỗi này tồn tại **độc lập** với BUG-PRODUCT-001 — kể cả khi vá xong BUG-PRODUCT-001 (thêm `authenticateToken` vào 3 route sản phẩm), lỗ hổng leo thang đặc quyền (privilege escalation) này vẫn còn nguyên vì middleware chỉ verify chữ ký, không verify role. Cần vá cả 2 lớp: (1) gắn `authenticateToken`, và (2) thêm kiểm tra `role === 'admin'` (ví dụ middleware `requireAdmin` riêng) cho mọi route quản trị.
+  > ```
+  >
+  > ```markdown
+  > # BUG-PRODUCT-003: Không validate Giá sản phẩm (chấp nhận 0, âm, trống, không phải số)
+  >
+  > ## Found by Test Case
+  >
+  > TC-PRODUCT-007, TC-PRODUCT-008, TC-PRODUCT-009, TC-PRODUCT-010
+  >
+  > ## Requirement liên quan
+  >
+  > FR-15 (Quản lý Sản phẩm — Giá phải là số dương hợp lệ)
+  >
+  > ## Severity / Priority
+  >
+  > Critical / P1
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: http://localhost:5174 (frontend-admin), API: http://localhost:3000/api/products
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > **Kịch bản 1 — Giá = 0 (TC-PRODUCT-007):** Đăng nhập Admin → tab Sản phẩm → nhập Tên hợp lệ, Giá = `0` → "Lưu sản phẩm".
+  >
+  > **Kịch bản 2 — Giá âm (TC-PRODUCT-008):** Tương tự, Giá = `-1000`.
+  >
+  > **Kịch bản 3 — Giá trống (TC-PRODUCT-009):** Tương tự, để trống trường Giá.
+  >
+  > **Kịch bản 4 — Giá không phải số (TC-PRODUCT-010, qua API vì UI chặn nhập ký tự):** `POST /api/products` với `price: "abc"`.
+  >
+  > ## Expected result
+  >
+  > Cả 4 kịch bản: hệ thống từ chối, không tạo sản phẩm.
+  >
+  > ## Actual result
+  >
+  > Cả 4 kịch bản đều được **chấp nhận**, sản phẩm được lưu mà không có bất kỳ validate nào cho trường giá. Xác nhận qua `frontend-admin/src/App.jsx:500-508`: input Giá tiền chỉ có `type="number"`, không có `required`, `min`, hay `step`. `backend/server.js:167-177` (`POST /api/products`) cũng không kiểm tra giá trị `price` trước khi `INSERT` — chấp nhận cả chuỗi không phải số.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/product-chromium/index.html` (và firefox/webkit) — test `TC-PRODUCT-007`, `TC-PRODUCT-008`, `TC-PRODUCT-009`, `TC-PRODUCT-010` (Failed): `expect(wasCreated).toBe(false)` / `expect(res.ok()).toBe(false)` đều nhận `true`.
+  >
+  > ## Notes
+  >
+  > TC-PRODUCT-004 (giá = 1, biên dưới hợp lệ) và TC-PRODUCT-016 (giá = 0.01) đều PASS đúng như kỳ vọng — lỗi chỉ xảy ra ở các giá trị biên KHÔNG hợp lệ (0, âm, trống, không phải số), xác nhận đây là thiếu validate hoàn toàn chứ không phải lỗi ngẫu nhiên.
+  > ```
+  >
+  > ```markdown
+  > # BUG-PRODUCT-004: Tên sản phẩm không giới hạn độ dài tối đa 255 ký tự
+  >
+  > ## Found by Test Case
+  >
+  > TC-PRODUCT-006
+  >
+  > ## Requirement liên quan
+  >
+  > FR-15 (Quản lý Sản phẩm — Tên sản phẩm tối đa 255 ký tự)
+  >
+  > ## Severity / Priority
+  >
+  > Minor / P3
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: http://localhost:5174 (frontend-admin)
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Đăng nhập Admin → tab Sản phẩm.
+  > 2. Nhập Tên sản phẩm gồm **256 ký tự** (vượt quá giới hạn 255), Giá hợp lệ.
+  > 3. Bấm "Lưu sản phẩm".
+  >
+  > ## Expected result
+  >
+  > Hệ thống từ chối, không tạo sản phẩm (hoặc cắt bớt về đúng 255 ký tự).
+  >
+  > ## Actual result
+  >
+  > Sản phẩm được tạo thành công với tên đầy đủ 256 ký tự. Xác nhận qua `frontend-admin/src/App.jsx:491-499`: input Tên sản phẩm có `required` (nên trường hợp để trống — TC-PRODUCT-005 — đã bị chặn đúng) nhưng **không có `maxLength`**; `backend/server.js` cũng không giới hạn độ dài chuỗi trước khi `INSERT`.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/product-chromium/index.html` — test `TC-PRODUCT-006` (Failed): `expect(wasCreated).toBe(false)` nhận `true` (request gửi đi: có).
+  >
+  > ## Notes
+  >
+  > TC-PRODUCT-002 (255 ký tự, đúng biên trên hợp lệ) PASS bình thường — lỗi chỉ xảy ra khi vượt biên (256 ký tự), xác nhận đây thực sự là thiếu giới hạn trên, không phải lỗi biên dưới/logic khác.
+  > ```
+  >
+  > ```markdown
+  > # BUG-PRODUCT-005: Danh mục sản phẩm không thực sự bắt buộc — UI không cho bỏ trống, backend không kiểm tồn tại
+  >
+  > ## Found by Test Case
+  >
+  > TC-PRODUCT-011, TC-PRODUCT-012
+  >
+  > ## Requirement liên quan
+  >
+  > FR-15 (Quản lý Sản phẩm — Danh mục là bắt buộc, phải chọn từ danh sách có sẵn)
+  >
+  > ## Severity / Priority
+  >
+  > Major / P2
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: http://localhost:5174 (frontend-admin), API: http://localhost:3000/api/products
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > **Phần 1 (TC-PRODUCT-011):** Đăng nhập Admin → tab Sản phẩm → quan sát dropdown Danh mục trong form thêm sản phẩm.
+  >
+  > **Phần 2 (TC-PRODUCT-012):** Gọi `POST /api/products` với `category_id: 999999` (không tồn tại trong bảng `categories`).
+  >
+  > ## Expected result
+  >
+  > - Phần 1: UI phải có trạng thái "chưa chọn" (option rỗng) để người dùng có thể bỏ trống, thoả yêu cầu "Danh mục là bắt buộc" theo đúng nghĩa validate được.
+  > - Phần 2: Request bị từ chối vì `category_id` không tồn tại.
+  >
+  > ## Actual result
+  >
+  > - Phần 1: Dropdown (`frontend-admin/src/App.jsx:528-543`) chỉ render các category có sẵn (`categories.map(...)`), **không có option rỗng/placeholder nào**, và state mặc định `category_id = 1` — không thể tạo được trạng thái "không chọn danh mục" qua UI để kiểm chứng việc bắt buộc.
+  > - Phần 2: Request **thành công**, sản phẩm được tạo với `category_id = 999999` không tồn tại. Bảng `products` (`backend/database.js:64-71`) không khai báo `FOREIGN KEY`, và `backend/server.js:167-177` không validate `category_id` có tồn tại trong bảng `categories` hay không trước khi `INSERT`.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/product-chromium/index.html` — test `TC-PRODUCT-011` (Failed): `expect(page.locator('form select').locator('option[value=""]')).toHaveCount(1)` nhận count = 0; test `TC-PRODUCT-012` (Failed): `expect(res.ok()).toBe(false)` nhận `true`.
+  >
+  > ## Notes
+  >
+  > Hai triệu chứng của cùng một gốc rễ: "Danh mục bắt buộc" chỉ được thực thi hời hợt qua giá trị mặc định ở UI, không có validate thật ở tầng backend/CSDL (thiếu FOREIGN KEY constraint).
+  > ```
+  >
+  > ```markdown
+  > # BUG-PRODUCT-006: Sửa 1 sản phẩm làm đổi TÊN hiển thị của TẤT CẢ sản phẩm khác trên danh sách
+  >
+  > ## Found by Test Case
+  >
+  > TC-PRODUCT-015
+  >
+  > ## Requirement liên quan
+  >
+  > FR-15 (Quản lý Sản phẩm — sửa 1 sản phẩm chỉ được ảnh hưởng đúng sản phẩm đó)
+  >
+  > ## Severity / Priority
+  >
+  > Critical / P1
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — quan sát được ở cả 3, nhưng **flaky theo thời gian thực thi** (không ổn định tuyệt đối theo browser cụ thể — có lần chạy pass ở một browser, lần khác lại fail ở cùng browser đó, do phụ thuộc thời điểm `alert()` chặn luồng JS so với lúc assertion kiểm tra DOM)
+  > - OS: Windows 11
+  > - URL: http://localhost:5174 (frontend-admin)
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Đăng nhập Admin → tab Sản phẩm, tạo sẵn 2 sản phẩm X và Y qua API (dữ liệu riêng, không đụng 5 sản phẩm seed gốc).
+  > 2. Bấm "Sửa" trên sản phẩm X, đổi Tên và Giá, bấm "Lưu sản phẩm".
+  > 3. Ngay sau khi lưu (chưa reload trang), quan sát dòng của sản phẩm Y trong bảng danh sách.
+  >
+  > ## Expected result
+  >
+  > Chỉ dòng của sản phẩm X đổi tên/giá; dòng của sản phẩm Y (và mọi sản phẩm khác) giữ nguyên tên cũ.
+  >
+  > ## Actual result
+  >
+  > Dòng của sản phẩm Y **cũng bị đổi tên** thành tên mới của X ngay trên giao diện. Xác nhận qua `frontend-admin/src/App.jsx:110-114`:
+  >
+  > ```js
+  > const fakeMassUpdatedProducts = products.map((p) => ({
+  >   ...p,
+  >   name: productForm.name,
+  > }));
+  > setProducts(fakeMassUpdatedProducts);
+  > ```
+  >
+  > Sau khi `PUT` thành công, code gán **tên của sản phẩm vừa sửa cho TẤT CẢ sản phẩm** trong state cục bộ, thay vì chỉ cập nhật đúng 1 phần tử. Đây là bug chỉ tồn tại ở **hiển thị phía client** — dữ liệu trong CSDL vẫn đúng (chỉ sản phẩm X bị đổi), và bug biến mất nếu người dùng tải lại trang / gọi lại `fetchData()`. Nếu chỉ kiểm qua API (`GET /api/products`) sẽ **bỏ sót hoàn toàn** bug này vì tầng dữ liệu vẫn đúng — phải kiểm cả 2 tầng: UI ngay sau khi lưu, và API sau đó.
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/product-chromium/index.html` — test `TC-PRODUCT-015` (Failed ở assertion soft trên UI): `expect.soft(productRow(page, 'San pham Y ...')).toHaveCount(1)` nhận count = 0 ngay sau khi lưu; assertion cứng qua API (`GET /api/products`) sau đó vẫn PASS, xác nhận CSDL không bị ảnh hưởng.
+  >
+  > ## Notes
+  >
+  > Test case này flaky theo lần chạy (không phải theo browser) — trong 2 lần chạy full suite liên tiếp, số lần fail dao động (đôi khi PASS ở webkit/firefox, đôi khi FAIL ở cả 3), khả năng cao do timing giữa `alert("Cập nhật thành công!")` chặn luồng JS đồng bộ và thời điểm Playwright đọc DOM để assert. Cần điều tra thêm nếu muốn ổn định hoá; tuy nhiên bug chức năng (mass-rename) là có thật và đã xác nhận qua source, không phụ thuộc vào tính flaky của assertion.
+  > ```
+  >
+  > ```markdown
+  > # BUG-PRODUCT-007: Giá sản phẩm trong danh sách Admin hiển thị không có dấu phân cách hàng nghìn
+  >
+  > ## Found by Test Case
+  >
+  > TC-PRODUCT-017
+  >
+  > ## Requirement liên quan
+  >
+  > FR-21 (Giá tiền phải luôn dùng ký hiệu ₫ với định dạng phân cách hàng nghìn)
+  >
+  > ## Severity / Priority
+  >
+  > Minor / P3
+  >
+  > ## Environment
+  >
+  > - Browser: Chromium, Firefox, WebKit — tái hiện trên cả 3
+  > - OS: Windows 11
+  > - URL: http://localhost:5174 (frontend-admin)
+  > - Build: nhánh `hw04/23127211`, commit `3d2a86d`
+  >
+  > ## Steps to reproduce
+  >
+  > 1. Đăng nhập Admin → tab Sản phẩm, đảm bảo có sản phẩm với giá ≥ 1000 (ví dụ 150.000).
+  > 2. Quan sát cột "Giá" trong bảng danh sách sản phẩm.
+  >
+  > ## Expected result
+  >
+  > Giá hiển thị có dấu phân cách hàng nghìn, ví dụ `150,000 ₫`.
+  >
+  > ## Actual result
+  >
+  > Giá hiển thị dạng số thô, không phân cách: `150000 ₫`. Xác nhận qua `frontend-admin/src/App.jsx:590`: `<td className="p-3">{p.price} ₫</td>` — render trực tiếp giá trị số, không qua `Number(...).toLocaleString()` như các nơi khác trong ứng dụng (ví dụ Dashboard tổng doanh thu đã dùng `toLocaleString()`).
+  >
+  > ## Evidence
+  >
+  > - HTML report: `tests/e2e/reports/html/product-chromium/index.html` — test `TC-PRODUCT-017` (soft-fail): `expect.soft(row).toContainText('150,000')` nhận text thực tế `"San pham X ...150000 ₫SửaXóa"`.
+  >
+  > ## Notes
+  >
+  > Lỗi cosmetic, độ ưu tiên thấp; cùng loại lỗi định dạng tiền tệ với BUG-CART-005 (nên rà soát toàn bộ codebase để tìm các chỗ khác quên `toLocaleString()`).
+  > ```
+  >
+  > **Tổng kết:** 22/22 bug đã được ghi thành file dưới `tests/bug-reports/{register,cart,product}/`, đúng format `templates/bug_report.md`. Chưa tạo GitHub Issue thật (cần xác nhận của người dùng trước khi đăng công khai lên GitHub Issues) — tiêu đề đề xuất cho từng Issue đã liệt kê ở đầu output này, nội dung Issue body dùng nguyên văn phần field bên dưới H1 của mỗi file (bỏ dòng tiêu đề `# BUG-...`).
+  >
+  > **Nhắc theo yêu cầu của skill:** sau khi tạo Issue thật trên GitHub cho từng bug, cần cập nhật cột `Bug Issue` trong `tests/test-summary/traceability-matrix.md` với số/link Issue tương ứng.
+
+- **Đánh giá:** _(để trống — chờ sinh viên tự review và điền nhận xét theo đúng yêu cầu "Human review" của HW04)_
+- **Suy luận:** _(để trống — chờ sinh viên tự điền)_
+- **Sửa:** _(để trống — chờ sinh viên tự điền)_
