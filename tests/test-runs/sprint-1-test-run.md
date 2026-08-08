@@ -22,14 +22,14 @@ done
 
 ## 1. Tổng quan kết quả — 9 lượt chạy (3 feature × 3 browser)
 
-| Feature | Test file | Số TC | Chromium | Firefox | WebKit |
-| :------ | :-------- | ----: | :------- | :------ | :----- |
-| FR-01 — Đăng ký | `specs/register.spec.ts` | 17 | 9 Pass / 8 Fail (40.8s) | 9 Pass / 8 Fail (1.4m) | 9 Pass / 8 Fail (46.7s) |
-| FR-07 — Giỏ hàng | `specs/cart.spec.ts` | 13 | 1 Pass / 12 Fail (2.0m) | 1 Pass / 12 Fail (3.1m) | 1 Pass / 12 Fail (2.3m) |
-| FR-15 — Quản lý Sản phẩm (Admin) | `specs/product.spec.ts` | 18 | 7 Pass / 11 Fail (48.4s) | 8 Pass / 10 Fail (1.7m) | 8 Pass / 10 Fail (50.0s) |
+| Feature                          | Test file                | Số TC | Chromium                 | Firefox                 | WebKit                   |
+| :------------------------------- | :----------------------- | ----: | :----------------------- | :---------------------- | :----------------------- |
+| FR-01 — Đăng ký                  | `specs/register.spec.ts` |    17 | 9 Pass / 8 Fail (40.8s)  | 9 Pass / 8 Fail (1.4m)  | 9 Pass / 8 Fail (46.7s)  |
+| FR-07 — Giỏ hàng                 | `specs/cart.spec.ts`     |    13 | 1 Pass / 12 Fail (2.0m)  | 1 Pass / 12 Fail (3.1m) | 1 Pass / 12 Fail (2.3m)  |
+| FR-15 — Quản lý Sản phẩm (Admin) | `specs/product.spec.ts`  |    18 | 7 Pass / 11 Fail (48.4s) | 8 Pass / 10 Fail (1.7m) | 8 Pass / 10 Fail (50.0s) |
 
 **Tổng cộng:** 48 test case × 3 browser = **144 lượt thực thi** (≥ 9 browser run theo yêu cầu tối thiểu của đề bài, đạt 3×3=9 tổ hợp feature×browser).
-**Pass:** 51/144 · **Fail:** 93/144.
+**Pass:** 53/144 · **Fail:** 91/144.
 
 Số lượng Fail cao là **có chủ đích**: `expected` trong mỗi file `test-data/*.json` được thiết kế bám đúng SRS (`README.md`), không chỉnh theo hành vi lỗi hiện tại của SUT — mỗi assertion fail chính là bằng chứng cho 1 bug thật (xem mục 3). Đây không phải lỗi của script automation.
 
@@ -53,12 +53,12 @@ Danh sách 9 report:
 
 **22 bug** đã được ghi thành báo cáo riêng dưới `tests/bug-reports/<module>/`, xem chi tiết từng bug tại đó và trong `tests/test-summary/traceability-matrix.md` (cột `Bug Issue`).
 
-| Module | Số bug | Blocker/P0 | Critical/P1 | Major/P2 | Minor/P3 |
-| :----- | ----: | ---------: | -----------: | -------: | -------: |
-| register (FR-01) | 5 | 1 (plaintext password) | 2 | 2 | 0 |
-| cart (FR-07) | 10 | 0 | 4 | 3 | 3 |
-| product (FR-15, Admin) | 7 | 2 (thiếu auth) | 2 | 1 | 2 |
-| **Tổng** | **22** | **3** | **8** | **6** | **5** |
+| Module                 | Số bug |             Blocker/P0 | Critical/P1 | Major/P2 | Minor/P3 |
+| :--------------------- | -----: | ---------------------: | ----------: | -------: | -------: |
+| register (FR-01)       |      5 | 1 (plaintext password) |           2 |        2 |        0 |
+| cart (FR-07)           |     10 |                      0 |           4 |        3 |        3 |
+| product (FR-15, Admin) |      7 |         2 (thiếu auth) |           2 |        1 |        2 |
+| **Tổng**               | **22** |                  **3** |       **8** |    **6** |    **5** |
 
 Chưa tạo GitHub Issue thật cho các bug này (cần xác nhận của sinh viên trước khi đăng công khai) — tiêu đề đề xuất cho từng Issue đã liệt kê trong AI Audit Report (`docs/anh-khoa/ai audit report.md`), nội dung Issue body lấy nguyên phần field trong mỗi file `tests/bug-reports/<module>/BUG-<MODULE>-<NNN>.md`.
 
@@ -76,15 +76,15 @@ Chưa tạo GitHub Issue thật cho các bug này (cần xác nhận của sinh 
 
 Xem chi tiết đầy đủ trong mục `knownIssues` của từng file `tests/e2e/test-data/*.json`. Tóm tắt:
 
-| Test Case | Vấn đề | Cách xử lý |
-| :-------- | :----- | :---------- |
-| TC-REGISTER-013, 014 | Form không có trường "Xác nhận mật khẩu" | Đổi sang assert sự TỒN TẠI của field (kind `confirmField`) |
-| TC-REGISTER-017 (SEC-01) | Không thể đăng ký qua UI vì bug mật khẩu chặn hết | Gọi thẳng API `/api/register` → `/api/login` → `/api/users/me` |
-| TC-REGISTER-003, 004 | Mật khẩu hợp lệ theo FR-01 luôn bị chặn bởi bug regex trước khi chạm tới logic cần kiểm | Gọi thẳng API, tách khỏi vòng lặp UI chính |
-| TC-PRODUCT-010 | `input type="number"` không cho nhập ký tự `abc` qua UI | Gọi thẳng `POST /api/products` |
-| TC-PRODUCT-011 | Không thể tạo trạng thái "chưa chọn danh mục" qua UI (select luôn có giá trị mặc định) | Đổi sang assert sự TỒN TẠI của option rỗng (kind `categoryRequired`) |
-| TC-PRODUCT-012 | Chỉ có thể chọn category từ danh sách có sẵn qua UI | Gọi thẳng API với `category_id` không tồn tại |
-| TC-PRODUCT-013, 014 | Cần kiểm response code khi thiếu token / sai role — không thao tác qua form | Dùng `request` fixture gọi thẳng API |
+| Test Case                | Vấn đề                                                                                  | Cách xử lý                                                           |
+| :----------------------- | :-------------------------------------------------------------------------------------- | :------------------------------------------------------------------- |
+| TC-REGISTER-013, 014     | Form không có trường "Xác nhận mật khẩu"                                                | Đổi sang assert sự TỒN TẠI của field (kind `confirmField`)           |
+| TC-REGISTER-017 (SEC-01) | Không thể đăng ký qua UI vì bug mật khẩu chặn hết                                       | Gọi thẳng API `/api/register` → `/api/login` → `/api/users/me`       |
+| TC-REGISTER-003, 004     | Mật khẩu hợp lệ theo FR-01 luôn bị chặn bởi bug regex trước khi chạm tới logic cần kiểm | Gọi thẳng API, tách khỏi vòng lặp UI chính                           |
+| TC-PRODUCT-010           | `input type="number"` không cho nhập ký tự `abc` qua UI                                 | Gọi thẳng `POST /api/products`                                       |
+| TC-PRODUCT-011           | Không thể tạo trạng thái "chưa chọn danh mục" qua UI (select luôn có giá trị mặc định)  | Đổi sang assert sự TỒN TẠI của option rỗng (kind `categoryRequired`) |
+| TC-PRODUCT-012           | Chỉ có thể chọn category từ danh sách có sẵn qua UI                                     | Gọi thẳng API với `category_id` không tồn tại                        |
+| TC-PRODUCT-013, 014      | Cần kiểm response code khi thiếu token / sai role — không thao tác qua form             | Dùng `request` fixture gọi thẳng API                                 |
 
 Không có test case nào trong 48 case bị bỏ hoàn toàn — toàn bộ đều automate được, chỉ khác nhau ở tầng thao tác (UI trực tiếp hoặc API) tuỳ theo việc UI có cho phép tái hiện đúng điều kiện cần kiểm hay không.
 
