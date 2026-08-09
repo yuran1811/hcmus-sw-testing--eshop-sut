@@ -175,8 +175,16 @@ function cartRows(page: Page): Locator {
   return page.locator('table tbody tr');
 }
 
+/**
+ * Da doi tu hasText (khop chuoi con, khong phan biet hoa/thuong) sang khop
+ * CHINH XAC noi dung cell "San pham" - cung mot lop loi da xac nhan that o
+ * productRow() trong product.spec.ts (TC-PRODUCT-003, ten 1 ky tu "A" khop
+ * nham 5-6 dong khac). Du cart.json hien chi dung ten dai/duy nhat nen chua
+ * gay fail that, day van la cung dang locator gion, sua truoc de tranh lap
+ * lai dung bug da biet neu sau nay them du lieu ten ngan.
+ */
 function rowFor(page: Page, name: string): Locator {
-  return cartRows(page).filter({ hasText: name });
+  return cartRows(page).filter({ has: page.getByRole('cell', { name, exact: true }) });
 }
 
 /**
