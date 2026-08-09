@@ -74,6 +74,9 @@ function reseedAdminSync() {
 
 // Clean and Seed Hook
 test.beforeAll(async ({ playwright }) => {
+  // Extended timeout: admin reseed + DB cleanup + multi-user registration is heavy
+  test.setTimeout(60_000);
+
   // Ensure admin user exists in case previous runs left it deleted
   reseedAdminSync();
 

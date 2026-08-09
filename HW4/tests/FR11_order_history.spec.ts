@@ -40,6 +40,9 @@ if (testCases.length < 12) {
 
 // Setup/Seed hook: Clean database, pre-register test users, and seed required orders via SUT APIs
 test.beforeAll(async ({ playwright }) => {
+  // Extended timeout: DB cleanup + user registration + order seeding is heavy
+  test.setTimeout(60_000);
+
   // 0. Clean up database to ensure test isolation
   try {
     const backendDbPath = path.resolve(__dirname, '..', '..', 'backend');
