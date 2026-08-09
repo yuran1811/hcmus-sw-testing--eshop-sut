@@ -1,0 +1,95 @@
+[
+  {
+    "caseId": "F19-TC-001",
+    "category": "Access Control",
+    "purpose": "Verify unauthenticated guest cannot access admin dashboard/user list"
+  },
+  {
+    "caseId": "F19-TC-002",
+    "category": "Access Control",
+    "purpose": "Verify standard user login is rejected on the admin login page",
+    "email": "test@eshop.com",
+    "password": "Test1234!",
+    "expectedAlert": "Bạn không phải là admin!"
+  },
+  {
+    "caseId": "F19-TC-003",
+    "category": "Access Control",
+    "purpose": "Verify admin user can log in successfully to the admin console",
+    "email": "admin@eshop.com",
+    "password": "Admin123!"
+  },
+  {
+    "caseId": "F19-TC-004",
+    "category": "Access Control (API)",
+    "purpose": "Verify guest call to GET /api/admin/users returns 401"
+  },
+  {
+    "caseId": "F19-TC-005",
+    "category": "Access Control (API)",
+    "purpose": "Verify standard user call to GET /api/admin/users returns 403",
+    "email": "test@eshop.com",
+    "password": "Test1234!"
+  },
+  {
+    "caseId": "F19-TC-006",
+    "category": "Access Control (API)",
+    "purpose": "Verify standard user call to DELETE /api/admin/users/:id returns 403",
+    "email": "test@eshop.com",
+    "password": "Test1234!"
+  },
+  {
+    "caseId": "F19-TC-007",
+    "category": "User List",
+    "purpose": "Verify user list table header columns and rows are displayed correctly"
+  },
+  {
+    "caseId": "F19-TC-008",
+    "category": "Security",
+    "purpose": "Verify that user passwords are not exposed in frontend UI or API responses"
+  },
+  {
+    "caseId": "F19-TC-009",
+    "category": "GUI Standards",
+    "purpose": "Verify Vietnamese language consistency for user list page elements"
+  },
+  {
+    "caseId": "F19-TC-010",
+    "category": "Functional",
+    "purpose": "Verify admin can successfully delete a standard user",
+    "email": "user_f19_delete@eshop.com",
+    "password": "Delete123!"
+  },
+  {
+    "caseId": "F19-TC-011",
+    "category": "Functional",
+    "purpose": "Verify admin is prevented from self-deleting on the user management UI"
+  },
+  {
+    "caseId": "F19-TC-012",
+    "category": "Functional (API)",
+    "purpose": "Verify backend API prevents admin from self-deleting (returns 400 or 403)"
+  },
+  {
+    "caseId": "F19-TC-013",
+    "category": "GUI Standards",
+    "purpose": "Verify that the delete action button uses red background color"
+  },
+  {
+    "caseId": "F19-TC-014",
+    "category": "GUI Standards",
+    "purpose": "Verify page content title uses exactly one h1 describing the content"
+  },
+  {
+    "caseId": "F19-TC-015",
+    "category": "Usability",
+    "purpose": "Verify tab key navigation order is top-to-bottom, left-to-right"
+  },
+  {
+    "caseId": "F19-TC-016",
+    "category": "Security",
+    "purpose": "Verify user name/phone containing XSS scripts is escaped safely on the UI",
+    "email": "user_f19_xss@eshop.com",
+    "password": "Xss1234!"
+  }
+]

@@ -503,6 +503,10 @@ app.get("/api/admin/users", authenticateToken, (req, res) => {
 
 app.delete("/api/admin/users/:id", authenticateToken, (req, res) => {
   db.run("DELETE FROM users WHERE id = ?", [req.params.id], function (err) {
+    if (err) {
+      require('fs').appendFileSync(require('path').join(__dirname, 'error.log'), `DELETE /api/admin/users/${req.params.id} error: ${err.message}\n`);
+      return res.status(500).json({ error: err.message });
+    }
     res.json({ message: "User deleted" });
   });
 });

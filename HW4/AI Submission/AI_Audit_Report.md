@@ -28,6 +28,7 @@ Báo cáo này ghi lại chi tiết các tương tác với AI trong quá trình
 | **Tool:** Gemini 3.5 Flash<br>**Time:** 20:01 09/08/2026<br>**Prompt:** "Tạo project Playwright cho HW04 Automation Testing tại thư mục HW4/ trong repo..."                                                                           | Cấu hình project Playwright hoàn chỉnh gồm package.json, tsconfig.json, playwright.config.ts, runner scripts/run-matrix.js và các file test verify.                                                                                                                                                                                                                                                                                                             | **VALID** | Phù hợp với yêu cầu cấu hình dự án Playwright Task 1 (chạy cross-browser, trích xuất báo cáo HTML gán nhãn MSSV và thư mục tùy chỉnh).             | Accepted as-is |
 | **Tool:** Gemini 3.5 Flash<br>**Time:** 20:10 09/08/2026<br>**Prompt:** "Tôi muốn viết test script tự động hóa cho tính năng FR-03 (Quên mật khẩu & Đặt lại mật khẩu) bằng Playwright..." | Phân tích nghiệp vụ, thiết kế 22 test cases chi tiết và triển khai mã nguồn Playwright tự động hóa hướng dữ liệu (FR03_data.json & FR03_forgot_password.spec.ts). | **INCOMPLETE** | Thiết kế test case bao quát đầy đủ các kịch bản kiểm thử (Positive, Negative, Boundary, Security, GUI, Navigation) đáp ứng yêu cầu tối thiểu 12 test cases của môn học. Quy trình kiểm thử hướng dữ liệu (data-driven) và chạy ổn định trên 3 trình duyệt. | Sửa lỗi cú pháp `expect` trong câu lệnh assert và khai báo thư viện `@types/node` cho dự án. |
 | **Tool:** Gemini 3.5 Flash<br>**Time:** 21:00 09/08/2026<br>**Prompt:** "Tôi muốn viết test script tự động hóa bằng Playwright cho tính năng FR-11 (Xem lịch sử đơn hàng của User)..." | Phân tích nghiệp vụ, thiết kế 18 test cases chi tiết và triển khai mã nguồn Playwright tự động hóa hướng dữ liệu (FR11_data.json & FR11_order_history.spec.ts). | **INCOMPLETE** | Thiết kế test case bao quát đầy đủ các kịch bản kiểm thử (Access Control, Data Display, Vietnamese Status Labels, Status Colors, Empty State, Cancellation, GUI) đáp ứng yêu cầu tối thiểu 12 test cases của môn học. Quy trình kiểm thử hướng dữ liệu (data-driven) và chạy ổn định trên 3 trình duyệt. | Bổ dung logic dọn dẹp cơ sở dữ liệu (Database Cleanup) cho bảng `orders` và các tài khoản test `user_f11_%` trong khối `beforeAll` trước khi chạy gieo dữ liệu (seeding) để tránh lỗi trùng lặp dữ liệu (strict-mode violation) giữa các lượt chạy. |
+| **Tool:** Gemini 3.5 Flash<br>**Time:** 21:15 09/08/2026<br>**Prompt:** "Tôi muốn viết test script tự động hóa bằng Playwright cho tính năng FR-19 (Quản lý người dùng)..." | Phân tích nghiệp vụ, thiết kế 16 test cases chi tiết và triển khai mã nguồn Playwright tự động hóa hướng dữ liệu (FR19_data.json & FR19_user_management.spec.ts). | **INCOMPLETE** | Thiết kế test case bao quát đầy đủ các kịch bản kiểm thử (Access Control, User List, Role Modification, Self-Deletion, Search, Security, GUI) đáp ứng yêu cầu tối thiểu 12 test cases của môn học. Quy trình kiểm thử hướng dữ liệu (data-driven) và chạy ổn định trên 3 trình duyệt. | Điều chỉnh thiết kế dữ liệu kiểm thử trong `FR19_data.json` và bổ sung logic dọn dẹp cơ sở dữ liệu (Database Cleanup) cho bảng `users` đối với tài khoản `email LIKE '%_f19_%'` sử dụng thư viện `sqlite3` trong khối `beforeAll` trước khi gieo dữ liệu. |
 
 ---
 
@@ -250,22 +251,22 @@ AI đã tạo các file kiểm thử tự động tại thư mục `HW4/`:
 
 | Metric                                   | Count | Percentage |
 | ---------------------------------------- | ----: | ---------: |
-| **Total AI-generated artifacts audited** |     4 |       100% |
-| **VALID (correct, accepted as-is)**      |     2 |      50.0% |
+| **Total AI-generated artifacts audited** |     5 |       100% |
+| **VALID (correct, accepted as-is)**      |     2 |      40.0% |
 | **INVALID (wrong; rejected)**            |     0 |         0% |
-| **INCOMPLETE (acceptable after edits)**  |     2 |      50.0% |
+| **INCOMPLETE (acceptable after edits)**  |     3 |      60.0% |
 
 ---
 
 ## 5. Conclusion
 
-Việc áp dụng AI (Gemini 3.5 Flash) để hỗ trợ viết bộ kiểm thử tự động hóa cho các tính năng nghiệp vụ và giao diện (FR-03, FR-11) giúp tăng tốc độ thiết kế kịch bản kiểm thử một cách toàn diện. AI gợi ý các trường hợp biên rất tốt, tự động hóa mã nguồn cấu hình dự án nhanh chóng. Tuy nhiên, lập trình viên vẫn phải kiểm duyệt kỹ lưỡng để giải quyết các vấn đề liên quan đến trạng thái dữ liệu (data state isolation/cleanup) nhằm tránh trùng lặp dữ liệu khi chạy lặp lại nhiều lần. Vai trò kiểm duyệt của QA là cực kỳ quan trọng để liên kết kết quả lỗi thực tế của SUT với tài liệu đặc tả nghiệp vụ.
+Việc áp dụng AI (Gemini 3.5 Flash) để hỗ trợ viết bộ kiểm thử tự động hóa cho các tính năng nghiệp vụ, giao diện và quản trị (FR-03, FR-11, FR-19) giúp tăng tốc độ thiết kế kịch bản kiểm thử một cách toàn diện. AI gợi ý các trường hợp biên rất tốt, tự động hóa mã nguồn cấu hình dự án nhanh chóng. Tuy nhiên, lập trình viên vẫn phải kiểm duyệt kỹ lưỡng để giải quyết các vấn đề liên quan đến trạng thái dữ liệu (data state isolation/cleanup) nhằm tránh trùng lặp dữ liệu khi chạy lặp lại nhiều lần. Vai trò kiểm duyệt của QA là cực kỳ quan trọng để liên kết kết quả lỗi thực tế của SUT với tài liệu đặc tả nghiệp vụ.
 
 ---
 
 ## 6. Mandatory Disclosure
 
-The EShop Automation Testing Agent Skill, Playwright project configuration, and test suites for FR-03 and FR-11 were initially generated by Gemini 3.5 Flash; I reviewed and modified the final parameters, assertions, and database cleanup routines; all Playwright test scripts, localized test data structures, and HTML reports containing my Student ID were executed and verified entirely by me. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any automated screenshot validation or student-identifying evidence listed in the prohibited category.
+The EShop Automation Testing Agent Skill, Playwright project configuration, and test suites for FR-03, FR-11, and FR-19 were initially generated by Gemini 3.5 Flash; I reviewed and modified the final parameters, assertions, and database cleanup routines; all Playwright test scripts, localized test data structures, and HTML reports containing my Student ID were executed and verified entirely by me. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any automated screenshot validation or student-identifying evidence listed in the prohibited category.
 
 ---
 
@@ -293,6 +294,7 @@ The EShop Automation Testing Agent Skill, Playwright project configuration, and 
 | 2   | Gemini 3.5 Flash | Project Setup | HW04 Task 1    | 2026-08-09 | G9.2     | VALID   |
 | 3   | Gemini 3.5 Flash | Test Suite    | FR-03 (Auth)   | 2026-08-09 | G9.4     | INCOMPLETE |
 | 4   | Gemini 3.5 Flash | Test Suite    | FR-11 (Orders) | 2026-08-09 | G9.4     | INCOMPLETE |
+| 5   | Gemini 3.5 Flash | Test Suite    | FR-19 (Admin)  | 2026-08-09 | G9.4     | INCOMPLETE |
 
 ### Contribution Breakdown
 
@@ -302,6 +304,7 @@ The EShop Automation Testing Agent Skill, Playwright project configuration, and 
 | Cấu hình & Tự động hóa chạy test matrix    |  85% |     15% |
 | Triển khai bộ test FR-03                   |  80% |     20% |
 | Triển khai bộ test FR-11                   |  75% |     25% |
+| Triển khai bộ test FR-19                   |  75% |     25% |
 | Khai triển & Kiểm thử chạy thực tế         |  15% |     85% |
 | Viết báo cáo & Audit Log                   |  40% |     60% |
 

@@ -41,7 +41,7 @@ test.beforeAll(async ({ playwright }) => {
     `;
     execSync(`node -e "${cleanupScript.replace(/"/g, '\\"').replace(/\n/g, ' ')}"`);
     console.log('Database cleaned successfully before seeding.');
-  } catch (e) {
+  } catch (e: any) {
     console.error('Database cleanup failed:', e.message);
   }
 
@@ -57,7 +57,7 @@ test.beforeAll(async ({ playwright }) => {
   for (const u of usersToRegister) {
     try {
       await requestContext.post('http://localhost:3000/api/register', { data: u });
-    } catch (e) {
+    } catch (e: any) {
       console.log(`Pre-registration note: ${u.email} already exists or failed: ${e.message}`);
     }
   }
@@ -70,7 +70,7 @@ test.beforeAll(async ({ playwright }) => {
     });
     const adminData = await adminRes.json();
     adminToken = adminData.token;
-  } catch (e) {
+  } catch (e: any) {
     console.error('Failed to login admin for seeding:', e.message);
   }
 
@@ -81,7 +81,7 @@ test.beforeAll(async ({ playwright }) => {
     });
     const mainData = await mainRes.json();
     mainToken = mainData.token;
-  } catch (e) {
+  } catch (e: any) {
     console.error('Failed to login main user for seeding:', e.message);
   }
 
@@ -92,7 +92,7 @@ test.beforeAll(async ({ playwright }) => {
     });
     const otherData = await otherRes.json();
     otherToken = otherData.token;
-  } catch (e) {
+  } catch (e: any) {
     console.error('Failed to login other user for seeding:', e.message);
   }
 
