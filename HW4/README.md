@@ -9,7 +9,7 @@
 * **Lớp:** 23KTPM3
 * **Đề tài:** HW04 - Automation Testing (AI-assisted)
 * **SUT:** EShop (Ứng dụng TMĐT thực hành kiểm thử)
-* **Link GitHub Repository:** *(Sinh viên cập nhật link repo công khai tại đây)*
+* **Link GitHub Repository:** [yuran1811/hcmus-sw-testing--eshop-sut (Branch hw04/23127148-nguyenan)](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw04/23127148-nguyenan)
 
 ---
 
