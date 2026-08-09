@@ -10,7 +10,7 @@
 
 ## Phương pháp tiếp cận (AI-First Automation Methodology)
 
-Cả 3 feature đều đi theo đúng quy trình 5 phase của skill [`playwright-automation`](../../.agents/skills/playwright-automation/SKILL.md) — AI **không** nhận một prompt hộp đen kiểu "hãy viết script cho tính năng X", mà đi qua từng phase có điểm dừng xác nhận của con người (toàn bộ log nguyên văn nằm tại `docs/anh-khoa/ai audit report.md`):
+Cả 3 feature đều đi theo đúng quy trình 5 phase của skill [`playwright-automation`](.agents/skills/playwright-automation/SKILL.md) — AI **không** nhận một prompt hộp đen kiểu "hãy viết script cho tính năng X", mà đi qua từng phase có điểm dừng xác nhận của con người (toàn bộ log nguyên văn nằm tại `docs/anh-khoa/ai audit report.md`):
 
 1. **Phase 1 — Chiến lược & Ánh xạ (grounding).** AI đọc đồng thời toàn bộ bảng test case (`tests/test-cases/<feature>/`) và source thật (`frontend-web`/`frontend-admin`/`backend`), đối chiếu từng điểm nghi ngờ của người dùng bằng số dòng cụ thể, và tự tìm thêm gap chưa được nêu. Không sinh code ở phase này.
 2. **Phase 2 — Sinh dữ liệu & script.** Viết `tests/e2e/test-data/<feature>.json` trước (đầy đủ ca, có mục `knownIssues` giải thích từng sai khác SUT-vs-SRS kèm số dòng), rồi mới viết `tests/e2e/specs/<feature>.spec.ts` lặp qua dữ liệu — không hardcode giá trị thay đổi theo ca.
@@ -236,3 +236,20 @@ Khớp **chính xác** nội dung cell "Tên SP" (`getByRole('cell', { name, exa
 
 ![Github-issues](<github-issues(1).png>)
 ![Github-issues](<github-issues(2).png>)
+
+---
+
+## Git Commit Log (mục 12)
+
+Đạt yêu cầu **≥8 commit đụng file `.spec.ts`, trải trên ≥4 ngày khác nhau** — hiện có **8 commit / 5 ngày** (05, 06, 07, 08, 09/08/2026):
+
+| Ngày       | Commit    | Nội dung                                                                 |
+| ---------- | --------- | ------------------------------------------------------------------------ |
+| 2026-08-05 | `7bbe646` | test(register): automate FR-01 theo hướng data-driven                    |
+| 2026-08-06 | `eb67fb8` | test(register): cover all 17 FR-01 test cases (data-driven)              |
+| 2026-08-07 | `e64fc50` | test(cart): automate all 13 FR-07 test cases (data-driven)               |
+| 2026-08-07 | `a56a52a` | test(product): automate all 18 FR-15 admin CRUD test cases (data-driven) |
+| 2026-08-08 | `48decb8` | fix: refine test case setups in cart.spec.ts and cart.json               |
+| 2026-08-08 | `4089d52` | fix: improve product row locator to match exact cell content             |
+| 2026-08-08 | `81df2fc` | fix: enhance API tests for email format and duplication cases            |
+| 2026-08-09 | `13099f9` | fix: harden `rowFor()` locator in cart.spec.ts to exact cell match       |
