@@ -2,16 +2,28 @@ import { test, expect } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
 
-// Define the TestCase interface to match our JSON schema
+/**
+ * Represents the structure of a test case for the FR-03 Forgot Password feature.
+ * Data is dynamically loaded from the external JSON file.
+ */
 interface TestCase {
+  /** Unique identifier for the test case, e.g., F03-TC-001 */
   caseId: string;
+  /** The test category (e.g., Happy Path, Negative, Boundary, Security, GUI) */
   category: string;
+  /** Detailed description of the test case purpose */
   purpose: string;
+  /** The email address to enter during the forgot password flow */
   email: string;
+  /** Optional new password to reset to */
   newPassword?: string;
+  /** Optional confirmation password that must match newPassword in happy path */
   confirmPassword?: string;
+  /** Type of OTP handling for this case (valid, invalid, reused, crossEmail, none) */
   otpType: 'valid' | 'invalid' | 'reused' | 'crossEmail' | 'none';
+  /** Expected alert error message, if any */
   expectedError?: string;
+  /** Expected URL path to redirect to after action, if any */
   expectedRoute?: string;
 }
 
