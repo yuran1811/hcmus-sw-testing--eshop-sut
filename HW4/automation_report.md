@@ -3,6 +3,29 @@
 
 ---
 
+## MỤC LỤC (TABLE OF CONTENTS)
+
+- [I. Thông Tin Sinh Viên](#i-thông-tin-sinh-viên)
+- [II. Tổng Quan Ma Trận Kiểm Thử (Test Matrix Overview)](#ii-tổng-quan-ma-trận-kiểm-thử-test-matrix-overview)
+- [III. Thống Kê Tóm Tắt Kết Quả Kiểm Thử (Test Execution Summary)](#iii-thống-kê-tóm-tắt-kết-quả-kiểm-thử-test-execution-summary)
+- [IV. Phân Tích Khoảng Cách Và Đánh Giá Kịch Bản AI Sinh (AI-Generated Scripts Review & Gap Analysis)](#iv-phân-tích-khoảng-cách-và-đánh-giá-kịch-bản-ai-sinh-ai-generated-scripts-review-gap-analysis)
+  - [4.1 Thiết Kế Hướng Dữ Liệu (Data-Driven Testing)](#41-thiết-kế-hướng-dữ-liệu-data-driven-testing)
+  - [4.2 Các Mẫu Kiểm Chứng Được Sử Dụng (Assertion Patterns)](#42-các-mẫu-kiểm-chứng-được-sử-dụng-assertion-patterns)
+  - [4.3 Những Lỗi Sai Và Điểm Thiếu Sót Của AI (What AI Got Wrong & Missed)](#43-những-lỗi-sai-và-điểm-thiếu-sót-của-ai-what-ai-got-wrong-missed)
+  - [4.4 Giải Trình Nguyên Nhân AI Bỏ Sót (Why AI Missed)](#44-giải-trình-nguyên-nhân-ai-bỏ-sót-why-ai-missed)
+  - [4.5 Các Ca Kiểm Thử Không Thể Tự Động Hóa (Unautomated Test Cases)](#45-các-ca-kiểm-thử-không-thể-tự-động-hóa-unautomated-test-cases)
+- [V. Chi Tiết Các Lỗi Hệ Thống Phát Hiện Được (SUT Defects Mapping)](#v-chi-tiết-các-lỗi-hệ-thống-phát-hiện-được-sut-defects-mapping)
+  - [1. Phân hệ FR-03: Quên và Đặt lại mật khẩu](#1-phân-hệ-fr-03-quên-và-đặt-lại-mật-khẩu-9-lỗi-sut-khiến-9-test-cases-thất-bại)
+  - [2. Phân hệ FR-11: Xem Lịch sử Đơn hàng](#2-phân-hệ-fr-11-xem-lịch-sử-đơn-hàng-5-lỗi-sut-khiến-5-test-cases-thất-bại)
+  - [3. Phân hệ FR-19: Quản lý Người dùng - Admin](#3-phân-hệ-fr-19-quản-lý-người-dùng---admin-3-lỗi-sut-khiến-5-test-cases-thất-bại)
+- [VI. Nhận Định QA Về Chất Lượng Sản Phẩm (SUT Quality Assessment)](#vi-nhận-định-qa-về-chất-lượng-sản-phẩm-sut-quality-assessment)
+  - [1. Đánh giá tính Bảo mật và Phân quyền](#1-đánh-giá-tính-bảo-mật-và-phân-quyền-security-access-control---rất-kém-critical-risk)
+  - [2. Đánh giá Logic Nghiệp vụ](#2-đánh-giá-logic-nghiệp-vụ-business-logic-validation---có-lỗi-logic-nặng)
+  - [3. Đánh giá Giao diện và Trải nghiệm người dùng](#3-đánh-giá-giao-diện-và-trải-nghiệm-người-dùng-gui-usability---thiếu-chuẩn-hóa)
+  - [KẾT LUẬN VÀ KHUYẾN NGHỊ](#kết-luận-và-khuyến-nghị)
+
+---
+
 ### I. Thông Tin Sinh Viên
 * **Họ và tên:** Ân Tiến Nguyên An
 * **Mã số sinh viên (MSSV):** 23127148
