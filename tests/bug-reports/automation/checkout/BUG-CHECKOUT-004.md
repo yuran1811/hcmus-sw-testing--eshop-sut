@@ -70,3 +70,7 @@ Received: 99999999
 > 344 |           expect(order.total_amount).not.toBe(tc.must_not_persist_total);
       |                                      ^
 ```
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/250

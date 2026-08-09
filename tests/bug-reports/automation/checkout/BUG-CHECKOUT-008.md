@@ -33,4 +33,8 @@ Browser: Chromium / Firefox / WebKit, OS: Windows, URL: http://localhost:5173
 ## Evidence
 
 - **TC-CHECKOUT-011 (Giao diện hiển thị thông tin thanh toán lỗi):**
-  ![Evidence](./screenshots/TC-CHECKOUT-011.png)
+  ![Evidence](https://raw.githubusercontent.com/yuran1811/hcmus-sw-testing--eshop-sut/hw4/23127115-mqtan/tests/bug-reports/automation/checkout/screenshots/TC-CHECKOUT-011.png)
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/254

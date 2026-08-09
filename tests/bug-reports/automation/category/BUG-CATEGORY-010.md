@@ -68,3 +68,7 @@ Received array:  [{"id": 45, "name": "iPhone Pro", "category_id": 12}]
 > 197 |     expect(list).toHaveLength(0);
       |                  ^
 ```
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/246

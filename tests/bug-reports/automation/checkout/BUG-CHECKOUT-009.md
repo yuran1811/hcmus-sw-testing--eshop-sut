@@ -33,4 +33,8 @@ Browser: Chromium / Firefox / WebKit, OS: Windows, URL: http://localhost:5173
 ## Evidence
 
 - **TC-CHECKOUT-012 (Giao diện hiển thị tổng tiền cho phép chỉnh sửa):**
-  ![Evidence](./screenshots/TC-CHECKOUT-012.png)
+  ![Evidence](https://raw.githubusercontent.com/yuran1811/hcmus-sw-testing--eshop-sut/hw4/23127115-mqtan/tests/bug-reports/automation/checkout/screenshots/TC-CHECKOUT-012.png)
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/255

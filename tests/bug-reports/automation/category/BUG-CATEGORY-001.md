@@ -68,3 +68,7 @@ Received: 201
 > 57 |     expect.soft(resp.status()).toBe(tc.expected_status);
      |                                ^
 ```
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/237

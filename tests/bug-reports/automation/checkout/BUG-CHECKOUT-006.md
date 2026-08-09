@@ -70,3 +70,7 @@ Received array:  [{"product_id": 2, "quantity": 1, "name": "Samsung Galaxy S23"}
 > 77 |     expect(cart).toHaveLength(0);
      |                  ^
 ```
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/252

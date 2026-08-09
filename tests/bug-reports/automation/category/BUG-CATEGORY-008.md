@@ -59,3 +59,7 @@ Received: 500
 > 324 |       expect.soft(resp.status()).toBe(variant.expected_status);
       |                                  ^
 ```
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/244

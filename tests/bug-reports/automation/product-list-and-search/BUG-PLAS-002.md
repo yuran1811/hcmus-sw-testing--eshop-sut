@@ -33,4 +33,8 @@ Browser: Chromium / Firefox / WebKit, OS: Windows, URL: http://localhost:5173
 ## Evidence
 
 - **TC-PLAS-007 (Kiểm tra ảnh thiếu alt):**
-  ![Evidence](./screenshots/TC-PLAS-007.png)
+  ![Evidence](https://raw.githubusercontent.com/yuran1811/hcmus-sw-testing--eshop-sut/hw4/23127115-mqtan/tests/bug-reports/automation/product-list-and-search/screenshots/TC-PLAS-007.png)
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/258

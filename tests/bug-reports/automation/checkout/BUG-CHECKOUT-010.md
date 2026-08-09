@@ -68,3 +68,7 @@ Expected: not "[object Object]"
 > 322 |               expect.soft(order.shipping_address).not.toBe(variant.must_not_persist_object_string);
       |                                                       ^
 ```
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/256

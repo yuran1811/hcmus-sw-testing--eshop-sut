@@ -62,3 +62,7 @@ Received array:  []
 > 417 |     expect(cartBItemsAfter).toHaveLength(cartBCountBefore);
       |                             ^
 ```
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/253
