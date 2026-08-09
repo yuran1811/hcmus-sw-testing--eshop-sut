@@ -247,6 +247,58 @@ AI đã tạo các file kiểm thử tự động tại thư mục `HW4/`:
 
 ---
 
+### Artifact #5 -- FR-19 User Management Playwright Test Suite Design & Implementation
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Gemini 3.5 Flash |
+| **Date/Time** | 2026-08-09 21:15:00 +07:00 |
+| **Task** | Thiết kế 16 test cases và lập trình test script Playwright tự động hóa cho tính năng FR-19 (Quản lý người dùng) |
+| **Feature / Module** | FR-19 (User Management for Admin) |
+| **Bloom-AI Level** | G9.4 (Collaborate / Create - Thiết kế và phát triển kịch bản tự động hóa tích hợp) |
+| **Verdict** | INCOMPLETE |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Tôi muốn viết test script tự động hóa bằng Playwright cho tính năng FR-19 (Quản lý người dùng của Admin).
+Hãy đọc kỹ đặc tả FR-19 cùng các quy định phân quyền truy cập (Access Control FR-12) và quy định giao diện (GUI Requirements FR-21) tại @[d:\Project\Testing\hcmus-sw-testing--eshop-sut\README.md] và mã nguồn API tại @[d:\Project\Testing\hcmus-sw-testing--eshop-sut\backend\server.js].
+
+**Nhiệm vụ đầu tiên:**
+1. Hãy thực hiện bước Phân tích (Analyze) tính năng này: liệt kê các tác nhân (actors), tiền điều kiện (preconditions), và các ràng buộc nghiệp vụ (như phân quyền Admin role = 'admin', cấm tự xóa tài khoản của chính mình, không để lộ mật khẩu...).
+2. Hãy thiết kế (Design) và đề xuất danh sách tối đa các test cases có thể (bao gồm Access Control phân quyền admin/user/guest, User List display bảo mật mật khẩu, Delete User, Delete Self-Prevention, GUI màu sắc nút bấm red/blue và tiêu đề h1, Security XSS-safe và role validation). Mỗi test case cần có ID định dạng `F19-TC-xxx`, danh mục, mục đích, các bước thực hiện và kết quả mong đợi cụ thể.
+
+Hãy đưa ra bảng thiết kế test case trước. Tôi sẽ duyệt danh sách này trước khi yêu cầu bạn sinh code.
+```
+
+**Execution notes:**
+
+- **Skill(s) active:** playwright, ai-audit-report
+- **Mode:** APPEND
+- **Các bước thực hiện:** AI đã phân tích các ràng buộc trong README.md và API backend trong server.js. Thiết kế danh sách 16 kịch bản kiểm thử dữ liệu ngoại bao gồm Access Control, User List, Deletion, Self-Prevention, GUI và bảo mật XSS. Sau đó, lập trình mã test Playwright sử dụng SQLite database cleanup. Thiết lập cơ chế tự động khôi phục tài khoản Admin sau mỗi test case và sau API self-delete để đảm bảo các test case độc lập không bị gián đoạn dữ liệu.
+
+#### (2) AI Output
+
+AI đã tạo các file kiểm thử tự động tại thư mục `HW4/`:
+1. **Dữ liệu kiểm thử ngoài:** [FR19_data.json](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/test-data/FR19_data.json) chứa 16 kịch bản kiểm thử.
+2. **Mã nguồn Playwright:** [FR19_user_management.spec.ts](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/tests/FR19_user_management.spec.ts) thực hiện kiểm thử tự động hóa hướng dữ liệu, kiểm tra các dialog alert và xác minh tính an toàn XSS.
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | INCOMPLETE |
+| **Reasoning** | Bộ test case thiết kế đầy đủ các kịch bản kiểm thử theo phân tích đặc tả, chạy và phát hiện chính xác 5 lỗi nghiêm trọng của SUT (lỗi thiếu phân quyền API, lỗi tự xóa Admin, lỗi thẻ tiêu đề GUI). Tuy nhiên, kịch bản test API tự xóa tài khoản Admin ở phiên tạo đầu tiên làm thay đổi trạng thái cơ sở dữ liệu vĩnh viễn, khiến các test case chạy sau bị lỗi đăng nhập diện rộng. |
+| **Student Fix** | Điều chỉnh thiết kế dữ liệu kiểm thử trong `FR19_data.json`, bổ sung logic dọn dẹp cơ sở dữ liệu (Database Cleanup) cho các tài khoản `email LIKE '%_f19_%'` sử dụng thư viện `sqlite3` trong khối `beforeAll` trước khi gieo dữ liệu. Đồng thời, bổ sung hàm đồng bộ `reseedAdminSync` gọi trong `beforeAll`, `afterEach` và inline sau test case tự xóa để tự động khôi phục tài khoản Admin, đảm bảo tính cô lập của dữ liệu. |
+| **Reviewed by** | Nguyễn An |
+| **Review date** | 2026-08-09 |
+| **Quality rating** | Excellent |
+| **Issues found** | Admin deletion test polluted state for subsequent test cases |
+
+---
+
 ## 4. Summary of AI Accuracy
 
 | Metric                                   | Count | Percentage |
