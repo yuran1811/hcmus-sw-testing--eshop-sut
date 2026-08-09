@@ -32,5 +32,5 @@ Ngưỡng phân cách hàng nghìn B = 1000; điểm B.
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None
 

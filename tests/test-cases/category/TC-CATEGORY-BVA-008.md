@@ -39,4 +39,4 @@ Category Count Min = 0; đây là điểm mở rộng B+2 = 2 nhằm kiểm tra 
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None

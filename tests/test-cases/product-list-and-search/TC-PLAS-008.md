@@ -36,4 +36,4 @@ EC21 (Specification gap: exact vs contains match) + EC7 + OC1/OC6 (conditional) 
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None

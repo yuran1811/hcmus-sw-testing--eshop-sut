@@ -45,4 +45,4 @@ Mỗi request còn có `total_amount = 4000000` và header `Authorization: Beare
 
 ## Status / Related bugs
 
-Not Run / N/A
+Fail / BUG-CHECKOUT-010

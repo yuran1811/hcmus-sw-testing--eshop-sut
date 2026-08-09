@@ -42,4 +42,4 @@ EC18 (Specification gap: stale/already-deleted ID) + OC5 (Deterministic missing-
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None

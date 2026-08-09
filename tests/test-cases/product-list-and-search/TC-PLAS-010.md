@@ -34,4 +34,4 @@ EC4 (Unicode/ký tự đặc biệt) + EC13 (ký tự dành riêng URL) + OC3
 
 ## Status / Related bugs
 
-Not Run / N/A
+Fail / BUG-PLAS-008

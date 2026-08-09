@@ -40,4 +40,4 @@ EC5 (search = HTML/Script payload) + EC7 (DB có sản phẩm) + EC11 (tải d�
 
 ## Status / Related bugs
 
-Fail / BUG-PLAS-001, BUG-PLAS-005
+Fail / BUG-PLAS-001

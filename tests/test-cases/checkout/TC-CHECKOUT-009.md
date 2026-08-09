@@ -41,4 +41,4 @@ Checkout API / Robustness-Characterization / Domain Testing (Equivalence Partiti
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None

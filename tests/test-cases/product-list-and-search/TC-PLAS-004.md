@@ -39,4 +39,4 @@ EC4 (search Unicode exact-name) + EC7 (DB có sản phẩm) + EC11 (tải dữ l
 
 ## Status / Related bugs
 
-Fail / BUG-PLAS-001, BUG-PLAS-002, BUG-PLAS-003
+Fail / BUG-PLAS-001

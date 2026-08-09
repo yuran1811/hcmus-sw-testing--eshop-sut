@@ -36,4 +36,4 @@ EC5 (Token của user thường — không có quyền Admin) + OC6 (Forbidden)
 
 ## Status / Related bugs
 
-Fail / BUG-CATEGORY-003
+Fail / BUG-CATEGORY-004

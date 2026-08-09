@@ -42,4 +42,4 @@ Checkout API + Admin Orders UI / Security-Functional / Domain Testing (Equivalen
 
 ## Status / Related bugs
 
-Not Run / N/A
+Fail / BUG-CHECKOUT-006

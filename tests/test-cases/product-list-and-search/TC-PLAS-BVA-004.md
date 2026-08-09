@@ -37,4 +37,4 @@ Số lượng sản phẩm trong DB: natural minimum `B = 0`, điểm kiểm th�
 
 ## Status / Related bugs
 
-Fail / BUG-PLAS-004
+Fail / BUG-PLAS-005

@@ -42,5 +42,5 @@ EC10 (Name null) + EC11 (Name sai kiểu dữ liệu) + OC2 (Validation error)
 
 ## Status / Related bugs
 
-Not Run / N/A
+Fail / BUG-CATEGORY-007
 

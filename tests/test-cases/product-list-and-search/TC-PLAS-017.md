@@ -37,4 +37,4 @@ EC19 (giá dưới 1000) + EC20 (giá tại/trên 1000) + OC2 (định dạng gi
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None

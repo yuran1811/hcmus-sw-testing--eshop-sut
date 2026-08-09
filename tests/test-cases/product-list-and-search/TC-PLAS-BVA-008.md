@@ -32,5 +32,5 @@ Ngưỡng phân cách hàng nghìn B = 1000; điểm B+1 = 1001.
 
 ## Status / Related bugs
 
-Not Run / N/A
+Fail / BUG-PLAS-007
 

@@ -35,4 +35,4 @@ EC12 (Specification gap: case variation) + OC1/OC6 (result hoặc empty state th
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None

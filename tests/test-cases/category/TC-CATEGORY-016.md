@@ -39,5 +39,5 @@ EC14 (Name chứa HTML/XSS — dữ liệu không tin cậy) + OC8 (Safe text re
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None
 

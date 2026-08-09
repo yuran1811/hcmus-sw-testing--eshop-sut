@@ -42,4 +42,4 @@ Checkout API / Robustness-Characterization / Length Reference Analysis (`R = 1`)
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None

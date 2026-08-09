@@ -40,5 +40,5 @@ Biên tự nhiên của lực lượng tập hợp: Category Count Min = 0, Test
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None
 

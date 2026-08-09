@@ -37,4 +37,4 @@ Mốc identifier implementation-derived: SQLite `INTEGER PRIMARY KEY AUTOINCREME
 
 ## Status / Related bugs
 
-Not Run / N/A
+Fail / BUG-CATEGORY-009

@@ -41,4 +41,4 @@ EC15 (Name chứa SQL metacharacters) + OC9 (Parameterized query / database inte
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None

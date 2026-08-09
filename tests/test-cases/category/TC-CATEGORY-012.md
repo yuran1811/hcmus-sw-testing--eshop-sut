@@ -38,5 +38,5 @@ EC2 (Name bị bỏ sót — missing required field) + OC2 (Validation error)
 
 ## Status / Related bugs
 
-Not Run / N/A
+Fail / BUG-CATEGORY-006
 

@@ -45,4 +45,4 @@ Checkout / Functional / Domain Testing (Equivalence Partitioning)
 
 ## Status / Related bugs
 
-Fail / BUG-CHECKOUT-001, BUG-CHECKOUT-002
+Fail / BUG-CHECKOUT-006

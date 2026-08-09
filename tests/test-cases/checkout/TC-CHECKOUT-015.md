@@ -42,4 +42,4 @@ Checkout API / Functional-Data Isolation / Domain Testing (Equivalence Partition
 
 ## Status / Related bugs
 
-Not Run / N/A
+Fail / BUG-CHECKOUT-007

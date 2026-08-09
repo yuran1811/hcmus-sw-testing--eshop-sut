@@ -37,4 +37,4 @@ EC8 (ID không tồn tại — specification gap) + OC5 (missing/stale resource 
 
 ## Status / Related bugs
 
-Fail / BUG-CATEGORY-002
+Fail / BUG-CATEGORY-003

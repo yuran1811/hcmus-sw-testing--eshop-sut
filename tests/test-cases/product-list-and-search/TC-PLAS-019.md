@@ -37,4 +37,4 @@ EC18 (nhiều request đang chờ) + OC10 (latest-request-wins)
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None

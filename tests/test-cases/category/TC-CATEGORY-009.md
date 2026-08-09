@@ -42,4 +42,4 @@ EC9 (Category được product tham chiếu — policy gap) + OC7 (reference-int
 
 ## Status / Related bugs
 
-Fail / BUG-CATEGORY-004
+Fail / BUG-CATEGORY-010

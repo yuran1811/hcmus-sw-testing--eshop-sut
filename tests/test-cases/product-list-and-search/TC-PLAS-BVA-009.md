@@ -34,4 +34,4 @@ Product List & Search / Functional / Boundary Value Analysis (Near-boundary exte
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None

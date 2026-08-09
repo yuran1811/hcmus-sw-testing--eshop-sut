@@ -34,4 +34,4 @@ Mốc tham chiếu độ bền `R = 255`; điểm `R-1 = 254`, hoàn chỉnh b�
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None

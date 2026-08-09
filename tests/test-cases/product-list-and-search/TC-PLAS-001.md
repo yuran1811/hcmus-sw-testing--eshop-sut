@@ -40,4 +40,4 @@ EC2 (search = "") + EC7 (DB có sản phẩm) + EC11 (tải dữ liệu hoàn t�
 
 ## Status / Related bugs
 
-Fail / BUG-PLAS-001, BUG-PLAS-002, BUG-PLAS-003
+Fail / BUG-PLAS-001

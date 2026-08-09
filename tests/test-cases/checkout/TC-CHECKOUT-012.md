@@ -41,4 +41,4 @@ Checkout Web UI + API / Functional-Security / Domain Testing (Equivalence Partit
 
 ## Status / Related bugs
 
-Not Run / N/A
+Fail / BUG-CHECKOUT-009

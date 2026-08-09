@@ -34,4 +34,4 @@ EC16 (API lỗi) + OC4 + OC5 (error state an toàn)
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None

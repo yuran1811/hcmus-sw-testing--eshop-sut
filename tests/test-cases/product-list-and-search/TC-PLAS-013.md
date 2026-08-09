@@ -34,5 +34,5 @@ EC15 (SQL injection payload) + OC3 + OC5
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None
 

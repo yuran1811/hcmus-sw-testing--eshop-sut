@@ -43,4 +43,4 @@ Checkout / Functional / Boundary Value Analysis (3-point + 2-point)
 
 ## Status / Related bugs
 
-Fail / BUG-CHECKOUT-001
+Fail / BUG-CHECKOUT-006

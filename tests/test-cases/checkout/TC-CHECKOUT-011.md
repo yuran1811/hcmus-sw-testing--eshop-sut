@@ -41,4 +41,4 @@ Checkout Web UI / Functional / Domain Testing (Equivalence Partitioning)
 
 ## Status / Related bugs
 
-Not Run / N/A
+Fail / BUG-CHECKOUT-008

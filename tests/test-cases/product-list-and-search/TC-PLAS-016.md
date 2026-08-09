@@ -34,5 +34,5 @@ OC1 (đủ thuộc tính thẻ sản phẩm) + OC7 (alt text hợp lệ)
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None
 

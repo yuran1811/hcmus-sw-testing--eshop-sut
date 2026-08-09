@@ -33,4 +33,4 @@ Ngưỡng bắt đầu cần phân cách hàng nghìn B = 1000; điểm B-1 = 99
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None

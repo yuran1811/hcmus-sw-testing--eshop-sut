@@ -34,5 +34,5 @@ EC5 (HTML/XSS event-handler payload) + OC3 (render an toàn)
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None
 

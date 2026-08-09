@@ -40,5 +40,5 @@ EC12 (Name hợp lệ chứa Unicode/ký tự đa byte) + OC1 (Thêm thành côn
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None
 

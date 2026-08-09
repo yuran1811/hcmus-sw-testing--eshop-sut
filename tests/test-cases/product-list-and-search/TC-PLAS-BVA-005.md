@@ -37,4 +37,4 @@ Số lượng sản phẩm trong DB: Min count boundary (B = 0), điểm kiểm 
 
 ## Status / Related bugs
 
-Fail / BUG-PLAS-001, BUG-PLAS-002, BUG-PLAS-003
+Fail / BUG-PLAS-001

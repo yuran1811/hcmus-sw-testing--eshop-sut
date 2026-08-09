@@ -34,5 +34,5 @@ EC3 (không khớp) + OC6 (empty state đầy đủ)
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None
 

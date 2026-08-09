@@ -41,4 +41,4 @@ EC17 (category_id sai kiểu/cú pháp) + OC10 (Controlled identifier policy, no
 
 ## Status / Related bugs
 
-Not Run / N/A
+Fail / BUG-CATEGORY-008

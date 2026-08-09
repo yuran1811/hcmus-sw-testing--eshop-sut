@@ -39,4 +39,4 @@ Mốc implementation-derived `R = 1` của fixture SQLite; kết quả xóa thà
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None

@@ -36,4 +36,4 @@ EC11 (tải dữ liệu hoàn tất) + OC4 (đúng 1 thẻ `<h1>` duy nhất)
 
 ## Status / Related bugs
 
-Fail / BUG-PLAS-001
+Fail / BUG-PLAS-002, BUG-PLAS-003

@@ -37,4 +37,4 @@ EC3 (Name chỉ chứa whitespace) + OC2 (Validation error)
 
 ## Status / Related bugs
 
-Fail / BUG-CATEGORY-001
+Fail / BUG-CATEGORY-002

@@ -35,5 +35,5 @@ EC17 (dữ liệu sản phẩm không tin cậy) + OC9 (tên được escape)
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None
 

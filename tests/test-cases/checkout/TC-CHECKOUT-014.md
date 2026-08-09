@@ -42,4 +42,4 @@ Checkout API / Negative-Security / Domain Testing (Equivalence Partitioning)
 
 ## Status / Related bugs
 
-Not Run / N/A
+Fail / BUG-CHECKOUT-005

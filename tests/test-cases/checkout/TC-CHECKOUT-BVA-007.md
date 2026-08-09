@@ -47,4 +47,4 @@ Mỗi request có `total_amount = 4000000` và `shipping_address` bằng chuỗi
 
 ## Status / Related bugs
 
-Not Run / N/A
+Pass / None
