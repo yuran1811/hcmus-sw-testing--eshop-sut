@@ -23,9 +23,17 @@ const STATUS_LABEL: Record<string, string> = {
 test.describe('FR-10 — Order State Machine (UI only)', () => {
   for (const tc of cases) {
     test(`${tc.id} — ${tc.description}`, async ({ browser }) => {
-      // Each test needs its own context(s) (separate user + admin session at
-      // once); close them at the end so 15 tests in one file don't
-      // accumulate dozens of open contexts and slow the whole run down.
+
+      // LỖI: Không cleanup browser context
+      // test.describe('FR-02 Tests', () => {
+      //   for (const tc of cases) {
+      //     test(`${tc.id}`, async ({ page }) => {
+      //       // 13 tests × 2 contexts = 26 contexts accumulate
+      //       // Memory exhaustion → timeout
+      //     });
+      //   }
+      // });
+      
       const contexts: BrowserContext[] = [];
       const openPage = async () => {
         const ctx = await browser.newContext();
@@ -35,12 +43,6 @@ test.describe('FR-10 — Order State Machine (UI only)', () => {
 
       try {
         if (tc.kind === 'roleBypassLogin') {
-          // The admin panel's OWN client-side role check blocks this login
-          // attempt (see App.jsx: `if (user.role !== 'admin') alert(...)`),
-          // even though the backend API behind it has no such check at all
-          // (BUG-14 — see bug-reports/fr10-orderstate/BUG-14.md). That deeper
-          // issue can't be demonstrated through pure UI interaction; this
-          // case only verifies the client-side gate itself behaves correctly.
           const page = await openPage();
           let dialogMessage = '';
           page.once('dialog', (d) => { dialogMessage = d.message(); d.accept(); });

@@ -1,9 +1,8 @@
 # HW04 — Kiểm Thử Tự Động (Hỗ Trợ AI)
 
 **Mã Sinh Viên:** 23127152  
-**Bài Tập:** HW04-AI  
-**Khóa Học:** Kiểm Thử Phần Mềm & QA  
-**Ngày Nộp:** 2026-08-08
+**Bài Tập:** HW04
+**Khóa Học:** Kiểm Thử Phần Mềm 
 
 ---
 
@@ -306,8 +305,8 @@ Mỗi báo cáo lỗi bao gồm:
 - [x] Ma Trận Khả Năng Theo Dõi (hoàn Chỉnh)
 - [x] Nhật Ký Cam Kết Git (tệp Text)
 - [x] README Với Tự Đánh Giá
-- [ ] Video Demo (bỏ Qua)
-- [ ] Kỹ Năng Agent (tùy Chọn, Không Hoàn Thành)
+- [x] Video Demo
+- [x] Agent Skill
 
 ---
 

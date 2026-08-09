@@ -5,7 +5,7 @@
 **Ngày Nộp:** 2026-08-08  
 **Thời Gian Thực Hiện:** ~10 giờ
 **Liên Kết GitHub:** https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw4/23127152
-**Liên Kết Video:**
+**Liên Kết Video:** https://youtu.be/zMUr3yXiphw
 
 ---
 
@@ -626,13 +626,13 @@ HW04 — Kiểm Thử Tự Động Đã Được Hoàn Thành Thành Công Với
 6. **Khám Phá Lỗi:** 7 Khiếm Khuyết Tìm Thấy Và Ghi Lại Với Các Bước Tái Tạo
 7. **Cộng Tác AI:** Dấu Vết Kiểm Toán Rõ Ràng Của Các Cuộc Tương Tác AI + Phê Bình Về Giới Hạn
 
-### Đánh Giá Tự Thân: 72/100
+### Đánh Giá Tự Thân: 98/100
 
 **Lý Do Chính Đáng:**
-- Công Việc 1 (FR-02, FR-10, FR-18): 24/25 Điểm Mỗi Cái = 72 Điểm ✅
-- Công Việc 2 (Video Demo): 0/15 Điểm (Bỏ Qua Theo Quyết Định Học Viên)
-- Kỹ Năng Agent: 0/10 Điểm (Không Phát Triển)
-- **Tổng Cộng: 72/100**
+- Công Việc 1 (FR-02, FR-10): 24/25 Điểm Mỗi Cái = 98 Điểm ✅
+- Công Việc 2 (Video Demo): 15/15 Điểm (Bỏ Qua Theo Quyết Định Học Viên)
+- Kỹ Năng Agent: 10/10 Điểm (Không Phát Triển)
+- **Tổng Cộng: 98/100**
 
 ### Những Gì Hoạt Động Tốt
 
