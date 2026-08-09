@@ -11,6 +11,9 @@
 | **Assignment date**        | 2026-08-09        |
 | **AI tool(s) used**        | Gemini 3.5 Flash  |
 | **AI used?**               | Yes               |
+| **Automation Tool**        | Playwright (TypeScript) |
+| **HTML Reporter**          | Playwright HTML Reporter |
+| **Bloom-AI Level**         | G9.2 (Apply), G9.3 (Analyse), G9.4 (Collaborate) |
 
 ---
 
