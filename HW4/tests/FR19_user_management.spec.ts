@@ -3,13 +3,22 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
 
-// Define the TestCase interface for typing
+/**
+ * Represents the structure of a test case for the FR-19 Admin User Management feature.
+ * Data is dynamically loaded from the external JSON file.
+ */
 interface TestCase {
+  /** Unique identifier for the test case, e.g., F19-TC-001 */
   caseId: string;
+  /** The test category (e.g., Access Control, User List, Functional, Security, GUI) */
   category: string;
+  /** Detailed description of the test case purpose */
   purpose: string;
+  /** Optional email address of the user to be verified, deleted, or tested */
   email?: string;
+  /** Optional password of the user */
   password?: string;
+  /** Expected browser alert dialog message, if any */
   expectedAlert?: string;
 }
 
