@@ -3,14 +3,24 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
 
-// Define the TestCase interface for typing
+/**
+ * Represents the structure of a test case for the FR-11 Order History feature.
+ * Data is dynamically loaded from the external JSON file.
+ */
 interface TestCase {
+  /** Unique identifier for the test case, e.g., F11-TC-001 */
   caseId: string;
+  /** The test category (e.g., Access Control, Data Display, Status Colors, Cancellation, GUI) */
   category: string;
+  /** Detailed description of the test case purpose */
   purpose: string;
+  /** The email address of the user who owns the orders */
   email: string;
+  /** The order total amount or order count expected */
   amount: number;
+  /** Expected status label in Vietnamese (e.g., "Chờ xác nhận", "Đang giao", "Đã giao", "Đã hủy") */
   expectedLabel: string;
+  /** Expected CSS class name for styling check */
   expectedClass?: string;
 }
 
