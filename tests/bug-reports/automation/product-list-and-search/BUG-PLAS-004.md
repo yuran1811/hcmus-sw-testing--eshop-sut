@@ -56,4 +56,8 @@ Call log:
 
 ### 3. Screenshot
 
-![Playwright failure screenshot - missing empty state](../../../test-runs/automation/scripts/product-list-and-search/test-results/plas-ep-FR-05-Product-List-3e621--tại-—-hiển-thị-empty-state-chromium/test-failed-1.png)
+![Playwright failure screenshot - missing empty state](https://raw.githubusercontent.com/yuran1811/hcmus-sw-testing--eshop-sut/hw4/23127115-mqtan/tests/bug-reports/automation/product-list-and-search/screenshots/BUG-PLAS-004.png)
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/260

@@ -61,4 +61,8 @@ Received: 500
 
 ### 3. Screenshot
 
-![Playwright failure screenshot - long keyword causes HTTP 500](../../../test-runs/automation/scripts/product-list-and-search/test-results/plas-ep-FR-05-Product-List-b0388-ý-tự-—-không-crash-hệ-thống-chromium/test-failed-1.png)
+![Playwright failure screenshot - long keyword causes HTTP 500](https://raw.githubusercontent.com/yuran1811/hcmus-sw-testing--eshop-sut/hw4/23127115-mqtan/tests/bug-reports/automation/product-list-and-search/screenshots/BUG-PLAS-006.png)
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/262

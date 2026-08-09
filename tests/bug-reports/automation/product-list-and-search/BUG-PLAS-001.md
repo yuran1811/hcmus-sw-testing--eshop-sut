@@ -38,4 +38,8 @@ Browser: Chromium / Firefox / WebKit, OS: Windows, URL: http://localhost:5173
 
 ### Screenshot
 
-![Playwright failure screenshot - multiple h1 tags](../../../test-runs/automation/scripts/product-list-and-search/test-results/plas-bva-FR-05-Product-Lis-694e7--h1-duy-nhất-sau-khi-search-chromium/test-failed-1.png)
+![Playwright failure screenshot - multiple h1 tags](https://raw.githubusercontent.com/yuran1811/hcmus-sw-testing--eshop-sut/hw4/23127115-mqtan/tests/bug-reports/automation/product-list-and-search/screenshots/BUG-PLAS-001.png)
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/257

@@ -61,4 +61,8 @@ Received: 500
 
 ### 3. Screenshot
 
-![Playwright failure screenshot - boundary keyword causes HTTP 500](../../../test-runs/automation/scripts/product-list-and-search/test-results/plas-bva-FR-05-Product-Lis-ca4f5--ký-tự-Biên-trên-mốc-R-255--chromium/test-failed-1.png)
+![Playwright failure screenshot - boundary keyword causes HTTP 500](https://raw.githubusercontent.com/yuran1811/hcmus-sw-testing--eshop-sut/hw4/23127115-mqtan/tests/bug-reports/automation/product-list-and-search/screenshots/BUG-PLAS-007.png)
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/263

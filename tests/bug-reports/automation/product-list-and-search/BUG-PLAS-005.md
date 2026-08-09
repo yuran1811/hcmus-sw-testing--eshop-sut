@@ -64,4 +64,8 @@ Received: 14 (Trả về toàn bộ số lượng sản phẩm trong database)
 
 ### 3. Screenshot
 
-![Playwright failure screenshot - SQL injection search returns products](../../../test-runs/automation/scripts/product-list-and-search/test-results/plas-bva-FR-05-Product-Lis-95f36--biệt-SQL-Injection-OR-1-1--chromium/test-failed-1.png)
+![Playwright failure screenshot - SQL injection search returns products](https://raw.githubusercontent.com/yuran1811/hcmus-sw-testing--eshop-sut/hw4/23127115-mqtan/tests/bug-reports/automation/product-list-and-search/screenshots/BUG-PLAS-005.png)
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/261

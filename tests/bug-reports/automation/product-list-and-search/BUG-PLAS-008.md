@@ -59,4 +59,8 @@ Received: 0
 
 ### 3. Screenshot
 
-![Playwright failure screenshot - search keyword is not trimmed](../../../test-runs/automation/scripts/product-list-and-search/test-results/plas-ep-FR-05-Product-List-6d78f-ng-thừa-ở-đầu-cuối-trimmed--chromium/test-failed-1.png)
+![Playwright failure screenshot - search keyword is not trimmed](https://raw.githubusercontent.com/yuran1811/hcmus-sw-testing--eshop-sut/hw4/23127115-mqtan/tests/bug-reports/automation/product-list-and-search/screenshots/BUG-PLAS-008.png)
+
+## GitHub Issue
+
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/264
