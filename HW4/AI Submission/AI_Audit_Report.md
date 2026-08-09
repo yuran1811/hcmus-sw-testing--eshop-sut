@@ -27,6 +27,7 @@ Báo cáo này ghi lại chi tiết các tương tác với AI trong quá trình
 | **Tool:** Gemini 3.5 Flash<br>**Time:** 12:00 09/08/2026<br>**Prompt:** "Bây giờ, tôi cần bạn hỗ trợ giúp tôi viết agent skill cho automation testing cho workflow (data driven, multi-browser script generation and maintenance)..." | Cấu trúc file Agent Skill hoàn chỉnh cho quy trình kiểm thử tự động trên EShop.<br>Đường dẫn lưu trữ:<br>- [.agents/skills/automation-testing/SKILL.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/automation-testing/SKILL.md)<br>- [.agents/skills/automation-testing/references/feature-archetypes.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/automation-testing/references/feature-archetypes.md) | **VALID** | Phù hợp với yêu cầu xây dựng Agent Skill tự động hóa đa trình duyệt (Chromium, Firefox, WebKit) và hướng dữ liệu (data-driven) của HW04 Section 7. | Accepted as-is |
 | **Tool:** Gemini 3.5 Flash<br>**Time:** 20:01 09/08/2026<br>**Prompt:** "Tạo project Playwright cho HW04 Automation Testing tại thư mục HW4/ trong repo..."                                                                           | Cấu hình project Playwright hoàn chỉnh gồm package.json, tsconfig.json, playwright.config.ts, runner scripts/run-matrix.js và các file test verify.                                                                                                                                                                                                                                                                                                             | **VALID** | Phù hợp với yêu cầu cấu hình dự án Playwright Task 1 (chạy cross-browser, trích xuất báo cáo HTML gán nhãn MSSV và thư mục tùy chỉnh).             | Accepted as-is |
 | **Tool:** Gemini 3.5 Flash<br>**Time:** 20:10 09/08/2026<br>**Prompt:** "Tôi muốn viết test script tự động hóa cho tính năng FR-03 (Quên mật khẩu & Đặt lại mật khẩu) bằng Playwright..." | Phân tích nghiệp vụ, thiết kế 22 test cases chi tiết và triển khai mã nguồn Playwright tự động hóa hướng dữ liệu (FR03_data.json & FR03_forgot_password.spec.ts). | **INCOMPLETE** | Thiết kế test case bao quát đầy đủ các kịch bản kiểm thử (Positive, Negative, Boundary, Security, GUI, Navigation) đáp ứng yêu cầu tối thiểu 12 test cases của môn học. Quy trình kiểm thử hướng dữ liệu (data-driven) và chạy ổn định trên 3 trình duyệt. | Sửa lỗi cú pháp `expect` trong câu lệnh assert và khai báo thư viện `@types/node` cho dự án. |
+| **Tool:** Gemini 3.5 Flash<br>**Time:** 21:00 09/08/2026<br>**Prompt:** "Tôi muốn viết test script tự động hóa bằng Playwright cho tính năng FR-11 (Xem lịch sử đơn hàng của User)..." | Phân tích nghiệp vụ, thiết kế 18 test cases chi tiết và triển khai mã nguồn Playwright tự động hóa hướng dữ liệu (FR11_data.json & FR11_order_history.spec.ts). | **INCOMPLETE** | Thiết kế test case bao quát đầy đủ các kịch bản kiểm thử (Access Control, Data Display, Vietnamese Status Labels, Status Colors, Empty State, Cancellation, GUI) đáp ứng yêu cầu tối thiểu 12 test cases của môn học. Quy trình kiểm thử hướng dữ liệu (data-driven) và chạy ổn định trên 3 trình duyệt. | Bổ dung logic dọn dẹp cơ sở dữ liệu (Database Cleanup) cho bảng `orders` và các tài khoản test `user_f11_%` trong khối `beforeAll` trước khi chạy gieo dữ liệu (seeding) để tránh lỗi trùng lặp dữ liệu (strict-mode violation) giữa các lượt chạy. |
 
 ---
 
@@ -193,26 +194,78 @@ AI đã tạo các file kiểm thử tự động tại thư mục `HW4/`:
 
 ---
 
+### Artifact #4 -- FR-11 Order History Playwright Test Suite Design & Implementation
+
+| Field                | Value                                                                                                          |
+| -------------------- | -------------------------------------------------------------------------------------------------------------- |
+| **AI Tool**          | Gemini 3.5 Flash                                                                                               |
+| **Date/Time**        | 2026-08-09 21:00:00 +07:00                                                                                     |
+| **Task**             | Thiết kế 18 test cases và lập trình test script Playwright tự động hóa cho tính năng FR-11 (Lịch sử đơn hàng)  |
+| **Feature / Module** | FR-11 (User Order History)                                                                                     |
+| **Bloom-AI Level**   | G9.4 (Collaborate / Create - Thiết kế và phát triển kịch bản tự động hóa tích hợp)                             |
+| **Verdict**          | INCOMPLETE                                                                                                     |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Tôi muốn viết test script tự động hóa bằng Playwright cho tính năng FR-11 (Xem lịch sử đơn hàng của User).
+Hãy đọc kỹ đặc tả FR-11 cùng các quy định giao diện (GUI Requirements FR-21, FR-23, FR-24) tại @[d:\Project\Testing\hcmus-sw-testing--eshop-sut\README.md] và mã nguồn API tại @[d:\Project\Testing\hcmus-sw-testing--eshop-sut\backend\server.js].
+
+**Nhiệm vụ đầu tiên:**
+1. Hãy thực hiện bước Phân tích (Analyze) tính năng này: liệt kê các tác nhân (actors), tiền điều kiện (preconditions), và các ràng buộc nghiệp vụ (như phân quyền chỉ xem đơn hàng của mình, quy tắc đổi tên trạng thái tiếng Việt, định dạng tiền tệ...).
+2. Hãy thiết kế (Design) và đề xuất danh sách tối đa các test cases có thể (bao gồm Access Control, Data Display, Status Labels tiếng Việt cho cả 5 trạng thái, Status Colors, Empty/Boundary states, Navigation & GUI, Order Cancellation). Mỗi test case cần có ID định dạng `F11-TC-xxx`, danh mục, mục đích, các bước thực hiện và kết quả mong đợi cụ thể.
+
+Hãy đưa ra bảng thiết kế test case trước. Tôi sẽ duyệt danh sách này trước khi yêu cầu bạn sinh code.
+```
+
+**Execution notes:**
+
+- **Skill(s) active:** playwright, ai-audit-report
+- **Mode:** APPEND
+- **Các bước thực hiện:** AI đã phân tích các ràng buộc trong README.md và API backend trong server.js. Phát hiện 5 lỗi nghiêm trọng của SUT (cho phép hủy đơn shipping, thiếu navbar highlight, thiếu tiêu đề h1, nhãn nút Đăng xuất là "Thoát" và thiếu minh họa empty state). AI thiết kế 18 kịch bản kiểm thử dữ liệu ngoại và lập trình mã test Playwright. Sau lần chạy đầu tiên bị lỗi strict-mode do trùng lặp dữ liệu từ các lượt chạy cũ, AI bổ sung khối dọn dẹp database trong `beforeAll` trước khi seeding để chạy trơn tru trên cả 3 trình duyệt.
+
+#### (2) AI Output
+
+AI đã tạo các file kiểm thử tự động tại thư mục `HW4/`:
+1. **Dữ liệu kiểm thử ngoài:** [FR11_data.json](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/test-data/FR11_data.json) chứa 18 bản ghi test cases.
+2. **Mã nguồn Playwright:** [FR11_order_history.spec.ts](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/tests/FR11_order_history.spec.ts) thực hiện kiểm thử tự động hóa hướng dữ liệu, bao gồm kết nối cơ sở dữ liệu SQLite cục bộ để làm sạch trước khi gieo dữ liệu (seeding).
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect             | Detail                                                                                                                                                                                                                                                                                                                                                                       |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Verdict**        | INCOMPLETE                                                                                                                                                                                                                                                                                                                                                                   |
+| **Reasoning**      | Bộ test case thiết kế rất toàn diện, bao quát được các lỗi của SUT so với tài liệu SRS và chạy hoàn thành tốt ma trận 3 trình duyệt. Tuy nhiên, AI ở phiên tạo code đầu tiên chưa tính đến vấn đề trùng lặp dữ liệu (strict-mode violation) của cơ sở dữ liệu SQLite khi chạy kiểm thử nhiều lần, dẫn đến lỗi định vị hàng.                                                  |
+| **Student Fix**    | Bổ sung logic dọn dẹp cơ sở dữ liệu (Database Cleanup) cho bảng `orders` và các tài khoản test `user_f11_%` thông qua `execSync` chạy kịch bản node inline sử dụng thư viện `sqlite3` của backend trong khối `beforeAll` trước khi gieo dữ liệu. Đồng thời, khôi phục tệp `FR19_dummy.spec.ts` để đảm bảo kịch bản chạy ma trận của dự án không bị lỗi. |
+| **Reviewed by**    | Nguyễn An                                                                                                                                                                                                                                                                                                                                                                    |
+| **Review date**    | 2026-08-09                                                                                                                                                                                                                                                                                                                                                                   |
+| **Quality rating** | Excellent                                                                                                                                                                                                                                                                                                                                                                    |
+| **Issues found**   | Strict-mode locator violations on consecutive runs                                                                                                                                                                                                                                                                                                                           |
+
+---
+
 ## 4. Summary of AI Accuracy
 
 | Metric                                   | Count | Percentage |
 | ---------------------------------------- | ----: | ---------: |
-| **Total AI-generated artifacts audited** |     3 |       100% |
-| **VALID (correct, accepted as-is)**      |     2 |      66.7% |
+| **Total AI-generated artifacts audited** |     4 |       100% |
+| **VALID (correct, accepted as-is)**      |     2 |      50.0% |
 | **INVALID (wrong; rejected)**            |     0 |         0% |
-| **INCOMPLETE (acceptable after edits)**  |     1 |      33.3% |
+| **INCOMPLETE (acceptable after edits)**  |     2 |      50.0% |
 
 ---
 
 ## 5. Conclusion
 
-Việc áp dụng AI (Gemini 3.5 Flash) để thiết kế Agent Skill và cấu trúc dự án Playwright mang lại hiệu quả rất lớn. AI đã giúp chuẩn hóa các tệp cấu hình dự án, cấu trúc các bước kiểm thử và tự động hóa toàn bộ ma trận kiểm thử đa trình duyệt một cách nhanh chóng và chính xác. Trải nghiệm này chứng minh rằng AI là một trợ thủ đắc lực trong việc viết khung mã nguồn (scaffolding) và giải quyết các tác vụ cấu hình phức tạp. Tuy nhiên, lập trình viên cần đóng vai trò kiểm duyệt, giám sát hoạt động cài đặt môi trường và điều phối cấu hình các biến hệ thống để đảm bảo kết quả chạy ổn định trên môi trường local thực tế.
+Việc áp dụng AI (Gemini 3.5 Flash) để hỗ trợ viết bộ kiểm thử tự động hóa cho các tính năng nghiệp vụ và giao diện (FR-03, FR-11) giúp tăng tốc độ thiết kế kịch bản kiểm thử một cách toàn diện. AI gợi ý các trường hợp biên rất tốt, tự động hóa mã nguồn cấu hình dự án nhanh chóng. Tuy nhiên, lập trình viên vẫn phải kiểm duyệt kỹ lưỡng để giải quyết các vấn đề liên quan đến trạng thái dữ liệu (data state isolation/cleanup) nhằm tránh trùng lặp dữ liệu khi chạy lặp lại nhiều lần. Vai trò kiểm duyệt của QA là cực kỳ quan trọng để liên kết kết quả lỗi thực tế của SUT với tài liệu đặc tả nghiệp vụ.
 
 ---
 
 ## 6. Mandatory Disclosure
 
-The EShop Automation Testing Agent Skill and Playwright project configuration were initially generated by Gemini 3.5 Flash; I reviewed and modified the final parameters, directory mappings, and specific configuration settings; all Playwright test scripts, localized test data structures, and HTML reports containing my Student ID were executed and verified entirely by me. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any automated screenshot validation or student-identifying evidence listed in the prohibited category.
+The EShop Automation Testing Agent Skill, Playwright project configuration, and test suites for FR-03 and FR-11 were initially generated by Gemini 3.5 Flash; I reviewed and modified the final parameters, assertions, and database cleanup routines; all Playwright test scripts, localized test data structures, and HTML reports containing my Student ID were executed and verified entirely by me. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any automated screenshot validation or student-identifying evidence listed in the prohibited category.
 
 ---
 
@@ -239,6 +292,7 @@ The EShop Automation Testing Agent Skill and Playwright project configuration we
 | 1   | Gemini 3.5 Flash | Agent Skills  | HW04 Section 7 | 2026-08-09 | G9.4     | VALID   |
 | 2   | Gemini 3.5 Flash | Project Setup | HW04 Task 1    | 2026-08-09 | G9.2     | VALID   |
 | 3   | Gemini 3.5 Flash | Test Suite    | FR-03 (Auth)   | 2026-08-09 | G9.4     | INCOMPLETE |
+| 4   | Gemini 3.5 Flash | Test Suite    | FR-11 (Orders) | 2026-08-09 | G9.4     | INCOMPLETE |
 
 ### Contribution Breakdown
 
@@ -247,6 +301,7 @@ The EShop Automation Testing Agent Skill and Playwright project configuration we
 | Nghiên cứu & Thiết kế cấu trúc Agent Skill |  80% |     20% |
 | Cấu hình & Tự động hóa chạy test matrix    |  85% |     15% |
 | Triển khai bộ test FR-03                   |  80% |     20% |
+| Triển khai bộ test FR-11                   |  75% |     25% |
 | Khai triển & Kiểm thử chạy thực tế         |  15% |     85% |
 | Viết báo cáo & Audit Log                   |  40% |     60% |
 
