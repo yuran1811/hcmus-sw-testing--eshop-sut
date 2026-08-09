@@ -29,6 +29,7 @@ Báo cáo này ghi lại chi tiết các tương tác với AI trong quá trình
 | **Tool:** Gemini 3.5 Flash<br>**Time:** 20:10 09/08/2026<br>**Prompt:** "Tôi muốn viết test script tự động hóa cho tính năng FR-03 (Quên mật khẩu & Đặt lại mật khẩu) bằng Playwright..." | Phân tích nghiệp vụ, thiết kế 22 test cases chi tiết và triển khai mã nguồn Playwright tự động hóa hướng dữ liệu (FR03_data.json & FR03_forgot_password.spec.ts). | **INCOMPLETE** | Thiết kế test case bao quát đầy đủ các kịch bản kiểm thử (Positive, Negative, Boundary, Security, GUI, Navigation) đáp ứng yêu cầu tối thiểu 12 test cases của môn học. Quy trình kiểm thử hướng dữ liệu (data-driven) và chạy ổn định trên 3 trình duyệt. | Sửa lỗi cú pháp `expect` trong câu lệnh assert và khai báo thư viện `@types/node` cho dự án. |
 | **Tool:** Gemini 3.5 Flash<br>**Time:** 21:00 09/08/2026<br>**Prompt:** "Tôi muốn viết test script tự động hóa bằng Playwright cho tính năng FR-11 (Xem lịch sử đơn hàng của User)..." | Phân tích nghiệp vụ, thiết kế 18 test cases chi tiết và triển khai mã nguồn Playwright tự động hóa hướng dữ liệu (FR11_data.json & FR11_order_history.spec.ts). | **INCOMPLETE** | Thiết kế test case bao quát đầy đủ các kịch bản kiểm thử (Access Control, Data Display, Vietnamese Status Labels, Status Colors, Empty State, Cancellation, GUI) đáp ứng yêu cầu tối thiểu 12 test cases của môn học. Quy trình kiểm thử hướng dữ liệu (data-driven) và chạy ổn định trên 3 trình duyệt. | Bổ dung logic dọn dẹp cơ sở dữ liệu (Database Cleanup) cho bảng `orders` và các tài khoản test `user_f11_%` trong khối `beforeAll` trước khi chạy gieo dữ liệu (seeding) để tránh lỗi trùng lặp dữ liệu (strict-mode violation) giữa các lượt chạy. |
 | **Tool:** Gemini 3.5 Flash<br>**Time:** 21:15 09/08/2026<br>**Prompt:** "Tôi muốn viết test script tự động hóa bằng Playwright cho tính năng FR-19 (Quản lý người dùng)..." | Phân tích nghiệp vụ, thiết kế 16 test cases chi tiết và triển khai mã nguồn Playwright tự động hóa hướng dữ liệu (FR19_data.json & FR19_user_management.spec.ts). | **INCOMPLETE** | Thiết kế test case bao quát đầy đủ các kịch bản kiểm thử (Access Control, User List, Role Modification, Self-Deletion, Search, Security, GUI) đáp ứng yêu cầu tối thiểu 12 test cases của môn học. Quy trình kiểm thử hướng dữ liệu (data-driven) và chạy ổn định trên 3 trình duyệt. | Điều chỉnh thiết kế dữ liệu kiểm thử trong `FR19_data.json` và bổ sung logic dọn dẹp cơ sở dữ liệu (Database Cleanup) cho bảng `users` đối với tài khoản `email LIKE '%_f19_%'` sử dụng thư viện `sqlite3` trong khối `beforeAll` trước khi gieo dữ liệu. |
+| **Tool:** Gemini 3.5 Flash<br>**Time:** 22:20 09/08/2026<br>**Prompt:** "Hãy giúp tôi viết các tài liệu báo cáo chất lượng cao... Chia bug reports... git stash pop... chuyển evidences vào trong bug report..." | Phục hồi và dọn dẹp Git Stash; phân tích chi tiết lỗi chạy test, viết thêm 8 báo cáo lỗi mới; di chuyển thư mục Evidences vào Bug Report và cập nhật hàng loạt 17 tệp báo cáo lỗi. | **INCOMPLETE** | Phù hợp với chuẩn ISTQB và yêu cầu kiểm thử thực tế. QA đã kiểm duyệt cấu trúc thư mục và chỉ đạo di chuyển thư mục minh chứng để báo cáo tự đóng gói chuyên nghiệp. | Tái cấu trúc phân chia báo cáo lỗi theo FR; xóa các tệp trùng lặp tại `HW4/docs/`; di chuyển và cập nhật đường dẫn tương đối ảnh chụp màn hình trong 17 tệp báo cáo. |
 
 ---
 
@@ -87,7 +88,7 @@ AI đã tạo ra 2 file cấu trúc hoàn thiện cho Agent Skill:
 
 ---
 
-### Artifact #2 -- HW04 Playwright Project and Matrix Runner Configuration
+## Artifact #2 -- HW04 Playwright Project and Matrix Runner Configuration
 
 | Field                | Value                                                                                      |
 | -------------------- | ------------------------------------------------------------------------------------------ |
@@ -98,7 +99,7 @@ AI đã tạo ra 2 file cấu trúc hoàn thiện cho Agent Skill:
 | **Bloom-AI Level**   | G9.2 (Apply - Triển khai cấu trúc cấu hình và chạy tự động hóa)                           |
 | **Verdict**          | VALID                                                                                      |
 
-#### (1) Prompt + Tool
+### (1) Prompt + Tool
 
 **Prompt (verbatim):**
 
@@ -121,7 +122,7 @@ Sau khi tạo xong, chạy npm install và npx playwright install
 - **Mode:** APPEND
 - **Các bước thực hiện:** AI đã tạo các file cấu hình `package.json`, `tsconfig.json`, `playwright.config.ts` và script `run-matrix.js`, sau đó chạy `npm install` và `npx playwright install`. Để chạy thử nghiệm và kiểm chứng, AI tạo các spec rỗng cho FR03, FR11, và FR19 và thực thi thành công ma trận 9 cells.
 
-#### (2) AI Output
+### (2) AI Output
 
 AI đã tạo các file dự án tại thư mục `HW4/`:
 1. `package.json`: Chứa devDependencies `@playwright/test` và `typescript`.
@@ -129,7 +130,7 @@ AI đã tạo các file dự án tại thư mục `HW4/`:
 3. `playwright.config.ts`: Định nghĩa 3 trình duyệt, lấy `baseURL` và `REPORT_DIR` từ env, tùy biến tiêu đề HTML report `Run by: 23127148 | {feature} | {browser}`.
 4. `scripts/run-matrix.js`: Script chạy tuần tự 9 cells bằng `child_process.spawnSync`, in bảng tóm tắt kết quả.
 
-#### (3)-(5) Verdict, Reasoning, Student Fix
+### (3)-(5) Verdict, Reasoning, Student Fix
 
 | Aspect             | Detail                                                                                                                                                                                                                                                                                                                                          |
 | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -143,7 +144,7 @@ AI đã tạo các file dự án tại thư mục `HW4/`:
 
 ---
 
-### Artifact #3 -- FR-03 Forgot Password Playwright Test Suite Design & Implementation
+## Artifact #3 -- FR-03 Forgot Password Playwright Test Suite Design & Implementation
 
 | Field                | Value                                                                                                        |
 | -------------------- | ------------------------------------------------------------------------------------------------------------ |
@@ -154,7 +155,7 @@ AI đã tạo các file dự án tại thư mục `HW4/`:
 | **Bloom-AI Level**   | G9.4 (Collaborate / Create - Thiết kế và phát triển kịch bản tự động hóa tích hợp)                           |
 | **Verdict**          | INCOMPLETE                                                                                                   |
 
-#### (1) Prompt + Tool
+### (1) Prompt + Tool
 
 **Prompt (verbatim):**
 
@@ -169,19 +170,13 @@ Hãy đọc kỹ đặc tả FR-03 và FR-01 tại README.md cùng mã nguồn A
 Hãy đưa ra bảng thiết kế test case trước. Tôi sẽ duyệt danh sách này trước khi yêu cầu bạn sinh code.
 ```
 
-**Execution notes:**
-
-- **Skill(s) active:** automation-testing, ai-audit-report
-- **Mode:** APPEND
-- **Các bước thực hiện:** AI đã phân tích đặc tả yêu cầu nghiệp vụ của tính năng FR-03 và các ràng buộc liên quan ở FR-01/GUI/Security trong README.md, đối chiếu với mã nguồn API trong backend/server.js và mã nguồn trang React ForgotPassword.jsx. Sau khi phát hiện 10 điểm lệch đặc tả/lỗi nghiêm trọng của SUT, AI đã đề xuất chiến lược kiểm thử song song (Happy path dùng mật khẩu tương thích SUT để chạy thành công; các case kiểm thử đặc tả khác chạy và báo lỗi đúng thực tế QA). Sau đó, AI thiết kế 22 test cases chi tiết, lập mô hình dữ liệu ngoài và viết mã nguồn test Playwright hoàn thiện cùng matrix runner chạy ổn định trên Chromium, Firefox và WebKit.
-
-#### (2) AI Output
+### (2) AI Output
 
 AI đã tạo các file kiểm thử tự động tại thư mục `HW4/`:
 1. **Dữ liệu kiểm thử ngoài:** [FR03_data.json](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/test-data/FR03_data.json) chứa 22 bản ghi test cases.
 2. **Mã nguồn Playwright:** [FR03_forgot_password.spec.ts](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/tests/FR03_forgot_password.spec.ts) tự động đọc dữ liệu ngoài, thực thi tuần tự các bước khôi phục mật khẩu, xử lý Dialog Alert, định vị các phần tử React động và kiểm chứng kết quả bằng các assertion web-first của Playwright.
 
-#### (3)-(5) Verdict, Reasoning, Student Fix
+### (3)-(5) Verdict, Reasoning, Student Fix
 
 | Aspect             | Detail                                                                                                                                                                                                                                                                                                                                           |
 | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -195,7 +190,7 @@ AI đã tạo các file kiểm thử tự động tại thư mục `HW4/`:
 
 ---
 
-### Artifact #4 -- FR-11 Order History Playwright Test Suite Design & Implementation
+## Artifact #4 -- FR-11 Order History Playwright Test Suite Design & Implementation
 
 | Field                | Value                                                                                                          |
 | -------------------- | -------------------------------------------------------------------------------------------------------------- |
@@ -206,7 +201,7 @@ AI đã tạo các file kiểm thử tự động tại thư mục `HW4/`:
 | **Bloom-AI Level**   | G9.4 (Collaborate / Create - Thiết kế và phát triển kịch bản tự động hóa tích hợp)                             |
 | **Verdict**          | INCOMPLETE                                                                                                     |
 
-#### (1) Prompt + Tool
+### (1) Prompt + Tool
 
 **Prompt (verbatim):**
 
@@ -221,19 +216,13 @@ Hãy đọc kỹ đặc tả FR-11 cùng các quy định giao diện (GUI Requi
 Hãy đưa ra bảng thiết kế test case trước. Tôi sẽ duyệt danh sách này trước khi yêu cầu bạn sinh code.
 ```
 
-**Execution notes:**
-
-- **Skill(s) active:** playwright, ai-audit-report
-- **Mode:** APPEND
-- **Các bước thực hiện:** AI đã phân tích các ràng buộc trong README.md và API backend trong server.js. Phát hiện 5 lỗi nghiêm trọng của SUT (cho phép hủy đơn shipping, thiếu navbar highlight, thiếu tiêu đề h1, nhãn nút Đăng xuất là "Thoát" và thiếu minh họa empty state). AI thiết kế 18 kịch bản kiểm thử dữ liệu ngoại và lập trình mã test Playwright. Sau lần chạy đầu tiên bị lỗi strict-mode do trùng lặp dữ liệu từ các lượt chạy cũ, AI bổ sung khối dọn dẹp database trong `beforeAll` trước khi seeding để chạy trơn tru trên cả 3 trình duyệt.
-
-#### (2) AI Output
+### (2) AI Output
 
 AI đã tạo các file kiểm thử tự động tại thư mục `HW4/`:
 1. **Dữ liệu kiểm thử ngoài:** [FR11_data.json](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/test-data/FR11_data.json) chứa 18 bản ghi test cases.
 2. **Mã nguồn Playwright:** [FR11_order_history.spec.ts](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/tests/FR11_order_history.spec.ts) thực hiện kiểm thử tự động hóa hướng dữ liệu, bao gồm kết nối cơ sở dữ liệu SQLite cục bộ để làm sạch trước khi gieo dữ liệu (seeding).
 
-#### (3)-(5) Verdict, Reasoning, Student Fix
+### (3)-(5) Verdict, Reasoning, Student Fix
 
 | Aspect             | Detail                                                                                                                                                                                                                                                                                                                                                                       |
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -247,18 +236,18 @@ AI đã tạo các file kiểm thử tự động tại thư mục `HW4/`:
 
 ---
 
-### Artifact #5 -- FR-19 User Management Playwright Test Suite Design & Implementation
+## Artifact #5 -- FR-19 User Management Playwright Test Suite Design & Implementation
 
-| Field | Value |
-| --- | --- |
-| **AI Tool** | Gemini 3.5 Flash |
-| **Date/Time** | 2026-08-09 21:15:00 +07:00 |
-| **Task** | Thiết kế 16 test cases và lập trình test script Playwright tự động hóa cho tính năng FR-19 (Quản lý người dùng) |
-| **Feature / Module** | FR-19 (User Management for Admin) |
-| **Bloom-AI Level** | G9.4 (Collaborate / Create - Thiết kế và phát triển kịch bản tự động hóa tích hợp) |
-| **Verdict** | INCOMPLETE |
+| Field                | Value                                                                                                           |
+| -------------------- | --------------------------------------------------------------------------------------------------------------- |
+| **AI Tool**          | Gemini 3.5 Flash                                                                                                |
+| **Date/Time**        | 2026-08-09 21:15:00 +07:00                                                                                      |
+| **Task**             | Thiết kế 16 test cases và lập trình test script Playwright tự động hóa cho tính năng FR-19 (Quản lý người dùng) |
+| **Feature / Module** | FR-19 (User Management for Admin)                                                                               |
+| **Bloom-AI Level**   | G9.4 (Collaborate / Create - Thiết kế và phát triển kịch bản tự động hóa tích hợp)                              |
+| **Verdict**          | INCOMPLETE                                                                                                      |
 
-#### (1) Prompt + Tool
+### (1) Prompt + Tool
 
 **Prompt (verbatim):**
 
@@ -273,29 +262,79 @@ Hãy đọc kỹ đặc tả FR-19 cùng các quy định phân quyền truy c�
 Hãy đưa ra bảng thiết kế test case trước. Tôi sẽ duyệt danh sách này trước khi yêu cầu bạn sinh code.
 ```
 
-**Execution notes:**
-
-- **Skill(s) active:** playwright, ai-audit-report
-- **Mode:** APPEND
-- **Các bước thực hiện:** AI đã phân tích các ràng buộc trong README.md và API backend trong server.js. Thiết kế danh sách 16 kịch bản kiểm thử dữ liệu ngoại bao gồm Access Control, User List, Deletion, Self-Prevention, GUI và bảo mật XSS. Sau đó, lập trình mã test Playwright sử dụng SQLite database cleanup. Thiết lập cơ chế tự động khôi phục tài khoản Admin sau mỗi test case và sau API self-delete để đảm bảo các test case độc lập không bị gián đoạn dữ liệu.
-
-#### (2) AI Output
+### (2) AI Output
 
 AI đã tạo các file kiểm thử tự động tại thư mục `HW4/`:
 1. **Dữ liệu kiểm thử ngoài:** [FR19_data.json](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/test-data/FR19_data.json) chứa 16 kịch bản kiểm thử.
 2. **Mã nguồn Playwright:** [FR19_user_management.spec.ts](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/tests/FR19_user_management.spec.ts) thực hiện kiểm thử tự động hóa hướng dữ liệu, kiểm tra các dialog alert và xác minh tính an toàn XSS.
 
-#### (3)-(5) Verdict, Reasoning, Student Fix
+### (3)-(5) Verdict, Reasoning, Student Fix
 
-| Aspect | Detail |
-| --- | --- |
-| **Verdict** | INCOMPLETE |
-| **Reasoning** | Bộ test case thiết kế đầy đủ các kịch bản kiểm thử theo phân tích đặc tả, chạy và phát hiện chính xác 5 lỗi nghiêm trọng của SUT (lỗi thiếu phân quyền API, lỗi tự xóa Admin, lỗi thẻ tiêu đề GUI). Tuy nhiên, kịch bản test API tự xóa tài khoản Admin ở phiên tạo đầu tiên làm thay đổi trạng thái cơ sở dữ liệu vĩnh viễn, khiến các test case chạy sau bị lỗi đăng nhập diện rộng. |
-| **Student Fix** | Điều chỉnh thiết kế dữ liệu kiểm thử trong `FR19_data.json`, bổ sung logic dọn dẹp cơ sở dữ liệu (Database Cleanup) cho các tài khoản `email LIKE '%_f19_%'` sử dụng thư viện `sqlite3` trong khối `beforeAll` trước khi gieo dữ liệu. Đồng thời, bổ sung hàm đồng bộ `reseedAdminSync` gọi trong `beforeAll`, `afterEach` và inline sau test case tự xóa để tự động khôi phục tài khoản Admin, đảm bảo tính cô lập của dữ liệu. |
-| **Reviewed by** | Nguyễn An |
-| **Review date** | 2026-08-09 |
-| **Quality rating** | Excellent |
-| **Issues found** | Admin deletion test polluted state for subsequent test cases |
+| Aspect             | Detail                                                                                                                                                                                                                                                                                                                                                                       |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Verdict**        | INCOMPLETE                                                                                                                                                                                                                                                                                                                                                                   |
+| **Reasoning**      | Bộ test case thiết kế đầy đủ các kịch bản kiểm thử theo phân tích đặc tả, chạy và phát hiện chính xác 5 lỗi nghiêm trọng của SUT (lỗi thiếu phân quyền API, lỗi tự xóa Admin, lỗi thẻ tiêu đề GUI). Tuy nhiên, kịch bản test API tự xóa tài khoản Admin ở phiên tạo đầu tiên làm thay đổi trạng thái cơ sở dữ liệu vĩnh viễn, khiến các test case chạy sau bị lỗi đăng nhập diện rộng. |
+| **Student Fix**    | Điều chỉnh thiết kế dữ liệu kiểm thử trong `FR19_data.json`, bổ sung logic dọn dẹp cơ sở dữ liệu (Database Cleanup) cho các tài khoản `email LIKE '%_f19_%'` sử dụng thư viện `sqlite3` trong khối `beforeAll` trước khi gieo dữ liệu. Đồng thời, bổ sung hàm đồng bộ `reseedAdminSync` gọi trong `beforeAll`, `afterEach` và inline sau test case tự xóa để tự động khôi phục tài khoản Admin, đảm bảo tính cô lập của dữ liệu. |
+| **Reviewed by**    | Nguyễn An                                                                                                                                                                                                                                                                                                                                                                    |
+| **Review date**    | 2026-08-09                                                                                                                                                                                                                                                                                                                                                                   |
+| **Quality rating** | Excellent                                                                                                                                                                                                                                                                                                                                                                    |
+| **Issues found**   | Admin deletion test polluted state for subsequent test cases                                                                                                                                                                                                                                                                                                                 |
+
+---
+
+## Artifact #6 -- Bug Reports Refactoring, GUI Bug Expansion & Git Operations
+
+| Field                | Value                                                                                                                                                                             |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **AI Tool**          | Gemini 3.5 Flash                                                                                                                                                                  |
+| **Date/Time**        | 2026-08-09 22:20:00 +07:00                                                                                                                                                        |
+| **Task**             | Giải quyết xung đột Git Stash, bổ sung 8 báo cáo lỗi giao diện, di chuyển thư mục Evidences vào trong Bug Report và dọn dẹp các tệp trùng lặp.                                    |
+| **Feature / Module** | HW04 Task 2 & Task 3 (Bug Reports, Evidences & Git Operations)                                                                                                                    |
+| **Bloom-AI Level**   | G9.4 (Collaborate / Create - Khắc phục sự cố môi trường Git, tự động hóa cập nhật mã nguồn báo cáo lỗi hàng loạt và phân tích lỗi giao diện chuyên sâu)                           |
+| **Verdict**          | INCOMPLETE                                                                                                                                                                        |
+
+### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Hãy giúp tôi viết các tài liệu báo cáo chất lượng cao...
+Chia bug reports thành từng FR đi, Evidences của chia thành FR...
+Kiểm tra lại kỹ xem chạy automation testing cho FR03, FR11, FR19 ổn hết chưa vậy...
+Ủa khoan nhưng mà sao chưa được git stash pop hết vậy...
+Hãy kiểm tra xem HW4 có bị trùng hay dư file nào không, đảm bảo...
+Và có nên chuyển evidences vào trong bug report không, vì phải có evidence đẻ chứng minh nó lag bug report...
+Hãy cập nhật AI Audit Report
+```
+
+**Execution notes:**
+
+- **Skill(s) active:** ai-audit-report
+- **Mode:** APPEND / FINALIZE
+- **Các bước thực hiện:** AI đã phân tích sự cố SQLite bị khóa do tiến trình Node backend đang hoạt động, thực hiện tắt tiến trình Node, loại bỏ các file untracked xung đột và pop thành công Git Stash. Phân tích chi tiết các báo cáo chạy test HTML thất bại để phát hiện thêm 8 lỗi giao diện, bản dịch và bảo mật mới (nhãn Đăng ký/Đăng nhập, ô password plaintext, thiếu step indicator, thiếu dấu sao bắt buộc, thiếu thông báo lỗi inline, thiếu vô hiệu hóa nút submit, thiếu h1, thiếu highlight menu). Viết bổ sung 8 file báo cáo lỗi mới. Sau đó, viết kịch bản di chuyển thư mục `Evidences` vào trong `Bug Report/Evidences/` và thay đổi hàng loạt đường dẫn ảnh tương đối thành công.
+
+### (2) AI Output
+
+AI đã thực hiện các hành động dọn dẹp và bổ sung:
+1. **Giải quyết Git Stash:** Tắt tiến trình Node.js (PID 23280), dọn dẹp các file untracked xung đột và pop Git Stash thành công để phục hồi dữ liệu test.
+2. **Tạo thêm 8 file báo cáo lỗi giao diện & bảo mật:**
+   - FR03: `BUG-FORGOT-004.md` đến `BUG-FORGOT-009.md`
+   - FR11: `BUG-ORDERS-004.md` và `BUG-ORDERS-005.md`
+3. **Di chuyển & Cập nhật liên kết ảnh:** Di chuyển thư mục `Evidences/` vào trong `Bug Report/` và thay đổi đường dẫn ảnh tương đối từ `../../Evidences/` sang `../Evidences/` trong toàn bộ 17 file báo cáo lỗi.
+4. **Xóa các file trùng lặp:** Xóa bỏ 9 file báo cáo lỗi cũ dư thừa tại `HW4/docs/`.
+5. **Khởi động lại API Server:** Đảm bảo server hoạt động ổn định trên cổng 3000.
+
+### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect             | Detail                                                                                                                                                                                                                                                                                                             |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Verdict**        | INCOMPLETE                                                                                                                                                                                                                                                                                                         |
+| **Reasoning**      | Phân tích lỗi từ báo cáo HTML giúp xác định thêm các lỗi giao diện và bảo mật thực tế của SUT để báo cáo đầy đủ, tuân thủ đúng yêu cầu chất lượng QA. Quyết định di chuyển thư mục Evidences giúp cấu trúc thư mục của báo cáo gọn gàng, tự đóng gói chuyên nghiệp. Tuy nhiên, lập trình viên cần kiểm duyệt các file trùng lặp để xóa bỏ hoàn toàn. |
+| **Student Fix**    | Chỉ đạo phân chia báo cáo lỗi theo các thư mục FR03, FR11, FR19 riêng biệt; yêu cầu dọn dẹp các file báo cáo lỗi dư thừa tại thư mục `HW4/docs/`; đồng ý di chuyển thư mục `Evidences` vào bên trong `Bug Report` để báo cáo gọn gàng hơn.                                                                          |
+| **Reviewed by**    | Nguyễn An                                                                                                                                                                                                                                                                                                          |
+| **Review date**    | 2026-08-09                                                                                                                                                                                                                                                                                                         |
+| **Quality rating** | Excellent                                                                                                                                                                                                                                                                                                          |
+| **Issues found**   | Duplicate reports in old paths; relative image paths broken after directory relocation                                                                                                                                                                                                                             |
 
 ---
 
@@ -303,22 +342,22 @@ AI đã tạo các file kiểm thử tự động tại thư mục `HW4/`:
 
 | Metric                                   | Count | Percentage |
 | ---------------------------------------- | ----: | ---------: |
-| **Total AI-generated artifacts audited** |     5 |       100% |
-| **VALID (correct, accepted as-is)**      |     2 |      40.0% |
+| **Total AI-generated artifacts audited** |     6 |       100% |
+| **VALID (correct, accepted as-is)**      |     2 |      33.3% |
 | **INVALID (wrong; rejected)**            |     0 |         0% |
-| **INCOMPLETE (acceptable after edits)**  |     3 |      60.0% |
+| **INCOMPLETE (acceptable after edits)**  |     4 |      66.7% |
 
 ---
 
 ## 5. Conclusion
 
-Việc áp dụng AI (Gemini 3.5 Flash) để hỗ trợ viết bộ kiểm thử tự động hóa cho các tính năng nghiệp vụ, giao diện và quản trị (FR-03, FR-11, FR-19) giúp tăng tốc độ thiết kế kịch bản kiểm thử một cách toàn diện. AI gợi ý các trường hợp biên rất tốt, tự động hóa mã nguồn cấu hình dự án nhanh chóng. Tuy nhiên, lập trình viên vẫn phải kiểm duyệt kỹ lưỡng để giải quyết các vấn đề liên quan đến trạng thái dữ liệu (data state isolation/cleanup) nhằm tránh trùng lặp dữ liệu khi chạy lặp lại nhiều lần. Vai trò kiểm duyệt của QA là cực kỳ quan trọng để liên kết kết quả lỗi thực tế của SUT với tài liệu đặc tả nghiệp vụ.
+Việc áp dụng AI (Gemini 3.5 Flash) để viết kiểm thử tự động và phân tích báo cáo HTML chạy test giúp tăng tốc độ thiết kế kịch bản và phát hiện lỗi giao diện/bảo mật. AI hỗ trợ sinh nhanh các bản thảo báo cáo lỗi chi tiết. Tuy nhiên, kiểm thử viên phải trực tiếp giải quyết các vấn đề vận hành như cô lập trạng thái dữ liệu (database clean-up), xử lý xung đột Git Stash do tiến trình bị khóa và tối ưu hóa cấu trúc thư mục lưu trữ để tài liệu báo cáo tự đóng gói chuyên nghiệp. Vai trò kiểm duyệt và định hướng cấu trúc của con người vẫn là yếu tố quyết định chất lượng QA.
 
 ---
 
 ## 6. Mandatory Disclosure
 
-The EShop Automation Testing Agent Skill, Playwright project configuration, and test suites for FR-03, FR-11, and FR-19 were initially generated by Gemini 3.5 Flash; I reviewed and modified the final parameters, assertions, and database cleanup routines; all Playwright test scripts, localized test data structures, and HTML reports containing my Student ID were executed and verified entirely by me. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any automated screenshot validation or student-identifying evidence listed in the prohibited category.
+The EShop Automation Testing Agent Skill, Playwright project configuration, test suites for FR-03, FR-11, and FR-19, and the final 17 structured bug reports were initially generated by Gemini 3.5 Flash; I reviewed and modified the final parameters, assertions, database cleanup routines, and directory structure; all Playwright test scripts, localized test data structures, HTML reports, and the relocated Evidences containing my Student ID were executed and verified entirely by me. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any automated screenshot validation or student-identifying evidence listed in the prohibited category.
 
 ---
 
@@ -347,6 +386,7 @@ The EShop Automation Testing Agent Skill, Playwright project configuration, and 
 | 3   | Gemini 3.5 Flash | Test Suite    | FR-03 (Auth)   | 2026-08-09 | G9.4     | INCOMPLETE |
 | 4   | Gemini 3.5 Flash | Test Suite    | FR-11 (Orders) | 2026-08-09 | G9.4     | INCOMPLETE |
 | 5   | Gemini 3.5 Flash | Test Suite    | FR-19 (Admin)  | 2026-08-09 | G9.4     | INCOMPLETE |
+| 6   | Gemini 3.5 Flash | Git & Reports | HW04 Task 2 & 3| 2026-08-09 | G9.4     | INCOMPLETE |
 
 ### Contribution Breakdown
 
@@ -358,6 +398,8 @@ The EShop Automation Testing Agent Skill, Playwright project configuration, and 
 | Triển khai bộ test FR-11                   |  75% |     25% |
 | Triển khai bộ test FR-19                   |  75% |     25% |
 | Khai triển & Kiểm thử chạy thực tế         |  15% |     85% |
+| Tái cấu trúc & Bổ sung báo cáo lỗi         |  50% |     50% |
+| Xử lý sự cố môi trường & Git               |  40% |     60% |
 | Viết báo cáo & Audit Log                   |  40% |     60% |
 
 ### Compliance Checklist
