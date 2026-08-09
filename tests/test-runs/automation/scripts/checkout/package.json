@@ -12,7 +12,8 @@
     "test:api": "playwright test tests/checkout-api.spec.ts",
     "test:ui": "playwright test tests/checkout-ui.spec.ts",
     "test:bva": "playwright test tests/checkout-bva.spec.ts",
-    "report": "playwright show-report"
+    "report": "playwright show-report",
+    "stamp-report": "node ../_common/stamp-report.js \"EShop Checkout Automation\""
   },
   "keywords": [
     "playwright",

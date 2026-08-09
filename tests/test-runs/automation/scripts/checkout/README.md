@@ -1,207 +1,60 @@
-# Checkout (FR-08) — Playwright Automation Test Suite
+# Báo cáo Kết quả Kiểm thử Tự động - Phân hệ Checkout (FR-08)
 
-> **Student:** Mạch Quốc Tấn — MSSV: **23127115**  
-> **Assignment:** Homework 04 — Automation Testing  
-> **Feature:** FR-08 Checkout  
-> **Course:** CS423 / CSC15003 — Software Testing
+Thư mục này chứa các kịch bản kiểm thử tự động bằng Playwright cho tính năng Thanh toán (FR-08 Checkout).
 
----
+## Thông tin chạy test
 
-## Tổng quan
+- **Ngày thực hiện**: 2026-08-09
+- **Người thực hiện**: Mạch Quốc Tấn
+- **Công cụ**: Playwright v1.40+ (TypeScript)
+- **Môi trường chạy**: Localhost (Backend: port 3000, Frontend Web: port 5173)
+- **Trình duyệt kiểm thử**: Chromium, Firefox, WebKit (Đa trình duyệt)
 
-Bộ kiểm thử tự động này bao phủ toàn bộ **22 test case** cho tính năng Checkout (FR-08) của EShop SUT, được tổ chức thành 3 file spec:
+## Kết quả tổng quan
 
-| File spec                    | Test cases                | Kỹ thuật                 |
-| ---------------------------- | ------------------------- | ------------------------ |
-| `tests/checkout-api.spec.ts` | TC-CHECKOUT-001 → 015     | Equivalence Partitioning |
-| `tests/checkout-ui.spec.ts`  | TC-CHECKOUT-011, 012      | EP (Web UI)              |
-| `tests/checkout-bva.spec.ts` | TC-CHECKOUT-BVA-001 → 007 | Boundary Value Analysis  |
+- **Tổng số kịch bản chạy (Browser Runs)**: 87 lượt (29 kịch bản × 3 trình duyệt)
+- **Số lượt Pass**: 45
+- **Số lượt Fail**: 42
 
-### Assertion patterns được dùng (≥ 3 loại theo yêu cầu đề)
+## Danh sách các kịch bản kiểm thử
 
-| Pattern | Loại                      | Ví dụ trong script                                                   |
-| ------- | ------------------------- | -------------------------------------------------------------------- |
-| 1       | Trạng thái HTTP / phần tử | `expect(resp.status()).toBe(200)`, `toBeVisible()`, `toBeDisabled()` |
-| 2       | Nội dung / giá trị trường | `toContain('Checkout successful')`, `toBe('pending')`                |
-| 3       | Soft assertion            | `expect.soft(order.total_amount).toBe(10000000)`                     |
-| 4       | Mạng / API response       | `request.post(...)`, kiểm tra `status()` và `json()`                 |
-| 5       | Số lượng / đếm phần tử    | `toHaveLength(0)`, `toHaveLength(2)`                                 |
+| Mã Test Case              | Tên Kịch bản                                   | Chromium | Firefox | WebKit | Ghi chú                                   |
+| :------------------------ | :--------------------------------------------- | :------- | :------ | :----- | :---------------------------------------- |
+| TC-CHECKOUT-001           | Thanh toán thành công giỏ hàng hợp lệ          | Fail     | Fail    | Fail   | BUG-CHECKOUT-006 (Cart not cleared)       |
+| TC-CHECKOUT-002           | Thanh toán với token JWT không hợp lệ          | Fail     | Fail    | Fail   | BUG-CHECKOUT-001 (Auth bypass)            |
+| TC-CHECKOUT-002B          | Thanh toán không đính kèm header token         | Pass     | Pass    | Pass   | Chặn đúng yêu cầu thiếu token             |
+| TC-CHECKOUT-003           | Thanh toán khi giỏ hàng trống                  | Fail     | Fail    | Fail   | BUG-CHECKOUT-002 (Empty cart accepted)    |
+| TC-CHECKOUT-004           | Sửa total_amount thành mốc giá rẻ hơn          | Fail     | Fail    | Fail   | BUG-CHECKOUT-003 (Forged amount accepted) |
+| TC-CHECKOUT-005           | Địa chỉ giao hàng thông thường                 | Fail     | Fail    | Fail   | BUG-CHECKOUT-006 (Cart not cleared)       |
+| TC-CHECKOUT-006           | Địa chỉ giao hàng chứa số và ký tự đặc biệt    | Pass     | Pass    | Pass   | Hoạt động đúng                            |
+| TC-CHECKOUT-007           | Địa chỉ giao hàng Tiếng Việt có dấu            | Pass     | Pass    | Pass   | Hoạt động đúng                            |
+| TC-CHECKOUT-008A..008B    | Thiếu shipping_address / shipping_address null | Pass     | Pass    | Pass   | Hoạt động đúng                            |
+| TC-CHECKOUT-009           | Địa chỉ giao hàng chỉ chứa khoảng trắng        | Pass     | Pass    | Pass   | Chặn đúng (400)                           |
+| TC-CHECKOUT-010A          | Địa chỉ giao hàng null                         | Pass     | Pass    | Pass   | Chặn đúng (400)                           |
+| TC-CHECKOUT-010B          | Địa chỉ giao hàng number                       | Pass     | Pass    | Pass   | Chặn đúng (400)                           |
+| TC-CHECKOUT-010C          | Địa chỉ giao hàng object                       | Fail     | Fail    | Fail   | BUG-CHECKOUT-010                          |
+| TC-CHECKOUT-010D          | Địa chỉ giao hàng array                        | Pass     | Pass    | Pass   | Chặn đúng / xử lý an toàn                 |
+| TC-CHECKOUT-011           | Xem trang checkout khi có sản phẩm             | Fail     | Fail    | Fail   | BUG-CHECKOUT-008 (UI error)               |
+| TC-CHECKOUT-012           | Chỉnh sửa tổng tiền trực tiếp trên UI          | Fail     | Fail    | Fail   | BUG-CHECKOUT-009 (UI editable)            |
+| TC-CHECKOUT-013           | Sửa total_amount cao hơn tổng giá gốc          | Fail     | Fail    | Fail   | BUG-CHECKOUT-004 (Forged amount accepted) |
+| TC-CHECKOUT-014           | Sửa đổi giá (price) của từng item sản phẩm     | Fail     | Fail    | Fail   | BUG-CHECKOUT-005 (Forged items price)     |
+| TC-CHECKOUT-015           | Checkout của User B không ảnh hưởng User A     | Fail     | Fail    | Fail   | BUG-CHECKOUT-007 (Cart leak delete)       |
+| TC-CHECKOUT-BVA-001       | Thanh toán thành công biên dưới (1 sản phẩm)   | Fail     | Fail    | Fail   | BUG-CHECKOUT-006 (Cart not cleared)       |
+| TC-CHECKOUT-BVA-002       | Sửa total_amount chênh lệch nhỏ hơn (-1₫)      | Fail     | Fail    | Fail   | BUG-CHECKOUT-003                          |
+| TC-CHECKOUT-BVA-003       | Sửa total_amount chênh lệch lớn hơn (+1₫)      | Fail     | Fail    | Fail   | BUG-CHECKOUT-004                          |
+| TC-CHECKOUT-BVA-004..007C | Các kịch bản biên shipping_address             | Pass     | Pass    | Pass   | Hoạt động đúng                            |
 
----
+## Danh sách lỗi phát hiện (Báo cáo lỗi tự động)
 
-## Yêu cầu môi trường
+Các lỗi phát hiện trong quá trình kiểm thử tự động được ghi nhận tại thư mục `tests/bug-reports/automation/checkout/`:
 
-| Phần mềm         | Phiên bản tối thiểu     |
-| ---------------- | ----------------------- |
-| Node.js          | ≥ 18.x                  |
-| pnpm             | ≥ 8.x                   |
-| @playwright/test | ^1.49.1                 |
-
-### Dịch vụ cần chạy trước khi test
-
-| Dịch vụ          | URL mặc định            | Ghi chú                              |
-| ---------------- | ----------------------- | ------------------------------------ |
-| **Backend API**  | `http://localhost:3000` | Express.js backend                   |
-| **Frontend Web** | `http://localhost:5173` | Vite frontend (chỉ cần cho UI tests) |
-
----
-
-## Cài đặt
-
-```bash
-# 1. Di chuyển vào thư mục này
-cd tests/test-runs/automation/scripts/checkout
-
-# 2. Cài đặt dependencies
-pnpm install
-
-# 3. Cài browser binaries (lần đầu)
-pnpm exec playwright install
-```
-
----
-
-## Chạy test
-
-### Chạy toàn bộ (3 browsers: Chromium, Firefox, WebKit)
-
-```bash
-pnpm test
-# hoặc
-pnpm exec playwright test
-```
-
-### Chạy theo browser riêng lẻ
-
-```bash
-pnpm test:chromium       # Chỉ Chromium
-pnpm test:firefox        # Chỉ Firefox
-pnpm test:webkit         # Chỉ WebKit (Safari engine)
-```
-
-### Chạy theo file spec riêng lẻ
-
-```bash
-pnpm test:api            # Chỉ API tests (TC-001 → TC-015)
-pnpm test:bva            # Chỉ BVA tests (BVA-001 → BVA-007)
-pnpm test:ui             # Chỉ UI tests (TC-011, TC-012)
-```
-
-### Chạy với output chi tiết
-
-```bash
-pnpm exec playwright test --reporter=list,html
-```
-
-### Mở HTML Report
-
-```bash
-pnpm report
-# hoặc
-pnpm exec playwright show-report
-```
-
-Report được sinh ra tại `playwright-report/index.html`.  
-Tiêu đề report sẽ hiển thị: **"Run by: 23127115 (Mạch Quốc Tấn)"** kèm ISO timestamp.
-
----
-
-## Cấu trúc thư mục
-
-```
-tests/test-runs/automation/scripts/checkout/
-├── package.json                      # Dependencies & pnpm scripts
-├── playwright.config.ts              # Multi-browser config, student metadata
-├── tsconfig.json                     # TypeScript config
-│
-├── pages/
-│   └── CheckoutPage.ts               # Page Object Model (API helper + Web UI)
-│
-├── data/
-│   └── checkout-test-data.json       # Test data cho tất cả test cases
-│
-├── tests/
-│   ├── checkout-api.spec.ts          # TC-001–015 (Equivalence Partitioning, API)
-│   ├── checkout-ui.spec.ts           # TC-011, 012 (Web UI tests)
-│   └── checkout-bva.spec.ts          # BVA-001–007 (Boundary Value Analysis)
-│
-└── playwright-report/                # (tự sinh sau khi chạy)
-    └── index.html
-```
-
----
-
-## Tài khoản test mặc định
-
-Bộ test sẽ tự **đăng ký** hai tài khoản khi khởi chạy (nếu chưa tồn tại):
-
-| Tài khoản | Email               | Password       |
-| --------- | ------------------- | -------------- |
-| User A    | `user_a@eshop.test` | `Password123!` |
-| User B    | `user_b@eshop.test` | `Password123!` |
-
-> **Lưu ý:** Nếu backend đã có tài khoản trùng email, bước đăng ký sẽ bỏ qua (ignore 400) và tiến hành đăng nhập bình thường.
-
----
-
-## Thiết lập thủ công (nếu cần)
-
-Nếu muốn dùng tài khoản có sẵn, chỉnh sửa file `data/checkout-test-data.json`:
-
-```json
-{
-  "users": {
-    "userA": {
-      "email": "your_account@domain.com",
-      "password": "YourPassword",
-      "name": "Your Name"
-    }
-  }
-}
-```
-
----
-
-## Lưu ý về thứ tự chạy test
-
-- Tests được cấu hình chạy **tuần tự** (`fullyParallel: false`, `workers: 1`) để tránh race condition trên cart state chia sẻ giữa các test.
-- Mỗi test tự **reset cart** trước khi thực thi (gọi `DELETE /api/cart` hoặc checkout để làm trống giỏ).
-- Các test characterization (`TC-008`, `TC-009`, `TC-010`, `TC-013`) dùng `expect.soft()` vì SRS chưa định nghĩa hành vi bắt buộc — các test này **ghi nhận hành vi thực tế** thay vì áp đặt một kết quả cụ thể.
-
----
-
-## Kết quả mong đợi và bugs đã biết
-
-| Test ID                     | Expected                          | Status   | Bug                   |
-| --------------------------- | --------------------------------- | -------- | --------------------- |
-| TC-CHECKOUT-001             | 200 + cart cleared                | **FAIL** | BUG-CHECKOUT-001, 002 |
-| TC-CHECKOUT-002             | 401 Unauthorized                  | Pass     | —                     |
-| TC-CHECKOUT-003             | 400 Empty cart                    | **FAIL** | BUG-CHECKOUT-003      |
-| TC-CHECKOUT-004             | 400 or 200 w/ server total        | **FAIL** | BUG-CHECKOUT-004      |
-| TC-CHECKOUT-005             | 200 + address preserved           | Not Run  | —                     |
-| TC-CHECKOUT-006             | 200 + Unicode address OK          | Not Run  | —                     |
-| TC-CHECKOUT-007             | XSS safe (no alert)               | Not Run  | —                     |
-| TC-CHECKOUT-008             | 200 or 400, no 500                | Not Run  | —                     |
-| TC-CHECKOUT-009             | 200 or 400, no 500                | Not Run  | —                     |
-| TC-CHECKOUT-010             | 200 or 400, no `[object Object]`  | Not Run  | —                     |
-| TC-CHECKOUT-011             | All product rows visible          | Not Run  | —                     |
-| TC-CHECKOUT-012             | Total read-only, backend enforces | Not Run  | —                     |
-| TC-CHECKOUT-013             | 200, backend computes total       | Not Run  | —                     |
-| TC-CHECKOUT-014             | Forged items rejected             | Not Run  | —                     |
-| TC-CHECKOUT-015             | Only actor's cart cleared         | Not Run  | —                     |
-| TC-CHECKOUT-BVA-001         | 200 + 1-item cart success         | **FAIL** | BUG-CHECKOUT-001      |
-| TC-CHECKOUT-BVA-002         | 400 or 200 w/ server total        | **FAIL** | BUG-CHECKOUT-004      |
-| TC-CHECKOUT-BVA-003         | 400 or 200 w/ server total        | **FAIL** | BUG-CHECKOUT-004      |
-| TC-CHECKOUT-BVA-004         | No 500; 200 or 400                | Not Run  | —                     |
-| TC-CHECKOUT-BVA-005         | No 500; 200 or 400                | Not Run  | —                     |
-| TC-CHECKOUT-BVA-006         | No 500, no truncation             | Not Run  | —                     |
-| TC-CHECKOUT-BVA-007 (A/B/C) | No 500, no truncation             | Not Run  | —                     |
-
----
-
-## Tham khảo thêm
-
-- [Playwright Docs](https://playwright.dev/docs/intro)
-- [API Specification EShop](../../api_specification.md)
-- [Test Cases Checkout](../../test-cases/checkout/)
-- [Bug Reports](../../../docs/report/)
+- [BUG-CHECKOUT-001](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-001.md): Khách hàng dùng token JWT không hợp lệ vẫn thanh toán thành công.
+- [BUG-CHECKOUT-002](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-002.md): Giỏ hàng trống vẫn cho phép gửi yêu cầu thanh toán thành công.
+- [BUG-CHECKOUT-003](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-003.md): Backend chấp nhận total_amount giả mạo thấp hơn giá thực tế.
+- [BUG-CHECKOUT-004](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-004.md): Backend chấp nhận total_amount giả mạo cao hơn giá thực tế.
+- [BUG-CHECKOUT-005](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-005.md): Backend chấp nhận giá sản phẩm / items giả mạo từ client.
+- [BUG-CHECKOUT-006](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-006.md): Giỏ hàng không được xóa sạch sau khi thực hiện thanh toán thành công.
+- [BUG-CHECKOUT-007](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-007.md): Lỗi rò rỉ phân tách dữ liệu: API Checkout xóa nhầm giỏ hàng của user khác.
+- [BUG-CHECKOUT-008](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-008.md): UI Checkout hiển thị thiếu thông tin sản phẩm.
+- [BUG-CHECKOUT-009](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-009.md): UI Checkout cho phép sửa tổng tiền total_amount.
+- [BUG-CHECKOUT-010](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-010.md): API Checkout chấp nhận shipping_address sai kiểu dữ liệu dạng Object.

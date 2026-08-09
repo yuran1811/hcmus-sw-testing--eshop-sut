@@ -1,4 +1,5 @@
 import { Page, APIRequestContext, Locator } from '@playwright/test';
+import { automationEnv } from '../../_common/env';
 
 /**
  * Page Object Model for Checkout API + Web UI (FR-08)
@@ -48,7 +49,7 @@ export class CheckoutAPIHelper {
   readonly request: APIRequestContext;
   readonly baseURL: string;
 
-  constructor(request: APIRequestContext, baseURL = 'http://localhost:3000') {
+  constructor(request: APIRequestContext, baseURL = automationEnv.apiBaseUrl) {
     this.request = request;
     this.baseURL = baseURL;
   }
@@ -94,7 +95,7 @@ export class CheckoutAPIHelper {
    * performing a checkout or other helper means. Adjust if needed.
    */
   async clearCart(token: string) {
-    // Try standard delete; if 404 use workaround
+    // Try standard delete; if not-found use workaround
     const response = await this.request.delete(`${this.baseURL}/api/cart`, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -234,19 +235,19 @@ export class CheckoutWebPage {
   }
 
   /** Navigate to the web frontend home page */
-  async gotoFrontend(baseURL = 'http://localhost:5173') {
+  async gotoFrontend(baseURL = automationEnv.frontendBaseUrl) {
     await this.page.goto(baseURL);
     await this.page.waitForLoadState('domcontentloaded');
   }
 
   /** Navigate to the cart page */
-  async gotoCart(baseURL = 'http://localhost:5173') {
+  async gotoCart(baseURL = automationEnv.frontendBaseUrl) {
     await this.page.goto(`${baseURL}/cart`);
     await this.page.waitForLoadState('domcontentloaded');
   }
 
   /** Navigate to the checkout page */
-  async gotoCheckout(baseURL = 'http://localhost:5173') {
+  async gotoCheckout(baseURL = automationEnv.frontendBaseUrl) {
     await this.page.goto(`${baseURL}/checkout`);
     await this.page.waitForLoadState('domcontentloaded');
   }

@@ -40,6 +40,8 @@
       "tc_id": "TC-PLAS-006",
       "description": "Tìm kiếm từ khóa cực dài 300 ký tự A",
       "search_keyword_length": 300,
+      "search_delay_ms": 1000,
+      "loading_timeout_ms": 500,
       "check_no_crash": true
     },
     {
@@ -112,12 +114,14 @@
     {
       "tc_id": "TC-PLAS-017",
       "description": "Kiểm tra điều hướng logo EShop về trang chủ",
+      "search_keyword": "MacBook",
       "click_logo": true
     },
     {
       "tc_id": "TC-PLAS-018",
       "description": "Kiểm tra hiển thị tổng số sản phẩm bên dưới",
       "search_keyword": "",
+      "footer_count_text": "Hiển thị 5 sản phẩm",
       "check_footer_count": true
     },
     {

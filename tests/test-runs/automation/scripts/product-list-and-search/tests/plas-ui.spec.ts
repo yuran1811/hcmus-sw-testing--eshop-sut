@@ -16,6 +16,7 @@
 import { test, expect } from '@playwright/test';
 import { ProductListPage } from '../pages/ProductListPage';
 import testData from '../data/plas-test-data.json';
+import { UI_CONSTANTS } from '../../_common/constants';
 
 test.describe('FR-05 Product List & Search — UI & Navigation', () => {
 
@@ -36,16 +37,20 @@ test.describe('FR-05 Product List & Search — UI & Navigation', () => {
     // [Pattern 5] — Count = 1
     const count = await plasPage.getProductCount();
     expect(count).toBe(tc.expected_count);
+    const h1Count = await plasPage.getH1Count();
+    expect(h1Count).toBe(UI_CONSTANTS.EXPECTED_H1_COUNT);
 
     // [Pattern 1] — Product image is visible
-    await expect(plasPage.productImages.first()).toBeVisible();
+    const image = plasPage.productImages.first();
+    await expect(image).toBeVisible();
+    await expect(image).toHaveAttribute('alt', /.+/);
 
     // [Pattern 3] — Title & price check
     const titles = await plasPage.getProductTitles();
     expect(titles[0]).toContain(tc.expected_title!);
 
     const prices = await plasPage.getProductPrices();
-    expect(prices[0]).toBeTruthy();
+    expect(prices[0]).toContain(UI_CONSTANTS.CURRENCY_SYMBOL);
   });
 
   // ──────────────────────────────────────────────────────────────────────────
@@ -82,7 +87,7 @@ test.describe('FR-05 Product List & Search — UI & Navigation', () => {
   test('TC-PLAS-017: Kiểm tra điều hướng logo EShop về trang chủ', async ({ page }) => {
     const tc = testData.test_cases.find(c => c.tc_id === 'TC-PLAS-017')!;
     // Perform search first
-    await plasPage.search('MacBook');
+    await plasPage.search(tc.search_keyword!);
 
     // [Pattern 1] — Logo link is visible
     await expect(plasPage.logoLink).toBeVisible();
@@ -99,7 +104,7 @@ test.describe('FR-05 Product List & Search — UI & Navigation', () => {
   test('TC-PLAS-018: Kiểm tra hiển thị tổng số sản phẩm bên dưới (Footer count)', async ({ page }) => {
     const tc = testData.test_cases.find(c => c.tc_id === 'TC-PLAS-018')!;
     // [Pattern 1] — Footer product count indicator check
-    const footerCount = page.locator('text=Hiển thị 5 sản phẩm').or(page.locator('h1.text-center.text-gray-400'));
+    const footerCount = page.locator(`text=${tc.footer_count_text}`).or(page.locator('h1.text-center.text-gray-400'));
     await expect(footerCount.first()).toBeVisible();
   });
 
@@ -113,7 +118,6 @@ test.describe('FR-05 Product List & Search — UI & Navigation', () => {
     await page.waitForLoadState('domcontentloaded');
 
     // [Pattern 1] — Product cards visible after load
-    const count = await plasPage.getProductCount();
-    expect(count).toBeGreaterThan(0);
+    await expect.poll(async () => await plasPage.getProductCount()).toBeGreaterThan(0);
   });
 });

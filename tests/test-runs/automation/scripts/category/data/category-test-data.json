@@ -17,7 +17,7 @@
       "description": "Thêm danh mục thành công với tên hợp lệ",
       "type": "positive",
       "technique": "Equivalence Partitioning",
-      "name": "Điện tử",
+      "name_prefix": "Điện tử",
       "expected_status_oneOf": [200, 201],
       "expect_in_list": true
     },
@@ -44,6 +44,8 @@
       "description": "Xem danh sách danh mục thành công",
       "type": "positive",
       "technique": "Equivalence Partitioning",
+      "list_name_prefix_a": "List Test A",
+      "list_name_prefix_b": "List Test B",
       "expected_status": 200,
       "expect_array": true,
       "min_count": 1
@@ -53,8 +55,18 @@
       "description": "Xóa danh mục thành công",
       "type": "positive",
       "technique": "Equivalence Partitioning",
+      "delete_target_prefix": "Thời trang DELETE_TEST",
       "expected_status_oneOf": [200, 204],
       "expect_deleted": true
+    },
+    {
+      "tc_id": "TC-CATEGORY-009",
+      "description": "Chính sách xóa danh mục đang được sản phẩm tham chiếu",
+      "type": "characterization",
+      "technique": "Equivalence Partitioning",
+      "protected_target_id": 1,
+      "expected_status_oneOf": [200, 204, 400, 409],
+      "must_not_500": true
     },
     {
       "tc_id": "TC-CATEGORY-012",
@@ -69,7 +81,7 @@
       "description": "Thêm danh mục Unicode và emoji hợp lệ",
       "type": "positive",
       "technique": "Equivalence Partitioning",
-      "name": "Đồ gia dụng – Nhà bếp 🍳",
+      "name_prefix": "Đồ gia dụng – Nhà bếp 🍳",
       "expected_status_oneOf": [200, 201],
       "expect_in_list": true,
       "expect_name_preserved": true
@@ -79,8 +91,17 @@
       "description": "Đặc tả hóa chính sách tạo hai danh mục trùng tên",
       "type": "characterization",
       "technique": "Equivalence Partitioning",
-      "name": "Đồ sưu tầm",
+      "name_prefix": "Đồ sưu tầm",
       "expected_status_oneOf": [200, 201, 400, 409],
+      "must_not_500": true
+    },
+    {
+      "tc_id": "TC-CATEGORY-020",
+      "description": "Xóa lặp cùng category_id — idempotency characterization",
+      "type": "characterization",
+      "technique": "Equivalence Partitioning",
+      "idempotency_target_prefix": "Dùng để kiểm tra xóa lặp",
+      "expected_status_oneOf": [200, 204, 404, 410],
       "must_not_500": true
     }
   ],
@@ -91,7 +112,7 @@
       "type": "negative",
       "technique": "Equivalence Partitioning",
       "no_auth": true,
-      "name": "Điện tử",
+      "name_prefix": "Điện tử",
       "expected_status_oneOf": [401, 403]
     },
     {
@@ -100,7 +121,7 @@
       "type": "negative",
       "technique": "Equivalence Partitioning",
       "use_normal_user": true,
-      "name": "Điện tử",
+      "name_prefix": "Điện tử",
       "expected_status": 403
     },
     {
@@ -119,6 +140,7 @@
       "technique": "Equivalence Partitioning",
       "use_normal_user": true,
       "target_id": 1,
+      "target_name_prefix": "Forbidden Delete Target",
       "expected_status": 403
     }
   ],
@@ -237,6 +259,41 @@
       "expected_status_oneOf": [400, 404],
       "must_not_500": true,
       "must_not_mutate": true
+    },
+    {
+      "tc_id": "TC-CATEGORY-BVA-004",
+      "description": "Delete ID fresh target at boundary R",
+      "technique": "BVA Identifier Reference",
+      "fresh_name_prefix": "BVA-004 Test",
+      "expected_status_oneOf": [200, 204]
+    },
+    {
+      "tc_id": "TC-CATEGORY-BVA-005",
+      "description": "Delete R+1 target pair",
+      "technique": "BVA Identifier Reference",
+      "target_name_prefix": "BVA-005 Target",
+      "expected_status_oneOf": [200, 204]
+    },
+    {
+      "tc_id": "TC-CATEGORY-BVA-006",
+      "description": "GET danh sách khi DB trống",
+      "technique": "BVA Count Boundary",
+      "expected_status": 200
+    },
+    {
+      "tc_id": "TC-CATEGORY-BVA-007",
+      "description": "GET danh sách với đúng 1 danh mục",
+      "technique": "BVA Count Boundary",
+      "unique_name_prefix": "Danh mục duy nhất BVA007",
+      "expected_status": 200
+    },
+    {
+      "tc_id": "TC-CATEGORY-BVA-008",
+      "description": "GET danh sách với 2 danh mục",
+      "technique": "BVA Count Boundary",
+      "name_a_prefix": "Điện tử BVA008A",
+      "name_b_prefix": "Gia dụng BVA008B",
+      "expected_status": 200
     }
   ]
 }

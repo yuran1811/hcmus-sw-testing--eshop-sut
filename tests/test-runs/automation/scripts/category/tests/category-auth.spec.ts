@@ -15,8 +15,9 @@
 import { test, expect } from '@playwright/test';
 import { CategoryAPIHelper } from '../pages/CategoryPage';
 import testData from '../data/category-test-data.json';
+import { automationEnv } from '../../_common/env';
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = automationEnv.apiBaseUrl;
 
 // ─── Credentials ─────────────────────────────────────────────────────────────
 const ADMIN       = testData.users.admin;
@@ -35,17 +36,18 @@ test.describe('FR-14 Category Authorization — Equivalence Partitioning', () =>
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CATEGORY-007: POST /api/categories — no auth token → 401/403
+  // TC-CATEGORY-007: POST /api/categories — no auth token → auth rejection
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CATEGORY-007: Thêm danh mục thất bại khi không có token (EC4 → OC6)', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tc = testData.tc_auth.find((item) => item.tc_id === 'TC-CATEGORY-007')!;
     const countBefore = await api.getCategoryCount(adminToken);
 
     // [Pattern 4] — Network: POST without Authorization header
-    const resp = await api.createCategory(null, 'Điện tử');
+    const resp = await api.createCategory(null, tc.name_prefix);
 
-    // [Pattern 1] — Status 401 or 403
-    expect([401, 403]).toContain(resp.status());
+    // [Pattern 1] — Auth rejection status
+    expect(tc.expected_status_oneOf).toContain(resp.status());
 
     // [Pattern 3] — No category was created
     const countAfter = await api.getCategoryCount(adminToken);
@@ -53,17 +55,18 @@ test.describe('FR-14 Category Authorization — Equivalence Partitioning', () =>
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CATEGORY-008: POST /api/categories — normal user token → 403
+  // TC-CATEGORY-008: POST /api/categories — normal user token → forbidden
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CATEGORY-008: Thêm danh mục thất bại khi dùng token user thường (EC5 → OC6)', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tc = testData.tc_auth.find((item) => item.tc_id === 'TC-CATEGORY-008')!;
     const countBefore = await api.getCategoryCount(adminToken);
 
     // [Pattern 4] — Network: POST with non-admin token
-    const resp = await api.createCategory(userToken, 'Điện tử');
+    const resp = await api.createCategory(userToken, tc.name_prefix);
 
-    // [Pattern 1] — Status 403
-    expect(resp.status()).toBe(403);
+    // [Pattern 1] — Forbidden status
+    expect(resp.status()).toBe(tc.expected_status);
 
     // [Pattern 3] — No category was created
     const countAfter = await api.getCategoryCount(adminToken);
@@ -71,10 +74,11 @@ test.describe('FR-14 Category Authorization — Equivalence Partitioning', () =>
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CATEGORY-010: DELETE /api/categories/:id — no auth → 401
+  // TC-CATEGORY-010: DELETE /api/categories/:id — no auth → auth rejection
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CATEGORY-010: Xóa danh mục thất bại khi không có token (EC4)', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tc = testData.tc_auth.find((item) => item.tc_id === 'TC-CATEGORY-010')!;
 
     // Ensure category id=1 exists or create a target
     const list = await api.getCategoryList(adminToken);
@@ -82,14 +86,14 @@ test.describe('FR-14 Category Authorization — Equivalence Partitioning', () =>
     if (list.length > 0) {
       targetId = list[0].id;
     } else {
-      targetId = await api.createTestCategory(adminToken, `Auth Test Target ${Date.now()}`);
+      targetId = await api.createTestCategory(adminToken, `${tc.target_name_prefix} ${Date.now()}`);
     }
 
     // [Pattern 4] — Network: DELETE without token
     const resp = await api.deleteCategory(null, targetId);
 
-    // [Pattern 1] — Status 401
-    expect(resp.status()).toBe(401);
+    // [Pattern 1] — Auth rejection status
+    expect(resp.status()).toBe(tc.expected_status);
 
     // [Pattern 3] — Category still exists
     const listAfter = await api.getCategoryList(adminToken);
@@ -97,19 +101,20 @@ test.describe('FR-14 Category Authorization — Equivalence Partitioning', () =>
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CATEGORY-011: DELETE /api/categories/:id — normal user token → 403
+  // TC-CATEGORY-011: DELETE /api/categories/:id — normal user token → forbidden
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CATEGORY-011: Xóa danh mục thất bại khi dùng token user thường (EC5)', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tc = testData.tc_auth.find((item) => item.tc_id === 'TC-CATEGORY-011')!;
 
     // Create target via admin
-    const targetId = await api.createTestCategory(adminToken, `Forbidden Delete Target ${Date.now()}`);
+    const targetId = await api.createTestCategory(adminToken, `${tc.target_name_prefix} ${Date.now()}`);
 
     // [Pattern 4] — Network: DELETE with non-admin token
     const resp = await api.deleteCategory(userToken, targetId);
 
-    // [Pattern 1] — Status 403
-    expect(resp.status()).toBe(403);
+    // [Pattern 1] — Forbidden status
+    expect(resp.status()).toBe(tc.expected_status);
 
     // [Pattern 3] — Category still exists
     const listAfter = await api.getCategoryList(adminToken);
@@ -133,7 +138,7 @@ test.describe('FR-14 Category Authorization — Equivalence Partitioning', () =>
         { name: variant.name }
       );
 
-      // [Pattern 1] — Status 401 or 403
+      // [Pattern 1] — Auth rejection status
       expect(variant.expected_status_oneOf).toContain(resp.status());
 
       // [Pattern 3] — No category created

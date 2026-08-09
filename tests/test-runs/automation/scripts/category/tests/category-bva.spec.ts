@@ -17,8 +17,10 @@
 import { test, expect } from '@playwright/test';
 import { CategoryAPIHelper, Category } from '../pages/CategoryPage';
 import testData from '../data/category-test-data.json';
+import { automationEnv } from '../../_common/env';
+import { HTTP_STATUS } from '../../_common/http-status';
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = automationEnv.apiBaseUrl;
 const ADMIN = testData.users.admin;
 
 test.describe('FR-14 Category — BVA (Boundary Value Analysis)', () => {
@@ -31,16 +33,16 @@ test.describe('FR-14 Category — BVA (Boundary Value Analysis)', () => {
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CATEGORY-BVA-001: Name length = 1 (Boundary Min B)
+  // TC-CATEGORY-BVA-001: Name length tại biên dưới hợp lệ
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-CATEGORY-BVA-001: Tên 1 ký tự (Boundary Min B) — phải được chấp nhận', async ({ request }) => {
+  test('TC-CATEGORY-BVA-001: Tên ở biên dưới hợp lệ — phải được chấp nhận', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
     const tcData = testData.tc_bva.find(tc => tc.tc_id === 'TC-CATEGORY-BVA-001')!;
 
     // [Pattern 4] — Network: POST name="A"
     const resp = await api.createCategory(adminToken, tcData.name!);
 
-    // [Pattern 1] — Status 200 or 201
+    // [Pattern 1] — Success status on create
     expect(tcData.expected_status_oneOf).toContain(resp.status());
 
     const body = await resp.json() as { id?: number };
@@ -58,16 +60,16 @@ test.describe('FR-14 Category — BVA (Boundary Value Analysis)', () => {
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CATEGORY-BVA-002: Name length = 2 (B+1)
+  // TC-CATEGORY-BVA-002: Name length ngay trên biên dưới
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-CATEGORY-BVA-002: Tên 2 ký tự (B+1 tại biên Min) — phải được chấp nhận', async ({ request }) => {
+  test('TC-CATEGORY-BVA-002: Tên ngay trên biên dưới — phải được chấp nhận', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
     const tcData = testData.tc_bva.find(tc => tc.tc_id === 'TC-CATEGORY-BVA-002')!;
 
     // [Pattern 4] — Network: POST name="AB"
     const resp = await api.createCategory(adminToken, tcData.name!);
 
-    // [Pattern 1] — Status 200 or 201
+    // [Pattern 1] — Success status on create
     expect(tcData.expected_status_oneOf).toContain(resp.status());
 
     const body = await resp.json() as { id?: number };
@@ -87,9 +89,9 @@ test.describe('FR-14 Category — BVA (Boundary Value Analysis)', () => {
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CATEGORY-BVA-003: DELETE /api/categories/0 — ID dưới mốc tham chiếu (R-1)
+  // TC-CATEGORY-BVA-003: DELETE với ID dưới mốc tham chiếu
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-CATEGORY-BVA-003: DELETE với ID = 0 (R-1) — không xóa gì, không 500', async ({ request }) => {
+  test('TC-CATEGORY-BVA-003: DELETE với ID dưới mốc tham chiếu — không xóa gì, không lỗi máy chủ', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
     const tcData = testData.tc_bva.find(tc => tc.tc_id === 'TC-CATEGORY-BVA-003')!;
     const countBefore = await api.getCategoryCount(adminToken);
@@ -97,10 +99,10 @@ test.describe('FR-14 Category — BVA (Boundary Value Analysis)', () => {
     // [Pattern 4] — Network: DELETE id=0
     const resp = await api.deleteCategory(adminToken, tcData.delete_id!);
 
-    // [Pattern 1] — Must not 500
-    expect(resp.status()).not.toBe(500);
-    // [Pattern 5] — Characterization: 400 or 404 preferred
-    expect.soft([400, 404]).toContain(resp.status());
+    // [Pattern 1] — Must not server error
+    expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
+    // [Pattern 5] — Characterization: rejection or not-found preferred
+    expect.soft(tcData.expected_status_oneOf).toContain(resp.status());
 
     // [Pattern 3] — Count unchanged
     const countAfter = await api.getCategoryCount(adminToken);
@@ -108,22 +110,23 @@ test.describe('FR-14 Category — BVA (Boundary Value Analysis)', () => {
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CATEGORY-BVA-004: DELETE /api/categories/1 — ID tại mốc tham chiếu (R)
+  // TC-CATEGORY-BVA-004: DELETE với ID tại mốc tham chiếu
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-CATEGORY-BVA-004: DELETE với ID = 1 (mốc R) — xóa thành công nếu tồn tại và không có sản phẩm', async ({ request }) => {
+  test('TC-CATEGORY-BVA-004: DELETE với ID tại mốc tham chiếu — xóa thành công nếu tồn tại và không có sản phẩm', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tcData = testData.tc_bva.find(tc => tc.tc_id === 'TC-CATEGORY-BVA-004')!;
 
     // Create a fresh category that will get a low ID
     // NOTE: In a live system, id=1 may have products. We use a newly created one.
     // If id=1 exists and has no products, we can test directly.
     // For safety, we create a clean category and use its ID.
-    const freshId = await api.createTestCategory(adminToken, `BVA-004 Test ${Date.now()}`);
+    const freshId = await api.createTestCategory(adminToken, `${tcData.fresh_name_prefix} ${Date.now()}`);
 
     // [Pattern 4] — Network: DELETE freshId
     const resp = await api.deleteCategory(adminToken, freshId);
 
-    // [Pattern 1] — Status 200 or 204
-    expect([200, 204]).toContain(resp.status());
+    // [Pattern 1] — Success status on delete
+    expect([HTTP_STATUS.OK, HTTP_STATUS.NO_CONTENT]).toContain(resp.status());
 
     // [Pattern 3] — Verify removed
     const list = await api.getCategoryList(adminToken);
@@ -131,20 +134,21 @@ test.describe('FR-14 Category — BVA (Boundary Value Analysis)', () => {
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CATEGORY-BVA-005: DELETE với ID = R+1 — ngay trên mốc tham chiếu
+  // TC-CATEGORY-BVA-005: DELETE với ID ngay trên mốc tham chiếu
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-CATEGORY-BVA-005: DELETE với ID ngay trên mốc tham chiếu (R+1) — xóa thành công', async ({ request }) => {
+  test('TC-CATEGORY-BVA-005: DELETE với ID ngay trên mốc tham chiếu — xóa thành công', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tcData = testData.tc_bva.find(tc => tc.tc_id === 'TC-CATEGORY-BVA-005')!;
 
-    // Create two categories to get IDs at R and R+1 reference
-    const id1 = await api.createTestCategory(adminToken, `BVA-005 Target 1 ${Date.now()}`);
-    const id2 = await api.createTestCategory(adminToken, `BVA-005 Target 2 ${Date.now() + 1}`);
+    // Create two categories to get IDs around the reference point
+    const id1 = await api.createTestCategory(adminToken, `${tcData.target_name_prefix} 1 ${Date.now()}`);
+    const id2 = await api.createTestCategory(adminToken, `${tcData.target_name_prefix} 2 ${Date.now() + 1}`);
 
-    // [Pattern 4] — Delete the second one (R+1 reference)
+    // [Pattern 4] — Delete the second one (above-reference target)
     const resp = await api.deleteCategory(adminToken, id2);
 
-    // [Pattern 1] — Status 200 or 204
-    expect([200, 204]).toContain(resp.status());
+    // [Pattern 1] — Success status on delete
+    expect([HTTP_STATUS.OK, HTTP_STATUS.NO_CONTENT]).toContain(resp.status());
 
     // [Pattern 3] — id2 gone, id1 still present
     const list = await api.getCategoryList(adminToken);
@@ -156,19 +160,19 @@ test.describe('FR-14 Category — BVA (Boundary Value Analysis)', () => {
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CATEGORY-BVA-006: GET /api/categories khi có 0 danh mục — empty array
+  // TC-CATEGORY-BVA-006: GET /api/categories khi danh sách trống — empty array
   // NOTE: This test is a best-effort characterization since the DB is shared.
   //       We verify at minimum that the empty array format is correct on a fresh DB.
   //       On a shared DB, we verify the API handles the response format correctly.
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-CATEGORY-BVA-006: GET danh sách khi DB trống — trả về mảng rỗng, không crash (Boundary Min B=0)', async ({ request }) => {
+  test('TC-CATEGORY-BVA-006: GET danh sách khi danh sách trống — trả về mảng rỗng, không crash', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
 
     // [Pattern 4] — Network: GET /api/categories
     const resp = await api.getCategories(adminToken);
 
-    // [Pattern 1] — Status 200
-    expect(resp.status()).toBe(200);
+    // [Pattern 1] — Success status on list retrieval
+    expect(resp.status()).toBe(HTTP_STATUS.OK);
 
     // [Pattern 2] — Response is an array (not null or error object)
     const body = await resp.json() as Category[] | { error?: string };
@@ -188,20 +192,21 @@ test.describe('FR-14 Category — BVA (Boundary Value Analysis)', () => {
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CATEGORY-BVA-007: GET /api/categories khi có đúng 1 danh mục (B+1)
+  // TC-CATEGORY-BVA-007: GET /api/categories khi có đúng 1 danh mục
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-CATEGORY-BVA-007: GET danh sách với đúng 1 danh mục — mảng có 1 phần tử đúng (B+1)', async ({ request }) => {
+  test('TC-CATEGORY-BVA-007: GET danh sách với đúng 1 danh mục — mảng có 1 phần tử đúng', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tcData = testData.tc_bva.find(tc => tc.tc_id === 'TC-CATEGORY-BVA-007')!;
 
     // Create an isolated category
-    const uniqueName = `Danh mục duy nhất BVA007 ${Date.now()}`;
+    const uniqueName = `${tcData.unique_name_prefix} ${Date.now()}`;
     const id = await api.createTestCategory(adminToken, uniqueName);
 
     // [Pattern 4] — Network: GET
     const resp = await api.getCategories(adminToken);
 
-    // [Pattern 1] — Status 200
-    expect(resp.status()).toBe(200);
+    // [Pattern 1] — Success status on list retrieval
+    expect(resp.status()).toBe(HTTP_STATUS.OK);
 
     const list = await resp.json() as Category[];
 
@@ -218,13 +223,14 @@ test.describe('FR-14 Category — BVA (Boundary Value Analysis)', () => {
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CATEGORY-BVA-008: GET /api/categories khi có 2 danh mục (Near-boundary B+2)
+  // TC-CATEGORY-BVA-008: GET /api/categories khi có 2 danh mục ở vùng lân cận biên
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-CATEGORY-BVA-008: GET danh sách với 2 danh mục — cả hai xuất hiện đúng (B+2)', async ({ request }) => {
+  test('TC-CATEGORY-BVA-008: GET danh sách với 2 danh mục — cả hai xuất hiện đúng', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tcData = testData.tc_bva.find(tc => tc.tc_id === 'TC-CATEGORY-BVA-008')!;
 
-    const nameA = `Điện tử BVA008A ${Date.now()}`;
-    const nameB = `Gia dụng BVA008B ${Date.now() + 1}`;
+    const nameA = `${tcData.name_a_prefix} ${Date.now()}`;
+    const nameB = `${tcData.name_b_prefix} ${Date.now() + 1}`;
 
     const idA = await api.createTestCategory(adminToken, nameA);
     const idB = await api.createTestCategory(adminToken, nameB);
@@ -232,8 +238,8 @@ test.describe('FR-14 Category — BVA (Boundary Value Analysis)', () => {
     // [Pattern 4] — Network: GET
     const resp = await api.getCategories(adminToken);
 
-    // [Pattern 1] — Status 200
-    expect(resp.status()).toBe(200);
+    // [Pattern 1] — Success status on list retrieval
+    expect(resp.status()).toBe(HTTP_STATUS.OK);
 
     const list = await resp.json() as Category[];
 

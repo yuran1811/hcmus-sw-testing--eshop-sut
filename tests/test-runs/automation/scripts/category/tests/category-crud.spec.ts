@@ -17,8 +17,10 @@
 import { test, expect } from '@playwright/test';
 import { CategoryAPIHelper, Category } from '../pages/CategoryPage';
 import testData from '../data/category-test-data.json';
+import { automationEnv } from '../../_common/env';
+import { HTTP_STATUS } from '../../_common/http-status';
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = automationEnv.apiBaseUrl;
 
 // ─── Shared credentials ───────────────────────────────────────────────────────
 const ADMIN = testData.users.admin;
@@ -38,13 +40,14 @@ test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CATEGORY-001: Thêm danh mục thành công với tên hợp lệ (EC1)', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
-    const uniqueName = `Điện tử TC001 ${Date.now()}`;
+    const tc = testData.tc_crud.find((item) => item.tc_id === 'TC-CATEGORY-001')!;
+    const uniqueName = `${tc.name_prefix} TC001 ${Date.now()}`;
 
     // [Pattern 4] — Network: POST /api/categories
     const resp = await api.createCategory(adminToken, uniqueName);
 
-    // [Pattern 1] — Status: 200 or 201
-    expect([200, 201]).toContain(resp.status());
+    // [Pattern 1] — Success status on create
+    expect(tc.expected_status_oneOf).toContain(resp.status());
 
     // [Pattern 2] — Body has id
     const body = await resp.json() as { id?: number; category?: { id: number } };
@@ -53,7 +56,7 @@ test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
 
     // [Pattern 4] — Verify appears in list
     const listResp = await api.getCategories(adminToken);
-    expect(listResp.status()).toBe(200);
+    expect(listResp.status()).toBe(HTTP_STATUS.OK);
     const list = await listResp.json() as Category[];
     const found = list.some((c) => c.name === uniqueName);
     // [Pattern 2] — Name must be in list
@@ -64,17 +67,18 @@ test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CATEGORY-002: Tên để trống → 400
+  // TC-CATEGORY-002: Tên để trống → bị từ chối
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CATEGORY-002: Thêm danh mục thất bại khi tên rỗng (EC2)', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tc = testData.tc_crud.find((item) => item.tc_id === 'TC-CATEGORY-002')!;
     const countBefore = await api.getCategoryCount(adminToken);
 
     // [Pattern 4] — Network: POST with empty name
     const resp = await api.createCategory(adminToken, '');
 
-    // [Pattern 1] — Status: 400
-    expect(resp.status()).toBe(400);
+    // [Pattern 1] — Validation rejection status
+    expect(resp.status()).toBe(tc.expected_status);
 
     // [Pattern 3] — Count unchanged
     const countAfter = await api.getCategoryCount(adminToken);
@@ -82,17 +86,18 @@ test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CATEGORY-003: Tên chỉ gồm khoảng trắng → 400
+  // TC-CATEGORY-003: Tên chỉ gồm khoảng trắng → bị từ chối
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CATEGORY-003: Thêm danh mục thất bại khi tên chỉ chứa khoảng trắng (EC3)', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tc = testData.tc_crud.find((item) => item.tc_id === 'TC-CATEGORY-003')!;
     const countBefore = await api.getCategoryCount(adminToken);
 
     // [Pattern 4] — Network: POST whitespace-only name
     const resp = await api.createCategory(adminToken, '   ');
 
-    // [Pattern 1] — Status: 400
-    expect(resp.status()).toBe(400);
+    // [Pattern 1] — Validation rejection status
+    expect(resp.status()).toBe(tc.expected_status);
 
     // [Pattern 3] — Count unchanged
     const countAfter = await api.getCategoryCount(adminToken);
@@ -104,16 +109,17 @@ test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CATEGORY-004: Xem danh sách danh mục thành công — GET /api/categories', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tc = testData.tc_crud.find((item) => item.tc_id === 'TC-CATEGORY-004')!;
 
     // Pre-condition: ensure at least 2 categories exist
-    const id1 = await api.createTestCategory(adminToken, `List Test A ${Date.now()}`);
-    const id2 = await api.createTestCategory(adminToken, `List Test B ${Date.now() + 1}`);
+    const id1 = await api.createTestCategory(adminToken, `${tc.list_name_prefix_a} ${Date.now()}`);
+    const id2 = await api.createTestCategory(adminToken, `${tc.list_name_prefix_b} ${Date.now() + 1}`);
 
     // [Pattern 4] — Network: GET /api/categories
     const resp = await api.getCategories(adminToken);
 
-    // [Pattern 1] — Status 200
-    expect(resp.status()).toBe(200);
+    // [Pattern 1] — Success status on list retrieval
+    expect(resp.status()).toBe(tc.expected_status);
 
     // [Pattern 2] — Body is array with id and name fields
     const list = await resp.json() as Category[];
@@ -138,16 +144,17 @@ test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CATEGORY-005: Xóa danh mục thành công với ID hợp lệ (EC7)', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tc = testData.tc_crud.find((item) => item.tc_id === 'TC-CATEGORY-005')!;
 
     // Create a target category to delete
-    const targetName = `Thời trang DELETE_TEST ${Date.now()}`;
+    const targetName = `${tc.delete_target_prefix} ${Date.now()}`;
     const targetId = await api.createTestCategory(adminToken, targetName);
 
     // [Pattern 4] — Network: DELETE
     const resp = await api.deleteCategory(adminToken, targetId);
 
-    // [Pattern 1] — Status 200 or 204
-    expect([200, 204]).toContain(resp.status());
+    // [Pattern 1] — Success status on delete
+    expect(tc.expected_status_oneOf).toContain(resp.status());
 
     // [Pattern 2] — Verify removed from list
     const list = await api.getCategoryList(adminToken);
@@ -160,15 +167,16 @@ test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CATEGORY-006: Xóa category_id không tồn tại — không crash, không claim deleted (EC8)', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tc = testData.tc_characterization.find((item) => item.tc_id === 'TC-CATEGORY-006')!;
     const countBefore = await api.getCategoryCount(adminToken);
 
     // [Pattern 4] — Network: DELETE non-existent ID
     const resp = await api.deleteCategory(adminToken, 99999);
 
-    // [Pattern 1] — Must not 500
-    expect(resp.status()).not.toBe(500);
-    // [Pattern 5] — Characterization: 404/410/200/204 all acceptable
-    expect.soft([200, 204, 404, 410]).toContain(resp.status());
+    // [Pattern 1] — Must not server error
+    expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
+    // [Pattern 5] — Nonexistent delete must not be reported as success
+    expect(tc.expected_status_oneOf).toContain(resp.status());
 
     // [Pattern 3] — Category count unchanged
     const countAfter = await api.getCategoryCount(adminToken);
@@ -180,23 +188,28 @@ test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CATEGORY-009: Xóa danh mục có sản phẩm liên kết — không để orphan records (EC9)', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tc = testData.tc_crud.find((item) => item.tc_id === 'TC-CATEGORY-009') as {
+      protected_target_id: string | number;
+      expected_status_oneOf: number[];
+    };
 
     // This test documents the characterization policy for cascade delete.
     // We check behavior when deleting a category that likely has products (id=1 from seed data).
-    const resp = await api.deleteCategory(adminToken, 1);
+    const resp = await api.deleteCategory(adminToken, tc.protected_target_id);
 
-    // [Pattern 1] — Must not 500 or return raw DB error
-    expect(resp.status()).not.toBe(500);
-    // [Pattern 5] — Characterization: accept 200/204 (cascade/idempotent) or 400/409 (restrict)
-    expect.soft([200, 204, 400, 409]).toContain(resp.status());
+    // [Pattern 1] — Must not server error or return raw DB error
+    expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
+    // [Pattern 5] — Characterization: accept either strict rejection or safe cascade
+    expect(tc.expected_status_oneOf).toContain(resp.status());
 
-    // [Pattern 4] — After the operation, verify products still have valid references
-    const productsResp = await request.get(`${BASE_URL}/api/products`);
-    if (productsResp.ok()) {
+    if (([HTTP_STATUS.OK, HTTP_STATUS.NO_CONTENT] as number[]).includes(resp.status())) {
+      // [Pattern 4] — After a successful delete, no product may keep the deleted category_id
+      const productsResp = await request.get(`${BASE_URL}/api/products`);
+      expect(productsResp.status()).toBe(HTTP_STATUS.OK);
       const products = await productsResp.json() as Array<{ category_id?: number | null }>;
-      // Soft assert: if products exist, they should not become orphaned
-      // (We cannot fully verify without knowing the pre-existing state, so soft assert)
-      expect.soft(Array.isArray(products)).toBe(true);
+      expect(Array.isArray(products)).toBe(true);
+      const orphaned = products.filter((product) => product.category_id === tc.protected_target_id);
+      expect(orphaned).toHaveLength(0);
     }
   });
 
@@ -205,13 +218,14 @@ test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CATEGORY-012: Thêm danh mục thất bại khi body thiếu thuộc tính name (EC2)', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tc = testData.tc_crud.find((item) => item.tc_id === 'TC-CATEGORY-012')!;
     const countBefore = await api.getCategoryCount(adminToken);
 
     // [Pattern 4] — Network: POST empty body {}
     const resp = await api.createCategoryRaw(adminToken, {});
 
-    // [Pattern 1] — Status 400
-    expect(resp.status()).toBe(400);
+    // [Pattern 1] — Validation rejection status
+    expect(resp.status()).toBe(tc.expected_status);
 
     // [Pattern 3] — Count unchanged
     const countAfter = await api.getCategoryCount(adminToken);
@@ -226,7 +240,7 @@ test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
       // [Pattern 4] — Network: POST with invalid type
       const resp = await api.createCategoryRaw(adminToken, { name: variant.name });
 
-      // [Pattern 1] — Status 400
+      // [Pattern 1] — Validation rejection status
       expect(resp.status()).toBe(variant.expected_status);
 
       // [Pattern 3] — Count unchanged
@@ -240,13 +254,14 @@ test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CATEGORY-014: Thêm danh mục với Unicode và emoji — lưu nguyên vẹn (EC12)', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
-    const unicodeName = `Đồ gia dụng – Nhà bếp 🍳 ${Date.now()}`;
+    const tc = testData.tc_crud.find((item) => item.tc_id === 'TC-CATEGORY-014')!;
+    const unicodeName = `${tc.name_prefix} ${Date.now()}`;
 
     // [Pattern 4] — Network: POST unicode name
     const resp = await api.createCategory(adminToken, unicodeName);
 
-    // [Pattern 1] — Status 200 or 201
-    expect([200, 201]).toContain(resp.status());
+    // [Pattern 1] — Success status on create
+    expect(tc.expected_status_oneOf).toContain(resp.status());
 
     const body = await resp.json() as { id?: number };
     const id = body.id;
@@ -265,23 +280,24 @@ test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CATEGORY-015: Chính sách khi tạo hai danh mục trùng tên (EC13)', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
-    const dupName = `Đồ sưu tầm DUP ${Date.now()}`;
+    const tc = testData.tc_crud.find((item) => item.tc_id === 'TC-CATEGORY-015')!;
+    const dupName = `${tc.name_prefix} DUP ${Date.now()}`;
 
     // [Pattern 4] — First creation
     const resp1 = await api.createCategory(adminToken, dupName);
     const id1Body = await resp1.json() as { id?: number };
     const id1 = id1Body.id;
 
-    expect([200, 201]).toContain(resp1.status());
+    expect(tc.expected_status_oneOf).toContain(resp1.status());
 
     // [Pattern 4] — Second creation with same name
     const resp2 = await api.createCategory(adminToken, dupName);
 
-    // [Pattern 1] — Must not 500
-    expect(resp2.status()).not.toBe(500);
+    // [Pattern 1] — Must not server error
+    expect(resp2.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
 
-    // [Pattern 5] — Characterization: either allowed (200/201) or rejected (400/409)
-    expect.soft([200, 201, 400, 409]).toContain(resp2.status());
+    // [Pattern 5] — Characterization: either allowed success or rejected by validation/conflict
+    expect.soft(tc.expected_status_oneOf).toContain(resp2.status());
 
     // [Pattern 2] — If rejected, first record still intact
     if (resp2.status() >= 400) {
@@ -298,15 +314,15 @@ test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
   const syntaxIds = testData.tc_characterization.filter(tc => tc.tc_id.startsWith('TC-CATEGORY-019'));
 
   for (const variant of syntaxIds) {
-    test(`${variant.tc_id}: DELETE với ID sai cú pháp (${variant.delete_id}) — không xóa, không 500 (EC17)`, async ({ request }) => {
+    test(`${variant.tc_id}: DELETE với ID sai cú pháp (${variant.delete_id}) — không xóa, không lỗi máy chủ (EC17)`, async ({ request }) => {
       const api = new CategoryAPIHelper(request, BASE_URL);
       const countBefore = await api.getCategoryCount(adminToken);
 
       // [Pattern 4] — Network: DELETE with bad ID
       const resp = await api.deleteCategory(adminToken, variant.delete_id);
 
-      // [Pattern 1] — Must not 500; must be 400 or 404
-      expect(resp.status()).not.toBe(500);
+      // [Pattern 1] — Must not server error; must be rejection or not-found
+      expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
       expect.soft(variant.expected_status_oneOf).toContain(resp.status());
 
       // [Pattern 3] — Count unchanged
@@ -318,15 +334,16 @@ test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
   // ──────────────────────────────────────────────────────────────────────────
   // TC-CATEGORY-020: Xóa lặp cùng category_id — idempotency characterization
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-CATEGORY-020: Xóa lặp cùng ID — không 500, không tạo lại, hành vi nhất quán (EC18)', async ({ request }) => {
+    test('TC-CATEGORY-020: Xóa lặp cùng ID — không lỗi máy chủ, không tạo lại, hành vi nhất quán (EC18)', async ({ request }) => {
     const api = new CategoryAPIHelper(request, BASE_URL);
+    const tc = testData.tc_crud.find((item) => item.tc_id === 'TC-CATEGORY-020')!;
 
     // Create isolated target
-    const id = await api.createTestCategory(adminToken, `Dùng để kiểm tra xóa lặp ${Date.now()}`);
+    const id = await api.createTestCategory(adminToken, `${tc.idempotency_target_prefix} ${Date.now()}`);
 
     // [Pattern 4] — First DELETE: must succeed
     const resp1 = await api.deleteCategory(adminToken, id);
-    expect([200, 204]).toContain(resp1.status());
+    expect(tc.expected_status_oneOf).toContain(resp1.status());
 
     // Confirm deleted
     const listAfter1 = await api.getCategoryList(adminToken);
@@ -335,10 +352,10 @@ test.describe('FR-14 Category CRUD — Equivalence Partitioning', () => {
     // [Pattern 4] — Second DELETE on same ID
     const resp2 = await api.deleteCategory(adminToken, id);
 
-    // [Pattern 1] — Must not 500, must not recreate
-    expect(resp2.status()).not.toBe(500);
-    // [Pattern 5] — Characterization: 404/410 (preferred) or 200/204 (idempotent)
-    expect.soft([200, 204, 404, 410]).toContain(resp2.status());
+    // [Pattern 1] — Must not server error, must not recreate
+    expect(resp2.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
+    // [Pattern 5] — Characterization: not-found/gone preferred or success on idempotent delete
+    expect.soft(tc.expected_status_oneOf).toContain(resp2.status());
 
     // [Pattern 3] — Item still gone
     const listAfter2 = await api.getCategoryList(adminToken);

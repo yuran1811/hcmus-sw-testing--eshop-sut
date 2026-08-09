@@ -7,7 +7,7 @@
  * Assignment: HW04 - Automation Testing
  *
  * Assertion patterns used:
- *   Pattern 1 — HTTP status assertion (must not 500)
+ *   Pattern 1 — HTTP status assertion (must not server-error)
  *   Pattern 2 — Body field / value (name stored as literal, not executed)
  *   Pattern 3 — Count / length (table still exists and has records)
  *   Pattern 4 — Network / API response
@@ -16,8 +16,10 @@
 import { test, expect } from '@playwright/test';
 import { CategoryAPIHelper, Category } from '../pages/CategoryPage';
 import testData from '../data/category-test-data.json';
+import { automationEnv } from '../../_common/env';
+import { HTTP_STATUS } from '../../_common/http-status';
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = automationEnv.apiBaseUrl;
 const ADMIN = testData.users.admin;
 
 test.describe('FR-14 Category Security — XSS & SQL Injection', () => {
@@ -40,12 +42,12 @@ test.describe('FR-14 Category Security — XSS & SQL Injection', () => {
     // [Pattern 4] — Network: POST XSS name
     const resp = await api.createCategory(adminToken, xssPayload);
 
-    // [Pattern 1] — Must not 500
-    expect(resp.status()).not.toBe(500);
-    // Status: 200/201 (stored) or 400 (rejected with validation)
+    // [Pattern 1] — Must not server error
+    expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
+    // Status: success on create or validation rejection
     expect(tcData.expected_status_oneOf).toContain(resp.status());
 
-    if ([200, 201].includes(resp.status())) {
+    if (([HTTP_STATUS.OK, HTTP_STATUS.CREATED] as number[]).includes(resp.status())) {
       const body = await resp.json() as { id?: number };
       const id = body.id;
 
@@ -64,7 +66,7 @@ test.describe('FR-14 Category Security — XSS & SQL Injection', () => {
         await api.cleanupCategory(adminToken, id);
       }
     }
-    // If 400 returned: XSS correctly rejected — test passes (no script execution possible)
+    // If bad request is returned: XSS correctly rejected — test passes (no script execution possible)
   });
 
   // ──────────────────────────────────────────────────────────────────────────
@@ -81,14 +83,14 @@ test.describe('FR-14 Category Security — XSS & SQL Injection', () => {
     // [Pattern 4] — Network: POST SQL injection name
     const resp = await api.createCategory(adminToken, sqlPayload);
 
-    // [Pattern 1] — Must not 500 (raw SQL error is a security failure)
-    expect(resp.status()).not.toBe(500);
+    // [Pattern 1] — Must not server error (raw SQL error is a security failure)
+    expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
     expect(tcData.expected_status_oneOf).toContain(resp.status());
 
     // [Pattern 4] — Try GET categories — must succeed (table not dropped)
     const listResp = await api.getCategories(adminToken);
-    // [Pattern 1] — GET must return 200 (categories table survived)
-    expect(listResp.status()).toBe(200);
+    // [Pattern 1] — GET must return OK (categories table survived)
+    expect(listResp.status()).toBe(HTTP_STATUS.OK);
 
     const list = await listResp.json() as Category[];
     // [Pattern 3] — Table still has records (at minimum the ones before this test)
@@ -98,12 +100,12 @@ test.describe('FR-14 Category Security — XSS & SQL Injection', () => {
 
     // [Pattern 2] — Create a post-injection control category to verify DB is operational
     const controlResp = await api.createCategory(adminToken, `Đối chứng sau SQLi ${Date.now()}`);
-    expect([200, 201]).toContain(controlResp.status());
+    expect([HTTP_STATUS.OK, HTTP_STATUS.CREATED]).toContain(controlResp.status());
     const controlBody = await controlResp.json() as { id?: number };
     if (controlBody.id) await api.cleanupCategory(adminToken, controlBody.id);
 
     // Cleanup the SQL payload category if it was accepted
-    if ([200, 201].includes(resp.status())) {
+    if (([HTTP_STATUS.OK, HTTP_STATUS.CREATED] as number[]).includes(resp.status())) {
       const body = await resp.json().catch(() => ({})) as { id?: number };
       if (body.id) await api.cleanupCategory(adminToken, body.id);
     }

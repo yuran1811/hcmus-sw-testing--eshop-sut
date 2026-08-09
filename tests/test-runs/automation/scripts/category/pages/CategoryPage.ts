@@ -1,4 +1,5 @@
 import { APIRequestContext, APIResponse } from '@playwright/test';
+import { automationEnv } from '../../_common/env';
 
 /**
  * Page Object / API Helper for Category Management (FR-14)
@@ -35,14 +36,14 @@ export class CategoryAPIHelper {
   readonly request: APIRequestContext;
   readonly baseURL: string;
 
-  constructor(request: APIRequestContext, baseURL = 'http://localhost:3000') {
+  constructor(request: APIRequestContext, baseURL = automationEnv.apiBaseUrl) {
     this.request = request;
     this.baseURL = baseURL;
   }
 
   // ── Auth ──────────────────────────────────────────────────────────────────
 
-  /** Register a new user (ignores 400 = "already exists") */
+  /** Register a new user (ignores bad-request when the user already exists) */
   async register(creds: UserCredentials): Promise<void> {
     await this.request.post(`${this.baseURL}/api/register`, {
       data: { name: creds.name, email: creds.email, password: creds.password },
@@ -160,7 +161,7 @@ export class CategoryAPIHelper {
   }
 
   /**
-   * Delete a category by ID; ignore 404 (already gone).
+   * Delete a category by ID; ignore not-found responses.
    * Used in afterEach cleanup blocks.
    */
   async cleanupCategory(token: string, id: number | null): Promise<void> {

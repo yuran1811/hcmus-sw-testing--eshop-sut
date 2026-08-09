@@ -15,6 +15,8 @@
 import { test, expect } from '@playwright/test';
 import { CheckoutAPIHelper, CartItem } from '../pages/CheckoutPage';
 import testDataRaw from '../data/checkout-test-data.json';
+import { automationEnv } from '../../_common/env';
+import { HTTP_STATUS } from '../../_common/http-status';
 
 // ─── Type helpers ────────────────────────────────────────────────────────────
 interface User { email: string; password: string; name: string }
@@ -22,18 +24,20 @@ interface TestData {
   users: { userA: User; userB: User; invalid: User };
   products: Record<string, CartItem>;
   tc_api: any[];
+  tc_type_variants: any[];
+  meta: { robustness_ref: number; shipping_address_short: string; shipping_address_unicode: string };
 }
 const testData = testDataRaw as unknown as TestData;
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = automationEnv.apiBaseUrl;
 
 /** Ensure user exists (register if needed) then login and return token */
 async function ensureUserAndLogin(
   api: CheckoutAPIHelper,
   user: User
 ): Promise<string> {
-  // Attempt registration — ignore 400 "already exists"
+  // Attempt registration — ignore bad-request when the user already exists
   await api.request.post(`${BASE_URL}/api/register`, {
     data: { name: user.name, email: user.email, password: user.password },
   });
@@ -43,7 +47,7 @@ async function ensureUserAndLogin(
 /** Reset cart: perform a dummy checkout or DELETE. Returns after cart is empty. */
 async function resetCart(api: CheckoutAPIHelper, token: string): Promise<void> {
   const del = await api.clearCart(token);
-  if (del.status() === 200 || del.status() === 204) return;
+  if (del.status() === HTTP_STATUS.OK || del.status() === HTTP_STATUS.NO_CONTENT) return;
   const cart = await api.getCart(token);
   if (cart.ok()) {
     const items = await cart.json() as unknown[];
@@ -75,7 +79,7 @@ test.describe('FR-08 Checkout — API Tests (Equivalence Partitioning)', () => {
     const tc = testData.tc_api.find(c => c.tc_id === 'TC-CHECKOUT-001')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
-    await prepareCart(api, token, [testData.products.airpods, testData.products.keychron]);
+    await prepareCart(api, token, tc.cart_items as CartItem[]);
 
     const checkoutResp = await api.checkout(token, tc.payload);
 
@@ -86,7 +90,7 @@ test.describe('FR-08 Checkout — API Tests (Equivalence Partitioning)', () => {
     expect(body.orderId).toBeTruthy();
 
     const cartResp = await api.getCart(token);
-    expect(cartResp.status()).toBe(200);
+    expect(cartResp.status()).toBe(HTTP_STATUS.OK);
     const cartItems = await cartResp.json() as unknown[];
     expect(cartItems).toHaveLength(0);
 
@@ -150,7 +154,7 @@ test.describe('FR-08 Checkout — API Tests (Equivalence Partitioning)', () => {
     const tc = testData.tc_api.find(c => c.tc_id === 'TC-CHECKOUT-004')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
-    await prepareCart(api, token, [testData.products.airpods, testData.products.keychron]);
+    await prepareCart(api, token, tc.cart_items as CartItem[]);
 
     const orderCountBefore = await api.getOrderCount(token);
 
@@ -159,7 +163,7 @@ test.describe('FR-08 Checkout — API Tests (Equivalence Partitioning)', () => {
     const status = resp.status();
     expect(tc.expected_status_oneOf).toContain(status);
 
-    if (status === 200) {
+    if (status === HTTP_STATUS.OK) {
       const body = await resp.json() as { orderId?: number };
       if (body.orderId) {
         const orderResp = await api.getOrder(token, body.orderId);
@@ -182,7 +186,7 @@ test.describe('FR-08 Checkout — API Tests (Equivalence Partitioning)', () => {
     const tc = testData.tc_api.find(c => c.tc_id === 'TC-CHECKOUT-005')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
-    await prepareCart(api, token, [testData.products.airpods, testData.products.keychron]);
+    await prepareCart(api, token, tc.cart_items as CartItem[]);
 
     const resp = await api.checkout(token, tc.payload);
 
@@ -209,7 +213,7 @@ test.describe('FR-08 Checkout — API Tests (Equivalence Partitioning)', () => {
     const tc = testData.tc_api.find(c => c.tc_id === 'TC-CHECKOUT-006')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
-    await prepareCart(api, token, [testData.products.keychron]);
+    await prepareCart(api, token, tc.cart_items as CartItem[]);
 
     const resp = await api.checkout(token, tc.payload);
 
@@ -232,15 +236,15 @@ test.describe('FR-08 Checkout — API Tests (Equivalence Partitioning)', () => {
     const tc = testData.tc_api.find(c => c.tc_id === 'TC-CHECKOUT-007')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
-    await prepareCart(api, token, [testData.products.keychron]);
+    await prepareCart(api, token, tc.cart_items as CartItem[]);
 
     const resp = await api.checkout(token, tc.payload);
 
     const status = resp.status();
     expect(tc.expected_status_oneOf).toContain(status);
-    expect(status).not.toBe(500);
+    expect(status).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
 
-    if (status === 200) {
+    if (status === HTTP_STATUS.OK) {
       const body = await resp.json() as { orderId?: number };
       if (body.orderId) {
         const orderResp = await api.getOrder(token, body.orderId);
@@ -259,11 +263,11 @@ test.describe('FR-08 Checkout — API Tests (Equivalence Partitioning)', () => {
     const tc = testData.tc_api.find(c => c.tc_id === 'TC-CHECKOUT-008A')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
-    await prepareCart(api, token, [testData.products.keychron]);
+    await prepareCart(api, token, tc.cart_items as CartItem[]);
 
     const resp = await api.checkout(token, tc.payload);
 
-    expect(resp.status()).not.toBe(500);
+    expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
     expect.soft(tc.expected_status_oneOf).toContain(resp.status());
   });
 
@@ -271,11 +275,11 @@ test.describe('FR-08 Checkout — API Tests (Equivalence Partitioning)', () => {
     const tc = testData.tc_api.find(c => c.tc_id === 'TC-CHECKOUT-008B')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
-    await prepareCart(api, token, [testData.products.keychron]);
+    await prepareCart(api, token, tc.cart_items as CartItem[]);
 
     const resp = await api.checkout(token, tc.payload);
 
-    expect(resp.status()).not.toBe(500);
+    expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
     expect.soft(tc.expected_status_oneOf).toContain(resp.status());
   });
 
@@ -286,45 +290,37 @@ test.describe('FR-08 Checkout — API Tests (Equivalence Partitioning)', () => {
     const tc = testData.tc_api.find(c => c.tc_id === 'TC-CHECKOUT-009')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
-    await prepareCart(api, token, [testData.products.keychron]);
+    await prepareCart(api, token, tc.cart_items as CartItem[]);
 
     const resp = await api.checkout(token, tc.payload);
 
-    expect(resp.status()).not.toBe(500);
+    expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
     expect.soft(tc.expected_status_oneOf).toContain(resp.status());
   });
 
   // ──────────────────────────────────────────────────────────────────────────
   // TC-CHECKOUT-010: Non-string shipping_address types
   // ──────────────────────────────────────────────────────────────────────────
-  const typeVariants = [
-    { id: 'A', label: 'Number',  addr: 12345 },
-    { id: 'B', label: 'Boolean', addr: true },
-    { id: 'C', label: 'Object',  addr: { line: '123 Le Loi' } },
-    { id: 'D', label: 'Array',   addr: ['123 Le Loi'] },
-  ] as const;
-
-  for (const variant of typeVariants) {
-    test(`TC-CHECKOUT-010${variant.id}: shipping_address là ${variant.label} — không crash, không lưu [object Object]`, async ({ request }) => {
+  for (const variant of testData.tc_type_variants) {
+    test(`${variant.tc_id}: ${variant.description}`, async ({ request }) => {
       const api = new CheckoutAPIHelper(request, BASE_URL);
       const token = await ensureUserAndLogin(api, testData.users.userA);
-      await prepareCart(api, token, [testData.products.keychron]);
+      await prepareCart(api, token, variant.cart_items as CartItem[]);
 
-      const resp = await api.checkout(token, {
-        total_amount: 4000000,
-        shipping_address: variant.addr,
-      });
+      const resp = await api.checkout(token, variant.payload);
 
-      expect(resp.status()).not.toBe(500);
-      expect.soft([200, 400]).toContain(resp.status());
+      expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
+      expect.soft(variant.expected_status_oneOf).toContain(resp.status());
 
-      if (resp.status() === 200) {
+      if (resp.status() === HTTP_STATUS.OK) {
         const body = await resp.json() as { orderId?: number };
         if (body.orderId) {
           const orderResp = await api.getOrder(token, body.orderId);
           if (orderResp.ok()) {
             const order = await orderResp.json() as { shipping_address?: string };
-            expect.soft(order.shipping_address).not.toBe('[object Object]');
+            if (variant.must_not_persist_object_string) {
+              expect.soft(order.shipping_address).not.toBe(variant.must_not_persist_object_string);
+            }
           }
         }
       }
@@ -338,13 +334,13 @@ test.describe('FR-08 Checkout — API Tests (Equivalence Partitioning)', () => {
     const tc = testData.tc_api.find(c => c.tc_id === 'TC-CHECKOUT-013')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
-    await prepareCart(api, token, [testData.products.airpods, testData.products.keychron]);
+    await prepareCart(api, token, tc.cart_items as CartItem[]);
 
     const resp = await api.checkout(token, tc.payload);
 
-    expect(resp.status()).not.toBe(500);
+    expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
 
-    if (resp.status() === 200) {
+    if (resp.status() === HTTP_STATUS.OK) {
       const body = await resp.json() as { orderId?: number };
       if (body.orderId) {
         const orderResp = await api.getOrder(token, body.orderId);
@@ -364,15 +360,15 @@ test.describe('FR-08 Checkout — API Tests (Equivalence Partitioning)', () => {
     const tc = testData.tc_api.find(c => c.tc_id === 'TC-CHECKOUT-014')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
-    await prepareCart(api, token, [testData.products.airpods, testData.products.keychron]);
+    await prepareCart(api, token, tc.cart_items as CartItem[]);
 
     const orderCountBefore = await api.getOrderCount(token);
 
     const resp = await api.checkout(token, tc.forged_payload);
 
-    expect(resp.status()).not.toBe(500);
+    expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
 
-    if (resp.status() === 200) {
+    if (resp.status() === HTTP_STATUS.OK) {
       const body = await resp.json() as { orderId?: number };
       if (body.orderId) {
         const orderResp = await api.getOrder(token, body.orderId);
@@ -393,23 +389,24 @@ test.describe('FR-08 Checkout — API Tests (Equivalence Partitioning)', () => {
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CHECKOUT-015: Checkout chỉ xóa giỏ của user A, không ảnh hưởng user B', async ({ request }) => {
     const api = new CheckoutAPIHelper(request, BASE_URL);
+    const tc = testData.tc_api.find(c => c.tc_id === 'TC-CHECKOUT-015')!;
 
     const tokenA = await ensureUserAndLogin(api, testData.users.userA);
-    await prepareCart(api, tokenA, [testData.products.keychron]);
+    await prepareCart(api, tokenA, tc.user_a_cart_items as CartItem[]);
 
     const tokenB = await ensureUserAndLogin(api, testData.users.userB);
-    await prepareCart(api, tokenB, [testData.products.airpods]);
+    await prepareCart(api, tokenB, tc.user_b_cart_items as CartItem[]);
 
     const cartBefore = await api.getCart(tokenB);
     const cartBItems = await cartBefore.json() as unknown[];
     const cartBCountBefore = cartBItems.length;
 
     const respA = await api.checkout(tokenA, {
-      total_amount: 4000000,
-      shipping_address: '123 Le Loi',
+      total_amount: tc.payload.total_amount,
+      shipping_address: tc.payload.shipping_address,
     });
 
-    expect(respA.status()).toBe(200);
+    expect(respA.status()).toBe(HTTP_STATUS.OK);
 
     const cartARespAfter = await api.getCart(tokenA);
     const cartAItems = await cartARespAfter.json() as unknown[];

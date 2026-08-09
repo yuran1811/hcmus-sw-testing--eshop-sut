@@ -12,7 +12,8 @@
     "test:ep": "playwright test tests/plas-ep.spec.ts",
     "test:ui": "playwright test tests/plas-ui.spec.ts",
     "test:bva": "playwright test tests/plas-bva.spec.ts",
-    "report": "playwright show-report"
+    "report": "playwright show-report",
+    "stamp-report": "node ../_common/stamp-report.js \"EShop Product List & Search Automation\""
   },
   "keywords": [
     "playwright",

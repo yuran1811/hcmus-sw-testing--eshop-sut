@@ -1,4 +1,5 @@
 import { Page, Locator } from '@playwright/test';
+import { automationEnv } from '../../_common/env';
 
 /**
  * Page Object Model for Product List & Search Page (FR-05)
@@ -29,6 +30,7 @@ export class ProductListPage {
   readonly detailButtons: Locator;
   readonly addToCartButtons: Locator;
   readonly emptyStateText: Locator;
+  readonly loadingIndicator: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -46,12 +48,18 @@ export class ProductListPage {
     this.detailButtons = page.locator('.grid > div.border a:has-text("Xem chi tiết")');
     this.addToCartButtons = page.locator('.grid > div.border button:has-text("Thêm vào giỏ")');
     this.emptyStateText = page.locator('text=Không tìm thấy sản phẩm').or(page.locator('.empty-state'));
+    this.loadingIndicator = page
+      .locator('text=Đang tải...')
+      .or(page.locator('text=Đang tải'))
+      .or(page.locator('[data-testid="loading"]'))
+      .or(page.locator('.loading'))
+      .or(page.locator('.spinner'));
   }
 
   /**
    * Navigate to home page
    */
-  async goto(baseURL = 'http://localhost:5173') {
+  async goto(baseURL = automationEnv.frontendBaseUrl) {
     await this.page.goto(baseURL);
     await this.page.waitForLoadState('domcontentloaded');
   }
@@ -61,8 +69,11 @@ export class ProductListPage {
    */
   async search(keyword: string) {
     await this.searchInput.fill(keyword);
+    const responsePromise = this.page.waitForResponse((response) => {
+      return response.request().method() === 'GET' && response.url().includes('/api/products?search=');
+    });
     await this.searchButton.click();
-    await this.page.waitForLoadState('domcontentloaded');
+    await responsePromise;
   }
 
   /**
@@ -70,8 +81,11 @@ export class ProductListPage {
    */
   async clearSearch() {
     await this.searchInput.fill('');
+    const responsePromise = this.page.waitForResponse((response) => {
+      return response.request().method() === 'GET' && response.url().includes('/api/products?search=');
+    });
     await this.searchButton.click();
-    await this.page.waitForLoadState('domcontentloaded');
+    await responsePromise;
   }
 
   /**
@@ -79,8 +93,11 @@ export class ProductListPage {
    */
   async searchByPressingEnter(keyword: string) {
     await this.searchInput.fill(keyword);
+    const responsePromise = this.page.waitForResponse((response) => {
+      return response.request().method() === 'GET' && response.url().includes('/api/products?search=');
+    });
     await this.searchInput.press('Enter');
-    await this.page.waitForLoadState('domcontentloaded');
+    await responsePromise;
   }
 
   /**
@@ -121,5 +138,22 @@ export class ProductListPage {
       alts.push(await img.getAttribute('alt'));
     }
     return alts;
+  }
+
+  /**
+   * Get the visible body text for raw-error detection.
+   */
+  async getBodyText(): Promise<string> {
+    return await this.page.locator('body').innerText();
+  }
+
+  /**
+   * Check whether the page is horizontally overflowing.
+   */
+  async hasHorizontalOverflow(): Promise<boolean> {
+    return await this.page.evaluate(() => {
+      const doc = document.documentElement;
+      return doc.scrollWidth > doc.clientWidth;
+    });
   }
 }

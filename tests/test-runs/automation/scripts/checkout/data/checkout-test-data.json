@@ -207,8 +207,52 @@
       "must_not_persist_total": 1,
       "expected_status_oneOf": [200, 400],
       "if_200_expected_total_in_db": 10000000
+    },
+    {
+      "tc_id": "TC-CHECKOUT-015",
+      "description": "Checkout chỉ xóa giỏ của đúng người dùng thực hiện",
+      "type": "characterization",
+      "technique": "Equivalence Partitioning",
+      "user_a_cart_items": [
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "user_b_cart_items": [
+        { "id": 4, "name": "Tai nghe AirPods Pro 2", "price": 6000000, "quantity": 1 }
+      ],
+      "payload": {
+        "total_amount": 4000000,
+        "shipping_address": "123 Le Loi"
+      },
+      "expected_status": 200
     }
   ],
+  "tc_ui": [
+    {
+      "tc_id": "TC-CHECKOUT-011",
+      "description": "Trang Checkout hiển thị đầy đủ mọi dòng sản phẩm",
+      "cart_items": [
+        { "id": 4, "name": "Tai nghe AirPods Pro 2", "price": 6000000, "quantity": 2 },
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "expected_name_keywords": ["airpods", "keychron"],
+      "expected_total_amount": 16000000
+    },
+    {
+      "tc_id": "TC-CHECKOUT-012",
+      "description": "Tổng tiền là giá trị tự động và không thể chỉnh sửa",
+      "cart_items": [
+        { "id": 4, "name": "Tai nghe AirPods Pro 2", "price": 6000000, "quantity": 1 },
+        { "id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1 }
+      ],
+      "tampered_total_amount": 1,
+      "post_submit_wait_ms": 2000
+    }
+  ],
+  "meta": {
+    "robustness_ref": 500,
+    "shipping_address_short": "123 Le Loi",
+    "shipping_address_unicode": "Số 12/3, Đường Nguyễn Huệ, P. Bến Nghé, Q.1, TP. Hồ Chí Minh"
+  },
   "tc_bva": [
     {
       "tc_id": "TC-CHECKOUT-BVA-001",

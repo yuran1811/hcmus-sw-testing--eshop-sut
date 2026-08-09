@@ -16,6 +16,7 @@
 import { test, expect } from '@playwright/test';
 import { ProductListPage } from '../pages/ProductListPage';
 import testData from '../data/plas-test-data.json';
+import { UI_CONSTANTS } from '../../_common/constants';
 
 test.describe('FR-05 Product List & Search — BVA (Boundary Value Analysis)', () => {
 
@@ -27,19 +28,19 @@ test.describe('FR-05 Product List & Search — BVA (Boundary Value Analysis)', (
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-PLAS-BVA-001: Tìm kiếm từ khóa 1 ký tự (Biên dưới tối thiểu B+1)
+  // TC-PLAS-BVA-001: Tìm kiếm từ khóa ở biên dưới hợp lệ
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-PLAS-BVA-001: Tìm kiếm từ khóa 1 ký tự (Biên dưới B+1 = 1)', async () => {
+  test('TC-PLAS-BVA-001: Tìm kiếm từ khóa ở biên dưới hợp lệ', async () => {
     const tc = testData.test_cases.find(c => c.tc_id === 'TC-PLAS-BVA-001')!;
     await plasPage.search(tc.search_keyword!);
 
-    // [Pattern 5] — Count = 2 (iPhone 15 Pro Max, Tai nghe AirPods Pro 2 contain 'i')
+    // [Pattern 5] — Count matches the dataset expectation
     const count = await plasPage.getProductCount();
     expect(count).toBe(tc.expected_count);
 
     // [Pattern 3] — Soft assertion for <h1> tag count
     const h1Count = await plasPage.getH1Count();
-    expect.soft(h1Count).toBe(1);
+    expect.soft(h1Count).toBe(UI_CONSTANTS.EXPECTED_H1_COUNT);
   });
 
   // ──────────────────────────────────────────────────────────────────────────
@@ -53,6 +54,10 @@ test.describe('FR-05 Product List & Search — BVA (Boundary Value Analysis)', (
     // [Pattern 1] — Error box must not appear; page does not crash
     await expect(plasPage.errorBox).not.toBeVisible();
     await expect(page.locator('body')).toBeVisible();
+    for (const keyword of UI_CONSTANTS.DB_ERROR_KEYWORDS) {
+      await expect.soft(page.locator('body')).not.toContainText(keyword);
+    }
+    expect(await plasPage.hasHorizontalOverflow()).toBe(false);
 
     // [Pattern 5] — Count = 0 (empty state)
     const count = await plasPage.getProductCount();
@@ -60,9 +65,9 @@ test.describe('FR-05 Product List & Search — BVA (Boundary Value Analysis)', (
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-PLAS-BVA-003: Tìm kiếm từ khóa 256 ký tự (Biên trên R+1 = 256)
+  // TC-PLAS-BVA-003: Tìm kiếm từ khóa ở biên trên hợp lệ
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-PLAS-BVA-003: Tìm kiếm từ khóa 256 ký tự (Biên trên R+1 = 256)', async ({ page }) => {
+  test('TC-PLAS-BVA-003: Tìm kiếm từ khóa ở biên trên hợp lệ', async ({ page }) => {
     const tc = testData.test_cases.find(c => c.tc_id === 'TC-PLAS-BVA-003')!;
     const keyword256 = 'A'.repeat(tc.search_keyword_length!);
     await plasPage.search(keyword256);
@@ -70,6 +75,10 @@ test.describe('FR-05 Product List & Search — BVA (Boundary Value Analysis)', (
     // [Pattern 1] — Error box must not appear; page does not crash
     await expect(plasPage.errorBox).not.toBeVisible();
     await expect(page.locator('body')).toBeVisible();
+    for (const keyword of UI_CONSTANTS.DB_ERROR_KEYWORDS) {
+      await expect.soft(page.locator('body')).not.toContainText(keyword);
+    }
+    expect(await plasPage.hasHorizontalOverflow()).toBe(false);
   });
 
   // ──────────────────────────────────────────────────────────────────────────
@@ -82,6 +91,9 @@ test.describe('FR-05 Product List & Search — BVA (Boundary Value Analysis)', (
     // [Pattern 1] — No SQL error displayed
     await expect(plasPage.errorBox).not.toBeVisible();
     await expect(page.locator('body')).toBeVisible();
+    for (const keyword of UI_CONSTANTS.DB_ERROR_KEYWORDS) {
+      await expect.soft(page.locator('body')).not.toContainText(keyword);
+    }
 
     // [Pattern 5] — 0 matching items for exact string payload
     const count = await plasPage.getProductCount();
@@ -97,13 +109,13 @@ test.describe('FR-05 Product List & Search — BVA (Boundary Value Analysis)', (
 
     // [Pattern 3] — Soft assertion for single <h1> tag requirement (BUG-PLAS-001)
     const h1Count = await plasPage.getH1Count();
-    expect.soft(h1Count, 'FR-05 requires exactly 1 <h1> tag on page (BUG-PLAS-001)').toBe(1);
+    expect.soft(h1Count, 'FR-05 requires exactly 1 <h1> tag on page (BUG-PLAS-001)').toBe(UI_CONSTANTS.EXPECTED_H1_COUNT);
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-PLAS-BVA-006: Tìm kiếm từ khóa độ dài 0 ký tự
+  // TC-PLAS-BVA-006: Tìm kiếm từ khóa rỗng
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-PLAS-BVA-006: Tìm kiếm từ khóa độ dài 0 ký tự (Boundary Min B = 0)', async () => {
+  test('TC-PLAS-BVA-006: Tìm kiếm từ khóa rỗng', async () => {
     const tc = testData.test_cases.find(c => c.tc_id === 'TC-PLAS-BVA-006')!;
     await plasPage.search(tc.search_keyword!);
 
@@ -113,9 +125,9 @@ test.describe('FR-05 Product List & Search — BVA (Boundary Value Analysis)', (
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-PLAS-BVA-007: Tìm kiếm từ khóa độ dài 2 ký tự
+  // TC-PLAS-BVA-007: Tìm kiếm từ khóa ngay trên biên dưới
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-PLAS-BVA-007: Tìm kiếm từ khóa độ dài 2 ký tự (B+2 = 2)', async () => {
+  test('TC-PLAS-BVA-007: Tìm kiếm từ khóa ngay trên biên dưới', async () => {
     const tc = testData.test_cases.find(c => c.tc_id === 'TC-PLAS-BVA-007')!;
     await plasPage.search(tc.search_keyword!);
 
@@ -129,9 +141,9 @@ test.describe('FR-05 Product List & Search — BVA (Boundary Value Analysis)', (
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-PLAS-BVA-008: Tìm kiếm từ khóa độ dài 254 ký tự
+  // TC-PLAS-BVA-008: Tìm kiếm từ khóa ngay dưới biên trên
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-PLAS-BVA-008: Tìm kiếm từ khóa độ dài 254 ký tự (Biên R-1 = 254)', async ({ page }) => {
+  test('TC-PLAS-BVA-008: Tìm kiếm từ khóa ngay dưới biên trên', async ({ page }) => {
     const tc = testData.test_cases.find(c => c.tc_id === 'TC-PLAS-BVA-008')!;
     const keyword254 = 'A'.repeat(tc.search_keyword_length!);
     await plasPage.search(keyword254);
@@ -139,6 +151,10 @@ test.describe('FR-05 Product List & Search — BVA (Boundary Value Analysis)', (
     // [Pattern 1] — No crash
     await expect(plasPage.errorBox).not.toBeVisible();
     await expect(page.locator('body')).toBeVisible();
+    for (const keyword of UI_CONSTANTS.DB_ERROR_KEYWORDS) {
+      await expect.soft(page.locator('body')).not.toContainText(keyword);
+    }
+    expect(await plasPage.hasHorizontalOverflow()).toBe(false);
   });
 
   // ──────────────────────────────────────────────────────────────────────────

@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import { automationEnv } from '../_common/env';
 
 /**
  * Playwright Test Configuration for Checkout (FR-08)
@@ -28,7 +29,7 @@ export default defineConfig({
     'Timestamp': new Date().toISOString(),
   },
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: automationEnv.apiBaseUrl,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',

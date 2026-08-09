@@ -13,7 +13,8 @@
     "test:auth": "playwright test tests/category-auth.spec.ts",
     "test:security": "playwright test tests/category-security.spec.ts",
     "test:bva": "playwright test tests/category-bva.spec.ts",
-    "report": "playwright show-report"
+    "report": "playwright show-report",
+    "stamp-report": "node ../_common/stamp-report.js \"EShop Category Automation\""
   },
   "keywords": [
     "playwright",

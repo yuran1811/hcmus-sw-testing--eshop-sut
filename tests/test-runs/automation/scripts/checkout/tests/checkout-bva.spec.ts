@@ -16,14 +16,17 @@
 import { test, expect } from '@playwright/test';
 import { CheckoutAPIHelper, CartItem } from '../pages/CheckoutPage';
 import testDataRaw from '../data/checkout-test-data.json';
+import { automationEnv } from '../../_common/env';
+import { HTTP_STATUS } from '../../_common/http-status';
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = automationEnv.apiBaseUrl;
 
 interface User { email: string; password: string; name: string }
 interface TestData {
   users: { userA: User };
   products: { airpods: CartItem; keychron: CartItem };
   tc_bva: any[];
+  meta: { robustness_ref: number; shipping_address_short: string; shipping_address_unicode: string };
 }
 const testData = testDataRaw as unknown as TestData;
 
@@ -38,7 +41,7 @@ async function ensureUserAndLogin(api: CheckoutAPIHelper, user: User): Promise<s
 
 async function resetCart(api: CheckoutAPIHelper, token: string): Promise<void> {
   const del = await api.clearCart(token);
-  if (del.status() === 200 || del.status() === 204) return;
+  if (del.status() === HTTP_STATUS.OK || del.status() === HTTP_STATUS.NO_CONTENT) return;
   const cart = await api.getCart(token);
   if (cart.ok()) {
     const items = await cart.json() as unknown[];
@@ -63,14 +66,14 @@ async function prepareCart(
 test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CHECKOUT-BVA-001: Giỏ hàng đúng 1 sản phẩm (cực tiểu biên, valid)
+  // TC-CHECKOUT-BVA-001: Giỏ hàng tại biên dưới hợp lệ
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-CHECKOUT-BVA-001: Checkout với đúng 1 sản phẩm trong giỏ (boundary min = 1)', async ({ request }) => {
+  test('TC-CHECKOUT-BVA-001: Checkout với giỏ hàng ở biên dưới hợp lệ', async ({ request }) => {
     const tc = testData.tc_bva.find(c => c.tc_id === 'TC-CHECKOUT-BVA-001')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
 
-    await prepareCart(api, token, [testData.products.keychron]);
+    await prepareCart(api, token, tc.cart_items as CartItem[]);
 
     const resp = await api.checkout(token, tc.payload);
 
@@ -95,21 +98,21 @@ test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CHECKOUT-BVA-002: total_amount = server_total - 1 (biên B-1, invalid)
+  // TC-CHECKOUT-BVA-002: total_amount thấp hơn giá trị hệ thống tính
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-CHECKOUT-BVA-002: total_amount = server_total - 1 (biên dưới lệch 1 đơn vị)', async ({ request }) => {
+  test('TC-CHECKOUT-BVA-002: total_amount thấp hơn giá trị hệ thống tính', async ({ request }) => {
     const tc = testData.tc_bva.find(c => c.tc_id === 'TC-CHECKOUT-BVA-002')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
-    await prepareCart(api, token, [testData.products.airpods, testData.products.keychron]);
+    await prepareCart(api, token, tc.cart_items as CartItem[]);
 
     const resp = await api.checkout(token, tc.payload);
 
     const status = resp.status();
     expect(tc.expected_status_oneOf).toContain(status);
-    expect(status).not.toBe(500);
+    expect(status).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
 
-    if (status === 200) {
+    if (status === HTTP_STATUS.OK) {
       const body = await resp.json() as { orderId?: number };
       if (body.orderId) {
         const orderResp = await api.getOrder(token, body.orderId);
@@ -123,21 +126,21 @@ test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CHECKOUT-BVA-003: total_amount = server_total + 1 (biên B+1, invalid)
+  // TC-CHECKOUT-BVA-003: total_amount cao hơn giá trị hệ thống tính
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-CHECKOUT-BVA-003: total_amount = server_total + 1 (biên trên lệch 1 đơn vị)', async ({ request }) => {
+  test('TC-CHECKOUT-BVA-003: total_amount cao hơn giá trị hệ thống tính', async ({ request }) => {
     const tc = testData.tc_bva.find(c => c.tc_id === 'TC-CHECKOUT-BVA-003')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
-    await prepareCart(api, token, [testData.products.airpods, testData.products.keychron]);
+    await prepareCart(api, token, tc.cart_items as CartItem[]);
 
     const resp = await api.checkout(token, tc.payload);
 
     const status = resp.status();
     expect(tc.expected_status_oneOf).toContain(status);
-    expect(status).not.toBe(500);
+    expect(status).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
 
-    if (status === 200) {
+    if (status === HTTP_STATUS.OK) {
       const body = await resp.json() as { orderId?: number };
       if (body.orderId) {
         const orderResp = await api.getOrder(token, body.orderId);
@@ -151,35 +154,35 @@ test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CHECKOUT-BVA-004: shipping_address = empty string (length 0 = R-1)
+  // TC-CHECKOUT-BVA-004: shipping_address rỗng, dưới mốc tham chiếu
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-CHECKOUT-BVA-004: shipping_address chuỗi rỗng (length 0 = R-1 quanh mốc 1)', async ({ request }) => {
+  test('TC-CHECKOUT-BVA-004: shipping_address rỗng, dưới mốc tham chiếu', async ({ request }) => {
     const tc = testData.tc_bva.find(c => c.tc_id === 'TC-CHECKOUT-BVA-004')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
-    await prepareCart(api, token, [testData.products.keychron]);
+    await prepareCart(api, token, tc.cart_items as CartItem[]);
 
     const resp = await api.checkout(token, tc.payload);
 
-    expect(resp.status()).not.toBe(500);
+    expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
     expect(tc.expected_status_oneOf).toContain(resp.status());
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CHECKOUT-BVA-005: shipping_address = 1 char (length = R)
+  // TC-CHECKOUT-BVA-005: shipping_address tại mốc tham chiếu
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-CHECKOUT-BVA-005: shipping_address 1 ký tự (length = R, tại mốc tham chiếu)', async ({ request }) => {
+  test('TC-CHECKOUT-BVA-005: shipping_address tại mốc tham chiếu', async ({ request }) => {
     const tc = testData.tc_bva.find(c => c.tc_id === 'TC-CHECKOUT-BVA-005')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
-    await prepareCart(api, token, [testData.products.keychron]);
+    await prepareCart(api, token, tc.cart_items as CartItem[]);
 
     const resp = await api.checkout(token, tc.payload);
 
-    expect(resp.status()).not.toBe(500);
+    expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
     expect(tc.expected_status_oneOf).toContain(resp.status());
 
-    if (resp.status() === 200) {
+    if (resp.status() === HTTP_STATUS.OK) {
       const body = await resp.json() as { orderId?: number };
       if (body.orderId) {
         const orderResp = await api.getOrder(token, body.orderId);
@@ -192,20 +195,20 @@ test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CHECKOUT-BVA-006: shipping_address = 2 chars (length = R+1)
+  // TC-CHECKOUT-BVA-006: shipping_address trên mốc tham chiếu
   // ──────────────────────────────────────────────────────────────────────────
-  test('TC-CHECKOUT-BVA-006: shipping_address 2 ký tự (length = R+1, ngay trên mốc)', async ({ request }) => {
+  test('TC-CHECKOUT-BVA-006: shipping_address trên mốc tham chiếu', async ({ request }) => {
     const tc = testData.tc_bva.find(c => c.tc_id === 'TC-CHECKOUT-BVA-006')!;
     const api = new CheckoutAPIHelper(request, BASE_URL);
     const token = await ensureUserAndLogin(api, testData.users.userA);
-    await prepareCart(api, token, [testData.products.keychron]);
+    await prepareCart(api, token, tc.cart_items as CartItem[]);
 
     const resp = await api.checkout(token, tc.payload);
 
-    expect(resp.status()).not.toBe(500);
+    expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
     expect(tc.expected_status_oneOf).toContain(resp.status());
 
-    if (resp.status() === 200) {
+    if (resp.status() === HTTP_STATUS.OK) {
       const body = await resp.json() as { orderId?: number };
       if (body.orderId) {
         const orderResp = await api.getOrder(token, body.orderId);
@@ -218,13 +221,13 @@ test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
   });
 
   // ──────────────────────────────────────────────────────────────────────────
-  // TC-CHECKOUT-BVA-007: shipping_address at robustness boundary 499/500/501
+  // TC-CHECKOUT-BVA-007: shipping_address tại vùng biên độ bền
   // ──────────────────────────────────────────────────────────────────────────
-  const robustnessRef = 500;
+  const robustnessRef = testData.meta.robustness_ref;
   const robustnessIterations = [
-    { id: 'A', label: 'R-1 (499)', len: robustnessRef - 1 },
-    { id: 'B', label: 'R (500)',   len: robustnessRef },
-    { id: 'C', label: 'R+1 (501)', len: robustnessRef + 1 },
+    { id: 'A', label: 'Dưới mốc', len: robustnessRef - 1 },
+    { id: 'B', label: 'Tại mốc', len: robustnessRef },
+    { id: 'C', label: 'Trên mốc', len: robustnessRef + 1 },
   ] as const;
 
   for (const iter of robustnessIterations) {
@@ -237,14 +240,14 @@ test.describe('FR-08 Checkout — BVA Tests (Boundary Value Analysis)', () => {
       expect(longAddress.length).toBe(iter.len);
 
       const resp = await api.checkout(token, {
-        total_amount: 4000000,
+        total_amount: testData.products.keychron.price,
         shipping_address: longAddress,
       });
 
-      expect(resp.status()).not.toBe(500);
-      expect([200, 400]).toContain(resp.status());
+      expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
+      expect([HTTP_STATUS.OK, HTTP_STATUS.BAD_REQUEST]).toContain(resp.status());
 
-      if (resp.status() === 200) {
+      if (resp.status() === HTTP_STATUS.OK) {
         const body = await resp.json() as { orderId?: number };
         if (body.orderId) {
           const orderResp = await api.getOrder(token, body.orderId);

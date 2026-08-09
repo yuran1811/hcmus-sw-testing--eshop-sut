@@ -1,217 +1,65 @@
-# Category Management (FR-14) — Playwright Automation Test Suite
+# Báo cáo Kết quả Kiểm thử Tự động - Phân hệ Category (FR-14)
 
-> **Student:** Mạch Quốc Tấn — MSSV: **23127115**  
-> **Assignment:** Homework 04 — Automation Testing  
-> **Feature:** FR-14 Category Management  
-> **Course:** CS423 / CSC15003 — Software Testing
+Thư mục này chứa các kịch bản kiểm thử tự động bằng Playwright cho tính năng Quản lý Danh mục (FR-14 Category).
 
----
+## Thông tin chạy test
 
-## Tổng quan
+- **Ngày thực hiện**: 2026-08-09
+- **Người thực hiện**: Mạch Quốc Tấn
+- **Công cụ**: Playwright v1.40+ (TypeScript)
+- **Môi trường chạy**: Localhost (Backend: port 3000, Frontend Admin: port 5174)
+- **Trình duyệt kiểm thử**: Chromium, Firefox, WebKit (Đa trình duyệt)
 
-Bộ kiểm thử tự động này bao phủ toàn bộ **28 test case** cho tính năng Category Management (FR-14) của EShop SUT, được tổ chức thành 4 file spec:
+## Kết quả tổng quan
 
-| File spec                         | Test cases                                 | Kỹ thuật                              |
-| --------------------------------- | ------------------------------------------ | ------------------------------------- |
-| `tests/category-crud.spec.ts`     | TC-CATEGORY-001~006, 009, 012~015, 019~020 | Equivalence Partitioning, Data-driven |
-| `tests/category-auth.spec.ts`     | TC-CATEGORY-007, 008, 010, 011, 018        | Equivalence Partitioning (Auth)       |
-| `tests/category-security.spec.ts` | TC-CATEGORY-016, 017                       | Malicious Input Partition             |
-| `tests/category-bva.spec.ts`      | TC-CATEGORY-BVA-001~008                    | Boundary Value Analysis               |
+- **Tổng số kịch bản chạy (Browser Runs)**: 102 lượt (34 kịch bản × 3 trình duyệt)
+- **Số lượt Pass**: 58
+- **Số lượt Fail**: 44
 
-### Assertion patterns được dùng (≥ 3 loại theo yêu cầu đề)
+## Danh sách các kịch bản kiểm thử
 
-| Pattern | Loại                      | Ví dụ trong script                                                   |
-| ------- | ------------------------- | -------------------------------------------------------------------- |
-| 1       | HTTP status code          | `expect(resp.status()).toBe(400)`, `not.toBe(500)`                   |
-| 2       | Nội dung / giá trị trường | `expect(found?.name).toBe('Điện tử')`                                |
-| 3       | Số lượng / count          | `expect(list.length).toBeGreaterThanOrEqual(2)`, `toBe(countBefore)` |
-| 4       | Network / API response    | `request.post(...)`, kiểm tra `status()` và `json()`                 |
-| 5       | Soft assertion            | `expect.soft([200, 204]).toContain(resp.status())`                   |
+| Mã Test Case             | Tên Kịch bản                                         | Chromium | Firefox | WebKit | Ghi chú                           |
+| :----------------------- | :--------------------------------------------------- | :------- | :------ | :----- | :-------------------------------- |
+| TC-CATEGORY-001          | Thêm danh mục thành công tên hợp lệ                  | Pass     | Pass    | Pass   | Hoạt động đúng                    |
+| TC-CATEGORY-002          | Thêm danh mục thất bại khi tên rỗng                  | Fail     | Fail    | Fail   | BUG-CATEGORY-001                  |
+| TC-CATEGORY-003          | Thêm danh mục thất bại khi tên chỉ chứa khoảng trắng | Fail     | Fail    | Fail   | BUG-CATEGORY-002                  |
+| TC-CATEGORY-004          | Xem danh sách danh mục thành công                    | Pass     | Fail    | Fail   | Lỗi trên Firefox/WebKit           |
+| TC-CATEGORY-005          | Xóa danh mục thành công                              | Pass     | Pass    | Pass   | Hoạt động đúng                    |
+| TC-CATEGORY-006          | Xóa danh mục không tồn tại                           | Pass     | Pass    | Pass   | BUG-CATEGORY-003 (Báo thành công) |
+| TC-CATEGORY-007          | Thêm danh mục không token                            | Pass     | Pass    | Pass   | Chặn đúng (401)                   |
+| TC-CATEGORY-008          | Thêm danh mục với token user thường                  | Fail     | Fail    | Fail   | BUG-CATEGORY-004 (403 bypass)     |
+| TC-CATEGORY-009          | Xóa danh mục có sản phẩm liên kết                    | Fail     | Fail    | Fail   | BUG-CATEGORY-010 (Orphan records) |
+| TC-CATEGORY-010          | Xóa danh mục không token                             | Pass     | Pass    | Pass   | Chặn đúng (401)                   |
+| TC-CATEGORY-011          | Xóa danh mục với token user thường                   | Fail     | Fail    | Fail   | BUG-CATEGORY-005 (403 bypass)     |
+| TC-CATEGORY-012          | Thêm danh mục thiếu thuộc tính name                  | Fail     | Fail    | Fail   | BUG-CATEGORY-006                  |
+| TC-CATEGORY-013-1        | name = null                                          | Fail     | Fail    | Fail   | BUG-CATEGORY-007                  |
+| TC-CATEGORY-013-2        | name = 123                                           | Fail     | Fail    | Fail   | BUG-CATEGORY-007                  |
+| TC-CATEGORY-013-3        | name = true                                          | Fail     | Fail    | Fail   | BUG-CATEGORY-007                  |
+| TC-CATEGORY-013-4        | name = []                                            | Fail     | Fail    | Fail   | BUG-CATEGORY-007                  |
+| TC-CATEGORY-013-5        | name = {}                                            | Fail     | Fail    | Fail   | BUG-CATEGORY-007                  |
+| TC-CATEGORY-014          | Thêm danh mục tên Unicode/Emoji                      | Pass     | Pass    | Pass   | Hoạt động đúng                    |
+| TC-CATEGORY-015          | Trùng tên danh mục                                   | Pass     | Pass    | Pass   | Hoạt động đúng                    |
+| TC-CATEGORY-016          | Tên danh mục chứa XSS                                | Pass     | Pass    | Pass   | Hoạt động đúng                    |
+| TC-CATEGORY-017          | Tên danh mục chứa SQLi                               | Pass     | Pass    | Pass   | Hoạt động đúng                    |
+| TC-CATEGORY-018-1..002   | Token sai chữ ký / hết hạn                           | Pass     | Pass    | Pass   | 2 biến thể đều hoạt động đúng     |
+| TC-CATEGORY-019-1        | DELETE với ID sai cú pháp (abc)                      | Fail     | Fail    | Fail   | BUG-CATEGORY-008 (500 Error)      |
+| TC-CATEGORY-019-2        | DELETE với ID sai cú pháp (1.5)                      | Fail     | Fail    | Fail   | BUG-CATEGORY-008 (500 Error)      |
+| TC-CATEGORY-020          | Xóa lặp cùng ID                                      | Pass     | Pass    | Pass   | Hoạt động đúng                    |
+| TC-CATEGORY-BVA-001..002 | Biên ký tự độ dài tên hợp lệ                         | Pass     | Pass    | Pass   | Hoạt động đúng                    |
+| TC-CATEGORY-BVA-003      | DELETE với ID dưới mốc tham chiếu                    | Fail     | Fail    | Fail   | BUG-CATEGORY-009 (500 Error)      |
+| TC-CATEGORY-BVA-004..008 | Các kịch bản biên khác                               | Pass     | Pass    | Pass   | Hoạt động đúng                    |
 
----
+## Danh sách lỗi phát hiện (Báo cáo lỗi tự động)
 
-## Yêu cầu môi trường
+Các lỗi phát hiện trong quá trình kiểm thử tự động được ghi nhận tại thư mục `tests/bug-reports/automation/category/`:
 
-| Phần mềm         | Phiên bản tối thiểu |
-| ---------------- | ------------------- |
-| Node.js          | ≥ 18.x              |
-| pnpm             | ≥ 8.x               |
-| @playwright/test | ^1.49.1             |
-
-### Dịch vụ cần chạy trước khi test
-
-| Dịch vụ         | URL mặc định            | Ghi chú                     |
-| --------------- | ----------------------- | --------------------------- |
-| **Backend API** | `http://localhost:3000` | Express.js + SQLite backend |
-
-> **Không cần** Frontend (`localhost:5173`) — toàn bộ tests đều là **API tests**.
-
----
-
-## Cài đặt
-
-```bash
-# 1. Di chuyển vào thư mục này
-cd tests/test-runs/automation/scripts/category
-
-# 2. Cài đặt dependencies
-pnpm install
-
-# 3. Cài browser binaries (lần đầu)
-pnpm exec playwright install
-```
-
----
-
-## Chạy test
-
-### Chạy toàn bộ (3 browsers: Chromium, Firefox, WebKit)
-
-```bash
-pnpm test
-# hoặc
-pnpm exec playwright test
-```
-
-### Chạy theo browser riêng lẻ
-
-```bash
-pnpm test:chromium       # Chỉ Chromium
-pnpm test:firefox        # Chỉ Firefox
-pnpm test:webkit         # Chỉ WebKit (Safari engine)
-```
-
-### Chạy theo nhóm test
-
-```bash
-pnpm test:crud           # CRUD tests (TC-001 → TC-020)
-pnpm test:auth           # Auth/Authorization tests (TC-007, 008, 010, 011, 018)
-pnpm test:security       # Security tests (TC-016, 017)
-pnpm test:bva            # BVA tests (BVA-001 → BVA-008)
-```
-
-### Xem HTML Report
-
-```bash
-pnpm report
-# hoặc
-pnpm exec playwright show-report
-```
-
-Report tại `playwright-report/index.html`.  
-Tiêu đề report: **"EShop Category Automation — Run by: 23127115 (Mạch Quốc Tấn)"** kèm ISO timestamp.
-
----
-
-## Cấu trúc thư mục
-
-```
-tests/test-runs/automation/scripts/category/
-├── package.json                      # Dependencies & pnpm scripts
-├── playwright.config.ts              # Multi-browser config, student metadata
-├── tsconfig.json                     # TypeScript config
-│
-├── pages/
-│   └── CategoryPage.ts               # API Helper (CategoryAPIHelper)
-│
-├── data/
-│   └── category-test-data.json       # Test data cho tất cả 28 test cases
-│
-├── tests/
-│   ├── category-crud.spec.ts         # CRUD + Equivalence Partitioning (13 TC)
-│   ├── category-auth.spec.ts         # Auth/Authorization (5 TC + 2 invalid-token variants)
-│   ├── category-security.spec.ts     # XSS + SQL Injection (2 TC)
-│   └── category-bva.spec.ts          # Boundary Value Analysis (8 TC)
-│
-└── playwright-report/                # (tự sinh sau khi chạy)
-    └── index.html
-```
-
----
-
-## Tài khoản test mặc định
-
-Bộ test tự **đăng ký** 2 tài khoản khi khởi chạy (ignore 400 nếu đã tồn tại):
-
-| Vai trò         | Email                       | Password    | Mục đích                         |
-| --------------- | --------------------------- | ----------- | -------------------------------- |
-| **Admin**       | `admin_cat_test@eshop.test` | `Admin123!` | Thực hiện CRUD category          |
-| **Normal User** | `user_cat_test@eshop.test`  | `User123!`  | Test authorization (TC-008, 011) |
-
-> **Lưu ý:** Backend EShop SUT phân biệt `role: 'admin'` và `role: 'user'`.  
-> Nếu tài khoản admin tự đăng ký không có `role = 'admin'`, cần tạo thủ công hoặc seed dữ liệu.
-
----
-
-## Tạo tài khoản Admin thủ công (nếu cần)
-
-Nếu API `/api/register` không gán role admin tự động, seed thủ công qua SQLite:
-
-```bash
-# Trong thư mục backend
-sqlite3 database.db "UPDATE users SET role='admin' WHERE email='admin_cat_test@eshop.test';"
-```
-
----
-
-## API Endpoints được test
-
-| Method   | Endpoint              | Test Cases                                |
-| -------- | --------------------- | ----------------------------------------- |
-| `POST`   | `/api/categories`     | TC-001~003, 007~008, 012~018              |
-| `GET`    | `/api/categories`     | TC-004, BVA-006~008                       |
-| `DELETE` | `/api/categories/:id` | TC-005~006, 009~011, 019~020, BVA-003~005 |
-| `POST`   | `/api/register`       | Setup (auto)                              |
-| `POST`   | `/api/login`          | Setup (auto)                              |
-
----
-
-## Lưu ý về thứ tự chạy test
-
-- Tests chạy **tuần tự** (`workers: 1`) để tránh race conditions trên shared categories table.
-- Mỗi test tự **cleanup** category đã tạo ở `afterEach` / cuối test body.
-- Test **characterization** (TC-006, 009, 015, 019, 020, BVA-006) sử dụng `expect.soft()` vì SRS chưa định nghĩa hành vi bắt buộc — các test này ghi nhận hành vi thực tế.
-
----
-
-## Kết quả mong đợi
-
-| Test ID               | Expected                     | Status   | Bug              |
-| --------------------- | ---------------------------- | -------- | ---------------- |
-| TC-CATEGORY-001       | 200/201 + in list            | Pass     | —                |
-| TC-CATEGORY-002       | 400 (empty name)             | **Fail** | BUG-CATEGORY-001 |
-| TC-CATEGORY-003       | 400 (whitespace-only)        | **Fail** | BUG-CATEGORY-001 |
-| TC-CATEGORY-004       | 200 + array with id,name     | Pass     | —                |
-| TC-CATEGORY-005       | 200/204 + removed            | Pass     | —                |
-| TC-CATEGORY-006       | No 500, no mutation          | **Fail** | BUG-CATEGORY-002 |
-| TC-CATEGORY-007       | 401/403                      | Pass     | —                |
-| TC-CATEGORY-008       | 403                          | **Fail** | BUG-CATEGORY-003 |
-| TC-CATEGORY-009       | No orphan records            | **Fail** | BUG-CATEGORY-004 |
-| TC-CATEGORY-010       | 401                          | Pass     | —                |
-| TC-CATEGORY-011       | 403                          | **Fail** | BUG-CATEGORY-005 |
-| TC-CATEGORY-012       | 400 (missing name)           | Not Run  | —                |
-| TC-CATEGORY-013 (1-5) | 400 (type error)             | Not Run  | —                |
-| TC-CATEGORY-014       | 200/201 + unicode OK         | Not Run  | —                |
-| TC-CATEGORY-015       | Characterization             | Not Run  | —                |
-| TC-CATEGORY-016       | XSS safe                     | Not Run  | —                |
-| TC-CATEGORY-017       | SQL safe                     | Not Run  | —                |
-| TC-CATEGORY-018 (1,2) | 401/403                      | Not Run  | —                |
-| TC-CATEGORY-019 (1,2) | 400/404                      | Not Run  | —                |
-| TC-CATEGORY-020       | No 500, idempotent           | Not Run  | —                |
-| TC-CATEGORY-BVA-001   | 200/201, name='A'            | Pass     | —                |
-| TC-CATEGORY-BVA-002   | 200/201, name='AB'           | Pass     | —                |
-| TC-CATEGORY-BVA-003   | 400/404, no mutation         | Not Run  | —                |
-| TC-CATEGORY-BVA-004   | 200/204, removed             | Not Run  | —                |
-| TC-CATEGORY-BVA-005   | 200/204, only target removed | Not Run  | —                |
-| TC-CATEGORY-BVA-006   | 200 + array                  | Not Run  | —                |
-| TC-CATEGORY-BVA-007   | 200 + 1 item                 | Not Run  | —                |
-| TC-CATEGORY-BVA-008   | 200 + 2 items                | Not Run  | —                |
-
----
-
-## Tham khảo thêm
-
-- [Playwright Docs](https://playwright.dev/docs/intro)
-- [Test Cases Category](../../test-cases/category/)
-- [Bug Reports](../../../docs/report/Bug_Report.md)
-- [AI Audit Report](../../../docs/report/AI_Audit_Report.md)
+- [BUG-CATEGORY-001](../../../../bug-reports/automation/category/BUG-CATEGORY-001.md): API chấp nhận thêm mới danh mục với tên rỗng.
+- [BUG-CATEGORY-002](../../../../bug-reports/automation/category/BUG-CATEGORY-002.md): API chấp nhận thêm mới danh mục với tên chỉ chứa khoảng trắng.
+- [BUG-CATEGORY-003](../../../../bug-reports/automation/category/BUG-CATEGORY-003.md): Báo xóa thành công danh mục không tồn tại thay vì phản hồi lỗi hợp lý.
+- [BUG-CATEGORY-004](../../../../bug-reports/automation/category/BUG-CATEGORY-004.md): Lỗi phân quyền, cho phép tài khoản user thường thêm danh mục.
+- [BUG-CATEGORY-005](../../../../bug-reports/automation/category/BUG-CATEGORY-005.md): Lỗi phân quyền, cho phép tài khoản user thường xóa danh mục.
+- [BUG-CATEGORY-006](../../../../bug-reports/automation/category/BUG-CATEGORY-006.md): API chấp nhận thêm mới danh mục khi payload thiếu thuộc tính name.
+- [BUG-CATEGORY-007](../../../../bug-reports/automation/category/BUG-CATEGORY-007.md): API chấp nhận thêm mới danh mục khi name sai kiểu dữ liệu.
+- [BUG-CATEGORY-008](../../../../bug-reports/automation/category/BUG-CATEGORY-008.md): API DELETE không validate ID dạng chuỗi/số thực dẫn đến SQLite syntax error.
+- [BUG-CATEGORY-009](../../../../bug-reports/automation/category/BUG-CATEGORY-009.md): API DELETE không validate ID nằm ngoài biên (0, -1) dẫn đến SQLite error.
+- [BUG-CATEGORY-010](../../../../bug-reports/automation/category/BUG-CATEGORY-010.md): Xóa danh mục không xử lý các sản phẩm liên kết gây orphan records.

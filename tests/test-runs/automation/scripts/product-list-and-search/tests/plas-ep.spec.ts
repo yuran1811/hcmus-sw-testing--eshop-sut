@@ -17,6 +17,7 @@
 import { test, expect } from '@playwright/test';
 import { ProductListPage } from '../pages/ProductListPage';
 import testDataRaw from '../data/plas-test-data.json';
+import { UI_CONSTANTS } from '../../_common/constants';
 
 // Type assertion for TS safety
 interface TestCase {
@@ -56,7 +57,7 @@ test.describe('FR-05 Product List & Search — Equivalence Partitioning', () => 
     expect(productCount).toBe(tc.expected_count);
 
     const h1Count = await plasPage.getH1Count();
-    expect.soft(h1Count, 'FR-05 requires exactly 1 <h1> tag on page (BUG-PLAS-001)').toBe(1);
+    expect.soft(h1Count, 'FR-05 requires exactly 1 <h1> tag on page (BUG-PLAS-001)').toBe(UI_CONSTANTS.EXPECTED_H1_COUNT);
 
     const imageAlts = await plasPage.getProductImagesAlt();
     for (const alt of imageAlts) {
@@ -65,7 +66,7 @@ test.describe('FR-05 Product List & Search — Equivalence Partitioning', () => 
 
     const prices = await plasPage.getProductPrices();
     for (const price of prices) {
-      expect.soft(price.includes('₫'), 'Price must display ₫ symbol (BUG-PLAS-003)').toBeTruthy();
+      expect.soft(price.includes(UI_CONSTANTS.CURRENCY_SYMBOL), 'Price must display ₫ symbol (BUG-PLAS-003)').toBeTruthy();
     }
   });
 
@@ -81,6 +82,15 @@ test.describe('FR-05 Product List & Search — Equivalence Partitioning', () => 
 
     const titles = await plasPage.getProductTitles();
     expect(titles[0]).toContain(tc.expected_title!);
+
+    const h1Count = await plasPage.getH1Count();
+    expect(h1Count).toBe(UI_CONSTANTS.EXPECTED_H1_COUNT);
+
+    const alts = await plasPage.getProductImagesAlt();
+    expect(alts[0]).toBeTruthy();
+
+    const prices = await plasPage.getProductPrices();
+    expect(prices[0]).toContain(UI_CONSTANTS.CURRENCY_SYMBOL);
   });
 
   // ──────────────────────────────────────────────────────────────────────────
@@ -108,6 +118,15 @@ test.describe('FR-05 Product List & Search — Equivalence Partitioning', () => 
 
     const titles = await plasPage.getProductTitles();
     expect(titles[0]).toContain(tc.expected_title!);
+
+    const h1Count = await plasPage.getH1Count();
+    expect(h1Count).toBe(UI_CONSTANTS.EXPECTED_H1_COUNT);
+
+    const alts = await plasPage.getProductImagesAlt();
+    expect(alts[0]).toBeTruthy();
+
+    const prices = await plasPage.getProductPrices();
+    expect(prices[0]).toContain(UI_CONSTANTS.CURRENCY_SYMBOL);
   });
 
   // ──────────────────────────────────────────────────────────────────────────
@@ -122,15 +141,33 @@ test.describe('FR-05 Product List & Search — Equivalence Partitioning', () => 
 
     expect(dialogFired).toBe(false);
     await expect(page.locator('body')).toBeVisible();
+
+    const bodyText = await plasPage.getBodyText();
+    for (const keyword of UI_CONSTANTS.DB_ERROR_KEYWORDS) {
+      expect(bodyText).not.toContain(keyword);
+    }
   });
 
   // ──────────────────────────────────────────────────────────────────────────
   // TC-PLAS-006: Tìm kiếm từ khóa cực dài 300 ký tự A
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-PLAS-006: Tìm kiếm từ khóa cực dài 300 ký tự — không crash hệ thống', async ({ page }) => {
-    const tc = testData.test_cases.find(c => c.tc_id === 'TC-PLAS-006')!;
+    const tc = testData.test_cases.find(c => c.tc_id === 'TC-PLAS-006') as {
+      tc_id: string;
+      search_keyword_length?: number;
+      search_delay_ms?: number;
+      loading_timeout_ms?: number;
+    };
     const longKeyword = 'A'.repeat(tc.search_keyword_length!);
-    await plasPage.search(longKeyword);
+    await page.route('**/api/products?search=*', async route => {
+      await page.waitForTimeout(tc.search_delay_ms!);
+      await route.continue();
+    });
+
+    await plasPage.searchInput.fill(longKeyword);
+    const loadingPromise = expect(plasPage.loadingIndicator).toBeVisible({ timeout: tc.loading_timeout_ms! });
+    await plasPage.searchButton.click();
+    await loadingPromise;
 
     await expect(plasPage.errorBox).not.toBeVisible();
     await expect(page.locator('body')).toBeVisible();

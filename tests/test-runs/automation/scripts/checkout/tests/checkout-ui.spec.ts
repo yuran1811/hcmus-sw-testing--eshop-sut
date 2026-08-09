@@ -16,14 +16,17 @@ import { test, expect } from '@playwright/test';
 import { CheckoutWebPage } from '../pages/CheckoutPage';
 import { CheckoutAPIHelper, CartItem } from '../pages/CheckoutPage';
 import testDataRaw from '../data/checkout-test-data.json';
+import { automationEnv } from '../../_common/env';
 
-const API_BASE = 'http://localhost:3000';
-const WEB_BASE = 'http://localhost:5173';
+const API_BASE = automationEnv.apiBaseUrl;
+const WEB_BASE = automationEnv.frontendBaseUrl;
 
 interface User { email: string; password: string; name: string }
 interface TestData {
   users: { userA: User };
   products: { airpods: CartItem; keychron: CartItem };
+  tc_ui: any[];
+  meta: { robustness_ref: number; shipping_address_short: string; shipping_address_unicode: string };
 }
 const testData = testDataRaw as unknown as TestData;
 
@@ -74,13 +77,10 @@ test.describe('FR-08 Checkout — Web UI Tests (Equivalence Partitioning)', () =
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CHECKOUT-011: Trang Checkout hiển thị đầy đủ tên, đơn giá, số lượng các sản phẩm', async ({ page, request }) => {
     const api = new CheckoutAPIHelper(request, API_BASE);
+    const tc = testData.tc_ui.find(c => c.tc_id === 'TC-CHECKOUT-011')!;
 
-    // Setup cart with 2 AirPods and 1 Keychron
-    const cartItems: CartItem[] = [
-      { ...testData.products.airpods, quantity: 2 },
-      { ...testData.products.keychron, quantity: 1 },
-    ];
-    await prepareCart(api, tokenA, cartItems);
+    // Setup cart from data-driven checkout UI scenario
+    await prepareCart(api, tokenA, tc.cart_items as CartItem[]);
 
     // Inject token into localStorage so frontend considers user logged in
     await loginViaStorage(page, tokenA);
@@ -100,14 +100,14 @@ test.describe('FR-08 Checkout — Web UI Tests (Equivalence Partitioning)', () =
     // [Pattern 2] — Text assertion: product names should appear
     const names = await webPage.getOrderItemNames();
     const nameLower = names.map((n) => n.toLowerCase()).join(' ');
-    expect.soft(nameLower).toContain('airpods');
-    expect.soft(nameLower).toContain('keychron');
+    for (const keyword of tc.expected_name_keywords) {
+      expect.soft(nameLower).toContain(keyword);
+    }
 
-    // [Pattern 2] — Total should reflect 2×6,000,000 + 4,000,000 = 16,000,000
+    // [Pattern 2] — Total should reflect the expected calculated amount from data
     const totalText = await webPage.getTotalAmountText();
-    // Accept both formatted (16.000.000) and raw (16000000) representations
     const totalClean = totalText.replace(/\D/g, '');
-    expect.soft(totalClean).toContain('16000000');
+    expect.soft(totalClean).toContain(String(tc.expected_total_amount));
   });
 
   // ──────────────────────────────────────────────────────────────────────────
@@ -115,12 +115,8 @@ test.describe('FR-08 Checkout — Web UI Tests (Equivalence Partitioning)', () =
   // ──────────────────────────────────────────────────────────────────────────
   test('TC-CHECKOUT-012: Điều khiển tổng tiền là read-only và backend không tin giá trị client sửa', async ({ page, request }) => {
     const api = new CheckoutAPIHelper(request, API_BASE);
-
-    const cartItems: CartItem[] = [
-      testData.products.airpods,
-      testData.products.keychron,
-    ];
-    await prepareCart(api, tokenA, cartItems);
+    const tc = testData.tc_ui.find(c => c.tc_id === 'TC-CHECKOUT-012')!;
+    await prepareCart(api, tokenA, tc.cart_items as CartItem[]);
     await loginViaStorage(page, tokenA);
 
     const webPage = new CheckoutWebPage(page);
@@ -162,16 +158,16 @@ test.describe('FR-08 Checkout — Web UI Tests (Equivalence Partitioning)', () =
     // [Pattern 2] — After DOM manipulation (override total to 1) and submitting,
     // backend should still use its own computed total.
     // (Simulate via DevTools evaluation; verify via API)
-    await page.evaluate(() => {
+    await page.evaluate((tamperedTotal: number) => {
       const inputs = document.querySelectorAll('input');
       inputs.forEach((inp) => {
         if (inp.name === 'total_amount' || inp.getAttribute('data-testid') === 'total-amount') {
           (inp as HTMLInputElement).removeAttribute('disabled');
           (inp as HTMLInputElement).removeAttribute('readonly');
-          (inp as HTMLInputElement).value = '1';
+          (inp as HTMLInputElement).value = String(tamperedTotal);
         }
       });
-    });
+    }, tc.tampered_total_amount);
 
     // Check order count before submitting
     const orderCountBefore = await api.getOrderCount(tokenA);
@@ -183,7 +179,7 @@ test.describe('FR-08 Checkout — Web UI Tests (Equivalence Partitioning)', () =
     const submitVisible = await submitBtn.isVisible().catch(() => false);
     if (submitVisible) {
       await submitBtn.click();
-      await page.waitForTimeout(2000);
+      await page.waitForTimeout(tc.post_submit_wait_ms);
 
       const orderCountAfter = await api.getOrderCount(tokenA);
       if (orderCountAfter > orderCountBefore) {
@@ -193,8 +189,8 @@ test.describe('FR-08 Checkout — Web UI Tests (Equivalence Partitioning)', () =
           const orders = await ordersResp.json() as Array<{ total_amount?: number; id?: number }>;
           const latestOrder = orders[orders.length - 1];
           if (latestOrder) {
-            // [Pattern 2] — Backend must not have accepted the DOM-manipulated total of "1"
-            expect(latestOrder.total_amount).not.toBe(1);
+            // [Pattern 2] — Backend must not have accepted the DOM-manipulated total
+            expect(latestOrder.total_amount).not.toBe(tc.tampered_total_amount);
           }
         }
       }

@@ -1,181 +1,62 @@
-# Product List & Search (FR-05) — Playwright Automation Test Suite
+# Báo cáo Kết quả Kiểm thử Tự động - Phân hệ Product List & Search (FR-05)
 
-> **Student:** Mạch Quốc Tấn — MSSV: **23127115**  
-> **Assignment:** Homework 04 — Automation Testing  
-> **Feature:** FR-05 Product List & Search  
-> **Course:** CS423 / CSC15003 — Software Testing
+Thư mục này chứa các kịch bản kiểm thử tự động bằng Playwright cho tính năng Danh sách sản phẩm & Tìm kiếm (FR-05).
 
----
+## Thông tin chạy test
 
-## Tổng quan
+- **Ngày thực hiện**: 2026-08-09
+- **Người thực hiện**: Mạch Quốc Tấn
+- **Công cụ**: Playwright v1.40+ (TypeScript)
+- **Môi trường chạy**: Localhost (Backend: port 3000, Frontend Web: port 5173)
+- **Trình duyệt kiểm thử**: Chromium, Firefox, WebKit (Đa trình duyệt)
 
-Bộ kiểm thử tự động này bao phủ toàn bộ **29 test case** cho tính năng Xem danh sách & Tìm kiếm sản phẩm (FR-05) của EShop SUT, được tổ chức thành 3 file spec:
+## Kết quả tổng quan
 
-| File spec                | Test cases               | Kỹ thuật                                       |
-| ------------------------ | ------------------------ | ---------------------------------------------- |
-| `tests/plas-ep.spec.ts`  | TC-PLAS-001~006, 008~014 | Equivalence Partitioning, Functional, Security |
-| `tests/plas-ui.spec.ts`  | TC-PLAS-007, 015~019     | Web UI, Navigation, Card Details, Layout       |
-| `tests/plas-bva.spec.ts` | TC-PLAS-BVA-001~010      | Boundary Value Analysis                        |
+- **Tổng số kịch bản chạy (Browser Runs)**: 87 lượt (29 kịch bản × 3 trình duyệt)
+- **Số lượt Pass**: 45
+- **Số lượt Fail**: 42
 
-### Assertion patterns được dùng (≥ 3 loại theo yêu cầu đề)
+## Danh sách các kịch bản kiểm thử
 
-| Pattern | Loại                       | Ví dụ trong script                                                              |
-| ------- | -------------------------- | ------------------------------------------------------------------------------- |
-| 1       | Element visibility / state | `expect(plasPage.errorBox).not.toBeVisible()`, `toBeVisible()`                  |
-| 2       | Nội dung / giá trị trường  | `expect(titles[0]).toContain('MacBook Pro M3')`                                 |
-| 3       | Soft assertion             | `expect.soft(h1Count).toBe(1)`, `expect.soft(price.includes('₫')).toBeTruthy()` |
-| 4       | Network / Event assertion  | `page.on('dialog', ...)`                                                        |
-| 5       | Số lượng / count           | `expect(productCount).toBe(5)`, `toBeGreaterThan(0)`                            |
+| Mã Test Case         | Tên Kịch bản                                   | Chromium | Firefox | WebKit | Ghi chú                                     |
+| :------------------- | :--------------------------------------------- | :------- | :------ | :----- | :------------------------------------------ |
+| TC-PLAS-001          | Xem danh sách khi search rỗng                  | Fail     | Fail    | Fail   | BUG-PLAS-001 (SEO h1 count > 1)             |
+| TC-PLAS-002          | Tìm kiếm sản phẩm tên chính xác                | Fail     | Fail    | Fail   | BUG-PLAS-001                                |
+| TC-PLAS-003          | Tìm kiếm với từ khóa không tồn tại             | Fail     | Fail    | Fail   | BUG-PLAS-004 (No empty state)               |
+| TC-PLAS-004          | Tìm kiếm từ khóa Tiếng Việt có dấu             | Fail     | Fail    | Fail   | BUG-PLAS-001                                |
+| TC-PLAS-005          | Tìm kiếm với mã độc XSS / script HTML          | Fail     | Fail    | Fail   | BUG-PLAS-001                                |
+| TC-PLAS-006          | Tìm kiếm từ khóa cực dài 300 ký tự             | Fail     | Fail    | Fail   | BUG-PLAS-006 (Crash 500)                    |
+| TC-PLAS-007          | Kiểm tra chi tiết thẻ sản phẩm (ảnh, tên, giá) | Fail     | Fail    | Fail   | BUG-PLAS-002 (no alt) / BUG-PLAS-003 (no ₫) |
+| TC-PLAS-008          | Tìm kiếm không phân biệt hoa thường            | Pass     | Pass    | Pass   | Hoạt động đúng                              |
+| TC-PLAS-009          | Tìm kiếm một phần tên sản phẩm                 | Pass     | Pass    | Pass   | Hoạt động đúng                              |
+| TC-PLAS-010          | Tìm kiếm từ khóa có khoảng trắng thừa          | Fail     | Fail    | Fail   | BUG-PLAS-008 (Not trimmed)                  |
+| TC-PLAS-011          | Tìm kiếm chỉ chứa khoảng trắng                 | Pass     | Pass    | Pass   | Hoạt động đúng                              |
+| TC-PLAS-012          | Tìm kiếm bằng ký tự đặc biệt SQL Injection     | Pass     | Pass    | Pass   | Trả về danh sách trống an toàn              |
+| TC-PLAS-013          | Tìm kiếm với từ khóa trùng khớp danh mục       | Pass     | Pass    | Pass   | Hoạt động đúng                              |
+| TC-PLAS-014          | Xóa từ khóa tìm kiếm (nút Clear)               | Pass     | Pass    | Pass   | Hoạt động đúng                              |
+| TC-PLAS-015          | Kiểm tra nút Xem chi tiết sản phẩm             | Pass     | Pass    | Pass   | Hoạt động đúng                              |
+| TC-PLAS-016          | Kiểm tra nút Thêm vào giỏ hàng sản phẩm        | Pass     | Pass    | Pass   | Hoạt động đúng                              |
+| TC-PLAS-017          | Kiểm tra điều hướng logo EShop về trang chủ    | Pass     | Pass    | Pass   | Hoạt động đúng                              |
+| TC-PLAS-018          | Kiểm tra hiển thị tổng số sản phẩm             | Pass     | Pass    | Pass   | Hoạt động đúng                              |
+| TC-PLAS-019          | Kiểm tra chỉ báo trạng thái đang tải           | Pass     | Pass    | Pass   | Hoạt động đúng                              |
+| TC-PLAS-BVA-001      | Tìm kiếm từ khóa ở biên dưới (1 ký tự)         | Fail     | Fail    | Fail   | BUG-PLAS-001                                |
+| TC-PLAS-BVA-002      | Tìm kiếm từ khóa 255 ký tự (mốc biên trên)     | Fail     | Fail    | Fail   | BUG-PLAS-007 (SQLite Error)                 |
+| TC-PLAS-BVA-003      | Tìm kiếm từ khóa ở biên trên (256 ký tự)       | Fail     | Fail    | Fail   | BUG-PLAS-007 (SQLite Error)                 |
+| TC-PLAS-BVA-004      | Tìm kiếm SQLi (' OR '1'='1)                    | Fail     | Fail    | Fail   | BUG-PLAS-005 (SQL Injection leak)           |
+| TC-PLAS-BVA-005      | Kiểm tra duy trì 1 thẻ h1 duy nhất             | Fail     | Fail    | Fail   | BUG-PLAS-001                                |
+| TC-PLAS-BVA-006..007 | Tìm kiếm biên dưới                             | Pass     | Pass    | Pass   | Hoạt động đúng                              |
+| TC-PLAS-BVA-008      | Tìm kiếm ngay dưới biên trên                   | Fail     | Fail    | Fail   | BUG-PLAS-007                                |
+| TC-PLAS-BVA-009..010 | Tìm kiếm chữ số / kết hợp                      | Pass     | Pass    | Pass   | Hoạt động đúng                              |
 
----
+## Danh sách lỗi phát hiện (Báo cáo lỗi tự động)
 
-## Yêu cầu môi trường
+Các lỗi phát hiện trong quá trình kiểm thử tự động được ghi nhận tại thư mục `tests/bug-reports/automation/product-list-and-search/`:
 
-| Phần mềm         | Phiên bản tối thiểu     |
-| ---------------- | ----------------------- |
-| Node.js          | ≥ 18.x                  |
-| pnpm             | ≥ 8.x                   |
-| @playwright/test | ^1.49.1                 |
-
-### Dịch vụ cần chạy trước khi test
-
-| Dịch vụ          | URL mặc định            | Ghi chú            |
-| ---------------- | ----------------------- | ------------------ |
-| **Backend API**  | `http://localhost:3000` | Express.js backend |
-| **Frontend Web** | `http://localhost:5173` | Vite frontend      |
-
----
-
-## Cài đặt
-
-```bash
-# 1. Di chuyển vào thư mục này
-cd tests/test-runs/automation/scripts/product-list-and-search
-
-# 2. Cài đặt dependencies
-pnpm install
-
-# 3. Cài browser binaries (lần đầu)
-pnpm exec playwright install
-```
-
----
-
-## Chạy test
-
-### Chạy toàn bộ (3 browsers: Chromium, Firefox, WebKit)
-
-```bash
-pnpm test
-# hoặc
-pnpm exec playwright test
-```
-
-### Chạy theo browser riêng lẻ
-
-```bash
-pnpm test:chromium       # Chỉ Chromium
-pnpm test:firefox        # Chỉ Firefox
-pnpm test:webkit         # Chỉ WebKit (Safari engine)
-```
-
-### Chạy theo nhóm test
-
-```bash
-pnpm test:ep             # Equivalence Partitioning tests (TC-001 → TC-014)
-pnpm test:ui             # UI & Navigation tests (TC-007, TC-015 → TC-019)
-pnpm test:bva            # BVA tests (BVA-001 → BVA-010)
-```
-
-### Xem HTML Report
-
-```bash
-pnpm report
-# hoặc
-pnpm exec playwright show-report
-```
-
-Report tại `playwright-report/index.html`.  
-Tiêu đề report: **"EShop Product List & Search Automation — Run by: 23127115 (Mạch Quốc Tấn)"** kèm ISO timestamp.
-
----
-
-## Cấu trúc thư mục
-
-```
-tests/test-runs/automation/scripts/product-list-and-search/
-├── package.json                      # Dependencies & pnpm scripts
-├── playwright.config.ts              # Multi-browser config, student metadata
-├── tsconfig.json                     # TypeScript config
-│
-├── pages/
-│   └── ProductListPage.ts            # Page Object Model (Locators & helper actions)
-│
-├── data/
-│   └── plas-test-data.json           # File chứa dữ liệu 29 test cases
-│
-├── tests/
-│   ├── plas-ep.spec.ts               # Equivalence Partitioning & Security (13 TC)
-│   ├── plas-ui.spec.ts               # Web UI & Navigation (6 TC)
-│   └── plas-bva.spec.ts              # Boundary Value Analysis (10 TC)
-│
-└── playwright-report/                # (tự sinh sau khi chạy)
-    └── index.html
-```
-
----
-
-## Dữ liệu sản phẩm mẫu (Seed Data)
-
-Các thông số dữ liệu kiểm thử được đối sánh chính xác với `backend/database.js`:
-
-1. `iPhone 15 Pro Max` (30.000.000 ₫ - Điện thoại)
-2. `Samsung Galaxy S24 Ultra` (28.000.000 ₫ - Điện thoại)
-3. `MacBook Pro M3` (45.000.000 ₫ - Laptop)
-4. `Tai nghe AirPods Pro 2` (6.000.000 ₫ - Phụ kiện)
-5. `Bàn phím cơ Keychron Q1` (4.000.000 ₫ - Phụ kiện)
-
----
-
-## Kết quả mong đợi & Bugs đã biết
-
-| Test ID         | Expected                                  | Status   | Bug                                      |
-| --------------- | ----------------------------------------- | -------- | ---------------------------------------- |
-| TC-PLAS-001     | 5 items + 1 `<h1>` + ₫ symbol             | **Fail** | BUG-PLAS-001, BUG-PLAS-002, BUG-PLAS-003 |
-| TC-PLAS-002     | 1 item "MacBook Pro M3"                   | Pass     | —                                        |
-| TC-PLAS-003     | 0 items + empty state message             | **Fail** | BUG-PLAS-004                             |
-| TC-PLAS-004     | 1 item "Bàn phím cơ Keychron Q1"          | Pass     | —                                        |
-| TC-PLAS-005     | Safe XSS, no alert                        | Pass     | —                                        |
-| TC-PLAS-006     | No crash on 300 chars                     | Pass     | —                                        |
-| TC-PLAS-007     | Card image + title + price visible        | Pass     | —                                        |
-| TC-PLAS-008     | Case insensitive match                    | Pass     | —                                        |
-| TC-PLAS-009     | Partial name match                        | Pass     | —                                        |
-| TC-PLAS-010     | Trimmed whitespace search                 | Pass     | —                                        |
-| TC-PLAS-011     | Whitespace search returns 5 items         | Pass     | —                                        |
-| TC-PLAS-012     | Empty search returns 5 items              | Pass     | —                                        |
-| TC-PLAS-013     | Enter key triggers search                 | Pass     | —                                        |
-| TC-PLAS-014     | Clear search restores 5 items             | Pass     | —                                        |
-| TC-PLAS-015     | Detail button navigates to `/product/:id` | Pass     | —                                        |
-| TC-PLAS-016     | Add to cart button functional             | Pass     | —                                        |
-| TC-PLAS-017     | Logo navigates to home                    | Pass     | —                                        |
-| TC-PLAS-018     | Footer displays total count               | Pass     | —                                        |
-| TC-PLAS-019     | Page loads cleanly                        | Pass     | —                                        |
-| TC-PLAS-BVA-001 | 1 char "i" returns 2 items                | Pass     | —                                        |
-| TC-PLAS-BVA-002 | 255 chars search no crash                 | Pass     | —                                        |
-| TC-PLAS-BVA-003 | 256 chars search no crash                 | Pass     | —                                        |
-| TC-PLAS-BVA-004 | SQL injection safe                        | Pass     | —                                        |
-| TC-PLAS-BVA-005 | Single `<h1>` tag maintained              | **Fail** | BUG-PLAS-001                             |
-| TC-PLAS-BVA-006 | 0 char search returns 5 items             | Pass     | —                                        |
-| TC-PLAS-BVA-007 | 2 char "S2" returns 1 item                | Pass     | —                                        |
-| TC-PLAS-BVA-008 | 254 chars search no crash                 | Pass     | —                                        |
-| TC-PLAS-BVA-009 | Numeric search "15" returns 1 item        | Pass     | —                                        |
-| TC-PLAS-BVA-010 | Alphanumeric "Galaxy S24" returns 1 item  | Pass     | —                                        |
-
----
-
-## Tham khảo thêm
-
-- [Playwright Docs](https://playwright.dev/docs/intro)
-- [Test Cases Product List & Search](../../test-cases/product-list-and-search/)
-- [Bug Reports](../../../docs/report/Bug_Report.md)
-- [AI Audit Report](../../../docs/report/AI_Audit_Report.md)
+- [BUG-PLAS-001](../../../../bug-reports/automation/product-list-and-search/BUG-PLAS-001.md): Vi phạm tiêu chuẩn SEO: Trang web tồn tại nhiều hơn một thẻ h1.
+- [BUG-PLAS-002](../../../../bug-reports/automation/product-list-and-search/BUG-PLAS-002.md): Ảnh sản phẩm không có thuộc tính alt hoặc alt bị bỏ trống.
+- [BUG-PLAS-003](../../../../bug-reports/automation/product-list-and-search/BUG-PLAS-003.md): Giá sản phẩm không hiển thị ký hiệu tiền tệ chuẩn ₫.
+- [BUG-PLAS-004](../../../../bug-reports/automation/product-list-and-search/BUG-PLAS-004.md): Tìm kiếm từ khóa không tồn tại không hiển thị thông điệp báo trống (Empty State).
+- [BUG-PLAS-005](../../../../bug-reports/automation/product-list-and-search/BUG-PLAS-005.md): Lỗ hổng bảo mật SQL Injection trên thanh tìm kiếm sản phẩm.
+- [BUG-PLAS-006](../../../../bug-reports/automation/product-list-and-search/BUG-PLAS-006.md): Tìm kiếm từ khóa cực dài (300 ký tự) gây crash backend và lỗi HTTP 500.
+- [BUG-PLAS-007](../../../../bug-reports/automation/product-list-and-search/BUG-PLAS-007.md): Tìm kiếm từ khóa ở biên trên (255/256 ký tự) gây lỗi SQLite Error.
+- [BUG-PLAS-008](../../../../bug-reports/automation/product-list-and-search/BUG-PLAS-008.md): Từ khóa tìm kiếm có khoảng trắng thừa ở đầu/cuối không được cắt bỏ (Trim).
