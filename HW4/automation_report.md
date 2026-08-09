@@ -18,9 +18,9 @@
 
 Quy trình chạy thử nghiệm tự động hóa được thiết kế và thực thi dưới dạng **Ma trận 9-Cell (3 Tính năng × 3 Trình duyệt)** nhằm đảm bảo khả năng tương thích chéo (cross-browser compatibility) và kiểm chứng tính nhất quán về mặt phản hồi logic/giao diện trên các công cụ render khác nhau (Chromium, Firefox, WebKit).
 
-Tất cả 9 cell kiểm thử đã được chạy thành công qua trình điều khiển tự động hóa `run-matrix.js`. Tuy nhiên, do tồn tại các lỗi nghiêm trọng trong bản build hiện tại của SUT (System Under Test) ở cả phía Frontend và Backend API, một số test case kiểm thử đã bị **FAILED** trên mọi trình duyệt. Sự thất bại này phản ánh chính xác các khiếm khuyết (defects) của SUT so với tài liệu đặc tả SRS, chứ không phải do lỗi của kịch bản kiểm thử (test script).
+Tất cả 9 cell kiểm thử đã được chạy thành công qua trình điều khiển tự động hóa `run-matrix.js`. Tuy nhiên, do tồn tại các lỗi nghiêm trọng trong bản build hiện tại của SUT (System Under Test) ở cả phía Frontend và Backend API, một số test case kiểm thử đã bị **FAILED** trên mọi trình duyệt. Sự thất bại này phản ánh chính xác các khiếu khuyết (defects) của SUT so với tài liệu đặc tả SRS, chứ không phải do lỗi của kịch bản kiểm thử (test script).
 
-#### Bảng Ma Trận Thực Thi 9-Cell & Trạng Thế Trình Duyệt:
+#### Bảng Ma Trận Thực Thi 9-Cell & Trạng Thái Trình Duyệt:
 
 | Phân hệ tính năng (Feature Code) | Chromium (Google Chrome) | Firefox (Mozilla Firefox) | WebKit (Safari Engine) | Nhận xét chung của QA |
 | :--- | :---: | :---: | :---: | :--- |
@@ -48,7 +48,42 @@ Dưới đây là bảng thống kê số lượng Test Cases thực hiện cho 
 
 ---
 
-### IV. Chi Tiết Các Lỗi Hệ Thống Phát Hiện Được (SUT Defects Mapping)
+### IV. Phân Tích Khoảng Cách Và Đánh Giá Kịch Bản AI Sinh (AI-Generated Scripts Review & Gap Analysis)
+
+Để đáp ứng đầy đủ yêu cầu khắt khe của môn học, QA Lead đã thực hiện phân tích khoảng cách kỹ thuật giữa sản phẩm do AI (Gemini 3.5 Flash) sinh ra ban đầu so với bộ test case hoàn chỉnh chạy ổn định trên thực tế.
+
+#### 4.1 Thiết Kế Hướng Dữ Liệu (Data-Driven Testing)
+Kịch bản sinh ra bởi AI đã tách biệt hoàn toàn dữ liệu kiểm thử ra khỏi mã nguồn logic. Toàn bộ dữ liệu đầu vào và các kết quả mong đợi được cấu trúc trong 3 tệp JSON ngoài:
+- [FR03_data.json](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/test-data/FR03_data.json) (22 bộ dữ liệu)
+- [FR11_data.json](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/test-data/FR11_data.json) (18 bộ dữ liệu)
+- [FR19_data.json](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/test-data/FR19_data.json) (16 bộ dữ liệu)
+
+Mã nguồn Playwright sử dụng vòng lặp động `for (const tc of testCases)` để đọc dữ liệu từ file JSON thông qua thư viện `fs` và `path` của Node.js nhằm sinh ra các test case tương ứng một cách tự động, tuân thủ đúng yêu cầu không sử dụng mảng/đối tượng inline cứng trong code.
+
+#### 4.2 Các Mẫu Kiểm Chứng Được Sử Dụng (Assertion Patterns)
+Bộ kiểm thử tự động sử dụng **3 mẫu kiểm chứng (assertion) khác biệt** của Playwright để đảm bảo độ bao phủ và tính tin cậy của kết quả:
+1. **Web-First Assertions (Kiểm chứng Giao diện động):** Sử dụng các hàm bất đồng bộ trực tiếp trên locator như `await expect(locator).toBeVisible()`, `await expect(locator).toHaveClass()`, `await expect(locator).toHaveText()` để tự động chờ (auto-wait) phần tử xuất hiện trên DOM.
+2. **Value Assertions (Kiểm chứng Giá trị & Logic API):** Sử dụng hàm kiểm chứng giá trị đồng bộ như `expect(actualValue).toBe(expectedValue)` hoặc `expect(actualValue).toContain(substring)` để kiểm tra mã trạng thái response API, dữ liệu JSON phản hồi hoặc nội dung hội thoại alert thu thập được từ trình duyệt.
+3. **Negative Assertions (Kiểm chứng Phủ định/Chặn lỗi):** Sử dụng dạng phủ định `.not` như `expect(actualValue).not.toBe(forbiddenValue)` hoặc `await expect(locator).not.toBeVisible()` nhằm xác nhận các trường hợp bảo mật hoặc giao diện không được phép hiển thị thông tin sai lệch.
+
+#### 4.3 Những Lỗi Sai Và Điểm Thiếu Sót Của AI (What AI Got Wrong & Missed)
+Trong quá trình rà soát (Human Review), sinh viên đã phát hiện và chỉnh sửa các lỗi lớn sau trong mã nguồn do AI cung cấp:
+- **Thiếu logic dọn dẹp cơ sở dữ liệu (Database Cleanup):** Đây là lỗi nghiêm trọng nhất. Do cơ sở dữ liệu SQLite của SUT có các ràng buộc duy nhất (Unique Constraints) về email và mã đơn hàng, việc AI chạy lặp lại test case nhiều lần hoặc chạy song song trên 3 trình duyệt mà không làm sạch dữ liệu cũ (`beforeAll` hook) dẫn đến lỗi trùng lặp dữ liệu (`SQLITE_CONSTRAINT: UNIQUE constraint failed`) khiến toàn bộ các lượt chạy sau bị hỏng.
+- **Lỗi ô nhiễm trạng thái Admin (State Isolation Violations):** Trong phân hệ FR-19, kịch bản test API xóa Admin thực hiện xóa tài khoản quản trị chính của hệ thống. AI viết test case này mà không có cơ chế hoàn tác/khôi phục dữ liệu Admin, dẫn đến việc các test case sau đó không thể đăng nhập quyền Admin để tiếp tục chạy test, gây lỗi hàng loạt.
+- **Bộ định vị phần tử dễ gãy (Fragile Locators):** AI lạm dụng các selector tĩnh dựa trên text tiếng Việt cụ thể (như `page.locator('text=Lịch sử đơn hàng')`) hoặc class CSS Tailwind dài dòng của nút bấm. Khi chạy trên các trình duyệt khác nhau hoặc khi giao diện có sự thay đổi nhỏ về giao diện render, các selector này lập tức bị lỗi timeout.
+- **Sai cú pháp TypeScript & Playwright API:** AI sinh nhầm cú pháp so khớp của hàm expect (ví dụ: `expect(actual, message).toBe(...)` thay vì cấu trúc chuẩn của Playwright).
+
+#### 4.4 Giải Trình Nguyên Nhân AI Bỏ Sót (Why AI Missed)
+- **Thiếu ngữ cảnh thực thi động (Execution Context):** AI hoạt động dựa trên mô hình ngôn ngữ tĩnh (static language model), chỉ suy đoán mã nguồn dựa trên mô tả văn bản và cấu trúc API tĩnh được cung cấp. Nó không có khả năng tự chạy thử, không nhìn thấy luồng chạy dữ liệu động trong SQLite, và không cảm nhận được sự xung đột dữ liệu giữa các luồng chạy song song (Parallel execution).
+- **Giới hạn huấn luyện (Training Data Limitations):** AI thường học từ các ví dụ kiểm thử đơn lẻ trên mạng vốn bỏ qua các logic phức tạp về setup/teardown cơ sở dữ liệu thực tế, dẫn đến thói quen viết code test "sạch" trên lý thuyết nhưng "bẩn" trên môi trường tích hợp thực tế.
+
+#### 4.5 Các Ca Kiểm Thử Không Thể Tự Động Hóa (Unautomated Test Cases)
+- **Kết quả:** **0 ca bị bỏ lại.**
+- **Giải trình:** Cả 56/56 test cases được thiết kế ban đầu đều đã được tự động hóa thành công 100%. Các khó khăn về định vị hộp thoại Alert trình duyệt, đồng bộ dữ liệu SQLite bất đồng bộ, hay giả lập đăng nhập đa quyền (Guest, User, Admin) đều đã được giải quyết triệt để bằng mã nguồn bổ sung thủ công của con người (như hàm `reseedAdminSync` đồng bộ cơ sở dữ liệu trực tiếp bằng lệnh gọi SQLite backend).
+
+---
+
+### V. Chi Tiết Các Lỗi Hệ Thống Phát Hiện Được (SUT Defects Mapping)
 
 Bộ test tự động đã phát hiện tổng cộng **17 lỗi hệ thống khác nhau** (được mô tả chi tiết trong 17 tệp tin `.md` báo cáo lỗi tại thư mục [Bug Report](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/Bug%20Report/)). 
 Dưới đây là bảng ánh xạ chi tiết giữa các Test Case bị FAILED trong quá trình chạy tự động hóa và Bug Report tương ứng:
@@ -89,7 +124,7 @@ Dưới đây là bảng ánh xạ chi tiết giữa các Test Case bị FAILED 
 
 ---
 
-### V. Nhận Định QA Về Chất Lượng Sản Phẩm (SUT Quality Assessment)
+### VI. Nhận Định QA Về Chất Lượng Sản Phẩm (SUT Quality Assessment)
 
 Dựa trên kết quả thực thi 168 lượt chạy test tự động hóa chéo và phân tích chi tiết 17 lỗi phát hiện được, QA Lead đưa ra các nhận định và đánh giá chuyên môn sau về chất lượng sản phẩm:
 

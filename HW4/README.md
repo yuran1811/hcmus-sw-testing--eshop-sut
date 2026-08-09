@@ -10,14 +10,28 @@
 * **Đề tài:** HW04 - Automation Testing (AI-assisted)
 * **SUT:** EShop (Ứng dụng TMĐT thực hành kiểm thử)
 * **Link GitHub Repository:** *(Sinh viên cập nhật link repo công khai tại đây)*
-* **Link Video Demo YouTube (Không công khai - Unlisted):** *(Sinh viên cập nhật link video chạy thử nghiệm và giải trình sửa lỗi dài >= 5 phút tại đây)*
-* **Link Video Demo Agent Skill YouTube:** *(Sinh viên cập nhật link video chạy demo Agent Skill tại đây)*
 
 ---
 
-### II. Bảng Tự Đánh Giá Kết Quả (Self-Assessment Table)
+### II. Báo Cáo Tóm Tắt Kiểm Thử (Test Summary Report)
 
-Dựa trên các tiêu chí chấm điểm và yêu cầu nghiêm ngặt của đề bài tại tài liệu [2026.HW04.Automation Testing_En (1).md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/2026.HW04.Automation%20Testing_En%20(1).md), dưới đây là bảng tự đánh giá chi tiết:
+Đáp ứng yêu cầu của mục 14 (Submission Regulations) trong tài liệu hướng dẫn bài tập, dưới đây là thống kê tóm tắt kết quả vận hành hệ thống kiểm thử tự động:
+
+- **Số lượng phân hệ tính năng kiểm thử (Number of features):** 3 (FR-03: Quên mật khẩu, FR-11: Lịch sử đơn hàng, FR-19: Quản lý người dùng Admin).
+- **Số lượng Test Cases tự động hóa (Number of test cases automated):** 56 test cases (được định nghĩa động qua dữ liệu JSON ngoài).
+- **Số lượng Test Cases thực thi (Number of test cases executed):** 56 test cases (chạy trên mỗi trình duyệt trong ma trận).
+- **Số lượng Test Cases ĐẠT (Number of test cases passed):** 37 test cases (đồng nhất trên cả 3 trình duyệt).
+- **Số lượng Test Cases LỖI (Number of test cases failed):** 19 test cases (thất bại do phát hiện lỗi thực tế của SUT trên cả 3 trình duyệt).
+- **Số lượng lượt chạy trình duyệt (Number of browser runs):** 9 lượt chạy (3 tính năng × 3 trình duyệt Chromium, Firefox, WebKit).
+- **Số lượng lỗi hệ thống phát hiện (Number of bugs):** 17 lỗi (được ghi nhận thành 17 tệp tin `.md` chi tiết tại thư mục `Bug Report`).
+- **Đường dẫn Video thuyết minh Demo (Demo video link):** *(Sinh viên cập nhật link video YouTube Demo unlisted tại đây)*
+- **Đường dẫn Video Agent Skill (Agent Skill video link):** *(Sinh viên cập nhật link video YouTube demo Agent Skill tại đây)*
+
+---
+
+### III. Bảng Tự Đánh Giá Kết Quả (Self-Assessment Table)
+
+Dưới đây là bảng tự đánh giá dựa trên thang điểm đề bài yêu cầu tại tài liệu [2026.HW04.Automation Testing_En (1).md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/2026.HW04.Automation%20Testing_En%20(1).md):
 
 | STT | Thành phần bài nộp (Criteria) | Yêu cầu đặc tả đề bài (Requirements) | Trạng thái hoàn thành (Status) | Điểm tối đa | Tự đánh giá |
 | :---: | :--- | :--- | :--- | :---: | :---: |
@@ -32,7 +46,7 @@ Dựa trên các tiêu chí chấm điểm và yêu cầu nghiêm ngặt của �
 
 ---
 
-### III. Hướng Dẫn Thiết Lập Và Chạy Bộ Test Tự Động (Execution Guide)
+### IV. Hướng Dẫn Thiết Lập Và Chạy Bộ Test Tự Động (Execution Guide)
 
 Vui lòng thực hiện tuần tự các bước dưới đây để chạy bộ test tự động hóa đa trình duyệt.
 
@@ -94,7 +108,7 @@ npx playwright test --ui
 
 ---
 
-### IV. Đường Dẫn Báo Cáo Kết Quả Kiểm Thử (HTML Reports Matrix)
+### V. Đường Dẫn Báo Cáo Kết Quả Kiểm Thử (HTML Reports Matrix)
 
 Sau khi thực thi lệnh chạy ma trận `npm run test:matrix`, các báo cáo HTML sẽ được tạo riêng lẻ tại thư mục `HW4/reports/html/`. Giảng viên và TA có thể bấm vào các liên kết tương đối dưới đây để xem trực tiếp báo cáo chi tiết của từng lượt chạy (đảm bảo đã mở đúng cấu trúc thư mục trên local):
 
