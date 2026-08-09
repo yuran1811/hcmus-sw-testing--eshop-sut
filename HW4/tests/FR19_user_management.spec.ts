@@ -22,6 +22,12 @@ interface TestCase {
   expectedAlert?: string;
 }
 
+/** Base URL for the SUT backend API */
+const API_BASE_URL = 'http://localhost:3000';
+
+/** Default admin account credentials for API seeding and login operations */
+const ADMIN_CREDENTIALS = { email: 'admin@eshop.com', password: 'Admin123!' };
+
 // Load external JSON test data
 const dataPath = path.join(__dirname, '..', 'test-data', 'FR19_data.json');
 const testCases: TestCase[] = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
@@ -97,7 +103,7 @@ test.beforeAll(async ({ playwright }) => {
   
   // Register user_f19_delete
   try {
-    const res = await requestContext.post('http://localhost:3000/api/register', {
+    const res = await requestContext.post(`${API_BASE_URL}/api/register`, {
       data: {
         name: "User F19 Delete",
         email: "user_f19_delete@eshop.com",
@@ -112,7 +118,7 @@ test.beforeAll(async ({ playwright }) => {
 
   // Register user_f19_xss
   try {
-    const res = await requestContext.post('http://localhost:3000/api/register', {
+    const res = await requestContext.post(`${API_BASE_URL}/api/register`, {
       data: {
         name: "<script id=\"xss-test\">console.log('xss-run')</script>",
         email: "user_f19_xss@eshop.com",
@@ -123,13 +129,13 @@ test.beforeAll(async ({ playwright }) => {
     xssUserId = data.id;
 
     // Login and update profile to insert XSS payload into phone field
-    const loginRes = await requestContext.post('http://localhost:3000/api/login', {
+    const loginRes = await requestContext.post(`${API_BASE_URL}/api/login`, {
       data: { email: 'user_f19_xss@eshop.com', password: 'Xss1234!' }
     });
     const loginData = await loginRes.json();
     const xssToken = loginData.token;
 
-    await requestContext.put('http://localhost:3000/api/users/me', {
+    await requestContext.put(`${API_BASE_URL}/api/users/me`, {
       headers: { Authorization: `Bearer ${xssToken}` },
       data: {
         name: "<script id=\"xss-test\">console.log('xss-run')</script>",
@@ -143,13 +149,13 @@ test.beforeAll(async ({ playwright }) => {
 
   // Retrieve user IDs for admin and standard user to verify or perform API checks
   try {
-    const adminLogin = await requestContext.post('http://localhost:3000/api/login', {
-      data: { email: 'admin@eshop.com', password: 'Admin123!' }
+    const adminLogin = await requestContext.post(`${API_BASE_URL}/api/login`, {
+      data: ADMIN_CREDENTIALS
     });
     const adminData = await adminLogin.json();
     adminUserId = adminData.user.id;
 
-    const stdLogin = await requestContext.post('http://localhost:3000/api/login', {
+    const stdLogin = await requestContext.post(`${API_BASE_URL}/api/login`, {
       data: { email: 'test@eshop.com', password: 'Test1234!' }
     });
     const stdData = await stdLogin.json();
@@ -220,20 +226,20 @@ for (const tc of testCases) {
 
     if (tc.caseId === 'F19-TC-004') {
       // API Guest block: GET /api/admin/users without token
-      const res = await requestContext.get('http://localhost:3000/api/admin/users');
+      const res = await requestContext.get(`${API_BASE_URL}/api/admin/users`);
       expect(res.status()).toBe(401);
       return;
     }
 
     if (tc.caseId === 'F19-TC-005') {
       // API Standard user block: GET /api/admin/users with user token
-      const loginRes = await requestContext.post('http://localhost:3000/api/login', {
+      const loginRes = await requestContext.post(`${API_BASE_URL}/api/login`, {
         data: { email: tc.email, password: tc.password }
       });
       const loginData = await loginRes.json();
       const token = loginData.token;
 
-      const res = await requestContext.get('http://localhost:3000/api/admin/users', {
+      const res = await requestContext.get(`${API_BASE_URL}/api/admin/users`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       // SUT failure expectation (Bug): SUT lacks role validation in middleware
@@ -244,13 +250,13 @@ for (const tc of testCases) {
 
     if (tc.caseId === 'F19-TC-006') {
       // API Standard user block: DELETE /api/admin/users/:id with user token
-      const loginRes = await requestContext.post('http://localhost:3000/api/login', {
+      const loginRes = await requestContext.post(`${API_BASE_URL}/api/login`, {
         data: { email: tc.email, password: tc.password }
       });
       const loginData = await loginRes.json();
       const token = loginData.token;
 
-      const res = await requestContext.delete(`http://localhost:3000/api/admin/users/${deleteUserId}`, {
+      const res = await requestContext.delete(`${API_BASE_URL}/api/admin/users/${deleteUserId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       // SUT failure expectation (Bug): SUT lacks role validation in middleware
@@ -288,13 +294,13 @@ for (const tc of testCases) {
       expect(pageContent).not.toContain('Test1234!');
 
       // 2. API Check: Fetch user list and check properties
-      const adminLogin = await requestContext.post('http://localhost:3000/api/login', {
-        data: { email: 'admin@eshop.com', password: 'Admin123!' }
+      const adminLogin = await requestContext.post(`${API_BASE_URL}/api/login`, {
+        data: ADMIN_CREDENTIALS
       });
       const adminData = await adminLogin.json();
       const adminToken = adminData.token;
 
-      const res = await requestContext.get('http://localhost:3000/api/admin/users', {
+      const res = await requestContext.get(`${API_BASE_URL}/api/admin/users`, {
         headers: { Authorization: `Bearer ${adminToken}` }
       });
       const users = await res.json();
@@ -352,14 +358,14 @@ for (const tc of testCases) {
 
     if (tc.caseId === 'F19-TC-012') {
       // Prevent Self-Deletion (API)
-      const adminLogin = await requestContext.post('http://localhost:3000/api/login', {
-        data: { email: 'admin@eshop.com', password: 'Admin123!' }
+      const adminLogin = await requestContext.post(`${API_BASE_URL}/api/login`, {
+        data: ADMIN_CREDENTIALS
       });
       const adminData = await adminLogin.json();
       const adminToken = adminData.token;
 
       // Request self-deletion via API
-      const res = await requestContext.delete(`http://localhost:3000/api/admin/users/${adminUserId}`, {
+      const res = await requestContext.delete(`${API_BASE_URL}/api/admin/users/${adminUserId}`, {
         headers: { Authorization: `Bearer ${adminToken}` }
       });
       

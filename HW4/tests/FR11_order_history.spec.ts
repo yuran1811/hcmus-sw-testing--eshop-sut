@@ -24,6 +24,12 @@ interface TestCase {
   expectedClass?: string;
 }
 
+/** Base URL for the SUT backend API */
+const API_BASE_URL = 'http://localhost:3000';
+
+/** Default admin account credentials for API seeding operations */
+const ADMIN_CREDENTIALS = { email: 'admin@eshop.com', password: 'Admin123!' };
+
 // Load external JSON test data
 const dataPath = path.join(__dirname, '..', 'test-data', 'FR11_data.json');
 const testCases: TestCase[] = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
@@ -66,7 +72,7 @@ test.beforeAll(async ({ playwright }) => {
 
   for (const u of usersToRegister) {
     try {
-      await requestContext.post('http://localhost:3000/api/register', { data: u });
+      await requestContext.post(`${API_BASE_URL}/api/register`, { data: u });
     } catch (e: any) {
       console.log(`Pre-registration note: ${u.email} already exists or failed: ${e.message}`);
     }
@@ -75,8 +81,8 @@ test.beforeAll(async ({ playwright }) => {
   // 2. Obtain JWT tokens via Login
   let adminToken = '';
   try {
-    const adminRes = await requestContext.post('http://localhost:3000/api/login', {
-      data: { email: 'admin@eshop.com', password: 'Admin123!' }
+    const adminRes = await requestContext.post(`${API_BASE_URL}/api/login`, {
+      data: ADMIN_CREDENTIALS
     });
     const adminData = await adminRes.json();
     adminToken = adminData.token;
@@ -86,7 +92,7 @@ test.beforeAll(async ({ playwright }) => {
 
   let mainToken = '';
   try {
-    const mainRes = await requestContext.post('http://localhost:3000/api/login', {
+    const mainRes = await requestContext.post(`${API_BASE_URL}/api/login`, {
       data: { email: 'user_f11_main@eshop.com', password: 'Main1234!' }
     });
     const mainData = await mainRes.json();
@@ -97,7 +103,7 @@ test.beforeAll(async ({ playwright }) => {
 
   let otherToken = '';
   try {
-    const otherRes = await requestContext.post('http://localhost:3000/api/login', {
+    const otherRes = await requestContext.post(`${API_BASE_URL}/api/login`, {
       data: { email: 'user_f11_other@eshop.com', password: 'Other1234!' }
     });
     const otherData = await otherRes.json();
@@ -109,7 +115,7 @@ test.beforeAll(async ({ playwright }) => {
   // Helper function to create an order and advance its status using state transitions
   const seedOrder = async (token: string, amount: number, finalStatus: string) => {
     // Create pending order
-    const checkoutRes = await requestContext.post('http://localhost:3000/api/checkout', {
+    const checkoutRes = await requestContext.post(`${API_BASE_URL}/api/checkout`, {
       headers: { Authorization: `Bearer ${token}` },
       data: { total_amount: amount, shipping_address: '123 Test Street, District 1, HCMC' }
     });
@@ -135,7 +141,7 @@ test.beforeAll(async ({ playwright }) => {
       }
 
       for (const status of transitions) {
-        await requestContext.put(`http://localhost:3000/api/admin/orders/${orderId}/status`, {
+        await requestContext.put(`${API_BASE_URL}/api/admin/orders/${orderId}/status`, {
           headers: { Authorization: `Bearer ${adminToken || token}` },
           data: { status }
         });

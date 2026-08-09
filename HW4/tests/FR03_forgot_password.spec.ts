@@ -27,6 +27,9 @@ interface TestCase {
   expectedRoute?: string;
 }
 
+/** Base URL for the SUT backend API */
+const API_BASE_URL = 'http://localhost:3000';
+
 // Load external JSON test data
 const dataPath = path.join(__dirname, '..', 'test-data', 'FR03_data.json');
 const testCases: TestCase[] = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
@@ -52,7 +55,7 @@ test.beforeAll(async ({ playwright }) => {
 
   for (const user of users) {
     try {
-      await requestContext.post('http://localhost:3000/api/register', {
+      await requestContext.post(`${API_BASE_URL}/api/register`, {
         data: user,
       });
     } catch (e) {
