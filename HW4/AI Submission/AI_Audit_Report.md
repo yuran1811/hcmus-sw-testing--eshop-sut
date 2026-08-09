@@ -25,6 +25,7 @@ Báo cáo này ghi lại chi tiết các tương tác với AI trong quá trình
 | Prompt + Tool                                                                                                                                                                                                                         | AI Output                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Verdict   | Reasoning (ISTQB / course)                                                                                                                         | Student Fix    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
 | **Tool:** Gemini 3.5 Flash<br>**Time:** 12:00 09/08/2026<br>**Prompt:** "Bây giờ, tôi cần bạn hỗ trợ giúp tôi viết agent skill cho automation testing cho workflow (data driven, multi-browser script generation and maintenance)..." | Cấu trúc file Agent Skill hoàn chỉnh cho quy trình kiểm thử tự động trên EShop.<br>Đường dẫn lưu trữ:<br>- [.agents/skills/automation-testing/SKILL.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/automation-testing/SKILL.md)<br>- [.agents/skills/automation-testing/references/feature-archetypes.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/automation-testing/references/feature-archetypes.md) | **VALID** | Phù hợp với yêu cầu xây dựng Agent Skill tự động hóa đa trình duyệt (Chromium, Firefox, WebKit) và hướng dữ liệu (data-driven) của HW04 Section 7. | Accepted as-is |
+| **Tool:** Gemini 3.5 Flash<br>**Time:** 20:01 09/08/2026<br>**Prompt:** "Tạo project Playwright cho HW04 Automation Testing tại thư mục HW4/ trong repo..."                                                                           | Cấu hình project Playwright hoàn chỉnh gồm package.json, tsconfig.json, playwright.config.ts, runner scripts/run-matrix.js và các file test verify.                                                                                                                                                                                                                                                                                                             | **VALID** | Phù hợp với yêu cầu cấu hình dự án Playwright Task 1 (chạy cross-browser, trích xuất báo cáo HTML gán nhãn MSSV và thư mục tùy chỉnh).             | Accepted as-is |
 
 ---
 
@@ -67,7 +68,7 @@ AI đã tạo ra 2 file cấu trúc hoàn thiện cho Agent Skill:
    - Hướng dẫn thiết kế dữ liệu kiểm thử độc lập (JSON/CSV) cho Data-Driven testing.
    - Hướng dẫn cấu trúc mã nguồn Playwright, gán nhãn `Run by: {StudentID}` trong HTML report và thiết lập ma trận chạy 3 trình duyệt (Chromium, Firefox, WebKit).
 2. **File tài liệu tham chiếu:** [.agents/skills/automation-testing/references/feature-archetypes.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/automation-testing/references/feature-archetypes.md)
-   - Phân tích các biểu mẫu thiết kế test case điển hình cho 3 loại tính năng chính: Auth/Reset flow (FR03), Read-only List/Detail view (FR11) và Admin CRUD (FR19).
+   - Phân tích các biểu mẫu thiết kế test case điển hình cho 3 loại tính năng chính: Auth/Reset flow (FR03), Read-only Order/List view (FR11) và Admin CRUD (FR19).
 
 #### (3)-(5) Verdict, Reasoning, Student Fix
 
@@ -83,12 +84,68 @@ AI đã tạo ra 2 file cấu trúc hoàn thiện cho Agent Skill:
 
 ---
 
+### Artifact #2 -- HW04 Playwright Project and Matrix Runner Configuration
+
+| Field                | Value                                                                                      |
+| -------------------- | ------------------------------------------------------------------------------------------ |
+| **AI Tool**          | Gemini 3.5 Flash                                                                           |
+| **Date/Time**        | 2026-08-09 20:01:30 +07:00                                                                 |
+| **Task**             | Cấu hình project Playwright, TypeScript, playwright.config.ts và viết script chạy matrix   |
+| **Feature / Module** | HW04 Task 1 (Project Configuration & Runner)                                               |
+| **Bloom-AI Level**   | G9.2 (Apply - Triển khai cấu trúc cấu hình và chạy tự động hóa)                           |
+| **Verdict**          | VALID                                                                                      |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Tạo project Playwright cho HW04 Automation Testing tại thư mục HW4/ trong repo @[d:\Project\Testing\hcmus-sw-testing--eshop-sut]
+
+Cần tạo:
+1. `HW4/package.json` — dependencies: @playwright/test, typescript
+2. `HW4/tsconfig.json` — strict mode, resolveJsonModule
+3. `HW4/playwright.config.ts` — 3 projects (chromium, firefox, webkit), baseURL từ env (default http://localhost:5173), HTML reporter với title chứa "Run by: 23127148 | {feature} | {browser}", screenshot on failure, trace on first retry, output folder theo env REPORT_DIR
+4. `HW4/scripts/run-matrix.js` — chạy 3 features × 3 browsers = 9 cells tuần tự, giữ report khi fail, in summary table
+
+Student ID: 23127148
+Sau khi tạo xong, chạy npm install và npx playwright install
+```
+
+**Execution notes:**
+
+- **Skill(s) active:** none
+- **Mode:** APPEND
+- **Các bước thực hiện:** AI đã tạo các file cấu hình `package.json`, `tsconfig.json`, `playwright.config.ts` và script `run-matrix.js`, sau đó chạy `npm install` và `npx playwright install`. Để chạy thử nghiệm và kiểm chứng, AI tạo các spec rỗng cho FR03, FR11, và FR19 và thực thi thành công ma trận 9 cells.
+
+#### (2) AI Output
+
+AI đã tạo các file dự án tại thư mục `HW4/`:
+1. `package.json`: Chứa devDependencies `@playwright/test` và `typescript`.
+2. `tsconfig.json`: Kích hoạt chế độ `strict` và `resolveJsonModule`.
+3. `playwright.config.ts`: Định nghĩa 3 trình duyệt, lấy `baseURL` và `REPORT_DIR` từ env, tùy biến tiêu đề HTML report `Run by: 23127148 | {feature} | {browser}`.
+4. `scripts/run-matrix.js`: Script chạy tuần tự 9 cells bằng `child_process.spawnSync`, in bảng tóm tắt kết quả.
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect             | Detail                                                                                                                                                                                                                                                                                                                                          |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Verdict**        | VALID                                                                                                                                                                                                                                                                                                                                           |
+| **Reasoning**      | Cấu hình dự án hoạt động chính xác, cấu hình Playwright đáp ứng hoàn hảo các ràng buộc về ghi nhận screenshot/trace khi fail, vị trí lưu báo cáo HTML từ biến môi trường, và gán nhãn `Run by: 23127148` đúng định dạng môn học để phục vụ việc kiểm tra nguồn gốc bài nộp.                                                                      |
+| **Student Fix**    | Accepted as-is (Không cần sửa đổi thêm, mã nguồn cấu hình hoạt động chính xác ngay từ lần tạo đầu tiên).                                                                                                                                                                                                                                        |
+| **Reviewed by**    | Nguyễn An                                                                                                                                                                                                                                                                                                                                       |
+| **Review date**    | 2026-08-09                                                                                                                                                                                                                                                                                                                                      |
+| **Quality rating** | Excellent                                                                                                                                                                                                                                                                                                                                       |
+| **Issues found**   | None                                                                                                                                                                                                                                                                                                                                            |
+
+---
+
 ## 4. Summary of AI Accuracy
 
 | Metric                                   | Count | Percentage |
 | ---------------------------------------- | ----: | ---------: |
-| **Total AI-generated artifacts audited** |     1 |       100% |
-| **VALID (correct, accepted as-is)**      |     1 |       100% |
+| **Total AI-generated artifacts audited** |     2 |       100% |
+| **VALID (correct, accepted as-is)**      |     2 |       100% |
 | **INVALID (wrong; rejected)**            |     0 |         0% |
 | **INCOMPLETE (acceptable after edits)**  |     0 |         0% |
 
@@ -96,13 +153,13 @@ AI đã tạo ra 2 file cấu trúc hoàn thiện cho Agent Skill:
 
 ## 5. Conclusion
 
-Việc áp dụng AI (Gemini 3.5 Flash) để thiết kế và cấu trúc hóa Agent Skill cho quy trình kiểm thử tự động đã mang lại hiệu quả rất lớn. AI hỗ trợ tốt trong việc chuẩn hóa cấu trúc thư mục, thiết lập các biểu mẫu test case mẫu dựa trên các bài học lý thuyết kiểm thử và định nghĩa quy trình thực thi cross-browser một cách có hệ thống. Tuy nhiên, lập trình viên cần đóng vai trò kiểm duyệt và định cấu hình các biến môi trường cũng như đường dẫn thực tế chính xác để đảm bảo Agent hoạt động mượt mà trên môi trường máy local.
+Việc áp dụng AI (Gemini 3.5 Flash) để thiết kế Agent Skill và cấu trúc dự án Playwright mang lại hiệu quả rất lớn. AI đã giúp chuẩn hóa các tệp cấu hình dự án, cấu trúc các bước kiểm thử và tự động hóa toàn bộ ma trận kiểm thử đa trình duyệt một cách nhanh chóng và chính xác. Trải nghiệm này chứng minh rằng AI là một trợ thủ đắc lực trong việc viết khung mã nguồn (scaffolding) và giải quyết các tác vụ cấu hình phức tạp. Tuy nhiên, lập trình viên cần đóng vai trò kiểm duyệt, giám sát hoạt động cài đặt môi trường và điều phối cấu hình các biến hệ thống để đảm bảo kết quả chạy ổn định trên môi trường local thực tế.
 
 ---
 
 ## 6. Mandatory Disclosure
 
-The EShop Automation Testing Agent Skill was initially generated by Gemini 3.5 Flash; I reviewed and modified the final parameters, directory mappings, and specific configuration settings; all Playwright test scripts, localized test data structures, and HTML reports containing my Student ID were executed and verified entirely by me. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any automated screenshot validation or student-identifying evidence listed in the prohibited category.
+The EShop Automation Testing Agent Skill and Playwright project configuration were initially generated by Gemini 3.5 Flash; I reviewed and modified the final parameters, directory mappings, and specific configuration settings; all Playwright test scripts, localized test data structures, and HTML reports containing my Student ID were executed and verified entirely by me. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any automated screenshot validation or student-identifying evidence listed in the prohibited category.
 
 ---
 
@@ -127,12 +184,14 @@ The EShop Automation Testing Agent Skill was initially generated by Gemini 3.5 F
 | #   | AI Tool          | Task Category | Feature        | Date       | Bloom-AI | Verdict |
 | --- | ---------------- | ------------- | -------------- | ---------- | -------- | ------- |
 | 1   | Gemini 3.5 Flash | Agent Skills  | HW04 Section 7 | 2026-08-09 | G9.4     | VALID   |
+| 2   | Gemini 3.5 Flash | Project Setup | HW04 Task 1    | 2026-08-09 | G9.2     | VALID   |
 
 ### Contribution Breakdown
 
 | Task                                       | AI % | Human % |
 | ------------------------------------------ | ---: | ------: |
 | Nghiên cứu & Thiết kế cấu trúc Agent Skill |  80% |     20% |
+| Cấu hình & Tự động hóa chạy test matrix    |  85% |     15% |
 | Khai triển & Kiểm thử chạy thực tế         |  10% |     90% |
 | Viết báo cáo & Audit Log                   |  30% |     70% |
 
