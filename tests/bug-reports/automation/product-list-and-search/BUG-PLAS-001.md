@@ -7,7 +7,7 @@ assignees: ""
 ---
 
 - **Test Cases:** TC-PLAS-001, TC-PLAS-002, TC-PLAS-004, TC-PLAS-005, TC-PLAS-BVA-001, TC-PLAS-BVA-005
-- **Test Script Files:**
+- **Test Script File(s):**
   * [plas-ep.spec.ts](../../../test-runs/automation/scripts/product-list-and-search/tests/plas-ep.spec.ts) (cho TC-PLAS-001, 002, 004, 005)
   * [plas-bva.spec.ts](../../../test-runs/automation/scripts/product-list-and-search/tests/plas-bva.spec.ts) (cho TC-PLAS-BVA-001, TC-PLAS-BVA-005)
 
@@ -35,3 +35,7 @@ Browser: Chromium / Firefox / WebKit, OS: Windows, URL: http://localhost:5173
 ## Evidence
 
 *(Lỗi cấu trúc SEO DOM, phát hiện qua kiểm thử tự động của Playwright).*
+
+### Screenshot
+
+![Playwright failure screenshot - multiple h1 tags](../../../test-runs/automation/scripts/product-list-and-search/test-results/plas-bva-FR-05-Product-Lis-694e7--h1-duy-nhất-sau-khi-search-chromium/test-failed-1.png)

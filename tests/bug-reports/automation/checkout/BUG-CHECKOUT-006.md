@@ -7,7 +7,7 @@ assignees: ""
 ---
 
 - **Test Cases:** TC-CHECKOUT-001, TC-CHECKOUT-005, TC-CHECKOUT-006, TC-CHECKOUT-007, TC-CHECKOUT-BVA-001
-- **Test Script Files:**
+- **Test Script File(s):**
   * [checkout-api.spec.ts](../../../test-runs/automation/scripts/checkout/tests/checkout-api.spec.ts) (cho TC-CHECKOUT-001, TC-CHECKOUT-005, TC-CHECKOUT-006, TC-CHECKOUT-007)
   * [checkout-bva.spec.ts](../../../test-runs/automation/scripts/checkout/tests/checkout-bva.spec.ts) (cho TC-CHECKOUT-BVA-001)
 

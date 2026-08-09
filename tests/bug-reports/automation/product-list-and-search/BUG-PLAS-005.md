@@ -7,7 +7,7 @@ assignees: ""
 ---
 
 - **Test Cases:** TC-PLAS-012, TC-PLAS-BVA-004
-- **Test Script Files:**
+- **Test Script File(s):**
   * [plas-ep.spec.ts](../../../test-runs/automation/scripts/product-list-and-search/tests/plas-ep.spec.ts) (cho TC-PLAS-012)
   * [plas-bva.spec.ts](../../../test-runs/automation/scripts/product-list-and-search/tests/plas-bva.spec.ts) (cho TC-PLAS-BVA-004)
 
@@ -61,3 +61,7 @@ Received: 14 (Trả về toàn bộ số lượng sản phẩm trong database)
 > 326 |     await expect(products).toHaveCount(0);
       |                            ^
 ```
+
+### 3. Screenshot
+
+![Playwright failure screenshot - SQL injection search returns products](../../../test-runs/automation/scripts/product-list-and-search/test-results/plas-bva-FR-05-Product-Lis-95f36--biệt-SQL-Injection-OR-1-1--chromium/test-failed-1.png)

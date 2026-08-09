@@ -56,3 +56,7 @@ Received: 0
 > 256 |     await expect(products.count()).toBeGreaterThan(0);
       |                                    ^
 ```
+
+### 3. Screenshot
+
+![Playwright failure screenshot - search keyword is not trimmed](../../../test-runs/automation/scripts/product-list-and-search/test-results/plas-ep-FR-05-Product-List-6d78f-ng-thừa-ở-đầu-cuối-trimmed--chromium/test-failed-1.png)

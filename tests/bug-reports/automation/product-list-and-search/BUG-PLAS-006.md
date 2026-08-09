@@ -58,3 +58,7 @@ Received: 500
 > 186 |     expect(response.status()).not.toBe(500);
       |                               ^
 ```
+
+### 3. Screenshot
+
+![Playwright failure screenshot - long keyword causes HTTP 500](../../../test-runs/automation/scripts/product-list-and-search/test-results/plas-ep-FR-05-Product-List-b0388-ý-tự-—-không-crash-hệ-thống-chromium/test-failed-1.png)

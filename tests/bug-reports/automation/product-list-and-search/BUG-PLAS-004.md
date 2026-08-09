@@ -53,3 +53,7 @@ Call log:
 > 126 |     await expect(emptyMessage).toBeVisible();
       |                                ^
 ```
+
+### 3. Screenshot
+
+![Playwright failure screenshot - missing empty state](../../../test-runs/automation/scripts/product-list-and-search/test-results/plas-ep-FR-05-Product-List-3e621--tại-—-hiển-thị-empty-state-chromium/test-failed-1.png)

@@ -58,3 +58,7 @@ Received: 500
 > 116 |     expect(response.status()).not.toBe(500);
       |                               ^
 ```
+
+### 3. Screenshot
+
+![Playwright failure screenshot - boundary keyword causes HTTP 500](../../../test-runs/automation/scripts/product-list-and-search/test-results/plas-bva-FR-05-Product-Lis-ca4f5--ký-tự-Biên-trên-mốc-R-255--chromium/test-failed-1.png)
