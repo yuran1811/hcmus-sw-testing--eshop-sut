@@ -23,13 +23,14 @@ for (const feature of features) {
     console.log(`Report Dir: ${reportDir}`);
     console.log(`--------------------------------------------------`);
 
+    const isoTimestamp = new Date().toISOString();
     // Set environment variables for playwright.config.ts
     const env = {
       ...process.env,
       TEST_FEATURE: feature,
       TEST_BROWSER: browser,
       REPORT_DIR: reportDir,
-      PLAYWRIGHT_HTML_TITLE: `Run by: ${studentId} | ${feature} | ${browser}`,
+      PLAYWRIGHT_HTML_TITLE: `Run by: ${studentId} | ${feature} | ${browser} | ${isoTimestamp}`,
     };
 
     // Run playwright command for this specific cell
