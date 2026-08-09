@@ -140,7 +140,7 @@ for (const tc of testCases) {
       await page.getByRole('button', { name: 'Lấy mã OTP' }).click();
       const emailInput = page.locator('input').first();
       const validationMessage = await emailInput.evaluate((el: HTMLInputElement) => el.validationMessage);
-      expect(validationMessage).not.toBe('', { message: 'Expected browser validation to block invalid email format' });
+      expect(validationMessage, 'Expected browser validation to block invalid email format').not.toBe('');
       return;
     }
 
