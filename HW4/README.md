@@ -24,8 +24,8 @@
 - **Số lượng Test Cases LỖI (Number of test cases failed):** 19 test cases (thất bại do phát hiện lỗi thực tế của SUT trên cả 3 trình duyệt).
 - **Số lượng lượt chạy trình duyệt (Number of browser runs):** 9 lượt chạy (3 tính năng × 3 trình duyệt Chromium, Firefox, WebKit).
 - **Số lượng lỗi hệ thống phát hiện (Number of bugs):** 17 lỗi (được ghi nhận thành 17 tệp tin `.md` chi tiết tại thư mục `Bug Report`).
-- **Đường dẫn Video thuyết minh Demo (Demo video link):** *(Sinh viên cập nhật link video YouTube Demo unlisted tại đây)*
-- **Đường dẫn Video Agent Skill (Agent Skill video link):** *(Sinh viên cập nhật link video YouTube demo Agent Skill tại đây)*
+- **Đường dẫn Video thuyết minh Demo & Agent Skill (Unified YouTube Link):** *(Sinh viên cập nhật link video YouTube Demo chung tại đây - video dài >= 5 phút kết hợp thuyết minh chạy bộ test chéo trình duyệt và chạy demo Agent Skill)*
+
 
 ---
 

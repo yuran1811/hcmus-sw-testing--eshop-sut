@@ -1,0 +1,4 @@
+[PLACEHOLDER] ĐƯỜNG DẪN VIDEO DEMO CHUNG (RUN MATRIX & AGENT SKILL)
+Vui lòng dán link YouTube demo thuyết minh bài tập HW04 và chạy Agent Skill (dùng chung 1 video) của bạn vào dòng dưới đây:
+
+https://www.youtube.com/watch?v=YOUR_UNIFIED_DEMO_VIDEO_HERE
