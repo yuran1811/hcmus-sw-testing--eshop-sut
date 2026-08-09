@@ -30,6 +30,7 @@ Báo cáo này ghi lại chi tiết các tương tác với AI trong quá trình
 | **Tool:** Gemini 3.5 Flash<br>**Time:** 21:00 09/08/2026<br>**Prompt:** "Tôi muốn viết test script tự động hóa bằng Playwright cho tính năng FR-11 (Xem lịch sử đơn hàng của User)..." | Phân tích nghiệp vụ, thiết kế 18 test cases chi tiết và triển khai mã nguồn Playwright tự động hóa hướng dữ liệu (FR11_data.json & FR11_order_history.spec.ts). | **INCOMPLETE** | Thiết kế test case bao quát đầy đủ các kịch bản kiểm thử (Access Control, Data Display, Vietnamese Status Labels, Status Colors, Empty State, Cancellation, GUI) đáp ứng yêu cầu tối thiểu 12 test cases của môn học. Quy trình kiểm thử hướng dữ liệu (data-driven) và chạy ổn định trên 3 trình duyệt. | Bổ dung logic dọn dẹp cơ sở dữ liệu (Database Cleanup) cho bảng `orders` và các tài khoản test `user_f11_%` trong khối `beforeAll` trước khi chạy gieo dữ liệu (seeding) để tránh lỗi trùng lặp dữ liệu (strict-mode violation) giữa các lượt chạy. |
 | **Tool:** Gemini 3.5 Flash<br>**Time:** 21:15 09/08/2026<br>**Prompt:** "Tôi muốn viết test script tự động hóa bằng Playwright cho tính năng FR-19 (Quản lý người dùng)..." | Phân tích nghiệp vụ, thiết kế 16 test cases chi tiết và triển khai mã nguồn Playwright tự động hóa hướng dữ liệu (FR19_data.json & FR19_user_management.spec.ts). | **INCOMPLETE** | Thiết kế test case bao quát đầy đủ các kịch bản kiểm thử (Access Control, User List, Role Modification, Self-Deletion, Search, Security, GUI) đáp ứng yêu cầu tối thiểu 12 test cases của môn học. Quy trình kiểm thử hướng dữ liệu (data-driven) và chạy ổn định trên 3 trình duyệt. | Điều chỉnh thiết kế dữ liệu kiểm thử trong `FR19_data.json` và bổ sung logic dọn dẹp cơ sở dữ liệu (Database Cleanup) cho bảng `users` đối với tài khoản `email LIKE '%_f19_%'` sử dụng thư viện `sqlite3` trong khối `beforeAll` trước khi gieo dữ liệu. |
 | **Tool:** Gemini 3.5 Flash<br>**Time:** 22:20 09/08/2026<br>**Prompt:** "Hãy giúp tôi viết các tài liệu báo cáo chất lượng cao... Chia bug reports... git stash pop... chuyển evidences vào trong bug report..." | Phục hồi và dọn dẹp Git Stash; phân tích chi tiết lỗi chạy test, viết thêm 8 báo cáo lỗi mới; di chuyển thư mục Evidences vào Bug Report và cập nhật hàng loạt 17 tệp báo cáo lỗi. | **INCOMPLETE** | Phù hợp với chuẩn ISTQB và yêu cầu kiểm thử thực tế. QA đã kiểm duyệt cấu trúc thư mục và chỉ đạo di chuyển thư mục minh chứng để báo cáo tự đóng gói chuyên nghiệp. | Tái cấu trúc phân chia báo cáo lỗi theo FR; xóa các tệp trùng lặp tại `HW4/docs/`; di chuyển và cập nhật đường dẫn tương đối ảnh chụp màn hình trong 17 tệp báo cáo. |
+| **Tool:** Gemini 3.5 Flash<br>**Time:** 22:45 09/08/2026<br>**Prompt:** "Tôi đã hoàn tất việc chạy thử nghiệm tự động hóa 9-cell cho 3 tính năng FR-03, FR-11, FR-19 và đã viết xong 17 báo cáo lỗi chi tiết. Bây giờ, hãy giúp tôi tạo các file tài liệu tổng kết cuối cùng để đóng gói bài nộp HW04..." | Tạo mới và cập nhật các file tài liệu đóng gói bài nộp: báo cáo kiểm thử tự động, phê bình AI và hướng dẫn README có tích hợp video chung. | **INCOMPLETE** | Phù hợp với yêu cầu đóng gói và nộp bài HW04. Các chỉnh sửa do sinh viên yêu cầu giúp gộp video, điều chỉnh định dạng đoạn văn critique và bổ sung Gap Analysis. | Chỉ đạo gộp video demo, xóa tệp link agent skill thừa, định dạng lại AI Critique thành 1 đoạn văn duy nhất và bổ sung Gap Analysis vào báo cáo chính. |
 
 ---
 
@@ -338,14 +339,68 @@ AI đã thực hiện các hành động dọn dẹp và bổ sung:
 
 ---
 
+## Artifact #7 -- HW04 Final Documentation, Critique and Packaging
+
+| Field                | Value                                                                                                           |
+| -------------------- | --------------------------------------------------------------------------------------------------------------- |
+| **AI Tool**          | Gemini 3.5 Flash                                                                                                |
+| **Date/Time**        | 2026-08-09 22:45:00 +07:00                                                                                      |
+| **Task**             | Thiết kế và sinh các tài liệu tổng kết nộp bài HW04 (báo cáo kiểm thử tự động, phê bình AI, hướng dẫn README và các tệp placeholder link video) |
+| **Feature / Module** | HW04 Section 14 (Submission Regulations & Packaging)                                                             |
+| **Bloom-AI Level**   | G9.4 (Collaborate / Create - Tích hợp thiết kế tài liệu báo cáo và chuẩn hóa đóng gói)                           |
+| **Verdict**          | INCOMPLETE                                                                                                      |
+
+### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Tôi đã hoàn tất việc chạy thử nghiệm tự động hóa 9-cell cho 3 tính năng FR-03, FR-11, FR-19 và đã viết xong 17 báo cáo lỗi chi tiết.
+Bây giờ, hãy giúp tôi tạo các file tài liệu tổng kết cuối cùng để đóng gói bài nộp HW04 (sử dụng tiếng Việt, cấu trúc Markdown rõ ràng chuyên nghiệp):
+**Yêu cầu tạo 3 file tài liệu sau:**
+1. **`HW4/automation_report.md`** — Báo cáo tổng kết kiểm thử tự động...
+2. **`HW4/AI Submission/AI_Critique.md`** — Bài phê bình ngắn (200-300 từ) về công cụ AI (Gemini 3.5 Flash) được sử dụng...
+3. **`HW4/README.md`** — File hướng dẫn chạy bài tập và tự đánh giá...
+
+[Cùng các phản hồi sau đó về việc gộp video và sửa lại AI Critique thành 1 đoạn duy nhất]
+```
+
+**Execution notes:**
+
+- **Skill(s) active:** ai-audit-report
+- **Mode:** APPEND / FINALIZE
+- **Các bước thực hiện:** AI đã phân tích các yêu cầu của bài tập HW04, tạo mới 3 file tài liệu tổng kết đạt chất lượng QA Lead. Sau đó, tiếp nhận phản hồi của người dùng để tối ưu hóa tệp phê bình AI thành một đoạn duy nhất 242 từ, và gộp hai tệp placeholder link video YouTube thành một tệp `link_demo_youtube.txt` duy nhất tương ứng với mã nguồn `README.md` đã sửa đổi.
+
+### (2) AI Output
+
+AI đã tạo các file tài liệu tại thư mục `HW4/`:
+1. **Báo cáo kiểm thử:** [automation_report.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/automation_report.md) bao gồm thông tin sinh viên, ma trận 9-cell, thống kê số liệu và phân tích khoảng cách/đánh giá kịch bản AI sinh (Assertion Patterns, Data-driven JSON, sqlite db lock fixes).
+2. **Bài phê bình AI:** [AI_Critique.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/AI%20Submission/AI_Critique.md) dạng 1 đoạn văn 242 từ.
+3. **Hướng dẫn & Đánh giá:** [README.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/README.md) chứa bảng tự đánh giá, báo cáo tóm tắt kiểm thử (Test Summary Report) và các link HTML matrix.
+4. **Placeholder video:** [link_demo_youtube.txt](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/link_demo_youtube.txt) cho video demo duy nhất.
+
+### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect             | Detail                                                                                                                                                                                                                                                                                                             |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Verdict**        | INCOMPLETE                                                                                                                                                                                                                                                                                                         |
+| **Reasoning**      | Các file tài liệu được tạo ra đầy đủ thông tin, cấu trúc chuẩn xác và phù hợp với yêu cầu đóng gói HW04. Tuy nhiên, AI ở các lượt sinh đầu tiên đã chia tách thành 2 video và viết AI Critique quá dài. Cần sự can thiệp của sinh viên để gộp video, chỉnh sửa cấu trúc đoạn văn critique và cập nhật Gap Analysis trong báo cáo chính. |
+| **Student Fix**    | Chỉ đạo gộp 2 video demo thành 1 video duy nhất, xóa tệp link agent skill dư thừa; yêu cầu thu gọn AI Critique thành 1 đoạn văn duy nhất dưới 300 từ; yêu cầu cập nhật chi tiết phần Gap Analysis vào báo cáo kiểm thử. |
+| **Reviewed by**    | Nguyễn An                                                                                                                                                                                                                                                                                                          |
+| **Review date**    | 2026-08-09                                                                                                                                                                                                                                                                                                         |
+| **Quality rating** | Excellent                                                                                                                                                                                                                                                                                                          |
+| **Issues found**   | Redundant placeholders for videos; AI Critique format initially had multiple bullet points.                                                                                                                                                                                                                        |
+
+---
+
 ## 4. Summary of AI Accuracy
 
 | Metric                                   | Count | Percentage |
 | ---------------------------------------- | ----: | ---------: |
-| **Total AI-generated artifacts audited** |     6 |       100% |
-| **VALID (correct, accepted as-is)**      |     2 |      33.3% |
+| **Total AI-generated artifacts audited** |     7 |       100% |
+| **VALID (correct, accepted as-is)**      |     2 |      28.6% |
 | **INVALID (wrong; rejected)**            |     0 |         0% |
-| **INCOMPLETE (acceptable after edits)**  |     4 |      66.7% |
+| **INCOMPLETE (acceptable after edits)**  |     5 |      71.4% |
 
 ---
 
@@ -357,7 +412,7 @@ Việc áp dụng AI (Gemini 3.5 Flash) để viết kiểm thử tự động v
 
 ## 6. Mandatory Disclosure
 
-The EShop Automation Testing Agent Skill, Playwright project configuration, test suites for FR-03, FR-11, and FR-19, and the final 17 structured bug reports were initially generated by Gemini 3.5 Flash; I reviewed and modified the final parameters, assertions, database cleanup routines, and directory structure; all Playwright test scripts, localized test data structures, HTML reports, and the relocated Evidences containing my Student ID were executed and verified entirely by me. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any automated screenshot validation or student-identifying evidence listed in the prohibited category.
+The EShop Automation Testing Agent Skill, Playwright project configuration, test suites for FR-03, FR-11, and FR-19, the final 17 structured bug reports, and the final packaging documentation (automation_report.md, AI_Critique.md, README.md) were initially generated by Gemini 3.5 Flash; I reviewed and modified the final parameters, assertions, database cleanup routines, and directory structure; all Playwright test scripts, localized test data structures, HTML reports, and the relocated Evidences containing my Student ID were executed and verified entirely by me. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any automated screenshot validation or student-identifying evidence listed in the prohibited category.
 
 ---
 
@@ -387,6 +442,7 @@ The EShop Automation Testing Agent Skill, Playwright project configuration, test
 | 4   | Gemini 3.5 Flash | Test Suite    | FR-11 (Orders) | 2026-08-09 | G9.4     | INCOMPLETE |
 | 5   | Gemini 3.5 Flash | Test Suite    | FR-19 (Admin)  | 2026-08-09 | G9.4     | INCOMPLETE |
 | 6   | Gemini 3.5 Flash | Git & Reports | HW04 Task 2 & 3| 2026-08-09 | G9.4     | INCOMPLETE |
+| 7   | Gemini 3.5 Flash | Docs & Pack  | HW04 Section 14| 2026-08-09 | G9.4     | INCOMPLETE |
 
 ### Contribution Breakdown
 
