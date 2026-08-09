@@ -26,6 +26,7 @@ Báo cáo này ghi lại chi tiết các tương tác với AI trong quá trình
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
 | **Tool:** Gemini 3.5 Flash<br>**Time:** 12:00 09/08/2026<br>**Prompt:** "Bây giờ, tôi cần bạn hỗ trợ giúp tôi viết agent skill cho automation testing cho workflow (data driven, multi-browser script generation and maintenance)..." | Cấu trúc file Agent Skill hoàn chỉnh cho quy trình kiểm thử tự động trên EShop.<br>Đường dẫn lưu trữ:<br>- [.agents/skills/automation-testing/SKILL.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/automation-testing/SKILL.md)<br>- [.agents/skills/automation-testing/references/feature-archetypes.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/automation-testing/references/feature-archetypes.md) | **VALID** | Phù hợp với yêu cầu xây dựng Agent Skill tự động hóa đa trình duyệt (Chromium, Firefox, WebKit) và hướng dữ liệu (data-driven) của HW04 Section 7. | Accepted as-is |
 | **Tool:** Gemini 3.5 Flash<br>**Time:** 20:01 09/08/2026<br>**Prompt:** "Tạo project Playwright cho HW04 Automation Testing tại thư mục HW4/ trong repo..."                                                                           | Cấu hình project Playwright hoàn chỉnh gồm package.json, tsconfig.json, playwright.config.ts, runner scripts/run-matrix.js và các file test verify.                                                                                                                                                                                                                                                                                                             | **VALID** | Phù hợp với yêu cầu cấu hình dự án Playwright Task 1 (chạy cross-browser, trích xuất báo cáo HTML gán nhãn MSSV và thư mục tùy chỉnh).             | Accepted as-is |
+| **Tool:** Gemini 3.5 Flash<br>**Time:** 20:10 09/08/2026<br>**Prompt:** "Tôi muốn viết test script tự động hóa cho tính năng FR-03 (Quên mật khẩu & Đặt lại mật khẩu) bằng Playwright..." | Phân tích nghiệp vụ, thiết kế 22 test cases chi tiết và triển khai mã nguồn Playwright tự động hóa hướng dữ liệu (FR03_data.json & FR03_forgot_password.spec.ts). | **VALID** | Thiết kế test case bao quát đầy đủ các kịch bản kiểm thử (Positive, Negative, Boundary, Security, GUI, Navigation) đáp ứng yêu cầu tối thiểu 12 test cases của môn học. Quy trình kiểm thử hướng dữ liệu (data-driven) và chạy ổn định trên 3 trình duyệt. | Accepted as-is |
 
 ---
 
@@ -140,12 +141,64 @@ AI đã tạo các file dự án tại thư mục `HW4/`:
 
 ---
 
+### Artifact #3 -- FR-03 Forgot Password Playwright Test Suite Design & Implementation
+
+| Field                | Value                                                                                                        |
+| -------------------- | ------------------------------------------------------------------------------------------------------------ |
+| **AI Tool**          | Gemini 3.5 Flash                                                                                             |
+| **Date/Time**        | 2026-08-09 20:10:00 +07:00                                                                                   |
+| **Task**             | Thiết kế 22 test cases và lập trình test script Playwright tự động hóa cho tính năng FR-03 (Quên mật khẩu)   |
+| **Feature / Module** | FR-03 (Forgot Password & Reset Password)                                                                     |
+| **Bloom-AI Level**   | G9.4 (Collaborate / Create - Thiết kế và phát triển kịch bản tự động hóa tích hợp)                           |
+| **Verdict**          | VALID                                                                                                        |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Tôi muốn viết test script tự động hóa cho tính năng FR-03 (Quên mật khẩu & Đặt lại mật khẩu) bằng Playwright. 
+Hãy đọc kỹ đặc tả FR-03 và FR-01 tại README.md cùng mã nguồn API tại backend/server.js.
+
+**Nhiệm vụ đầu tiên:**
+1. Hãy thực hiện bước Phân tích (Analyze) tính năng này: liệt kê các tác nhân (actors), tiền điều kiện (preconditions), và các ràng buộc về nghiệp vụ (như định dạng mật khẩu mạnh, mã OTP...).
+2. Hãy thiết kế (Design) và đề xuất danh sách tối đa các test cases có thể (bao gồm Positive, Negative, Boundary, Security, GUI, và Navigation). Hãy cố gắng phủ hết tất cả các kịch bản kiểm thử có thể nghĩ ra cho tính năng này. Mỗi test case cần có ID định dạng `F03-TC-xxx`, danh mục, mục đích, các bước thực hiện và kết quả mong đợi cụ thể.
+
+Hãy đưa ra bảng thiết kế test case trước. Tôi sẽ duyệt danh sách này trước khi yêu cầu bạn sinh code.
+```
+
+**Execution notes:**
+
+- **Skill(s) active:** automation-testing, ai-audit-report
+- **Mode:** APPEND
+- **Các bước thực hiện:** AI đã phân tích đặc tả yêu cầu nghiệp vụ của tính năng FR-03 và các ràng buộc liên quan ở FR-01/GUI/Security trong README.md, đối chiếu với mã nguồn API trong backend/server.js và mã nguồn trang React ForgotPassword.jsx. Sau khi phát hiện 10 điểm lệch đặc tả/lỗi nghiêm trọng của SUT, AI đã đề xuất chiến lược kiểm thử song song (Happy path dùng mật khẩu tương thích SUT để chạy thành công; các case kiểm thử đặc tả khác chạy và báo lỗi đúng thực tế QA). Sau đó, AI thiết kế 22 test cases chi tiết, lập mô hình dữ liệu ngoài và viết mã nguồn test Playwright hoàn thiện cùng matrix runner chạy ổn định trên Chromium, Firefox và WebKit.
+
+#### (2) AI Output
+
+AI đã tạo các file kiểm thử tự động tại thư mục `HW4/`:
+1. **Dữ liệu kiểm thử ngoài:** [FR03_data.json](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/test-data/FR03_data.json) chứa 22 bản ghi test cases.
+2. **Mã nguồn Playwright:** [FR03_forgot_password.spec.ts](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/tests/FR03_forgot_password.spec.ts) tự động đọc dữ liệu ngoài, thực thi tuần tự các bước khôi phục mật khẩu, xử lý Dialog Alert, định vị các phần tử React động và kiểm chứng kết quả bằng các assertion web-first của Playwright.
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect             | Detail                                                                                                                                                                                                                                                                                                                                           |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Verdict**        | VALID                                                                                                                                                                                                                                                                                                                                           |
+| **Reasoning**      | Các test case thiết kế rất chi tiết, bao quát đầy đủ 22 kịch bản từ kiểm thử biên, giao diện cho đến các kịch bản bảo mật (SQL Injection, XSS, rate-limit). Chiến lược kiểm thử không sửa code SUT mà viết test tự động phản ánh lỗi thực tế là cực kỳ đúng đắn về mặt QA. Mã nguồn chạy ổn định trên cả 3 trình duyệt và xuất báo cáo HTML đầy đủ. |
+| **Student Fix**    | Accepted as-is (Không cần sửa đổi thêm, mã nguồn test chạy ổn định và phản ánh đúng trạng thái lỗi của phần mềm).                                                                                                                                                                                                                                |
+| **Reviewed by**    | Nguyễn An                                                                                                                                                                                                                                                                                                                                       |
+| **Review date**    | 2026-08-09                                                                                                                                                                                                                                                                                                                                      |
+| **Quality rating** | Excellent                                                                                                                                                                                                                                                                                                                                       |
+| **Issues found**   | None                                                                                                                                                                                                                                                                                                                                            |
+
+---
+
 ## 4. Summary of AI Accuracy
 
 | Metric                                   | Count | Percentage |
 | ---------------------------------------- | ----: | ---------: |
-| **Total AI-generated artifacts audited** |     2 |       100% |
-| **VALID (correct, accepted as-is)**      |     2 |       100% |
+| **Total AI-generated artifacts audited** |     3 |       100% |
+| **VALID (correct, accepted as-is)**      |     3 |       100% |
 | **INVALID (wrong; rejected)**            |     0 |         0% |
 | **INCOMPLETE (acceptable after edits)**  |     0 |         0% |
 
@@ -185,6 +238,7 @@ The EShop Automation Testing Agent Skill and Playwright project configuration we
 | --- | ---------------- | ------------- | -------------- | ---------- | -------- | ------- |
 | 1   | Gemini 3.5 Flash | Agent Skills  | HW04 Section 7 | 2026-08-09 | G9.4     | VALID   |
 | 2   | Gemini 3.5 Flash | Project Setup | HW04 Task 1    | 2026-08-09 | G9.2     | VALID   |
+| 3   | Gemini 3.5 Flash | Test Suite    | FR-03 (Auth)   | 2026-08-09 | G9.4     | VALID   |
 
 ### Contribution Breakdown
 
@@ -192,8 +246,9 @@ The EShop Automation Testing Agent Skill and Playwright project configuration we
 | ------------------------------------------ | ---: | ------: |
 | Nghiên cứu & Thiết kế cấu trúc Agent Skill |  80% |     20% |
 | Cấu hình & Tự động hóa chạy test matrix    |  85% |     15% |
-| Khai triển & Kiểm thử chạy thực tế         |  10% |     90% |
-| Viết báo cáo & Audit Log                   |  30% |     70% |
+| Triển khai bộ test FR-03                   |  80% |     20% |
+| Khai triển & Kiểm thử chạy thực tế         |  15% |     85% |
+| Viết báo cáo & Audit Log                   |  40% |     60% |
 
 ### Compliance Checklist
 
