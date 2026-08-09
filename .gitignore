@@ -1,2 +1,9 @@
 node_modules/
-
+.vscode/
+config-paths.txt
+credentials.json
+git_commit_log.md
+package-json-paths.txt
+package-json-utf8.txt
+HW4/playwright-report/
+HW4/test-results/
