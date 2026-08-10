@@ -67,10 +67,10 @@ Nominal values for other variables: `Product Count` = 3 (trong đó có fixture 
 
 | BVA Scenario #           | DT Test Case                                                              | Variable | Test Value | Overlap Reason                                                                             |
 | ------------------------ | ------------------------------------------------------------------------- | -------- | ---------- | ------------------------------------------------------------------------------------------ |
-| 3-Point B at natural min | [TC-PLAS-001](../tests/test-cases/product-list-and-search/TC-PLAS-001.md) | search   | `""`       | Trùng dữ liệu kiểm thử xem tất cả sản phẩm; không phải cặp 2-Point                         |
-| Omitted (EC2, quy về B)  | [TC-PLAS-001](../tests/test-cases/product-list-and-search/TC-PLAS-001.md) | search   | Omitted    | Bỏ tham số tương đương độ dài 0; không được gán nhầm thành B-1                             |
-| Price B-1                | [TC-PLAS-017](../tests/test-cases/product-list-and-search/TC-PLAS-017.md) | price    | `999`      | Chồng phủ có chủ đích: Domain kiểm định format output, BVA-006 kiểm định điểm quanh ngưỡng |
-| Price B                  | [TC-PLAS-017](../tests/test-cases/product-list-and-search/TC-PLAS-017.md) | price    | `1000`     | Chồng phủ có chủ đích: Domain kiểm định format output, BVA-007 kiểm định đúng ngưỡng       |
+| 3-Point B at natural min | [TC-PLAS-001](../../tests/test-cases/product-list-and-search/TC-PLAS-001.md) | search   | `""`       | Trùng dữ liệu kiểm thử xem tất cả sản phẩm; không phải cặp 2-Point                         |
+| Omitted (EC2, quy về B)  | [TC-PLAS-001](../../tests/test-cases/product-list-and-search/TC-PLAS-001.md) | search   | Omitted    | Bỏ tham số tương đương độ dài 0; không được gán nhầm thành B-1                             |
+| Price B-1                | [TC-PLAS-017](../../tests/test-cases/product-list-and-search/TC-PLAS-017.md) | price    | `999`      | Chồng phủ có chủ đích: Domain kiểm định format output, BVA-006 kiểm định điểm quanh ngưỡng |
+| Price B                  | [TC-PLAS-017](../../tests/test-cases/product-list-and-search/TC-PLAS-017.md) | price    | `1000`     | Chồng phủ có chủ đích: Domain kiểm định format output, BVA-007 kiểm định đúng ngưỡng       |
 
 Các kịch bản BVA còn lại không trùng lắp sẽ được chuyển thành các Test Case BVA mới.
 
@@ -78,16 +78,16 @@ Các kịch bản BVA còn lại không trùng lắp sẽ được chuyển thà
 
 | #   | TC ID                                                                             | Description                                            | Technique(s)                 | Boundary            | Expected                               |
 | --- | --------------------------------------------------------------------------------- | ------------------------------------------------------ | ---------------------------- | ------------------- | -------------------------------------- |
-| 1   | [TC-PLAS-BVA-001](../tests/test-cases/product-list-and-search/TC-PLAS-BVA-001.md) | Tìm kiếm với từ khóa có độ dài tối thiểu + 1 (1 ký tự) | 3-Point                      | Min length, B + 1   | Hiển thị fixture có exact-name `M`     |
-| 2   | [TC-PLAS-BVA-002](../tests/test-cases/product-list-and-search/TC-PLAS-BVA-002.md) | Tìm kiếm tại biên độ bền tham chiếu 255 ký tự          | 3-point robustness reference | Reference, R        | Empty state, không crash/tràn layout   |
-| 3   | [TC-PLAS-BVA-003](../tests/test-cases/product-list-and-search/TC-PLAS-BVA-003.md) | Tìm kiếm ngay trên biên độ bền tham chiếu (256 ký tự)  | 3-point robustness reference | Reference, R + 1    | Không cắt âm thầm/crash/tràn layout    |
-| 4   | [TC-PLAS-BVA-004](../tests/test-cases/product-list-and-search/TC-PLAS-BVA-004.md) | Kiểm tra hiển thị khi cơ sở dữ liệu trống (0 sản phẩm) | One-sided 3-Point            | Min DB count, B     | Hiển thị thông báo empty state         |
-| 5   | [TC-PLAS-BVA-005](../tests/test-cases/product-list-and-search/TC-PLAS-BVA-005.md) | Kiểm tra hiển thị khi cơ sở dữ liệu có đúng 1 sản phẩm | 3-Point                      | Min DB count, B + 1 | Hiển thị lưới chứa đúng 1 thẻ sản phẩm |
-| 6   | [TC-PLAS-BVA-006](../tests/test-cases/product-list-and-search/TC-PLAS-BVA-006.md) | Giá 999 ngay dưới ngưỡng phân cách                     | 3-Point + 2-Point            | Price, B-1          | `999 ₫`                                |
-| 7   | [TC-PLAS-BVA-007](../tests/test-cases/product-list-and-search/TC-PLAS-BVA-007.md) | Giá 1000 tại ngưỡng phân cách                          | 3-Point + 2-Point            | Price, B            | `1.000 ₫`                              |
-| 8   | [TC-PLAS-BVA-008](../tests/test-cases/product-list-and-search/TC-PLAS-BVA-008.md) | Giá 1001 ngay trên ngưỡng phân cách                    | 3-Point                      | Price, B+1          | `1.001 ₫`                              |
-| 9   | [TC-PLAS-BVA-009](../tests/test-cases/product-list-and-search/TC-PLAS-BVA-009.md) | Danh sách có đúng hai sản phẩm                         | Near-boundary extension      | Count, B+2          | Hai thẻ trong grid                     |
-| 10  | [TC-PLAS-BVA-010](../tests/test-cases/product-list-and-search/TC-PLAS-BVA-010.md) | Độ dài 254 ngay dưới mốc tham chiếu                    | 3-point robustness reference | Reference, R-1      | Không crash, empty state               |
+| 1   | [TC-PLAS-BVA-001](../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-001.md) | Tìm kiếm với từ khóa có độ dài tối thiểu + 1 (1 ký tự) | 3-Point                      | Min length, B + 1   | Hiển thị fixture có exact-name `M`     |
+| 2   | [TC-PLAS-BVA-002](../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-002.md) | Tìm kiếm tại biên độ bền tham chiếu 255 ký tự          | 3-point robustness reference | Reference, R        | Empty state, không crash/tràn layout   |
+| 3   | [TC-PLAS-BVA-003](../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-003.md) | Tìm kiếm ngay trên biên độ bền tham chiếu (256 ký tự)  | 3-point robustness reference | Reference, R + 1    | Không cắt âm thầm/crash/tràn layout    |
+| 4   | [TC-PLAS-BVA-004](../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-004.md) | Kiểm tra hiển thị khi cơ sở dữ liệu trống (0 sản phẩm) | One-sided 3-Point            | Min DB count, B     | Hiển thị thông báo empty state         |
+| 5   | [TC-PLAS-BVA-005](../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-005.md) | Kiểm tra hiển thị khi cơ sở dữ liệu có đúng 1 sản phẩm | 3-Point                      | Min DB count, B + 1 | Hiển thị lưới chứa đúng 1 thẻ sản phẩm |
+| 6   | [TC-PLAS-BVA-006](../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-006.md) | Giá 999 ngay dưới ngưỡng phân cách                     | 3-Point + 2-Point            | Price, B-1          | `999 ₫`                                |
+| 7   | [TC-PLAS-BVA-007](../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-007.md) | Giá 1000 tại ngưỡng phân cách                          | 3-Point + 2-Point            | Price, B            | `1.000 ₫`                              |
+| 8   | [TC-PLAS-BVA-008](../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-008.md) | Giá 1001 ngay trên ngưỡng phân cách                    | 3-Point                      | Price, B+1          | `1.001 ₫`                              |
+| 9   | [TC-PLAS-BVA-009](../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-009.md) | Danh sách có đúng hai sản phẩm                         | Near-boundary extension      | Count, B+2          | Hai thẻ trong grid                     |
+| 10  | [TC-PLAS-BVA-010](../../tests/test-cases/product-list-and-search/TC-PLAS-BVA-010.md) | Độ dài 254 ngay dưới mốc tham chiếu                    | 3-point robustness reference | Reference, R-1      | Không crash, empty state               |
 
 ---
 
@@ -167,9 +167,9 @@ Nominal values for other variables: `Authorization` = Valid Token, `Cart State` 
 
 | BVA Scenario #          | DT Test Case                                                       | Variable        | Test Value | Overlap Reason                                                |
 | ----------------------- | ------------------------------------------------------------------ | --------------- | ---------- | ------------------------------------------------------------- |
-| 3-Point #1 / 2-Point #2 | [TC-CHECKOUT-003](../tests/test-cases/checkout/TC-CHECKOUT-003.md) | Cart Item count | 0          | Đã được bao phủ trong ca kiểm thử giỏ hàng trống              |
-| 3-Point #5 / 2-Point #3 | [TC-CHECKOUT-001](../tests/test-cases/checkout/TC-CHECKOUT-001.md) | total_amount    | 10000000   | Đã được bao phủ bởi ca kiểm thử thành công luồng chính        |
-| Address B-1             | [TC-CHECKOUT-009](../tests/test-cases/checkout/TC-CHECKOUT-009.md) | address length  | whitespace | Cùng miền address trống hiệu dụng; BVA-004 dùng empty literal |
+| 3-Point #1 / 2-Point #2 | [TC-CHECKOUT-003](../../tests/test-cases/checkout/TC-CHECKOUT-003.md) | Cart Item count | 0          | Đã được bao phủ trong ca kiểm thử giỏ hàng trống              |
+| 3-Point #5 / 2-Point #3 | [TC-CHECKOUT-001](../../tests/test-cases/checkout/TC-CHECKOUT-001.md) | total_amount    | 10000000   | Đã được bao phủ bởi ca kiểm thử thành công luồng chính        |
+| Address B-1             | [TC-CHECKOUT-009](../../tests/test-cases/checkout/TC-CHECKOUT-009.md) | address length  | whitespace | Cùng miền address trống hiệu dụng; BVA-004 dùng empty literal |
 
 Các kịch bản BVA còn lại không trùng lắp sẽ được chuyển thành các Test Case BVA mới.
 
@@ -177,13 +177,13 @@ Các kịch bản BVA còn lại không trùng lắp sẽ được chuyển thà
 
 | #   | TC ID                                                                      | Description                                                    | Technique(s)                 | Boundary                   | Expected                                              |
 | --- | -------------------------------------------------------------------------- | -------------------------------------------------------------- | ---------------------------- | -------------------------- | ----------------------------------------------------- |
-| 1   | [TC-CHECKOUT-BVA-001](../tests/test-cases/checkout/TC-CHECKOUT-BVA-001.md) | Thanh toán đơn hàng thành công khi giỏ hàng có đúng 1 sản phẩm | 3-Point + 2-Point            | Giỏ hàng = 1 sản phẩm (B)  | Pass - Đơn hàng được tạo thành công                   |
-| 2   | [TC-CHECKOUT-BVA-002](../tests/test-cases/checkout/TC-CHECKOUT-BVA-002.md) | Xử lý an toàn khi total client thấp hơn server 1đ              | 3-Point + 2-Point            | total_amount = T - 1 (B-1) | Reject hoặc persist server total                      |
-| 3   | [TC-CHECKOUT-BVA-003](../tests/test-cases/checkout/TC-CHECKOUT-BVA-003.md) | Xử lý an toàn khi total client cao hơn server 1đ               | 3-Point + 2-Point            | total_amount = T + 1 (B+1) | Reject hoặc persist server total                      |
-| 4   | [TC-CHECKOUT-BVA-004](../tests/test-cases/checkout/TC-CHECKOUT-BVA-004.md) | Address dài 0 tại dưới mốc non-empty                           | Length characterization      | Address, R-1               | Hành vi policy rõ, không 5xx/partial state            |
-| 5   | [TC-CHECKOUT-BVA-005](../tests/test-cases/checkout/TC-CHECKOUT-BVA-005.md) | Address dài đúng 1 ký tự                                       | Length characterization      | Address, R                 | Accept+preserve hoặc reject 400; no 5xx/partial state |
-| 6   | [TC-CHECKOUT-BVA-006](../tests/test-cases/checkout/TC-CHECKOUT-BVA-006.md) | Address dài 2 ký tự                                            | Length characterization      | Address, R+1               | Accept+preserve hoặc reject 400; no 5xx/partial state |
-| 7   | [TC-CHECKOUT-BVA-007](../tests/test-cases/checkout/TC-CHECKOUT-BVA-007.md) | Address dài 499/500/501 quanh mốc robustness                   | 3-point robustness reference | R=500                      | Không silent truncation/5xx/partial state             |
+| 1   | [TC-CHECKOUT-BVA-001](../../tests/test-cases/checkout/TC-CHECKOUT-BVA-001.md) | Thanh toán đơn hàng thành công khi giỏ hàng có đúng 1 sản phẩm | 3-Point + 2-Point            | Giỏ hàng = 1 sản phẩm (B)  | Pass - Đơn hàng được tạo thành công                   |
+| 2   | [TC-CHECKOUT-BVA-002](../../tests/test-cases/checkout/TC-CHECKOUT-BVA-002.md) | Xử lý an toàn khi total client thấp hơn server 1đ              | 3-Point + 2-Point            | total_amount = T - 1 (B-1) | Reject hoặc persist server total                      |
+| 3   | [TC-CHECKOUT-BVA-003](../../tests/test-cases/checkout/TC-CHECKOUT-BVA-003.md) | Xử lý an toàn khi total client cao hơn server 1đ               | 3-Point + 2-Point            | total_amount = T + 1 (B+1) | Reject hoặc persist server total                      |
+| 4   | [TC-CHECKOUT-BVA-004](../../tests/test-cases/checkout/TC-CHECKOUT-BVA-004.md) | Address dài 0 tại dưới mốc non-empty                           | Length characterization      | Address, R-1               | Hành vi policy rõ, không 5xx/partial state            |
+| 5   | [TC-CHECKOUT-BVA-005](../../tests/test-cases/checkout/TC-CHECKOUT-BVA-005.md) | Address dài đúng 1 ký tự                                       | Length characterization      | Address, R                 | Accept+preserve hoặc reject 400; no 5xx/partial state |
+| 6   | [TC-CHECKOUT-BVA-006](../../tests/test-cases/checkout/TC-CHECKOUT-BVA-006.md) | Address dài 2 ký tự                                            | Length characterization      | Address, R+1               | Accept+preserve hoặc reject 400; no 5xx/partial state |
+| 7   | [TC-CHECKOUT-BVA-007](../../tests/test-cases/checkout/TC-CHECKOUT-BVA-007.md) | Address dài 499/500/501 quanh mốc robustness                   | 3-point robustness reference | R=500                      | Không silent truncation/5xx/partial state             |
 
 ---
 
@@ -245,20 +245,20 @@ Nominal values: Token = JWT Admin
 | BVA Scenario #  | DT Test Case                                                       | Variable    | Test Value            | Overlap Reason                                                                                                 |
 | --------------- | ------------------------------------------------------------------ | ----------- | --------------------- | -------------------------------------------------------------------------------------------------------------- |
 | #1 (B-1 at min) | TC-CATEGORY-002                                                    | name        | ""                    | Same test data and expected result (Name rỗng)                                                                 |
-| Count multiple  | [TC-CATEGORY-004](../tests/test-cases/category/TC-CATEGORY-004.md) | Count       | >= 2 fixture          | Phủ lớp EC21 nhưng không thay thế điểm chính xác Count=2                                                       |
-| ID reference R  | [TC-CATEGORY-005](../tests/test-cases/category/TC-CATEGORY-005.md) | category_id | existing ID (ví dụ 1) | Chồng phủ xóa record tồn tại; BVA-004 cố định fixture R=1, BVA-005 bổ sung R+1 và kiểm tra không xóa nhầm ID 1 |
+| Count multiple  | [TC-CATEGORY-004](../../tests/test-cases/category/TC-CATEGORY-004.md) | Count       | >= 2 fixture          | Phủ lớp EC21 nhưng không thay thế điểm chính xác Count=2                                                       |
+| ID reference R  | [TC-CATEGORY-005](../../tests/test-cases/category/TC-CATEGORY-005.md) | category_id | existing ID (ví dụ 1) | Chồng phủ xóa record tồn tại; BVA-004 cố định fixture R=1, BVA-005 bổ sung R+1 và kiểm tra không xóa nhầm ID 1 |
 
 #### Final BVA Test Case Summary
 
 | #   | TC ID                                                                      | Description                  | Technique(s)            | Boundary       | Expected                         |
 | --- | -------------------------------------------------------------------------- | ---------------------------- | ----------------------- | -------------- | -------------------------------- |
-| 1   | [TC-CATEGORY-BVA-001](../tests/test-cases/category/TC-CATEGORY-BVA-001.md) | Name đúng 1 ký tự            | 3-Point + 2-Point       | Min, B         | Accept                           |
-| 2   | [TC-CATEGORY-BVA-002](../tests/test-cases/category/TC-CATEGORY-BVA-002.md) | Name 2 ký tự                 | 3-Point only            | Min, B+1       | Accept                           |
-| 3   | [TC-CATEGORY-BVA-003](../tests/test-cases/category/TC-CATEGORY-BVA-003.md) | category_id = 0              | Identifier reference    | ID, R-1        | Controlled response, no mutation |
-| 4   | [TC-CATEGORY-BVA-004](../tests/test-cases/category/TC-CATEGORY-BVA-004.md) | category_id = 1              | Identifier reference    | ID, R          | Delete success                   |
-| 5   | [TC-CATEGORY-BVA-005](../tests/test-cases/category/TC-CATEGORY-BVA-005.md) | category_id = 2              | Identifier reference    | ID, R+1        | Delete success                   |
-| 6   | [TC-CATEGORY-BVA-006](../tests/test-cases/category/TC-CATEGORY-BVA-006.md) | Danh sách có 0 danh mục      | One-sided 3-Point       | Count Min, B   | Empty state có minh họa/message  |
-| 7   | [TC-CATEGORY-BVA-007](../tests/test-cases/category/TC-CATEGORY-BVA-007.md) | Danh sách có 1 danh mục      | 3-Point                 | Count Min, B+1 | One row                          |
-| 8   | [TC-CATEGORY-BVA-008](../tests/test-cases/category/TC-CATEGORY-BVA-008.md) | Danh sách có đúng 2 danh mục | Near-boundary extension | Count, B+2     | Two rows                         |
+| 1   | [TC-CATEGORY-BVA-001](../../tests/test-cases/category/TC-CATEGORY-BVA-001.md) | Name đúng 1 ký tự            | 3-Point + 2-Point       | Min, B         | Accept                           |
+| 2   | [TC-CATEGORY-BVA-002](../../tests/test-cases/category/TC-CATEGORY-BVA-002.md) | Name 2 ký tự                 | 3-Point only            | Min, B+1       | Accept                           |
+| 3   | [TC-CATEGORY-BVA-003](../../tests/test-cases/category/TC-CATEGORY-BVA-003.md) | category_id = 0              | Identifier reference    | ID, R-1        | Controlled response, no mutation |
+| 4   | [TC-CATEGORY-BVA-004](../../tests/test-cases/category/TC-CATEGORY-BVA-004.md) | category_id = 1              | Identifier reference    | ID, R          | Delete success                   |
+| 5   | [TC-CATEGORY-BVA-005](../../tests/test-cases/category/TC-CATEGORY-BVA-005.md) | category_id = 2              | Identifier reference    | ID, R+1        | Delete success                   |
+| 6   | [TC-CATEGORY-BVA-006](../../tests/test-cases/category/TC-CATEGORY-BVA-006.md) | Danh sách có 0 danh mục      | One-sided 3-Point       | Count Min, B   | Empty state có minh họa/message  |
+| 7   | [TC-CATEGORY-BVA-007](../../tests/test-cases/category/TC-CATEGORY-BVA-007.md) | Danh sách có 1 danh mục      | 3-Point                 | Count Min, B+1 | One row                          |
+| 8   | [TC-CATEGORY-BVA-008](../../tests/test-cases/category/TC-CATEGORY-BVA-008.md) | Danh sách có đúng 2 danh mục | Near-boundary extension | Count, B+2     | Two rows                         |
 
 ---

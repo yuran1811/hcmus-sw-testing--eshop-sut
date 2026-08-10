@@ -192,3 +192,15 @@
 - **AI output (faithful summary):**
   > Dùng GitHub CLI cập nhật issue #250, #252 và #261 theo các file bug report Markdown hiện tại. Issue #250 được đổi title thành "[BUG][Thanh toán][Automation] Backend không đảm bảo total_amount được tính từ dữ liệu server" và cập nhật body có `TC-CHECKOUT-013`, `TC-CHECKOUT-BVA-003`, `total_amount = null`. Issue #252 được cập nhật body để gỡ `TC-CHECKOUT-006/007` và giữ `TC-CHECKOUT-BVA-001`. Issue #261 được cập nhật body để gỡ `TC-PLAS-012` và giữ `TC-PLAS-BVA-004`.
 - **What the student changed/kept from this output:** Giữ GitHub Issues đồng bộ với bug report Markdown và traceability mới nhất.
+
+---
+
+### Entry 14
+- **Tool:** Codex / GPT-5
+- **Date/time:** 2026-08-10 11:27
+- **Task context:** Rà soát package nộp HW04 và sửa đường dẫn tài liệu
+- **Prompt used (verbatim):**
+  > 23127115_HW04_AI_Automation_100 kiểm tra xem các file đã đặt yêu cầu chưa, sửa lại readme và các file khác cho đúng đường dẫn
+- **AI output (faithful summary):**
+  > Đối chiếu yêu cầu HW04 với README và các tài liệu trong `docs/report`. Chạy kiểm tra Markdown links, phát hiện các link từ `docs/report` tới `../tests/...` bị sai vì phải trỏ về `../../tests/...`; sửa trong `Domain_Testing_Report.md` và `Boundary_Value_Analysis_Report.md`. Phát hiện README/Main Report còn link tới `Test_Case_to_Script_Mapping.md` và `Automation_Issues_and_Solutions.md` dù nội dung đã được gộp vào `Main_Report.md`; cập nhật sang anchor trong `Main_Report.md`. Kiểm tra lại không còn broken relative links trong `docs/report`; xác nhận HTML reports có `Run by: 23127115` dưới dạng HTML `<code>23127115</code>`, có timestamp ISO, có 38 commit chạm `.spec.ts`, nhưng `docs/report` hiện chưa có PDF.
+- **What the student changed/kept from this output:** Giữ các link tương đối đã sửa và dùng kết quả rà soát để biết phần còn thiếu trước khi đóng gói là export PDF.

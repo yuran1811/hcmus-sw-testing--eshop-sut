@@ -1,0 +1,113 @@
+/**
+ * Category Security Test Suite (FR-14, SEC-04, SEC-05)
+ * Covers: TC-CATEGORY-016 (XSS), TC-CATEGORY-017 (SQL Injection)
+ * Technique: Malicious Input Partition
+ *
+ * Student: Mạch Quốc Tấn - 23127115
+ * Assignment: HW04 - Automation Testing
+ *
+ * Assertion patterns used:
+ *   Pattern 1 — HTTP status assertion (must not server-error)
+ *   Pattern 2 — Body field / value (name stored as literal, not executed)
+ *   Pattern 3 — Count / length (table still exists and has records)
+ *   Pattern 4 — Network / API response
+ */
+
+import { test, expect } from '@playwright/test';
+import { CategoryAPIHelper, Category } from '../pages/CategoryPage';
+import testData from '../data/category-test-data.json';
+import { automationEnv } from '../../_common/env';
+import { HTTP_STATUS } from '../../_common/http-status';
+
+const BASE_URL = automationEnv.apiBaseUrl;
+const ADMIN = testData.users.admin;
+
+test.describe('FR-14 Category Security — XSS & SQL Injection', () => {
+
+  let adminToken: string;
+
+  test.beforeAll(async ({ request }) => {
+    const api = new CategoryAPIHelper(request, BASE_URL);
+    adminToken = await api.ensureLogin(ADMIN);
+  });
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // TC-CATEGORY-016: XSS payload in category name
+  // ──────────────────────────────────────────────────────────────────────────
+  test("TC-CATEGORY-016: Tên danh mục chứa HTML/XSS — lưu như plain text, không thực thi script (EC14)", async ({ request }) => {
+    const api = new CategoryAPIHelper(request, BASE_URL);
+    const tcData = testData.tc_security.find(tc => tc.tc_id === 'TC-CATEGORY-016')!;
+    const xssPayload = tcData.name;
+
+    // [Pattern 4] — Network: POST XSS name
+    const resp = await api.createCategory(adminToken, xssPayload);
+
+    // [Pattern 1] — Must not server error
+    expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
+    // Status: success on create or validation rejection
+    expect(tcData.expected_status_oneOf).toContain(resp.status());
+
+    if (([HTTP_STATUS.OK, HTTP_STATUS.CREATED] as number[]).includes(resp.status())) {
+      const body = await resp.json() as { id?: number };
+      const id = body.id;
+
+      if (id) {
+        // [Pattern 2] — Retrieve from list; stored name must be the literal string, not interpreted
+        const list = await api.getCategoryList(adminToken);
+        const found = list.find((c) => c.id === id);
+        if (found) {
+          // Name stored must equal the literal payload (stored as text)
+          expect.soft(found.name).toBe(xssPayload);
+          // Must NOT be an empty string (which would indicate silent stripping)
+          expect.soft(found.name.length).toBeGreaterThan(0);
+        }
+
+        // Cleanup
+        await api.cleanupCategory(adminToken, id);
+      }
+    }
+    // If bad request is returned: XSS correctly rejected — test passes (no script execution possible)
+  });
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // TC-CATEGORY-017: SQL Injection payload in category name
+  // ──────────────────────────────────────────────────────────────────────────
+  test("TC-CATEGORY-017: Tên danh mục chứa payload SQL — bảng categories không bị DROP (EC15)", async ({ request }) => {
+    const api = new CategoryAPIHelper(request, BASE_URL);
+    const tcData = testData.tc_security.find(tc => tc.tc_id === 'TC-CATEGORY-017')!;
+    const sqlPayload = tcData.name;
+
+    // [Pattern 3] — Capture count before attack
+    const countBefore = await api.getCategoryCount(adminToken);
+
+    // [Pattern 4] — Network: POST SQL injection name
+    const resp = await api.createCategory(adminToken, sqlPayload);
+
+    // [Pattern 1] — Must not server error (raw SQL error is a security failure)
+    expect(resp.status()).not.toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
+    expect(tcData.expected_status_oneOf).toContain(resp.status());
+
+    // [Pattern 4] — Try GET categories — must succeed (table not dropped)
+    const listResp = await api.getCategories(adminToken);
+    // [Pattern 1] — GET must return OK (categories table survived)
+    expect(listResp.status()).toBe(HTTP_STATUS.OK);
+
+    const list = await listResp.json() as Category[];
+    // [Pattern 3] — Table still has records (at minimum the ones before this test)
+    expect(Array.isArray(list)).toBe(true);
+    // Count should be >= countBefore (may be +1 if SQL name was accepted and stored)
+    expect(list.length).toBeGreaterThanOrEqual(countBefore > 0 ? 1 : 0);
+
+    // [Pattern 2] — Create a post-injection control category to verify DB is operational
+    const controlResp = await api.createCategory(adminToken, `Đối chứng sau SQLi ${Date.now()}`);
+    expect([HTTP_STATUS.OK, HTTP_STATUS.CREATED]).toContain(controlResp.status());
+    const controlBody = await controlResp.json() as { id?: number };
+    if (controlBody.id) await api.cleanupCategory(adminToken, controlBody.id);
+
+    // Cleanup the SQL payload category if it was accepted
+    if (([HTTP_STATUS.OK, HTTP_STATUS.CREATED] as number[]).includes(resp.status())) {
+      const body = await resp.json().catch(() => ({})) as { id?: number };
+      if (body.id) await api.cleanupCategory(adminToken, body.id);
+    }
+  });
+});

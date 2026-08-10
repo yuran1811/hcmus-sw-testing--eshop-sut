@@ -14,7 +14,7 @@
 | Repository SUT gốc | https://github.com/ttbhanh/eshop-sut                                             |
 | Ngày cập nhật      | 10/08/2026                                                                       |
 
-README này là trang tổng hợp cho bài nộp HW04. Nội dung bám theo yêu cầu trong [2026.HW04.Automation Testing_En.md](../requirement/2026.HW04.Automation%20Testing_En.md), gồm bảng tự đánh giá, tóm tắt automation, link báo cáo, script, HTML report, bug report, GitHub Issues, AI Audit Report, AI Critique và video demo.
+README này là trang tổng hợp cho bài nộp HW04. Nội dung bám theo yêu cầu trong [2026.HW04.Automation Testing_En.md](../requirement/2026.HW04.Automation Testing_En.md), gồm bảng tự đánh giá, tóm tắt automation, link báo cáo, script, HTML report, bug report, GitHub Issues, AI Audit Report, AI Critique và video demo.
 
 ## 2. Bảng tự đánh giá
 
@@ -145,8 +145,8 @@ Tài liệu liên quan:
 | Báo cáo chính                   | [Main_Report.md](./Main_Report.md)                                                   |
 | Domain Testing                  | [Domain_Testing_Report.md](./Domain_Testing_Report.md)                               |
 | Boundary Value Analysis         | [Boundary_Value_Analysis_Report.md](./Boundary_Value_Analysis_Report.md)             |
-| Mapping test case sang script   | [Test_Case_to_Script_Mapping.md](../../Test_Case_to_Script_Mapping.md)               |
-| Gap analysis / AI script review | [Automation_Issues_and_Solutions.md](../../Automation_Issues_and_Solutions.md)       |
+| Mapping test case sang script   | [Main_Report.md - Mục 3](./Main_Report.md#3-chuyển-đổi-test-case-thành-script-tự-động) |
+| Gap analysis / AI script review | [Main_Report.md - Mục 7](./Main_Report.md#7-rà-soát-và-phân-tích-khoảng-trống-script-do-ai-tạo) |
 | Automation test summary         | [test-summary-report.md](../../tests/test-summary/automation/test-summary-report.md) |
 | Traceability matrix             | [traceability-matrix.md](../../tests/test-summary/automation/traceability-matrix.md) |
 | Bug report tổng hợp             | [Bug_Report.md](./Bug_Report.md)                                                     |
@@ -158,7 +158,7 @@ Tài liệu liên quan:
 | Khai báo sử dụng AI             | [AI_Audit_Report.md](./AI_Audit_Report.md)                                                                         |
 | Nhật ký prompt/output từng lượt | [AI_Audit_Report.md](./AI_Audit_Report.md)                                                                         |
 | Phản biện AI 200-300 từ         | [AI_Critique.md](./AI_Critique.md)                                                                                 |
-| Rà soát script do AI tạo        | [Main_Report.md](./Main_Report.md), [Automation_Issues_and_Solutions.md](../../Automation_Issues_and_Solutions.md) |
+| Rà soát script do AI tạo        | [Main_Report.md - Mục 7](./Main_Report.md#7-rà-soát-và-phân-tích-khoảng-trống-script-do-ai-tạo) |
 
 AI được dùng để hỗ trợ tạo script, refactor data-driven, rà soát kết quả, lập bug report và viết báo cáo. Các script cuối cùng đã được rà soát lại thủ công, siết assertion, sửa wait/selector và phân biệt lỗi script với bug thật của SUT.
 
@@ -197,7 +197,8 @@ git log --oneline --name-only -- "*.spec.ts" > docs/report/git_commit_logs.txt
 | Hạng mục bắt buộc          | Đường dẫn trong repository                                                                                                                                                                                                                                                                                         |
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | README tổng hợp            | [README.md](./README.md)                                                                                                                                                                                                                                                                                           |
-| Báo cáo chính Markdown/PDF | [Main_Report.md](./Main_Report.md)                                                                                                                                                                                                                                                                                 |
+| Báo cáo chính Markdown     | [Main_Report.md](./Main_Report.md)                                                                                                                                                                                                                                                                                 |
+| Báo cáo chính PDF          | Cần export từ [Main_Report.md](./Main_Report.md) trước khi nộp Moodle                                                                                                                                                                                                                                               |
 | Báo cáo thiết kế test      | [Domain_Testing_Report.md](./Domain_Testing_Report.md), [Boundary_Value_Analysis_Report.md](./Boundary_Value_Analysis_Report.md)                                                                                                                                                                                   |
 | Automation scripts         | [tests/test-runs/automation/scripts](../../tests/test-runs/automation/scripts)                                                                                                                                                                                                                                     |
 | File dữ liệu JSON          | [Category data](../../tests/test-runs/automation/scripts/category/data/category-test-data.json), [Checkout data](../../tests/test-runs/automation/scripts/checkout/data/checkout-test-data.json), [PLAS data](../../tests/test-runs/automation/scripts/product-list-and-search/data/plas-test-data.json)           |
@@ -206,8 +207,8 @@ git log --oneline --name-only -- "*.spec.ts" > docs/report/git_commit_logs.txt
 | Test summary               | [tests/test-summary/automation](../../tests/test-summary/automation)                                                                                                                                                                                                                                               |
 | Bug reports                | [tests/bug-reports/automation](../../tests/bug-reports/automation), [Bug_Report.md](./Bug_Report.md)                                                                                                                                                                                                               |
 | GitHub Issues evidence     | [docs/report/images](./images), [GitHub Issues](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues)                                                                                                                                                                                                   |
-| AI Audit Report            | [AI_Audit_Report.md](./AI_Audit_Report.md)                                                                                                                                                                                                                                                                         |
-| AI Critique                | [AI_Critique.md](./AI_Critique.md)                                                                                                                                                                                                                                                                                 |
+| AI Audit Report            | [AI_Audit_Report.md](./AI_Audit_Report.md), cần export PDF trước khi nộp Moodle                                                                                                                                                                                                                                    |
+| AI Critique                | [AI_Critique.md](./AI_Critique.md), cần export PDF trước khi nộp Moodle                                                                                                                                                                                                                                            |
 | Agent Skills               | [.agents/skills](../../.agents/skills)                                                                                                                                                                                                                                                                             |
 | Video demo link            | https://youtu.be/RM_GT7frNXw                                                                                                                                                                                                                                                                                       |
 | Git commit log             | [git_commit_logs.txt](./git_commit_logs.txt)                                                                                                                                                                                                                                                                       |

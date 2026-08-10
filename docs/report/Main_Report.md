@@ -58,7 +58,7 @@ Hai báo cáo này mô tả phân vùng tương đương, miền dữ liệu h�
 
 ## 3. Chuyển đổi test case thành script tự động
 
-Quá trình chuyển đổi test case thành Playwright script được thực hiện theo hướng có kiểm soát: test case thiết kế là nguồn chính, AI chỉ hỗ trợ tạo nháp script, còn tester rà soát lại mapping, dữ liệu, assertion và kết quả mong đợi. Nội dung chi tiết được tổng hợp từ tài liệu chuyển đổi [Test_Case_to_Script_Mapping.md](../../Test_Case_to_Script_Mapping.md).
+Quá trình chuyển đổi test case thành Playwright script được thực hiện theo hướng có kiểm soát: test case thiết kế là nguồn chính, AI chỉ hỗ trợ tạo nháp script, còn tester rà soát lại mapping, dữ liệu, assertion và kết quả mong đợi. Nội dung chi tiết đã được tổng hợp trực tiếp trong mục này thay vì tách thành file phụ.
 
 ### 3.1 Nguyên tắc chuyển đổi
 
@@ -285,11 +285,11 @@ Các quyết định cuối cùng do tester chịu trách nhiệm:
 
 | Hạng mục                         | Tài liệu                                                                                  |
 | -------------------------------- | ----------------------------------------------------------------------------------------- |
-| Requirement                      | [2026.HW04.Automation Testing_En.md](../requirement/2026.HW04.Automation%20Testing_En.md) |
+| Requirement                      | [2026.HW04.Automation Testing_En.md](../requirement/2026.HW04.Automation Testing_En.md) |
 | Thiết kế Domain Testing          | [Domain_Testing_Report.md](./Domain_Testing_Report.md)                                    |
 | Thiết kế Boundary Value Analysis | [Boundary_Value_Analysis_Report.md](./Boundary_Value_Analysis_Report.md)                  |
-| Mapping test case sang script    | [Test_Case_to_Script_Mapping.md](../../Test_Case_to_Script_Mapping.md)                    |
-| Gap analysis / AI script review  | [Automation_Issues_and_Solutions.md](../../Automation_Issues_and_Solutions.md)            |
+| Mapping test case sang script    | [Mục 3 trong Main_Report.md](#3-chuyển-đổi-test-case-thành-script-tự-động)            |
+| Gap analysis / AI script review  | [Mục 7 trong Main_Report.md](#7-rà-soát-và-phân-tích-khoảng-trống-script-do-ai-tạo)   |
 | Bug report tổng hợp              | [Bug_Report.md](./Bug_Report.md)                                                          |
 | Automation test summary          | [test-summary-report.md](../../tests/test-summary/automation/test-summary-report.md)      |
 | Automation traceability matrix   | [traceability-matrix.md](../../tests/test-summary/automation/traceability-matrix.md)      |

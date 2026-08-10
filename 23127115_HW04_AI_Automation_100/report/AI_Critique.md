@@ -1,0 +1,7 @@
+# AI Critique
+
+Trong bài tập HW4 này, em thấy AI hữu ích nhất ở giai đoạn tạo khung Playwright script, tách dữ liệu kiểm thử sang JSON và gợi ý cách tổ chức báo cáo. Tuy nhiên, em thấy kết quả ban đầu của AI chưa đủ tin cậy để dùng trực tiếp. Do đã có kết quả từ những lần chạy kiểm thử thủ công ở HW2, qua đó dễ dàng thấy được là các script chưa được mạnh. Một lỗi rõ nhất là assertion còn yếu: một số script Product List & Search chỉ kiểm tra trang không crash hoặc có danh sách sản phẩm, nhưng chưa kiểm tra đủ `h1`, `alt` của ảnh, định dạng giá, empty state và lỗi SQL/SQLite. Ở Category và Checkout, AI cũng có xu hướng bao phủ happy path tốt hơn negative/security path, ví dụ delete ID không tồn tại, thiếu `name`, `name` sai kiểu dữ liệu, `total_amount` hoặc items bị giả mạo từ client.
+
+Em nghĩ AI bỏ sót các điểm này vì prompt ban đầu tập trung nhiều vào tạo script hơn là chứng minh từng expected result bằng oracle kiểm thử cụ thể. Ngoài ra, mô hình không thật sự hiểu timing và DOM thực tế của SUT, nên dễ sinh wait tổng quát như chờ `domcontentloaded` thay vì chờ response API ổn định. Với các lỗi bảo mật hoặc toàn vẹn dữ liệu, AI cũng thiên về mẫu kiểm thử phổ biến, không tự suy luận đầy đủ nếu không được yêu cầu rõ.
+
+Qua việc sử dụng AI trong bài tập này, em rút ra là sử dụng AI tạo script ban đầu rất tốt nhưng chỉ nên dừng lại ở mức tạo khung. Mỗi script cần được rà soát lại bằng traceability với test case, assertion phải bám expected result, wait phải dựa trên tín hiệu ổn định.

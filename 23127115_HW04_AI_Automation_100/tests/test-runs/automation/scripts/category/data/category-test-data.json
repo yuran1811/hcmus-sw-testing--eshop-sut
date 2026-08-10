@@ -1,0 +1,299 @@
+{
+  "users": {
+    "admin": {
+      "email": "admin@eshop.com",
+      "password": "Admin123!",
+      "name": "Admin User"
+    },
+    "normalUser": {
+      "email": "test@eshop.com",
+      "password": "Test1234!",
+      "name": "Test User"
+    }
+  },
+  "tc_crud": [
+    {
+      "tc_id": "TC-CATEGORY-001",
+      "description": "Thêm danh mục thành công với tên hợp lệ",
+      "type": "positive",
+      "technique": "Equivalence Partitioning",
+      "name_prefix": "Điện tử",
+      "expected_status_oneOf": [200, 201],
+      "expect_in_list": true
+    },
+    {
+      "tc_id": "TC-CATEGORY-002",
+      "description": "Thêm danh mục thất bại khi tên để trống",
+      "type": "negative",
+      "technique": "Equivalence Partitioning",
+      "name": "",
+      "expected_status": 400,
+      "expect_not_in_list": true
+    },
+    {
+      "tc_id": "TC-CATEGORY-003",
+      "description": "Thêm danh mục thất bại khi tên chỉ gồm khoảng trắng",
+      "type": "negative",
+      "technique": "Equivalence Partitioning",
+      "name": "   ",
+      "expected_status": 400,
+      "expect_not_in_list": true
+    },
+    {
+      "tc_id": "TC-CATEGORY-004",
+      "description": "Xem danh sách danh mục thành công",
+      "type": "positive",
+      "technique": "Equivalence Partitioning",
+      "list_name_prefix_a": "List Test A",
+      "list_name_prefix_b": "List Test B",
+      "expected_status": 200,
+      "expect_array": true,
+      "min_count": 1
+    },
+    {
+      "tc_id": "TC-CATEGORY-005",
+      "description": "Xóa danh mục thành công",
+      "type": "positive",
+      "technique": "Equivalence Partitioning",
+      "delete_target_prefix": "Thời trang DELETE_TEST",
+      "expected_status_oneOf": [200, 204],
+      "expect_deleted": true
+    },
+    {
+      "tc_id": "TC-CATEGORY-009",
+      "description": "Chính sách xóa danh mục đang được sản phẩm tham chiếu",
+      "type": "characterization",
+      "technique": "Equivalence Partitioning",
+      "protected_target_id": 1,
+      "expected_status_oneOf": [200, 204, 400, 409],
+      "must_not_500": true
+    },
+    {
+      "tc_id": "TC-CATEGORY-012",
+      "description": "Thêm danh mục thất bại khi thiếu thuộc tính name (body = {})",
+      "type": "negative",
+      "technique": "Equivalence Partitioning",
+      "body": {},
+      "expected_status": 400
+    },
+    {
+      "tc_id": "TC-CATEGORY-014",
+      "description": "Thêm danh mục Unicode và emoji hợp lệ",
+      "type": "positive",
+      "technique": "Equivalence Partitioning",
+      "name_prefix": "Đồ gia dụng – Nhà bếp 🍳",
+      "expected_status_oneOf": [200, 201],
+      "expect_in_list": true,
+      "expect_name_preserved": true
+    },
+    {
+      "tc_id": "TC-CATEGORY-015",
+      "description": "Đặc tả hóa chính sách tạo hai danh mục trùng tên",
+      "type": "characterization",
+      "technique": "Equivalence Partitioning",
+      "name_prefix": "Đồ sưu tầm",
+      "expected_status_oneOf": [200, 201, 400, 409],
+      "must_not_500": true
+    },
+    {
+      "tc_id": "TC-CATEGORY-020",
+      "description": "Xóa lặp cùng category_id — idempotency characterization",
+      "type": "characterization",
+      "technique": "Equivalence Partitioning",
+      "idempotency_target_prefix": "Dùng để kiểm tra xóa lặp",
+      "expected_status_oneOf": [200, 204, 404, 410],
+      "must_not_500": true
+    }
+  ],
+  "tc_auth": [
+    {
+      "tc_id": "TC-CATEGORY-007",
+      "description": "Thêm danh mục thất bại khi không có token",
+      "type": "negative",
+      "technique": "Equivalence Partitioning",
+      "no_auth": true,
+      "name_prefix": "Điện tử",
+      "expected_status_oneOf": [401, 403]
+    },
+    {
+      "tc_id": "TC-CATEGORY-008",
+      "description": "Thêm danh mục thất bại khi dùng token user thường",
+      "type": "negative",
+      "technique": "Equivalence Partitioning",
+      "use_normal_user": true,
+      "name_prefix": "Điện tử",
+      "expected_status": 403
+    },
+    {
+      "tc_id": "TC-CATEGORY-010",
+      "description": "Xóa danh mục thất bại khi không có token",
+      "type": "negative",
+      "technique": "Equivalence Partitioning",
+      "no_auth": true,
+      "target_id": 1,
+      "expected_status": 401
+    },
+    {
+      "tc_id": "TC-CATEGORY-011",
+      "description": "Xóa danh mục thất bại khi dùng token user thường",
+      "type": "negative",
+      "technique": "Equivalence Partitioning",
+      "use_normal_user": true,
+      "target_id": 1,
+      "target_name_prefix": "Forbidden Delete Target",
+      "expected_status": 403
+    }
+  ],
+  "tc_invalid_token": [
+    {
+      "tc_id": "TC-CATEGORY-018-1",
+      "description": "Từ chối tạo danh mục với token sai chữ ký",
+      "auth_header": "Bearer invalid.token.signature",
+      "name": "Token sai",
+      "expected_status_oneOf": [401, 403]
+    },
+    {
+      "tc_id": "TC-CATEGORY-018-2",
+      "description": "Từ chối tạo danh mục với token hết hạn",
+      "auth_header": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBlc2hvcC52biIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDAwMDAwMCwiZXhwIjoxNzAwMDAwMDAxfQ.invalid_expired_signature",
+      "name": "Token hết hạn",
+      "expected_status_oneOf": [401, 403]
+    }
+  ],
+  "tc_type_variants": [
+    {
+      "tc_id": "TC-CATEGORY-013-1",
+      "description": "name = null (type error)",
+      "name": null,
+      "expected_status": 400
+    },
+    {
+      "tc_id": "TC-CATEGORY-013-2",
+      "description": "name = 123 (Number type error)",
+      "name": 123,
+      "expected_status": 400
+    },
+    {
+      "tc_id": "TC-CATEGORY-013-3",
+      "description": "name = true (Boolean type error)",
+      "name": true,
+      "expected_status": 400
+    },
+    {
+      "tc_id": "TC-CATEGORY-013-4",
+      "description": "name = [] (Array type error)",
+      "name": [],
+      "expected_status": 400
+    },
+    {
+      "tc_id": "TC-CATEGORY-013-5",
+      "description": "name = {\"text\": \"Gia dụng\"} (Object type error)",
+      "name": { "text": "Gia dụng" },
+      "expected_status": 400
+    }
+  ],
+  "tc_security": [
+    {
+      "tc_id": "TC-CATEGORY-016",
+      "description": "Tên danh mục chứa HTML/XSS — không thực thi script",
+      "name": "<img src=x onerror=alert('CATEGORY-XSS')>",
+      "expected_status_oneOf": [200, 201, 400],
+      "must_not_500": true,
+      "if_200_no_script_execution": true
+    },
+    {
+      "tc_id": "TC-CATEGORY-017",
+      "description": "Tên danh mục chứa SQL injection payload",
+      "name": "'); DROP TABLE categories; --",
+      "expected_status_oneOf": [200, 201, 400],
+      "must_not_500": true,
+      "table_must_survive": true
+    }
+  ],
+  "tc_characterization": [
+    {
+      "tc_id": "TC-CATEGORY-006",
+      "description": "Xóa category_id không tồn tại — xử lý có kiểm soát",
+      "delete_id": 99999,
+      "expected_status_oneOf": [200, 204, 404, 410],
+      "must_not_500": true,
+      "must_not_claim_deleted": true
+    },
+    {
+      "tc_id": "TC-CATEGORY-019-1",
+      "description": "DELETE /api/categories/abc — ID chuỗi không phải số",
+      "delete_id": "abc",
+      "expected_status_oneOf": [400, 404],
+      "must_not_500": true
+    },
+    {
+      "tc_id": "TC-CATEGORY-019-2",
+      "description": "DELETE /api/categories/1.5 — ID không nguyên",
+      "delete_id": "1.5",
+      "expected_status_oneOf": [400, 404],
+      "must_not_500": true
+    }
+  ],
+  "tc_bva": [
+    {
+      "tc_id": "TC-CATEGORY-BVA-001",
+      "description": "Tên danh mục đúng 1 ký tự (Boundary Min B)",
+      "technique": "BVA 3-Point + 2-Point",
+      "name": "A",
+      "expected_status_oneOf": [200, 201],
+      "expect_in_list": true
+    },
+    {
+      "tc_id": "TC-CATEGORY-BVA-002",
+      "description": "Tên danh mục 2 ký tự (B+1 tại biên Min)",
+      "technique": "BVA 3-Point",
+      "name": "AB",
+      "expected_status_oneOf": [200, 201],
+      "expect_in_list": true
+    },
+    {
+      "tc_id": "TC-CATEGORY-BVA-003",
+      "description": "DELETE /api/categories/0 — ID dưới mốc tham chiếu (R-1)",
+      "technique": "BVA Identifier Reference",
+      "delete_id": 0,
+      "expected_status_oneOf": [400, 404],
+      "must_not_500": true,
+      "must_not_mutate": true
+    },
+    {
+      "tc_id": "TC-CATEGORY-BVA-004",
+      "description": "Delete ID fresh target at boundary R",
+      "technique": "BVA Identifier Reference",
+      "fresh_name_prefix": "BVA-004 Test",
+      "expected_status_oneOf": [200, 204]
+    },
+    {
+      "tc_id": "TC-CATEGORY-BVA-005",
+      "description": "Delete R+1 target pair",
+      "technique": "BVA Identifier Reference",
+      "target_name_prefix": "BVA-005 Target",
+      "expected_status_oneOf": [200, 204]
+    },
+    {
+      "tc_id": "TC-CATEGORY-BVA-006",
+      "description": "GET danh sách khi DB trống",
+      "technique": "BVA Count Boundary",
+      "expected_status": 200
+    },
+    {
+      "tc_id": "TC-CATEGORY-BVA-007",
+      "description": "GET danh sách với đúng 1 danh mục",
+      "technique": "BVA Count Boundary",
+      "unique_name_prefix": "Danh mục duy nhất BVA007",
+      "expected_status": 200
+    },
+    {
+      "tc_id": "TC-CATEGORY-BVA-008",
+      "description": "GET danh sách với 2 danh mục",
+      "technique": "BVA Count Boundary",
+      "name_a_prefix": "Điện tử BVA008A",
+      "name_b_prefix": "Gia dụng BVA008B",
+      "expected_status": 200
+    }
+  ]
+}

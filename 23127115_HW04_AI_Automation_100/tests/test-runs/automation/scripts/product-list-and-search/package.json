@@ -1,0 +1,32 @@
+{
+  "name": "eshop-plas-playwright-automation",
+  "version": "1.0.0",
+  "description": "Playwright Automation Test Suite for Product List & Search (FR-05) - HW04",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:all": "playwright test --project=chromium --project=firefox --project=webkit",
+    "test:ep": "playwright test tests/plas-ep.spec.ts",
+    "test:ui": "playwright test tests/plas-ui.spec.ts",
+    "test:bva": "playwright test tests/plas-bva.spec.ts",
+    "report": "playwright show-report",
+    "stamp-report": "node ../_common/stamp-report.js \"EShop Product List & Search Automation\""
+  },
+  "keywords": [
+    "playwright",
+    "automation-testing",
+    "eshop",
+    "product-list-and-search",
+    "hw04"
+  ],
+  "author": "Mạch Quốc Tấn (23127115)",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.1",
+    "typescript": "^5.7.2"
+  }
+}
