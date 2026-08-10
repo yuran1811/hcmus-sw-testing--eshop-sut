@@ -236,22 +236,22 @@ export class CheckoutWebPage {
 
   /** Navigate to the web frontend home page */
   async gotoFrontend(baseURL = automationEnv.frontendBaseUrl) {
-    await this.page.goto(baseURL);
-    await this.page.locator('body').waitFor({ state: 'visible' });
+    await this.page.goto(baseURL, { waitUntil: 'commit' });
+    await this.page.locator('body').waitFor({ state: 'visible', timeout: 10000 });
   }
 
   /** Navigate to the cart page */
   async gotoCart(baseURL = automationEnv.frontendBaseUrl) {
-    await this.page.goto(`${baseURL}/cart`);
-    await this.page.waitForURL(/\/cart(?:[/?#].*)?$/);
-    await this.page.locator('body').waitFor({ state: 'visible' });
+    await this.page.goto(`${baseURL}/cart`, { waitUntil: 'commit' });
+    await this.page.waitForURL(/\/cart(?:[/?#].*)?$/, { timeout: 10000 });
+    await this.page.locator('body').waitFor({ state: 'visible', timeout: 10000 });
   }
 
   /** Navigate to the checkout page */
   async gotoCheckout(baseURL = automationEnv.frontendBaseUrl) {
-    await this.page.goto(`${baseURL}/checkout`);
-    await this.page.waitForURL(/\/checkout(?:[/?#].*)?$/);
-    await this.page.locator('body').waitFor({ state: 'visible' });
+    await this.page.goto(`${baseURL}/checkout`, { waitUntil: 'commit' });
+    await this.page.waitForURL(/\/checkout(?:[/?#].*)?$/, { timeout: 10000 });
+    await this.page.locator('body').waitFor({ state: 'visible', timeout: 10000 });
   }
 
   /** Get count of product rows shown in the checkout table */

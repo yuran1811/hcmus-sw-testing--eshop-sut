@@ -56,20 +56,36 @@ export class ProductListPage {
       .or(page.locator('.spinner'));
   }
 
+  private waitForProductsResponse(searchOnly = false) {
+    return this.page.waitForResponse((response) => {
+      const url = response.url();
+      const isProductsRequest = response.request().method() === 'GET' && url.includes('/api/products');
+      if (!isProductsRequest) return false;
+      return searchOnly ? url.includes('search=') : !url.includes('search=');
+    }, { timeout: 10000 }).catch(() => null);
+  }
+
+  private async waitForProductUiSettled() {
+    await Promise.race([
+      this.productCards.first().waitFor({ state: 'visible', timeout: 10000 }).catch(() => null),
+      this.emptyStateText.waitFor({ state: 'visible', timeout: 10000 }).catch(() => null),
+      this.errorBox.waitFor({ state: 'visible', timeout: 10000 }).catch(() => null),
+    ]);
+  }
+
   /**
    * Navigate to home page
    */
   async goto(baseURL = automationEnv.frontendBaseUrl) {
-    const productsResponse = this.page.waitForResponse((response) => {
-      const url = response.url();
-      return response.request().method() === 'GET'
-        && url.includes('/api/products')
-        && !url.includes('/api/products?search=');
-    }).catch(() => null);
+    const productsResponse = this.waitForProductsResponse(false);
 
-    await this.page.goto(baseURL);
-    await productsResponse;
-    await this.searchInput.waitFor({ state: 'visible' });
+    await this.page.goto(baseURL, { waitUntil: 'commit' });
+    await this.searchInput.waitFor({ state: 'visible', timeout: 10000 });
+
+    await Promise.race([
+      productsResponse,
+      this.waitForProductUiSettled(),
+    ]);
   }
 
   /**
@@ -77,11 +93,10 @@ export class ProductListPage {
    */
   async search(keyword: string) {
     await this.searchInput.fill(keyword);
-    const responsePromise = this.page.waitForResponse((response) => {
-      return response.request().method() === 'GET' && response.url().includes('/api/products?search=');
-    });
+    const responsePromise = this.waitForProductsResponse(true);
     await this.searchButton.click();
     await responsePromise;
+    await this.waitForProductUiSettled();
   }
 
   /**
@@ -89,11 +104,10 @@ export class ProductListPage {
    */
   async clearSearch() {
     await this.searchInput.fill('');
-    const responsePromise = this.page.waitForResponse((response) => {
-      return response.request().method() === 'GET' && response.url().includes('/api/products?search=');
-    });
+    const responsePromise = this.waitForProductsResponse(true);
     await this.searchButton.click();
     await responsePromise;
+    await this.waitForProductUiSettled();
   }
 
   /**
@@ -101,11 +115,10 @@ export class ProductListPage {
    */
   async searchByPressingEnter(keyword: string) {
     await this.searchInput.fill(keyword);
-    const responsePromise = this.page.waitForResponse((response) => {
-      return response.request().method() === 'GET' && response.url().includes('/api/products?search=');
-    });
+    const responsePromise = this.waitForProductsResponse(true);
     await this.searchInput.press('Enter');
     await responsePromise;
+    await this.waitForProductUiSettled();
   }
 
   /**
