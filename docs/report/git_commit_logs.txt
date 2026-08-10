@@ -1,0 +1,3121 @@
+* commit 0d6deb9821a937d65282911ed290f6ecff91966c
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 10 08:10:36 2026 +0700
+| 
+|     docs(report): add AI critique
+| 
+|  docs/report/AI_Critique.md | 7 +++++++
+|  1 file changed, 7 insertions(+)
+| 
+* commit e40c44773c406368e47c8eb3eede98e668600b33
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 10 08:01:01 2026 +0700
+| 
+|     docs(report): add Main report and update test-design, bug report, AI audit report
+| 
+|  docs/report/AI_Audit_Report.md                   |   24 +-
+|  docs/report/Boundary_Value_Analysis_Report.md    |  290 +-
+|  docs/report/Bug_Report.md                        |   64 +
+|  docs/report/Domain_Testing_Report.md             |  784 ++---
+|  docs/report/Main_Report.md                       |  305 ++
+|  docs/report/images/gh-issue-1.png                |  Bin 0 -> 306320 bytes
+|  docs/report/images/gh-issue-2.png                |  Bin 0 -> 344904 bytes
+|  docs/report/images/gh-issue-3.png                |  Bin 0 -> 355741 bytes
+|  docs/report/images/gh-issue-4.png                |  Bin 0 -> 209677 bytes
+|  docs/report/manual/Bug_Report.md                 |  115 -
+|  docs/report/manual/Main_Report.md                |  870 ------
+|  docs/report/manual/README.md                     |   61 -
+|  docs/report/manual/git_commit_logs.txt           | 3194 --------------------
+|  docs/report/manual/images/bug_issue/1.png        |  Bin 403132 -> 0 bytes
+|  docs/report/manual/images/bug_issue/2.png        |  Bin 437506 -> 0 bytes
+|  docs/report/manual/images/bug_issue/3.png        |  Bin 367461 -> 0 bytes
+|  docs/report/manual/images/bug_issue/detail-1.png |  Bin 254194 -> 0 bytes
+|  docs/report/manual/images/bug_issue/detail-2.png |  Bin 326138 -> 0 bytes
+|  docs/report/manual/images/bug_issue/detail-3.png |  Bin 379208 -> 0 bytes
+|  19 files changed, 928 insertions(+), 4779 deletions(-)
+| 
+* commit 5e0be1b8472a5fca28158d54d6ef07c31ca36f68
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 10 00:55:45 2026 +0700
+| 
+|     docs: update automation test summary
+| 
+|  .../automation/test-summary-report.md             | 57 ++++++++++++++
+|  .../automation/traceability-matrix.md             | 85 +++++++++++++++++++++
+|  2 files changed, 142 insertions(+)
+| 
+* commit 158677420ea252ea5cd0d754bd1711bccb473d2e
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 10 00:44:29 2026 +0700
+| 
+|     test: add automation run artifacts
+| 
+|  .../2d086163290de5cf2c1cc799d82345e2efd98f5b.md   | 226 +++++++++++++
+|  .../39317468ab025b4d6d51535a3947c02979024553.md   | 165 ++++++++++
+|  .../4c0793680043207bf7170ed8fec3b2c5329face2.md   | 226 +++++++++++++
+|  .../5096787b0e57552b2de8a1389f1474136d28cbab.md   | 226 +++++++++++++
+|  .../52415392b6eb2c869cae87a33d143933c9b340c0.md   | 226 +++++++++++++
+|  .../5b660fdd4f9e703460944c0188fe33e83b21ff68.md   | 165 ++++++++++
+|  .../8e409c62abcfd92d6b1fd8a9a53a9677135b82fd.md   | 175 ++++++++++
+|  .../9939c5bb736b9da95db3bfa7ac6d046db9036ae3.md   | 233 ++++++++++++++
+|  .../9cfbfc8b643fb73fbc171491cadf3967972dcd98.md   | 226 +++++++++++++
+|  .../a091f5ff50564aa92a9b0f9038b91200dc22fccc.md   | 226 +++++++++++++
+|  .../a77f7a1d4c432689e654033ac641105cd5d8a5ba.md   | 159 +++++++++
+|  .../abbae07a34e5a4772e942b0d30cacfeb9849a194.md   | 225 +++++++++++++
+|  .../bf68abc57a7ffaab07fe84159fd1e195a9c313fb.md   | 226 +++++++++++++
+|  .../cff6a93221438d46a14b7daec9a88f242cd3d3bf.md   | 247 ++++++++++++++
+|  .../ec71d393155d3fb0fda4df39b5d7746e6a455662.md   | 206 ++++++++++++
+|  .../ffc80af7caaa1268a81a555811b53f17258e7638.md   | 227 +++++++++++++
+|  .../scripts/category/test-results/.last-run.json  |  49 +++
+|  .../error-context.md"                             | 159 +++++++++
+|  .../error-context.md"                             | 159 +++++++++
+|  .../error-context.md"                             | 159 +++++++++
+|  .../error-context.md"                             | 175 ++++++++++
+|  .../error-context.md"                             | 175 ++++++++++
+|  .../error-context.md"                             | 175 ++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 165 ++++++++++
+|  .../error-context.md"                             | 165 ++++++++++
+|  .../error-context.md"                             | 165 ++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 227 +++++++++++++
+|  .../error-context.md"                             | 227 +++++++++++++
+|  .../error-context.md"                             | 227 +++++++++++++
+|  .../error-context.md"                             | 233 ++++++++++++++
+|  .../error-context.md"                             | 247 ++++++++++++++
+|  .../error-context.md"                             | 206 ++++++++++++
+|  .../error-context.md"                             | 206 ++++++++++++
+|  .../error-context.md"                             | 206 ++++++++++++
+|  .../error-context.md"                             | 225 +++++++++++++
+|  .../error-context.md"                             | 225 +++++++++++++
+|  .../error-context.md"                             | 225 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 165 ++++++++++
+|  .../error-context.md"                             | 165 ++++++++++
+|  .../error-context.md"                             | 165 ++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../03ef3a8b4d95736716f577e9d7c4231ded67b565.webm | Bin 0 -> 35480 bytes
+|  .../084bd7620d7badc59cea17074a486aede946e74b.md   | 205 ++++++++++++
+|  .../1b49722e10000a8a1913d042aa88c12dfb27e452.md   | 214 +++++++++++++
+|  .../1d64be3182b369d8cea1abedbbe5a16f5c498af4.md   | 221 +++++++++++++
+|  .../1f824d40c2707954b1f9a7375139e045e804c8f2.md   | 227 +++++++++++++
+|  .../205c25bab58d58eddf3a810678ea526819f6ac4f.md   | 214 +++++++++++++
+|  .../239e6557fc061afa73f82c0e5d4e1fb2e7de2086.md   | 141 ++++++++
+|  .../326dea3fcf92932491726e484ae29cea91707534.webm | Bin 0 -> 120144 bytes
+|  .../32f694a3cdadfee2a3cbdb327c93ec76e5f29cb7.md   | 225 +++++++++++++
+|  .../350e8d63e14f425f4ea1089ba49968c4da0e06e6.md   | 202 ++++++++++++
+|  .../35477639df96790ad91c9967d296abd0da76ecda.md   | 225 +++++++++++++
+|  .../3a43a38d4534d8401161db993fb22f15c98113e3.md   | 256 +++++++++++++++
+|  .../532cad400f3f3507078377fcb4fb091979153de8.md   | 214 +++++++++++++
+|  .../57bdf1fddf0764d554163de3ab283ae240f1e3e8.md   | 256 +++++++++++++++
+|  .../5b2ff7ab1deca34bd392b8cbb1efa66e23fc95fe.md   | 141 ++++++++
+|  .../5e34c69002ede23adc49bc075c69488ae92df761.png  | Bin 0 -> 27665 bytes
+|  .../63bc3de3a6cce2f0a0ff19b369fc526724288761.png  | Bin 0 -> 64342 bytes
+|  .../7117d16d069197c30e0e9750ea2e0ccfcfc3b9f2.md   | 225 +++++++++++++
+|  .../77b6b44ff7267bf9a8a76bdfe000bb9c22cf0e84.webm | Bin 0 -> 39367 bytes
+|  .../783b446e1eb59b1364cb4a87af67c8ecfda9a51c.md   | 175 ++++++++++
+|  .../7b928be086c31168c244c5432f1307a2e844ce97.webm | Bin 0 -> 45816 bytes
+|  .../7e00144c3a0fee922e84a96fe4eb3f02725a3d14.md   | 226 +++++++++++++
+|  .../832e9685e912fba60f49b32c5f951f553e50c91b.md   | 227 +++++++++++++
+|  .../83356e45ef69ba0d2962c982932fedadc1ceeb3a.png  | Bin 0 -> 26206 bytes
+|  .../a9f4182fffdcc85aa5a8912e7f585b37443c0183.md   | 226 +++++++++++++
+|  .../b09fa6dc3ddcb3e27942010734ba64aea72a7595.md   | 221 +++++++++++++
+|  .../b93663dad7a2dd6fff35bbd95b0520b658dcfb27.md   | 225 +++++++++++++
+|  .../bd6e3d121faf584baffe4f206c39af096276095d.webm | Bin 0 -> 125180 bytes
+|  .../cdd2c1b8f024bff8b7436841239681da0d4e75f6.md   | 227 +++++++++++++
+|  .../ce7fd12b116b66033042e4f72bac8748b02e6816.md   | 221 +++++++++++++
+|  .../ea50f9911703c26f6c1e74fb125287c413527fd4.webm | Bin 0 -> 102213 bytes
+|  .../ead157c1ef9ac5d21da9ba65b6114e127db81881.md   | 141 ++++++++
+|  .../scripts/checkout/test-results/.last-run.json  |  47 +++
+|  .../error-context.md"                             | 227 +++++++++++++
+|  .../error-context.md"                             | 227 +++++++++++++
+|  .../error-context.md"                             | 227 +++++++++++++
+|  .../error-context.md"                             | 221 +++++++++++++
+|  .../error-context.md"                             | 221 +++++++++++++
+|  .../error-context.md"                             | 221 +++++++++++++
+|  .../error-context.md"                             | 225 +++++++++++++
+|  .../error-context.md"                             | 225 +++++++++++++
+|  .../error-context.md"                             | 225 +++++++++++++
+|  .../error-context.md"                             | 141 ++++++++
+|  .../error-context.md"                             | 141 ++++++++
+|  .../error-context.md"                             | 141 ++++++++
+|  .../error-context.md"                             | 225 +++++++++++++
+|  .../error-context.md"                             | 225 +++++++++++++
+|  .../error-context.md"                             | 225 +++++++++++++
+|  .../error-context.md"                             | 205 ++++++++++++
+|  .../error-context.md"                             | 205 ++++++++++++
+|  .../error-context.md"                             | 205 ++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 175 ++++++++++
+|  .../error-context.md"                             | 175 ++++++++++
+|  .../error-context.md"                             | 175 ++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 226 +++++++++++++
+|  .../error-context.md"                             | 225 +++++++++++++
+|  .../error-context.md"                             | 225 +++++++++++++
+|  .../error-context.md"                             | 225 +++++++++++++
+|  .../error-context.md"                             | 214 +++++++++++++
+|  .../error-context.md"                             | 214 +++++++++++++
+|  .../error-context.md"                             | 214 +++++++++++++
+|  .../error-context.md"                             | 225 +++++++++++++
+|  .../error-context.md"                             | 225 +++++++++++++
+|  .../error-context.md"                             | 225 +++++++++++++
+|  .../error-context.md"                             | 202 ++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 26206 bytes
+|  .../video.webm"                                   | Bin 0 -> 120144 bytes
+|  .../error-context.md"                             | 202 ++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 27665 bytes
+|  .../video.webm"                                   | Bin 0 -> 125180 bytes
+|  .../error-context.md"                             | 202 ++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 64342 bytes
+|  .../video.webm"                                   | Bin 0 -> 102213 bytes
+|  .../error-context.md"                             | 256 +++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 26206 bytes
+|  .../video.webm"                                   | Bin 0 -> 39367 bytes
+|  .../error-context.md"                             | 256 +++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 27665 bytes
+|  .../video.webm"                                   | Bin 0 -> 45816 bytes
+|  .../error-context.md"                             | 256 +++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 64342 bytes
+|  .../video.webm"                                   | Bin 0 -> 35480 bytes
+|  .../010f922093b09cf709f43be97a29004b16ed9f23.png  | Bin 0 -> 56538 bytes
+|  .../060b5ae963aea63d4e1cb69f31f64ce23fcd8a16.png  | Bin 0 -> 83024 bytes
+|  .../06564a70434a2e06aafa120b0e1254c686fee179.webm | Bin 0 -> 74342 bytes
+|  .../0684301f4ff643e2ede4b90cbd34975ac5775d69.md   | 279 ++++++++++++++++
+|  .../079fd43e344b6dcb1dbae76c3bbee584b0943052.png  | Bin 0 -> 28263 bytes
+|  .../095ed97964a28ccd142762269d0822b561bad141.png  | Bin 0 -> 17186 bytes
+|  .../09e11e30c149a0ca3522b170dbca706bb708ada4.webm | Bin 0 -> 57609 bytes
+|  .../0c4a283d3fdb9b152f384ae18bbc8ff69f85d7a5.webm | Bin 0 -> 80712 bytes
+|  .../11b7f2be7b88741fc517f9893644300de3dd686c.webm | Bin 0 -> 40158 bytes
+|  .../138e25af0ef94e7f8df0a68f002f72b106cef425.webm | Bin 0 -> 57688 bytes
+|  .../14ef051cee9a034810c41d0a14c8a95063c43614.md   | 337 ++++++++++++++++++++
+|  .../150491b3525706a4c6f2a456a28b2ab4ce64b65c.webm | Bin 0 -> 64286 bytes
+|  .../1d0128ecabd91a93a3b64b6287219cb7838433ee.md   | 279 ++++++++++++++++
+|  .../1d061371c48d64847f6032bd2607eb54ee4b2644.png  | Bin 0 -> 18291 bytes
+|  .../1d5868f2362ccba29dc9480eb09a802160635120.webm | Bin 0 -> 40736 bytes
+|  .../1fe817ae7c79709e505b1b197d3f25bd402ad94f.webm | Bin 0 -> 124106 bytes
+|  .../2218b7896b4f225b4fd16c2059e1328909c72a3c.webm | Bin 0 -> 44653 bytes
+|  .../231b449c003ba12d49d9bd5e3e28fa6b1cce5d53.md   | 241 ++++++++++++++
+|  .../241ec36d26f34da8d8b2881f762d2ea8c88e1131.png  | Bin 0 -> 57172 bytes
+|  .../2525f615f1603ce34e0efacb89eca4c92ecf2fc4.md   | 209 ++++++++++++
+|  .../254cfee45dc2c416742b20f1b8e3c2a893e28948.webm | Bin 0 -> 60535 bytes
+|  .../2cc1cb841b6793ae23516be3ee930eb5c1920c98.webm | Bin 0 -> 48599 bytes
+|  .../344556bfbea8570e0b5f50667296d5e711be6a98.md   | 210 ++++++++++++
+|  .../34cdba16efd44738712b6712e7fc897911df5ae9.webm | Bin 0 -> 59123 bytes
+|  .../381f41ef8389e67d14f423bfffcaed392cac9d7a.png  | Bin 0 -> 25343 bytes
+|  .../39b969e879352ea7b648aa23073e2466c286b82e.webm | Bin 0 -> 46927 bytes
+|  .../3be1220f04cfd6383925d91a5ca23a5ce47d4bf0.png  | Bin 0 -> 38769 bytes
+|  .../3f43c83f4f0489e05215dadfc7c4576afd2171b2.png  | Bin 0 -> 25977 bytes
+|  .../41db840ed4db0dd6d8c342a02dc6f40bf01c72bb.png  | Bin 0 -> 17854 bytes
+|  .../4cb9f6dfd18c7663631d8d00b18c80fd6260bed7.md   | 207 ++++++++++++
+|  .../4daa1b728d80d6f47e2d5fd0c00088815957e435.md   | 259 +++++++++++++++
+|  .../509d45f1d7af5b36a2fb6f60f23da456b4840db1.png  | Bin 0 -> 30207 bytes
+|  .../52be4afe6875bd271706b7bb1d5d0232198dc0ed.webm | Bin 0 -> 74756 bytes
+|  .../5475289fe0f0ccd82b9a729a1a83189b2865cffd.png  | Bin 0 -> 79967 bytes
+|  .../560457f8189e15d4829206a20fd33c9fc08fade7.png  | Bin 0 -> 28855 bytes
+|  .../57a7befb875dda26c358d50f0a100fc5eb524a8e.md   | 258 +++++++++++++++
+|  .../57eee7a35888c5d9e5a98b77f0dbff33159dd3e1.png  | Bin 0 -> 30688 bytes
+|  .../5d82680760aa801ad8dad9b0f0f185421945fe69.png  | Bin 0 -> 18315 bytes
+|  .../600b9952ffb23aa2495044d021ffbe89c3e0c67b.webm | Bin 0 -> 88453 bytes
+|  .../62ee40aaf8fb0793bda1562e7c15cc6105b4e0a7.webm | Bin 0 -> 61161 bytes
+|  .../6548cf9205446fe4a98dd397035e6a9a886f31b6.md   | 182 +++++++++++
+|  .../67c4e71c24c2318a6c32b4cb327bb10d350c7a0e.webm | Bin 0 -> 37615 bytes
+|  .../6b3bc69e4299cc2e979953252416bb0857ccdb68.webm | Bin 0 -> 55328 bytes
+|  .../71eaa69215c76cbc472731b8f1ff472c6e513ca1.webm | Bin 0 -> 61283 bytes
+|  .../7363b70701f922b658de8f8b3c6ddbd1d4ae010a.md   | 231 ++++++++++++++
+|  .../76d3028131baf8ee8db53d1cbc62e041070338d0.webm | Bin 0 -> 66551 bytes
+|  .../7aec46e724b89c7ef0320dc6fab463b0687fda8f.webm | Bin 0 -> 52887 bytes
+|  .../7b99e5beedbcdf7180a64fc020f938c167498a01.webm | Bin 0 -> 65334 bytes
+|  .../7e101b5fa9acf157b353c2b95d7634e4fc2ae629.webm | Bin 0 -> 62223 bytes
+|  .../7ee90303af2dc74aee4666bd55cb9798ae5bfb4d.md   | 243 ++++++++++++++
+|  .../82fcd0b1e31ad5606915b5849f7be004b8dc2b01.png  | Bin 0 -> 16260 bytes
+|  .../85a3ee8e33a6cfcdbf87e4a74d03a4ee624a0c7a.md   | 182 +++++++++++
+|  .../8980a0c5c3b1934cf193cc921e55446968c9b099.md   | 210 ++++++++++++
+|  .../8a7912a8d034b5c4c998eeffb9d08a17f3cbfe65.webm | Bin 0 -> 140202 bytes
+|  .../8bc6be31668f9d2db236d919bdfde44a35c9a569.webm | Bin 0 -> 60415 bytes
+|  .../8e6c130f7708731c21905c1b8706dfe56e62a461.webm | Bin 0 -> 109268 bytes
+|  .../8f6192da4fd886b98fe89e8764677dfa63362db2.webm | Bin 0 -> 46730 bytes
+|  .../905fafd7b113291898bebf82cc1505db571f4f4f.webm | Bin 0 -> 111815 bytes
+|  .../91178b09320c7d0d92251a5a2627972c1841e69c.png  | Bin 0 -> 27825 bytes
+|  .../9195f864c424f0ba61f4ba52702bc3b74b2acfbb.md   | 265 +++++++++++++++
+|  .../935811103015037f92a1ec770d7a298ac2c287b2.png  | Bin 0 -> 46932 bytes
+|  .../9892b5e6aaacb1680268f80f4ab16b71382b2f49.png  | Bin 0 -> 68833 bytes
+|  .../9d02c9b4a2b2fb21793d38d6a97fb8c993412253.png  | Bin 0 -> 18038 bytes
+|  .../a0d4b3640679fb410b327fc7119318c783090fe6.webm | Bin 0 -> 44150 bytes
+|  .../a3cae725bedf3f453f85f32b870597bbfbbeb797.png  | Bin 0 -> 16312 bytes
+|  .../a49b2688aab739f0922f690fef9e1f3c6fc02f5f.webm | Bin 0 -> 69201 bytes
+|  .../a4e11581dbd68a5c0d01e1c23dc8dd9ca3346949.md   | 231 ++++++++++++++
+|  .../a65098156316d6eb1421c12596f2d26255378761.md   | 337 ++++++++++++++++++++
+|  .../a679a86b4fde52c9530d11ceea626b964a339286.png  | Bin 0 -> 49433 bytes
+|  .../aac9888c126d7d52c84c946bd71523ce69821d96.webm | Bin 0 -> 79194 bytes
+|  .../aea9650c5401a30eb79b150ddca5a403cd72beb8.png  | Bin 0 -> 103981 bytes
+|  .../b3ab773d61da076ed3f8ca23b10231a43a79c32c.png  | Bin 0 -> 73395 bytes
+|  .../b664727d7eb17d8f19ca46b1ee3def0521865541.webm | Bin 0 -> 87653 bytes
+|  .../b74e1fd3c4af656b69e7716c7581043a6f611ded.md   | 254 +++++++++++++++
+|  .../bbf64c4f1b4d5a329a52d140aae5eda5e28e1eae.webm | Bin 0 -> 92916 bytes
+|  .../bfc4e05f57b37feb6e635c38551b16c001a66149.webm | Bin 0 -> 116953 bytes
+|  .../c04d64838f33a3ebb70280eafc3ae3a58deb1c13.md   | 207 ++++++++++++
+|  .../c2608cc20be48822055bbe1ff4cc1165f59258f0.webm | Bin 0 -> 43860 bytes
+|  .../c3bd5da3402f2f1bb32282c73e61fd651ecaaed6.png  | Bin 0 -> 52169 bytes
+|  .../c489699dadaf4276f8d5eaa2579235c14097dd53.md   | 245 ++++++++++++++
+|  .../c53e012102bb076c934dc622544fdcdffb95695b.png  | Bin 0 -> 32204 bytes
+|  .../c5fd433994c582abd361d37b05481b8ee1d82216.png  | Bin 0 -> 57351 bytes
+|  .../d169b171a7dcc83b847aa56aca6f6e432b7c260a.png  | Bin 0 -> 18324 bytes
+|  .../d3032f859be727d7f900297a5e010e3a029f661f.png  | Bin 0 -> 19800 bytes
+|  .../d3c0531457957183655bbd81ac5ba5df216cdc9e.png  | Bin 0 -> 43227 bytes
+|  .../d60d66616a5610b3a983b9ff133ed741fb92b90e.webm | Bin 0 -> 34609 bytes
+|  .../d86c9e3111af2193979f581dcdf9ef5c0b259f41.md   | 265 +++++++++++++++
+|  .../da28ffc3c48a7bbdfaf728850c7e14f330f4cc04.png  | Bin 0 -> 18312 bytes
+|  .../dce16572cf2a6647c3de5927afe6f8d03afc47c4.webm | Bin 0 -> 53547 bytes
+|  .../e0fe6717f94e09abc27d0bd07449fe5f62a0165a.png  | Bin 0 -> 72403 bytes
+|  .../e18cb39009451a3c3a21cfe660440bf83f03279e.md   | 209 ++++++++++++
+|  .../e785127a86e9bbee6b6de3b6212d070d4fadc067.md   | 241 ++++++++++++++
+|  .../e8f1aeb12e6bea0f22c2d3dd49338042291fbfd0.webm | Bin 0 -> 57023 bytes
+|  .../ee042974f959c2e1c4eb9c547645d098d49dce66.png  | Bin 0 -> 19588 bytes
+|  .../ef11f208e76f14d722721daa51b5c641ad2c488a.webm | Bin 0 -> 56098 bytes
+|  .../ef9c1e49c43641921cc0f72bf292f3adbb343ec9.md   | 186 +++++++++++
+|  .../f1ea84cafa0450d8acbc05e17dd7dda89ea920a1.png  | Bin 0 -> 108000 bytes
+|  .../f2cab536065874a1793cd544bdff8d1f2012aee2.webm | Bin 0 -> 95931 bytes
+|  .../f431e5b5947a472f7b32a7323ee0b2e6450d014c.png  | Bin 0 -> 30333 bytes
+|  .../f4509386af426fa9f55341eef1dc4f961de50222.md   | 245 ++++++++++++++
+|  .../f62ff11e872e8aa6226d87fd411e25bdd917615a.webm | Bin 0 -> 66948 bytes
+|  .../f70b9b9063b39a10466bf066ca9aa49c43da065b.webm | Bin 0 -> 41034 bytes
+|  .../f775c64dae02c8c32d663cdf28556775d738b79c.md   | 259 +++++++++++++++
+|  .../f9474d6fbbe63ef4bf5dfadf9bbe96771cd73da2.md   | 186 +++++++++++
+|  .../febacf4b977ebfcd48650addb5e0f81600b4d269.png  | Bin 0 -> 32653 bytes
+|  .../test-results/.last-run.json                   |  47 +++
+|  .../error-context.md"                             | 209 ++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 32653 bytes
+|  .../video.webm"                                   | Bin 0 -> 59123 bytes
+|  .../error-context.md"                             | 209 ++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 38769 bytes
+|  .../video.webm"                                   | Bin 0 -> 92916 bytes
+|  .../error-context.md"                             | 209 ++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 83024 bytes
+|  .../video.webm"                                   | Bin 0 -> 53547 bytes
+|  .../error-context.md"                             | 231 ++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 17186 bytes
+|  .../video.webm"                                   | Bin 0 -> 61161 bytes
+|  .../error-context.md"                             | 231 ++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 18291 bytes
+|  .../video.webm"                                   | Bin 0 -> 88453 bytes
+|  .../error-context.md"                             | 231 ++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 49433 bytes
+|  .../video.webm"                                   | Bin 0 -> 60415 bytes
+|  .../error-context.md"                             | 241 ++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 25977 bytes
+|  .../video.webm"                                   | Bin 0 -> 55328 bytes
+|  .../error-context.md"                             | 241 ++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 28855 bytes
+|  .../video.webm"                                   | Bin 0 -> 66551 bytes
+|  .../error-context.md"                             | 241 ++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 68833 bytes
+|  .../video.webm"                                   | Bin 0 -> 41034 bytes
+|  .../error-context.md"                             | 279 ++++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 43227 bytes
+|  .../video.webm"                                   | Bin 0 -> 57609 bytes
+|  .../error-context.md"                             | 279 ++++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 57172 bytes
+|  .../video.webm"                                   | Bin 0 -> 80712 bytes
+|  .../error-context.md"                             | 279 ++++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 108000 bytes
+|  .../video.webm"                                   | Bin 0 -> 40158 bytes
+|  .../error-context.md"                             | 186 +++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 17186 bytes
+|  .../video.webm"                                   | Bin 0 -> 57688 bytes
+|  .../error-context.md"                             | 186 +++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 18315 bytes
+|  .../video.webm"                                   | Bin 0 -> 116953 bytes
+|  .../error-context.md"                             | 186 +++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 49433 bytes
+|  .../video.webm"                                   | Bin 0 -> 66948 bytes
+|  .../error-context.md"                             | 210 ++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 17186 bytes
+|  .../video.webm"                                   | Bin 0 -> 60535 bytes
+|  .../error-context.md"                             | 210 ++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 18312 bytes
+|  .../video.webm"                                   | Bin 0 -> 79194 bytes
+|  .../error-context.md"                             | 210 ++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 49433 bytes
+|  .../video.webm"                                   | Bin 0 -> 56098 bytes
+|  .../error-context.md"                             | 245 ++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 28263 bytes
+|  .../video.webm"                                   | Bin 0 -> 69201 bytes
+|  .../error-context.md"                             | 245 ++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 30688 bytes
+|  .../video.webm"                                   | Bin 0 -> 95931 bytes
+|  .../error-context.md"                             | 245 ++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 73395 bytes
+|  .../video.webm"                                   | Bin 0 -> 44150 bytes
+|  .../error-context.md"                             | 265 +++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 19800 bytes
+|  .../video.webm"                                   | Bin 0 -> 48599 bytes
+|  .../error-context.md"                             | 265 +++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 19588 bytes
+|  .../video.webm"                                   | Bin 0 -> 109268 bytes
+|  .../error-context.md"                             | 265 +++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 57351 bytes
+|  .../video.webm"                                   | Bin 0 -> 74342 bytes
+|  .../error-context.md"                             | 254 +++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 18038 bytes
+|  .../video.webm"                                   | Bin 0 -> 111815 bytes
+|  .../error-context.md"                             | 254 +++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 17854 bytes
+|  .../video.webm"                                   | Bin 0 -> 140202 bytes
+|  .../error-context.md"                             | 254 +++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 52169 bytes
+|  .../video.webm"                                   | Bin 0 -> 124106 bytes
+|  .../error-context.md"                             | 207 ++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 16312 bytes
+|  .../video.webm"                                   | Bin 0 -> 52887 bytes
+|  .../error-context.md"                             | 207 ++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 16260 bytes
+|  .../video.webm"                                   | Bin 0 -> 64286 bytes
+|  .../error-context.md"                             | 207 ++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 46932 bytes
+|  .../video.webm"                                   | Bin 0 -> 57023 bytes
+|  .../error-context.md"                             | 258 +++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 17186 bytes
+|  .../video.webm"                                   | Bin 0 -> 46730 bytes
+|  .../error-context.md"                             | 258 +++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 18324 bytes
+|  .../video.webm"                                   | Bin 0 -> 44653 bytes
+|  .../error-context.md"                             | 258 +++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 49433 bytes
+|  .../video.webm"                                   | Bin 0 -> 37615 bytes
+|  .../error-context.md"                             | 243 ++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 25343 bytes
+|  .../video.webm"                                   | Bin 0 -> 40736 bytes
+|  .../error-context.md"                             | 337 ++++++++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 56538 bytes
+|  .../video.webm"                                   | Bin 0 -> 46927 bytes
+|  .../error-context.md"                             | 337 ++++++++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 103981 bytes
+|  .../video.webm"                                   | Bin 0 -> 34609 bytes
+|  .../error-context.md"                             | 259 +++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 27825 bytes
+|  .../video.webm"                                   | Bin 0 -> 61283 bytes
+|  .../error-context.md"                             | 259 +++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 30207 bytes
+|  .../video.webm"                                   | Bin 0 -> 87653 bytes
+|  .../error-context.md"                             | 259 +++++++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 72403 bytes
+|  .../video.webm"                                   | Bin 0 -> 43860 bytes
+|  .../error-context.md"                             | 182 +++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 30333 bytes
+|  .../video.webm"                                   | Bin 0 -> 62223 bytes
+|  .../error-context.md"                             | 182 +++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 32204 bytes
+|  .../video.webm"                                   | Bin 0 -> 74756 bytes
+|  .../error-context.md"                             | 182 +++++++++++
+|  .../test-failed-1.png"                            | Bin 0 -> 79967 bytes
+|  .../video.webm"                                   | Bin 0 -> 65334 bytes
+|  380 files changed, 43005 insertions(+)
+| 
+* commit f87322e11cb78540d4a7f71a22b4dbd2c656cff1
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 10 00:41:49 2026 +0700
+| 
+|     docs: link automation bug reports to issues
+| 
+|  tests/bug-reports/automation/category/BUG-CATEGORY-001.md         | 4 ++++
+|  tests/bug-reports/automation/category/BUG-CATEGORY-002.md         | 4 ++++
+|  tests/bug-reports/automation/category/BUG-CATEGORY-003.md         | 4 ++++
+|  tests/bug-reports/automation/category/BUG-CATEGORY-004.md         | 4 ++++
+|  tests/bug-reports/automation/category/BUG-CATEGORY-005.md         | 4 ++++
+|  tests/bug-reports/automation/category/BUG-CATEGORY-006.md         | 4 ++++
+|  tests/bug-reports/automation/category/BUG-CATEGORY-007.md         | 4 ++++
+|  tests/bug-reports/automation/category/BUG-CATEGORY-008.md         | 4 ++++
+|  tests/bug-reports/automation/category/BUG-CATEGORY-009.md         | 4 ++++
+|  tests/bug-reports/automation/category/BUG-CATEGORY-010.md         | 4 ++++
+|  tests/bug-reports/automation/checkout/BUG-CHECKOUT-001.md         | 4 ++++
+|  tests/bug-reports/automation/checkout/BUG-CHECKOUT-002.md         | 4 ++++
+|  tests/bug-reports/automation/checkout/BUG-CHECKOUT-003.md         | 4 ++++
+|  tests/bug-reports/automation/checkout/BUG-CHECKOUT-004.md         | 4 ++++
+|  tests/bug-reports/automation/checkout/BUG-CHECKOUT-005.md         | 4 ++++
+|  tests/bug-reports/automation/checkout/BUG-CHECKOUT-006.md         | 4 ++++
+|  tests/bug-reports/automation/checkout/BUG-CHECKOUT-007.md         | 4 ++++
+|  tests/bug-reports/automation/checkout/BUG-CHECKOUT-008.md         | 6 +++++-
+|  tests/bug-reports/automation/checkout/BUG-CHECKOUT-009.md         | 6 +++++-
+|  tests/bug-reports/automation/checkout/BUG-CHECKOUT-010.md         | 4 ++++
+|  .../automation/product-list-and-search/BUG-PLAS-002.md            | 6 +++++-
+|  .../automation/product-list-and-search/BUG-PLAS-003.md            | 6 +++++-
+|  22 files changed, 92 insertions(+), 4 deletions(-)
+| 
+* commit 9ef4ada2ed31357dddeae25bb275f88caecd4f96
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 10 00:39:34 2026 +0700
+| 
+|     docs: update test case statuses
+| 
+|  tests/test-cases/category/TC-CATEGORY-003.md                | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-006.md                | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-008.md                | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-009.md                | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-012.md                | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-013.md                | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-014.md                | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-015.md                | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-016.md                | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-017.md                | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-018.md                | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-019.md                | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-020.md                | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-BVA-003.md            | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-BVA-004.md            | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-BVA-005.md            | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-BVA-006.md            | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-BVA-007.md            | 2 +-
+|  tests/test-cases/category/TC-CATEGORY-BVA-008.md            | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-001.md                | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-002.md                | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-003.md                | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-004.md                | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-005.md                | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-006.md                | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-007.md                | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-008.md                | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-009.md                | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-010.md                | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-011.md                | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-012.md                | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-013.md                | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-014.md                | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-015.md                | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-001.md            | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-002.md            | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-004.md            | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-005.md            | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-006.md            | 2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-007.md            | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-001.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-002.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-004.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-005.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-006.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-007.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-008.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-009.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-010.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-011.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-012.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-013.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-014.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-015.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-016.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-017.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-018.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-019.md     | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-BVA-001.md | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-BVA-004.md | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-BVA-005.md | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-BVA-006.md | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-BVA-007.md | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-BVA-008.md | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-BVA-009.md | 2 +-
+|  tests/test-cases/product-list-and-search/TC-PLAS-BVA-010.md | 2 +-
+|  66 files changed, 66 insertions(+), 66 deletions(-)
+| 
+* commit 3af1ff438566131491d66270cf6f8f6f6ad8dc00
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 10 00:36:45 2026 +0700
+| 
+|     docs: fix automation issue screenshot links
+| 
+|  .../product-list-and-search/BUG-PLAS-001.md           |   6 +++++-
+|  .../product-list-and-search/BUG-PLAS-004.md           |   6 +++++-
+|  .../product-list-and-search/BUG-PLAS-005.md           |   6 +++++-
+|  .../product-list-and-search/BUG-PLAS-006.md           |   6 +++++-
+|  .../product-list-and-search/BUG-PLAS-007.md           |   6 +++++-
+|  .../product-list-and-search/BUG-PLAS-008.md           |   6 +++++-
+|  .../screenshots/BUG-PLAS-001.png                      | Bin 0 -> 25977 bytes
+|  .../screenshots/BUG-PLAS-004.png                      | Bin 0 -> 18038 bytes
+|  .../screenshots/BUG-PLAS-005.png                      | Bin 0 -> 43227 bytes
+|  .../screenshots/BUG-PLAS-006.png                      | Bin 0 -> 17186 bytes
+|  .../screenshots/BUG-PLAS-007.png                      | Bin 0 -> 17186 bytes
+|  .../screenshots/BUG-PLAS-008.png                      | Bin 0 -> 16312 bytes
+|  12 files changed, 30 insertions(+), 6 deletions(-)
+| 
+* commit b3f21d3cc7485746b89a94fdcf4ccd670673483a
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 10 00:17:55 2026 +0700
+| 
+|     docs: improve automation bug report evidence and remove manual result
+| 
+|  .../automation/checkout/BUG-CHECKOUT-003.md       |   2 +-
+|  .../automation/checkout/BUG-CHECKOUT-004.md       |   2 +-
+|  .../automation/checkout/BUG-CHECKOUT-006.md       |   2 +-
+|  .../product-list-and-search/BUG-PLAS-001.md       |   6 +-
+|  .../product-list-and-search/BUG-PLAS-004.md       |   4 ++
+|  .../product-list-and-search/BUG-PLAS-005.md       |   6 +-
+|  .../product-list-and-search/BUG-PLAS-006.md       |   4 ++
+|  .../product-list-and-search/BUG-PLAS-007.md       |   4 ++
+|  .../product-list-and-search/BUG-PLAS-008.md       |   4 ++
+|  .../manual/category/BUG-CATEGORY-001.md           |  47 ---------------
+|  .../manual/category/BUG-CATEGORY-002.md           |  42 --------------
+|  .../manual/category/BUG-CATEGORY-003.md           |  43 --------------
+|  .../manual/category/BUG-CATEGORY-004.md           |  42 --------------
+|  .../manual/category/BUG-CATEGORY-005.md           |  42 --------------
+|  .../category/screenshots/TC-CATEGORY-002.png      | Bin 159890 -> 0 bytes
+|  .../category/screenshots/TC-CATEGORY-003.png      | Bin 162143 -> 0 bytes
+|  .../category/screenshots/TC-CATEGORY-006.png      | Bin 235502 -> 0 bytes
+|  .../category/screenshots/TC-CATEGORY-008.png      | Bin 288912 -> 0 bytes
+|  .../category/screenshots/TC-CATEGORY-009.png      | Bin 281032 -> 0 bytes
+|  .../category/screenshots/TC-CATEGORY-011.png      | Bin 330398 -> 0 bytes
+|  .../manual/checkout/BUG-CHECKOUT-001.md           |  52 -----------------
+|  .../manual/checkout/BUG-CHECKOUT-002.md           |  42 --------------
+|  .../manual/checkout/BUG-CHECKOUT-003.md           |  48 ---------------
+|  .../manual/checkout/BUG-CHECKOUT-004.md           |  48 ---------------
+|  .../checkout/screenshots/TC-CHECKOUT-001a.png     | Bin 291796 -> 0 bytes
+|  .../checkout/screenshots/TC-CHECKOUT-001b.png     | Bin 299571 -> 0 bytes
+|  .../checkout/screenshots/TC-CHECKOUT-001c.png     | Bin 271335 -> 0 bytes
+|  .../checkout/screenshots/TC-CHECKOUT-001d.png     | Bin 293934 -> 0 bytes
+|  .../checkout/screenshots/TC-CHECKOUT-001e.png     | Bin 217822 -> 0 bytes
+|  .../checkout/screenshots/TC-CHECKOUT-003a.png     | Bin 354884 -> 0 bytes
+|  .../checkout/screenshots/TC-CHECKOUT-003b.png     | Bin 328955 -> 0 bytes
+|  .../checkout/screenshots/TC-CHECKOUT-003c.png     | Bin 289060 -> 0 bytes
+|  .../checkout/screenshots/TC-CHECKOUT-004a.png     | Bin 330405 -> 0 bytes
+|  .../checkout/screenshots/TC-CHECKOUT-004b.png     | Bin 324273 -> 0 bytes
+|  .../checkout/screenshots/TC-CHECKOUT-004c.png     | Bin 324218 -> 0 bytes
+|  .../product-list-and-search/BUG-PLAS-001.md       |  59 -------------------
+|  .../product-list-and-search/BUG-PLAS-002.md       |  61 --------------------
+|  .../product-list-and-search/BUG-PLAS-003.md       |  51 ----------------
+|  .../product-list-and-search/BUG-PLAS-004.md       |  53 -----------------
+|  .../product-list-and-search/BUG-PLAS-005.md       |  53 -----------------
+|  .../product-list-and-search/BUG-PLAS-006.md       |  44 --------------
+|  .../product-list-and-search/BUG-PLAS-007.md       |  48 ---------------
+|  .../screenshots/TC-PLAS-001.png                   | Bin 322713 -> 0 bytes
+|  .../screenshots/TC-PLAS-002.png                   | Bin 216816 -> 0 bytes
+|  .../screenshots/TC-PLAS-003.png                   | Bin 165661 -> 0 bytes
+|  .../screenshots/TC-PLAS-004.png                   | Bin 209317 -> 0 bytes
+|  .../screenshots/TC-PLAS-005a.png                  | Bin 220197 -> 0 bytes
+|  .../screenshots/TC-PLAS-005b.png                  | Bin 182600 -> 0 bytes
+|  .../screenshots/TC-PLAS-006a.png                  | Bin 264250 -> 0 bytes
+|  .../screenshots/TC-PLAS-006b.png                  | Bin 222356 -> 0 bytes
+|  .../screenshots/TC-PLAS-007.png                   | Bin 240024 -> 0 bytes
+|  .../screenshots/TC-PLAS-BVA-001.png               | Bin 297195 -> 0 bytes
+|  .../screenshots/TC-PLAS-BVA-002.png               | Bin 149100 -> 0 bytes
+|  .../screenshots/TC-PLAS-BVA-003.png               | Bin 195224 -> 0 bytes
+|  .../screenshots/TC-PLAS-BVA-004a.png              | Bin 256022 -> 0 bytes
+|  .../screenshots/TC-PLAS-BVA-004b.png              | Bin 171780 -> 0 bytes
+|  .../screenshots/TC-PLAS-BVA-005a.png              | Bin 273665 -> 0 bytes
+|  .../screenshots/TC-PLAS-BVA-005b.png              | Bin 217721 -> 0 bytes
+|  tests/test-runs/manual/CATEGORY-test-run.md       |  19 ------
+|  tests/test-runs/manual/CHECKOUT-test-run.md       |  13 -----
+|  tests/test-runs/manual/PLAS-test-run.md           |  18 ------
+|  tests/test-summary/test-summary-report.md         |  35 -----------
+|  tests/test-summary/traceability-matrix.md         |  38 ------------
+|  63 files changed, 29 insertions(+), 903 deletions(-)
+| 
+* commit b547e0ec9123285777e78aac6885220ad6b9385f
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 10 00:06:35 2026 +0700
+| 
+|     docs: finalize HW04 automation bug-reports and evidence
+| 
+|  .../automation/category/BUG-CATEGORY-001.md       |  70 ++++++++++++++++++
+|  .../automation/category/BUG-CATEGORY-002.md       |  70 ++++++++++++++++++
+|  .../automation/category/BUG-CATEGORY-003.md       |  61 ++++++++++++++++
+|  .../automation/category/BUG-CATEGORY-004.md       |  68 ++++++++++++++++++
+|  .../automation/category/BUG-CATEGORY-005.md       |  62 ++++++++++++++++
+|  .../automation/category/BUG-CATEGORY-006.md       |  65 +++++++++++++++++
+|  .../automation/category/BUG-CATEGORY-007.md       |  67 +++++++++++++++++
+|  .../automation/category/BUG-CATEGORY-008.md       |  61 ++++++++++++++++
+|  .../automation/category/BUG-CATEGORY-009.md       |  61 ++++++++++++++++
+|  .../automation/category/BUG-CATEGORY-010.md       |  70 ++++++++++++++++++
+|  .../automation/checkout/BUG-CHECKOUT-001.md       |  68 ++++++++++++++++++
+|  .../automation/checkout/BUG-CHECKOUT-002.md       |  69 ++++++++++++++++++
+|  .../automation/checkout/BUG-CHECKOUT-003.md       |  72 +++++++++++++++++++
+|  .../automation/checkout/BUG-CHECKOUT-004.md       |  72 +++++++++++++++++++
+|  .../automation/checkout/BUG-CHECKOUT-005.md       |  76 ++++++++++++++++++++
+|  .../automation/checkout/BUG-CHECKOUT-006.md       |  72 +++++++++++++++++++
+|  .../automation/checkout/BUG-CHECKOUT-007.md       |  64 +++++++++++++++++
+|  .../automation/checkout/BUG-CHECKOUT-008.md       |  36 ++++++++++
+|  .../automation/checkout/BUG-CHECKOUT-009.md       |  36 ++++++++++
+|  .../automation/checkout/BUG-CHECKOUT-010.md       |  70 ++++++++++++++++++
+|  .../checkout/screenshots/TC-CHECKOUT-011.png      | Bin 0 -> 26206 bytes
+|  .../checkout/screenshots/TC-CHECKOUT-012.png      | Bin 0 -> 26206 bytes
+|  .../product-list-and-search/BUG-PLAS-001.md       |  37 ++++++++++
+|  .../product-list-and-search/BUG-PLAS-002.md       |  36 ++++++++++
+|  .../product-list-and-search/BUG-PLAS-003.md       |  36 ++++++++++
+|  .../product-list-and-search/BUG-PLAS-004.md       |  55 ++++++++++++++
+|  .../product-list-and-search/BUG-PLAS-005.md       |  63 ++++++++++++++++
+|  .../product-list-and-search/BUG-PLAS-006.md       |  60 ++++++++++++++++
+|  .../product-list-and-search/BUG-PLAS-007.md       |  60 ++++++++++++++++
+|  .../product-list-and-search/BUG-PLAS-008.md       |  58 +++++++++++++++
+|  .../screenshots/TC-PLAS-007.png                   | Bin 0 -> 30333 bytes
+|  31 files changed, 1695 insertions(+)
+| 
+* commit a0e9e70f148f82864850ecf43dbe7dbc761b20e1
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 10 00:05:40 2026 +0700
+| 
+|     test: finalize HW04 automation test runs
+| 
+|  tests/test-runs/automation/scripts/README.md      |  79 ++++++
+|  .../automation/scripts/_common/constants.ts       |   9 +
+|  tests/test-runs/automation/scripts/_common/env.ts |  48 ++++
+|  .../automation/scripts/_common/http-status.ts     |  12 +
+|  .../automation/scripts/_common/stamp-report.js    |  57 ++++
+|  .../automation/scripts/_common/tsconfig.json      |  16 ++
+|  .../automation/scripts/category/README.md         | 282 +++++---------------
+|  .../scripts/category/data/category-test-data.json |  67 ++++-
+|  .../automation/scripts/category/package-lock.json | 112 ++++++++
+|  .../automation/scripts/category/package.json      |   3 +-
+|  .../scripts/category/pages/CategoryPage.ts        |   7 +-
+|  .../scripts/category/playwright-report/index.html |  24 +-
+|  .../scripts/category/playwright.config.ts         |   3 +-
+|  .../automation/scripts/category/pnpm-lock.yaml    |  77 ------
+|  .../scripts/category/tests/category-auth.spec.ts  |  41 +--
+|  .../scripts/category/tests/category-bva.spec.ts   |  88 +++---
+|  .../scripts/category/tests/category-crud.spec.ts  | 127 +++++----
+|  .../category/tests/category-security.spec.ts      |  28 +-
+|  .../automation/scripts/checkout/README.md         | 267 +++++-------------
+|  .../scripts/checkout/data/checkout-test-data.json |  44 +++
+|  .../automation/scripts/checkout/package-lock.json | 112 ++++++++
+|  .../automation/scripts/checkout/package.json      |   3 +-
+|  .../scripts/checkout/pages/CheckoutPage.ts        |  11 +-
+|  .../scripts/checkout/playwright-report/index.html |  24 +-
+|  .../scripts/checkout/playwright.config.ts         |   3 +-
+|  .../automation/scripts/checkout/pnpm-lock.yaml    |  77 ------
+|  .../scripts/checkout/tests/checkout-api.spec.ts   |  91 +++----
+|  .../scripts/checkout/tests/checkout-bva.spec.ts   |  79 +++---
+|  .../scripts/checkout/tests/checkout-ui.spec.ts    |  46 ++--
+|  .../scripts/product-list-and-search/README.md     | 243 +++++------------
+|  .../data/plas-test-data.json                      |   4 +
+|  .../product-list-and-search/package-lock.json     | 112 ++++++++
+|  .../scripts/product-list-and-search/package.json  |   3 +-
+|  .../pages/ProductListPage.ts                      |  42 ++-
+|  .../playwright-report/index.html                  |  24 +-
+|  .../product-list-and-search/playwright.config.ts  |   3 +-
+|  .../product-list-and-search/pnpm-lock.yaml        |  77 ------
+|  .../tests/plas-bva.spec.ts                        |  42 ++-
+|  .../product-list-and-search/tests/plas-ep.spec.ts |  45 +++-
+|  .../product-list-and-search/tests/plas-ui.spec.ts |  16 +-
+|  40 files changed, 1326 insertions(+), 1122 deletions(-)
+| 
+* commit 105524897878ced16763eeb349fe46fe8848d58f
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Aug 9 14:00:27 2026 +0700
+| 
+|     chore: configure pnpm workspace to allow sqlite3 builds
+| 
+|  backend/pnpm-workspace.yaml | 2 ++
+|  1 file changed, 2 insertions(+)
+| 
+* commit 41c44a5c4ba3f46e2498ee094192a235fa518306
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Fri Aug 7 23:44:28 2026 +0700
+| 
+|     docs: update automation READMEs to use pnpm and fix folder paths
+| 
+|  .../automation/scripts/category/README.md         | 34 ++++++++++-----------
+|  .../automation/scripts/checkout/README.md         | 34 ++++++++++-----------
+|  .../scripts/product-list-and-search/README.md     | 32 +++++++++----------
+|  3 files changed, 50 insertions(+), 50 deletions(-)
+| 
+* commit 085f02b3bda957f226b520faea2932749b1adef0
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Fri Aug 7 23:19:41 2026 +0700
+| 
+|     docs/tests: update requirements, clean up reports and structure manual bug reports
+| 
+|  .agents/skills/ai-audit-logger/SKILL.md           | 101 ---------------
+|  .../assets/audit_report_template.md               |  31 -----
+|  .../ai-audit-logger/scripts/log_interaction.py    |  77 -----------
+|  .../scripts/render_audit_report.py                |  87 -------------
+|  .agents/skills/playwright-ai-automation/SKILL.md  |   4 +-
+|  .../references/submission-checklist.md            |   6 +-
+|  .../scripts/check_git_commits.sh                  |   7 +-
+|  docs/report/{ => manual}/Bug_Report.md            |  32 ++---
+|  docs/report/{ => manual}/Main_Report.md           | 136 ++++++++++----------
+|  docs/report/{ => manual}/README.md                |   0
+|  docs/report/{ => manual}/git_commit_logs.txt      |   0
+|  docs/report/{ => manual}/images/bug_issue/1.png   | Bin
+|  docs/report/{ => manual}/images/bug_issue/2.png   | Bin
+|  docs/report/{ => manual}/images/bug_issue/3.png   | Bin
+|  .../{ => manual}/images/bug_issue/detail-1.png    | Bin
+|  .../{ => manual}/images/bug_issue/detail-2.png    | Bin
+|  .../{ => manual}/images/bug_issue/detail-3.png    | Bin
+|  .../2026.HW04.Automation Testing_En.md            |   2 +-
+|  .../{ => manual}/category/BUG-CATEGORY-001.md     |   0
+|  .../{ => manual}/category/BUG-CATEGORY-002.md     |   0
+|  .../{ => manual}/category/BUG-CATEGORY-003.md     |   0
+|  .../{ => manual}/category/BUG-CATEGORY-004.md     |   0
+|  .../{ => manual}/category/BUG-CATEGORY-005.md     |   0
+|  .../category/screenshots/TC-CATEGORY-002.png      | Bin
+|  .../category/screenshots/TC-CATEGORY-003.png      | Bin
+|  .../category/screenshots/TC-CATEGORY-006.png      | Bin
+|  .../category/screenshots/TC-CATEGORY-008.png      | Bin
+|  .../category/screenshots/TC-CATEGORY-009.png      | Bin
+|  .../category/screenshots/TC-CATEGORY-011.png      | Bin
+|  .../{ => manual}/checkout/BUG-CHECKOUT-001.md     |   0
+|  .../{ => manual}/checkout/BUG-CHECKOUT-002.md     |   0
+|  .../{ => manual}/checkout/BUG-CHECKOUT-003.md     |   0
+|  .../{ => manual}/checkout/BUG-CHECKOUT-004.md     |   0
+|  .../checkout/screenshots/TC-CHECKOUT-001a.png     | Bin
+|  .../checkout/screenshots/TC-CHECKOUT-001b.png     | Bin
+|  .../checkout/screenshots/TC-CHECKOUT-001c.png     | Bin
+|  .../checkout/screenshots/TC-CHECKOUT-001d.png     | Bin
+|  .../checkout/screenshots/TC-CHECKOUT-001e.png     | Bin
+|  .../checkout/screenshots/TC-CHECKOUT-003a.png     | Bin
+|  .../checkout/screenshots/TC-CHECKOUT-003b.png     | Bin
+|  .../checkout/screenshots/TC-CHECKOUT-003c.png     | Bin
+|  .../checkout/screenshots/TC-CHECKOUT-004a.png     | Bin
+|  .../checkout/screenshots/TC-CHECKOUT-004b.png     | Bin
+|  .../checkout/screenshots/TC-CHECKOUT-004c.png     | Bin
+|  .../product-list-and-search/BUG-PLAS-001.md       |   0
+|  .../product-list-and-search/BUG-PLAS-002.md       |   0
+|  .../product-list-and-search/BUG-PLAS-003.md       |   0
+|  .../product-list-and-search/BUG-PLAS-004.md       |   0
+|  .../product-list-and-search/BUG-PLAS-005.md       |   0
+|  .../product-list-and-search/BUG-PLAS-006.md       |   0
+|  .../product-list-and-search/BUG-PLAS-007.md       |   0
+|  .../screenshots/TC-PLAS-001.png                   | Bin
+|  .../screenshots/TC-PLAS-002.png                   | Bin
+|  .../screenshots/TC-PLAS-003.png                   | Bin
+|  .../screenshots/TC-PLAS-004.png                   | Bin
+|  .../screenshots/TC-PLAS-005a.png                  | Bin
+|  .../screenshots/TC-PLAS-005b.png                  | Bin
+|  .../screenshots/TC-PLAS-006a.png                  | Bin
+|  .../screenshots/TC-PLAS-006b.png                  | Bin
+|  .../screenshots/TC-PLAS-007.png                   | Bin
+|  .../screenshots/TC-PLAS-BVA-001.png               | Bin
+|  .../screenshots/TC-PLAS-BVA-002.png               | Bin
+|  .../screenshots/TC-PLAS-BVA-003.png               | Bin
+|  .../screenshots/TC-PLAS-BVA-004a.png              | Bin
+|  .../screenshots/TC-PLAS-BVA-004b.png              | Bin
+|  .../screenshots/TC-PLAS-BVA-005a.png              | Bin
+|  .../screenshots/TC-PLAS-BVA-005b.png              | Bin
+|  tests/test-summary/test-summary-report.md         |   2 +-
+|  68 files changed, 92 insertions(+), 393 deletions(-)
+| 
+* commit 862e40ac76822efdc4f67b95f90af876d7092aa1
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Fri Aug 7 01:13:47 2026 +0700
+| 
+|     docs(report): update AI Audit Report for hardcode data refactoring
+| 
+|  docs/report/AI_Audit_Report.md | 38 +++++++++++++++++++++++++++++++++++++-
+|  1 file changed, 37 insertions(+), 1 deletion(-)
+| 
+* commit 5d1a2187cc7533a6b973bc009f15e8781469da31
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Fri Aug 7 01:12:51 2026 +0700
+| 
+|     refactor(checkout): resolve hardcoded data, migrate to pnpm and regenerate playwright report
+| 
+|  .../automation/scripts/checkout/package-lock.json | 112 ------------
+|  .../scripts/checkout/playwright-report/index.html |   2 +-
+|  .../automation/scripts/checkout/pnpm-lock.yaml    |  77 ++++++++
+|  .../scripts/checkout/tests/checkout-api.spec.ts   | 184 +++++---------------
+|  .../scripts/checkout/tests/checkout-bva.spec.ts   | 105 +++--------
+|  .../scripts/checkout/tests/checkout-ui.spec.ts    |   5 +-
+|  6 files changed, 157 insertions(+), 328 deletions(-)
+| 
+* commit 31f69c52c80e9abeda09836d145a294774e87779
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Fri Aug 7 01:12:33 2026 +0700
+| 
+|     refactor(product-search): resolve hardcoded data and regenerate playwright report
+| 
+|  .../data/plas-test-data.json                      |   1 +
+|  .../playwright-report/index.html                  |   2 +-
+|  .../tests/plas-bva.spec.ts                        |  51 +++++----
+|  .../product-list-and-search/tests/plas-ep.spec.ts | 116 +++++++++++---------
+|  .../product-list-and-search/tests/plas-ui.spec.ts |  17 ++-
+|  5 files changed, 107 insertions(+), 80 deletions(-)
+| 
+* commit c41dbf23a9531de81df613ff336aeff3bf504562
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Fri Aug 7 01:12:03 2026 +0700
+| 
+|     refactor(category): resolve hardcoded data, migrate to pnpm and regenerate playwright report
+| 
+|  .../automation/scripts/category/package-lock.json | 112 --------------------
+|  .../scripts/category/playwright-report/index.html |   2 +-
+|  .../automation/scripts/category/pnpm-lock.yaml    |  77 ++++++++++++++
+|  .../scripts/category/tests/category-auth.spec.ts  |  31 ++----
+|  .../scripts/category/tests/category-bva.spec.ts   |  22 ++--
+|  .../scripts/category/tests/category-crud.spec.ts  |  36 ++-----
+|  .../category/tests/category-security.spec.ts      |  13 ++-
+|  7 files changed, 117 insertions(+), 176 deletions(-)
+| 
+* commit 824d2245fa05f759a700b12b4b03011d4789675d
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Thu Aug 6 23:51:00 2026 +0700
+| 
+|     chore: configure gitignore to ignore database.sqlite and temp folders
+| 
+|  .gitignore              |  51 ++++++++++++++++++++++++++++++++++++++++++++++
+|  backend/database.sqlite | Bin 36864 -> 0 bytes
+|  2 files changed, 51 insertions(+)
+| 
+* commit b6056870386cd4e48607b8cb84c871b3b12d3365
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Wed Aug 5 16:47:07 2026 +0700
+| 
+|     test(scripts): realocate scripts into test runs
+| 
+|  tests/{ => test-runs/automation}/scripts/category/README.md             | 0
+|  .../automation}/scripts/category/data/category-test-data.json           | 0
+|  tests/{ => test-runs/automation}/scripts/category/package-lock.json     | 0
+|  tests/{ => test-runs/automation}/scripts/category/package.json          | 0
+|  tests/{ => test-runs/automation}/scripts/category/pages/CategoryPage.ts | 0
+|  .../automation}/scripts/category/playwright-report/index.html           | 0
+|  tests/{ => test-runs/automation}/scripts/category/playwright.config.ts  | 0
+|  .../automation}/scripts/category/tests/category-auth.spec.ts            | 0
+|  .../automation}/scripts/category/tests/category-bva.spec.ts             | 0
+|  .../automation}/scripts/category/tests/category-crud.spec.ts            | 0
+|  .../automation}/scripts/category/tests/category-security.spec.ts        | 0
+|  tests/{ => test-runs/automation}/scripts/category/tsconfig.json         | 0
+|  tests/{ => test-runs/automation}/scripts/checkout/README.md             | 0
+|  .../automation}/scripts/checkout/data/checkout-test-data.json           | 0
+|  tests/{ => test-runs/automation}/scripts/checkout/package-lock.json     | 0
+|  tests/{ => test-runs/automation}/scripts/checkout/package.json          | 0
+|  tests/{ => test-runs/automation}/scripts/checkout/pages/CheckoutPage.ts | 0
+|  .../automation}/scripts/checkout/playwright-report/index.html           | 0
+|  tests/{ => test-runs/automation}/scripts/checkout/playwright.config.ts  | 0
+|  .../automation}/scripts/checkout/tests/checkout-api.spec.ts             | 0
+|  .../automation}/scripts/checkout/tests/checkout-bva.spec.ts             | 0
+|  .../automation}/scripts/checkout/tests/checkout-ui.spec.ts              | 0
+|  tests/{ => test-runs/automation}/scripts/checkout/tsconfig.json         | 0
+|  .../automation}/scripts/product-list-and-search/README.md               | 0
+|  .../scripts/product-list-and-search/data/plas-test-data.json            | 0
+|  .../automation}/scripts/product-list-and-search/package.json            | 0
+|  .../scripts/product-list-and-search/pages/ProductListPage.ts            | 0
+|  .../scripts/product-list-and-search/playwright-report/index.html        | 0
+|  .../automation}/scripts/product-list-and-search/playwright.config.ts    | 0
+|  .../automation}/scripts/product-list-and-search/pnpm-lock.yaml          | 0
+|  .../automation}/scripts/product-list-and-search/tests/plas-bva.spec.ts  | 0
+|  .../automation}/scripts/product-list-and-search/tests/plas-ep.spec.ts   | 0
+|  .../automation}/scripts/product-list-and-search/tests/plas-ui.spec.ts   | 0
+|  .../automation}/scripts/product-list-and-search/tsconfig.json           | 0
+|  tests/test-runs/{ => manual}/CATEGORY-test-run.md                       | 0
+|  tests/test-runs/{ => manual}/CHECKOUT-test-run.md                       | 0
+|  tests/test-runs/{ => manual}/PLAS-test-run.md                           | 0
+|  37 files changed, 0 insertions(+), 0 deletions(-)
+| 
+* commit 36020842c62e55288ad107ec2a62ee2aa94e52d9
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Wed Aug 5 16:38:10 2026 +0700
+| 
+|     test(scripts): refactor category and checkout data, restructure product-list-and-search spec files and update READMEs
+| 
+|  docs/report/AI_Audit_Report.md                    |  14 +-
+|  tests/scripts/category/README.md                  | 122 +++++-----
+|  .../scripts/category/data/category-test-data.json |  10 +-
+|  .../scripts/category/tests/category-auth.spec.ts  |   4 +-
+|  tests/scripts/category/tests/category-bva.spec.ts |   2 +-
+|  .../scripts/category/tests/category-crud.spec.ts  |   2 +-
+|  .../category/tests/category-security.spec.ts      |   2 +-
+|  tests/scripts/checkout/README.md                  |  98 ++++----
+|  .../scripts/checkout/data/checkout-test-data.json |   6 +-
+|  tests/scripts/product-list-and-search/README.md   | 248 +++++++++++++-------
+|  .../scripts/product-list-and-search/package.json  |   4 +
+|  .../pages/ProductListPage.ts                      |  25 +-
+|  .../playwright-report/index.html                  |  49 ++++
+|  .../product-list-and-search/playwright.config.ts  |  10 +-
+|  .../tests/plas-bva.spec.ts                        | 164 +++++++++++++
+|  .../product-list-and-search/tests/plas-ep.spec.ts | 222 ++++++++++++++++++
+|  .../product-list-and-search/tests/plas-ui.spec.ts | 112 +++++++++
+|  .../tests/product-list-and-search.spec.ts         | 140 -----------
+|  .../scripts/product-list-and-search/tsconfig.json |  11 +-
+|  19 files changed, 876 insertions(+), 369 deletions(-)
+| 
+* commit ac2bdc15677b1b02df20a2cb8e516739587a778e
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Wed Aug 5 16:21:54 2026 +0700
+| 
+|     feat: initialize category test suite with Playwright and add AI audit reporting tools
+| 
+|  docs/report/AI_Audit_Report.md                    |  14 +-
+|  tests/scripts/category/README.md                  | 217 ++++++++++++
+|  .../scripts/category/data/category-test-data.json | 242 +++++++++++++
+|  tests/scripts/category/package-lock.json          | 112 ++++++
+|  tests/scripts/category/package.json               |  32 ++
+|  tests/scripts/category/pages/CategoryPage.ts      | 170 +++++++++
+|  .../scripts/category/playwright-report/index.html |  49 +++
+|  tests/scripts/category/playwright.config.ts       |  53 +++
+|  .../scripts/category/tests/category-auth.spec.ts  | 159 +++++++++
+|  tests/scripts/category/tests/category-bva.spec.ts | 249 ++++++++++++++
+|  .../scripts/category/tests/category-crud.spec.ts  | 363 ++++++++++++++++++++
+|  .../category/tests/category-security.spec.ts      | 108 ++++++
+|  tests/scripts/category/tsconfig.json              |  15 +
+|  13 files changed, 1782 insertions(+), 1 deletion(-)
+| 
+* commit fe21d11502f8e2513daf8c0d9d47c029a7063eba
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Wed Aug 5 16:03:15 2026 +0700
+| 
+|     refactor(test): remove mobile register test cases, runs, and related bug reports
+| 
+|  docs/report/Boundary_Value_Analysis_Report.md     |  81 ---------
+|  docs/report/Bug_Report.md                         |  44 +----
+|  docs/report/Domain_Testing_Report.md              | 162 -----------------
+|  docs/report/Main_Report.md                        | 192 +-------------------
+|  docs/report/README.md                             |  11 +-
+|  .../mobile-register/BUG-MOBILE-REGISTER-001.md    |  42 -----
+|  .../mobile-register/BUG-MOBILE-REGISTER-002.md    |  48 -----
+|  .../mobile-register/BUG-MOBILE-REGISTER-003.md    |  48 -----
+|  .../mobile-register/BUG-MOBILE-REGISTER-004.md    |  48 -----
+|  .../mobile-register/BUG-MOBILE-REGISTER-005.md    |  48 -----
+|  .../screenshots/TC-MOBILE-REGISTER-001.png        | Bin 183607 -> 0 bytes
+|  .../screenshots/TC-MOBILE-REGISTER-002a.png       | Bin 353312 -> 0 bytes
+|  .../screenshots/TC-MOBILE-REGISTER-002b.png       | Bin 247314 -> 0 bytes
+|  .../screenshots/TC-MOBILE-REGISTER-003a.png       | Bin 241455 -> 0 bytes
+|  .../screenshots/TC-MOBILE-REGISTER-003b.png       | Bin 236239 -> 0 bytes
+|  .../screenshots/TC-MOBILE-REGISTER-004a.png       | Bin 239848 -> 0 bytes
+|  .../screenshots/TC-MOBILE-REGISTER-004b.png       | Bin 233367 -> 0 bytes
+|  .../screenshots/TC-MOBILE-REGISTER-005a.png       | Bin 241853 -> 0 bytes
+|  .../screenshots/TC-MOBILE-REGISTER-005b.png       | Bin 235151 -> 0 bytes
+|  .../mobile-register/TC-MOBILE-REGISTER-001.md     |  43 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-002.md     |  42 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-003.md     |  42 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-004.md     |  42 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-005.md     |  43 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-006.md     |  42 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-007.md     |  42 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-008.md     |  42 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-009.md     |  42 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-010.md     |  42 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-011.md     |  42 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-012.md     |  42 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-013.md     |  42 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-014.md     |  44 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-015.md     |  44 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-016.md     |  43 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-017.md     |  43 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-018.md     |  43 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-019.md     |  43 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-020.md     |  43 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-021.md     |  44 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-022.md     |  52 ------
+|  .../mobile-register/TC-MOBILE-REGISTER-BVA-001.md |  44 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-BVA-002.md |  43 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-BVA-003.md |  44 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-BVA-004.md |  44 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-BVA-005.md |  44 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-BVA-006.md |  44 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-BVA-007.md |  43 -----
+|  .../mobile-register/TC-MOBILE-REGISTER-BVA-008.md |  43 -----
+|  tests/test-runs/MOBILE-REGISTER-test-run.md       |  21 ---
+|  tests/test-summary/test-summary-report.md         |   9 +-
+|  tests/test-summary/traceability-matrix.md         |  15 --
+|  52 files changed, 25 insertions(+), 2040 deletions(-)
+| 
+* commit 64896905965e7e5d885b6c2c961d6603c0ab21a7
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Wed Aug 5 13:01:38 2026 +0700
+| 
+|     feat: initialize checkout test suite with Playwright and add AI audit reporting tools
+| 
+|  docs/report/AI_Audit_Report.md                    |  14 +-
+|  tests/scripts/checkout/README.md                  | 207 ++++++++
+|  .../scripts/checkout/data/checkout-test-data.json | 362 ++++++++++++++
+|  tests/scripts/checkout/package-lock.json          | 112 +++++
+|  tests/scripts/checkout/package.json               |  31 ++
+|  tests/scripts/checkout/pages/CheckoutPage.ts      | 276 +++++++++++
+|  .../scripts/checkout/playwright-report/index.html |  49 ++
+|  tests/scripts/checkout/playwright.config.ts       |  53 ++
+|  tests/scripts/checkout/tests/checkout-api.spec.ts | 517 ++++++++++++++++++++
+|  tests/scripts/checkout/tests/checkout-bva.spec.ts | 309 ++++++++++++
+|  tests/scripts/checkout/tests/checkout-ui.spec.ts  | 204 ++++++++
+|  tests/scripts/checkout/tsconfig.json              |  15 +
+|  12 files changed, 2148 insertions(+), 1 deletion(-)
+| 
+* commit 6e06c15c0e18cc71729af64bd77b2d2e5a61519a
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Wed Aug 5 01:52:47 2026 +0700
+| 
+|     feat: initialize product list and search test suite with Playwright and add AI audit reporting tools
+| 
+|  .agents/skills/ai-audit-report/SKILL.md           |  69 +++++++
+|  docs/report/AI_Audit_Report.md                    |  15 ++
+|  tests/scripts/.gitkeep                            |   0
+|  tests/scripts/product-list-and-search/README.md   | 113 ++++++++++++
+|  .../data/plas-test-data.json                      | 193 ++++++++++++++++++++
+|  .../scripts/product-list-and-search/package.json  |  27 +++
+|  .../pages/ProductListPage.ts                      | 114 ++++++++++++
+|  .../product-list-and-search/playwright.config.ts  |  46 +++++
+|  .../product-list-and-search/pnpm-lock.yaml        |  77 ++++++++
+|  .../tests/product-list-and-search.spec.ts         | 140 ++++++++++++++
+|  .../scripts/product-list-and-search/tsconfig.json |  14 ++
+|  11 files changed, 808 insertions(+)
+| 
+* commit 11fc78602f7c95758f3a34321accc30626ed2ed3
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Wed Aug 5 01:00:53 2026 +0700
+| 
+|     docs: update test-summary and fix hw2 to hw4
+| 
+|  docs/report/Boundary_Value_Analysis_Report.md |  2 +-
+|  docs/report/Domain_Testing_Report.md          |  2 +-
+|  docs/report/Main_Report.md                    |  4 ++--
+|  docs/report/README.md                         |  2 +-
+|  tests/test-summary/test-summary-report.md     | 26 ++++++++++++-------------
+|  5 files changed, 18 insertions(+), 18 deletions(-)
+| 
+* commit 2933368c2ad32c548cee5a51e13b477b2cc66bc5
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Wed Aug 5 00:49:34 2026 +0700
+| 
+|     test(scripts): remove old .rest files
+| 
+|  tests/scripts/.gitkeep                            |  0
+|  tests/scripts/category/test_tc_category_004.rest  | 20 -------
+|  tests/scripts/category/test_tc_category_005.rest  | 37 -------------
+|  tests/scripts/category/test_tc_category_006.rest  | 20 -------
+|  tests/scripts/category/test_tc_category_007.rest  | 10 ----
+|  tests/scripts/category/test_tc_category_008.rest  | 25 ---------
+|  tests/scripts/category/test_tc_category_009.rest  | 20 -------
+|  tests/scripts/category/test_tc_category_010.rest  |  5 --
+|  tests/scripts/category/test_tc_category_011.rest  | 20 -------
+|  .../category/test_tc_category_bva_001.rest        | 25 ---------
+|  .../category/test_tc_category_bva_002.rest        | 25 ---------
+|  tests/scripts/checkout/test_tc_checkout_002.rest  | 20 -------
+|  tests/scripts/checkout/test_tc_checkout_003.rest  | 27 ----------
+|  tests/scripts/checkout/test_tc_checkout_004.rest  | 59 --------------------
+|  .../checkout/test_tc_checkout_bva_001.rest        | 47 ----------------
+|  .../checkout/test_tc_checkout_bva_002.rest        | 60 ---------------------
+|  .../checkout/test_tc_checkout_bva_003.rest        | 60 ---------------------
+|  .../test_tc_mobile_register_002.rest              | 13 -----
+|  18 files changed, 493 deletions(-)
+| 
+* commit 03dbc2b6b6113a34fb89cedbf65938826f810587
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Wed Aug 5 00:47:44 2026 +0700
+| 
+|     test(bug): update report and relocate bug screenshots
+| 
+|  tests/bug-reports/category/BUG-CATEGORY-001.md         |  4 ++--
+|  tests/bug-reports/category/BUG-CATEGORY-002.md         | 12 ++++++------
+|  tests/bug-reports/category/BUG-CATEGORY-003.md         |  2 +-
+|  tests/bug-reports/category/BUG-CATEGORY-004.md         | 11 +++++------
+|  tests/bug-reports/category/BUG-CATEGORY-005.md         |  2 +-
+|  tests/bug-reports/checkout/BUG-CHECKOUT-001.md         | 10 +++++-----
+|  tests/bug-reports/checkout/BUG-CHECKOUT-003.md         |  6 +++---
+|  tests/bug-reports/checkout/BUG-CHECKOUT-004.md         |  6 +++---
+|  .../mobile-register/BUG-MOBILE-REGISTER-001.md         |  2 +-
+|  .../mobile-register/BUG-MOBILE-REGISTER-002.md         |  4 ++--
+|  .../mobile-register/BUG-MOBILE-REGISTER-003.md         |  4 ++--
+|  .../mobile-register/BUG-MOBILE-REGISTER-004.md         |  4 ++--
+|  .../mobile-register/BUG-MOBILE-REGISTER-005.md         |  4 ++--
+|  .../product-list-and-search/BUG-PLAS-001.md            | 16 ++++++++--------
+|  .../product-list-and-search/BUG-PLAS-002.md            | 10 +++++-----
+|  .../product-list-and-search/BUG-PLAS-003.md            | 10 +++++-----
+|  .../product-list-and-search/BUG-PLAS-004.md            |  6 +++---
+|  .../product-list-and-search/BUG-PLAS-005.md            |  4 ++--
+|  .../product-list-and-search/BUG-PLAS-006.md            |  2 +-
+|  .../product-list-and-search/BUG-PLAS-007.md            |  8 ++++----
+|  20 files changed, 63 insertions(+), 64 deletions(-)
+| 
+* commit 25a36c4650fd1669eab923d493d390ca0985db2a
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Wed Aug 5 00:36:13 2026 +0700
+| 
+|     test(evidence): relocate bug screenshots
+| 
+|  .../category => category/screenshots}/TC-CATEGORY-002.png | Bin
+|  .../category => category/screenshots}/TC-CATEGORY-003.png | Bin
+|  .../category => category/screenshots}/TC-CATEGORY-006.png | Bin
+|  .../category => category/screenshots}/TC-CATEGORY-008.png | Bin
+|  .../category => category/screenshots}/TC-CATEGORY-009.png | Bin
+|  .../category => category/screenshots}/TC-CATEGORY-011.png | Bin
+|  .../screenshots}/TC-CHECKOUT-001a.png                     | Bin
+|  .../screenshots}/TC-CHECKOUT-001b.png                     | Bin
+|  .../screenshots}/TC-CHECKOUT-001c.png                     | Bin
+|  .../screenshots}/TC-CHECKOUT-001d.png                     | Bin
+|  .../screenshots}/TC-CHECKOUT-001e.png                     | Bin
+|  .../screenshots}/TC-CHECKOUT-003a.png                     | Bin
+|  .../screenshots}/TC-CHECKOUT-003b.png                     | Bin
+|  .../screenshots}/TC-CHECKOUT-003c.png                     | Bin
+|  .../screenshots}/TC-CHECKOUT-004a.png                     | Bin
+|  .../screenshots}/TC-CHECKOUT-004b.png                     | Bin
+|  .../screenshots}/TC-CHECKOUT-004c.png                     | Bin
+|  .../screenshots}/TC-MOBILE-REGISTER-001.png               | Bin
+|  .../screenshots}/TC-MOBILE-REGISTER-002a.png              | Bin
+|  .../screenshots}/TC-MOBILE-REGISTER-002b.png              | Bin
+|  .../screenshots}/TC-MOBILE-REGISTER-003a.png              | Bin
+|  .../screenshots}/TC-MOBILE-REGISTER-003b.png              | Bin
+|  .../screenshots}/TC-MOBILE-REGISTER-004a.png              | Bin
+|  .../screenshots}/TC-MOBILE-REGISTER-004b.png              | Bin
+|  .../screenshots}/TC-MOBILE-REGISTER-005a.png              | Bin
+|  .../screenshots}/TC-MOBILE-REGISTER-005b.png              | Bin
+|  .../screenshots}/TC-PLAS-001.png                          | Bin
+|  .../screenshots}/TC-PLAS-002.png                          | Bin
+|  .../screenshots}/TC-PLAS-003.png                          | Bin
+|  .../screenshots}/TC-PLAS-004.png                          | Bin
+|  .../screenshots}/TC-PLAS-005a.png                         | Bin
+|  .../screenshots}/TC-PLAS-005b.png                         | Bin
+|  .../screenshots}/TC-PLAS-006a.png                         | Bin
+|  .../screenshots}/TC-PLAS-006b.png                         | Bin
+|  .../screenshots}/TC-PLAS-007.png                          | Bin
+|  .../screenshots}/TC-PLAS-BVA-001.png                      | Bin
+|  .../screenshots}/TC-PLAS-BVA-002.png                      | Bin
+|  .../screenshots}/TC-PLAS-BVA-003.png                      | Bin
+|  .../screenshots}/TC-PLAS-BVA-004a.png                     | Bin
+|  .../screenshots}/TC-PLAS-BVA-004b.png                     | Bin
+|  .../screenshots}/TC-PLAS-BVA-005a.png                     | Bin
+|  .../screenshots}/TC-PLAS-BVA-005b.png                     | Bin
+|  42 files changed, 0 insertions(+), 0 deletions(-)
+| 
+* commit 53e5ffb5b0e3fee34af003eb127342aec6281ed5
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Wed Aug 5 00:30:35 2026 +0700
+| 
+|     test(fr-20, fr-01): update and add more test cases
+| 
+|  .../mobile-register/TC-MOBILE-REGISTER-014.md     | 44 +++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-015.md     | 44 +++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-016.md     | 43 +++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-017.md     | 43 +++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-018.md     | 43 +++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-019.md     | 43 +++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-020.md     | 43 +++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-021.md     | 44 +++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-022.md     | 52 +++++++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-BVA-001.md |  3 +-
+|  .../mobile-register/TC-MOBILE-REGISTER-BVA-003.md | 44 +++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-BVA-004.md | 44 +++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-BVA-005.md | 44 +++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-BVA-006.md | 44 +++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-BVA-007.md | 43 +++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-BVA-008.md | 43 +++++++++++++++++
+|  16 files changed, 663 insertions(+), 1 deletion(-)
+| 
+* commit ce07a415628ffbabe90cf9a0a9a8a88336683ef0
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Wed Aug 5 00:28:57 2026 +0700
+| 
+|     test(fr-14): update and add more test cases
+| 
+|  tests/test-cases/category/TC-CATEGORY-004.md     |  6 ++-
+|  tests/test-cases/category/TC-CATEGORY-006.md     | 16 ++++----
+|  tests/test-cases/category/TC-CATEGORY-009.md     | 16 +++++---
+|  tests/test-cases/category/TC-CATEGORY-012.md     | 42 ++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-013.md     | 46 ++++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-014.md     | 44 +++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-015.md     | 44 +++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-016.md     | 43 ++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-017.md     | 44 +++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-018.md     | 41 +++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-019.md     | 44 +++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-020.md     | 45 +++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-BVA-003.md | 40 +++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-BVA-004.md | 42 ++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-BVA-005.md | 42 ++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-BVA-006.md | 44 +++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-BVA-007.md | 44 +++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-BVA-008.md | 42 ++++++++++++++++++++
+|  18 files changed, 670 insertions(+), 15 deletions(-)
+| 
+* commit 32bc0f8d46a7d3ee1444e6c46736ec6ca9a95c55
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Wed Aug 5 00:24:25 2026 +0700
+| 
+|     test(fr-08): update and add more test cases
+| 
+|  tests/test-cases/checkout/TC-CHECKOUT-004.md     | 11 ++---
+|  tests/test-cases/checkout/TC-CHECKOUT-005.md     | 47 ++++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-006.md     | 44 +++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-007.md     | 45 +++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-008.md     | 45 +++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-009.md     | 44 +++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-010.md     | 48 +++++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-011.md     | 44 +++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-012.md     | 44 +++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-013.md     | 45 +++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-014.md     | 45 +++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-015.md     | 45 +++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-002.md |  6 +--
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-003.md |  6 +--
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-004.md | 45 +++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-005.md | 44 +++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-006.md | 44 +++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-007.md | 50 ++++++++++++++++++++++
+|  18 files changed, 691 insertions(+), 11 deletions(-)
+| 
+* commit b91453621153a56be500ba6022e60cab93c324f3
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Wed Aug 5 00:23:34 2026 +0700
+| 
+|     test(fr-05): update and add more test cases
+| 
+|  .../product-list-and-search/TC-PLAS-004.md        |  8 ++---
+|  .../product-list-and-search/TC-PLAS-008.md        | 39 ++++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-009.md        | 38 ++++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-010.md        | 37 +++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-011.md        | 38 ++++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-012.md        | 38 ++++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-013.md        | 38 ++++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-014.md        | 37 +++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-015.md        | 38 ++++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-016.md        | 38 ++++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-017.md        | 40 +++++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-018.md        | 39 ++++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-019.md        | 40 +++++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-BVA-001.md    |  4 +--
+|  .../product-list-and-search/TC-PLAS-BVA-002.md    |  8 +++--
+|  .../product-list-and-search/TC-PLAS-BVA-003.md    | 11 +++---
+|  .../product-list-and-search/TC-PLAS-BVA-004.md    |  4 +--
+|  .../product-list-and-search/TC-PLAS-BVA-006.md    | 36 +++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-BVA-007.md    | 36 +++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-BVA-008.md    | 36 +++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-BVA-009.md    | 37 +++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-BVA-010.md    | 37 +++++++++++++++++++
+|  22 files changed, 662 insertions(+), 15 deletions(-)
+| 
+* commit 60fe53177ae11e066e1c3a0073dd548f1933d3f6
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Wed Aug 5 00:13:51 2026 +0700
+| 
+|     docs(report): add reports and update test cases design based on feedback
+| 
+|  docs/report/AI_Audit_Report.md                |    0
+|  docs/report/Boundary_Value_Analysis_Report.md |  345 +++
+|  docs/report/Bug_Report.md                     |  145 +
+|  docs/report/Domain_Testing_Report.md          |  810 ++++++
+|  docs/report/Main_Report.md                    | 1044 ++++++++
+|  docs/report/README.md                         |   62 +
+|  docs/report/git_commit_logs.txt               | 3194 +++++++++++++++++++++++
+|  docs/report/images/bug_issue/1.png            |  Bin 0 -> 403132 bytes
+|  docs/report/images/bug_issue/2.png            |  Bin 0 -> 437506 bytes
+|  docs/report/images/bug_issue/3.png            |  Bin 0 -> 367461 bytes
+|  docs/report/images/bug_issue/detail-1.png     |  Bin 0 -> 254194 bytes
+|  docs/report/images/bug_issue/detail-2.png     |  Bin 0 -> 326138 bytes
+|  docs/report/images/bug_issue/detail-3.png     |  Bin 0 -> 379208 bytes
+|  13 files changed, 5600 insertions(+)
+| 
+* commit e9076eec527b88f293fa0a909837dcd1185b5f22
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Wed Aug 5 00:05:16 2026 +0700
+| 
+|     docs(report): clean old report and add hw4 requirement
+| 
+|  .../2026.HW04.Automation Testing_En.md            |  188 ++
+|  .../2026.HW04.Automation Testing_En.pdf           |  Bin 0 -> 463155 bytes
+|  report/AI_Audit_Report.md                         |  160 -
+|  report/AI_Audit_Report.pdf                        |  Bin 208574 -> 0 bytes
+|  report/AI_Audit_Report_Raw_AI.md                  |  321 --
+|  report/AI_Audit_Report_Raw_AI.pdf                 |  Bin 240992 -> 0 bytes
+|  report/AI_Critique.md                             |    3 -
+|  report/AI_Critique.pdf                            |  Bin 33778 -> 0 bytes
+|  report/Boundary_Value_Analysis_Report.md          |  248 --
+|  report/Boundary_Value_Analysis_Report.pdf         |  Bin 342182 -> 0 bytes
+|  report/Bug_Report.md                              |  145 -
+|  report/Bug_Report.pdf                             |  Bin 2009148 -> 0 bytes
+|  report/Domain_Testing_Report.md                   |  542 ----
+|  report/Domain_Testing_Report.pdf                  |  Bin 655556 -> 0 bytes
+|  report/Main_Report.md                             | 1044 ------
+|  report/Main_Report.pdf                            |  Bin 2996557 -> 0 bytes
+|  report/README.md                                  |   62 -
+|  report/README.pdf                                 |  Bin 114325 -> 0 bytes
+|  report/git_commit_logs.txt                        | 3194 -------------------
+|  report/images/bug_issue/1.png                     |  Bin 403132 -> 0 bytes
+|  report/images/bug_issue/2.png                     |  Bin 437506 -> 0 bytes
+|  report/images/bug_issue/3.png                     |  Bin 367461 -> 0 bytes
+|  report/images/bug_issue/detail-1.png              |  Bin 254194 -> 0 bytes
+|  report/images/bug_issue/detail-2.png              |  Bin 326138 -> 0 bytes
+|  report/images/bug_issue/detail-3.png              |  Bin 379208 -> 0 bytes
+|  25 files changed, 188 insertions(+), 5719 deletions(-)
+| 
+* commit f90d6efb7e4bad7a2b2d22047abbfda26603aab0
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Wed Aug 5 00:02:26 2026 +0700
+| 
+|     feat(skills): udpate ai-audit-logger and add playright-ai-automation
+| 
+|  .agents/skills/ai-audit-logger/SKILL.md           | 101 +++++
+|  .../assets/audit_report_template.md               |  31 ++
+|  .../ai-audit-logger/scripts/log_interaction.py    |  77 ++++
+|  .../scripts/render_audit_report.py                |  87 +++++
+|  .agents/skills/ai-audit-report/SKILL.md           | 396 --------------------
+|  .agents/skills/playwright-ai-automation/SKILL.md  | 175 +++++++++
+|  .../references/ai-prompting-workflow.md           |  81 ++++
+|  .../references/bug-report-template.md             |  80 ++++
+|  .../references/demo-video-guide.md                |  82 ++++
+|  .../feature-selection-and-oral-defense.md         |  44 +++
+|  .../references/playwright-setup.md                | 202 ++++++++++
+|  .../references/review-and-critique.md             |  54 +++
+|  .../references/submission-checklist.md            |  43 +++
+|  .../references/test-design-techniques.md          | 131 +++++++
+|  .../scripts/check_git_commits.sh                  |  78 ++++
+|  .../scripts/package_submission.sh                 |  57 +++
+|  .../scripts/scaffold_playwright_project.sh        |  85 +++++
+|  17 files changed, 1408 insertions(+), 396 deletions(-)
+| 
+* commit f733ee50621de0ae4cdb260d81feee7bc277cd58
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Jun 29 09:50:17 2026 +0700
+| 
+|     docs: update README.md with add youtube link demo
+| 
+|  report/README.md  |   5 ++++-
+|  report/README.pdf | Bin 110693 -> 114325 bytes
+|  2 files changed, 4 insertions(+), 1 deletion(-)
+| 
+* commit 6215341fe2eb25fa6b2cbd11885fb7847913336e
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Jun 29 04:12:45 2026 +0700
+| 
+|     feat: add comprehensive domain testing and audit reports for HW2
+| 
+|  report/AI_Audit_Report.pdf                | Bin 0 -> 208574 bytes
+|  report/AI_Audit_Report_Raw_AI.pdf         | Bin 0 -> 240992 bytes
+|  report/AI_Critique.pdf                    | Bin 0 -> 33778 bytes
+|  report/Boundary_Value_Analysis_Report.pdf | Bin 0 -> 342182 bytes
+|  report/Bug_Report.pdf                     | Bin 0 -> 2009148 bytes
+|  report/Domain_Testing_Report.pdf          | Bin 0 -> 655556 bytes
+|  report/Main_Report.pdf                    | Bin 0 -> 2996557 bytes
+|  report/README.pdf                         | Bin 0 -> 110693 bytes
+|  8 files changed, 0 insertions(+), 0 deletions(-)
+| 
+* commit 764ea788e673018726584803d43a3686fd49f05c
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Jun 29 03:59:46 2026 +0700
+| 
+|     docs(report): complete main report, test summaries, and self-assessment for HW02
+| 
+|  .agents/skills/ai-gap-analysis/SKILL.md     |  378 ---
+|  .agents/skills/test-runner/SKILL.md         |  378 ---
+|  backend/database.sqlite                     |  Bin 36864 -> 36864 bytes
+|  report/AI_Audit_Report.md                   |  430 +---
+|  report/AI_Audit_Report_Raw_AI.md            |  321 +++
+|  report/AI_Critique.md                       |    3 +
+|  report/Bug_Report.md                        |  145 ++
+|  report/Main_Report.md                       | 1044 ++++++++
+|  report/README.md                            |   59 +
+|  report/git_commit_logs.txt                  | 3194 +++++++++++++++++++++++++
+|  report/images/bug_issue/1.png               |  Bin 0 -> 403132 bytes
+|  report/images/bug_issue/2.png               |  Bin 0 -> 437506 bytes
+|  report/images/bug_issue/3.png               |  Bin 0 -> 367461 bytes
+|  report/images/bug_issue/detail-1.png        |  Bin 0 -> 254194 bytes
+|  report/images/bug_issue/detail-2.png        |  Bin 0 -> 326138 bytes
+|  report/images/bug_issue/detail-3.png        |  Bin 0 -> 379208 bytes
+|  tests/bug-reports/BUG-[MODULE]-[BUGID].md   |   53 -
+|  tests/test-runs/CATEGORY-test-run.md        |   32 +-
+|  tests/test-runs/CHECKOUT-test-run.md        |    2 +
+|  tests/test-runs/MOBILE-REGISTER-test-run.md |    2 +
+|  tests/test-runs/PLAS-test-run.md            |    4 +
+|  tests/test-summary/test-summary-report.md   |   36 +
+|  tests/test-summary/traceability-matrix.md   |   56 +-
+|  23 files changed, 5001 insertions(+), 1136 deletions(-)
+| 
+* commit 4d69b7174b0e692dff44ee526efba543709a7a7a
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Jun 29 01:52:41 2026 +0700
+| 
+|     test(mobile): record TC-MOBILE-REGISTER-BVA-001 and BVA-002 fail under BUG-MOBILE-REGISTER-001
+| 
+|  tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-001.md   | 2 +-
+|  tests/test-cases/mobile-register/TC-MOBILE-REGISTER-BVA-001.md | 2 +-
+|  tests/test-cases/mobile-register/TC-MOBILE-REGISTER-BVA-002.md | 2 +-
+|  tests/test-runs/MOBILE-REGISTER-test-run.md                    | 4 ++--
+|  4 files changed, 5 insertions(+), 5 deletions(-)
+| 
+* commit 6dc091d1ec2df3d3a4458ac4714670c0b0e8a7ba
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Jun 29 01:50:43 2026 +0700
+| 
+|     test(mobile): record TC-MOBILE-REGISTER-012 and 013 fail under BUG-MOBILE-REGISTER-001
+| 
+|  tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-001.md | 2 +-
+|  tests/test-cases/mobile-register/TC-MOBILE-REGISTER-012.md   | 2 +-
+|  tests/test-cases/mobile-register/TC-MOBILE-REGISTER-013.md   | 2 +-
+|  tests/test-runs/MOBILE-REGISTER-test-run.md                  | 4 ++--
+|  4 files changed, 5 insertions(+), 5 deletions(-)
+| 
+* commit 3a83d8794ef982598346dea950d474c26c3d0bdc
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Jun 29 01:48:34 2026 +0700
+| 
+|     test(mobile): record TC-MOBILE-REGISTER-009 to 011 fail under BUG-MOBILE-REGISTER-001
+| 
+|  tests/test-cases/mobile-register/TC-MOBILE-REGISTER-009.md | 2 +-
+|  tests/test-cases/mobile-register/TC-MOBILE-REGISTER-010.md | 2 +-
+|  tests/test-cases/mobile-register/TC-MOBILE-REGISTER-011.md | 2 +-
+|  3 files changed, 3 insertions(+), 3 deletions(-)
+| 
+* commit bb67b2cde98a434ff393c2e0b968f7d8e515676c
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Jun 29 01:47:56 2026 +0700
+| 
+|     test(mobile): record TC-MOBILE-REGISTER-008 fail under BUG-MOBILE-REGISTER-001
+| 
+|  tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-001.md | 2 +-
+|  tests/test-cases/mobile-register/TC-MOBILE-REGISTER-008.md   | 2 +-
+|  tests/test-runs/MOBILE-REGISTER-test-run.md                  | 8 ++++----
+|  3 files changed, 6 insertions(+), 6 deletions(-)
+| 
+* commit f1e98b742e859150c3590b38c82341cb7be8ac40
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Jun 29 01:45:19 2026 +0700
+| 
+|     test(mobile): record TC-MOBILE-REGISTER-007 fail under BUG-MOBILE-REGISTER-001
+| 
+|  tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-001.md | 2 +-
+|  tests/test-cases/mobile-register/TC-MOBILE-REGISTER-007.md   | 2 +-
+|  tests/test-runs/MOBILE-REGISTER-test-run.md                  | 2 +-
+|  3 files changed, 3 insertions(+), 3 deletions(-)
+| 
+* commit c7111fee614ccb17a4777b9a2c0370f3d8e230e9
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Jun 29 01:43:24 2026 +0700
+| 
+|     test(mobile): record TC-MOBILE-REGISTER-006 fail under BUG-MOBILE-REGISTER-001
+| 
+|  tests/bug-reports/mobile-register/BUG-MOBILE-REGISTER-001.md | 2 +-
+|  tests/test-cases/mobile-register/TC-MOBILE-REGISTER-006.md   | 2 +-
+|  tests/test-runs/MOBILE-REGISTER-test-run.md                  | 2 +-
+|  3 files changed, 3 insertions(+), 3 deletions(-)
+| 
+* commit e6c93d60dbf4b31689701c881b57cf7a9a5ece97
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Jun 29 01:41:49 2026 +0700
+| 
+|     test(mobile): record TC-MOBILE-REGISTER-005 fail and create BUG-MOBILE-REGISTER-005
+| 
+|  .../mobile-register/BUG-MOBILE-REGISTER-001.md    |   2 +-
+|  .../mobile-register/BUG-MOBILE-REGISTER-005.md    |  48 ++++++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-005a.png   | Bin 0 -> 241853 bytes
+|  .../mobile-register/TC-MOBILE-REGISTER-005b.png   | Bin 0 -> 235151 bytes
+|  .../mobile-register/TC-MOBILE-REGISTER-005.md     |   2 +-
+|  tests/test-runs/MOBILE-REGISTER-test-run.md       |   2 +-
+|  6 files changed, 51 insertions(+), 3 deletions(-)
+| 
+* commit 69a5f9e710f483852febfbe775ea17801400d0a7
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Jun 29 01:39:13 2026 +0700
+| 
+|     test(mobile): record TC-MOBILE-REGISTER-004 fail and create BUG-MOBILE-REGISTER-004
+| 
+|  .../mobile-register/BUG-MOBILE-REGISTER-001.md    |   2 +-
+|  .../mobile-register/BUG-MOBILE-REGISTER-004.md    |  48 ++++++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-004a.png   | Bin 0 -> 239848 bytes
+|  .../mobile-register/TC-MOBILE-REGISTER-004b.png   | Bin 0 -> 233367 bytes
+|  .../mobile-register/TC-MOBILE-REGISTER-004.md     |   2 +-
+|  tests/test-runs/MOBILE-REGISTER-test-run.md       |  34 +++++++-------
+|  6 files changed, 67 insertions(+), 19 deletions(-)
+| 
+* commit ebc064c35d835aa39b96ff8528c92d47275597a2
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Jun 29 01:35:09 2026 +0700
+| 
+|     test(mobile): record TC-MOBILE-REGISTER-003 fail and create BUG-MOBILE-REGISTER-003
+| 
+|  .../mobile-register/BUG-MOBILE-REGISTER-001.md    |   2 +-
+|  .../mobile-register/BUG-MOBILE-REGISTER-003.md    |  48 ++++++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-003a.png   | Bin 0 -> 241455 bytes
+|  .../mobile-register/TC-MOBILE-REGISTER-003b.png   | Bin 0 -> 236239 bytes
+|  .../mobile-register/TC-MOBILE-REGISTER-003.md     |   2 +-
+|  tests/test-runs/MOBILE-REGISTER-test-run.md       |   2 +-
+|  6 files changed, 51 insertions(+), 3 deletions(-)
+| 
+* commit 1ed39464565b3a10f14a414027d44d8eb19f391c
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Jun 29 01:29:39 2026 +0700
+| 
+|     test(mobile): record TC-MOBILE-REGISTER-002 fail and create BUG-MOBILE-REGISTER-002
+| 
+|  .../mobile-register/BUG-MOBILE-REGISTER-001.md    |   2 +-
+|  .../mobile-register/BUG-MOBILE-REGISTER-002.md    |  48 ++++++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-002a.png   | Bin 0 -> 353312 bytes
+|  .../mobile-register/TC-MOBILE-REGISTER-002b.png   | Bin 0 -> 247314 bytes
+|  .../test_tc_mobile_register_002.rest              |  13 ++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-002.md     |   2 +-
+|  tests/test-runs/MOBILE-REGISTER-test-run.md       |  34 +++++++-------
+|  7 files changed, 80 insertions(+), 19 deletions(-)
+| 
+* commit 2032565629643088d7d03a367eab09b1e4352c31
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Jun 29 01:13:51 2026 +0700
+| 
+|     test(mobile): record TC-MOBILE-REGISTER-001 fail and create bug report
+| 
+|  .../mobile-register/BUG-MOBILE-REGISTER-001.md    |  42 ++++++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-001.png    | Bin 0 -> 183607 bytes
+|  .../mobile-register/TC-MOBILE-REGISTER-001.md     |   2 +-
+|  tests/test-runs/MOBILE-REGISTER-test-run.md       |  19 +++++++++
+|  4 files changed, 62 insertions(+), 1 deletion(-)
+| 
+* commit e1ea348683cf9e8d185860d7e45e25a11f99f541
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Jun 29 00:56:28 2026 +0700
+| 
+|     refactor: use relative paths for test case links in reports
+| 
+|  report/AI_Audit_Report.md                | 14 ++---
+|  report/Boundary_Value_Analysis_Report.md | 34 +++++------
+|  report/Domain_Testing_Report.md          | 94 +++++++++++++++---------------
+|  3 files changed, 71 insertions(+), 71 deletions(-)
+| 
+* commit a392bddd01bc7798f011e2b7304c72973943aae2
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Jun 29 00:25:33 2026 +0700
+| 
+|     test(mobile): design domain testing and BVA test cases for FR-01 and FR-20
+|     
+|     - Generate 13 Domain Testing test cases for mobile registration
+|     - Generate 2 Boundary Value Analysis test cases
+|     - Update Domain Testing and BVA reports
+|     - Append AI Audit Report entry
+| 
+|  report/AI_Audit_Report.md                         |  75 ++++++++++--
+|  report/Boundary_Value_Analysis_Report.md          |  47 ++++++++
+|  report/Domain_Testing_Report.md                   | 127 ++++++++++++++++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-001.md     |  43 +++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-002.md     |  42 +++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-003.md     |  42 +++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-004.md     |  42 +++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-005.md     |  43 +++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-006.md     |  42 +++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-007.md     |  42 +++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-008.md     |  42 +++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-009.md     |  42 +++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-010.md     |  42 +++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-011.md     |  42 +++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-012.md     |  42 +++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-013.md     |  42 +++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-BVA-001.md |  43 +++++++
+|  .../mobile-register/TC-MOBILE-REGISTER-BVA-002.md |  43 +++++++
+|  18 files changed, 871 insertions(+), 12 deletions(-)
+| 
+* commit 64e9907af53cc451e5909ced7d3ab74e1215b842
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Jun 29 00:16:37 2026 +0700
+| 
+|     config(mobile): update local host IP address for backend API connection
+| 
+|  frontend-mobile/App.js            |   2 +-
+|  frontend-mobile/package-lock.json | 221 +++++++++++++++++++++++++++++++++++-
+|  frontend-mobile/package.json      |   5 +-
+|  3 files changed, 225 insertions(+), 3 deletions(-)
+| 
+* commit 74bc1964140b4f4d3358b135c50bd3530ecb873f
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 23:33:27 2026 +0700
+| 
+|     refactor(tests): clean up login/mobile test cases and rename register to mobile-register
+| 
+|  tests/test-cases/login/TC-LOGIN-001.md            | 33 ---------------------
+|  .../TC-MPLAS-001.md                               | 33 ---------------------
+|  .../TC-MOBILE-REGISTER-001.md}                    |  0
+|  3 files changed, 66 deletions(-)
+| 
+* commit 018b6fcd253f853bd8507b780582e28f4ae6092e
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 23:23:11 2026 +0700
+| 
+|     test(category): update localhost port to 5174 in bug reports
+| 
+|  tests/bug-reports/category/BUG-CATEGORY-001.md | 2 +-
+|  tests/bug-reports/category/BUG-CATEGORY-002.md | 2 +-
+|  tests/bug-reports/category/BUG-CATEGORY-003.md | 2 +-
+|  tests/bug-reports/category/BUG-CATEGORY-004.md | 2 +-
+|  tests/bug-reports/category/BUG-CATEGORY-005.md | 2 +-
+|  5 files changed, 5 insertions(+), 5 deletions(-)
+| 
+* commit 97b47ad75b71cb70e3b6b8e9eded8e04a76999da
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 23:09:00 2026 +0700
+| 
+|     test: record TC-CATEGORY-BVA-002 result as Pass
+| 
+|  .../category/test_tc_category_bva_002.rest        | 25 +++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-BVA-002.md  |  4 ++--
+|  tests/test-runs/CATEGORY-test-run.md              |  2 +-
+|  3 files changed, 28 insertions(+), 3 deletions(-)
+| 
+* commit 81aa0f076a6b250c674eddb98405547d8ca04361
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 23:07:18 2026 +0700
+| 
+|     test: record TC-CATEGORY-BVA-001 result as Pass
+| 
+|  .../category/test_tc_category_bva_001.rest        | 25 +++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-BVA-001.md  |  4 ++--
+|  tests/test-runs/CATEGORY-test-run.md              |  2 +-
+|  3 files changed, 28 insertions(+), 3 deletions(-)
+| 
+* commit a17808facdb7e701299524d5e400540ab3e77b17
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 23:04:35 2026 +0700
+| 
+|     test: record TC-CATEGORY-011 result, script and create BUG-CATEGORY-005 report~
+| 
+|  tests/bug-reports/category/BUG-CATEGORY-005.md    |  42 ++++++++++++++++++++
+|  .../screenshots/category/TC-CATEGORY-011.png      | Bin 0 -> 330398 bytes
+|  tests/scripts/category/test_tc_category_011.rest  |  20 ++++++++++
+|  tests/test-cases/category/TC-CATEGORY-011.md      |   4 +-
+|  tests/test-runs/CATEGORY-test-run.md              |   2 +-
+|  5 files changed, 65 insertions(+), 3 deletions(-)
+| 
+* commit fb0414d40768d438e635340183882aed7dff4ddd
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 23:01:17 2026 +0700
+| 
+|     test: record TC-CATEGORY-010 result and script as Pass
+| 
+|  tests/scripts/category/test_tc_category_010.rest | 5 +++++
+|  tests/test-cases/category/TC-CATEGORY-010.md     | 4 ++--
+|  tests/test-runs/CATEGORY-test-run.md             | 2 +-
+|  3 files changed, 8 insertions(+), 3 deletions(-)
+| 
+* commit a4a9e0e5465ae299d4794f434cc429cbbce63a7f
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 22:59:38 2026 +0700
+| 
+|     test: record TC-CATEGORY-009 result, script and create BUG-CATEGORY-004 report
+| 
+|  tests/bug-reports/category/BUG-CATEGORY-004.md    |  43 ++++++++++++++++++++
+|  .../screenshots/category/TC-CATEGORY-009.png      | Bin 0 -> 281032 bytes
+|  tests/scripts/category/test_tc_category_009.rest  |  20 +++++++++
+|  tests/test-cases/category/TC-CATEGORY-009.md      |   4 +-
+|  tests/test-runs/CATEGORY-test-run.md              |   2 +-
+|  5 files changed, 66 insertions(+), 3 deletions(-)
+| 
+* commit 6e73b869e8b15c3c09a99fbf871c991e049ceb8d
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 22:55:52 2026 +0700
+| 
+|     test: record TC-CATEGORY-008 result, script and create BUG-CATEGORY-003 report
+| 
+|  tests/bug-reports/category/BUG-CATEGORY-003.md    |  43 ++++++++++++++++++++
+|  .../screenshots/category/TC-CATEGORY-008.png      | Bin 0 -> 288912 bytes
+|  tests/scripts/category/test_tc_category_008.rest  |  25 ++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-008.md      |   4 +-
+|  tests/test-runs/CATEGORY-test-run.md              |   2 +-
+|  5 files changed, 71 insertions(+), 3 deletions(-)
+| 
+* commit 4c22debb6aaffd9bf3ce4eb5841d591803152a61
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 22:50:52 2026 +0700
+| 
+|     test: record TC-CATEGORY-007 result and script as Pass
+| 
+|  tests/scripts/category/test_tc_category_007.rest | 10 ++++++++++
+|  tests/test-cases/category/TC-CATEGORY-007.md     |  4 ++--
+|  tests/test-runs/CATEGORY-test-run.md             |  2 +-
+|  3 files changed, 13 insertions(+), 3 deletions(-)
+| 
+* commit 2013d271909bcdd96767dbba98357f27075a47f0
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 22:50:44 2026 +0700
+| 
+|     test: record TC-CATEGORY-006 result, script and create BUG-CATEGORY-002 report
+| 
+|  tests/bug-reports/category/BUG-CATEGORY-002.md    |  42 ++++++++++++++++++++
+|  .../screenshots/category/TC-CATEGORY-006.png      | Bin 0 -> 235502 bytes
+|  tests/scripts/category/test_tc_category_006.rest  |  20 ++++++++++
+|  tests/test-cases/category/TC-CATEGORY-006.md      |   4 +-
+|  tests/test-runs/CATEGORY-test-run.md              |   2 +-
+|  5 files changed, 65 insertions(+), 3 deletions(-)
+| 
+* commit c7b32e0596eff36408e66789fe23d5e8e3041770
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 22:41:39 2026 +0700
+| 
+|     test: record TC-CATEGORY-005 result as Pass
+| 
+|  tests/scripts/category/test_tc_category_005.rest | 37 ++++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-005.md     |  4 +--
+|  tests/test-runs/CATEGORY-test-run.md             |  2 +-
+|  3 files changed, 40 insertions(+), 3 deletions(-)
+| 
+* commit a792ec46a7a261b31c05d0ffc12fa9982af32196
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 22:37:07 2026 +0700
+| 
+|     test: record TC-CATEGORY-004 result as Pass
+| 
+|  tests/scripts/category/test_tc_category_004.rest | 20 ++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-004.md     |  4 ++--
+|  tests/test-runs/CATEGORY-test-run.md             |  2 +-
+|  3 files changed, 23 insertions(+), 3 deletions(-)
+| 
+* commit 3468abc9d71d1d9614b26dcf6a3ac407f92f3189
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 22:20:38 2026 +0700
+| 
+|     test: record TC-CATEGORY-003 result and update BUG-CATEGORY-001 report
+| 
+|  tests/bug-reports/category/BUG-CATEGORY-001.md       |  12 +++++++-----
+|  .../screenshots/category/TC-CATEGORY-003.png         | Bin 0 -> 162143 bytes
+|  tests/test-cases/category/TC-CATEGORY-003.md         |   4 ++--
+|  tests/test-runs/CATEGORY-test-run.md                 |   2 +-
+|  4 files changed, 10 insertions(+), 8 deletions(-)
+| 
+* commit 0a7ec4f8f0ff67da37f24a8b75d9fa8445f6321e
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 22:18:38 2026 +0700
+| 
+|     test: record TC-CATEGORY-001 and TC-CATEGORY-002 results with BUG-CATEGORY-001
+| 
+|  tests/bug-reports/category/BUG-CATEGORY-001.md    |  45 ++++++++++++++++++++
+|  .../screenshots/category/TC-CATEGORY-002.png      | Bin 0 -> 159890 bytes
+|  tests/test-cases/category/TC-CATEGORY-002.md      |   4 +-
+|  tests/test-runs/CATEGORY-test-run.md              |   2 +-
+|  4 files changed, 48 insertions(+), 3 deletions(-)
+| 
+* commit 75211e19b456cc4657aac7fa7c848b1bc22f6570
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 22:15:03 2026 +0700
+| 
+|     test: record TC-CATEGORY-001 result
+| 
+|  tests/test-cases/category/TC-CATEGORY-001.md |  4 ++--
+|  tests/test-runs/CATEGORY-test-run.md         | 17 +++++++++++++++++
+|  2 files changed, 19 insertions(+), 2 deletions(-)
+| 
+* commit 22929eed08ec5079d96fdf4aea90dc9c46aa8040
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 21:17:46 2026 +0700
+| 
+|     test(category): add negative test cases for category deletion
+| 
+|  report/AI_Audit_Report.md                    | 16 ++++----
+|  report/Domain_Testing_Report.md              | 51 +++++++++++++++-----------
+|  tests/test-cases/category/TC-CATEGORY-009.md | 41 +++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-010.md | 37 +++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-011.md | 38 +++++++++++++++++++
+|  5 files changed, 153 insertions(+), 30 deletions(-)
+| 
+* commit a8234324f91e329db616aef92cff68b3064a0e96
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 19:51:00 2026 +0700
+| 
+|     test(category): generate DT and BVA test cases for FR-14
+| 
+|  report/AI_Audit_Report.md                        |  83 +++++++++++++---
+|  report/Boundary_Value_Analysis_Report.md         |  51 ++++++++++
+|  report/Domain_Testing_Report.md                  | 105 +++++++++++++++++++++
+|  tests/test-cases/category/TC-CATEGORY-001.md     |  29 +++---
+|  tests/test-cases/category/TC-CATEGORY-002.md     |  40 ++++++++
+|  tests/test-cases/category/TC-CATEGORY-003.md     |  40 ++++++++
+|  tests/test-cases/category/TC-CATEGORY-004.md     |  39 ++++++++
+|  tests/test-cases/category/TC-CATEGORY-005.md     |  42 +++++++++
+|  tests/test-cases/category/TC-CATEGORY-006.md     |  38 ++++++++
+|  tests/test-cases/category/TC-CATEGORY-007.md     |  38 ++++++++
+|  tests/test-cases/category/TC-CATEGORY-008.md     |  39 ++++++++
+|  tests/test-cases/category/TC-CATEGORY-BVA-001.md |  40 ++++++++
+|  tests/test-cases/category/TC-CATEGORY-BVA-002.md |  40 ++++++++
+|  13 files changed, 600 insertions(+), 24 deletions(-)
+| 
+* commit 6440429639addfb084b6ae81c0126a8246a76f25
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 18:09:33 2026 +0700
+| 
+|     test: record TC-CHECKOUT-BVA-002 and 003 results, update bug report
+| 
+|  tests/bug-reports/checkout/BUG-CHECKOUT-004.md    |  2 +-
+|  .../checkout/test_tc_checkout_bva_002.rest        | 60 +++++++++++++++++++++
+|  .../checkout/test_tc_checkout_bva_003.rest        | 60 +++++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-002.md  |  2 +-
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-003.md  |  2 +-
+|  tests/test-runs/CHECKOUT-test-run.md              |  4 +-
+|  6 files changed, 125 insertions(+), 5 deletions(-)
+| 
+* commit ec0012fe739d9266164be9dc8fa2d20e3984d151
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 17:57:30 2026 +0700
+| 
+|     test: record TC-CHECKOUT-BVA-001 result and update bug reports
+| 
+|  tests/bug-reports/checkout/BUG-CHECKOUT-001.md    |  2 +-
+|  .../checkout/test_tc_checkout_bva_001.rest        | 47 +++++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-001.md  |  2 +-
+|  tests/test-runs/CHECKOUT-test-run.md              |  2 +-
+|  4 files changed, 50 insertions(+), 3 deletions(-)
+| 
+* commit a75508e55520b7940cecab12f9bd7cc4edeec117
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 17:39:29 2026 +0700
+| 
+|     test: record TC-CHECKOUT-004 result and update bug reports
+| 
+|  tests/bug-reports/checkout/BUG-CHECKOUT-004.md    |  48 ++++++++++++++++
+|  .../screenshots/checkout/TC-CHECKOUT-004a.png     | Bin 0 -> 330405 bytes
+|  .../screenshots/checkout/TC-CHECKOUT-004b.png     | Bin 0 -> 324273 bytes
+|  .../screenshots/checkout/TC-CHECKOUT-004c.png     | Bin 0 -> 324218 bytes
+|  tests/scripts/checkout/test_tc_checkout_004.rest  |  59 ++++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-004.md      |   2 +-
+|  tests/test-runs/CHECKOUT-test-run.md              |   2 +-
+|  7 files changed, 109 insertions(+), 2 deletions(-)
+| 
+* commit e75f07b2a8622a144163d22865b6d787388cbc5f
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 17:20:57 2026 +0700
+| 
+|     test: record TC-CHECKOUT-003 result and update bug reports
+| 
+|  tests/bug-reports/checkout/BUG-CHECKOUT-003.md    |  48 ++++++++++++++++++++
+|  .../screenshots/checkout/TC-CHECKOUT-003a.png     | Bin 0 -> 354884 bytes
+|  .../screenshots/checkout/TC-CHECKOUT-003b.png     | Bin 0 -> 328955 bytes
+|  .../screenshots/checkout/TC-CHECKOUT-003c.png     | Bin 0 -> 289060 bytes
+|  .../bug-reports/screenshots/checkout/image.1.png  | Bin 267174 -> 0 bytes
+|  tests/bug-reports/screenshots/checkout/image.png  | Bin 311698 -> 0 bytes
+|  tests/scripts/checkout/test_tc_checkout_003.rest  |  27 +++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-003.md      |   2 +-
+|  tests/test-runs/CHECKOUT-test-run.md              |   2 +-
+|  9 files changed, 77 insertions(+), 2 deletions(-)
+| 
+* commit 3f419f2c693029cf577ab5c8b17d737a5a98bf5d
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 17:03:52 2026 +0700
+| 
+|     test(checkout): record TC-CHECKOUT-002 result as Pass
+| 
+|  .../bug-reports/screenshots/checkout/image.1.png  | Bin 0 -> 267174 bytes
+|  tests/bug-reports/screenshots/checkout/image.png  | Bin 0 -> 311698 bytes
+|  tests/scripts/checkout/test_tc_checkout_002.rest  |  20 ++++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-002.md      |   2 +-
+|  tests/test-runs/CHECKOUT-test-run.md              |   2 +-
+|  5 files changed, 22 insertions(+), 2 deletions(-)
+| 
+* commit f986ad805e68eaecc165374038449685ed43ef6f
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 16:57:20 2026 +0700
+| 
+|     test(checkout): report TC-CHECKOUT-001 results and bugs
+| 
+|  tests/bug-reports/checkout/BUG-CHECKOUT-001.md    |  52 ++++++++++++++++++++
+|  tests/bug-reports/checkout/BUG-CHECKOUT-002.md    |  42 ++++++++++++++++
+|  .../screenshots/checkout/TC-CHECKOUT-001a.png     | Bin 0 -> 291796 bytes
+|  .../screenshots/checkout/TC-CHECKOUT-001b.png     | Bin 0 -> 299571 bytes
+|  .../screenshots/checkout/TC-CHECKOUT-001c.png     | Bin 0 -> 271335 bytes
+|  .../screenshots/checkout/TC-CHECKOUT-001d.png     | Bin 0 -> 293934 bytes
+|  .../screenshots/checkout/TC-CHECKOUT-001e.png     | Bin 0 -> 217822 bytes
+|  tests/test-cases/checkout/TC-CHECKOUT-001.md      |   3 +-
+|  tests/test-runs/CHECKOUT-test-run.md              |  11 +++++
+|  9 files changed, 106 insertions(+), 2 deletions(-)
+| 
+* commit 9a96217cb0e97da2d2769ae2734c9bb577d3ed7a
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 16:17:51 2026 +0700
+| 
+|     test(checkout): remove hallucinated shipping_address variable from test cases and reports
+| 
+|  report/AI_Audit_Report.md                        | 14 ++--
+|  report/Boundary_Value_Analysis_Report.md         | 78 ++++++++++------------
+|  report/Domain_Testing_Report.md                  | 77 +++++++++------------
+|  tests/test-cases/checkout/TC-CHECKOUT-001.md     | 12 ++--
+|  tests/test-cases/checkout/TC-CHECKOUT-002.md     |  8 +--
+|  tests/test-cases/checkout/TC-CHECKOUT-003.md     | 10 +--
+|  tests/test-cases/checkout/TC-CHECKOUT-004.md     | 10 +--
+|  tests/test-cases/checkout/TC-CHECKOUT-005.md     | 44 ------------
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-001.md | 10 +--
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-002.md | 10 +--
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-003.md | 10 +--
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-004.md | 44 ------------
+|  12 files changed, 106 insertions(+), 221 deletions(-)
+| 
+* commit cfd8cd247bda5c69b1db8620aba5b48f9621b621
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 16:02:40 2026 +0700
+| 
+|     refactor(test): structure screenshots folder by feature and update bug reports
+| 
+|  .../product-list-and-search/BUG-PLAS-001.md           |  16 ++++++++--------
+|  .../product-list-and-search/BUG-PLAS-002.md           |  10 +++++-----
+|  .../product-list-and-search/BUG-PLAS-003.md           |  10 +++++-----
+|  .../product-list-and-search/BUG-PLAS-004.md           |   6 +++---
+|  .../product-list-and-search/BUG-PLAS-005.md           |   4 ++--
+|  .../product-list-and-search/BUG-PLAS-006.md           |   2 +-
+|  .../product-list-and-search/BUG-PLAS-007.md           |   2 +-
+|  .../{ => product-list-and-search}/TC-PLAS-001.png     | Bin
+|  .../{ => product-list-and-search}/TC-PLAS-002.png     | Bin
+|  .../{ => product-list-and-search}/TC-PLAS-003.png     | Bin
+|  .../{ => product-list-and-search}/TC-PLAS-004.png     | Bin
+|  .../{ => product-list-and-search}/TC-PLAS-005a.png    | Bin
+|  .../{ => product-list-and-search}/TC-PLAS-005b.png    | Bin
+|  .../{ => product-list-and-search}/TC-PLAS-006a.png    | Bin
+|  .../{ => product-list-and-search}/TC-PLAS-006b.png    | Bin
+|  .../{ => product-list-and-search}/TC-PLAS-007.png     | Bin
+|  .../{ => product-list-and-search}/TC-PLAS-BVA-001.png | Bin
+|  .../{ => product-list-and-search}/TC-PLAS-BVA-002.png | Bin
+|  .../{ => product-list-and-search}/TC-PLAS-BVA-003.png | Bin
+|  .../TC-PLAS-BVA-004a.png                              | Bin
+|  .../TC-PLAS-BVA-004b.png                              | Bin
+|  .../TC-PLAS-BVA-005a.png                              | Bin
+|  .../TC-PLAS-BVA-005b.png                              | Bin
+|  23 files changed, 25 insertions(+), 25 deletions(-)
+| 
+* commit 857e3f39108b5c22c08d08525391a9f451f3ce10
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 15:54:39 2026 +0700
+| 
+|     test(checkout): design test cases and reports using domain testing and BVA with real db products
+|     
+|     - Created 5 Domain Testing test cases (TC-CHECKOUT-001 to 005) and 4 BVA test cases (TC-CHECKOUT-BVA-001 to 004) under tests/test-cases/checkout/
+|     
+|     - Populated test cases and report tables with real database products (AirPods Pro 2 and Keychron Q1) and actual prices
+|     
+|     - Updated Domain_Testing_Report.md, Boundary_Value_Analysis_Report.md and added Entry 3 to AI_Audit_Report.md
+| 
+|  report/AI_Audit_Report.md                        |  97 ++++++++++---
+|  report/Boundary_Value_Analysis_Report.md         | 113 +++++++++++++--
+|  report/Domain_Testing_Report.md                  | 158 +++++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-001.md     |  38 +++--
+|  tests/test-cases/checkout/TC-CHECKOUT-002.md     |  42 ++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-003.md     |  43 ++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-004.md     |  45 ++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-005.md     |  44 ++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-001.md |  46 ++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-002.md |  44 ++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-003.md |  44 ++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-BVA-004.md |  44 ++++++
+|  12 files changed, 711 insertions(+), 47 deletions(-)
+| 
+* commit c3475cae2d922d9ef3eb823e55ab62d0be14ab34
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 15:13:51 2026 +0700
+| 
+|     docs: rename test run file to PLAS-test-run and update AI Audit Report
+| 
+|  report/AI_Audit_Report.md                         | 79 ++++++++++++++-------
+|  .../{sprint-1-test-run.md => PLAS-test-run.md}    |  0
+|  2 files changed, 53 insertions(+), 26 deletions(-)
+| 
+* commit 269aad2ae2c36da3d953bda9f28af1c45a960443
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 15:01:52 2026 +0700
+| 
+|     test: record TC-PLAS-BVA-005 results and update existing bug reports with evidence
+| 
+|  .../product-list-and-search/BUG-PLAS-001.md          |   6 ++++--
+|  .../product-list-and-search/BUG-PLAS-002.md          |   4 +++-
+|  .../product-list-and-search/BUG-PLAS-003.md          |   4 +++-
+|  tests/bug-reports/screenshots/TC-PLAS-BVA-005a.png   | Bin 0 -> 273665 bytes
+|  tests/bug-reports/screenshots/TC-PLAS-BVA-005b.png   | Bin 0 -> 217721 bytes
+|  .../product-list-and-search/TC-PLAS-BVA-005.md       |   2 +-
+|  tests/test-runs/sprint-1-test-run.md                 |   2 +-
+|  7 files changed, 12 insertions(+), 6 deletions(-)
+| 
+* commit 4fb360b3b4b28e2be679a6315ce929cd9381101c
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 14:56:42 2026 +0700
+| 
+|     test: record TC-PLAS-BVA-004 results and update BUG-PLAS-004 report
+| 
+|  .../product-list-and-search/BUG-PLAS-004.md       |  23 +++++++++++++-------
+|  .../bug-reports/screenshots/TC-PLAS-BVA-004a.png  | Bin 0 -> 256022 bytes
+|  .../bug-reports/screenshots/TC-PLAS-BVA-004b.png  | Bin 0 -> 171780 bytes
+|  .../product-list-and-search/TC-PLAS-BVA-004.md    |   2 +-
+|  tests/test-runs/sprint-1-test-run.md              |   2 +-
+|  5 files changed, 17 insertions(+), 10 deletions(-)
+| 
+* commit 7950192111b2702c6775675057d46844a42f1fb3
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 14:45:32 2026 +0700
+| 
+|     test: record TC-PLAS-BVA-003 results and update BUG-PLAS-007 report
+| 
+|  .../product-list-and-search/BUG-PLAS-007.md          |  14 ++++++++------
+|  tests/bug-reports/screenshots/TC-PLAS-BVA-003.png    | Bin 0 -> 195224 bytes
+|  .../product-list-and-search/TC-PLAS-BVA-003.md       |   2 +-
+|  tests/test-runs/sprint-1-test-run.md                 |   2 +-
+|  4 files changed, 10 insertions(+), 8 deletions(-)
+| 
+* commit 09c917f6847fde162e5df8602088e2b040ae66a8
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 14:40:47 2026 +0700
+| 
+|     test: record TC-PLAS-BVA-002 results and create BUG-PLAS-007 report
+| 
+|  .../product-list-and-search/BUG-PLAS-007.md       |  46 ++++++++++++++++++++
+|  tests/bug-reports/screenshots/TC-PLAS-BVA-002.png | Bin 0 -> 149100 bytes
+|  .../product-list-and-search/TC-PLAS-BVA-002.md    |   2 +-
+|  tests/test-runs/sprint-1-test-run.md              |   2 +-
+|  4 files changed, 48 insertions(+), 2 deletions(-)
+| 
+* commit 4be6b4cc5758fc8d98d9dc78b31f9366eaceaf9e
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 14:32:40 2026 +0700
+| 
+|     test: record TC-PLAS-BVA-001 results and update existing bug reports with evidence
+| 
+|  .../product-list-and-search/BUG-PLAS-001.md          |   6 ++++--
+|  .../product-list-and-search/BUG-PLAS-002.md          |   4 +++-
+|  .../product-list-and-search/BUG-PLAS-003.md          |   4 +++-
+|  tests/bug-reports/screenshots/TC-PLAS-BVA-001.png    | Bin 0 -> 297195 bytes
+|  .../product-list-and-search/TC-PLAS-BVA-001.md       |   2 +-
+|  tests/test-runs/sprint-1-test-run.md                 |   2 +-
+|  6 files changed, 12 insertions(+), 6 deletions(-)
+| 
+* commit 56d27865400761d14d0c14f2701bc4581c6e1726
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 14:26:09 2026 +0700
+| 
+|     test: record TC-PLAS-007 result and link to BUG-PLAS-001
+| 
+|  .../product-list-and-search/BUG-PLAS-001.md          |   6 ++++--
+|  tests/bug-reports/screenshots/TC-PLAS-007.png        | Bin 0 -> 240024 bytes
+|  .../product-list-and-search/TC-PLAS-007.md           |   2 +-
+|  tests/test-runs/sprint-1-test-run.md                 |   2 +-
+|  4 files changed, 6 insertions(+), 4 deletions(-)
+| 
+* commit 6bf5f9a52e51b0a5ff728deeb7ebdca3cf2a3009
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 14:21:33 2026 +0700
+| 
+|     test: record TC-PLAS-006 results and create BUG-PLAS-006 report
+| 
+|  .../product-list-and-search/BUG-PLAS-001.md       |   6 ++-
+|  .../product-list-and-search/BUG-PLAS-006.md       |  44 ++++++++++++++++++++
+|  tests/bug-reports/screenshots/TC-PLAS-006a.png    | Bin 0 -> 264250 bytes
+|  tests/bug-reports/screenshots/TC-PLAS-006b.png    | Bin 0 -> 222356 bytes
+|  .../product-list-and-search/TC-PLAS-006.md        |   2 +-
+|  tests/test-runs/sprint-1-test-run.md              |   2 +-
+|  6 files changed, 50 insertions(+), 4 deletions(-)
+| 
+* commit f24e197c354cf41a02394a15335b2e9d1b0c3575
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 14:12:26 2026 +0700
+| 
+|     docs: add bug splitting rules to test-run-reporter skill
+| 
+|  .agents/skills/test-run-reporter/SKILL.md | 19 ++++++++++++-------
+|  1 file changed, 12 insertions(+), 7 deletions(-)
+| 
+* commit 2a8c707f95f297e0f817db6fb268aa6745983956
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 14:11:59 2026 +0700
+| 
+|     test: record TC-PLAS-005 results, update BUG-PLAS-001, and create BUG-PLAS-005 for SQLITE error
+| 
+|  .../product-list-and-search/BUG-PLAS-001.md       |   8 +--
+|  .../product-list-and-search/BUG-PLAS-005.md       |  53 ++++++++++++++++++++
+|  tests/bug-reports/screenshots/TC-PLAS-005a.png    | Bin 0 -> 220197 bytes
+|  tests/bug-reports/screenshots/TC-PLAS-005b.png    | Bin 0 -> 182600 bytes
+|  .../product-list-and-search/TC-PLAS-005.md        |   2 +-
+|  tests/test-runs/sprint-1-test-run.md              |   2 +-
+|  6 files changed, 60 insertions(+), 5 deletions(-)
+| 
+* commit 5df367401592236d28c7dc0ca8bd82c09e839cff
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 13:57:15 2026 +0700
+| 
+|     test: record TC-PLAS-004 result and update existing bug reports with evidence
+| 
+|  .../product-list-and-search/BUG-PLAS-001.md          |   6 ++++--
+|  .../product-list-and-search/BUG-PLAS-002.md          |   4 +++-
+|  .../product-list-and-search/BUG-PLAS-003.md          |   4 +++-
+|  tests/bug-reports/screenshots/TC-PLAS-004.png        | Bin 0 -> 209317 bytes
+|  .../product-list-and-search/TC-PLAS-004.md           |   6 +++---
+|  tests/test-runs/sprint-1-test-run.md                 |   2 +-
+|  6 files changed, 14 insertions(+), 8 deletions(-)
+| 
+* commit 8d80410f64e8f8f89ba90907e6cd1c177b072882
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 13:54:54 2026 +0700
+| 
+|     feat: add test-run-reporter skill for manual test execution reporting
+| 
+|  .agents/skills/test-run-reporter/SKILL.md         | 357 ++++++++++++++++++++
+|  .../test-run-reporter/references/conventions.md   | 143 ++++++++
+|  2 files changed, 500 insertions(+)
+| 
+* commit f0254a35aa8903c53b1e975b0ec643808be09842
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 13:46:26 2026 +0700
+| 
+|     test: execute TC-PLAS-003, report BUG-PLAS-004, and add screenshot evidence
+| 
+|  .../product-list-and-search/BUG-PLAS-004.md       |  46 ++++++++++++++++++++
+|  tests/bug-reports/screenshots/TC-PLAS-003.png     | Bin 0 -> 165661 bytes
+|  .../product-list-and-search/TC-PLAS-003.md        |   2 +-
+|  tests/test-runs/sprint-1-test-run.md              |   2 +-
+|  4 files changed, 48 insertions(+), 2 deletions(-)
+| 
+* commit fc6b90c9d4e401990adbd6c8bf51969bca916729
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 13:04:31 2026 +0700
+| 
+|     test: execute TC-PLAS-002, report Fail, and add screenshot evidence
+| 
+|  .../product-list-and-search/BUG-PLAS-001.md          |   7 +++++--
+|  .../product-list-and-search/BUG-PLAS-002.md          |   7 +++++--
+|  .../product-list-and-search/BUG-PLAS-003.md          |   7 +++++--
+|  tests/bug-reports/screenshots/TC-PLAS-002.png        | Bin 0 -> 216816 bytes
+|  .../product-list-and-search/TC-PLAS-002.md           |   2 +-
+|  tests/test-runs/sprint-1-test-run.md                 |   2 +-
+|  6 files changed, 17 insertions(+), 8 deletions(-)
+| 
+* commit cd36f5f4e2a564eeadb16eca85e6d8efbcb7a70a
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 12:57:38 2026 +0700
+| 
+|     refactor: update test data to MacBook Pro M3 and sync reports
+| 
+|  report/Boundary_Value_Analysis_Report.md          | 24 ++++++++++-----------
+|  report/Domain_Testing_Report.md                   |  8 +++----
+|  .../product-list-and-search/TC-PLAS-001.md        |  2 +-
+|  .../product-list-and-search/TC-PLAS-002.md        | 18 ++++++++--------
+|  .../product-list-and-search/TC-PLAS-003.md        |  2 +-
+|  .../product-list-and-search/TC-PLAS-005.md        |  2 +-
+|  .../product-list-and-search/TC-PLAS-BVA-001.md    |  8 +++----
+|  .../product-list-and-search/TC-PLAS-BVA-002.md    |  2 +-
+|  .../product-list-and-search/TC-PLAS-BVA-003.md    |  2 +-
+|  .../product-list-and-search/TC-PLAS-BVA-005.md    |  6 +++---
+|  10 files changed, 37 insertions(+), 37 deletions(-)
+| 
+* commit a0d01fd1bcf0f959f39f92c8bc8b4f096f87a8eb
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 12:50:46 2026 +0700
+| 
+|     test: execute TC-PLAS-001 and report 3 bugs on product-list-and-search
+| 
+|  tests/bug-reports/BUG-[MODULE]-[BUGID].md         |  11 ++++-
+|  .../product-list-and-search/BUG-PLAS-001.md       |  44 +++++++++++++++++
+|  .../product-list-and-search/BUG-PLAS-002.md       |  52 ++++++++++++++++++++
+|  .../product-list-and-search/BUG-PLAS-003.md       |  42 ++++++++++++++++
+|  tests/bug-reports/screenshots/TC-PLAS-001.png     | Bin 0 -> 322713 bytes
+|  .../product-list-and-search/TC-PLAS-001.md        |   2 +-
+|  tests/test-runs/sprint-1-test-run.md              |  17 +++++--
+|  7 files changed, 162 insertions(+), 6 deletions(-)
+| 
+* commit f81fda14b76ad3b95d45b34610a7e19ed4bdbb31
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Jun 28 12:09:44 2026 +0700
+| 
+|     docs: update AI audit report review and add test run & bug report templates
+| 
+|  report/AI_Audit_Report.md                 | 14 ++++-----
+|  tests/bug-reports/BUG-[MODULE]-[BUGID].md | 46 +++++++++++++++++++++++++++++
+|  tests/test-runs/sprint-1-test-run.md      |  3 ++
+|  3 files changed, 56 insertions(+), 7 deletions(-)
+| 
+* commit 7a9ca78d1900c9d07f6623d6df6f404dc63ba2ce
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sat Jun 27 01:12:16 2026 +0700
+| 
+|     test(fr-05): generate domain testing and boundary value analysis test cases and reports
+| 
+|  report/AI_Audit_Report.md                         | 138 +++++++++--------
+|  report/Boundary_Value_Analysis_Report.md          |  77 ++++++++++
+|  report/Domain_Testing_Report.md                   | 162 ++++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-001.md        |  32 ++--
+|  .../product-list-and-search/TC-PLAS-002.md        |  42 +++++
+|  .../product-list-and-search/TC-PLAS-003.md        |  42 +++++
+|  .../product-list-and-search/TC-PLAS-004.md        |  42 +++++
+|  .../product-list-and-search/TC-PLAS-005.md        |  43 ++++++
+|  .../product-list-and-search/TC-PLAS-006.md        |  41 +++++
+|  .../product-list-and-search/TC-PLAS-007.md        |  39 +++++
+|  .../product-list-and-search/TC-PLAS-BVA-001.md    |  41 +++++
+|  .../product-list-and-search/TC-PLAS-BVA-002.md    |  42 +++++
+|  .../product-list-and-search/TC-PLAS-BVA-003.md    |  40 +++++
+|  .../product-list-and-search/TC-PLAS-BVA-004.md    |  40 +++++
+|  .../product-list-and-search/TC-PLAS-BVA-005.md    |  40 +++++
+|  15 files changed, 789 insertions(+), 72 deletions(-)
+| 
+* commit 5e71779ec9e5790e9005c719963bc50e93f397a2
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sat Jun 27 01:11:18 2026 +0700
+| 
+|     docs(skills): update and format agent skills for user prompt recording
+| 
+|  .agents/skills/ai-audit-report/SKILL.md |  29 ++++++--
+|  .agents/skills/ai-gap-analysis/SKILL.md |  14 ++--
+|  .agents/skills/test-runner/SKILL.md     |   8 +--
+|  .agents/skills/test-writer/SKILL.md     | 106 +++++++++++++++---------------
+|  4 files changed, 88 insertions(+), 69 deletions(-)
+| 
+* commit 4ac9249dea953dd9f9e125bcb6269c3143c93194
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Fri Jun 26 21:32:33 2026 +0700
+| 
+|     feat(skills): update test-writer with lint phase and detailed BVA, format md files
+| 
+|  .agents/skills/test-writer/SKILL.md | 423 ++++++++++++++++++++++++----------
+|  1 file changed, 299 insertions(+), 124 deletions(-)
+| 
+* commit c4c36d82eeac271dc7c7dc9ae19c3f9d1bc84605
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Fri Jun 26 20:12:49 2026 +0700
+| 
+|     chore: add initial test cases and report templates
+| 
+|  report/AI_Critique.md                             |  0
+|  report/Boundary_Value_Analysis_Report.md          |  0
+|  report/Bug_Report.md                              |  0
+|  report/Domain_Testing_Report.md                   |  0
+|  report/README.md                                  |  0
+|  report/git_commit_logs.txt                        |  0
+|  tests/test-cases/category/TC-CATEGORY-001.md      | 33 +++++++++++++++++++++
+|  tests/test-cases/checkout/TC-CHECKOUT-001.md      | 33 +++++++++++++++++++++
+|  .../TC-MPLAS-001.md                               | 33 +++++++++++++++++++++
+|  .../product-list-and-search/TC-PLAS-001.md        | 33 +++++++++++++++++++++
+|  10 files changed, 132 insertions(+)
+| 
+* commit f02fd8e3086df8c0c79efdf5499618793f4d788c
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Fri Jun 26 20:12:40 2026 +0700
+| 
+|     docs(report): add initial AI Audit Report template
+| 
+|  report/AI_Audit_Report.md | 142 ++++++++++++++++++++++++++++++++++++++++++++
+|  1 file changed, 142 insertions(+)
+| 
+* commit 725229478dfecde02a739cb4449bc8f77158e402
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Fri Jun 26 20:12:33 2026 +0700
+| 
+|     feat(skills): add AI Gap Analysis skill
+| 
+|  .agents/skills/ai-gap-analysis/SKILL.md | 378 ++++++++++++++++++++++++++++++
+|  1 file changed, 378 insertions(+)
+| 
+* commit ff38b7aa375a1bffe556bdec283e1780eec0df5e
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Fri Jun 26 20:12:17 2026 +0700
+| 
+|     feat(skills): add AI Audit Report skill and workspace auto-logging rules
+| 
+|  .agents/skills/ai-audit-report/SKILL.md | 377 ++++++++++++++++++++++++++++++
+|  .gemini/rules.md                        |  73 ++++++
+|  2 files changed, 450 insertions(+)
+| 
+* commit 2f4fa67287c2f94744e8c12dae97459e815c7710
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Fri Jun 26 20:12:08 2026 +0700
+| 
+|     feat(skills): update test-runner skill with test execution guidelines
+| 
+|  .agents/skills/test-runner/SKILL.md | 378 ++++++++++++++++++++++++++++++++++
+|  1 file changed, 378 insertions(+)
+| 
+* commit 473cac7a25db26783b36f0774a04e5cd0fe16f3c
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Fri Jun 26 20:12:01 2026 +0700
+| 
+|     feat(skills): update test-writer skill for domain testing and BVA
+| 
+|  .agents/skills/test-writer/SKILL.md | 481 ++++++++++++++++++++++++++++++++++
+|  1 file changed, 481 insertions(+)
+| 
+* commit 30884e695b7eec2c9d529197316844727117014d
+  Author: mqt4n <machquoctan2005@gmail.com>
+  Date:   Fri Jun 26 20:11:52 2026 +0700
+  
+      config(agent): update QA agent profile and instructions
+  
+   .github/agents/qa.agent.md | 47 ++++++++++++++++++++++++++++++++++++++++++++
+   1 file changed, 47 insertions(+)
+  
+* commit 64758dc8412254fe5870ee40018f7a39ff32416a
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 3 09:58:44 2026 +0700
+| 
+|     bug: add link github issues
+| 
+|  .../BUG-HOME-GUI-IA01-010.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA01-049.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA01-052.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA01-054.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA02-013.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA02-016.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA02-018.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA02-053.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA03-021.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA03-022.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA03-023.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA03-024.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA03-029.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA03-048.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA04-031.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA04-032.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA04-034.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA04-035.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA04-037.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA04-038.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA04-041.md                      |  4 +++
+|  .../BUG-HOME-GUI-IA04-044.md                      |  4 +++
+|  .../usability/U-001/BUG-AUTH-F01/BUG-AUTH-F01.md  |  4 +++
+|  .../usability/U-001/BUG-AUTH-F02/BUG-AUTH-F02.md  |  4 +++
+|  .../usability/U-001/BUG-AUTH-F03/BUG-AUTH-F03.md  |  4 +++
+|  .../usability/U-001/BUG-CART-F07/BUG-CART-F07.md  |  4 +++
+|  .../usability/U-001/BUG-CART-F08/BUG-CART-F08.md  |  4 +++
+|  .../usability/U-001/BUG-CART-F09/BUG-CART-F09.md  |  4 +++
+|  .../U-001/BUG-CHECKOUT-F05/BUG-CHECKOUT-F05.md    |  4 +++
+|  .../U-001/BUG-CHECKOUT-F06/BUG-CHECKOUT-F06.md    |  4 +++
+|  tests/test-cases/login/TC-LOGIN-001.md            | 33 ---------------------
+|  tests/test-cases/register/TC-REGISTER-001.md      |  0
+|  tests/test-runs/sprint-1-test-run.md              |  0
+|  33 files changed, 120 insertions(+), 33 deletions(-)
+| 
+* commit 7f3c857bf38b7a19aa6b54d7f185b89c5b22de7a
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 3 09:46:10 2026 +0700
+| 
+|     docs: add labels GUI and usability bug reports for the home page and core modules
+| 
+|  .../gui/home/BUG-HOME-GUI-IA01-010/BUG-HOME-GUI-IA01-010.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA01-049/BUG-HOME-GUI-IA01-049.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA01-052/BUG-HOME-GUI-IA01-052.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA01-054/BUG-HOME-GUI-IA01-054.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA02-013/BUG-HOME-GUI-IA02-013.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA02-016/BUG-HOME-GUI-IA02-016.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA02-018/BUG-HOME-GUI-IA02-018.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA02-053/BUG-HOME-GUI-IA02-053.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA03-021/BUG-HOME-GUI-IA03-021.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA03-022/BUG-HOME-GUI-IA03-022.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA03-023/BUG-HOME-GUI-IA03-023.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA03-024/BUG-HOME-GUI-IA03-024.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA03-029/BUG-HOME-GUI-IA03-029.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA03-048/BUG-HOME-GUI-IA03-048.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA04-031/BUG-HOME-GUI-IA04-031.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA04-032/BUG-HOME-GUI-IA04-032.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA04-034/BUG-HOME-GUI-IA04-034.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA04-035/BUG-HOME-GUI-IA04-035.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA04-037/BUG-HOME-GUI-IA04-037.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA04-038/BUG-HOME-GUI-IA04-038.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA04-041/BUG-HOME-GUI-IA04-041.md            | 1 +
+|  .../gui/home/BUG-HOME-GUI-IA04-044/BUG-HOME-GUI-IA04-044.md            | 1 +
+|  tests/bug-reports/usability/U-001/BUG-AUTH-F01/BUG-AUTH-F01.md         | 1 +
+|  tests/bug-reports/usability/U-001/BUG-AUTH-F02/BUG-AUTH-F02.md         | 1 +
+|  tests/bug-reports/usability/U-001/BUG-AUTH-F03/BUG-AUTH-F03.md         | 1 +
+|  tests/bug-reports/usability/U-001/BUG-CART-F07/BUG-CART-F07.md         | 1 +
+|  tests/bug-reports/usability/U-001/BUG-CART-F08/BUG-CART-F08.md         | 1 +
+|  tests/bug-reports/usability/U-001/BUG-CART-F09/BUG-CART-F09.md         | 1 +
+|  tests/bug-reports/usability/U-001/BUG-CHECKOUT-F05/BUG-CHECKOUT-F05.md | 1 +
+|  tests/bug-reports/usability/U-001/BUG-CHECKOUT-F06/BUG-CHECKOUT-F06.md | 1 +
+|  30 files changed, 30 insertions(+)
+| 
+* commit 6ff4526e2e00533775f737a0db7d0b3c9a00dad1
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 3 09:35:03 2026 +0700
+| 
+|     docs(task3): update Expo Go execution log, add screenshots, sync checklist, and update bug reports with evidence
+| 
+|  tests/checklists/home/checklist.md                |   8 +-
+|  .../CP-001/1_plan-prep/checklist.md               | 112 ++++++++++----------
+|  .../CP-001/2_execution/android-expogo.md          |  33 ++++++
+|  .../CP-001/2_execution/macos-safari.md            |  16 ---
+|  .../CP-001/2_execution/windows-chrome.md          |   4 +-
+|  .../CP-001/2_execution/windows-firefox.md         |   6 +-
+|  .../android-expogo/android_home_1.png             | Bin 0 -> 472022 bytes
+|  .../android-expogo/android_home_2.png             | Bin 0 -> 497357 bytes
+|  .../android-expogo/android_home_3.png             | Bin 0 -> 538244 bytes
+|  .../android-expogo/android_home_4.png             | Bin 0 -> 516718 bytes
+|  .../CP-001/3_screenshots/macos-safari/.gitkeep    |   0
+|  .../CP-001/3_screenshots/windows-chrome/.gitkeep  |   0
+|  .../CP-001/3_screenshots/windows-firefox/.gitkeep |   0
+|  13 files changed, 100 insertions(+), 79 deletions(-)
+| 
+* commit 68521110273f3e35e9056f8458528929189f7ac6
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 3 09:34:00 2026 +0700
+| 
+|     bug(home): create and update bug reports with environment details and images
+| 
+|  .../BUG-HOME-GUI-IA01-010.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA01-049.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA01-052.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA01-054.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA02-013.md                      |   7 ++-
+|  .../BUG-HOME-GUI-IA02-013_03.png                  | Bin 0 -> 472022 bytes
+|  .../BUG-HOME-GUI-IA02-016.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA02-018.md                      |  56 ++++++++++++++++++++
+|  .../BUG-HOME-GUI-IA02-018_01.png                  | Bin 0 -> 208638 bytes
+|  .../BUG-HOME-GUI-IA02-018_02.png                  | Bin 0 -> 210089 bytes
+|  .../BUG-HOME-GUI-IA02-018_03.png                  | Bin 0 -> 398198 bytes
+|  .../BUG-HOME-GUI-IA02-053.md                      |   7 ++-
+|  .../BUG-HOME-GUI-IA02-053_03.png                  | Bin 0 -> 297033 bytes
+|  .../BUG-HOME-GUI-IA03-021.md                      |   7 ++-
+|  .../BUG-HOME-GUI-IA03-021_03.png                  | Bin 0 -> 472022 bytes
+|  .../BUG-HOME-GUI-IA03-022.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA03-023.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA03-023_01.png                  | Bin 255470 -> 250890 bytes
+|  .../BUG-HOME-GUI-IA03-023_02.png                  | Bin 254973 -> 252082 bytes
+|  .../BUG-HOME-GUI-IA03-024.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA03-029.md                      |   7 ++-
+|  .../BUG-HOME-GUI-IA03-029_03.png                  | Bin 0 -> 516718 bytes
+|  .../BUG-HOME-GUI-IA03-048.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA04-031.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA04-032.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA04-034.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA04-035.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA04-037.md                      |  54 +++++++++++++++++++
+|  .../BUG-HOME-GUI-IA04-037_01.png                  | Bin 0 -> 530238 bytes
+|  .../BUG-HOME-GUI-IA04-038.md                      |  52 ++++++++++++++++++
+|  .../BUG-HOME-GUI-IA04-038_01.png                  | Bin 0 -> 253202 bytes
+|  .../BUG-HOME-GUI-IA04-038_02.png                  | Bin 0 -> 253726 bytes
+|  .../BUG-HOME-GUI-IA04-041.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA04-044.md                      |   5 +-
+|  34 files changed, 246 insertions(+), 19 deletions(-)
+| 
+* commit 4de18874ff2383dc04344e1c1fcac37244d4d56e
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 3 07:37:23 2026 +0700
+| 
+|     docs(task3): update Firefox execution log, add screenshots, sync checklist, and update bug reports with evidence
+| 
+|  .../BUG-HOME-GUI-IA01-010.md                      |  11 +-
+|  .../BUG-HOME-GUI-IA01-010_02.png                  | Bin 0 -> 255121 bytes
+|  .../BUG-HOME-GUI-IA01-049.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA01-049_02.png                  | Bin 0 -> 257199 bytes
+|  .../BUG-HOME-GUI-IA01-052.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA01-052_02.png                  | Bin 0 -> 254939 bytes
+|  .../BUG-HOME-GUI-IA01-054.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA01-054_02.png                  | Bin 0 -> 335370 bytes
+|  .../BUG-HOME-GUI-IA02-013.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA02-013_02.png                  | Bin 0 -> 255011 bytes
+|  .../BUG-HOME-GUI-IA02-016.md                      |   8 +-
+|  .../BUG-HOME-GUI-IA02-016_02.png                  | Bin 0 -> 195909 bytes
+|  .../BUG-HOME-GUI-IA02-053.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA02-053_02.png                  | Bin 0 -> 194956 bytes
+|  .../BUG-HOME-GUI-IA03-021.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA03-021_02.png                  | Bin 0 -> 255156 bytes
+|  .../BUG-HOME-GUI-IA03-022.md                      |   8 +-
+|  .../BUG-HOME-GUI-IA03-022_02.png                  | Bin 0 -> 254973 bytes
+|  .../BUG-HOME-GUI-IA03-023.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA03-023_02.png                  | Bin 0 -> 254973 bytes
+|  .../BUG-HOME-GUI-IA03-024.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA03-024_02.png                  | Bin 0 -> 286060 bytes
+|  .../BUG-HOME-GUI-IA03-029.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA03-029_02.png                  | Bin 0 -> 250879 bytes
+|  .../BUG-HOME-GUI-IA03-048.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA03-048_02.png                  | Bin 0 -> 255209 bytes
+|  .../BUG-HOME-GUI-IA04-031.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA04-031_02.png                  | Bin 0 -> 340957 bytes
+|  .../BUG-HOME-GUI-IA04-032.md                      |   8 +-
+|  .../BUG-HOME-GUI-IA04-032_02.png                  | Bin 0 -> 197824 bytes
+|  .../BUG-HOME-GUI-IA04-034.md                      |  15 ++-
+|  .../BUG-HOME-GUI-IA04-034_02.png                  | Bin 0 -> 280766 bytes
+|  .../BUG-HOME-GUI-IA04-035.md                      |   5 +-
+|  .../BUG-HOME-GUI-IA04-035_02.png                  | Bin 0 -> 255182 bytes
+|  .../BUG-HOME-GUI-IA04-041.md                      |  12 +--
+|  .../BUG-HOME-GUI-IA04-041_02.png                  | Bin 0 -> 241346 bytes
+|  .../BUG-HOME-GUI-IA04-044.md                      |   8 +-
+|  .../BUG-HOME-GUI-IA04-044_02.png                  | Bin 0 -> 322527 bytes
+|  .../CP-001/1_plan-prep/checklist.md               | 112 ++++++++++----------
+|  .../CP-001/2_execution/windows-chrome.md          |   2 +-
+|  .../CP-001/2_execution/windows-firefox.md         |  37 +++++--
+|  .../windows-firefox/firefox_home_1.png            | Bin 0 -> 57884 bytes
+|  .../windows-firefox/firefox_home_2.png            | Bin 0 -> 247878 bytes
+|  43 files changed, 159 insertions(+), 122 deletions(-)
+| 
+* commit d33d08584852daeb1c81125aa5cab17b26e8e12e
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 3 01:22:39 2026 +0700
+| 
+|     docs(task3): complete baseline Chrome execution log and update multi-platform checklist
+| 
+|  .../CP-001/1_plan-prep/checklist.md               | 112 ++++++++++----------
+|  .../CP-001/2_execution/macos-safari.md            |   4 -
+|  .../CP-001/2_execution/windows-chrome.md          |  41 ++++---
+|  .../CP-001/2_execution/windows-firefox.md         |   4 -
+|  .../windows-chrome/chrome_home_1.png              | Bin 0 -> 255505 bytes
+|  .../windows-chrome/chrome_home_2.png              | Bin 0 -> 252851 bytes
+|  6 files changed, 85 insertions(+), 76 deletions(-)
+| 
+* commit c3d53c054d1c634b150c65561cfb1940ff1a8ee9
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 3 01:20:26 2026 +0700
+| 
+|     docs(bug-reports): update bug screenshots with overlay
+| 
+|  .../BUG-HOME-GUI-IA01-010_01.png                  | Bin 95050 -> 255437 bytes
+|  .../BUG-HOME-GUI-IA01-049_01.png                  | Bin 110637 -> 257430 bytes
+|  .../BUG-HOME-GUI-IA01-052_01.png                  | Bin 109826 -> 255464 bytes
+|  .../BUG-HOME-GUI-IA01-054_01.png                  | Bin 172091 -> 336560 bytes
+|  .../BUG-HOME-GUI-IA02-013_01.png                  | Bin 110637 -> 255493 bytes
+|  .../BUG-HOME-GUI-IA02-016_01.png                  | Bin 17076 -> 195230 bytes
+|  .../BUG-HOME-GUI-IA02-053_01.png                  | Bin 16622 -> 195489 bytes
+|  .../BUG-HOME-GUI-IA03-021_01.png                  | Bin 96962 -> 255469 bytes
+|  .../BUG-HOME-GUI-IA03-022_01.png                  | Bin 42367 -> 255470 bytes
+|  .../BUG-HOME-GUI-IA03-023_01.png                  | Bin 96580 -> 255470 bytes
+|  .../BUG-HOME-GUI-IA03-024_01.png                  | Bin 117382 -> 282482 bytes
+|  .../BUG-HOME-GUI-IA03-029_01.png                  | Bin 38401 -> 252914 bytes
+|  .../BUG-HOME-GUI-IA03-048_01.png                  | Bin 10168 -> 270026 bytes
+|  .../BUG-HOME-GUI-IA04-031_01.png                  | Bin 14646 -> 263176 bytes
+|  .../BUG-HOME-GUI-IA04-032_01.png                  | Bin 17812 -> 196735 bytes
+|  .../BUG-HOME-GUI-IA04-034_01.png                  | Bin 120472 -> 284306 bytes
+|  .../BUG-HOME-GUI-IA04-035_01.png                  | Bin 95050 -> 256025 bytes
+|  .../BUG-HOME-GUI-IA04-041_01.png                  | Bin 14646 -> 279487 bytes
+|  .../BUG-HOME-GUI-IA04-044_01.png                  | Bin 14646 -> 345623 bytes
+|  19 files changed, 0 insertions(+), 0 deletions(-)
+| 
+* commit fdb4a7855c1c8bb367a0e75af1480eb15f3b998a
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 3 00:23:08 2026 +0700
+| 
+|     docs(task3): prepare cross-platform testing templates and update student email overlay
+| 
+|  .../cross_platform_screenshots_log.md             |  4 +-
+|  .../CP-001/1_plan-prep/checklist.md               | 60 +++++++++++++++++++
+|  .../CP-001/2_execution/macos-safari.md            | 20 +++++++
+|  .../CP-001/2_execution/windows-chrome.md          | 20 +++++++
+|  .../CP-001/2_execution/windows-firefox.md         | 20 +++++++
+|  .../CP-001/3_screenshots/macos-safari/.gitkeep    |  0
+|  .../CP-001/3_screenshots/windows-chrome/.gitkeep  |  0
+|  .../CP-001/3_screenshots/windows-firefox/.gitkeep |  0
+|  tests/cross-platform/CP-001/README.md             | 65 +++++++++++++++++++++
+|  tests/cross-platform/README.md                    |  9 +++
+|  10 files changed, 196 insertions(+), 2 deletions(-)
+| 
+* commit 6c1e12b2af7ef2fbc97aef801060944ba182d770
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Aug 2 22:42:08 2026 +0700
+| 
+|     docs(usability): finalize U-001 usability evaluation and bug reports
+| 
+|  docs/report/ai_audit_report.md                    |  17 +-
+|  tests/usability-tests/README.md                   |   2 +-
+|  .../usability_evaluation_report.md                | 194 +++++++++++++-------
+|  .../usability-tests/U-001/5_evidence/bug_index.md |  92 ++++++++--
+|  tests/usability-tests/U-001/README.md             |   9 +-
+|  ...op (U-001) (Responses) - Form Responses 1.csv" |  13 ++
+|  6 files changed, 237 insertions(+), 90 deletions(-)
+| 
+* commit 3e5b56ec3ee1bbc177dd6b8215a5b797f232a2b9
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Aug 2 22:40:59 2026 +0700
+| 
+|     feat(bugs): add usability bug reports for U-001 findings F01-F09
+| 
+|  .../usability/U-001/BUG-AUTH-F01/BUG-AUTH-F01.md  | 64 ++++++++++++++++++++
+|  .../usability/U-001/BUG-AUTH-F02/BUG-AUTH-F02.md  | 64 ++++++++++++++++++++
+|  .../usability/U-001/BUG-AUTH-F03/BUG-AUTH-F03.md  | 61 +++++++++++++++++++
+|  .../usability/U-001/BUG-CART-F07/BUG-CART-F07.md  | 63 ++++++++++++++++++++
+|  .../usability/U-001/BUG-CART-F08/BUG-CART-F08.md  | 62 ++++++++++++++++++++
+|  .../usability/U-001/BUG-CART-F09/BUG-CART-F09.md  | 62 ++++++++++++++++++++
+|  .../U-001/BUG-CHECKOUT-F05/BUG-CHECKOUT-F05.md    | 65 +++++++++++++++++++++
+|  .../U-001/BUG-CHECKOUT-F06/BUG-CHECKOUT-F06.md    | 62 ++++++++++++++++++++
+|  8 files changed, 503 insertions(+)
+| 
+* commit 1a76e5b5f8bc5a8bfea7c5c9d05cbeee11d1acd1
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Aug 2 21:52:24 2026 +0700
+| 
+|     refactor(bugs): move home bug reports under gui directory
+| 
+|  .../home/BUG-HOME-GUI-IA01-010/BUG-HOME-GUI-IA01-010.md   |   0
+|  .../BUG-HOME-GUI-IA01-010/BUG-HOME-GUI-IA01-010_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA01-049/BUG-HOME-GUI-IA01-049.md   |   0
+|  .../BUG-HOME-GUI-IA01-049/BUG-HOME-GUI-IA01-049_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA01-052/BUG-HOME-GUI-IA01-052.md   |   0
+|  .../BUG-HOME-GUI-IA01-052/BUG-HOME-GUI-IA01-052_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA01-054/BUG-HOME-GUI-IA01-054.md   |   0
+|  .../BUG-HOME-GUI-IA01-054/BUG-HOME-GUI-IA01-054_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA02-013/BUG-HOME-GUI-IA02-013.md   |   0
+|  .../BUG-HOME-GUI-IA02-013/BUG-HOME-GUI-IA02-013_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA02-016/BUG-HOME-GUI-IA02-016.md   |   0
+|  .../BUG-HOME-GUI-IA02-016/BUG-HOME-GUI-IA02-016_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA02-053/BUG-HOME-GUI-IA02-053.md   |   0
+|  .../BUG-HOME-GUI-IA02-053/BUG-HOME-GUI-IA02-053_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA03-021/BUG-HOME-GUI-IA03-021.md   |   0
+|  .../BUG-HOME-GUI-IA03-021/BUG-HOME-GUI-IA03-021_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA03-022/BUG-HOME-GUI-IA03-022.md   |  10 +++++++++-
+|  .../BUG-HOME-GUI-IA03-022/BUG-HOME-GUI-IA03-022_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA03-023/BUG-HOME-GUI-IA03-023.md   |   0
+|  .../BUG-HOME-GUI-IA03-023/BUG-HOME-GUI-IA03-023_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA03-024/BUG-HOME-GUI-IA03-024.md   |   0
+|  .../BUG-HOME-GUI-IA03-024/BUG-HOME-GUI-IA03-024_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA03-029/BUG-HOME-GUI-IA03-029.md   |   0
+|  .../BUG-HOME-GUI-IA03-029/BUG-HOME-GUI-IA03-029_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA03-048/BUG-HOME-GUI-IA03-048.md   |   0
+|  .../BUG-HOME-GUI-IA03-048/BUG-HOME-GUI-IA03-048_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA04-031/BUG-HOME-GUI-IA04-031.md   |   5 +++++
+|  .../BUG-HOME-GUI-IA04-031/BUG-HOME-GUI-IA04-031_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA04-032/BUG-HOME-GUI-IA04-032.md   |   0
+|  .../BUG-HOME-GUI-IA04-032/BUG-HOME-GUI-IA04-032_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA04-034/BUG-HOME-GUI-IA04-034.md   |   0
+|  .../BUG-HOME-GUI-IA04-034/BUG-HOME-GUI-IA04-034_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA04-035/BUG-HOME-GUI-IA04-035.md   |   0
+|  .../BUG-HOME-GUI-IA04-035/BUG-HOME-GUI-IA04-035_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA04-041/BUG-HOME-GUI-IA04-041.md   |   0
+|  .../BUG-HOME-GUI-IA04-041/BUG-HOME-GUI-IA04-041_01.png    | Bin
+|  .../home/BUG-HOME-GUI-IA04-044/BUG-HOME-GUI-IA04-044.md   |   5 +++++
+|  .../BUG-HOME-GUI-IA04-044/BUG-HOME-GUI-IA04-044_01.png    | Bin
+|  38 files changed, 19 insertions(+), 1 deletion(-)
+| 
+* commit b7a0bac3a5ae52735e306b877721cc7968e825d4
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Aug 2 20:39:49 2026 +0700
+| 
+|     docs(usability): fill SUS scores summary table in instrument.md
+| 
+|  .../usability-tests/U-001/2_session-guide/instrument.md | 15 +++++++--------
+|  1 file changed, 7 insertions(+), 8 deletions(-)
+| 
+* commit 10ca6079a6c69e36361bbb938eb2e1dcacb06546
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Aug 2 20:36:57 2026 +0700
+| 
+|     style(usability): format table alignment in recruiting_screen.md
+| 
+|  .../U-001/1_plan-prep/recruiting_screen.md           | 18 +++++++++---------
+|  1 file changed, 9 insertions(+), 9 deletions(-)
+| 
+* commit 9ea0148b472524828d17856cd4d09ba6868a2add
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Aug 2 20:35:56 2026 +0700
+| 
+|     docs(usability): update P02 session date and time in P02.md and recruiting_screen.md
+| 
+|  tests/usability-tests/U-001/1_plan-prep/recruiting_screen.md | 2 +-
+|  tests/usability-tests/U-001/3_sessions/P02.md                | 2 +-
+|  2 files changed, 2 insertions(+), 2 deletions(-)
+| 
+* commit ceef75d0bad0079fbd9f6f779894193946bcca4a
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Aug 2 20:32:55 2026 +0700
+| 
+|     docs(usability): fix phone number masking in recruiting_screen.md
+| 
+|  .../U-001/1_plan-prep/recruiting_screen.md               | 14 +++++++-------
+|  1 file changed, 7 insertions(+), 7 deletions(-)
+| 
+* commit 9b7469400c4be73b17c07fdeaeadc3444ed57ba9
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Aug 2 20:32:32 2026 +0700
+| 
+|     docs(usability): update participant details and screening checklist in recruiting_screen.md
+| 
+|  .../U-001/1_plan-prep/recruiting_screen.md        | 36 ++++++++++-----------
+|  1 file changed, 18 insertions(+), 18 deletions(-)
+| 
+* commit 16f4098d1d82a6fca4c2fb00826572374433f867
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Aug 2 20:14:39 2026 +0700
+| 
+|     feat: add usability test session documentation for P07
+| 
+|  tests/usability-tests/U-001/3_sessions/P07.md | 120 +++++++++++++-----------
+|  1 file changed, 66 insertions(+), 54 deletions(-)
+| 
+* commit 26d13c6bfd3989e9b27c4911e2282f01ab357328
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Aug 2 19:52:42 2026 +0700
+| 
+|     docs(usability): update sessions P05 and P06 notes and video links
+| 
+|  tests/usability-tests/U-001/3_sessions/P05.md |   2 +-
+|  tests/usability-tests/U-001/3_sessions/P06.md | 123 +++++++++++++-----------
+|  2 files changed, 70 insertions(+), 55 deletions(-)
+| 
+* commit db406ca0bf9a9185a3d5b60c6b5538af408683f5
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Aug 2 19:32:51 2026 +0700
+| 
+|     feat: add usability test session documentation for P05
+| 
+|  tests/usability-tests/U-001/3_sessions/P05.md | 118 ++++++++++++++----------
+|  1 file changed, 68 insertions(+), 50 deletions(-)
+| 
+* commit d2ab70839d85aede784063cca5920a0ed054765a
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Aug 2 19:13:27 2026 +0700
+| 
+|     feat: add usability test session documentation for P04
+| 
+|  tests/usability-tests/U-001/3_sessions/P04.md | 118 ++++++++++++++----------
+|  1 file changed, 68 insertions(+), 50 deletions(-)
+| 
+* commit 15b37c14e186b78fadbc518c7620fcb631f35eb6
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Aug 2 16:47:02 2026 +0700
+| 
+|     feat: add usability test session documentation for P03
+| 
+|  tests/usability-tests/U-001/3_sessions/P03.md | 116 ++++++++++++++----------
+|  1 file changed, 67 insertions(+), 49 deletions(-)
+| 
+* commit fdcae7043daf87836ed5f378d822242473ba5d1e
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Aug 2 15:51:02 2026 +0700
+| 
+|     feat: add usability test session documentation for P02
+| 
+|  tests/usability-tests/U-001/3_sessions/P02.md | 119 ++++++++++++++----------
+|  1 file changed, 69 insertions(+), 50 deletions(-)
+| 
+* commit d9fcc7f17cfa6138fa448263d04bce459c50c418
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sun Aug 2 12:39:06 2026 +0700
+| 
+|     feat: add usability test session documentation for P01
+| 
+|  tests/usability-tests/U-001/3_sessions/P01.md | 114 +++++++++++++-----------
+|  1 file changed, 64 insertions(+), 50 deletions(-)
+| 
+* commit ccf65ce5faad0cb083a2d719259e1d95f835ac3c
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sat Aug 1 23:35:52 2026 +0700
+| 
+|     docs(usability): update pilot runsheet results and gitignore mp4 folder
+| 
+|  .gitignore                                        |  2 +-
+|  .../U-001/2_session-guide/pilot_runsheet.md       | 28 ++++++++++-----------
+|  2 files changed, 15 insertions(+), 15 deletions(-)
+| 
+* commit ec18344a5f7bb54989ba4b225a14fa954ba8ece9
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Sat Aug 1 12:46:40 2026 +0700
+| 
+|     test(usability): reorganize U-001 structure and docs
+| 
+|  docs/report/ai_audit_report.md                    |  18 ++-
+|  tests/usability-tests/README.md                   |  85 ++++++------
+|  .../U-001/1_plan-prep/evaluation_goals.md         |  60 ++++++++
+|  .../U-001/1_plan-prep/recruiting_screen.md        |  52 +++++++
+|  .../U-001/1_plan-prep/task_scenario.md            |  37 +++++
+|  .../U-001/2_session-guide/instrument.md           |  73 ++++++++++
+|  .../U-001/2_session-guide/pilot_runsheet.md       |  53 +++++++
+|  tests/usability-tests/U-001/3_sessions/P01.md     |  83 +++++++++++
+|  tests/usability-tests/U-001/3_sessions/P02.md     |  83 +++++++++++
+|  tests/usability-tests/U-001/3_sessions/P03.md     |  83 +++++++++++
+|  tests/usability-tests/U-001/3_sessions/P04.md     |  83 +++++++++++
+|  tests/usability-tests/U-001/3_sessions/P05.md     |  83 +++++++++++
+|  tests/usability-tests/U-001/3_sessions/P06.md     |  85 ++++++++++++
+|  tests/usability-tests/U-001/3_sessions/P07.md     |  85 ++++++++++++
+|  .../usability_evaluation_report.md                |  87 ++++++++++++
+|  .../usability-tests/U-001/5_evidence/bug_index.md |  31 +++++
+|  tests/usability-tests/U-001/README.md             |  28 ++++
+|  tests/usability-tests/U-001/evaluation_goals.md   |  57 --------
+|  tests/usability-tests/U-001/instrument.md         | 146 --------------------
+|  tests/usability-tests/U-001/pilot_runsheet.md     | 138 ------------------
+|  tests/usability-tests/U-001/recruiting_screen.md  |  75 ----------
+|  tests/usability-tests/U-001/task_scenario.md      |  42 ------
+|  tests/usability-tests/google-form/.clasp.json     |  16 +++
+|  tests/usability-tests/google-form/README.md       |  47 +++++++
+|  tests/usability-tests/google-form/appsscript.json |   7 +
+|  .../usability-tests/google-form/generate_form.js  |  67 +++++++++
+|  26 files changed, 1190 insertions(+), 514 deletions(-)
+| 
+* commit 6d82dd45dfbf2aa3cb0f2043bcd3211bcb6fd401
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Fri Jul 31 12:47:30 2026 +0700
+| 
+|     config(deploy): specify node engine version for render environment
+| 
+|  backend/package.json | 3 +++
+|  1 file changed, 3 insertions(+)
+| 
+* commit b10a67155e918548e974ea5f1089cad7aee2a751
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Fri Jul 31 12:43:55 2026 +0700
+| 
+|     config(deploy): update configuration for cloud deployment on Render and Vercel
+| 
+|  backend/package.json                      |  1 +
+|  backend/server.js                         |  2 +-
+|  frontend-web/.gitignore                   |  1 +
+|  frontend-web/pnpm-lock.yaml               | 38 +++++++++++++++++++++++++++++
+|  frontend-web/src/config.js                |  1 +
+|  frontend-web/src/context/AuthContext.jsx  |  5 ++--
+|  frontend-web/src/pages/Checkout.jsx       |  7 +++---
+|  frontend-web/src/pages/ForgotPassword.jsx |  5 ++--
+|  frontend-web/src/pages/Home.jsx           |  3 ++-
+|  frontend-web/src/pages/ProductDetail.jsx  |  3 ++-
+|  frontend-web/src/pages/Profile.jsx        |  7 +++---
+|  frontend-web/src/pages/Register.jsx       |  3 ++-
+|  frontend-web/vercel.json                  |  8 ++++++
+|  13 files changed, 70 insertions(+), 14 deletions(-)
+| 
+* commit 1cea2392ce675a2b39017019e2ad5ed588467f28
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Fri Jul 31 12:07:51 2026 +0700
+| 
+|     test(usability): generate test plan for U-001 and update study designer skill
+| 
+|  .agents/skills/usability-study-designer/SKILL.md |  51 +++++--
+|  docs/report/ai_audit_report.md                   |  38 +++++-
+|  tests/usability-tests/README.md                  |  64 +++++++++
+|  tests/usability-tests/U-001/evaluation_goals.md  |  57 ++++++++
+|  tests/usability-tests/U-001/instrument.md        | 146 +++++++++++++++++++++
+|  tests/usability-tests/U-001/pilot_runsheet.md    | 138 +++++++++++++++++++
+|  tests/usability-tests/U-001/recruiting_screen.md |  75 +++++++++++
+|  tests/usability-tests/U-001/task_scenario.md     |  42 ++++++
+|  8 files changed, 595 insertions(+), 16 deletions(-)
+| 
+* commit 8f507cb54d026a452f7db3ab3774dd75fe8405a3
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Thu Jul 30 23:36:31 2026 +0700
+| 
+|     test(home): add, standardize bug reports and update checklist statuses
+| 
+|  .agents/skills/bug-report-github/SKILL.md         |  35 +++--
+|  .../BUG-HOME-GUI-IA01-010.md                      |  48 ++++++
+|  .../BUG-HOME-GUI-IA01-010_01.png                  | Bin 0 -> 95050 bytes
+|  .../BUG-HOME-GUI-IA01-049.md                      |  47 ++++++
+|  .../BUG-HOME-GUI-IA01-049_01.png                  | Bin 0 -> 110637 bytes
+|  .../BUG-HOME-GUI-IA01-052.md                      |  46 ++++++
+|  .../BUG-HOME-GUI-IA01-052_01.png                  | Bin 0 -> 109826 bytes
+|  .../BUG-HOME-GUI-IA01-054.md                      |  46 ++++++
+|  .../BUG-HOME-GUI-IA01-054_01.png                  | Bin 0 -> 172091 bytes
+|  .../BUG-HOME-GUI-IA02-013.md                      |  46 ++++++
+|  .../BUG-HOME-GUI-IA02-013_01.png                  | Bin 0 -> 110637 bytes
+|  .../BUG-HOME-GUI-IA02-016.md                      |  50 +++++++
+|  .../BUG-HOME-GUI-IA02-016_01.png                  | Bin 0 -> 17076 bytes
+|  .../BUG-HOME-GUI-IA02-053.md                      |  49 +++++++
+|  .../BUG-HOME-GUI-IA02-053_01.png                  | Bin 0 -> 16622 bytes
+|  .../BUG-HOME-GUI-IA03-021.md                      |  46 ++++++
+|  .../BUG-HOME-GUI-IA03-021_01.png                  | Bin 0 -> 96962 bytes
+|  .../BUG-HOME-GUI-IA03-022.md                      |  47 ++++++
+|  .../BUG-HOME-GUI-IA03-022_01.png                  | Bin 0 -> 42367 bytes
+|  .../BUG-HOME-GUI-IA03-023.md                      |  47 ++++++
+|  .../BUG-HOME-GUI-IA03-023_01.png                  | Bin 0 -> 96580 bytes
+|  .../BUG-HOME-GUI-IA03-024.md                      |  46 ++++++
+|  .../BUG-HOME-GUI-IA03-024_01.png                  | Bin 0 -> 117382 bytes
+|  .../BUG-HOME-GUI-IA03-029.md                      |  46 ++++++
+|  .../BUG-HOME-GUI-IA03-029_01.png                  | Bin 0 -> 38401 bytes
+|  .../BUG-HOME-GUI-IA03-048.md                      |  46 ++++++
+|  .../BUG-HOME-GUI-IA03-048_01.png                  | Bin 0 -> 10168 bytes
+|  .../BUG-HOME-GUI-IA04-031.md                      |  46 ++++++
+|  .../BUG-HOME-GUI-IA04-031_01.png                  | Bin 0 -> 14646 bytes
+|  .../BUG-HOME-GUI-IA04-032.md                      |  50 +++++++
+|  .../BUG-HOME-GUI-IA04-032_01.png                  | Bin 0 -> 17812 bytes
+|  .../BUG-HOME-GUI-IA04-034.md                      |  43 ++++++
+|  .../BUG-HOME-GUI-IA04-034_01.png                  | Bin 0 -> 120472 bytes
+|  .../BUG-HOME-GUI-IA04-035.md                      |  46 ++++++
+|  .../BUG-HOME-GUI-IA04-035_01.png                  | Bin 0 -> 95050 bytes
+|  .../BUG-HOME-GUI-IA04-041.md                      |  47 ++++++
+|  .../BUG-HOME-GUI-IA04-041_01.png                  | Bin 0 -> 14646 bytes
+|  .../BUG-HOME-GUI-IA04-044.md                      |  47 ++++++
+|  .../BUG-HOME-GUI-IA04-044_01.png                  | Bin 0 -> 14646 bytes
+|  tests/checklists/home/checklist.md                | 154 ++++++++++----------
+|  40 files changed, 989 insertions(+), 89 deletions(-)
+| 
+* commit aa392aa1d81c9149d30df858098aa1213b9a6a24
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Thu Jul 30 19:47:06 2026 +0700
+| 
+|     docs: update home checklist guidance, gap analysis and lint md
+| 
+|  .agents/skills/ai-audit-report/SKILL.md           |   3 +-
+|  .agents/skills/bug-report-github/SKILL.md         |  10 +-
+|  .agents/skills/doc_generator/SKILL.md             |   4 +-
+|  .agents/skills/gui-checklist-ai/SKILL.md          |  34 +++-
+|  .agents/skills/md-to-pdf/SKILL.md                 |   5 +-
+|  .agents/skills/usability-session-notes/SKILL.md   |   2 +-
+|  api_specification.md                              |  39 ++++-
+|  docs/report/ai_audit_report.md                    |  23 ++-
+|  .../usability_evaluation_report.md                |  13 +-
+|  docs/submission_demo/usability_evidence_pack.md   |   8 +-
+|  docs/theory/gui_testing_theory.md                 |   6 +-
+|  docs/theory/usability_testing_theory.md           |   4 +-
+|  setup_guide.md                                    |  29 +++-
+|  tests/checklists/home/ai_gap_analysis.md          | 180 ++++++++++++++------
+|  tests/checklists/home/checklist.md                |  25 ++-
+|  tests/test-summary/traceability-matrix.md         |   2 +
+|  16 files changed, 301 insertions(+), 86 deletions(-)
+| 
+* commit 79a5f049c35480abcb41695f10a1f7465e9adbe7
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Thu Jul 30 16:35:13 2026 +0700
+| 
+|     docs(test): update Home screen checklist and gap templates, ignore SUT database
+| 
+|  .agents/skills/gui-checklist-ai/SKILL.md |  12 +++-
+|  .gitignore                               |   2 +
+|  backend/database.sqlite                  | Bin 36864 -> 0 bytes
+|  tests/checklists/home/ai_gap_analysis.md | 103 +++++++++++++++--------------
+|  tests/checklists/home/checklist.md       |  34 ++++------
+|  5 files changed, 79 insertions(+), 72 deletions(-)
+| 
+* commit 9fc7dcf48e47c5ab4dafa3811e0220f24ad67f85
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Thu Jul 30 16:12:11 2026 +0700
+| 
+|     style(test): update checklist item IDs to include screen prefix HOME-GUI-
+| 
+|  .agents/skills/gui-checklist-ai/SKILL.md |   2 +-
+|  tests/checklists/home/ai_gap_analysis.md |  18 ++---
+|  tests/checklists/home/checklist.md       | 116 ++++++++++++++---------------
+|  3 files changed, 68 insertions(+), 68 deletions(-)
+| 
+* commit 1ddce58761a0f1e478825ccf4aaaf4182a7db5fa
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Thu Jul 30 15:58:35 2026 +0700
+| 
+|     docs(test): add Home screen GUI checklist and AI audit report
+| 
+|  .agents/skills/ai-audit-report/SKILL.md  |  15 ++-
+|  docs/report/ai_audit_report.md           |  80 +++++++++++++++
+|  tests/checklists/home/ai_gap_analysis.md |  94 ++++++++++++++++++
+|  tests/checklists/home/checklist.md       | 151 +++++++++++++++++++++++++++++
+|  4 files changed, 339 insertions(+), 1 deletion(-)
+| 
+* commit 1e984933fc8ba334eb51436daac70a0ad1fd8b77
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Thu Jul 30 15:49:32 2026 +0700
+| 
+|     feat: add documentation and premium PDF export styling for markdown files
+| 
+|  .agents/skills/doc_generator/SKILL.md             |  32 ++
+|  .agents/skills/doc_generator/scripts/md_to_pdf.py | 243 ++++++++++++++
+|  .agents/skills/md-to-pdf/SKILL.md                 |  96 ++++++
+|  .../md-to-pdf/resources/markdown-pdf-premium.css  | 349 ++++++++++++++++++++
+|  4 files changed, 720 insertions(+)
+| 
+* commit 558a58764c745b57c29810e6d034098e7df6d608
+  Author: mqt4n <machquoctan2005@gmail.com>
+  Date:   Tue Jul 28 12:14:25 2026 +0700
+  
+      feat: initialize documentation structure and agent skill templates for assignment submission
+  
+   .agents/skills/ai-audit-report/SKILL.md           |  55 +++
+   .agents/skills/bug-report-github/SKILL.md         | 148 ++++++++
+   .agents/skills/gui-checklist-ai/SKILL.md          | 105 ++++++
+   .agents/skills/hw-submission-packager/SKILL.md    |  73 ++++
+   .agents/skills/test-runner/SKILL.md               |   0
+   .agents/skills/test-writer/SKILL.md               |   0
+   .agents/skills/usability-session-notes/SKILL.md   |  86 +++++
+   .agents/skills/usability-study-designer/SKILL.md  |  76 ++++
+   docs/submission_demo/README.md                    |  42 +++
+   docs/submission_demo/ai_audit_and_critique.md     |  49 +++
+   docs/submission_demo/ai_audit_and_critique.pdf    | Bin 0 -> 27137 bytes
+   docs/submission_demo/bug_reports.md               |  80 ++++
+   .../checklist_and_test_summary.xlsx               | Bin 0 -> 9203 bytes
+   docs/submission_demo/commit_log_template.txt      |  32 ++
+   .../cross_platform_screenshots_log.md             |  17 +
+   docs/submission_demo/gui_checklist_report.md      |  51 +++
+   docs/submission_demo/gui_checklist_report.pdf     | Bin 0 -> 40033 bytes
+   docs/submission_demo/participant_table.md         |  19 +
+   .../usability_evaluation_report.md                |  49 +++
+   .../usability_evaluation_report.pdf               | Bin 0 -> 45168 bytes
+   docs/submission_demo/usability_evidence_pack.md   |  38 ++
+   docs/theory/Web GUI checklist Template.xlsx       | Bin 0 -> 27291 bytes
+   docs/theory/gui_testing_theory.md                 | 393 ++++++++++++++++++++
+   docs/theory/usability_testing_theory.md           | 366 ++++++++++++++++++
+   24 files changed, 1679 insertions(+)
+  
+* commit bce48090d453e2228bcb9f513e7a7c5a075f7a49
+  Author: mqt4n <machquoctan2005@gmail.com>
+  Date:   Mon Jul 6 16:57:22 2026 +0700
+  
+      initial commit
+  
+   .agents/skills/test-run-reporter/SKILL.md         | 378 ++++++++++++++++++++
+   .../test-run-reporter/references/conventions.md   | 144 ++++++++
+   .agents/skills/test-runner/SKILL.md               |   0
+   .../skills/test-writer-decision-table/SKILL.md    | 214 +++++++++++
+   .agents/skills/test-writer-pairwise/SKILL.md      | 207 +++++++++++
+   .../skills/test-writer-state-transition/SKILL.md  | 278 ++++++++++++++
+   .agents/skills/test-writer-use-case/SKILL.md      | 272 ++++++++++++++
+   .agents/skills/test-writer/SKILL.md               |   0
+   backend/database.sqlite                           | Bin 36864 -> 36864 bytes
+   report/AI_Audit_Report.md                         |  25 ++
+   tests/bug-reports/auth/BUG-AUTH-001.md            |  37 ++
+   tests/bug-reports/auth/BUG-AUTH-002.md            |  37 ++
+   tests/bug-reports/auth/BUG-AUTH-003.md            |  38 ++
+   tests/bug-reports/profile/BUG-PROFILE-001.md      |  39 ++
+   tests/bug-reports/profile/BUG-PROFILE-002.md      |  41 +++
+   tests/test-cases/auth/TC-AUTH-STT-01.md           |  42 +++
+   tests/test-cases/auth/TC-AUTH-STT-02.md           |  42 +++
+   tests/test-cases/auth/TC-AUTH-STT-03.md           |  41 +++
+   tests/test-cases/auth/TC-AUTH-STT-04.md           |  42 +++
+   tests/test-cases/auth/TC-AUTH-STT-05.md           |  41 +++
+   tests/test-cases/auth/TC-AUTH-STT-06.md           |  43 +++
+   tests/test-cases/auth/TC-AUTH-STT-07.md           |  43 +++
+   tests/test-cases/auth/TC-AUTH-STT-08.md           |  43 +++
+   tests/test-cases/auth/TC-AUTH-STT-09.md           |  38 ++
+   tests/test-cases/auth/TC-AUTH-STT-10.md           |  43 +++
+   tests/test-cases/login/TC-LOGIN-001.md            |  33 --
+   tests/test-cases/profile/TC-PROFILE-UCT-01.md     |  46 +++
+   tests/test-cases/profile/TC-PROFILE-UCT-02.md     |  45 +++
+   tests/test-cases/profile/TC-PROFILE-UCT-03.md     |  45 +++
+   tests/test-cases/profile/TC-PROFILE-UCT-04.md     |  45 +++
+   tests/test-cases/profile/TC-PROFILE-UCT-05.md     |  45 +++
+   tests/test-cases/profile/TC-PROFILE-UCT-06.md     |  45 +++
+   tests/test-cases/profile/TC-PROFILE-UCT-07.md     |  44 +++
+   tests/test-cases/register/TC-REGISTER-001.md      |   0
+   tests/test-design/State_Transition_Testing.md     |  76 ++++
+   tests/test-design/Use_Case_Testing.md             |  50 +++
+   tests/test-runs/AUTH-test-run.md                  |  16 +
+   tests/test-runs/PROFILE-test-run.md               |  13 +
+   tests/test-runs/script/auth/TC-AUTH-STT-01.rest   |  11 +
+   tests/test-runs/script/auth/TC-AUTH-STT-02.rest   |  11 +
+   tests/test-runs/script/auth/TC-AUTH-STT-03.rest   |  20 ++
+   tests/test-runs/script/auth/TC-AUTH-STT-04.rest   |  20 ++
+   tests/test-runs/script/auth/TC-AUTH-STT-05.rest   |  29 ++
+   tests/test-runs/script/auth/TC-AUTH-STT-06.rest   |  29 ++
+   tests/test-runs/script/auth/TC-AUTH-STT-07.rest   |  38 ++
+   tests/test-runs/script/auth/TC-AUTH-STT-08.rest   |  38 ++
+   tests/test-runs/script/auth/TC-AUTH-STT-09.rest   |  39 ++
+   tests/test-runs/script/auth/TC-AUTH-STT-10.rest   |  39 ++
+   .../script/profile/TC-PROFILE-UCT-01.rest         |  30 ++
+   .../script/profile/TC-PROFILE-UCT-02.rest         |  26 ++
+   .../script/profile/TC-PROFILE-UCT-03.rest         |  26 ++
+   .../script/profile/TC-PROFILE-UCT-04.rest         |  26 ++
+   .../script/profile/TC-PROFILE-UCT-05.rest         |  30 ++
+   .../script/profile/TC-PROFILE-UCT-06.rest         |  30 ++
+   .../script/profile/TC-PROFILE-UCT-07.rest         |  21 ++
+   tests/test-runs/sprint-1-test-run.md              |   0
+   tests/test-summary/test-summary-report.md         |  48 +++
+   tests/test-summary/traceability-matrix.md         |  24 +-
+   58 files changed, 3130 insertions(+), 36 deletions(-)
+  
+* commit 103e4a5c30461cca16f1a34c27e84f347d3eba4d
+  Author: mqt4n <machquoctan2005@gmail.com>
+  Date:   Mon Jul 6 15:22:04 2026 +0700
+  
+      initial commit
+  
+   .agents/skills/test-run-reporter/SKILL.md         | 378 ++++++++++++++++++++
+   .../test-run-reporter/references/conventions.md   | 144 ++++++++
+   .agents/skills/test-runner/SKILL.md               |   0
+   .../skills/test-writer-decision-table/SKILL.md    | 205 +++++++++++
+   .agents/skills/test-writer-pairwise/SKILL.md      | 198 ++++++++++
+   .agents/skills/test-writer/SKILL.md               |   0
+   api_specification.md                              |  34 +-
+   backend/database.sqlite                           | Bin 36864 -> 36864 bytes
+   report/AI_Audit_Report.md                         |  21 ++
+   setup_guide.md                                    |  15 +-
+   tests/bug-reports/checkout/BUG-CHECKOUT-001.md    |  43 +++
+   tests/bug-reports/checkout/BUG-CHECKOUT-002.md    |  43 +++
+   tests/bug-reports/checkout/BUG-CHECKOUT-003.md    |  47 +++
+   tests/test-cases/checkout/TC-CHECKOUT-DTT-001.md  |  35 ++
+   tests/test-cases/checkout/TC-CHECKOUT-DTT-002.md  |  37 ++
+   tests/test-cases/checkout/TC-CHECKOUT-DTT-003.md  |  41 +++
+   tests/test-cases/checkout/TC-CHECKOUT-DTT-004.md  |  41 +++
+   tests/test-cases/checkout/TC-CHECKOUT-PWS-001.md  |  35 ++
+   tests/test-cases/checkout/TC-CHECKOUT-PWS-002.md  |  35 ++
+   tests/test-cases/checkout/TC-CHECKOUT-PWS-003.md  |  35 ++
+   tests/test-cases/checkout/TC-CHECKOUT-PWS-004.md  |  37 ++
+   tests/test-cases/checkout/TC-CHECKOUT-PWS-005.md  |  36 ++
+   tests/test-cases/checkout/TC-CHECKOUT-PWS-006.md  |  37 ++
+   tests/test-cases/checkout/TC-CHECKOUT-PWS-007.md  |  35 ++
+   tests/test-cases/checkout/TC-CHECKOUT-PWS-008.md  |  36 ++
+   tests/test-cases/checkout/TC-CHECKOUT-PWS-009.md  |  37 ++
+   tests/test-cases/login/TC-LOGIN-001.md            |  33 --
+   tests/test-cases/register/TC-REGISTER-001.md      |   0
+   tests/test-design/Decision_Table_Testing.md       |  68 ++++
+   tests/test-design/Pair_Wise_Testing.md            |  70 ++++
+   tests/test-runs/CHECKOUT-test-run.md              |  19 +
+   .../script/checkout/TC-CHECKOUT-PWS-001.rest      |  11 +
+   .../script/checkout/TC-CHECKOUT-PWS-002.rest      |  11 +
+   .../script/checkout/TC-CHECKOUT-PWS-003.rest      |  11 +
+   .../script/checkout/TC-CHECKOUT-PWS-004.rest      |  36 ++
+   .../script/checkout/TC-CHECKOUT-PWS-005.rest      |  25 ++
+   .../script/checkout/TC-CHECKOUT-PWS-006.rest      |  47 +++
+   .../script/checkout/TC-CHECKOUT-PWS-007.rest      |  11 +
+   .../script/checkout/TC-CHECKOUT-PWS-008.rest      |  36 ++
+   .../script/checkout/TC-CHECKOUT-PWS-009.rest      |  47 +++
+   tests/test-runs/sprint-1-test-run.md              |   0
+   tests/test-summary/test-summary-report.md         |  32 ++
+   tests/test-summary/traceability-matrix.md         |  18 +-
+   43 files changed, 2031 insertions(+), 49 deletions(-)

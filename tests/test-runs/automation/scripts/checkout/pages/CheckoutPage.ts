@@ -237,19 +237,21 @@ export class CheckoutWebPage {
   /** Navigate to the web frontend home page */
   async gotoFrontend(baseURL = automationEnv.frontendBaseUrl) {
     await this.page.goto(baseURL);
-    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.locator('body').waitFor({ state: 'visible' });
   }
 
   /** Navigate to the cart page */
   async gotoCart(baseURL = automationEnv.frontendBaseUrl) {
     await this.page.goto(`${baseURL}/cart`);
-    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.waitForURL(/\/cart(?:[/?#].*)?$/);
+    await this.page.locator('body').waitFor({ state: 'visible' });
   }
 
   /** Navigate to the checkout page */
   async gotoCheckout(baseURL = automationEnv.frontendBaseUrl) {
     await this.page.goto(`${baseURL}/checkout`);
-    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.waitForURL(/\/checkout(?:[/?#].*)?$/);
+    await this.page.locator('body').waitFor({ state: 'visible' });
   }
 
   /** Get count of product rows shown in the checkout table */

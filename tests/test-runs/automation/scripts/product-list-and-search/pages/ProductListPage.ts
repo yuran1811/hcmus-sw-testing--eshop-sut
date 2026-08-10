@@ -60,8 +60,16 @@ export class ProductListPage {
    * Navigate to home page
    */
   async goto(baseURL = automationEnv.frontendBaseUrl) {
+    const productsResponse = this.page.waitForResponse((response) => {
+      const url = response.url();
+      return response.request().method() === 'GET'
+        && url.includes('/api/products')
+        && !url.includes('/api/products?search=');
+    }).catch(() => null);
+
     await this.page.goto(baseURL);
-    await this.page.waitForLoadState('domcontentloaded');
+    await productsResponse;
+    await this.searchInput.waitFor({ state: 'visible' });
   }
 
   /**

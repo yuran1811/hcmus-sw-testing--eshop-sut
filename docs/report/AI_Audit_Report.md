@@ -105,3 +105,16 @@
 - **AI output (summary):**
   > Khởi chạy local servers của SUT, chạy test suite Playwright đa trình duyệt, tạo các file bug report tự động (đính kèm hình ảnh giao diện lỗi), tạo các file `README.md` báo cáo kết quả chi tiết cho mỗi phân hệ.
 - **What the student changed/kept from this output:** Giữ nguyên kết quả chạy test và các báo cáo lỗi để hoàn thành bài nộp.
+
+---
+
+### Entry 9
+
+- **Tool:** Codex (GPT-5) via Codex CLI
+- **Date/time:** 2026-08-10 10:07
+- **Task context:** Rà soát và sửa wait không ổn định trong Page Object Model
+- **Prompt used (verbatim):**
+  > tôi phát hiện ra là còn nhiều cái bị vấn đề this.page.**waitForLoadState**('domcontentloaded'), sửa hết cho các page object model
+- **AI output (summary):**
+  > Quét các Page Object Model trong automation scripts, phát hiện `ProductListPage.goto()` và các hàm điều hướng của `CheckoutWebPage` còn dùng `waitForLoadState('domcontentloaded')`. Thay bằng wait theo tín hiệu cụ thể hơn: Product chờ response `/api/products` và search input visible; Checkout chờ URL `/cart` hoặc `/checkout` và body visible. Chạy lại kiểm tra không còn pattern `waitForLoadState('domcontentloaded')` và TypeScript compile pass cho Product List & Search và Checkout.
+- **What the student changed/kept from this output:** Giữ các thay đổi Page Object để giảm flaky wait và làm rõ phần human review/gap analysis về wait không ổn định.
