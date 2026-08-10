@@ -15,8 +15,8 @@
 Error: expect(received).toHaveLength(expected)
 
 Expected length: 0
-Received length: 2
-Received array:  [{"id": 4, "name": "Tai nghe AirPods Pro 2", "price": 6000000, "quantity": 1}, {"id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1}]
+Received length: 9
+Received array:  [{"id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1}, {"id": 4, "name": "Tai nghe AirPods Pro 2", "price": 6000000, "quantity": 1}, {"id": 4, "name": "Tai nghe AirPods Pro 2", "price": 6000000, "quantity": 1}, {"id": 4, "name": "Tai nghe AirPods Pro 2", "price": 6000000, "quantity": 1}, {"id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1}, {"id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1}, {"id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1}, {"id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1}, {"id": 5, "name": "Bàn phím cơ Keychron Q1", "price": 4000000, "quantity": 1}]
 ```
 
 # Test source

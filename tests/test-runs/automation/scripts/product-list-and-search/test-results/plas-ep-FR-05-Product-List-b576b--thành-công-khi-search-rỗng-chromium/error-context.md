@@ -12,10 +12,92 @@
 # Error details
 
 ```
-Error: expect(received).toBe(expected) // Object.is equality
+Error: FR-05 requires exactly 1 <h1> tag on page (BUG-PLAS-001)
 
-Expected: 5
-Received: 0
+expect(received).toBe(expected) // Object.is equality
+
+Expected: 1
+Received: 2
+```
+
+```
+Error: Image must have non-empty alt text (BUG-PLAS-002)
+
+expect(received).toBeTruthy()
+
+Received: ""
+```
+
+```
+Error: Image must have non-empty alt text (BUG-PLAS-002)
+
+expect(received).toBeTruthy()
+
+Received: ""
+```
+
+```
+Error: Image must have non-empty alt text (BUG-PLAS-002)
+
+expect(received).toBeTruthy()
+
+Received: ""
+```
+
+```
+Error: Image must have non-empty alt text (BUG-PLAS-002)
+
+expect(received).toBeTruthy()
+
+Received: ""
+```
+
+```
+Error: Image must have non-empty alt text (BUG-PLAS-002)
+
+expect(received).toBeTruthy()
+
+Received: ""
+```
+
+```
+Error: Price must display ₫ symbol (BUG-PLAS-003)
+
+expect(received).toBeTruthy()
+
+Received: false
+```
+
+```
+Error: Price must display ₫ symbol (BUG-PLAS-003)
+
+expect(received).toBeTruthy()
+
+Received: false
+```
+
+```
+Error: Price must display ₫ symbol (BUG-PLAS-003)
+
+expect(received).toBeTruthy()
+
+Received: false
+```
+
+```
+Error: Price must display ₫ symbol (BUG-PLAS-003)
+
+expect(received).toBeTruthy()
+
+Received: false
+```
+
+```
+Error: Price must display ₫ symbol (BUG-PLAS-003)
+
+expect(received).toBeTruthy()
+
+Received: false
 ```
 
 # Page snapshot
@@ -138,8 +220,7 @@ Received: 0
   54  |   test('TC-PLAS-001: Xem toàn bộ danh sách sản phẩm thành công khi search rỗng', async () => {
   55  |     const tc = testData.test_cases.find(c => c.tc_id === 'TC-PLAS-001')!;
   56  |     const productCount = await plasPage.getProductCount();
-> 57  |     expect(productCount).toBe(tc.expected_count);
-      |                          ^ Error: expect(received).toBe(expected) // Object.is equality
+  57  |     expect(productCount).toBe(tc.expected_count);
   58  | 
   59  |     const h1Count = await plasPage.getH1Count();
   60  |     expect.soft(h1Count, 'FR-05 requires exactly 1 <h1> tag on page (BUG-PLAS-001)').toBe(UI_CONSTANTS.EXPECTED_H1_COUNT);
@@ -151,7 +232,8 @@ Received: 0
   66  | 
   67  |     const prices = await plasPage.getProductPrices();
   68  |     for (const price of prices) {
-  69  |       expect.soft(price.includes(UI_CONSTANTS.CURRENCY_SYMBOL), 'Price must display ₫ symbol (BUG-PLAS-003)').toBeTruthy();
+> 69  |       expect.soft(price.includes(UI_CONSTANTS.CURRENCY_SYMBOL), 'Price must display ₫ symbol (BUG-PLAS-003)').toBeTruthy();
+      |                                                                                                               ^ Error: Price must display ₫ symbol (BUG-PLAS-003)
   70  |     }
   71  |   });
   72  | 
@@ -240,4 +322,16 @@ Received: 0
   155 |     const tc = testData.test_cases.find(c => c.tc_id === 'TC-PLAS-006') as {
   156 |       tc_id: string;
   157 |       search_keyword_length?: number;
+  158 |       search_delay_ms?: number;
+  159 |       loading_timeout_ms?: number;
+  160 |     };
+  161 |     const longKeyword = 'A'.repeat(tc.search_keyword_length!);
+  162 |     await page.route('**/api/products?search=*', async route => {
+  163 |       await page.waitForTimeout(tc.search_delay_ms!);
+  164 |       await route.continue();
+  165 |     });
+  166 | 
+  167 |     await plasPage.searchInput.fill(longKeyword);
+  168 |     const loadingPromise = expect(plasPage.loadingIndicator).toBeVisible({ timeout: tc.loading_timeout_ms! });
+  169 |     await plasPage.searchButton.click();
 ```

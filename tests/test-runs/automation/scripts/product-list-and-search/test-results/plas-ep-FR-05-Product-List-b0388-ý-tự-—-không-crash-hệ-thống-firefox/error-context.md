@@ -41,6 +41,32 @@ Call log:
   - textbox "Tìm kiếm...": AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
   - button "Tìm"
   - text: "Kết quả tìm kiếm cho: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  - heading "iPhone 15 Pro Max" [level=2]
+  - paragraph: 30,000,000 VND
+  - link "Xem chi tiết":
+    - /url: /product/1
+  - button "Thêm vào giỏ"
+  - heading "Samsung Galaxy S24 Ultra" [level=2]
+  - paragraph: 28,000,000 VND
+  - link "Xem chi tiết":
+    - /url: /product/2
+  - button "Thêm vào giỏ"
+  - heading "MacBook Pro M3" [level=2]
+  - paragraph: 45,000,000 VND
+  - link "Xem chi tiết":
+    - /url: /product/3
+  - button "Thêm vào giỏ"
+  - heading "Tai nghe AirPods Pro 2" [level=2]
+  - paragraph: 6,000,000 VND
+  - link "Xem chi tiết":
+    - /url: /product/4
+  - button "Thêm vào giỏ"
+  - heading "Bàn phím cơ Keychron Q1" [level=2]
+  - paragraph: 4,000,000 VND
+  - link "Xem chi tiết":
+    - /url: /product/5
+  - button "Thêm vào giỏ"
+  - heading "Hiển thị 5 sản phẩm" [level=1]
 - contentinfo: © 2026 EShop SUT. Dành cho mục đích kiểm thử.
 ```
 

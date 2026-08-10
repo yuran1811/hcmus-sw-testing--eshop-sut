@@ -41,23 +41,97 @@ Call log:
   - textbox "Tìm kiếm...": AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
   - button "Tìm"
   - text: "Kết quả tìm kiếm cho: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  - heading "iPhone 15 Pro Max" [level=2]
+  - paragraph: 30,000,000 VND
+  - link "Xem chi tiết":
+    - /url: /product/1
+  - button "Thêm vào giỏ"
+  - heading "Samsung Galaxy S24 Ultra" [level=2]
+  - paragraph: 28,000,000 VND
+  - link "Xem chi tiết":
+    - /url: /product/2
+  - button "Thêm vào giỏ"
+  - heading "MacBook Pro M3" [level=2]
+  - paragraph: 45,000,000 VND
+  - link "Xem chi tiết":
+    - /url: /product/3
+  - button "Thêm vào giỏ"
+  - heading "Tai nghe AirPods Pro 2" [level=2]
+  - paragraph: 6,000,000 VND
+  - link "Xem chi tiết":
+    - /url: /product/4
+  - button "Thêm vào giỏ"
+  - heading "Bàn phím cơ Keychron Q1" [level=2]
+  - paragraph: 4,000,000 VND
+  - link "Xem chi tiết":
+    - /url: /product/5
+  - button "Thêm vào giỏ"
+  - heading "Hiển thị 5 sản phẩm" [level=1]
 - contentinfo: © 2026 EShop SUT. Dành cho mục đích kiểm thử.
 ```
 
 ```
-Error: "page.waitForTimeout: Test ended." while running route callback.
-Consider awaiting `await page.unrouteAll({ behavior: 'ignoreErrors' })`
-before the end of the test to ignore remaining routes in flight.
+Error: expect(locator).toBeVisible() failed
+
+Locator: locator('text=Đang tải...').or(locator('text=Đang tải')).or(locator('[data-testid="loading"]')).or(locator('.loading')).or(locator('.spinner'))
+Expected: visible
+Timeout: 500ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toBeVisible" with timeout 500ms
+  - waiting for locator('text=Đang tải...').or(locator('text=Đang tải')).or(locator('[data-testid="loading"]')).or(locator('.loading')).or(locator('.spinner'))
+
+```
+
+```yaml
+- banner:
+  - link "EShop":
+    - /url: /
+  - navigation:
+    - link "Giỏ hàng":
+      - /url: /cart
+    - link "Đăng nhập":
+      - /url: /login
+    - link "Đăng ký":
+      - /url: /register
+- main:
+  - heading "Danh sách sản phẩm" [level=1]
+  - textbox "Tìm kiếm...": AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  - button "Tìm"
+  - text: "Kết quả tìm kiếm cho: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  - heading "iPhone 15 Pro Max" [level=2]
+  - paragraph: 30,000,000 VND
+  - link "Xem chi tiết":
+    - /url: /product/1
+  - button "Thêm vào giỏ"
+  - heading "Samsung Galaxy S24 Ultra" [level=2]
+  - paragraph: 28,000,000 VND
+  - link "Xem chi tiết":
+    - /url: /product/2
+  - button "Thêm vào giỏ"
+  - heading "MacBook Pro M3" [level=2]
+  - paragraph: 45,000,000 VND
+  - link "Xem chi tiết":
+    - /url: /product/3
+  - button "Thêm vào giỏ"
+  - heading "Tai nghe AirPods Pro 2" [level=2]
+  - paragraph: 6,000,000 VND
+  - link "Xem chi tiết":
+    - /url: /product/4
+  - button "Thêm vào giỏ"
+  - heading "Bàn phím cơ Keychron Q1" [level=2]
+  - paragraph: 4,000,000 VND
+  - link "Xem chi tiết":
+    - /url: /product/5
+  - button "Thêm vào giỏ"
+  - heading "Hiển thị 5 sản phẩm" [level=1]
+- contentinfo: © 2026 EShop SUT. Dành cho mục đích kiểm thử.
 ```
 
 # Test source
 
 ```ts
-  63  |     for (const alt of imageAlts) {
-  64  |       expect.soft(alt && alt.trim().length > 0, 'Image must have non-empty alt text (BUG-PLAS-002)').toBeTruthy();
-  65  |     }
-  66  | 
-  67  |     const prices = await plasPage.getProductPrices();
   68  |     for (const price of prices) {
   69  |       expect.soft(price.includes(UI_CONSTANTS.CURRENCY_SYMBOL), 'Price must display ₫ symbol (BUG-PLAS-003)').toBeTruthy();
   70  |     }
@@ -153,13 +227,13 @@ before the end of the test to ignore remaining routes in flight.
   160 |     };
   161 |     const longKeyword = 'A'.repeat(tc.search_keyword_length!);
   162 |     await page.route('**/api/products?search=*', async route => {
-> 163 |       await page.waitForTimeout(tc.search_delay_ms!);
-      |                  ^ Error: "page.waitForTimeout: Test ended." while running route callback.
+  163 |       await page.waitForTimeout(tc.search_delay_ms!);
   164 |       await route.continue();
   165 |     });
   166 | 
   167 |     await plasPage.searchInput.fill(longKeyword);
-  168 |     const loadingPromise = expect(plasPage.loadingIndicator).toBeVisible({ timeout: tc.loading_timeout_ms! });
+> 168 |     const loadingPromise = expect(plasPage.loadingIndicator).toBeVisible({ timeout: tc.loading_timeout_ms! });
+      |                                                              ^ Error: expect(locator).toBeVisible() failed
   169 |     await plasPage.searchButton.click();
   170 |     await loadingPromise;
   171 | 
@@ -255,4 +329,9 @@ before the end of the test to ignore remaining routes in flight.
   261 | 
   262 |     await plasPage.clearSearch();
   263 | 
+  264 |     const count = await plasPage.getProductCount();
+  265 |     expect(count).toBe(tc.expected_count);
+  266 |   });
+  267 | });
+  268 | 
 ```
