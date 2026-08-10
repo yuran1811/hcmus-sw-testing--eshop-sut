@@ -15,8 +15,8 @@
 | ---------------------------------------- | -------: | -----: |
 | Tổng số test case đã thiết kế            |       79 | 100,0% |
 | Tổng số test case đã cập nhật trạng thái |       79 | 100,0% |
-| Pass                                     |       38 |  48,1% |
-| Fail                                     |       41 |  51,9% |
+| Pass                                     |       41 |  51,9% |
+| Fail                                     |       38 |  48,1% |
 | Bug report automation                    |       28 |      - |
 | GitHub Issue đã tạo                      |       28 |      - |
 
@@ -25,9 +25,9 @@
 | Tính năng                                       | Yêu cầu chính       | Test case |   Pass |   Fail | Tỷ lệ Pass |
 | ----------------------------------------------- | ------------------- | --------: | -----: | -----: | ---------: |
 | Quản lý Danh mục (Category)                     | FR-14               |        28 |     18 |     10 |      64,3% |
-| Thanh toán (Checkout)                           | FR-08               |        22 |      6 |     16 |      27,3% |
-| Xem & Tìm kiếm sản phẩm (Product List & Search) | FR-05               |        29 |     14 |     15 |      48,3% |
-| **Tổng cộng**                                   | FR-05, FR-08, FR-14 |    **79** | **38** | **41** |  **48,1%** |
+| Thanh toán (Checkout)                           | FR-08               |        22 |      8 |     14 |      36,4% |
+| Xem & Tìm kiếm sản phẩm (Product List & Search) | FR-05               |        29 |     15 |     14 |      51,7% |
+| **Tổng cộng**                                   | FR-05, FR-08, FR-14 |    **79** | **41** | **38** |  **51,9%** |
 
 ## 4. Tổng quan kết quả chạy automation theo browser
 

@@ -6,9 +6,8 @@ labels: "type: bug, module: product-list-and-search, severity: critical, priorit
 assignees: ""
 ---
 
-- **Test Cases:** TC-PLAS-012, TC-PLAS-BVA-004
+- **Test Cases:** TC-PLAS-BVA-004
 - **Test Script File(s):**
-  * [plas-ep.spec.ts](../../../test-runs/automation/scripts/product-list-and-search/tests/plas-ep.spec.ts) (cho TC-PLAS-012)
   * [plas-bva.spec.ts](../../../test-runs/automation/scripts/product-list-and-search/tests/plas-bva.spec.ts) (cho TC-PLAS-BVA-004)
 
 ## Requirement liên quan
@@ -50,7 +49,7 @@ Content-Type: application/json
 
 ### 2. Playwright Test Assertion Log
 ```bash
-[chromium] › tests\plas-ep.spec.ts:320:7 › FR-05 Product List & Search › TC-PLAS-012: Tìm kiếm bằng ký tự đặc biệt SQL Injection
+[chromium] › tests\plas-bva.spec.ts:87:7 › FR-05 Product List & Search — BVA › TC-PLAS-BVA-004: Tìm kiếm bằng ký tự đặc biệt SQL Injection (' OR '1'='1)
 
 Error: expect(received).toBe(expected) // Object.is equality
 

@@ -41,4 +41,4 @@ Checkout API / Functional / Domain Testing (Equivalence Partitioning)
 
 ## Status / Related bugs
 
-Fail / BUG-CHECKOUT-006
+Pass / None

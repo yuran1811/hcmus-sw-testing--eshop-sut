@@ -35,4 +35,4 @@ EC14 (siêu ký tự SQL hợp lệ trong tên) + OC5 (xử lý lỗi/dữ liệ
 
 ## Status / Related bugs
 
-Fail / BUG-PLAS-005
+Pass / None

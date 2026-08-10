@@ -4,7 +4,7 @@ Thư mục này chứa các kịch bản kiểm thử tự động bằng Playwr
 
 ## Thông tin chạy test
 
-- **Ngày thực hiện**: 2026-08-09
+- **Ngày thực hiện**: 2026-08-10
 - **Người thực hiện**: Mạch Quốc Tấn
 - **Công cụ**: Playwright v1.40+ (TypeScript)
 - **Môi trường chạy**: Localhost (Backend: port 3000, Frontend Web: port 5173)
@@ -36,7 +36,7 @@ Thư mục này chứa các kịch bản kiểm thử tự động bằng Playwr
 | TC-CHECKOUT-010D          | Địa chỉ giao hàng array                        | Pass     | Pass    | Pass   | Chặn đúng / xử lý an toàn                 |
 | TC-CHECKOUT-011           | Xem trang checkout khi có sản phẩm             | Fail     | Fail    | Fail   | BUG-CHECKOUT-008 (UI error)               |
 | TC-CHECKOUT-012           | Chỉnh sửa tổng tiền trực tiếp trên UI          | Fail     | Fail    | Fail   | BUG-CHECKOUT-009 (UI editable)            |
-| TC-CHECKOUT-013           | Sửa total_amount cao hơn tổng giá gốc          | Fail     | Fail    | Fail   | BUG-CHECKOUT-004 (Forged amount accepted) |
+| TC-CHECKOUT-013           | Backend tự tính total_amount khi client không gửi | Fail     | Fail    | Fail   | BUG-CHECKOUT-004 (total_amount null)      |
 | TC-CHECKOUT-014           | Sửa đổi giá (price) của từng item sản phẩm     | Fail     | Fail    | Fail   | BUG-CHECKOUT-005 (Forged items price)     |
 | TC-CHECKOUT-015           | Checkout của User B không ảnh hưởng User A     | Fail     | Fail    | Fail   | BUG-CHECKOUT-007 (Cart leak delete)       |
 | TC-CHECKOUT-BVA-001       | Thanh toán thành công biên dưới (1 sản phẩm)   | Fail     | Fail    | Fail   | BUG-CHECKOUT-006 (Cart not cleared)       |
@@ -51,7 +51,7 @@ Các lỗi phát hiện trong quá trình kiểm thử tự động được ghi
 - [BUG-CHECKOUT-001](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-001.md): Khách hàng dùng token JWT không hợp lệ vẫn thanh toán thành công.
 - [BUG-CHECKOUT-002](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-002.md): Giỏ hàng trống vẫn cho phép gửi yêu cầu thanh toán thành công.
 - [BUG-CHECKOUT-003](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-003.md): Backend chấp nhận total_amount giả mạo thấp hơn giá thực tế.
-- [BUG-CHECKOUT-004](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-004.md): Backend chấp nhận total_amount giả mạo cao hơn giá thực tế.
+- [BUG-CHECKOUT-004](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-004.md): Backend không đảm bảo total_amount được tính từ dữ liệu server.
 - [BUG-CHECKOUT-005](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-005.md): Backend chấp nhận giá sản phẩm / items giả mạo từ client.
 - [BUG-CHECKOUT-006](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-006.md): Giỏ hàng không được xóa sạch sau khi thực hiện thanh toán thành công.
 - [BUG-CHECKOUT-007](../../../../bug-reports/automation/checkout/BUG-CHECKOUT-007.md): Lỗi rò rỉ phân tách dữ liệu: API Checkout xóa nhầm giỏ hàng của user khác.

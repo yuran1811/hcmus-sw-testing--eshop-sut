@@ -4,7 +4,7 @@ Thư mục này chứa các kịch bản kiểm thử tự động bằng Playwr
 
 ## Thông tin chạy test
 
-- **Ngày thực hiện**: 2026-08-09
+- **Ngày thực hiện**: 2026-08-10
 - **Người thực hiện**: Mạch Quốc Tấn
 - **Công cụ**: Playwright v1.40+ (TypeScript)
 - **Môi trường chạy**: Localhost (Backend: port 3000, Frontend Web: port 5173)
@@ -31,7 +31,7 @@ Thư mục này chứa các kịch bản kiểm thử tự động bằng Playwr
 | TC-PLAS-009          | Tìm kiếm một phần tên sản phẩm                 | Pass     | Pass    | Pass   | Hoạt động đúng                              |
 | TC-PLAS-010          | Tìm kiếm từ khóa có khoảng trắng thừa          | Fail     | Fail    | Fail   | BUG-PLAS-008 (Not trimmed)                  |
 | TC-PLAS-011          | Tìm kiếm chỉ chứa khoảng trắng                 | Pass     | Pass    | Pass   | Hoạt động đúng                              |
-| TC-PLAS-012          | Tìm kiếm bằng ký tự đặc biệt SQL Injection     | Pass     | Pass    | Pass   | Trả về danh sách trống an toàn              |
+| TC-PLAS-012          | Từ khóa chứa dấu nháy đơn không phá vỡ truy vấn | Pass     | Pass    | Pass   | Trả đúng sản phẩm hợp lệ, không lỗi SQL     |
 | TC-PLAS-013          | Tìm kiếm với từ khóa trùng khớp danh mục       | Pass     | Pass    | Pass   | Hoạt động đúng                              |
 | TC-PLAS-014          | Xóa từ khóa tìm kiếm (nút Clear)               | Pass     | Pass    | Pass   | Hoạt động đúng                              |
 | TC-PLAS-015          | Kiểm tra nút Xem chi tiết sản phẩm             | Pass     | Pass    | Pass   | Hoạt động đúng                              |
