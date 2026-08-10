@@ -1,10 +1,11 @@
 # AI Audit Report
 
-"I use AI tools for the following tasks,"
+"Em sử dụng công cụ AI cho các nhiệm vụ sau,"
 
 ## Danh sách các tương tác AI thực tế (AI Interactions Log)
 
 ### Entry 1
+
 - **Tool:** Gemini 3.6 Flash
 - **Date/time:** 2026-08-05 01:27
 - **Task context:** Tự động hóa Playwright cho FR-05 Product List & Search
@@ -17,6 +18,7 @@
 ---
 
 ### Entry 2
+
 - **Tool:** Claude Sonnet 4.6 (Thinking) via Antigravity IDE
 - **Date/time:** 2026-08-05 12:15
 - **Task context:** Task 2 - Tạo Playwright automation scripts cho FR-08 Checkout
@@ -29,6 +31,7 @@
 ---
 
 ### Entry 3
+
 - **Tool:** Gemini 2.5 Pro (Thinking) via Antigravity IDE
 - **Date/time:** 2026-08-05 16:05
 - **Task context:** Task 3 - Tạo Playwright automation scripts cho FR-14 Category Management
@@ -41,6 +44,7 @@
 ---
 
 ### Entry 4
+
 - **Tool:** Gemini 3.6 Flash via Antigravity IDE
 - **Date/time:** 2026-08-05 16:25
 - **Task context:** Task 4 - Đồng bộ & Cập nhật Playwright automation scripts cho FR-05 Product List & Search
@@ -53,6 +57,7 @@
 ---
 
 ### Entry 5
+
 - **Tool:** Gemini 3.5 Flash via Antigravity Agent
 - **Date/time:** 2026-08-06 23:58
 - **Task context:** Refactor toàn bộ test suite Category sang mô hình Data-Driven Testing (loại bỏ hoàn toàn hardcoded values)
@@ -65,6 +70,7 @@
 ---
 
 ### Entry 6
+
 - **Tool:** Gemini 3.5 Flash via Antigravity Agent
 - **Date/time:** 2026-08-07 00:35
 - **Task context:** Refactor toàn bộ test suite Product List & Search (PLAS) sang mô hình Data-Driven Testing (loại bỏ hoàn toàn hardcoded values)
@@ -77,6 +83,7 @@
 ---
 
 ### Entry 7
+
 - **Tool:** Gemini 3.5 Flash via Antigravity Agent
 - **Date/time:** 2026-08-07 00:55
 - **Task context:** Refactor toàn bộ kịch bản Checkout sang mô hình Data-Driven Testing (loại bỏ hoàn toàn hardcoded values)
@@ -85,3 +92,16 @@
 - **AI output (summary):**
   > Chuyển đổi toàn bộ địa chỉ giao hàng và tổng tiền giả định trong `checkout-api.spec.ts`, `checkout-bva.spec.ts`, và `checkout-ui.spec.ts` sang việc truy xuất động thông qua cấu trúc `tc_api` và `tc_bva` của file `checkout-test-data.json`.
 - **What the student changed/kept from this output:** Giữ nguyên toàn bộ mã nguồn refactor và chạy kiểm thử tự động trên local server để nghiệm thu sự tương thích.
+
+---
+
+### Entry 8
+
+- **Tool:** Gemini 3.5 Sonnet / Antigravity Agent
+- **Date/time:** 2026-08-09 22:04
+- **Task context:** Thực thi chạy kiểm thử tự động, báo cáo kết quả và lập bug reports
+- **Prompt used (verbatim):**
+  > vậy giờ hãy chạy giúp tôi toàn bộ các script của @[../../tests/test-runs/automation/scripts/category] @[../../tests/test-runs/automation/scripts/checkout] @[../../tests/test-runs/automation/scripts/product-list-and-search] và báo cáo vào README của mỗi folder, có bug thì sử dụng @[../../.agents/skills/test-run-reporter] viết vào trong @[../../tests/bug-reports/automation] giống như @[../../tests/bug-reports/manual], nhớ có hình ảnh đầy đủ từ playwright.
+- **AI output (summary):**
+  > Khởi chạy local servers của SUT, chạy test suite Playwright đa trình duyệt, tạo các file bug report tự động (đính kèm hình ảnh giao diện lỗi), tạo các file `README.md` báo cáo kết quả chi tiết cho mỗi phân hệ.
+- **What the student changed/kept from this output:** Giữ nguyên kết quả chạy test và các báo cáo lỗi để hoàn thành bài nộp.
