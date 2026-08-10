@@ -95,7 +95,7 @@ Các test case được chia thành hai nhóm khi chuyển sang script:
 | --------------------------- | ---------------------- | --------------------------------------------------------------------------------------- |
 | TC-CHECKOUT-001 đến 010     | `checkout-api.spec.ts` | Kiểm tra checkout API, token, giỏ hàng, tổng tiền, địa chỉ giao hàng và schema payload. |
 | TC-CHECKOUT-011, 012        | `checkout-ui.spec.ts`  | Kiểm tra UI checkout hiển thị thông tin sản phẩm và tổng tiền không được sửa từ client. |
-| TC-CHECKOUT-013, 014, 015   | `checkout-api.spec.ts` | Kiểm tra total_amount giả mạo, items/giá giả mạo và phân tách dữ liệu giữa người dùng.  |
+| TC-CHECKOUT-013, 014, 015   | `checkout-api.spec.ts` | Kiểm tra server tự tính total_amount khi client không gửi, items/giá giả mạo và phân tách dữ liệu giữa người dùng. |
 | TC-CHECKOUT-BVA-001 đến 007 | `checkout-bva.spec.ts` | Kiểm tra biên số lượng giỏ hàng và độ dài/kiểu dữ liệu địa chỉ giao hàng.               |
 
 #### FR-05 Product List & Search
@@ -166,8 +166,8 @@ Số liệu mới nhất được đồng bộ trong:
 | -------------------------------- | -------: | -----: |
 | Tổng số test case đã thiết kế    |       79 | 100,0% |
 | Test case đã cập nhật trạng thái |       79 | 100,0% |
-| Pass                             |       38 |  48,1% |
-| Fail                             |       41 |  51,9% |
+| Pass                             |       41 |  51,9% |
+| Fail                             |       38 |  48,1% |
 
 ### 5.2 Tổng quan theo browser runs
 
@@ -253,7 +253,7 @@ Các case validate input như thiếu `name`, `name` sai kiểu dữ liệu, ID 
 
 ### 7.4 Kết quả sau khi sửa và chạy lại
 
-Sau khi rà soát và sửa script, toàn bộ 3 suite được chạy lại trên 3 trình duyệt. Kết quả cuối cùng:
+Sau khi rà soát và sửa script, toàn bộ 3 suite được chạy lại trên 3 trình duyệt. Product List & Search và Checkout được chạy lại lần gần nhất ngày 10/08/2026. Kết quả cuối cùng:
 
 | Suite                 | Passed runs | Failed runs | Tổng browser runs |
 | --------------------- | ----------: | ----------: | ----------------: |
@@ -300,6 +300,6 @@ Các quyết định cuối cùng do tester chịu trách nhiệm:
 
 ## 10. Kết luận
 
-Bộ kiểm thử tự động đã bao phủ 3 tính năng chính FR-05, FR-08 và FR-14 với 79 test case thiết kế, chạy đa trình duyệt trên Chromium, Firefox và WebKit. Kết quả mới nhất ghi nhận 276 browser runs, trong đó 148 pass và 128 fail. Sau khi phân tích nguyên nhân gốc, các fail được gom thành 28 bug report automation và đã tạo GitHub Issues #237 đến #264.
+Bộ kiểm thử tự động đã bao phủ 3 tính năng chính FR-05, FR-08 và FR-14 với 79 test case thiết kế, chạy đa trình duyệt trên Chromium, Firefox và WebKit. Kết quả theo test case/truy vết mới nhất ghi nhận 41 pass và 38 fail; kết quả browser runs ghi nhận 276 lượt chạy, trong đó 148 pass và 128 fail. Sau khi phân tích nguyên nhân gốc, các fail được gom thành 28 bug report automation và đã tạo GitHub Issues #237 đến #264.
 
 Phần quan trọng nhất của quá trình này không chỉ là tạo được script Playwright, mà là rà soát và sửa script do AI hỗ trợ sinh ra. Các script cuối cùng đã được chỉnh để có assertion mạnh hơn, wait ổn định hơn, data-driven rõ ràng hơn và traceability nhất quán với test case, test run, bug report và GitHub Issue.

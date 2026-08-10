@@ -23,18 +23,18 @@ README này là trang tổng hợp cho bài nộp HW04. Nội dung bám theo yê
 | 1   | Nhiệm vụ 1 - Tính năng A: Product List & Search (FR-05) |          25 |               25 | [PLAS scripts](../../tests/test-runs/automation/scripts/product-list-and-search), [PLAS README](../../tests/test-runs/automation/scripts/product-list-and-search/README.md) |
 | 2   | Nhiệm vụ 1 - Tính năng B: Checkout (FR-08)              |          25 |               25 | [Checkout scripts](../../tests/test-runs/automation/scripts/checkout), [Checkout README](../../tests/test-runs/automation/scripts/checkout/README.md)                       |
 | 3   | Nhiệm vụ 1 - Tính năng C: Category Management (FR-14)   |          25 |               25 | [Category scripts](../../tests/test-runs/automation/scripts/category), [Category README](../../tests/test-runs/automation/scripts/category/README.md)                       |
-| 4   | Nhiệm vụ 2 - Video demo                                 |          15 |               15 | [Video demo](https://youtu.be/SR3oKVqRSvI)                                                                                                                                  |
-| 5   | Agent Skills                                            |          10 |               10 | [Agent skills](../../.agents/skills)                                                                                                                                        |
+| 4   | Nhiệm vụ 2 - Video demo                                 |          15 |               15 | [Video demo](https://youtu.be/RM_GT7frNXw)                                                                                                                                  |
+| 5   | Agent Skills                                            |          10 |               10 | [Agent skills](../../.agents/skills), [Video demo](https://youtu.be/9uhWSAUw3YY)                                                                                            |
 |     | **Tổng cộng**                                           |     **100** |          **100** | -                                                                                                                                                                           |
 
 ## 3. Tính năng được tự động hóa
 
 | Nhóm          | Requirement             | Tính năng             | Test case thiết kế |   Pass |   Fail | Bug report |
 | ------------- | ----------------------- | --------------------- | -----------------: | -----: | -----: | ---------: |
-| Nhóm A        | FR-05                   | Product List & Search |                 29 |     14 |     15 |          8 |
-| Nhóm B        | FR-08                   | Checkout              |                 22 |      6 |     16 |         10 |
+| Nhóm A        | FR-05                   | Product List & Search |                 29 |     15 |     14 |          8 |
+| Nhóm B        | FR-08                   | Checkout              |                 22 |      8 |     14 |         10 |
 | Nhóm C        | FR-14                   | Category Management   |                 28 |     18 |     10 |         10 |
-| **Tổng cộng** | **FR-05, FR-08, FR-14** | **3 tính năng web**   |             **79** | **38** | **41** |     **28** |
+| **Tổng cộng** | **FR-05, FR-08, FR-14** | **3 tính năng web**   |             **79** | **41** | **38** |     **28** |
 
 Ba tính năng đều là tính năng web thuộc các nhóm A, B và C. Không sử dụng tính năng mobile thuộc nhóm D.
 
@@ -45,8 +45,8 @@ Ba tính năng đều là tính năng web thuộc các nhóm A, B và C. Không 
 | Số tính năng được tự động hóa                   |       3 |
 | Số test case đã thiết kế                        |      79 |
 | Số test case đã tự động hóa/cập nhật trạng thái |      79 |
-| Test case Pass                                  |      38 |
-| Test case Fail                                  |      41 |
+| Test case Pass                                  |      41 |
+| Test case Fail                                  |      38 |
 | Browser runs                                    |     276 |
 | Passed browser runs                             |     148 |
 | Failed browser runs                             |     128 |
@@ -72,22 +72,22 @@ Mỗi suite chạy trên 3 browser: Chromium, Firefox và WebKit. Các HTML repo
 
 Bộ kiểm thử sử dụng **Playwright Test với TypeScript** để tự động hóa cả API-level checks và UI-level checks. Mỗi tính năng được tách thành một Playwright project riêng, có `package.json`, `playwright.config.ts`, thư mục `tests/`, `pages/`, `data/`, `playwright-report/` và `test-results/`.
 
-| Nội dung | Cách triển khai |
-| --- | --- |
-| Test runner | Playwright Test |
-| Ngôn ngữ | TypeScript |
-| Browser projects | Chromium, Firefox, WebKit |
-| Report | Playwright HTML report |
-| Report identity | `Run by: 23127115` và timestamp ISO |
-| Mô hình tổ chức | Page Object Model cho thao tác API/UI, spec files cho từng nhóm test |
-| Test artifacts | `playwright-report/` và `test-results/` trong từng suite |
+| Nội dung         | Cách triển khai                                                      |
+| ---------------- | -------------------------------------------------------------------- |
+| Test runner      | Playwright Test                                                      |
+| Ngôn ngữ         | TypeScript                                                           |
+| Browser projects | Chromium, Firefox, WebKit                                            |
+| Report           | Playwright HTML report                                               |
+| Report identity  | `Run by: 23127115` và timestamp ISO                                  |
+| Mô hình tổ chức  | Page Object Model cho thao tác API/UI, spec files cho từng nhóm test |
+| Test artifacts   | `playwright-report/` và `test-results/` trong từng suite             |
 
 Ba suite automation:
 
-| Suite | Playwright config | Page Object | Spec files |
-| --- | --- | --- | --- |
-| Category | [playwright.config.ts](../../tests/test-runs/automation/scripts/category/playwright.config.ts) | [CategoryPage.ts](../../tests/test-runs/automation/scripts/category/pages/CategoryPage.ts) | [category tests](../../tests/test-runs/automation/scripts/category/tests) |
-| Checkout | [playwright.config.ts](../../tests/test-runs/automation/scripts/checkout/playwright.config.ts) | [CheckoutPage.ts](../../tests/test-runs/automation/scripts/checkout/pages/CheckoutPage.ts) | [checkout tests](../../tests/test-runs/automation/scripts/checkout/tests) |
+| Suite                 | Playwright config                                                                                             | Page Object                                                                                                     | Spec files                                                                           |
+| --------------------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Category              | [playwright.config.ts](../../tests/test-runs/automation/scripts/category/playwright.config.ts)                | [CategoryPage.ts](../../tests/test-runs/automation/scripts/category/pages/CategoryPage.ts)                      | [category tests](../../tests/test-runs/automation/scripts/category/tests)            |
+| Checkout              | [playwright.config.ts](../../tests/test-runs/automation/scripts/checkout/playwright.config.ts)                | [CheckoutPage.ts](../../tests/test-runs/automation/scripts/checkout/pages/CheckoutPage.ts)                      | [checkout tests](../../tests/test-runs/automation/scripts/checkout/tests)            |
 | Product List & Search | [playwright.config.ts](../../tests/test-runs/automation/scripts/product-list-and-search/playwright.config.ts) | [ProductListPage.ts](../../tests/test-runs/automation/scripts/product-list-and-search/pages/ProductListPage.ts) | [PLAS tests](../../tests/test-runs/automation/scripts/product-list-and-search/tests) |
 
 ### 6.2 Data-driven JSON
@@ -100,26 +100,26 @@ Ba suite automation:
 
 Các script dùng dữ liệu ngoài từ JSON thay vì hardcode trực tiếp trong test logic. Các file spec import JSON trực tiếp, sau đó lặp qua từng nhóm dữ liệu để sinh test hoặc dùng dữ liệu theo từng test case.
 
-| Suite | Cách dùng JSON |
-| --- | --- |
-| Category | `category-auth.spec.ts`, `category-bva.spec.ts`, `category-crud.spec.ts`, `category-security.spec.ts` import `category-test-data.json` để chạy CRUD, auth, security và boundary cases. |
-| Checkout | `checkout-api.spec.ts`, `checkout-bva.spec.ts`, `checkout-ui.spec.ts` import `checkout-test-data.json` để kiểm tra token, cart, total amount, shipping address, UI và integrity cases. |
-| Product List & Search | `plas-ep.spec.ts`, `plas-bva.spec.ts`, `plas-ui.spec.ts` import `plas-test-data.json` để kiểm tra equivalence partitioning, boundary values, UI/SEO và search edge cases. |
+| Suite                 | Cách dùng JSON                                                                                                                                                                         |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Category              | `category-auth.spec.ts`, `category-bva.spec.ts`, `category-crud.spec.ts`, `category-security.spec.ts` import `category-test-data.json` để chạy CRUD, auth, security và boundary cases. |
+| Checkout              | `checkout-api.spec.ts`, `checkout-bva.spec.ts`, `checkout-ui.spec.ts` import `checkout-test-data.json` để kiểm tra token, cart, total amount, shipping address, UI và integrity cases. |
+| Product List & Search | `plas-ep.spec.ts`, `plas-bva.spec.ts`, `plas-ui.spec.ts` import `plas-test-data.json` để kiểm tra equivalence partitioning, boundary values, UI/SEO và search edge cases.              |
 
 ### 6.3 Assertion patterns
 
 Requirement yêu cầu tối thiểu 3 assertion patterns. Bộ test hiện dùng **ít nhất 8 nhóm assertion pattern**:
 
-| Pattern | Ví dụ assertion | Mục đích |
-| --- | --- | --- |
-| 1. HTTP status assertion | `expect(resp.status()).toBe(...)`, `expect(status).not.toBe(500)` | Kiểm tra API trả đúng status, không crash server |
-| 2. Response body / field assertion | `expect(body.message).toContain(...)`, `expect(body.orderId).toBeTruthy()` | Kiểm tra nội dung response và field nghiệp vụ |
-| 3. Data persistence / database assertion | `expect(order.total_amount).toBe(...)`, `expect(cartItems).toHaveLength(0)` | Kiểm tra dữ liệu lưu sau thao tác checkout/category |
-| 4. UI visibility / state assertion | `await expect(locator).toBeVisible()`, `await expect(errorBox).not.toBeVisible()` | Kiểm tra trạng thái hiển thị trên frontend |
-| 5. Text / value / attribute assertion | `toContainText`, `toHaveAttribute('alt', /.+/)`, `toContain('₫')` | Kiểm tra nội dung UI, alt text, giá tiền, empty state |
-| 6. URL / navigation assertion | `await expect(page).toHaveURL(...)`, `expect(page.url()).toContain(...)` | Kiểm tra điều hướng đúng trang |
-| 7. Count / length assertion | `toHaveLength`, `toBeGreaterThan`, `toBeGreaterThanOrEqual`, `toBe(1)` | Kiểm tra số lượng item, sản phẩm, category, heading |
-| 8. Negative / security assertion | `not.toContain(...)`, `not.toBe(...)`, `expected_status_oneOf` | Kiểm tra XSS/SQL payload, dữ liệu giả mạo, phân quyền, lỗi biên |
+| Pattern                                  | Ví dụ assertion                                                                   | Mục đích                                                        |
+| ---------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| 1. HTTP status assertion                 | `expect(resp.status()).toBe(...)`, `expect(status).not.toBe(500)`                 | Kiểm tra API trả đúng status, không crash server                |
+| 2. Response body / field assertion       | `expect(body.message).toContain(...)`, `expect(body.orderId).toBeTruthy()`        | Kiểm tra nội dung response và field nghiệp vụ                   |
+| 3. Data persistence / database assertion | `expect(order.total_amount).toBe(...)`, `expect(cartItems).toHaveLength(0)`       | Kiểm tra dữ liệu lưu sau thao tác checkout/category             |
+| 4. UI visibility / state assertion       | `await expect(locator).toBeVisible()`, `await expect(errorBox).not.toBeVisible()` | Kiểm tra trạng thái hiển thị trên frontend                      |
+| 5. Text / value / attribute assertion    | `toContainText`, `toHaveAttribute('alt', /.+/)`, `toContain('₫')`                 | Kiểm tra nội dung UI, alt text, giá tiền, empty state           |
+| 6. URL / navigation assertion            | `await expect(page).toHaveURL(...)`, `expect(page.url()).toContain(...)`          | Kiểm tra điều hướng đúng trang                                  |
+| 7. Count / length assertion              | `toHaveLength`, `toBeGreaterThan`, `toBeGreaterThanOrEqual`, `toBe(1)`            | Kiểm tra số lượng item, sản phẩm, category, heading             |
+| 8. Negative / security assertion         | `not.toContain(...)`, `not.toBe(...)`, `expected_status_oneOf`                    | Kiểm tra XSS/SQL payload, dữ liệu giả mạo, phân quyền, lỗi biên |
 
 Ngoài các pattern trên, một số test dùng `expect.soft(...)` để ghi nhận nhiều lỗi trong cùng một luồng kiểm thử và `expect.poll(...)` để chờ trạng thái UI ổn định hơn.
 
@@ -173,7 +173,7 @@ AI được dùng để hỗ trợ tạo script, refactor data-driven, rà soát
 
 ## 11. Video demo
 
-- **Link video demo:** https://youtu.be/SR3oKVqRSvI
+- **Link video demo:** https://youtu.be/RM_GT7frNXw
 - **Yêu cầu:** video YouTube unlisted, tối thiểu 5 phút, thuyết minh tiếng Việt.
 - **Nội dung cần thể hiện:** chạy một suite automation từ đầu đến cuối, chạy đa trình duyệt, mở HTML report, trình bày `Run by: 23127115`, giải thích ít nhất một lỗi đã sửa trong script do AI tạo.
 - **Bằng chứng tác giả:** video cần có face-cam hoặc terminal hiển thị `whoami` và `hostname`.
@@ -209,7 +209,7 @@ git log --oneline --name-only -- "*.spec.ts" > docs/report/git_commit_logs.txt
 | AI Audit Report            | [AI_Audit_Report.md](./AI_Audit_Report.md)                                                                                                                                                                                                                                                                         |
 | AI Critique                | [AI_Critique.md](./AI_Critique.md)                                                                                                                                                                                                                                                                                 |
 | Agent Skills               | [.agents/skills](../../.agents/skills)                                                                                                                                                                                                                                                                             |
-| Video demo link            | https://youtu.be/SR3oKVqRSvI                                                                                                                                                                                                                                                                                       |
+| Video demo link            | https://youtu.be/RM_GT7frNXw                                                                                                                                                                                                                                                                                       |
 | Git commit log             | [git_commit_logs.txt](./git_commit_logs.txt)                                                                                                                                                                                                                                                                       |
 
 ## 14. Tên file nộp Moodle

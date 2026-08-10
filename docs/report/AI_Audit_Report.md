@@ -118,3 +118,77 @@
 - **AI output (summary):**
   > Quét các Page Object Model trong automation scripts, phát hiện `ProductListPage.goto()` và các hàm điều hướng của `CheckoutWebPage` còn dùng `waitForLoadState('domcontentloaded')`. Thay bằng wait theo tín hiệu cụ thể hơn: Product chờ response `/api/products` và search input visible; Checkout chờ URL `/cart` hoặc `/checkout` và body visible. Chạy lại kiểm tra không còn pattern `waitForLoadState('domcontentloaded')` và TypeScript compile pass cho Product List & Search và Checkout.
 - **What the student changed/kept from this output:** Giữ các thay đổi Page Object để giảm flaky wait và làm rõ phần human review/gap analysis về wait không ổn định.
+
+---
+
+### Entry 10
+
+- **Tool:** Codex (GPT-5) via Codex CLI
+- **Date/time:** 2026-08-10 10:50
+- **Task context:** Sửa lỗi timeout trong `beforeEach` sau khi thay wait của Product Page Object
+- **Prompt used (verbatim):**
+  > ủa sao nó bị Test timeout of 30000ms exceeded while running "beforeEach" hook.
+  >
+  >   44 |   let plasPage: ProductListPage;
+  >   45 |
+  > > 46 |   test.beforeEach(async ({ page }) => {
+  >      |        ^
+  >   47 |     plasPage = new ProductListPage(page);
+  >   48 |     await plasPage.goto();
+  >   49 |   });
+  >     at G:\HCMUS\NAM3-HK3\Testing\Homework\HW4\hcmus-sw-testing--eshop-sut\tests\test-runs\automation\scripts\product-list-and-search\tests\plas-ep.spec.ts:46:8
+  > Error: locator.waitFor: Target page, context or browser has been closed
+  >
+  >    at ..\pages\ProductListPage.ts:72
+  >
+  >   70 |     await this.page.goto(baseURL);
+  >   71 |     await productsResponse;
+  > > 72 |     await this.searchInput.waitFor({ state: 'visible' });
+  >      |                            ^
+  >   73 |   }
+  >   74 |
+  >   75 |   /**
+  >     at ProductListPage.goto (G:\HCMUS\NAM3-HK3\Testing\Homework\HW4\hcmus-sw-testing--eshop-sut\tests\test-runs\automation\scripts\product-list-and-search\pages\ProductListPage.ts:72:28)
+  >     at G:\HCMUS\NAM3-HK3\Testing\Homework\HW4\hcmus-sw-testing--eshop-sut\tests\test-runs\automation\scripts\product-list-and-se
+  >
+  > là sao
+- **AI output (summary):**
+  > Phân tích nguyên nhân timeout do `ProductListPage.goto()` chờ response `/api/products` quá cứng; nếu response không match, bị cache hoặc chậm thì `beforeEach` treo đến 30 giây rồi page bị đóng. Sửa `goto()` thành wait mềm hơn: `page.goto(..., { waitUntil: 'commit' })`, chờ `searchInput` visible, sau đó `Promise.race` giữa API products, product card, empty state hoặc error box với timeout 10 giây. Chạy `tsc --noEmit` pass và smoke test `TC-PLAS-001` không còn timeout beforeEach; test fail do các bug SUT đã biết `BUG-PLAS-001`, `BUG-PLAS-002`, `BUG-PLAS-003`.
+- **What the student changed/kept from this output:** Giữ bản sửa wait mềm hơn trong `ProductListPage.goto()` để tránh flaky timeout khi mở trang Product List & Search.
+
+---
+
+### Entry 11
+
+- **Tool:** Codex (GPT-5) via Codex CLI
+- **Date/time:** 2026-08-10 10:53
+- **Task context:** Rà soát các Page Object khác để tìm lỗi wait tương tự
+- **Prompt used (verbatim):**
+  > rà soát xem các page object khác có bị tương tự không
+- **AI output (summary):**
+  > Rà soát `CategoryPage.ts`, `CheckoutPage.ts` và `ProductListPage.ts`. Kết luận Category là API helper nên không có rủi ro `page.waitForLoadState`. Sửa Checkout navigation waits để dùng `waitUntil: 'commit'`, `waitForURL(..., { timeout: 10000 })` và body visible có timeout. Sửa Product search actions (`search`, `clearSearch`, `searchByPressingEnter`) để dùng helper `waitForProductsResponse()` có timeout và fallback UI settled, tránh treo nếu response search không match. Chạy TypeScript checks cho cả 3 suite pass và smoke test `TC-PLAS-002` không timeout, chỉ fail ở bug SUT đã biết `BUG-PLAS-001`.
+- **What the student changed/kept from this output:** Giữ các thay đổi wait helper và timeout rõ ràng trong Page Object Model để giảm flaky timeout ở cả navigation và search actions.
+
+---
+
+### Entry 12
+- **Tool:** Codex / GPT-5
+- **Date/time:** 2026-08-10 11:05
+- **Task context:** Đồng bộ tài liệu automation sau khi chạy lại Product List & Search và Checkout
+- **Prompt used (verbatim):**
+  > tôi mới chạy lại test của product và checkout, hãy dựa vào kết quả cập nhật lại trong các tài liệu
+- **AI output (faithful summary):**
+  > Đọc Playwright HTML report mới nhất của `product-list-and-search` và `checkout`, giải nén payload report nhúng trong `index.html`, xác nhận mỗi suite có 87 browser runs với 45 passed, 42 failed, 0 flaky/skipped. Phát hiện các tài liệu bị lệch ở `TC-PLAS-012`, `TC-CHECKOUT-006`, `TC-CHECKOUT-007`, `BUG-PLAS-005`, `BUG-CHECKOUT-006` và mô tả `BUG-CHECKOUT-004`; cập nhật status, bug mapping, README và summary để nhất quán với kết quả chạy lại.
+- **What the student changed/kept from this output:** Giữ số browser-runs mới nhất, sửa status/mapping sai, và làm rõ khác biệt giữa test case thiết kế với browser runs.
+
+---
+
+### Entry 13
+- **Tool:** Codex / GPT-5
+- **Date/time:** 2026-08-10 11:11
+- **Task context:** Đồng bộ GitHub Issues với bug report automation sau khi cập nhật kết quả chạy lại
+- **Prompt used (verbatim):**
+  > sync luôn đi
+- **AI output (faithful summary):**
+  > Dùng GitHub CLI cập nhật issue #250, #252 và #261 theo các file bug report Markdown hiện tại. Issue #250 được đổi title thành "[BUG][Thanh toán][Automation] Backend không đảm bảo total_amount được tính từ dữ liệu server" và cập nhật body có `TC-CHECKOUT-013`, `TC-CHECKOUT-BVA-003`, `total_amount = null`. Issue #252 được cập nhật body để gỡ `TC-CHECKOUT-006/007` và giữ `TC-CHECKOUT-BVA-001`. Issue #261 được cập nhật body để gỡ `TC-PLAS-012` và giữ `TC-PLAS-BVA-004`.
+- **What the student changed/kept from this output:** Giữ GitHub Issues đồng bộ với bug report Markdown và traceability mới nhất.
