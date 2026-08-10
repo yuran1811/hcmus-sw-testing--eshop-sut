@@ -1,4 +1,4 @@
-# [BUG][Quản Lý Người Dùng Admin] API danh sách người dùng và API xóa người dùng thiếu phân quyền Admin
+# [BUG][User Management] API danh sách người dùng và API xóa người dùng thiếu phân quyền Admin
 
 ## Found by Test Case
 
@@ -33,10 +33,10 @@
 
 ## Actual result
 
-- Máy chủ vẫn xử lý thành công, trả về danh sách toàn bộ người dùng (kèm các thông tin bảo mật) hoặc xóa người dùng thành công với mã trạng thái `200 OK`. 
+- Máy chủ vẫn xử lý thành công, trả về danh sách toàn bộ người dùng (kèm các thông tin bảo mật) hoặc xóa người dùng thành công với mã trạng thái `200 OK`.
 - Nguyên nhân: Trong file `backend/server.js`, các endpoint `/api/admin/users` chỉ áp dụng middleware `authenticateToken` để kiểm tra token hợp lệ mà hoàn toàn bỏ qua việc xác thực vai trò quản trị (`req.user.role === 'admin'`).
 
 ## Evidence
 
 - Screenshot: ![Screenshot](../Evidences/FR19/F19-TC-005.png)
-
+- Screenshot: ![Screenshot](../Evidences/FR19/F19-TC-006.png)

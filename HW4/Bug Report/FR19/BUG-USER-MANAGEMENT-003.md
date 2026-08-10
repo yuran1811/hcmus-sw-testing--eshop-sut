@@ -1,4 +1,4 @@
-# [BUG][Quản Lý Người Dùng Admin] Tiêu đề trang quản lý sử dụng sai thẻ h2 thay vì thẻ h1
+# [BUG][User Management] Tiêu đề trang quản lý sử dụng sai thẻ h2 thay vì thẻ h1
 
 ## Found by Test Case
 
@@ -37,4 +37,3 @@
 ## Evidence
 
 - Screenshot: ![Screenshot](../Evidences/FR19/F19-TC-014.png)
-

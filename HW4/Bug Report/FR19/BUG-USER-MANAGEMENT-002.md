@@ -1,4 +1,4 @@
-# [BUG][Quản Lý Người Dùng Admin] Cho phép tài khoản Admin tự xóa chính mình trên giao diện và API
+# [BUG][User Management] Cho phép tài khoản Admin tự xóa chính mình trên giao diện và API
 
 ## Found by Test Case
 
@@ -40,4 +40,4 @@
 ## Evidence
 
 - Screenshot: ![Screenshot](../Evidences/FR19/F19-TC-011.png)
-
+- Screenshot: ![Screenshot](../Evidences/FR19/F19-TC-012.png)
