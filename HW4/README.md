@@ -139,4 +139,4 @@ Sau khi thực thi lệnh chạy ma trận `npm run test:matrix`, các báo cáo
 3. Nhật ký sử dụng AI (Mandatory): [AI_Audit_Report.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/AI%20Submission/AI_Audit_Report.md)
 4. Danh sách 17 báo cáo lỗi chi tiết: Thư mục [Bug Report](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/Bug%20Report/)
 5. Danh sách GitHub Issues đã tạo cho 17 lỗi HW04: [bug_issue_links.md](./bug_issue_links.md)
-6. Nhật ký Git commit: Tệp [git_commit_log.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/git_commit_log.md)
+6. Nhật ký Git commit: Tệp [git_commit_log.txt](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW4/git_commit_log.txt)
