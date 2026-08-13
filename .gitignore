@@ -7,3 +7,7 @@ backend/database.sqlite-shm
 backend/database.sqlite-wal
 *.db
 *.sqlite
+
+# JMeter temporary outputs at repository root
+/jmeter.log
+/results/
