@@ -1,2 +1,9 @@
 node_modules/
 
+# SQLite databases and temp files
+backend/database.sqlite
+backend/database.sqlite-journal
+backend/database.sqlite-shm
+backend/database.sqlite-wal
+*.db
+*.sqlite

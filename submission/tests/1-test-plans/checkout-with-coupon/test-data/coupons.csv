@@ -1,0 +1,2 @@
+code,type,discount_value,min_order_amount,expired_at,is_active,max_uses_per_user
+PERFTEST,percent,10,0,2099-12-31,1,9999
