@@ -32,6 +32,14 @@ Collect these before generating anything. Ask if not provided:
 - Host hardware specs: CPU core count and total RAM in GB.
 - File naming convention (for example: {ID}_{ScenarioType}_{YYYYMMDD}).
 
+Before writing any final JMX or k6 file, inspect the real backend implementation
+or run a quick API probe to confirm:
+- Actual response JSON shapes for every extracted field.
+- Actual status codes for each step.
+- Actual request payload field names for transactional endpoints.
+
+Do not trust only the specification when source code is available.
+
 ## Parameter selection guide
 
 Use hardware specs to derive starting parameters. These are estimates to
@@ -68,6 +76,14 @@ Recommended defaults:
   unrealistic and gives misleading results).
 - There is no fixed duration; the test ends when degradation is confirmed.
 - The key output is the VU count and RPS at which degradation began.
+
+Implementation preference for JMeter:
+- Prefer multiple built-in Thread Groups with staggered `delay` and `duration`
+  to create cumulative staged load.
+- Avoid relying on Stepping Thread Group, Ultimate Thread Group, or other
+  plugins unless the user explicitly confirms plugin availability.
+- Avoid Module Controller or brittle internal references when a self-contained
+  plan is practical.
 
 ### Spike test — sudden traffic burst
 
@@ -124,6 +140,14 @@ For each step, create a JMeter HTTP Request Sampler with:
 Do not add assertions yet. Output each sampler as XML.
 ```
 
+Important:
+- If a later request depends on a computed monetary total, create that
+  variable explicitly. Example: `cart_total = product_price * quantity`
+  before applying a coupon. Do not send a single-item price when the API
+  expects a cart/order total.
+- Do not invent fallback values for critical extracted variables unless the
+  workflow explicitly wants to continue after missing data.
+
 ### Sub-prompt C — Assertions
 
 ```
@@ -135,6 +159,14 @@ Add assertions to the sampler chain. For each step:
 
 Output the assertion XML blocks inline below each sampler they belong to.
 ```
+
+For JMeter, prefer fail-fast extractor validation using `JSR223 Assertion`
+when a plain Response Assertion is not enough. Critical variables include:
+- auth token
+- user id
+- product id / price / name
+- computed coupon result such as `final_amount`
+- created order identifier
 
 ### Sub-prompt D — CSV Data Set Config
 
@@ -195,6 +227,8 @@ Token/session management:
 - A JSON Extractor exists for every value that downstream steps depend on.
 - The extractor JSONPath is correct for the actual response schema.
 - Authorization headers reference the extracted token variable.
+- Extractor default values for critical workflow variables are blank unless
+  the test intentionally supports a fallback path.
 
 Account lockout handling:
 - If the application locks accounts after N failed logins, the CSV contains
@@ -205,9 +239,16 @@ Account lockout handling:
 Assertions:
 - Every sampler has at minimum a status code assertion.
 - Duration assertions are set to realistic thresholds, not defaults.
+- Critical extracted variables fail the sampler if missing, instead of silently
+  continuing with dummy values.
 
 Listener uniqueness:
 - Each of the three test plans uses a different listener type.
+
+Output ownership:
+- Decide whether the canonical raw log comes from the in-plan listener
+  `filename` or from CLI `-l`. Document one consistent convention and do not
+  leave ambiguity about which file is the submission artifact.
 
 ## Output deliverables
 

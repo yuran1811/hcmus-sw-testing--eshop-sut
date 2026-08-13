@@ -44,11 +44,11 @@
   > - **Spike** (`23127115_Spike_20260813.jmx`): 100 VUs, 10s ramp, 60s delay, 480s total, think-time mean=500ms±100ms, listener: Summary Report → `results/spike.jtl`.
   > Mỗi JMX thực hiện đủ 7 bước: Login (auth-heavy) → Categories (read) → Products?search= (read) → Cart (transactional) → Apply-Coupon (transactional) → Checkout (transactional) → My-Orders (read). CSV `test-data/users.csv` được bind qua CSVDataSet với 7 biến. JSONPath extractors truyền `access_token`, `user_id`, `product_id_resp`, `product_price`, `product_name`, `final_amount`, `order_id` xuyên suốt workflow. Mỗi bước có ResponseAssertion (status code) và DurationAssertion riêng.
 - **What the student changed/kept from this output:**
-  - **Giữ nguyên:** Toàn bộ cấu trúc 7-step, CSV binding, JSONPath extraction chain, 3 listener khác nhau trên 3 file.
-  - **Cần xác minh thủ công trước khi chạy:**
-    1. `POST /api/checkout` trả về 200 hay 201? Assertion hiện tại dùng test_type=40 (OR) cho cả 200 và 201.
-    2. JSON path `$.token` (login response) và `$.user.id` — cần verify với Postman/curl thực tế vì spec không rõ cấu trúc response.
-    3. `POST /api/cart` payload format `{id, name, price, quantity}` — cần xác minh với backend source code.
-    4. Stress test dùng ThreadGroup tuyến tính (+1 VU/3s); AI không đề xuất stepped ramp-up (Stepping Thread Group plugin). Đây là hạn chế: cần plugin Ultimate Thread Group cho stepped approach thực tế hơn.
-    5. Think time Spike 500ms có thể quá thấp so với thực tế nhưng phù hợp để mô phỏng burst traffic.
+  - **Giữ lại:** Toàn bộ workflow 7 bước, CSVDataSet binding với 7 biến, chain extractor giữa các bước, 3 listener khác nhau cho Load / Stress / Spike, naming convention của 3 file JMX, và các ngưỡng duration assertion cơ bản theo nhóm endpoint.
+  - **Sinh viên đã sửa trực tiếp từ output AI:**
+    1. Đổi `POST /api/apply-coupon` từ `total_amount = ${product_price}` sang `total_amount = ${cart_total}` với `cart_total = product_price × quantity`, vì output AI chưa tính đúng tổng giỏ hàng.
+    2. Đổi extractor của checkout từ `$.id` sang `$.orderId` để khớp backend thực tế tại `backend/server.js`.
+    3. Bỏ các default fallback nguy hiểm của `access_token`, `user_id`, `product_id_resp`, `product_name`, `product_price`, `final_amount`, `order_id`, rồi thêm `JSR223 Assertion` để fail rõ khi extractor không lấy được giá trị thật.
+    4. Chuyển stress plan từ một linear thread group 200 VU sang staged load độc lập hoàn toàn gồm 4 thread group: 50 VU từ phút 0, cộng thêm 50 VU ở phút 5, phút 10, và phút 15, để tạo tải cộng dồn 50 → 100 → 150 → 200 mà không phụ thuộc plugin hay module reuse.
+  - **Các điểm vẫn cần xác minh thủ công trước khi chạy chính thức:** response shape của login (`$.token`, `$.user.id`), status code thực tế của checkout (200 hay 201), và payload cart `{id, name, price, quantity}` bằng Postman/curl hoặc đọc source backend.
 

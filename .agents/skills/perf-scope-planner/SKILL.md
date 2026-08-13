@@ -57,6 +57,14 @@ GET /search?q={term}.
 multiple dependent operations. Examples: POST /cart/items, POST /orders,
 POST /payments, PATCH /orders/{id}/status.
 
+When repository source code is available, compare the specification against
+the implementation before finalizing the workflow. Record any mismatch that
+affects:
+- response field names used for extraction
+- request body shape
+- status code expectations
+- side effects such as DB reset on startup
+
 ## Step 3 — Design the end-to-end workflow
 
 Construct a single sequential workflow that exercises all three categories.
@@ -135,6 +143,11 @@ the API that will affect test design:
   a refresh step.
 - Stateful side effects: if creating orders or carts persists state that
   accumulates, document the cleanup strategy.
+- Derived totals: if coupon or checkout logic depends on order total, document
+  whether the workflow must compute `price * quantity` or another aggregate
+  before the transactional call.
+- Spec versus implementation drift: if docs say one thing and source code does
+  another, explicitly note which behavior the test plan should follow.
 
 ## Output format
 

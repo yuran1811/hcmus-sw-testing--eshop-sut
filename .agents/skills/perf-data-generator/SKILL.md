@@ -47,6 +47,9 @@ Also determine:
 - The range of product IDs, search keywords, and other parameters
   that will diversify the read and transactional steps.
 - Whether a coupon or discount code column is needed.
+- Whether transactional steps need derived values such as `cart_total`;
+  if so, ensure the CSV contains the inputs required to compute them
+  consistently, such as `quantity` and a valid product selection.
 
 ## Step 2 — Generate the primary CSV
 
@@ -82,6 +85,10 @@ perf_002@test.com,Test@12345,7,shirt,2,
 Generated CSV accounts must exist in the application before the test
 runs. Use the bulk registration script to POST each account to the
 registration endpoint.
+
+If the application resets or reseeds its database on startup, do not assume
+accounts survive a restart. Re-run the seed or registration step after every
+database reset and document that dependency in setup instructions.
 
 If registration requires fields beyond email and password (name, phone,
 address), extend the CSV schema and the registration payload accordingly.
@@ -141,6 +148,16 @@ grader will verify this in the test report.
 
 Depending on the workflow, additional CSV files may be needed.
 
+Reusable coupon file:
+```
+code,type,discount_value,min_order_amount,expired_at,is_active,max_uses_per_user
+PERFTEST,percent,10,0,2099-12-31,1,9999
+```
+
+When the workflow includes high-frequency coupon application, prefer a
+dedicated performance-test coupon with effectively non-blocking constraints
+so coupon exhaustion does not invalidate the scenario.
+
 Invalid credentials file (for account lockout boundary testing):
 ```
 email,password,expected_status
@@ -179,6 +196,7 @@ for p in data['data']:
 - Lockout reset script (documented with the method used).
 - Row count and column layout documented in the test report.
 - Confirmation that registration completed before the first test run.
+- Confirmation that any startup-time database reset behavior was accounted for.
 
 ## Reference files
 
