@@ -1,65 +1,65 @@
 # Traceability Matrix — Performance Testing
 
-> Scope: Performance Testing  
 > Workflow under test: Checkout with Coupon  
-> Prepared on: `2026-08-13`
+> Official execution date: `2026-08-13`
 
 ## Coverage Mapping
 
-| Requirement                                                               | Test Case / Step                                            | Planned Evidence                                | Result | Bug Issue | Status              |
-| ------------------------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------- | ------ | --------- | ------------------- |
-| Use one E2E workflow covering `auth-heavy`, `read-heavy`, `transactional` | Full workflow in all three JMX plans                        | 3 JMX files + main report                       | `TBD`  |           | `Planned`           |
-| Auth-heavy endpoint included                                              | Step 1 `POST /api/login`                                    | JMX sampler + JTL samples                       | `TBD`  |           | `Planned`           |
-| Read-heavy endpoint included                                              | Step 2 `GET /api/categories`                                | JMX sampler + JTL samples                       | `TBD`  |           | `Planned`           |
-| Read-heavy endpoint included                                              | Step 3 `GET /api/products?search=`                          | JMX sampler + JTL samples                       | `TBD`  |           | `Planned`           |
-| Transactional endpoint included                                           | Step 4 `POST /api/cart`                                     | JMX sampler + JTL samples                       | `TBD`  |           | `Planned`           |
-| Transactional endpoint included                                           | Step 5 `POST /api/apply-coupon`                             | JMX sampler + JTL samples                       | `TBD`  |           | `Planned`           |
-| Transactional endpoint included                                           | Step 6 `POST /api/checkout`                                 | JMX sampler + JTL samples                       | `TBD`  |           | `Planned`           |
-| Read-after-write verification included                                    | Step 7 `GET /api/orders/my-orders`                          | JMX sampler + JTL samples                       | `TBD`  |           | `Planned`           |
-| AI-generated test plans reviewed by human                                 | Pre-run review + correction log                             | `test-summary.md` section 2 and 5               | `TBD`  |           | `In progress`       |
-| Data-driven workflow with CSV input                                       | `CSV users.csv` in all plans                                | CSV file + JMX config                           | `TBD`  |           | `Present`           |
-| Three different listener/report types                                     | Load / Stress / Spike use distinct listeners                | JMX XML + screenshots                           | `TBD`  |           | `Present`           |
-| Correct file naming convention                                            | `23127115_Load_20260813.jmx`, `...Stress...`, `...Spike...` | Repository files                                | `Pass` |           | `Complete`          |
-| Execute Load scenario                                                     | Load plan run                                               | `results/load.jtl` + `results/load-report/`     | `TBD`  |           | `Missing evidence`  |
-| Execute Stress scenario                                                   | Stress plan run                                             | `results/stress.jtl` + `results/stress-report/` | `TBD`  |           | `Missing evidence`  |
-| Execute Spike scenario                                                    | Spike plan run                                              | `results/spike.jtl` + `results/spike-report/`   | `TBD`  |           | `Missing evidence`  |
-| Identify and reset account lockout between runs                           | Reset command before reruns                                 | Screenshot/log/command transcript               | `TBD`  |           | `Missing evidence`  |
-| Capture tool + resource usage together                                    | One screenshot per scenario                                 | Evidence screenshots                            | `TBD`  |           | `Missing evidence`  |
-| Capture hardware report and spec table                                    | Hardware screenshot + table                                 | Evidence screenshots + report section           | `TBD`  |           | `Missing evidence`  |
-| Generate raw `.jtl` logs                                                  | Load / Stress / Spike raw logs                              | 3 `.jtl` files                                  | `TBD`  |           | `Missing evidence`  |
-| Generate HTML reports                                                     | Load / Stress / Spike HTML folders                          | 3 report directories                            | `TBD`  |           | `Missing evidence`  |
-| Determine endurance threshold on local hardware                           | Endurance / soak run                                        | `endurance.jtl` + report + conclusion           | `TBD`  |           | `Missing evidence`  |
-| Record real bug or performance issue if found                             | GitHub issue or report note                                 | Issue link / screenshot / note                  | `TBD`  |           | `Pending execution` |
-| Provide video demo with narration                                         | YouTube unlisted link                                       | Main report / README                            | `TBD`  |           | `Missing evidence`  |
+| Requirement                                                                   | Test Case / Step                                            | Evidence                                                                                | Result | Status             |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------------------------------------- | ------ | ------------------ |
+| Use one E2E workflow covering `auth-heavy`, `read-heavy`, and `transactional` | Full workflow in all three JMX plans                        | 3 JMX files + official JTL artifacts                                                    | `Pass` | `Complete`         |
+| Auth-heavy endpoint included                                                  | Step 1 `POST /api/login`                                    | Present in all JMX files and all official JTL files                                     | `Pass` | `Complete`         |
+| Read-heavy endpoint included                                                  | Step 2 `GET /api/categories`                                | Present in all JMX files and all official JTL files                                     | `Pass` | `Complete`         |
+| Read-heavy endpoint included                                                  | Step 3 `GET /api/products?search=`                          | Present in all JMX files and all official JTL files                                     | `Pass` | `Complete`         |
+| Transactional endpoint included                                               | Step 4 `POST /api/cart`                                     | Present in all JMX files and all official JTL files                                     | `Pass` | `Complete`         |
+| Transactional endpoint included                                               | Step 5 `POST /api/apply-coupon`                             | Present in all JMX files and all official JTL files                                     | `Pass` | `Complete`         |
+| Transactional endpoint included                                               | Step 6 `POST /api/checkout`                                 | Present in all JMX files and all official JTL files                                     | `Pass` | `Complete`         |
+| Read-after-write verification included                                        | Step 7 `GET /api/orders/my-orders`                          | Present in all JMX files and all official JTL files                                     | `Pass` | `Complete`         |
+| AI-generated plans reviewed by human                                          | JMX repair log and review summary                           | `test-summary.md` sections 2 and 5                                                      | `Pass` | `Complete`         |
+| Data-driven workflow with CSV input                                           | `users.csv` and `keywords.csv`                              | Seed script + regenerated CSV files                                                     | `Pass` | `Complete`         |
+| Correct file naming convention                                                | `23127115_Load_20260813.jmx`, `...Stress...`, `...Spike...` | Repository files                                                                        | `Pass` | `Complete`         |
+| Execute Load scenario                                                         | Official Load run                                           | `submission/tests/2-test-runs/checkout-with-coupon/load/20260813-load-official.jtl`     | `Pass` | `Complete`         |
+| Execute Stress scenario                                                       | Official Stress run                                         | `submission/tests/2-test-runs/checkout-with-coupon/stress/20260813-stress-official.jtl` | `Pass` | `Complete`         |
+| Execute Spike scenario                                                        | Official Spike run                                          | `submission/tests/2-test-runs/checkout-with-coupon/spike/20260813-spike-official.jtl`   | `Pass` | `Complete`         |
+| Generate raw `.jtl` logs                                                      | Load / Stress / Spike                                       | Official `.jtl` files in `2-test-runs`                                                  | `Pass` | `Complete`         |
+| Identify and reset account state between runs                                 | Re-seed before each official run                            | Seed script execution logs                                                              | `Pass` | `Complete`         |
+| Generate HTML reports                                                         | Load / Stress / Spike report exports                        | `html-report/` folders in each official run directory                                   | `Pass` | `Complete`         |
+| Capture tool + resource usage together                                        | One screenshot per scenario                                 | No screenshots yet                                                                      | `TBD`  | `Missing evidence` |
+| Capture hardware report and spec table                                        | Hardware screenshot + table                                 | `submission/tests/2-test-runs/checkout-with-coupon/hardware-dxdiag.png` + section 4.5 in `test-summary.md` | `Pass`  | `Complete` |
+| Determine endurance threshold on local hardware                               | Endurance / soak run                                        | No separate run                                                                         | `TBD`  | `Missing evidence` |
+| Provide video demo with narration                                             | Submission video link                                       | No link yet                                                                             | `TBD`  | `Missing evidence` |
 
-## Pre-run Defect Tracking for the JMX Plans
+## Official Scenario Results
 
-| ID     | Finding                                                                         | Affected plan(s)    | Severity | Proposed fix                                                                                      | Status   |
-| ------ | ------------------------------------------------------------------------------- | ------------------- | -------- | ------------------------------------------------------------------------------------------------- | -------- |
-| JMX-01 | Coupon request uses `${product_price}` instead of cart total                    | Load, Stress, Spike | High     | Compute `${cart_total}` from `product_price * quantity` and send that to `/api/apply-coupon`      | `Closed` |
-| JMX-02 | Checkout extractor uses `$.id`, but backend returns `orderId`                   | Load, Stress, Spike | High     | Change extractor to `$.orderId`                                                                   | `Closed` |
-| JMX-03 | No hard assertion that extracted token and downstream variables are non-default | Load, Stress, Spike | High     | Add response / JSR223 assertions for `access_token`, `user_id`, `product_id_resp`, `final_amount` | `Closed` |
-| JMX-04 | Search sampler can silently fall back to default product data                   | Load, Stress, Spike | Medium   | Fail fast when no product is returned instead of masking with default values                      | `Closed` |
-| JMX-05 | Stress profile is linear, not stepped/incremental                               | Stress              | Medium   | Use staged load levels or document why linear ramp is acceptable                                  | `Closed` |
-| JMX-06 | Listener output path may duplicate or conflict with CLI `-l` usage              | Load, Stress, Spike | Low      | Standardize run commands and output ownership                                                     | `Open`   |
+| Scenario | Total samples | Failures | Error rate | Throughput      | p95      | p99      | Max         | Outcome                       |
+| -------- | ------------- | -------- | ---------- | --------------- | -------- | -------- | ----------- | ----------------------------- |
+| Load     | `5,996`       | `0`      | `0.00%`    | `4.698 req/s`   | `25 ms`  | `58 ms`  | `2360 ms`   | `Pass`                        |
+| Stress   | `138,180`     | `41`     | `0.03%`    | `115.276 req/s` | `259 ms` | `925 ms` | `3486 ms`   | `Pass with minor degradation` |
+| Spike    | `45,436`      | `34`     | `0.07%`    | `63.266 req/s`  | `41 ms`  | `68 ms`  | `481450 ms` | `Pass with end-of-test outliers` |
+
+## JMX Defect Tracking
+
+| ID     | Finding                                                      | Affected plan(s)    | Severity | Fix status | Notes                                                  |
+| ------ | ------------------------------------------------------------ | ------------------- | -------- | ---------- | ------------------------------------------------------ |
+| JMX-01 | Coupon request used `${product_price}` instead of cart total | Load, Stress, Spike | High     | `Closed`   | Replaced with `${cart_total}`                          |
+| JMX-02 | Checkout extractor used wrong field                          | Load, Stress, Spike | High     | `Closed`   | Extractor now reads `orderId`                          |
+| JMX-03 | Missing hard validation for extracted variables              | Load, Stress, Spike | High     | `Closed`   | Added `JSR223 Assertion` checks                        |
+| JMX-04 | Product search could silently fall back                      | Load, Stress, Spike | Medium   | `Closed`   | Workflow now fails clearly on missing data             |
+| JMX-05 | Stress profile was not staged                                | Stress              | Medium   | `Closed`   | Rebuilt as four cumulative stages                      |
+| JMX-06 | JMeter CLI parser incompatibility                            | Load, Stress, Spike | High     | `Closed`   | Repaired XML structure and extractor approach          |
+| JMX-07 | Listener / CLI output ownership not standardized             | Load, Stress, Spike | Low      | `Closed`   | Official runs stored in `submission/tests/2-test-runs` |
 
 ## Artifact Completion Checklist
 
-| Artifact                    | Expected path                                                                  | Status    | Notes                      |
-| --------------------------- | ------------------------------------------------------------------------------ | --------- | -------------------------- |
-| Load JTL                    | `submission/tests/1-test-plans/checkout-with-coupon/results/load.jtl`          | `Missing` |                            |
-| Stress JTL                  | `submission/tests/1-test-plans/checkout-with-coupon/results/stress.jtl`        | `Missing` |                            |
-| Spike JTL                   | `submission/tests/1-test-plans/checkout-with-coupon/results/spike.jtl`         | `Missing` |                            |
-| Load HTML report            | `submission/tests/1-test-plans/checkout-with-coupon/results/load-report/`      | `Missing` |                            |
-| Stress HTML report          | `submission/tests/1-test-plans/checkout-with-coupon/results/stress-report/`    | `Missing` |                            |
-| Spike HTML report           | `submission/tests/1-test-plans/checkout-with-coupon/results/spike-report/`     | `Missing` |                            |
-| Endurance JTL               | `submission/tests/1-test-plans/checkout-with-coupon/results/endurance.jtl`     | `Missing` |                            |
-| Endurance HTML report       | `submission/tests/1-test-plans/checkout-with-coupon/results/endurance-report/` | `Missing` |                            |
-| Resource screenshot: Load   | `submission/docs/test-report/evidence/`                                        | `Missing` |                            |
-| Resource screenshot: Stress | `submission/docs/test-report/evidence/`                                        | `Missing` |                            |
-| Resource screenshot: Spike  | `submission/docs/test-report/evidence/`                                        | `Missing` |                            |
-| Hardware screenshot         | `submission/docs/test-report/evidence/`                                        | `Missing` |                            |
-| Hardware spec table         | Main report                                                                    | `Missing` |                            |
-| Lockout reset proof         | Main report / evidence                                                         | `Missing` |                            |
-| Video demo link             | Main report / README                                                           | `Missing` |                            |
-| Bug issue evidence          | Main report / evidence                                                         | `Pending` | Depends on actual findings |
+| Artifact                         | Expected path                                                                           | Status    | Notes |
+| -------------------------------- | --------------------------------------------------------------------------------------- | --------- | ----- |
+| Load JTL                         | `submission/tests/2-test-runs/checkout-with-coupon/load/20260813-load-official.jtl`     | `Present` |       |
+| Stress JTL                       | `submission/tests/2-test-runs/checkout-with-coupon/stress/20260813-stress-official.jtl` | `Present` |       |
+| Spike JTL                        | `submission/tests/2-test-runs/checkout-with-coupon/spike/20260813-spike-official.jtl`   | `Present` |       |
+| Load HTML report                 | `submission/tests/2-test-runs/checkout-with-coupon/load/html-report/`                   | `Present` |       |
+| Stress HTML report               | `submission/tests/2-test-runs/checkout-with-coupon/stress/html-report/`                 | `Present` |       |
+| Spike HTML report                | `submission/tests/2-test-runs/checkout-with-coupon/spike/html-report/`                  | `Present` |       |
+| Resource screenshots             | `submission/docs/test-report/evidence/`                                                 | `Missing` |       |
+| Hardware screenshot / spec table | `submission/tests/2-test-runs/checkout-with-coupon/hardware-dxdiag.png`                 | `Present` | Spec table is documented in `test-summary.md` |
+| Endurance / soak artifact        | `submission/tests/2-test-runs/checkout-with-coupon/endurance/`                          | `Missing` |       |
+| Video demo link                  | Main report / README                                                                    | `Missing` |       |

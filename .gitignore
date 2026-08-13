@@ -11,3 +11,10 @@ backend/database.sqlite-wal
 # JMeter temporary outputs at repository root
 /jmeter.log
 /results/
+
+# Non-required performance test artifacts
+/submission/tests/1-test-plans/checkout-with-coupon/results/
+/submission/tests/2-test-runs/checkout-with-coupon/**/*-official.log
+/submission/tests/2-test-runs/checkout-with-coupon/**/*-smoke.jtl
+/submission/tests/2-test-runs/checkout-with-coupon/**/*-smoke.log
+/submission/tests/2-test-runs/checkout-with-coupon/**/smoke-run-note.md
