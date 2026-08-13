@@ -88,15 +88,29 @@
           <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract access_token" enabled="true">
             <stringProp name="JSONPathExtractor.referenceNames">access_token</stringProp>
             <stringProp name="JSONPathExtractor.jsonPathExprs">$.token</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues">TOKEN_NOT_FOUND</stringProp>
+            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
             <stringProp name="JSONPathExtractor.match_no">0</stringProp>
           </JSONPathExtractor>
           <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract user_id" enabled="true">
             <stringProp name="JSONPathExtractor.referenceNames">user_id</stringProp>
             <stringProp name="JSONPathExtractor.jsonPathExprs">$.user.id</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues">0</stringProp>
+            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
             <stringProp name="JSONPathExtractor.match_no">0</stringProp>
           </JSONPathExtractor>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Login Extracted Variables" enabled="true">
+            <stringProp name="cacheKey">login-extract-spike</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">if (!vars.get('access_token')?.trim()) {
+    AssertionResult.setFailure(true)
+    AssertionResult.setFailureMessage('access_token was not extracted from login response')
+}
+if (!vars.get('user_id')?.trim()) {
+    AssertionResult.setFailure(true)
+    AssertionResult.setFailureMessage('user_id was not extracted from login response')
+}</stringProp>
+          </JSR223Assertion>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Login 200" enabled="true">
             <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
@@ -154,21 +168,39 @@
           <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract product_id_resp" enabled="true">
             <stringProp name="JSONPathExtractor.referenceNames">product_id_resp</stringProp>
             <stringProp name="JSONPathExtractor.jsonPathExprs">$[0].id</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues">1</stringProp>
+            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
             <stringProp name="JSONPathExtractor.match_no">0</stringProp>
           </JSONPathExtractor>
           <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract product_name" enabled="true">
             <stringProp name="JSONPathExtractor.referenceNames">product_name</stringProp>
             <stringProp name="JSONPathExtractor.jsonPathExprs">$[0].name</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues">Unknown Product</stringProp>
+            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
             <stringProp name="JSONPathExtractor.match_no">0</stringProp>
           </JSONPathExtractor>
           <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract product_price" enabled="true">
             <stringProp name="JSONPathExtractor.referenceNames">product_price</stringProp>
             <stringProp name="JSONPathExtractor.jsonPathExprs">$[0].price</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues">100000</stringProp>
+            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
             <stringProp name="JSONPathExtractor.match_no">0</stringProp>
           </JSONPathExtractor>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Product Search Extracted Variables" enabled="true">
+            <stringProp name="cacheKey">product-extract-spike</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">if (!vars.get('product_id_resp')?.trim()) {
+    AssertionResult.setFailure(true)
+    AssertionResult.setFailureMessage('product_id_resp was not extracted from product search response')
+}
+if (!vars.get('product_name')?.trim()) {
+    AssertionResult.setFailure(true)
+    AssertionResult.setFailureMessage('product_name was not extracted from product search response')
+}
+if (!vars.get('product_price')?.trim()) {
+    AssertionResult.setFailure(true)
+    AssertionResult.setFailureMessage('product_price was not extracted from product search response')
+}</stringProp>
+          </JSR223Assertion>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Products 200" enabled="true">
             <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
@@ -208,6 +240,15 @@
               </elementProp>
             </collectionProp>
           </HeaderManager>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Compute cart_total" enabled="true">
+            <stringProp name="cacheKey">cart-total-spike</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def price = new BigDecimal(vars.get('product_price'))
+def quantity = new BigDecimal(vars.get('quantity'))
+vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
+          </JSR223PostProcessor>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Cart 200" enabled="true">
             <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
@@ -225,7 +266,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{"code":"${coupon_code}","total_amount":${product_price},"user_id":${user_id}}</stringProp>
+                <stringProp name="Argument.value">{"code":"${coupon_code}","total_amount":${cart_total},"user_id":${user_id}}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -242,9 +283,19 @@
           <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract final_amount" enabled="true">
             <stringProp name="JSONPathExtractor.referenceNames">final_amount</stringProp>
             <stringProp name="JSONPathExtractor.jsonPathExprs">$.final_amount</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues">${product_price}</stringProp>
+            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
             <stringProp name="JSONPathExtractor.match_no">0</stringProp>
           </JSONPathExtractor>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Coupon Extracted Variables" enabled="true">
+            <stringProp name="cacheKey">coupon-extract-spike</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">if (!vars.get('final_amount')?.trim()) {
+    AssertionResult.setFailure(true)
+    AssertionResult.setFailureMessage('final_amount was not extracted from coupon response')
+}</stringProp>
+          </JSR223Assertion>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Coupon 200" enabled="true">
             <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
@@ -286,10 +337,20 @@
           </HeaderManager>
           <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract order_id" enabled="true">
             <stringProp name="JSONPathExtractor.referenceNames">order_id</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.id</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues">0</stringProp>
+            <stringProp name="JSONPathExtractor.jsonPathExprs">$.orderId</stringProp>
+            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
             <stringProp name="JSONPathExtractor.match_no">0</stringProp>
           </JSONPathExtractor>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Checkout Extracted Variables" enabled="true">
+            <stringProp name="cacheKey">checkout-extract-spike</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">if (!vars.get('order_id')?.trim()) {
+    AssertionResult.setFailure(true)
+    AssertionResult.setFailureMessage('order_id was not extracted from checkout response')
+}</stringProp>
+          </JSR223Assertion>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Checkout 2xx" enabled="true">
             <collectionProp name="Asserion.test_strings">
               <stringProp>200</stringProp>

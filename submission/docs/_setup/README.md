@@ -42,7 +42,7 @@ node server.js
 Mặc định, backend chạy tại **`http://localhost:3000`**.  
 Kiểm tra bằng: `curl http://localhost:3000/api/categories`
 
-> ⚠️ **Lưu ý:** Database SQLite (`backend/database.sqlite`) được tạo tự động khi backend khởi động lần đầu. File này **không được commit** vào git (đã có trong `.gitignore`).
+Lưu ý: Database SQLite (`backend/database.sqlite`) được tạo tự động khi backend khởi động lần đầu. File này không được commit vào git (đã có trong `.gitignore`).
 
 ---
 
@@ -59,15 +59,18 @@ Kiểm tra bằng: `curl http://localhost:3000/api/categories`
 node submission/tests/1-test-plans/checkout-with-coupon/seed_perf_users.js
 ```
 
-Kết quả mong đợi:
+Kết quả mong đợi gần đúng:
 
-```
-Syncing 1 coupons to DB...
-  Upserted coupon: PERFTEST
-Seeding 300 users...
-  [300/300] Seeded perf_user300@eshop.com
-CSV written: submission/tests/1-test-plans/checkout-with-coupon/test-data/users.csv
-Done.
+```text
+✓ Connected to SQLite database at: ...
+✓ Coupon PERFTEST seeded into DB from CSV
+✓ Removed ... old perf test users
+✓ Inserted 300 performance test users into DB
+✓ users.csv written → ...
+✓ keywords.csv written → ...
+--- LOCKOUT RESET COMMAND (run before each test run) ---
+...
+✓ Done. DB connection closed.
 ```
 
 > **Chỉ cần chạy 1 lần**, trừ khi bạn reset database.
@@ -111,7 +114,7 @@ Các file `.jmx` trong repo **không yêu cầu plugin** — dùng `ThreadGroup`
 ```
 submission/tests/1-test-plans/checkout-with-coupon/
 ├── 23127115_Load_20260813.jmx      # Load test (50 VUs · 10 phút)
-├── 23127115_Stress_20260813.jmx    # Stress test (200 VUs · 20 phút)
+├── 23127115_Stress_20260813.jmx    # Stress test staged load (50 → 100 → 150 → 200 VUs)
 ├── 23127115_Spike_20260813.jmx     # Spike test (100 VUs · burst 10s)
 ├── seed_perf_users.js              # Script seed dữ liệu (bước 3)
 ├── test-data/
@@ -133,7 +136,7 @@ submission/tests/1-test-plans/checkout-with-coupon/
 jmeter -t submission/tests/1-test-plans/checkout-with-coupon/23127115_Load_20260813.jmx
 ```
 
-> ⚠️ **Không dùng GUI để chạy test thực tế** — GUI ngốn nhiều tài nguyên, ảnh hưởng kết quả đo.
+> **Không dùng GUI để chạy test thực tế** — GUI ngốn nhiều tài nguyên, ảnh hưởng kết quả đo.
 
 ---
 
@@ -204,10 +207,12 @@ db.run(\"UPDATE users SET login_attempts = 0, locked_until = NULL WHERE email LI
 
 | Vấn đề                    | Giả định trong JMX            | Cách verify                                    |
 | ------------------------- | ----------------------------- | ---------------------------------------------- |
-| Login response field name | `$.token` và `$.user.id`      | `POST /api/login` → inspect response JSON      |
-| Checkout status code      | 200 hoặc 201 (OR assertion)   | `POST /api/checkout` → xem status code thực tế |
-| Cart payload fields       | `{id, name, price, quantity}` | Xem `backend/routes/cart.js` hoặc test Postman |
-| Products search response  | Mảng JSON, `$[0].id`          | `GET /api/products?search=iPhone` → inspect    |
+| Login response field name | `$.token` và `$.user.id`        | `POST /api/login` → inspect response JSON            |
+| Checkout response field   | `$.orderId`                     | `POST /api/checkout` → inspect response JSON         |
+| Checkout status code      | 200 hoặc 201 (OR assertion)     | `POST /api/checkout` → xem status code thực tế       |
+| Cart payload fields       | `{id, name, price, quantity}`   | Xem backend source hoặc test Postman                 |
+| Products search response  | Mảng JSON, `$[0].id`            | `GET /api/products?search=iPhone` → inspect          |
+| Coupon total input        | `cart_total = product × quantity` | So sánh request body với dữ liệu CSV và backend    |
 
 ---
 

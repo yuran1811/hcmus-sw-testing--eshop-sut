@@ -10,7 +10,7 @@
 
 ## Tổng quan
 
-Luồng E2E này mô phỏng hành vi người dùng **mua hàng hoàn chỉnh có áp dụng mã giảm giá**, bao phủ cả 3 nhóm endpoint yêu cầu bởi HW05:
+Luồng E2E này mô phỏng hành vi người dùng **mua hàng hoàn chỉnh có áp dụng mã giảm giá**, bao phủ cả 3 nhóm endpoint yêu cầu bởi phạm vi kiểm thử hiệu năng hiện tại:
 
 | Nhóm          | Bước         | Endpoint                                                                        |
 | ------------- | ------------ | ------------------------------------------------------------------------------- |
@@ -44,9 +44,9 @@ checkout-with-coupon/
 | ------------------- | ---------------------------- | ------------------------------ | ----------------------------- |
 | **File**            | `23127115_Load_20260813.jmx` | `23127115_Stress_20260813.jmx` | `23127115_Spike_20260813.jmx` |
 | **Virtual Users**   | 50                           | 200                            | 100 (peak)                    |
-| **Ramp-up**         | 120s (tuyến tính)            | 600s (tuyến tính)              | 10s (đột ngột)                |
-| **Delay khởi động** | 0s                           | 0s                             | 60s (baseline trước spike)    |
-| **Duration**        | 600s (10 phút)               | 1200s (20 phút)                | 480s (~8 phút tổng)           |
+| **Ramp-up**         | 120s (tuyến tính)            | 30s cho mỗi stage              | 10s (đột ngột)                |
+| **Delay khởi động** | 0s                           | 0s / 300s / 600s / 900s        | 60s (baseline trước spike)    |
+| **Duration**        | 600s (10 phút)               | 1200s / 900s / 600s / 300s     | 480s (~8 phút tổng)           |
 | **Think time**      | 2000ms ±300ms                | 1000ms ±200ms                  | 500ms ±100ms                  |
 | **Listener**        | View Results Tree            | Aggregate Report               | Summary Report                |
 | **Output file**     | `results/load.jtl`           | `results/stress.jtl`           | `results/spike.jtl`           |
@@ -55,7 +55,14 @@ checkout-with-coupon/
 
 **Load (50 VUs):** Baseline kiểm thử bình thường. Phần cứng giả định 8 CPU / 16 GB RAM → max VU ≈ 640. 50 VU ≈ 8% max, đủ để đo p95/p99 ổn định mà không gây tải.
 
-**Stress (200 VUs):** 31% max VU. Ramp-up 600s để quan sát hệ thống chịu tải tăng dần. Chạy đến khi error rate > 5% hoặc p99 > 10s thì ghi lại ngưỡng đó.
+**Stress (200 VUs peak):** 31% max VU. Kịch bản được đổi sang 4 stage độc lập để tạo tải cộng dồn thực tế hơn:
+
+- Stage 1: 50 VU từ phút 0
+- Stage 2: +50 VU từ phút 5
+- Stage 3: +50 VU từ phút 10
+- Stage 4: +50 VU từ phút 15
+
+Thiết kế này cho phép quan sát rõ điểm bắt đầu suy giảm khi tổng tải tăng từ 50 → 100 → 150 → 200 VU mà không cần plugin ngoài.
 
 **Spike (100 VUs / 10s ramp):** Mô phỏng burst traffic (flash sale). 60s delay để hệ thống ổn định ở mức thấp trước, sau đó 100 VU xuất hiện trong 10s.
 
@@ -98,8 +105,8 @@ flowchart TD
     step2["Step 2: GET /api/categories [READ-HEAVY]\n• Assert: 200 OK, duration < 2000ms"]
     step3["Step 3: GET /api/products?search=${keyword} [READ-HEAVY]\n• Extract: product_id_resp, product_name, product_price\n• Assert: 200 OK, duration < 2000ms"]
     step4["Step 4: POST /api/cart [TRANSACTIONAL]\n• Header: Auth Bearer ${access_token}\n• Body: {id, name, price, quantity}\n• Assert: 200 OK, duration < 5000ms"]
-    step5["Step 5: POST /api/apply-coupon [TRANSACTIONAL]\n• Body: {code, total_amount, user_id}\n• Extract: final_amount\n• Assert: 200 OK, duration < 5000ms"]
-    step6["Step 6: POST /api/checkout [TRANSACTIONAL ★ CRITICAL]\n• Header: Auth Bearer ${access_token}\n• Body: {total_amount: final_amount, shipping_address}\n• Extract: order_id\n• Assert: 200/201, duration < 5000ms"]
+    step5["Step 5: POST /api/apply-coupon [TRANSACTIONAL]\n• Body: {code, total_amount: cart_total, user_id}\n• Extract: final_amount\n• Assert: 200 OK, duration < 5000ms"]
+    step6["Step 6: POST /api/checkout [TRANSACTIONAL ★ CRITICAL]\n• Header: Auth Bearer ${access_token}\n• Body: {total_amount: final_amount, shipping_address}\n• Extract: order_id from $.orderId\n• Assert: 200/201, duration < 5000ms"]
     step7["Step 7: GET /api/orders/my-orders [READ-HEAVY]\n• Header: Auth Bearer ${access_token}\n• Assert: 200 OK, duration < 2000ms"]
 
     csv --> step1
@@ -172,7 +179,8 @@ rm submission/tests/1-test-plans/checkout-with-coupon/results/*.jtl
 
 ## Known Issues & Human Review Notes
 
-1. **Login response JSON path** — JMX dùng `$.token` và `$.user.id`. Cần verify bằng Postman vì spec không ghi rõ.
-2. **Checkout status code** — Assertion dùng OR (200 hoặc 201). Xác nhận trước khi run.
-3. **Stress test ramp-up** — ThreadGroup tuyến tính, không phải stepped. Để có stepped ramp-up cần plugin _Ultimate Thread Group_.
-4. **Data accumulation** — Mỗi run tạo `50 VU × N iterations` đơn hàng trong DB. Không cần xóa trước khi chạy tiếp nhưng nên biết để phân tích kết quả.
+1. **Coupon total fix** — AI draft ban đầu gửi `total_amount = product_price`; bản cuối đã sửa thành `cart_total = product_price × quantity`.
+2. **Checkout extractor fix** — AI draft ban đầu dùng `$.id`; bản cuối đã sửa sang `$.orderId` để khớp backend.
+3. **Fail-fast extractor assertions** — Bản cuối thêm `JSR223 Assertion` để fail ngay khi không lấy được `access_token`, `user_id`, `product_id_resp`, `product_name`, `product_price`, `final_amount`, hoặc `order_id`.
+4. **Stress profile fix** — Stress test không còn dùng linear 200-VU ramp duy nhất; bản cuối dùng 4 stage độc lập để tạo tải cộng dồn 50 → 100 → 150 → 200 VU.
+5. **Data accumulation** — Mỗi run vẫn tạo thêm đơn hàng trong DB. Không cần xóa ngay trước run kế tiếp, nhưng phải ghi nhận khi phân tích log và số liệu.
