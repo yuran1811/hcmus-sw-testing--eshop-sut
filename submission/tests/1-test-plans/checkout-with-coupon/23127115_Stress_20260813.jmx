@@ -82,18 +82,17 @@
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract access_token" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">access_token</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.token</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract user_id" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">user_id</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.user.id</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Extract login fields" enabled="true">
+            <stringProp name="cacheKey">stress-stage1-login-fields</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def body = prev.getResponseDataAsString()
+def json = new groovy.json.JsonSlurper().parseText(body)
+vars.put('access_token', json?.token?.toString() ?: '')
+vars.put('user_id', json?.user?.id?.toString() ?: '')</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
           <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Login Extracted Variables" enabled="true">
             <stringProp name="cacheKey">login-extract-stress-stage1</stringProp>
             <stringProp name="filename"></stringProp>
@@ -108,15 +107,18 @@ if (!vars.get('user_id')?.trim()) {
     AssertionResult.setFailureMessage('user_id was not extracted from login response')
 }</stringProp>
           </JSR223Assertion>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Login 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Login lt5000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">5000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 2 GET categories" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments"><collectionProp name="Arguments.arguments"/></elementProp>
@@ -130,14 +132,16 @@ if (!vars.get('user_id')?.trim()) {
         </HTTPSamplerProxy>
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Categories 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Categories lt2000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">2000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 3 GET products search" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -160,24 +164,19 @@ if (!vars.get('user_id')?.trim()) {
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract product_id_resp" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">product_id_resp</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$[0].id</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract product_name" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">product_name</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$[0].name</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract product_price" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">product_price</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$[0].price</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Extract product fields" enabled="true">
+            <stringProp name="cacheKey">stress-stage1-product-fields</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def body = prev.getResponseDataAsString()
+def json = new groovy.json.JsonSlurper().parseText(body)
+def first = (json instanceof List &amp;&amp; !json.isEmpty()) ? json[0] : null
+vars.put('product_id_resp', first?.id?.toString() ?: '')
+vars.put('product_name', first?.name?.toString() ?: '')
+vars.put('product_price', first?.price?.toString() ?: '')</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
           <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Product Search Extracted Variables" enabled="true">
             <stringProp name="cacheKey">product-extract-stress-stage1</stringProp>
             <stringProp name="filename"></stringProp>
@@ -196,15 +195,18 @@ if (!vars.get('product_price')?.trim()) {
     AssertionResult.setFailureMessage('product_price was not extracted from product search response')
 }</stringProp>
           </JSR223Assertion>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Products 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Products lt2000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">2000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 4 POST cart" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -234,6 +236,7 @@ if (!vars.get('product_price')?.trim()) {
               </elementProp>
             </collectionProp>
           </HeaderManager>
+          <hashTree/>
           <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Compute cart_total" enabled="true">
             <stringProp name="cacheKey">cart-total-stress-stage1</stringProp>
             <stringProp name="filename"></stringProp>
@@ -243,15 +246,18 @@ if (!vars.get('product_price')?.trim()) {
 def quantity = new BigDecimal(vars.get('quantity'))
 vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
           </JSR223PostProcessor>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Cart 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Cart lt5000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">5000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 5 POST apply-coupon" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -273,12 +279,16 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract final_amount" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">final_amount</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.final_amount</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Extract coupon fields" enabled="true">
+            <stringProp name="cacheKey">stress-stage1-coupon-fields</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def body = prev.getResponseDataAsString()
+def json = new groovy.json.JsonSlurper().parseText(body)
+vars.put('final_amount', json?.final_amount?.toString() ?: '')</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
           <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Coupon Extracted Variables" enabled="true">
             <stringProp name="cacheKey">coupon-extract-stress-stage1</stringProp>
             <stringProp name="filename"></stringProp>
@@ -289,15 +299,18 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
     AssertionResult.setFailureMessage('final_amount was not extracted from coupon response')
 }</stringProp>
           </JSR223Assertion>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Coupon 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Coupon lt5000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">5000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 6 POST checkout" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -327,12 +340,17 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract order_id" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">order_id</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.orderId</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
+          <hashTree/>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Extract checkout fields" enabled="true">
+            <stringProp name="cacheKey">stress-stage1-checkout-fields</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def body = prev.getResponseDataAsString()
+def json = new groovy.json.JsonSlurper().parseText(body)
+vars.put('order_id', json?.orderId?.toString() ?: '')</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
           <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Checkout Extracted Variables" enabled="true">
             <stringProp name="cacheKey">checkout-extract-stress-stage1</stringProp>
             <stringProp name="filename"></stringProp>
@@ -343,18 +361,21 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
     AssertionResult.setFailureMessage('order_id was not extracted from checkout response')
 }</stringProp>
           </JSR223Assertion>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Checkout 2xx" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp>200</stringProp>
-              <stringProp>201</stringProp>
+              <stringProp name="0">200</stringProp>
+              <stringProp name="1">201</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">40</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Checkout lt5000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">5000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 7 GET my-orders" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments"><collectionProp name="Arguments.arguments"/></elementProp>
@@ -375,15 +396,18 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Orders 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Orders lt2000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">2000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Stage 2 - 50 VUs starting at minute 5" enabled="true">
@@ -449,18 +473,17 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract access_token" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">access_token</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.token</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract user_id" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">user_id</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.user.id</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Extract login fields" enabled="true">
+            <stringProp name="cacheKey">stress-stage2-login-fields</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def body = prev.getResponseDataAsString()
+def json = new groovy.json.JsonSlurper().parseText(body)
+vars.put('access_token', json?.token?.toString() ?: '')
+vars.put('user_id', json?.user?.id?.toString() ?: '')</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
           <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Login Extracted Variables" enabled="true">
             <stringProp name="cacheKey">login-extract-stress-stage2</stringProp>
             <stringProp name="filename"></stringProp>
@@ -475,15 +498,18 @@ if (!vars.get('user_id')?.trim()) {
     AssertionResult.setFailureMessage('user_id was not extracted from login response')
 }</stringProp>
           </JSR223Assertion>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Login 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Login lt5000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">5000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 2 GET categories" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments"><collectionProp name="Arguments.arguments"/></elementProp>
@@ -497,14 +523,16 @@ if (!vars.get('user_id')?.trim()) {
         </HTTPSamplerProxy>
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Categories 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Categories lt2000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">2000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 3 GET products search" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -527,24 +555,19 @@ if (!vars.get('user_id')?.trim()) {
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract product_id_resp" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">product_id_resp</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$[0].id</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract product_name" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">product_name</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$[0].name</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract product_price" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">product_price</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$[0].price</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Extract product fields" enabled="true">
+            <stringProp name="cacheKey">stress-stage2-product-fields</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def body = prev.getResponseDataAsString()
+def json = new groovy.json.JsonSlurper().parseText(body)
+def first = (json instanceof List &amp;&amp; !json.isEmpty()) ? json[0] : null
+vars.put('product_id_resp', first?.id?.toString() ?: '')
+vars.put('product_name', first?.name?.toString() ?: '')
+vars.put('product_price', first?.price?.toString() ?: '')</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
           <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Product Search Extracted Variables" enabled="true">
             <stringProp name="cacheKey">product-extract-stress-stage2</stringProp>
             <stringProp name="filename"></stringProp>
@@ -563,15 +586,18 @@ if (!vars.get('product_price')?.trim()) {
     AssertionResult.setFailureMessage('product_price was not extracted from product search response')
 }</stringProp>
           </JSR223Assertion>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Products 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Products lt2000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">2000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 4 POST cart" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -601,6 +627,7 @@ if (!vars.get('product_price')?.trim()) {
               </elementProp>
             </collectionProp>
           </HeaderManager>
+          <hashTree/>
           <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Compute cart_total" enabled="true">
             <stringProp name="cacheKey">cart-total-stress-stage2</stringProp>
             <stringProp name="filename"></stringProp>
@@ -610,15 +637,18 @@ if (!vars.get('product_price')?.trim()) {
 def quantity = new BigDecimal(vars.get('quantity'))
 vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
           </JSR223PostProcessor>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Cart 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Cart lt5000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">5000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 5 POST apply-coupon" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -640,12 +670,16 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract final_amount" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">final_amount</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.final_amount</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Extract coupon fields" enabled="true">
+            <stringProp name="cacheKey">stress-stage2-coupon-fields</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def body = prev.getResponseDataAsString()
+def json = new groovy.json.JsonSlurper().parseText(body)
+vars.put('final_amount', json?.final_amount?.toString() ?: '')</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
           <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Coupon Extracted Variables" enabled="true">
             <stringProp name="cacheKey">coupon-extract-stress-stage2</stringProp>
             <stringProp name="filename"></stringProp>
@@ -656,15 +690,18 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
     AssertionResult.setFailureMessage('final_amount was not extracted from coupon response')
 }</stringProp>
           </JSR223Assertion>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Coupon 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Coupon lt5000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">5000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 6 POST checkout" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -694,12 +731,17 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract order_id" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">order_id</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.orderId</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
+          <hashTree/>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Extract checkout fields" enabled="true">
+            <stringProp name="cacheKey">stress-stage2-checkout-fields</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def body = prev.getResponseDataAsString()
+def json = new groovy.json.JsonSlurper().parseText(body)
+vars.put('order_id', json?.orderId?.toString() ?: '')</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
           <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Checkout Extracted Variables" enabled="true">
             <stringProp name="cacheKey">checkout-extract-stress-stage2</stringProp>
             <stringProp name="filename"></stringProp>
@@ -710,18 +752,21 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
     AssertionResult.setFailureMessage('order_id was not extracted from checkout response')
 }</stringProp>
           </JSR223Assertion>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Checkout 2xx" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp>200</stringProp>
-              <stringProp>201</stringProp>
+              <stringProp name="0">200</stringProp>
+              <stringProp name="1">201</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">40</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Checkout lt5000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">5000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 7 GET my-orders" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments"><collectionProp name="Arguments.arguments"/></elementProp>
@@ -742,15 +787,18 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Orders 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Orders lt2000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">2000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Stage 3 - 50 VUs starting at minute 10" enabled="true">
@@ -816,18 +864,17 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract access_token" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">access_token</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.token</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract user_id" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">user_id</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.user.id</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Extract login fields" enabled="true">
+            <stringProp name="cacheKey">stress-stage3-login-fields</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def body = prev.getResponseDataAsString()
+def json = new groovy.json.JsonSlurper().parseText(body)
+vars.put('access_token', json?.token?.toString() ?: '')
+vars.put('user_id', json?.user?.id?.toString() ?: '')</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
           <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Login Extracted Variables" enabled="true">
             <stringProp name="cacheKey">login-extract-stress-stage3</stringProp>
             <stringProp name="filename"></stringProp>
@@ -842,15 +889,18 @@ if (!vars.get('user_id')?.trim()) {
     AssertionResult.setFailureMessage('user_id was not extracted from login response')
 }</stringProp>
           </JSR223Assertion>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Login 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Login lt5000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">5000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 2 GET categories" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments"><collectionProp name="Arguments.arguments"/></elementProp>
@@ -864,14 +914,16 @@ if (!vars.get('user_id')?.trim()) {
         </HTTPSamplerProxy>
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Categories 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Categories lt2000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">2000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 3 GET products search" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -894,24 +946,19 @@ if (!vars.get('user_id')?.trim()) {
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract product_id_resp" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">product_id_resp</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$[0].id</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract product_name" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">product_name</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$[0].name</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract product_price" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">product_price</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$[0].price</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Extract product fields" enabled="true">
+            <stringProp name="cacheKey">stress-stage3-product-fields</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def body = prev.getResponseDataAsString()
+def json = new groovy.json.JsonSlurper().parseText(body)
+def first = (json instanceof List &amp;&amp; !json.isEmpty()) ? json[0] : null
+vars.put('product_id_resp', first?.id?.toString() ?: '')
+vars.put('product_name', first?.name?.toString() ?: '')
+vars.put('product_price', first?.price?.toString() ?: '')</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
           <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Product Search Extracted Variables" enabled="true">
             <stringProp name="cacheKey">product-extract-stress-stage3</stringProp>
             <stringProp name="filename"></stringProp>
@@ -930,15 +977,18 @@ if (!vars.get('product_price')?.trim()) {
     AssertionResult.setFailureMessage('product_price was not extracted from product search response')
 }</stringProp>
           </JSR223Assertion>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Products 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Products lt2000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">2000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 4 POST cart" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -968,6 +1018,7 @@ if (!vars.get('product_price')?.trim()) {
               </elementProp>
             </collectionProp>
           </HeaderManager>
+          <hashTree/>
           <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Compute cart_total" enabled="true">
             <stringProp name="cacheKey">cart-total-stress-stage3</stringProp>
             <stringProp name="filename"></stringProp>
@@ -977,15 +1028,18 @@ if (!vars.get('product_price')?.trim()) {
 def quantity = new BigDecimal(vars.get('quantity'))
 vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
           </JSR223PostProcessor>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Cart 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Cart lt5000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">5000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 5 POST apply-coupon" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -1007,12 +1061,16 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract final_amount" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">final_amount</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.final_amount</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Extract coupon fields" enabled="true">
+            <stringProp name="cacheKey">stress-stage3-coupon-fields</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def body = prev.getResponseDataAsString()
+def json = new groovy.json.JsonSlurper().parseText(body)
+vars.put('final_amount', json?.final_amount?.toString() ?: '')</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
           <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Coupon Extracted Variables" enabled="true">
             <stringProp name="cacheKey">coupon-extract-stress-stage3</stringProp>
             <stringProp name="filename"></stringProp>
@@ -1023,15 +1081,18 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
     AssertionResult.setFailureMessage('final_amount was not extracted from coupon response')
 }</stringProp>
           </JSR223Assertion>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Coupon 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Coupon lt5000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">5000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 6 POST checkout" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -1061,12 +1122,17 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract order_id" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">order_id</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.orderId</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
+          <hashTree/>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Extract checkout fields" enabled="true">
+            <stringProp name="cacheKey">stress-stage3-checkout-fields</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def body = prev.getResponseDataAsString()
+def json = new groovy.json.JsonSlurper().parseText(body)
+vars.put('order_id', json?.orderId?.toString() ?: '')</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
           <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Checkout Extracted Variables" enabled="true">
             <stringProp name="cacheKey">checkout-extract-stress-stage3</stringProp>
             <stringProp name="filename"></stringProp>
@@ -1077,18 +1143,21 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
     AssertionResult.setFailureMessage('order_id was not extracted from checkout response')
 }</stringProp>
           </JSR223Assertion>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Checkout 2xx" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp>200</stringProp>
-              <stringProp>201</stringProp>
+              <stringProp name="0">200</stringProp>
+              <stringProp name="1">201</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">40</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Checkout lt5000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">5000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 7 GET my-orders" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments"><collectionProp name="Arguments.arguments"/></elementProp>
@@ -1109,15 +1178,18 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Orders 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Orders lt2000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">2000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Stage 4 - 50 VUs starting at minute 15" enabled="true">
@@ -1183,18 +1255,17 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract access_token" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">access_token</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.token</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract user_id" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">user_id</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.user.id</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Extract login fields" enabled="true">
+            <stringProp name="cacheKey">stress-stage4-login-fields</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def body = prev.getResponseDataAsString()
+def json = new groovy.json.JsonSlurper().parseText(body)
+vars.put('access_token', json?.token?.toString() ?: '')
+vars.put('user_id', json?.user?.id?.toString() ?: '')</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
           <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Login Extracted Variables" enabled="true">
             <stringProp name="cacheKey">login-extract-stress-stage4</stringProp>
             <stringProp name="filename"></stringProp>
@@ -1209,15 +1280,18 @@ if (!vars.get('user_id')?.trim()) {
     AssertionResult.setFailureMessage('user_id was not extracted from login response')
 }</stringProp>
           </JSR223Assertion>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Login 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Login lt5000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">5000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 2 GET categories" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments"><collectionProp name="Arguments.arguments"/></elementProp>
@@ -1231,14 +1305,16 @@ if (!vars.get('user_id')?.trim()) {
         </HTTPSamplerProxy>
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Categories 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Categories lt2000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">2000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 3 GET products search" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -1261,24 +1337,19 @@ if (!vars.get('user_id')?.trim()) {
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract product_id_resp" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">product_id_resp</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$[0].id</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract product_name" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">product_name</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$[0].name</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract product_price" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">product_price</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$[0].price</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Extract product fields" enabled="true">
+            <stringProp name="cacheKey">stress-stage4-product-fields</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def body = prev.getResponseDataAsString()
+def json = new groovy.json.JsonSlurper().parseText(body)
+def first = (json instanceof List &amp;&amp; !json.isEmpty()) ? json[0] : null
+vars.put('product_id_resp', first?.id?.toString() ?: '')
+vars.put('product_name', first?.name?.toString() ?: '')
+vars.put('product_price', first?.price?.toString() ?: '')</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
           <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Product Search Extracted Variables" enabled="true">
             <stringProp name="cacheKey">product-extract-stress-stage4</stringProp>
             <stringProp name="filename"></stringProp>
@@ -1297,15 +1368,18 @@ if (!vars.get('product_price')?.trim()) {
     AssertionResult.setFailureMessage('product_price was not extracted from product search response')
 }</stringProp>
           </JSR223Assertion>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Products 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Products lt2000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">2000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 4 POST cart" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -1335,6 +1409,7 @@ if (!vars.get('product_price')?.trim()) {
               </elementProp>
             </collectionProp>
           </HeaderManager>
+          <hashTree/>
           <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Compute cart_total" enabled="true">
             <stringProp name="cacheKey">cart-total-stress-stage4</stringProp>
             <stringProp name="filename"></stringProp>
@@ -1344,15 +1419,18 @@ if (!vars.get('product_price')?.trim()) {
 def quantity = new BigDecimal(vars.get('quantity'))
 vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
           </JSR223PostProcessor>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Cart 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Cart lt5000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">5000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 5 POST apply-coupon" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -1374,12 +1452,16 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract final_amount" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">final_amount</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.final_amount</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Extract coupon fields" enabled="true">
+            <stringProp name="cacheKey">stress-stage4-coupon-fields</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def body = prev.getResponseDataAsString()
+def json = new groovy.json.JsonSlurper().parseText(body)
+vars.put('final_amount', json?.final_amount?.toString() ?: '')</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
           <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Coupon Extracted Variables" enabled="true">
             <stringProp name="cacheKey">coupon-extract-stress-stage4</stringProp>
             <stringProp name="filename"></stringProp>
@@ -1390,15 +1472,18 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
     AssertionResult.setFailureMessage('final_amount was not extracted from coupon response')
 }</stringProp>
           </JSR223Assertion>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Coupon 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Coupon lt5000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">5000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 6 POST checkout" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -1428,12 +1513,17 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract order_id" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">order_id</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.orderId</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues"></stringProp>
-            <stringProp name="JSONPathExtractor.match_no">0</stringProp>
-          </JSONPathExtractor>
+          <hashTree/>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Extract checkout fields" enabled="true">
+            <stringProp name="cacheKey">stress-stage4-checkout-fields</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def body = prev.getResponseDataAsString()
+def json = new groovy.json.JsonSlurper().parseText(body)
+vars.put('order_id', json?.orderId?.toString() ?: '')</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
           <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Assert Checkout Extracted Variables" enabled="true">
             <stringProp name="cacheKey">checkout-extract-stress-stage4</stringProp>
             <stringProp name="filename"></stringProp>
@@ -1444,18 +1534,21 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
     AssertionResult.setFailureMessage('order_id was not extracted from checkout response')
 }</stringProp>
           </JSR223Assertion>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Checkout 2xx" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp>200</stringProp>
-              <stringProp>201</stringProp>
+              <stringProp name="0">200</stringProp>
+              <stringProp name="1">201</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">40</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Checkout lt5000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">5000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step 7 GET my-orders" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments"><collectionProp name="Arguments.arguments"/></elementProp>
@@ -1476,15 +1569,18 @@ vars.put('cart_total', price.multiply(quantity).toPlainString())</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert Orders 200" enabled="true">
-            <collectionProp name="Asserion.test_strings"><stringProp>200</stringProp></collectionProp>
+            <collectionProp name="Asserion.test_strings"><stringProp name="0">200</stringProp></collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert Orders lt2000ms" enabled="true">
             <stringProp name="DurationAssertion.duration">2000</stringProp>
           </DurationAssertion>
+          <hashTree/>
         </hashTree>
       </hashTree>
       <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
