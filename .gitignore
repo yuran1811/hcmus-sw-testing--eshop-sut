@@ -1,2 +1,7 @@
 node_modules/
 
+# HW05 - ket qua thuc thi (jtl/HTML report/raw json) qua nang, khong commit vao git.
+# Giu tren dia de dong goi vao file .zip nop bai theo dung cau truc de bai muc 14.
+performance-testing/**/results/
+performance-testing/**/jmeter.log
+__pycache__/
