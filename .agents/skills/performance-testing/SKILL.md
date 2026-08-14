@@ -48,15 +48,16 @@ Bước 8: Sinh báo cáo hiệu năng Markdown
 
 Hỏi người dùng hoặc đọc từ context để xác định:
 
-| Thông tin cần thu thập | Ví dụ |
+| Thông tin cần thu thập | Mô tả |
 |:---|:---|
-| **MSSV** | 23127148 |
-| **Vai trò / Câu chuyện** | Admin — quản lý danh mục & sản phẩm |
-| **Auth-heavy endpoint** | POST /api/login (email, password) |
-| **Read-heavy endpoints** | GET /api/products, GET /api/coupons |
-| **Transactional endpoints** | POST /api/categories, PUT /api/categories/:id, POST /api/admin/import-products |
-| **Tài khoản test** | admin@eshop.com / Admin123! |
-| **Phân bổ tải (%)** | Read 60%, CRUD 25%, Import 15% |
+| **Student ID** | Mã số sinh viên, dùng cho quy ước đặt tên file |
+| **Output directory** | Thư mục chứa kết quả (ví dụ: `HW5/`, `perf-test/`,...). Ký hiệu: `{OUTPUT_DIR}` |
+| **Vai trò / Câu chuyện** | Mô tả luồng nghiệp vụ mà VU sẽ mô phỏng |
+| **Auth-heavy endpoint** | Endpoint xác thực (login, register,...) |
+| **Read-heavy endpoints** | Các endpoint đọc dữ liệu (GET) |
+| **Transactional endpoints** | Các endpoint ghi dữ liệu (POST/PUT/DELETE) |
+| **Tài khoản test** | Email và password dùng cho VU |
+| **Phân bổ tải (%)** | Tỷ lệ % giữa Read / Write / Other |
 | **Ngày test (YYYYMMDD)** | Để đặt tên file theo quy ước |
 
 Tham khảo file `references/workload-model.md` để lấy thông số mặc định nếu người dùng không chỉ định.
@@ -65,10 +66,10 @@ Tham khảo file `references/workload-model.md` để lấy thông số mặc đ
 
 ## Bước 2: Tạo cấu trúc thư mục và dữ liệu
 
-Tạo cấu trúc trong thư mục `HW5/`:
+Tạo cấu trúc trong thư mục `{OUTPUT_DIR}` do người dùng chỉ định:
 
 ```
-HW5/
+{OUTPUT_DIR}/
 ├── test-plans/           # 3 file .jmx (Load, Stress, Spike)
 ├── test-data/            # File CSV cho data-driven test
 ├── results/
@@ -77,14 +78,11 @@ HW5/
 │   ├── spike/            # spike.jtl + html-report/
 │   └── endurance/        # endurance.jtl + html-report/
 ├── evidence/             # Screenshots Task Manager, hardware specs
-├── AI Submission/        # AI Audit Report + AI Critique
-├── Bug Report/           # Bug reports (nếu có)
 ├── README.md
-├── performance_report.md
-├── bug_issue_links.md
-├── git_commit_log.txt
-└── link_demo_youtube.txt
+└── performance_report.md
 ```
+
+> Người dùng có thể thêm các thư mục phụ tuỳ yêu cầu bài tập (AI Submission, Bug Report,...).
 
 Tạo file CSV phù hợp với workflow đã thu thập ở Bước 1:
 - `users.csv`: Chứa email và password của tài khoản test
@@ -94,13 +92,13 @@ Tạo file CSV phù hợp với workflow đã thu thập ở Bước 1:
 
 ## Bước 3: Sinh 3 file JMeter test plan (.jmx)
 
-### Quy ước đặt tên bắt buộc
+### Quy ước đặt tên
 
 ```
-{MSSV}_{ScenarioType}_{YYYYMMDD}.jmx
+{StudentID}_{ScenarioType}_{YYYYMMDD}.jmx
 ```
 
-Ví dụ: `23127148_Load_20260815.jmx`
+Ví dụ: `23127148_Load_20260815.jmx` — thay `{StudentID}` bằng MSSV thực tế.
 
 ### Cấu trúc chung của mỗi test plan
 
@@ -187,23 +185,23 @@ Chạy bằng CLI non-GUI để tối ưu tài nguyên máy:
 
 ```powershell
 # Load Test
-jmeter -n -t HW5/test-plans/{MSSV}_Load_{DATE}.jmx `
-       -l HW5/results/load/load.jtl `
-       -e -o HW5/results/load/html-report
+jmeter -n -t {OUTPUT_DIR}/test-plans/{StudentID}_Load_{DATE}.jmx `
+       -l {OUTPUT_DIR}/results/load/load.jtl `
+       -e -o {OUTPUT_DIR}/results/load/html-report
 
 # Restart backend giữa các lượt (reset DB + lockout)
 
 # Stress Test
-jmeter -n -t HW5/test-plans/{MSSV}_Stress_{DATE}.jmx `
-       -l HW5/results/stress/stress.jtl `
-       -e -o HW5/results/stress/html-report
+jmeter -n -t {OUTPUT_DIR}/test-plans/{StudentID}_Stress_{DATE}.jmx `
+       -l {OUTPUT_DIR}/results/stress/stress.jtl `
+       -e -o {OUTPUT_DIR}/results/stress/html-report
 
 # Restart backend
 
 # Spike Test
-jmeter -n -t HW5/test-plans/{MSSV}_Spike_{DATE}.jmx `
-       -l HW5/results/spike/spike.jtl `
-       -e -o HW5/results/spike/html-report
+jmeter -n -t {OUTPUT_DIR}/test-plans/{StudentID}_Spike_{DATE}.jmx `
+       -l {OUTPUT_DIR}/results/spike/spike.jtl `
+       -e -o {OUTPUT_DIR}/results/spike/html-report
 ```
 
 **Quan trọng:** Giữa mỗi lần chạy, restart backend (`node server.js`) để:
@@ -216,7 +214,7 @@ jmeter -n -t HW5/test-plans/{MSSV}_Spike_{DATE}.jmx `
 
 1. **Hardware specs:**
    ```powershell
-   systeminfo > HW5/evidence/systeminfo.txt
+   systeminfo > {OUTPUT_DIR}/evidence/systeminfo.txt
    ```
    Hoặc chạy `dxdiag` và chụp screenshot
 
@@ -226,9 +224,9 @@ jmeter -n -t HW5/test-plans/{MSSV}_Spike_{DATE}.jmx `
    - Task Manager tab Processes → `node.exe` (CPU, Memory, Disk, Network)
 
    Lưu vào:
-   - `HW5/evidence/load_taskmanager.png`
-   - `HW5/evidence/stress_taskmanager.png`
-   - `HW5/evidence/spike_taskmanager.png`
+   - `{OUTPUT_DIR}/evidence/load_taskmanager.png`
+   - `{OUTPUT_DIR}/evidence/stress_taskmanager.png`
+   - `{OUTPUT_DIR}/evidence/spike_taskmanager.png`
 
 3. **Endurance test (10-15 phút):** (tuỳ chọn nhưng nên làm)
    Copy Load test, đổi `hold_load_sec` thành 600-900, chạy và ghi nhận:
@@ -283,10 +281,10 @@ Nhóm các dòng theo cột `label` và tính riêng chỉ số cho từng sampl
 
 ## Bước 8: Sinh báo cáo hiệu năng
 
-Tạo file `HW5/performance_report.md` với cấu trúc:
+Tạo file `{OUTPUT_DIR}/performance_report.md` với cấu trúc:
 
 ```markdown
-# HW05 — Performance Testing Report
+# Performance Testing Report
 
 ## 1. Giới thiệu
 - SUT: EShop (Node.js + Express + SQLite)
@@ -333,10 +331,10 @@ Tạo file `HW5/performance_report.md` với cấu trúc:
 ## Git commit sau mỗi bước chính
 
 ```
-feat(hw5): init project structure and test data CSV
-feat(hw5): create 3 JMeter test plans (Load, Stress, Spike)
-feat(hw5): execute tests with raw .jtl logs and HTML reports
-feat(hw5): complete AI analysis and misinterpretation review
-feat(hw5): add Continuous Performance Testing proposal
-docs: finalize HW05 submission artifacts
+feat(perf-test): init project structure and test data CSV
+feat(perf-test): create 3 JMeter test plans (Load, Stress, Spike)
+feat(perf-test): execute tests with raw .jtl logs and HTML reports
+feat(perf-test): complete AI analysis and misinterpretation review
+feat(perf-test): add Continuous Performance Testing proposal
+docs: finalize performance testing submission artifacts
 ```
