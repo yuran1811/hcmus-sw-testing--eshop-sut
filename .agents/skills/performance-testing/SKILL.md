@@ -279,51 +279,38 @@ Nhóm các dòng theo cột `label` và tính riêng chỉ số cho từng sampl
 
 ---
 
-## Bước 8: Sinh báo cáo hiệu năng
+## Bước 8: Sinh báo cáo phân tích hiệu năng (Performance Test Report)
 
-Tạo file `{OUTPUT_DIR}/performance_report.md` với cấu trúc:
+Tạo file `{OUTPUT_DIR}/performance_report.md` với cấu trúc báo cáo kỹ thuật tiêu chuẩn:
 
 ```markdown
-# Performance Testing Report
+# Performance Testing & Log Analysis Report
 
-## 1. Giới thiệu
-- SUT: EShop (Node.js + Express + SQLite)
-- Scope: [Mô tả 3 nhóm endpoint]
-- Lý do chọn workflow (phân biệt với thành viên khác nếu cần)
+## 1. Executive Summary
+- **Target System (SUT):** Thông tin hệ thống kiểm thử
+- **Endpoint Group:** Danh sách API endpoints được kiểm thử
+- **Execution Date & Hardware:** Môi trường và thời gian thực thi
+- **Overall Verdict:** Tóm tắt kết quả (Pass/Fail theo SLA)
 
-## 2. Workload Model
-- Transaction distribution (bảng %)
-- Think Time (bảng theo action)
-- Test profiles (Load / Stress / Spike parameters)
+## 2. Workload Model & Scenario Profiles
+- **Transaction Distribution:** Tỷ lệ phân bổ giữa các API
+- **Think Time:** Cấu hình thời gian nghỉ giữa các thao tác
+- **Test Scenarios:** Cấu hình chi tiết cho Load, Stress, Spike và Soak/Endurance
 
-## 3. Task 1 — Test Design & Execution
-### 3.1 AI-assisted Design
-[Prompt và output từ AI]
+## 3. Execution Results & Metrics Analysis
+- **Throughput & Error Rate:** Bảng so sánh RPS và % lỗi qua các kịch bản
+- **Response Time Distribution:** Bảng chi tiết Average, p50, p90, p95, p99
+- **Per-Sampler Breakdown:** Phân tích độ trễ của từng endpoint riêng lẻ
+- **Endurance & Stability:** Ngưỡng chịu tải ổn định tối đa (Max Stable RPS, Memory ceiling)
 
-### 3.2 Human Review & Fix
-[Lỗi AI gặp, cách sửa, lý do]
+## 4. Bottleneck & Log Analysis
+- **Breaking Point Analysis:** Phân tích điểm gãy của hệ thống dưới tải cao
+- **Resource Utilization:** Đánh giá mức độ tiêu thụ CPU, RAM, Disk I/O của tiến trình backend
+- **Error Log Classification:** Phân loại các mã lỗi HTTP (4xx, 5xx, timeouts)
 
-### 3.3 Kết quả thực thi
-[Bảng kết quả + screenshots]
-
-### 3.4 Endurance Test
-[Max stable RPS, Memory ceiling]
-
-## 4. Task 2 — AI Analysis & Misinterpretation Hunt
-### 4.1 AI Analysis
-[Output từ AI phân tích .jtl]
-
-### 4.2 Misinterpretation Hunt
-[Các lỗi AI + giá trị thực từ .jtl]
-
-### 4.3 Đánh giá đề xuất tối ưu
-[Bảng feasible vs hallucinated]
-
-## 5. Task 3 — Continuous Performance Testing
-[Flowchart + trade-offs]
-
-## 6. Bug Reports
-[Danh sách lỗi phát hiện]
+## 5. Performance Insights & Recommendations
+- **Identified Bottlenecks:** Các điểm nghẽn hiệu năng phát hiện được
+- **Optimization Proposals:** Các đề xuất tối ưu hóa kiến trúc, database, caching kèm đánh giá mức độ khả thi
 ```
 
 ---
