@@ -330,11 +330,9 @@ Tạo file `{OUTPUT_DIR}/performance_report.md` với cấu trúc:
 
 ## Git commit sau mỗi bước chính
 
+Thực hiện commit rõ ràng theo chuẩn Conventional Commits sau khi hoàn thành mỗi mốc công việc:
+```bash
+git add <các file đã thay đổi>
+git commit -m "feat(perf): <mô tả ngắn gọn công việc hoàn thành>"
 ```
-feat(perf-test): init project structure and test data CSV
-feat(perf-test): create 3 JMeter test plans (Load, Stress, Spike)
-feat(perf-test): execute tests with raw .jtl logs and HTML reports
-feat(perf-test): complete AI analysis and misinterpretation review
-feat(perf-test): add Continuous Performance Testing proposal
-docs: finalize performance testing submission artifacts
-```
+
