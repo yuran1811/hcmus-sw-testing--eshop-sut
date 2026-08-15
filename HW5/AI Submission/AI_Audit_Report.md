@@ -33,7 +33,7 @@
 | **Tool:** Antigravity IDE<br>**Time:** 23:18 14/08/2026<br>**Prompt:** `"Tôi đang thực hiện Bước 3 của skill .agents/skills/performance-testing/SKILL.md... Workflow E2E của vai trò Admin... Hãy tạo 3 file JMeter test plan (.jmx)..."` | Sinh 3 file Test Plan Apache JMeter (`23127148_Load_20260815.jmx`, `23127148_Stress_20260815.jmx`, `23127148_Spike_20260815.jmx`) tích hợp Ultimate Thread Group và Dynamic ID Extractor | **INCOMPLETE** | **HW05 Section 6 & ISTQB FL 4.0 - Performance Testing:** Cần đáp ứng đúng 3 kịch bản tải với 3 Listener khác nhau, điều khiển tỷ lệ phân bổ qua Throughput Controller và Think Time chính xác. | Sinh viên đã đối soát lại cấu trúc cây XML, đảm bảo 3 Listener độc lập (Summary Report, Aggregate Report, View Results Tree), gán đúng Think Time (Spike = 0s) và cấu hình HttpClient4. |
 | **Tool:** Antigravity IDE<br>**Time:** 11:01 15/08/2026<br>**Prompt:** `"Tôi vừa thực hiện bước Human Review cho Task 1 (HW05 Performance Testing) đối với 3 file JMeter Test Plan vừa tạo tại HW5/test-plans/... 1. Bọc Login vào Once Only Controller... 2. Gỡ bỏ Global Response Assertion... 3. Kích hoạt đúng 3 Listener riêng biệt..."` | Tái cấu trúc trực tiếp 3 file `.jmx` (chèn Once Only Controller cho Login, loại bỏ Assertion root, kích hoạt 3 Listener độc lập), xác thực cú pháp XML tự động và xuất bảng phân tích Human Review. | **INCOMPLETE** | **ISTQB FL 4.0 - Performance Testing & Workload Modeling:** Tách session lifecycle của Authentication (chỉ chạy 1 lần/VU) tránh làm sai lệch tải thực tế, khử global assertion để đo đúng Error Rate tự nhiên dưới áp lực Stress/Spike. | Sinh viên phát hiện 3 lỗi thiết kế nghiêm trọng, yêu cầu AI thực hiện 3 điều chỉnh kỹ thuật (HR-01 đến HR-03), kiểm tra cú pháp XML bằng PowerShell và trực tiếp chạy Smoke Test nghiệm thu. |
 | **Tool:** Antigravity IDE<br>**Time:** 16:17 15/08/2026<br>**Prompt:** `"Tôi cần hoàn thành yêu cầu 'Determine the endurance threshold' trong Task 1 của HW05 Performance Testing... 1. Tạo file Test Plan Apache JMeter cho Endurance Test... 2. Cung cấp lệnh thực thi CLI... 3. Hướng dẫn thu thập bằng chứng... 4. Viết sẵn mẫu báo cáo kỹ thuật..."` | Khởi tạo file Test Plan `23127148_Endurance_20260815.jmx` (50 VUs, hold 600s, Once Only Login), cấu trúc thư mục `HW5/results/endurance/evidences/`, cung cấp lệnh thực thi CLI và mẫu báo cáo phân tích trần bộ nhớ/phần cứng. | **VALID** | **HW05 Task 1 & ISTQB FL 4.0 - Reliability / Endurance Testing:** Kịch bản đáp ứng chuẩn mực ngâm tải 10 phút ở mức tải chuẩn 50 VUs, cấu trúc kế thừa luồng E2E Admin đã chuẩn hóa và cung cấp khung đánh giá rò rỉ bộ nhớ (V8 GC behavior). | Chấp nhận nguyên vẹn (Accepted as-is). Sinh viên đã kiểm tra tính toàn vẹn của cấu trúc XML, xác nhận thông số UTG (hold 600s) và chuẩn bị tiến hành thực thi trên môi trường máy chủ cục bộ. |
-| **Tool:** Antigravity IDE<br>**Time:** 21:57 15/08/2026<br>**Prompt:** `"Hãy đóng vai một Chuyên gia Kiểm thử Hiệu năng (Performance Testing Specialist). Tôi cung cấp cho bạn dữ liệu trích xuất từ các file log gốc (.jtl) của 4 kịch bản kiểm thử (Load, Stress, Spike, Endurance) trên hệ thống EShop SUT... Dựa trên dữ liệu log .jtl gốc này, hãy thực hiện các phân tích: 1. Hiệu năng tổng thể & ngưỡng chịu tải, 2. Đánh giá điểm nghẽn, 3. Đề xuất giải pháp kỹ thuật..."` | Phân tích chuyên sâu 4 kịch bản từ dữ liệu log `.jtl` gốc, xác định các ngưỡng vận hành & điểm gãy độ trễ (Spike P95 vọt lên ~1.9s), chẩn đoán điểm nghẽn CPU-bound `/api/login` và Table-Level Write Lock của SQLite, đề xuất roadmap kỹ thuật tối ưu (SQLite WAL Mode, Cluster PM2, Caching, Batch Insert) và xuất tệp `performance_analysis_report.md`. | **VALID** | **HW05 Task 1, Task 2 & ISTQB FL 4.0 - Efficiency & Performance Engineering:** Khớp 100% dữ liệu thực nghiệm định lượng từ 4 file `.jtl` gốc (P50, P90, P95, P99, Throughput, Error Rate), giải thích chính xác nguyên lý SQLite lock contention và đưa ra giải pháp kỹ thuật tối ưu mang tính thực tiễn cao. | Chấp nhận nguyên vẹn (Accepted as-is). Sinh viên nghiệm thu các chỉ số phân tích, xác nhận kết quả đối khớp với log thực tế và chỉ đạo xuất bản hoàn chỉnh thành file báo cáo `HW5/Report/performance_analysis_report.md`. |
+| **Tool:** Antigravity IDE<br>**Time:** 21:57 15/08/2026<br>**Prompt:** `"Hãy đóng vai một Chuyên gia Kiểm thử Hiệu năng (Performance Testing Specialist). Tôi cung cấp cho bạn dữ liệu trích xuất từ các file log gốc (.jtl) của 4 kịch bản kiểm thử (Load, Stress, Spike, Endurance) trên hệ thống EShop SUT... Dựa trên dữ liệu log .jtl gốc này, hãy thực hiện các phân tích: 1. Hiệu năng tổng thể & ngưỡng chịu tải, 2. Đánh giá điểm nghẽn, 3. Đề xuất giải pháp kỹ thuật..."` | Phân tích chuyên sâu 4 kịch bản từ dữ liệu log `.jtl` gốc, xác định các ngưỡng vận hành & điểm gãy độ trễ (Spike P95 vọt lên ~1.9s), chẩn đoán điểm nghẽn CPU-bound `/api/login` và Table-Level Write Lock của SQLite, đề xuất roadmap kỹ thuật tối ưu (SQLite WAL Mode, Cluster PM2, Caching, Batch Insert) và xuất tệp `performance_analysis_report.md`. | **INCOMPLETE** | **HW05 Task 1, Task 2 & ISTQB FL 4.0 - Efficiency & Performance Engineering:** AI phân tích định tính xuất sắc (bottleneck, SQLite lock, giải pháp WAL), nhưng tính toán sai 5 chỉ số Percentile (P90 Load/Stress, P90/P95/P99 Spike) và có hiện tượng "bịa" số thập phân `.95`/`.99`. | Sinh viên trực tiếp parse lại 4 file `.jtl` gốc, đính chính toàn bộ 5 sai lệch phân vị (Spike P90 1,468ms vs 1,651ms; P95 1,733ms vs 1,897.95ms; P99 2,303ms vs 2,478.99ms), vạch rõ ảo giác số học và hoàn thiện mục 4.2 trong báo cáo chính. |
 
 ---
 
@@ -457,7 +457,7 @@ AI đã tạo và cung cấp các tài nguyên:
 | **Task** | Phân tích chuyên sâu dữ liệu trích xuất từ 4 file log gốc .jtl, xác định các ngưỡng vận hành & điểm gãy độ trễ, chẩn đoán điểm nghẽn kiến trúc và xây dựng roadmap kỹ thuật tối ưu hóa cho EShop SUT |
 | **Feature / Module** | HW05 Task 1 & Task 2 (Log Analysis, Bottleneck Identification & Performance Optimization) |
 | **Bloom-AI Level** | G9.3 (Analyse / Performance Engineering - Phân tích dữ liệu thực nghiệm .jtl, chẩn đoán điểm nghẽn kiến trúc và hoạch định giải pháp kỹ thuật tối ưu) |
-| **Verdict** | VALID |
+| **Verdict** | INCOMPLETE |
 
 #### (1) Prompt + Tool
 
@@ -500,20 +500,20 @@ Tạo file này ra 1 file md đi
 AI đã hoàn thành phân tích toàn diện và đưa vào tài liệu báo cáo:
 1. **Phần nội dung tích hợp vào báo cáo chính:** [Task 2 trong `HW5/Report/perfomance_report.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Report/perfomance_report.md)
    - **4.1. AI-Assisted .jtl Log Analysis & Performance Thresholds:** Ma trận so sánh 4 kịch bản đo lường với các phân vị P50, P90, P95, P99, Max, Throughput và Error Rate; sơ đồ 3 vùng tải và phân tích điểm nghẽn từng sampler.
-   - **4.2. Human Review: Misinterpretation Hunt:** Phản biện 3 ngộ nhận của AI (MH-01: Lầm tưởng 0% error rate là tốt; MH-02: Ngộ nhận Throughput tăng do server khỏe; MH-03: Hiểu nhầm RAM tăng là rò rỉ bộ nhớ).
+   - **4.2. Human Review: Misinterpretation Hunt & Metric Correction:** Đối chiếu chi tiết số liệu thực tế vs AI, chỉ ra 5 sai lệch phân vị, vạch trần ảo giác số học `.95`/`.99`, và phản biện 3 ngộ nhận kỹ thuật (MH-01, MH-02, MH-03).
    - **4.3. Judging AI's Optimization Proposals:** Phân loại 6 đề xuất tối ưu (4 Feasible, 1 Hallucinated - SQLite multi-writer connection pool, 1 Over-engineering - Microservices auth).
 
 #### (3)-(5) Verdict, Reasoning, Student Fix
 
 | Aspect | Detail |
 | --- | --- |
-| **Verdict** | **VALID** |
-| **Reasoning** | **HW05 Task 1, Task 2 & ISTQB FL 4.0 - Efficiency & Performance Engineering:** Báo cáo phân tích hoàn toàn bám sát số liệu thực nghiệm từ 4 file log `.jtl` gốc của sinh viên, chỉ ra đúng bản chất cơ chế khóa đơn luồng độc quyền của SQLite trong môi trường web đa luồng đồng thời cao, phân biệt rõ giữa CPU-bound (`login`) và I/O-bound (`products`/`categories`), đưa ra các giải pháp kỹ thuật cụ thể, khả thi và đạt tính chuẩn mực kỹ nghệ cao. |
-| **Student Fix** | **Accepted as-is.** Sinh viên đã rà soát toàn bộ các phân tích định lượng và lý giải kiến trúc, xác nhận số liệu hoàn toàn khớp với log thực tế thu được trong quá trình chạy kiểm thử và chỉ đạo tích hợp trọn vẹn vào Task 2 của báo cáo chính `HW5/Report/perfomance_report.md`. |
+| **Verdict** | **INCOMPLETE** |
+| **Reasoning** | **HW05 Task 1, Task 2 & ISTQB FL 4.0 - Efficiency & Performance Engineering:** Mặc dù AI lý giải kiến trúc rất sắc bén và chính xác (về SQLite lock, CPU-bound bcrypt và tối ưu WAL mode), nhưng AI đã mắc lỗi tính toán và ảo giác số học ở **5 giá trị Percentile**: (1) Load P90 lệch -2ms (12ms vs 14ms); (2) Stress P90 lệch -1ms (14ms vs 15ms); (3) Spike P90 phóng đại +183ms (1,651ms vs 1,468ms); (4) Spike P95 phóng đại +165ms (1,897.95ms vs 1,733ms); (5) Spike P99 phóng đại +176ms (2,478.99ms vs 2,303ms). Đặc biệt, phần thập phân `.95` và `.99` ở Spike P95/P99 trùng khớp với tên phân vị là biểu hiện của "độ chính xác giả tạo" (pseudo-precision hallucination). |
+| **Student Fix** | Sinh viên đã trực tiếp chạy script trích xuất dữ liệu tabular độc lập từ 4 file `.jtl` gốc, xây dựng **Bảng Đối Chiếu Toàn Diện Số Liệu (AI vs Raw .jtl)** trong Mục 4.2 của báo cáo, đính chính lại toàn bộ 5 giá trị phân vị thực tế, chứng minh vì sao các kết luận kiến trúc vẫn vững chắc (nhờ Avg RT và Max RT hoàn toàn khớp 100%), đồng thời bổ sung 3 phân tích phản biện bản chất kỹ thuật sâu sắc (MH-01 đến MH-03). |
 | **Reviewed by** | Ân Tiến Nguyên An |
 | **Review date** | 2026-08-15 |
-| **Quality rating** | Excellent |
-| **Issues found** | Không có (None). |
+| **Quality rating** | Excellent (Sau khi hoàn tất quy trình Human Review & Metric Correction) |
+| **Issues found** | 5 chỉ số Percentile bị tính sai/phóng đại và xuất hiện ảo giác số học pseudo-precision (Đã đính chính 100% dựa trên raw log thô). |
 
 ---
 
@@ -523,8 +523,8 @@ AI đã hoàn thành phân tích toàn diện và đưa vào tài liệu báo c�
 
 | Verdict | Số lượng | Tỷ lệ (%) | Ý nghĩa đánh giá |
 | :---: | :---: | :---: | :--- |
-| **VALID** | 3 | 42.9% | Chấp nhận nguyên vẹn không cần chỉnh sửa |
-| **INCOMPLETE** | 4 | 57.1% | Sử dụng bản thảo AI và hoàn thiện qua rà soát của sinh viên (Human-in-the-loop) |
+| **VALID** | 2 | 28.6% | Chấp nhận nguyên vẹn không cần chỉnh sửa |
+| **INCOMPLETE** | 5 | 71.4% | Sử dụng bản thảo AI và hoàn thiện qua rà soát của sinh viên (Human-in-the-loop) |
 | **INVALID** | 0 | 0.0% | Loại bỏ hoàn toàn do sai lệch bản chất |
 | **TỔNG CỘNG** | **7** | **100%** | **100% các artifact đều được kiểm duyệt và hiệu chỉnh nghiêm ngặt** |
 

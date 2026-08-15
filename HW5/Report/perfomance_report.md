@@ -89,13 +89,96 @@ Dưới đây là kết quả phân tích số liệu log gốc trích xuất t�
 
 ---
 
-## 4.2. Human Review: Misinterpretation Hunt (Sinh Viên Phản Biện & Săn Tìm Ngộ Nhận Của AI)
+## 4.2. Human Review: Misinterpretation Hunt & Metric Correction (Sinh Viên Phản Biện & Săn Tìm Sai Lệch Số Liệu Của AI)
 
-Quá trình đối soát độc lập của sinh viên đối với các nhận định của AI từ dữ liệu `.jtl` gốc:
+Quá trình đối soát độc lập của sinh viên giữa kết quả do AI phân tích và dữ liệu thực nghiệm trích xuất từ 4 file log `.jtl` gốc (`load_results.jtl`, `stress_results.jtl`, `spike_results.jtl`, `endurance_results.jtl`):
 
-| ID | Nhận định ban đầu của AI (AI Interpretation) | Dữ liệu thực nghiệm `.jtl` gốc | Phản biện của sinh viên & Bản chất kỹ thuật (Human Correction) |
+### 1. Bảng Đối Chiếu Toàn Diện Số Liệu: AI Reported vs Raw .jtl Log
+
+| Kịch bản | Chỉ số (Metric) | Giá trị AI phân tích | Giá trị Raw `.jtl` thực tế | Sai lệch ($\Delta$) | Trạng thái Thẩm định | Ghi chú & Đánh giá của Sinh viên |
+| :--- | :--- | :---: | :---: | :---: | :---: | :--- |
+| **Load Test** | Total Samples | 4,842 | 4,842 | 0 | ✅ Khớp 100% | Chính xác tuyệt đối |
+| | Error Rate | 0.00% | 0.00% | 0 | ✅ Khớp 100% | Chính xác tuyệt đối |
+| | Avg RT | 7.13 ms | 7.13 ms | 0 | ✅ Khớp 100% | Khớp chính xác |
+| | **P90** | **~12.0 ms** | **14 ms** | **-2 ms (-14.3%)** | ❌ **SAI SỐ** | AI ước lượng thấp hơn thực tế 2ms |
+| | P95 | 16.00 ms | 16.00 ms | 0 | ✅ Khớp 100% | Khớp chính xác |
+| | P99 | 30.00 ms | 30.00 ms | 0 | ✅ Khớp 100% | Khớp chính xác |
+| | Max RT | 76 ms | 76 ms | 0 | ✅ Khớp 100% | Khớp chính xác |
+| | Throughput | 16.29 req/s | 16.29 req/s | 0 | ✅ Khớp 100% | Khớp chính xác |
+| **Stress Test** | Total Samples | 16,546 | 16,546 | 0 | ✅ Khớp 100% | Chính xác tuyệt đối |
+| | Error Rate | 0.00% | 0.00% | 0 | ✅ Khớp 100% | Chính xác tuyệt đối |
+| | Avg RT | 8.26 ms | 8.26 ms | 0 | ✅ Khớp 100% | Khớp chính xác |
+| | **P90** | **~14.0 ms** | **15 ms** | **-1 ms (-6.7%)** | ❌ **SAI SỐ** | AI làm tròn ước tính lệch -1ms |
+| | P95 | 19.00 ms | 19.00 ms | 0 | ✅ Khớp 100% | Khớp chính xác |
+| | P99 | 31.00 ms | 31.00 ms | 0 | ✅ Khớp 100% | Khớp chính xác |
+| | Max RT | 66 ms | 66 ms | 0 | ✅ Khớp 100% | Khớp chính xác |
+| | Throughput | 42.61 req/s | 42.61 req/s | 0 | ✅ Khớp 100% | Khớp chính xác |
+| **Spike Test** | Total Samples | 31,357 | 31,357 | 0 | ✅ Khớp 100% | Chính xác tuyệt đối |
+| | Error Rate | 0.00% | 0.00% | 0 | ✅ Khớp 100% | Chính xác tuyệt đối |
+| | Avg RT | 397.87 ms | 397.87 ms | 0 | ✅ Khớp 100% | Khớp chính xác |
+| | **P90** | **1,651.00 ms** | **1,468 ms** | **+183 ms (+12.5%)** | ❌ **PHÓNG ĐẠI** | Thổi phồng độ trễ đuôi P90 thêm 183ms |
+| | **P95** | **1,897.95 ms** | **1,733 ms** | **+164.95 ms (+9.5%)** | ❌ **PHÓNG ĐẠI + ẢO GIÁC** | Thổi phồng + Bịa phần thập phân `.95` |
+| | **P99** | **2,478.99 ms** | **2,303 ms** | **+175.99 ms (+7.6%)** | ❌ **PHÓNG ĐẠI + ẢO GIÁC** | Thổi phồng + Bịa phần thập phân `.99` |
+| | Max RT | 3,278 ms | 3,278 ms | 0 | ✅ Khớp 100% | Khớp chính xác |
+| | Throughput | 158.03 req/s | 158.03 req/s | 0 | ✅ Khớp 100% | Khớp chính xác |
+| **Endurance** | Total Samples | 12,643 | 12,643 | 0 | ✅ Khớp 100% | Chính xác tuyệt đối |
+| | Error Rate | 0.00% | 0.00% | 0 | ✅ Khớp 100% | Chính xác tuyệt đối |
+| | Avg RT | 8.16 ms | 8.16 ms | 0 | ✅ Khớp 100% | Khớp chính xác |
+| | P90 | ~15.0 ms | 15 ms | 0 | ✅ Khớp | Khớp với log thực tế |
+| | P95 | 21.00 ms | 21.00 ms | 0 | ✅ Khớp 100% | Khớp chính xác |
+| | P99 | 31.00 ms | 31.00 ms | 0 | ✅ Khớp 100% | Khớp chính xác |
+| | Max RT | 370 ms | 370 ms | 0 | ✅ Khớp 100% | Khớp chính xác |
+| | Throughput | 19.23 req/s | 19.23 req/s | 0 | ✅ Khớp 100% | Khớp chính xác |
+
+---
+
+### 2. Phân Tích Chi Tiết 5 Sai Lệch Số Liệu Percentile & Hiện Tượng Ảo Giác (Pseudo-Precision Hallucination)
+
+Qua quá trình đối soát từng dòng dữ liệu từ log thô, sinh viên phát hiện **5 sai lệch chỉ số định lượng** và một **dấu hiệu ảo giác số học mang tính hệ thống của LLM**:
+
+1. **Load Test P90:**
+   - **AI công bố:** `~12.0 ms`
+   - **Thực tế log `.jtl`:** `14 ms`
+   - **Sai lệch:** AI ước lượng thấp hơn thực tế **-2 ms (-14.3%)**, làm cho kịch bản tải nền trông có vẻ tối ưu hơn thực tế một chút.
+
+2. **Stress Test P90:**
+   - **AI công bố:** `~14.0 ms`
+   - **Thực tế log `.jtl`:** `15 ms`
+   - **Sai lệch:** AI ước lượng thấp hơn thực tế **-1 ms (-6.7%)**.
+
+3. **Spike Test P90:**
+   - **AI công bố:** `1,651.00 ms`
+   - **Thực tế log `.jtl`:** `1,468 ms`
+   - **Sai lệch:** Phóng đại thêm **+183 ms (+12.5%)** so với phân vị thực tế của 31,357 samples.
+
+4. **Spike Test P95:**
+   - **AI công bố:** `1,897.95 ms`
+   - **Thực tế log `.jtl`:** `1,733 ms`
+   - **Sai lệch:** Phóng đại thêm **+164.95 ms (+9.5%)**.
+
+5. **Spike Test P99:**
+   - **AI công bố:** `2,478.99 ms`
+   - **Thực tế log `.jtl`:** `2,303 ms`
+   - **Sai lệch:** Phóng đại thêm **+175.99 ms (+7.6%)**.
+
+#### 🚩 Phát Hiện Dấu Hiệu "Ảo Giác Số Học & Độ Chính Xác Giả Tạo" (Pseudo-Precision Hallucination):
+- **Phân tích dấu vết:** Khi phân tích Spike Test, AI đưa ra $P_{95} = 1,897\mathbf{.95}\text{ ms}$ và $P_{99} = 2,478\mathbf{.99}\text{ ms}$. Phần thập phân `.95` và `.99` **trùng khớp một cách kỳ lạ với chính tên của phân vị** ($95^{\text{th}}$ và $99^{\text{th}}$ Percentile).
+- **Bản chất kỹ thuật:** Đây là bằng chứng rõ ràng cho thấy mô hình ngôn ngữ lớn (LLM) không thực sự chạy thuật toán QuickSelect hay sắp xếp phân vị rank trên 31,357 dòng log của file `.jtl`, mà đã **"bịa" (hallucinate) ra phần thập phân** để tạo cảm giác con số trông cực kỳ tinh vi, khoa học và có độ chính xác cao (Pseudo-precision).
+- **Nguyên nhân cốt lõi:** LLM là mô hình sinh từ ngữ theo xác suất, không phải công cụ xử lý dữ liệu tabular chuyên dụng. Khi được yêu cầu trích xuất phân vị từ tập dữ liệu lớn mà không có code execution can thiệp, LLM có xu hướng nội suy dựa trên kiến thức phân phối chuẩn và tự động chèn các hậu tố số học mang tính gợi cảm (heuristic pattern matching).
+
+#### 🎯 Đánh Giá Tác Động Tới Các Kết Luận Kiến Trúc & Tối Ưu (Impact Assessment):
+- **Tính chuẩn xác của dữ liệu nền:** Toàn bộ các chỉ số đo lường cốt lõi khác gồm *Total Samples, Error Rate (0.00%), Average Response Time, Maximum Response Time, Throughput* trên cả 4 kịch bản, cùng toàn bộ chỉ số *Avg RT và Max RT theo từng endpoint* (`/api/login`, `/api/products`, `/api/categories`, `/api/coupons`, `/api/admin/import-products`) đều **khớp chính xác 100%** với dữ liệu gốc trong `.jtl`.
+- **Kết luận kiến trúc vẫn hoàn toàn đúng đắn:** Dù 5 giá trị Percentile bị phóng đại từ 7.6% – 12.5% trong kịch bản Spike (AI ước lượng P95 là 1.89s thay vì 1.73s), thì cả hai con số này đều vượt xa ngưỡng trần SLA chuẩn ($< 500\text{ ms}$). Do đó, chẩn đoán về **"Điểm gãy hiệu năng nghiêm trọng do nghẽn hàng đợi tại 158 req/s"**, cũng như kết luận về điểm nghẽn **CPU-bound tại `bcrypt` (`POST /api/login` Avg 759ms)** và **Table-Level Exclusive Lock của SQLite (`GET /api/products` Max 3,278ms)** vẫn **hoàn toàn chính xác và có giá trị kỹ nghệ cao**, vì chúng được xây dựng trên Avg RT và Max RT đã được kiểm chứng chuẩn xác.
+
+---
+
+### 3. Phản Biện Sai Lệch Bản Chất Kỹ Thuật (Conceptual & Architectural Misinterpretation Hunt)
+
+Bên cạnh sai lệch số học, sinh viên phản biện 3 ngộ nhận bản chất kỹ nghệ trong phân tích của AI:
+
+| ID | Nhận định của AI (AI Interpretation) | Dữ liệu thực nghiệm `.jtl` gốc | Phản biện của sinh viên & Bản chất kỹ thuật (Human Correction) |
 | :---: | :--- | :--- | :--- |
-| **MH-01** | **"Kịch bản Spike 250 VUs đạt 0.00% lỗi nên hệ thống chịu tải cực tốt, không bị suy giảm hiệu năng"** | `spike_results.jtl`: Error Rate = 0.00%, nhưng P90 = 1,651ms, P95 = 1,897.95ms, Max = 3,278ms. | **SAI LỆCH NGHIÊM TRỌNG VỀ TRẢI NGHIỆM (False Positive Stability):** Tỷ lệ lỗi 0% chỉ phản ánh việc hàng đợi TCP socket của OS/Node.js chưa bị drop kết nối. Về mặt UX và SLA, độ trễ ~1.9s - 3.3s tương đương hệ thống bị "đóng băng", người dùng thực tế sẽ từ bỏ phiên giao dịch (abandonment). Đây là điểm gãy hiệu năng (Performance Degradation Breaking Point). |
+| **MH-01** | **"Kịch bản Spike 250 VUs đạt 0.00% lỗi nên hệ thống chịu tải cực tốt, không bị suy giảm hiệu năng"** | `spike_results.jtl`: Error Rate = 0.00%, nhưng P90 = 1,468ms (AI: 1,651ms), P95 = 1,733ms (AI: 1,897.95ms), Max = 3,278ms. | **SAI LỆCH NGHIÊM TRỌNG VỀ TRẢI NGHIỆM (False Positive Stability):** Tỷ lệ lỗi 0% chỉ phản ánh việc hàng đợi TCP socket của OS/Node.js chưa bị drop kết nối. Về mặt UX và SLA, độ trễ ~1.7s - 3.3s tương đương hệ thống bị "đóng băng", người dùng thực tế sẽ từ bỏ phiên giao dịch (abandonment). Đây là điểm gãy hiệu năng (Performance Degradation Breaking Point). |
 | **MH-02** | **"Throughput Spike đạt 158.03 req/s thể hiện năng lực xử lý của server tăng gấp 10 lần kịch bản Load (16.29 req/s)"** | `load_results.jtl` (Think Time 1-5s) vs `spike_results.jtl` (Think Time = 0s). | **NGỘ NHẬN VỀ NGUYÊN NHÂN TĂNG RPS (Throughput Illusion):** Throughput tăng không phải do server xử lý nhanh hơn (thực tế độ trễ trung bình tăng từ 7ms lên 397ms), mà do kịch bản Spike triệt tiêu Think Time = 0s và dồn ép 250 luồng liên tục, đẩy server vào tình trạng quá tải và ứ đọng hàng đợi. |
 | **MH-03** | **"Tiến trình Node.js tăng RAM từ 66.9MB lên 94.8MB sau 10 phút ngâm tải là dấu hiệu rò rỉ bộ nhớ (Memory Leak)"** | `endurance_results.jtl`: 12,643 samples, RAM ban đầu 66.9MB, đỉnh 94.8MB, duy trì ổn định 85-95MB suốt 8 phút cuối. | **HIỂU SAI CƠ CHẾ V8 GARBAGE COLLECTION:** Mức tăng ~28MB là hành vi bình thường để cấp phát bộ đệm (buffers, cache, internal handles). Đồ thị răng cưa sau 2 phút đầu và sự ổn định dưới 100MB khẳng định GC thu hồi rác hiệu quả, không có memory leak. |
 
