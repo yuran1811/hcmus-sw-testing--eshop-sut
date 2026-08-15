@@ -431,7 +431,7 @@ vars.put('order_id', json?.orderId?.toString() ?: '')</stringProp>
               <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
             </value>
           </objProp>
-          <stringProp name="filename">results/load.jtl</stringProp>
+          <stringProp name="filename"></stringProp>
         </ResultCollector>
         <hashTree/>
       </hashTree>

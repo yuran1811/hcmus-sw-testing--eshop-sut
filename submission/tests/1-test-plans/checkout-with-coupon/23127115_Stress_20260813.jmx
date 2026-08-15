@@ -1592,7 +1592,7 @@ vars.put('order_id', json?.orderId?.toString() ?: '')</stringProp>
             <success>true</success><label>true</label><code>true</code>
           </value>
         </objProp>
-        <stringProp name="filename">results/stress.jtl</stringProp>
+        <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
     </hashTree>
