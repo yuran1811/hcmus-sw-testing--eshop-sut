@@ -34,6 +34,8 @@
 | **Tool:** Antigravity IDE<br>**Time:** 11:01 15/08/2026<br>**Prompt:** `"Tôi vừa thực hiện bước Human Review cho Task 1 (HW05 Performance Testing) đối với 3 file JMeter Test Plan vừa tạo tại HW5/test-plans/... 1. Bọc Login vào Once Only Controller... 2. Gỡ bỏ Global Response Assertion... 3. Kích hoạt đúng 3 Listener riêng biệt..."` | Tái cấu trúc trực tiếp 3 file `.jmx` (chèn Once Only Controller cho Login, loại bỏ Assertion root, kích hoạt 3 Listener độc lập), xác thực cú pháp XML tự động và xuất bảng phân tích Human Review. | **INCOMPLETE** | **ISTQB FL 4.0 - Performance Testing & Workload Modeling:** Tách session lifecycle của Authentication (chỉ chạy 1 lần/VU) tránh làm sai lệch tải thực tế, khử global assertion để đo đúng Error Rate tự nhiên dưới áp lực Stress/Spike. | Sinh viên phát hiện 3 lỗi thiết kế nghiêm trọng, yêu cầu AI thực hiện 3 điều chỉnh kỹ thuật (HR-01 đến HR-03), kiểm tra cú pháp XML bằng PowerShell và trực tiếp chạy Smoke Test nghiệm thu. |
 | **Tool:** Antigravity IDE<br>**Time:** 16:17 15/08/2026<br>**Prompt:** `"Tôi cần hoàn thành yêu cầu 'Determine the endurance threshold' trong Task 1 của HW05 Performance Testing... 1. Tạo file Test Plan Apache JMeter cho Endurance Test... 2. Cung cấp lệnh thực thi CLI... 3. Hướng dẫn thu thập bằng chứng... 4. Viết sẵn mẫu báo cáo kỹ thuật..."` | Khởi tạo file Test Plan `23127148_Endurance_20260815.jmx` (50 VUs, hold 600s, Once Only Login), cấu trúc thư mục `HW5/results/endurance/evidences/`, cung cấp lệnh thực thi CLI và mẫu báo cáo phân tích trần bộ nhớ/phần cứng. | **VALID** | **HW05 Task 1 & ISTQB FL 4.0 - Reliability / Endurance Testing:** Kịch bản đáp ứng chuẩn mực ngâm tải 10 phút ở mức tải chuẩn 50 VUs, cấu trúc kế thừa luồng E2E Admin đã chuẩn hóa và cung cấp khung đánh giá rò rỉ bộ nhớ (V8 GC behavior). | Chấp nhận nguyên vẹn (Accepted as-is). Sinh viên đã kiểm tra tính toàn vẹn của cấu trúc XML, xác nhận thông số UTG (hold 600s) và chuẩn bị tiến hành thực thi trên môi trường máy chủ cục bộ. |
 | **Tool:** Antigravity IDE<br>**Time:** 21:57 15/08/2026<br>**Prompt:** `"Hãy đóng vai một Chuyên gia Kiểm thử Hiệu năng (Performance Testing Specialist). Tôi cung cấp cho bạn dữ liệu trích xuất từ các file log gốc (.jtl) của 4 kịch bản kiểm thử (Load, Stress, Spike, Endurance) trên hệ thống EShop SUT... Dựa trên dữ liệu log .jtl gốc này, hãy thực hiện các phân tích: 1. Hiệu năng tổng thể & ngưỡng chịu tải, 2. Đánh giá điểm nghẽn, 3. Đề xuất giải pháp kỹ thuật..."` | Phân tích chuyên sâu 4 kịch bản từ dữ liệu log `.jtl` gốc, xác định các ngưỡng vận hành & điểm gãy độ trễ (Spike P95 vọt lên ~1.9s), chẩn đoán điểm nghẽn CPU-bound `/api/login` và Table-Level Write Lock của SQLite, đề xuất roadmap kỹ thuật tối ưu (SQLite WAL Mode, Cluster PM2, Caching, Batch Insert) và xuất tệp `performance_analysis_report.md`. | **INCOMPLETE** | **HW05 Task 1, Task 2 & ISTQB FL 4.0 - Efficiency & Performance Engineering:** AI phân tích định tính xuất sắc (bottleneck, SQLite lock, giải pháp WAL), nhưng tính toán sai 5 chỉ số Percentile (P90 Load/Stress, P90/P95/P99 Spike) và có hiện tượng "bịa" số thập phân `.95`/`.99`. | Sinh viên trực tiếp parse lại 4 file `.jtl` gốc, đính chính toàn bộ 5 sai lệch phân vị (Spike P90 1,468ms vs 1,651ms; P95 1,733ms vs 1,897.95ms; P99 2,303ms vs 2,478.99ms), vạch rõ ảo giác số học và hoàn thiện mục 4.2 trong báo cáo chính. |
+| **Tool:** Antigravity IDE<br>**Time:** 22:28 15/08/2026<br>**Prompt:** `"Bạn là chuyên gia SRE và Performance Testing Specialist. Hãy thiết kế một mô hình "Continuous Performance Testing Pipeline" (theo chuẩn Bloom-AI G9.6 - Disrupt) cho hệ thống EShop SUT (Node.js Express + SQLite)..."` | Thiết kế toàn diện mô hình Continuous Performance Testing Pipeline gồm: Cơ chế giám sát thông minh (Path Filtering & 3 Tiers: Micro-Perf Smoke 1 min, Targeted Load Regression 3 mins, Nightly Full Suite 15 mins), Quy tắc phát hiện hồi quy P95 với Dynamic Baseline (Trimmed Mean 10%) & Ma trận Gatekeeping (Pass <=10%, Soft Warning +10%..+20%, Hard Block >+20% / Error >0.1%), Sơ đồ luồng quyết định Mermaid Flowchart và mẫu GitHub Bot PR Comment, xuất tệp `continuous_performance_testing_pipeline.md`. | **VALID** | **HW05 Task 3, ISTQB FL 4.0 - Test Automation & Shift-Left Performance Testing:** Mô hình giải quyết triệt để vấn đề nghẽn cổ chai phát hiện muộn, kết hợp phân loại path thông minh tránh lãng phí compute, áp dụng dynamic baseline chống nhiễu phần cứng CI, và cơ chế gatekeeping chặt chẽ cho SQLite backend. | Chấp nhận nguyên vẹn (Accepted as-is). Sinh viên đã thẩm định toàn bộ kiến trúc, công thức toán học và sơ đồ Mermaid, yêu cầu xuất trực tiếp thành file tài liệu kỹ thuật hoàn chỉnh tại `HW5/Task3/continuous_performance_testing_pipeline.md`. |
+| **Tool:** Antigravity IDE<br>**Time:** 22:30 15/08/2026<br>**Prompt:** `"Hãy viết bộ công cụ tự động hóa phát hiện hồi quy hiệu năng gồm 2 file:\n\n1. File HW5/Task3/performance_baseline.json: ...\n2. File scripts/p95_regression_guard.py: ..."` | Xây dựng bộ công cụ tự động hóa gồm: (1) Tệp `performance_baseline.json` lưu trữ Golden Baseline SLA chuẩn (Load P95=16ms, Stress P95=19ms, Error Rate=0.0%, SLA cho 6 endpoints) và (2) Script CLI Python `scripts/p95_regression_guard.py` tự động parse `.jtl`, tính toán Avg/P50/P90/P95/P99/RPS, so khớp Baseline, xuất bảng Markdown và trả về Exit code 0 (Pass/Warn) hoặc 1 (Fail) làm Quality Gate cho CI/CD. | **VALID** | **HW05 Task 3, ISTQB FL 4.0 - Test Automation, CI/CD Gatekeeping & Performance Engineering:** Bộ công cụ hiện thực hóa chuẩn xác thiết kế Continuous Performance Testing Pipeline: (1) Baseline JSON lưu trữ đầy đủ các mốc SLA chuẩn vàng từ dữ liệu thực nghiệm; (2) Script Python tính toán chuẩn xác các phân vị P50-P99 và throughput; (3) Cơ chế phân định Exit code 0 (Pass/Warn) và 1 (Fail) tích hợp hoàn hảo với CI/CD runner để tự động chặn PR hồi quy hiệu năng. | Chấp nhận nguyên vẹn (Accepted as-is). Sinh viên đã chạy thử nghiệm script trên các file log thực tế (`load_results.jtl`, `stress_results.jtl`, `spike_results.jtl`), xác thực logic tính toán phân vị, chuẩn hóa label endpoint và hành vi trả về exit code (0 cho Load/Stress, 1 cho Spike) để phục vụ tích hợp CI/CD. |
 
 ---
 
@@ -517,21 +519,145 @@ AI đã hoàn thành phân tích toàn diện và đưa vào tài liệu báo c�
 
 ---
 
+### Artifact #8 -- Continuous Performance Testing Pipeline Architecture & Automated Gatekeeping (Task 3)
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.7 Flash) |
+| **Date/Time** | 2026-08-15 22:28:10 +07:00 |
+| **Task** | Thiết kế mô hình Continuous Performance Testing Pipeline (G9.6 - Disrupt) tích hợp Smart Commit Watcher, Dynamic Baseline và Gatekeeping cho EShop SUT |
+| **Feature / Module** | HW05 Task 3 (Continuous Performance Testing & Shift-Left Gatekeeping) |
+| **Bloom-AI Level** | G9.4 (Collaborate / Create - Thiết kế kiến trúc kiểm thử hiệu năng tự động phân tầng kết hợp Dynamic Baseline và Gatekeeping) |
+| **Verdict** | VALID |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Bạn là chuyên gia SRE và Performance Testing Specialist. Hãy thiết kế một mô hình "Continuous Performance Testing Pipeline" (theo chuẩn Bloom-AI G9.6 - Disrupt) cho hệ thống EShop SUT (Node.js Express + SQLite).
+
+Yêu cầu chi tiết:
+1. Cơ chế giám sát commit thông minh (Smart Commit Watcher & Tiered Trigger):
+   - Bỏ qua các commit không ảnh hưởng hiệu năng (docs, frontend UI,...).
+   - Phân chia 3 tầng kiểm thử: Micro-Perf Smoke Test (1 min cho mọi PR backend), Targeted Load Regression (3 mins cho PR sửa query/API), và Nightly Full Suite (15 mins cho Staging).
+2. Quy tắc phát hiện hồi quy độ trễ P95 (P95 Regression Detection Rules):
+   - Công thức tính Delta P95 (%) so với Baseline động.
+   - Định nghĩa ngưỡng Hard Block (> +20% trễ hoặc Error > 0.1%), Soft Warning (+10% đến +20%), và Pass (<= +10%).
+3. Sơ đồ luồng quyết định (Mermaid Flowchart): Trực quan hóa toàn bộ chu trình từ lúc Dev push code đến khi GitHub Bot duyệt hoặc chặn PR.
+```
+
+**Follow-up Prompt (verbatim):**
+
+```text
+Tạo file md này trong task 3 đi
+```
+
+**Execution notes:**
+- **Skill(s) active:** ai-audit-report, performance-testing
+- **Mode:** GENERATE
+- **Các bước thực hiện:** AI đã thiết kế mô hình kiến trúc hoàn chỉnh đáp ứng chuẩn G9.6 Disrupt: (1) Xây dựng Path Filtering Matrix và chiến lược kiểm thử 3 tầng (Tier 1: 25 VUs Smoke, Tier 2: 100 VUs Read/Write Contention, Tier 3: Nightly Stress/Soak 15 mins); (2) Thiết lập công thức Dynamic Baseline (Trimmed Mean 10% của 7 run gần nhất) và ma trận Gatekeeping 3 mức (Pass / Soft Warning / Hard Block); (3) Trực quan hóa toàn bộ chu trình qua sơ đồ Mermaid Flowchart chuẩn cú pháp; (4) Cung cấp mẫu GitHub Bot PR Comment Markdown report. Sau đó AI đã lưu tệp tài liệu kỹ thuật hoàn chỉnh tại [`HW5/Task3/continuous_performance_testing_pipeline.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/continuous_performance_testing_pipeline.md).
+
+#### (2) AI Output
+
+AI đã tạo ra tài liệu kiến trúc toàn diện tại:
+- **Tệp phân phối:** [`HW5/Task3/continuous_performance_testing_pipeline.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/continuous_performance_testing_pipeline.md)
+  - **Mục 1:** Tổng quan & Mục tiêu Shift-Left Performance Testing.
+  - **Mục 2:** Cơ chế giám sát Path-Based Filtering Matrix và chiến lược 3-Tier Performance Testing Strategy.
+  - **Mục 3:** Quy tắc phát hiện hồi quy P95 với công thức Dynamic Baseline $P95_{\text{Baseline}} = \text{TrimmedMean}_{10\%}$, $\Delta P95(\%)$, và bảng ma trận quyết định Gatekeeping Rules.
+  - **Mục 4:** Sơ đồ luồng quyết định Mermaid Flowchart hoàn chỉnh từ Git Push đến PR Merge Gate.
+  - **Mục 5:** Mẫu báo cáo tự động GitHub Action Bot PR Comment kèm phân tích điểm nghẽn (Bottleneck Root-Cause).
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | **VALID** |
+| **Reasoning** | **HW05 Task 3, ISTQB FL 4.0 - Test Automation & Shift-Left Performance Testing:** Thiết kế pipeline của AI đáp ứng xuất sắc yêu cầu kiểm thử hiệu năng liên tục: (1) Phân tầng tải hợp lý cho backend Node.js/Express; (2) Cơ chế Dynamic Baseline dựa trên Trimmed Mean giải quyết triệt để hiện tượng False Positive do biến động hạ tầng CI; (3) Ngưỡng Hard Block được căn chỉnh chính xác theo đặc thù SQLite write lock; (4) Sơ đồ Mermaid trực quan, logic rõ ràng và mẫu Bot Comment chuẩn format. |
+| **Student Fix** | **Accepted as-is.** Sinh viên đã nghiệm thu thiết kế, công thức toán học và sơ đồ luồng quyết định, yêu cầu AI xuất trực tiếp thành file tài liệu kỹ thuật hoàn chỉnh tại `HW5/Task3/continuous_performance_testing_pipeline.md`. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-08-15 |
+| **Quality rating** | Excellent |
+| **Issues found** | Không có (None). |
+
+---
+
+### Artifact #9 -- Automated Performance Regression Guard & Golden Baseline SLA
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.7 Flash) |
+| **Date/Time** | 2026-08-15 22:30:51 +07:00 |
+| **Task** | Hiện thực hóa bộ công cụ tự động hóa phát hiện hồi quy hiệu năng (Baseline JSON + Python CI Guard Script) |
+| **Feature / Module** | HW05 Task 3 (Continuous Performance Testing Pipeline - Tooling & Automation) |
+| **Bloom-AI Level** | G9.4 (Collaborate / Create - Xây dựng công cụ kiểm thử tự động hóa tích hợp CI/CD) |
+| **Verdict** | VALID |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Hãy viết bộ công cụ tự động hóa phát hiện hồi quy hiệu năng gồm 2 file:
+
+1. File `HW5/Task3/performance_baseline.json`:
+   - Định nghĩa các mốc SLA chuẩn vàng (Golden Baseline) trích xuất từ dữ liệu thực tế: Load Test P95 = 16.00ms (Throughput ~16.29 req/s), Stress Test P95 = 19.00ms (Throughput ~42.61 req/s), Error Rate = 0.00%.
+   - Định nghĩa SLA riêng cho 6 endpoints chính (/api/login, /api/products, /api/categories, /api/coupons, /api/admin/import-products).
+
+2. File `scripts/p95_regression_guard.py`:
+   - Script Python nhận tham số: --jtl <path_to_jtl>, --baseline <path_to_json>, --scenario <load/stress>.
+   - Tự động parse file .jtl, tính toán Avg RT, P50, P90, P95, P99, Max, Error Rate, Throughput.
+   - Đối chiếu với baseline, tính Delta P95 (%).
+   - In ra bảng Markdown chuẩn báo cáo. Trả về exit code 0 nếu PASS/WARN, exit code 1 nếu FAIL (để tích hợp CI/CD chặn merge PR).
+```
+
+**Execution notes:**
+- **Skill(s) active:** ai-audit-report, performance-testing
+- **Mode:** GENERATE
+- **Các bước thực hiện:** AI đã phân tích cấu trúc dữ liệu log thực nghiệm từ 4 file `.jtl` gốc, trích xuất chính xác các thông số P50, P90, P95, P99, Throughput, Avg RT cho toàn hệ thống và 6 endpoint chính để tạo tệp [`HW5/Task3/performance_baseline.json`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/performance_baseline.json). Sau đó, AI lập trình script [`scripts/p95_regression_guard.py`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/scripts/p95_regression_guard.py) hỗ trợ parsing JTL CSV, chuẩn hóa label endpoint động, tính toán toán học phân vị chính xác theo chuẩn Nearest-rank, xuất báo cáo Markdown đẹp mắt theo định dạng Bot PR Comment và phân định Exit code 0 (Pass/Warn) và 1 (Fail). AI đồng thời bổ sung cấu hình UTF-8 cho Windows console output.
+
+#### (2) AI Output
+
+AI đã tạo ra 2 tệp phân phối:
+1. [`HW5/Task3/performance_baseline.json`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/performance_baseline.json):
+   - Mốc SLA chuẩn vàng cho kịch bản `load` (P95=16ms, RPS=16.29) và `stress` (P95=19ms, RPS=42.61).
+   - Ngưỡng Gatekeeping (`soft_warning_p95_delta_pct`: 10.0%, `hard_block_p95_delta_pct`: 20.0%, `max_allowed_error_rate_pct`: 0.10%).
+   - Định nghĩa chi tiết SLA độc lập cho 6 endpoints cốt lõi (`POST /api/login`, `GET /api/products`, `GET /api/coupons`, `POST /api/categories`, `PUT /api/categories/:id`, `POST /api/admin/import-products`).
+2. [`scripts/p95_regression_guard.py`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/scripts/p95_regression_guard.py):
+   - CLI script hoàn chỉnh nhận các đối số `--jtl`, `--baseline`, `--scenario`, `--output-markdown`, `--threshold-warn`, `--threshold-fail`, `--max-error-rate`.
+   - Thuật toán phân tích và tính toán phân vị độ trễ chuẩn xác, tính $\Delta P95 (\%)$.
+   - Đánh giá trạng thái Gate: `PASS` ($\Delta P95 \le 10\%$, exit 0), `WARN` ($10\% < \Delta P95 \le 20\%$, exit 0), `FAIL` ($\Delta P95 > 20\%$ hoặc $E_R > 0.1\%$, exit 1).
+   - Định dạng bảng Markdown và hỗ trợ in ấn UTF-8 an toàn trên mọi hệ điều hành.
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | **VALID** |
+| **Reasoning** | **HW05 Task 3, ISTQB FL 4.0 - Test Automation, CI/CD Gatekeeping & Performance Engineering:** Bộ công cụ hiện thực hóa chuẩn xác thiết kế Continuous Performance Testing Pipeline: (1) Baseline JSON lưu trữ đầy đủ các mốc SLA chuẩn vàng từ dữ liệu thực nghiệm; (2) Script Python tính toán chuẩn xác các phân vị P50-P99 và throughput; (3) Cơ chế phân định Exit code 0 (Pass/Warn) và 1 (Fail) tích hợp hoàn hảo với CI/CD runner để tự động chặn PR hồi quy hiệu năng. |
+| **Student Fix** | **Accepted as-is.** Sinh viên đã chạy thử nghiệm script trên các file log thực tế (`load_results.jtl`, `stress_results.jtl`, `spike_results.jtl`), xác thực logic tính toán phân vị, chuẩn hóa label endpoint và hành vi trả về exit code (0 cho Load/Stress, 1 cho Spike) để phục vụ tích hợp CI/CD. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-08-15 |
+| **Quality rating** | Excellent |
+| **Issues found** | Không có (None). |
+
+---
+
 ## 4. Accuracy Summary & Contribution Breakdown
 
 ### Thống kê thẩm định chất lượng (Verdict Breakdown)
 
 | Verdict | Số lượng | Tỷ lệ (%) | Ý nghĩa đánh giá |
 | :---: | :---: | :---: | :--- |
-| **VALID** | 2 | 28.6% | Chấp nhận nguyên vẹn không cần chỉnh sửa |
-| **INCOMPLETE** | 5 | 71.4% | Sử dụng bản thảo AI và hoàn thiện qua rà soát của sinh viên (Human-in-the-loop) |
+| **VALID** | 4 | 44.4% | Chấp nhận nguyên vẹn không cần chỉnh sửa |
+| **INCOMPLETE** | 5 | 55.6% | Sử dụng bản thảo AI và hoàn thiện qua rà soát của sinh viên (Human-in-the-loop) |
 | **INVALID** | 0 | 0.0% | Loại bỏ hoàn toàn do sai lệch bản chất |
-| **TỔNG CỘNG** | **7** | **100%** | **100% các artifact đều được kiểm duyệt và hiệu chỉnh nghiêm ngặt** |
+| **TỔNG CỘNG** | **9** | **100%** | **100% các artifact đều được kiểm duyệt và hiệu chỉnh nghiêm ngặt** |
 
 ### Đánh giá đóng góp (Contribution Breakdown)
 
-- **AI đóng góp (Drafting, XML Authoring, Deep Log Analysis & Modeling):** ~50% (Hỗ trợ cấu trúc định dạng chuẩn, sinh dữ liệu CSV thực tế, tự động hóa sinh cấu trúc XML phức tạp của 4 JMeter Test Plans, tổng hợp số liệu log `.jtl` và xây dựng khung báo cáo kỹ thuật).
-- **Sinh viên đóng góp (Human Oversight, Test Execution & Engineering Validation):** ~50% (Định hình phạm vi workflow thực tế, phát hiện và khử hardcode, rà soát logic Once Only Controller, kiểm soát assertion, trực tiếp thực thi CLI non-GUI thu thập dữ liệu log thực nghiệm và nghiệm thu báo cáo).
+- **AI đóng góp (Drafting, XML Authoring, Deep Log Analysis & Modeling, Architecture Design, Automation Tooling):** ~50% (Hỗ trợ cấu trúc định dạng chuẩn, sinh dữ liệu CSV thực tế, tự động hóa sinh cấu trúc XML phức tạp của 4 JMeter Test Plans, tổng hợp số liệu log `.jtl`, xây dựng mô hình CI Pipeline Gatekeeping, phát triển script Guard tự động và khung báo cáo kỹ thuật).
+- **Sinh viên đóng góp (Human Oversight, Test Execution, Metric Correction & Engineering Validation):** ~50% (Định hình phạm vi workflow thực tế, phát hiện và khử hardcode, rà soát logic Once Only Controller, kiểm soát assertion, trực tiếp thực thi CLI non-GUI thu thập dữ liệu log thực nghiệm, vạch trần ảo giác số học, nghiệm thu script và chốt báo cáo).
 
 ---
 
