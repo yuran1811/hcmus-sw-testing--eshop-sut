@@ -168,30 +168,80 @@ Qua quá trình đối soát từng dòng dữ liệu từ log thô, sinh viên 
 
 #### 🎯 Đánh Giá Tác Động Tới Các Kết Luận Kiến Trúc & Tối Ưu (Impact Assessment):
 - **Tính chuẩn xác của dữ liệu nền:** Toàn bộ các chỉ số đo lường cốt lõi khác gồm *Total Samples, Error Rate (0.00%), Average Response Time, Maximum Response Time, Throughput* trên cả 4 kịch bản, cùng toàn bộ chỉ số *Avg RT và Max RT theo từng endpoint* (`/api/login`, `/api/products`, `/api/categories`, `/api/coupons`, `/api/admin/import-products`) đều **khớp chính xác 100%** với dữ liệu gốc trong `.jtl`.
-- **Kết luận kiến trúc vẫn hoàn toàn đúng đắn:** Dù 5 giá trị Percentile bị phóng đại từ 7.6% – 12.5% trong kịch bản Spike (AI ước lượng P95 là 1.89s thay vì 1.73s), thì cả hai con số này đều vượt xa ngưỡng trần SLA chuẩn ($< 500\text{ ms}$). Do đó, chẩn đoán về **"Điểm gãy hiệu năng nghiêm trọng do nghẽn hàng đợi tại 158 req/s"**, cũng như kết luận về điểm nghẽn **CPU-bound tại `bcrypt` (`POST /api/login` Avg 759ms)** và **Table-Level Exclusive Lock của SQLite (`GET /api/products` Max 3,278ms)** vẫn **hoàn toàn chính xác và có giá trị kỹ nghệ cao**, vì chúng được xây dựng trên Avg RT và Max RT đã được kiểm chứng chuẩn xác.
+- **Kết luận kiến trúc vẫn hoàn toàn đúng đắn:** Dù 5 giá trị Percentile bị phóng đại từ 7.6% – 12.5% trong kịch bản Spike (AI ước lượng P95 là 1.89s thay vì 1.73s), thì cả hai con số này đều vượt xa ngưỡng trần SLA chuẩn ($< 500\text{ ms}$). Do đó, chẩn đoán về **"Điểm gãy hiệu năng nghiêm trọng do nghẽn hàng đợi tại 158 req/s"**, cũng như kết luận về **tranh chấp khóa ghi đĩa SQLite** tại `/api/login` (Avg 759ms) và **Table-Level Exclusive Lock của SQLite** (`GET /api/products` Max 3,278ms) vẫn **hoàn toàn chính xác và có giá trị kỹ nghệ cao**, vì chúng được xây dựng trên Avg RT và Max RT đã được kiểm chứng chuẩn xác.
 
 ---
 
 ### 3. Phản Biện Sai Lệch Bản Chất Kỹ Thuật (Conceptual & Architectural Misinterpretation Hunt)
 
-Bên cạnh sai lệch số học, sinh viên phản biện 3 ngộ nhận bản chất kỹ nghệ trong phân tích của AI:
+Bên cạnh sai lệch số học, sinh viên phản biện 4 ngộ nhận bản chất kỹ nghệ trong phân tích của AI:
 
 | ID | Nhận định của AI (AI Interpretation) | Dữ liệu thực nghiệm `.jtl` gốc | Phản biện của sinh viên & Bản chất kỹ thuật (Human Correction) |
 | :---: | :--- | :--- | :--- |
 | **MH-01** | **"Kịch bản Spike 250 VUs đạt 0.00% lỗi nên hệ thống chịu tải cực tốt, không bị suy giảm hiệu năng"** | `spike_results.jtl`: Error Rate = 0.00%, nhưng P90 = 1,468ms (AI: 1,651ms), P95 = 1,733ms (AI: 1,897.95ms), Max = 3,278ms. | **SAI LỆCH NGHIÊM TRỌNG VỀ TRẢI NGHIỆM (False Positive Stability):** Tỷ lệ lỗi 0% chỉ phản ánh việc hàng đợi TCP socket của OS/Node.js chưa bị drop kết nối. Về mặt UX và SLA, độ trễ ~1.7s - 3.3s tương đương hệ thống bị "đóng băng", người dùng thực tế sẽ từ bỏ phiên giao dịch (abandonment). Đây là điểm gãy hiệu năng (Performance Degradation Breaking Point). |
 | **MH-02** | **"Throughput Spike đạt 158.03 req/s thể hiện năng lực xử lý của server tăng gấp 10 lần kịch bản Load (16.29 req/s)"** | `load_results.jtl` (Think Time 1-5s) vs `spike_results.jtl` (Think Time = 0s). | **NGỘ NHẬN VỀ NGUYÊN NHÂN TĂNG RPS (Throughput Illusion):** Throughput tăng không phải do server xử lý nhanh hơn (thực tế độ trễ trung bình tăng từ 7ms lên 397ms), mà do kịch bản Spike triệt tiêu Think Time = 0s và dồn ép 250 luồng liên tục, đẩy server vào tình trạng quá tải và ứ đọng hàng đợi. |
 | **MH-03** | **"Tiến trình Node.js tăng RAM từ 66.9MB lên 94.8MB sau 10 phút ngâm tải là dấu hiệu rò rỉ bộ nhớ (Memory Leak)"** | `endurance_results.jtl`: 12,643 samples, RAM ban đầu 66.9MB, đỉnh 94.8MB, duy trì ổn định 85-95MB suốt 8 phút cuối. | **HIỂU SAI CƠ CHẾ V8 GARBAGE COLLECTION:** Mức tăng ~28MB là hành vi bình thường để cấp phát bộ đệm (buffers, cache, internal handles). Đồ thị răng cưa sau 2 phút đầu và sự ổn định dưới 100MB khẳng định GC thu hồi rác hiệu quả, không có memory leak. |
+| **MH-04** | **"Endpoint `/api/login` là điểm nghẽn CPU-bound nghiêm trọng do thuật toán băm mật khẩu `bcrypt` chiếm dụng Thread Pool"** | `server.js:46` (`if (user.password === password)`), `package.json` (không có `bcrypt`/`argon2`). | **ẢO GIÁC HIỆN THỰC MÃ NGUỒN (Implementation Hallucination):** AI suy luận từ kinh nghiệm phổ quát thay vì đọc code thật. SUT so sánh mật khẩu dạng plaintext (`===`), chi phí CPU gần như bằng 0. Độ trễ 759ms thực chất xuất phát từ việc mỗi request login thực hiện **1 SELECT + 1 UPDATE** gây **SQLite Database Write Lock** dưới tải 250 VUs đồng thời. |
 
 ---
 
 ## 4.3. Judging AI's Optimization Proposals (Đánh Giá Đề Xuất Tối Ưu: Khả Thi vs Ảo Giác)
 
+Sinh viên đối chiếu từng đề xuất với source code thực tế (`server.js`, `database.js`, `package.json`) để phân loại tính khả thi:
+
 | STT | Đề xuất tối ưu của AI | Phân loại | Đánh giá tính khả thi & Luận cứ kỹ thuật (Reasoning) |
 | :---: | :--- | :---: | :--- |
-| **OP-01** | **Bật SQLite WAL Mode (`PRAGMA journal_mode = WAL;`) và `synchronous = NORMAL;`** | ✅ **FEASIBLE (Khả thi cao)** | **Cực kỳ phù hợp & Hiệu quả cao nhất:** Chuyển SQLite từ Rollback Journal sang WAL cho phép các luồng đọc (Readers) không bị chặn bởi luồng ghi (Writer), nâng cao throughput đồng thời gấp 5-10 lần mà không cần thay đổi kiến trúc. |
+| **OP-01** | **Bật SQLite WAL Mode + PRAGMAs (`journal_mode=WAL`, `synchronous=NORMAL`, `cache_size=-64000`)** | ✅ **FEASIBLE (Khả thi cao)** | **Cực kỳ phù hợp & Hiệu quả cao nhất:** Chuyển SQLite từ Rollback Journal sang WAL cho phép các luồng đọc (Readers) không bị chặn bởi luồng ghi (Writer), nâng cao throughput đồng thời gấp 5-10 lần mà không cần thay đổi kiến trúc. *Lưu ý:* Code mẫu AI dùng cú pháp `better-sqlite3` (`db.pragma(...)`), cần chuyển sang `db.run("PRAGMA ...")` của package `sqlite3` hiện tại. |
 | **OP-02** | **Đánh chỉ mục (Database Indexing) trên `category_id`, `price`, `code`, `email`** | ✅ **FEASIBLE (Khả thi cao)** | **Khả thi & Dễ triển khai:** Khắc phục triệt để tình trạng Full Table Scan của `GET /api/products` và `GET /api/coupons`, giảm chi phí tìm kiếm từ $O(N)$ xuống $O(\log N)$. |
 | **OP-03** | **Sử dụng In-Memory Cache (Node-Cache / Redis) cho Read-Heavy APIs** | ✅ **FEASIBLE (Khả thi cao)** | **Khả thi:** Giảm tải tới 70-80% số lượng truy vấn đọc trực tiếp vào file SQLite, giải phóng I/O đĩa cho các tác vụ ghi. |
-| **OP-04** | **Chạy Node.js Cluster / PM2 Multi-Core tận dụng CPU i5-12450HX** | ✅ **FEASIBLE (Khả thi cao)** | **Khả thi:** Mở rộng từ 1 đơn luồng sang cụm 8 worker processes, giúp tận dụng tối đa 8 Cores / 12 Threads và chia nhỏ áp lực CPU băm mật khẩu `bcrypt` ở `/api/login`. |
-| **OP-05** | **Triển khai Database Connection Pool đa luồng ghi cho SQLite (Multi-Writer Pool)** | ❌ **HALLUCINATED / IMPRACTICAL (Ảo giác / Không khả thi)** | **Ảo giác kiến trúc:** SQLite là cơ sở dữ liệu dạng file (serverless, single-writer). Bản thân SQLite không hỗ trợ đa kết nối ghi đồng thời từ nhiều process/thread mà không bị `SQLITE_BUSY` hoặc khóa toàn bộ database file. Áp dụng Connection Pool đa writer như MySQL/Postgres vào SQLite là đề xuất sai bản chất hệ quản trị. |
-| **OP-06** | **Tách riêng Authentication Service sang Microservices độc lập** | ⚠️ **OVER-ENGINEERING (Không thực tế cho SUT)** | **Không phù hợp quy mô:** Với ứng dụng monolith demo, giải pháp này mang tính cồng kềnh, phức tạp hóa hạ tầng không cần thiết. Chỉ cần mở rộng `UV_THREADPOOL_SIZE=16` hoặc chuyển bcrypt sang Worker Threads là đủ giải quyết triệt để. |
+| **OP-04** | **Chạy Node.js Cluster / PM2 Multi-Core tận dụng CPU i5-12450HX** | ⚠️ **FEASIBLE nhưng LẬP LUẬN SAI** | **Khả thi nhưng lý do sai:** Mở rộng từ 1 tiến trình lên 8 worker processes giúp dàn đều tải I/O và socket handling, tuy nhiên lý do không phải để giảm tải CPU băm mật khẩu `bcrypt` (do SUT dùng plaintext) mà là chia nhỏ áp lực concurrent I/O. |
+| **OP-05** | **Batch Transaction cho `POST /api/admin/import-products` (`db.transaction()`)** | ⚠️ **FEASIBLE nhưng SAI DRIVER API** | **Nguyên lý đúng nhưng code mẫu sai driver:** AI đưa code mẫu `db.transaction()` của `better-sqlite3`. Với thư viện `sqlite3` hiện tại của SUT, cần dùng `db.serialize()` cùng `BEGIN TRANSACTION` / `COMMIT`. |
+| **OP-06** | **Triển khai Database Connection Pool đa luồng ghi cho SQLite (Multi-Writer Pool)** | ❌ **HALLUCINATED (Ảo giác kiến trúc)** | **Ảo giác kiến trúc:** SQLite là cơ sở dữ liệu serverless trên single-file, chỉ cho phép duy nhất 1 Writer tại một thời điểm. Việc đề xuất Connection Pool đa luồng ghi như MySQL/Postgres vào SQLite là đề xuất phi thực tế và sai bản chất hệ quản trị. |
+| **OP-07** | **Tách riêng Authentication Service sang Microservices độc lập** | ⚠️ **OVER-ENGINEERING (Không thực tế)** | **Không phù hợp quy mô:** Với ứng dụng monolith demo, giải pháp này mang tính cồng kềnh, phức tạp hóa hạ tầng không cần thiết. |
+
+---
+
+# Task 3 — Continuous Performance Testing Pipeline & Automated Regression Guard
+
+## 5.1. Kiến Trúc Mô Hình Continuous Performance Testing (Bloom-AI G9.6 Disrupt)
+
+Mô hình kiểm thử hiệu năng liên tục được thiết kế nhằm mục tiêu **Shift-Left Performance Testing**, ngăn chặn suy thoái hiệu năng trước khi code được merge vào nhánh chính (`main`/`staging`):
+
+1. **Smart Commit Watcher (Path-Based Filtering):** Phân loại thay đổi trong commit để kích hoạt tầng kiểm thử tương ứng:
+   - `docs/**`, `frontend/**`: Bỏ qua Performance Pipeline.
+   - `src/controllers/**`, `src/routes/**`: Kích hoạt **Tier 1: Micro-Perf Smoke Test** (25 VUs, ~1 phút).
+   - `src/models/**`, `migrations/**`: Kích hoạt **Tier 2: Targeted Load Regression** (100 VUs, ~3 phút, kiểm tra DB Write Contention).
+   - `Scheduled Nightly`: Kích hoạt **Tier 3: Nightly Full Suite** (Stress + Spike + Soak 15 phút).
+2. **Quy tắc Gatekeeping & Baseline Động (Dynamic Baseline):**
+   - **Baseline động:** $P95_{\text{Baseline}} = \text{TrimmedMean}_{10\%}(\{P95_{\text{run}_1}, \dots, P95_{\text{run}_7}\})$.
+   - **🟢 PASS ($\Delta P95 \le +10\%$ VÀ $E_R \le 0.1\%$):** Tự động cho phép merge PR (`exit 0`).
+   - **🟡 SOFT WARNING ($+10\% < \Delta P95 \le +20\%$ VÀ $E_R \le 0.1\%$):** Gắn nhãn review, yêu cầu phê duyệt từ Tech Lead / SRE (`exit 0`).
+   - **🔴 HARD BLOCK ($\Delta P95 > +20\%$ HOẶC $E_R > 0.1\%$ HOẶC SQLite Lock):** Tự động khóa nút merge trên GitHub CI/CD (`exit 1`).
+
+---
+
+## 5.2. Bộ Công Cụ Tự Động Hóa & Kết Quả Thực Nghiệm (Automation Tooling & CI Gate Verification)
+
+Bộ công cụ tự động hóa kiểm định hồi quy hiệu năng gồm 2 thành phần chính tại `HW5/Task3/`:
+- **File cấu hình SLA Baseline:** [`performance_baseline.json`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/performance_baseline.json) chứa mốc chuẩn vàng trích xuất từ 4 kịch bản kiểm thử thực tế và SLA chi tiết cho 6 endpoints cốt lõi.
+- **Script Guard kiểm định CI/CD:** [`p95_regression_guard.py`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/scripts/p95_regression_guard.py) tự động phân tích file `.jtl`, tính toán phân vị độ trễ, so khớp baseline, tạo báo cáo Markdown và trả về exit code cho CI runner.
+
+### Bảng Tổng Hợp Kết Quả Thực Thi Script Trên 4 Kịch Bản Thực Tế:
+
+| Kịch bản Kiểm Định | File Log `.jtl` | P95 Thực tế (ms) | P95 Baseline (ms) | Độ lệch $\Delta P95$ | Tỷ lệ Lỗi ($E_R$) | Kết Quả Gate (Verdict) | Exit Code CI/CD | Hành Vi Pipeline |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **Load Test** (50 VUs) | `load_results.jtl` | **16.00 ms** | 16.00 ms | `0.0%` | `0.00%` | 🟢 **PASS** | `0` | ✅ Cho phép merge tự động |
+| **Stress Test** (200 VUs) | `stress_results.jtl` | **19.00 ms** | 19.00 ms | `0.0%` | `0.00%` | 🟢 **PASS** | `0` | ✅ Cho phép merge tự động |
+| **Endurance Test** (10 mins) | `endurance_results.jtl` | **21.00 ms** | 21.00 ms | `0.0%` | `0.00%` | 🟢 **PASS** | `0` | ✅ Cho phép merge tự động |
+| **Spike Degradation** (Simulated) | `spike_results.jtl` vs Load Base | **1,733.00 ms** | 16.00 ms | **`+10,731.2%`** | `0.00%` | 🔴 **HARD BLOCK** | `1` | ❌ **Khóa Merge PR — Báo động đỏ** |
+
+---
+
+> 📄 **Tài liệu tham khảo chi tiết Task 3:**
+> - Thiết kế kiến trúc & Sơ đồ Mermaid: [`HW5/Task3/continuous_performance_testing_pipeline.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/continuous_performance_testing_pipeline.md)
+> - Báo cáo kiểm định Load Test: [`HW5/Task3/load_regression_report.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/load_regression_report.md)
+> - Báo cáo kiểm định Stress Test: [`HW5/Task3/stress_regression_report.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/stress_regression_report.md)
+> - Báo cáo kiểm định Endurance Test: [`HW5/Task3/endurance_regression_report.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/endurance_regression_report.md)
+> - Báo cáo kiểm định chặn PR (Hard Block): [`HW5/Task3/spike_regression_fail_gate_demo.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/spike_regression_fail_gate_demo.md)
+
 
