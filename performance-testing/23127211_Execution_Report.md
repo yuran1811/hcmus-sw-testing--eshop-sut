@@ -65,7 +65,28 @@ Chạy `k6/23127211_Soak_20260814.js`: 50 VU, ramp-up 60s + steady 780s (13 phú
 | Sau ~90s (bão hoà) | ~90–92 MB (dao động nhẹ quanh mức này, **không tăng thêm** dù tiếp tục giữ tải) |
 | Sau khi ngừng tải  | Giảm về **70.1 MB**                                                             |
 
-→ **Kết luận endurance**: RSS tăng nhanh trong ~90 giây đầu (giai đoạn JIT/cache warm-up bình thường của Node.js — object pool, module cache, V8 heap pre-allocation), sau đó **ổn định ở ~90MB và không tăng thêm** trong suốt phần còn lại của 15 phút chạy tải liên tục, rồi **giảm về gần mức ban đầu (70MB)** ngay sau khi tải dừng. Đây là hành vi GC bình thường — **không phát hiện dấu hiệu memory leak** trên hardware và khối lượng request đã test (~21.5K request / 15 phút ở 50 VU). CPU tiến trình backend giữ ổn định ~10% trong suốt bài test (trên máy 8 core), cho thấy backend hoàn toàn không bị nghẽn CPU ở mức tải này — nghẽn (nếu có) nằm ở I/O/SQLite, không phải xử lý CPU.
+→ **Kết luận endurance**: RSS tăng nhanh trong ~90 giây đầu (giai đoạn JIT/cache warm-up bình thường của Node.js — object pool, module cache, V8 heap pre-allocation), sau đó **ổn định ở ~90MB và không tăng thêm** trong suốt phần còn lại của 15 phút chạy tải liên tục, rồi **giảm về gần mức ban đầu (70MB)** ngay sau khi tải dừng. CPU tiến trình backend giữ ổn định ~10% trong suốt bài test (trên máy 8 core), cho thấy backend hoàn toàn không bị nghẽn CPU ở mức tải này — nghẽn (nếu có) nằm ở I/O/SQLite, không phải xử lý CPU.
+
+> ### ⚠️ ĐÍNH CHÍNH (2026-08-15) — kết luận "không có memory leak" ở trên là SAI
+>
+> Bản đầu của báo cáo này kết luận **"không phát hiện dấu hiệu memory leak"** dựa hoàn toàn vào đồ thị RSS. Kết luận đó **không đúng**.
+>
+> Khi rà lại backend sau Task 2, phát hiện `userCarts` (`backend/server.js:14`) là một object in-memory toàn cục mà `POST /api/cart` chỉ `push` thêm, còn `POST /api/checkout` **không bao giờ dọn** (đã kiểm chứng: số lần chuỗi `userCarts` xuất hiện trong handler checkout = **0**). Đây là một cấu trúc **tăng đơn điệu, không bao giờ được giải phóng** cho tới khi restart tiến trình — tức là memory leak thật sự.
+>
+> Bằng chứng định lượng, đo trực tiếp sau khi chạy xong toàn bộ 6 kịch bản + soak test:
+>
+> | Chỉ số                                                     | Giá trị đo được             |
+> | ---------------------------------------------------------- | --------------------------- |
+> | Số phần tử trong `userCarts[userId]` của **một** tài khoản | **24 692**                  |
+> | Kích thước response `GET /api/cart`                        | **716 069 bytes** (~700 KB) |
+> | Đối chứng `GET /api/categories`                            | 91 bytes                    |
+> | Tỷ lệ chênh lệch                                           | **7 868 lần**               |
+>
+> **Vì sao soak test 15 phút không phát hiện được:** trong 15 phút chỉ có ~3 596 iteration, tương ứng ~3 596 phần tử được thêm vào ≈ **0,4 MB** — chìm hoàn toàn trong biên độ dao động ~24 MB của V8 heap trong cùng khoảng thời gian. Nói cách khác, **độ nhạy của phép đo RSS thấp hơn tốc độ rò rỉ khoảng hai bậc độ lớn**.
+>
+> **Bài học phương pháp:** không thể kết luận "không có memory leak" chỉ từ đồ thị RSS phẳng. Đồ thị RSS phẳng chỉ chứng minh rằng _tốc độ rò rỉ nhỏ hơn độ nhiễu của phép đo_, không chứng minh _không có rò rỉ_. Muốn kết luận chắc chắn phải kiểm tra trực tiếp các cấu trúc dữ liệu có khả năng tích luỹ (ở đây chỉ cần một lệnh `GET /api/cart`), hoặc chạy soak dài hơn nhiều bậc để tín hiệu vượt lên trên nhiễu.
+>
+> Lỗi này đã được báo cáo: **`BUG-CART-001`** → [issue #285](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/285). Hồ sơ đầy đủ: `tests/bug-reports/cart/BUG-CART-001.md`.
 
 File dữ liệu thô: `k6/results/23127211_Soak_20260814_summary.json`, `k6/results/23127211_Soak_20260814_resource_FIXED_sample.csv` (xem mục 5 về lý do có "\_FIXED_sample").
 
