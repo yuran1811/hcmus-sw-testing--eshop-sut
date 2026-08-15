@@ -190,6 +190,184 @@
           "throughput_rps": 3.30
         }
       }
+    },
+    "spike": {
+      "description": "Flash Sale Spike Test (250 VUs, Sudden Traffic Surge, Think Time = 0s)",
+      "target_vus": 250,
+      "overall": {
+        "samples": 31357,
+        "avg_rt_ms": 397.87,
+        "p50_ms": 121.0,
+        "p90_ms": 1468.0,
+        "p95_ms": 1733.0,
+        "p99_ms": 2303.0,
+        "max_rt_ms": 3278.0,
+        "error_rate_pct": 0.0,
+        "throughput_rps": 158.03
+      },
+      "endpoints": {
+        "POST /api/login": {
+          "description": "Admin Authentication & JWT generation under Spike surge",
+          "samples": 290,
+          "avg_rt_ms": 759.16,
+          "p50_ms": 704.0,
+          "p90_ms": 1583.0,
+          "p95_ms": 1688.0,
+          "p99_ms": 1842.0,
+          "max_rt_ms": 1864.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 2.67
+        },
+        "GET /api/products": {
+          "description": "Product catalog query under extreme concurrency",
+          "samples": 10172,
+          "avg_rt_ms": 457.94,
+          "p50_ms": 134.0,
+          "p90_ms": 1710.0,
+          "p95_ms": 1990.0,
+          "p99_ms": 2557.0,
+          "max_rt_ms": 3278.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 51.28
+        },
+        "GET /api/coupons": {
+          "description": "Coupon list lookup under extreme concurrency",
+          "samples": 10059,
+          "avg_rt_ms": 346.18,
+          "p50_ms": 108.0,
+          "p90_ms": 1304.0,
+          "p95_ms": 1473.0,
+          "p99_ms": 1843.0,
+          "max_rt_ms": 2308.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 50.73
+        },
+        "POST /api/categories": {
+          "description": "Create category under extreme write lock contention",
+          "samples": 4179,
+          "avg_rt_ms": 385.98,
+          "p50_ms": 118.0,
+          "p90_ms": 1446.0,
+          "p95_ms": 1688.0,
+          "p99_ms": 2286.0,
+          "max_rt_ms": 3272.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 21.08
+        },
+        "PUT /api/categories/:id": {
+          "description": "Update category under extreme write lock contention",
+          "samples": 4149,
+          "avg_rt_ms": 350.46,
+          "p50_ms": 113.0,
+          "p90_ms": 1321.0,
+          "p95_ms": 1485.0,
+          "p99_ms": 1834.0,
+          "max_rt_ms": 2422.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 20.93
+        },
+        "POST /api/admin/import-products": {
+          "description": "Bulk import products under extreme write load",
+          "samples": 2508,
+          "avg_rt_ms": 417.97,
+          "p50_ms": 123.0,
+          "p90_ms": 1587.0,
+          "p95_ms": 1861.0,
+          "p99_ms": 2471.0,
+          "max_rt_ms": 2988.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 12.65
+        }
+      }
+    },
+    "endurance": {
+      "description": "10-Minute Soak/Endurance Test (50 VUs, Memory Leak & Resource Ceiling Verification)",
+      "target_vus": 50,
+      "overall": {
+        "samples": 12643,
+        "avg_rt_ms": 8.16,
+        "p50_ms": 7.0,
+        "p90_ms": 15.0,
+        "p95_ms": 21.0,
+        "p99_ms": 31.0,
+        "max_rt_ms": 370.0,
+        "error_rate_pct": 0.0,
+        "throughput_rps": 19.23
+      },
+      "endpoints": {
+        "POST /api/login": {
+          "description": "Admin Authentication & JWT generation (Once Only Login / 50 VUs)",
+          "samples": 50,
+          "avg_rt_ms": 12.86,
+          "p50_ms": 5.0,
+          "p90_ms": 9.0,
+          "p95_ms": 12.0,
+          "p99_ms": 370.0,
+          "max_rt_ms": 370.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 1.71
+        },
+        "GET /api/products": {
+          "description": "Product catalog query (Sustained 10-minute load)",
+          "samples": 4102,
+          "avg_rt_ms": 11.03,
+          "p50_ms": 8.0,
+          "p90_ms": 25.0,
+          "p95_ms": 29.0,
+          "p99_ms": 34.0,
+          "max_rt_ms": 59.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 6.26
+        },
+        "GET /api/coupons": {
+          "description": "Coupon list lookup (Sustained 10-minute load)",
+          "samples": 4087,
+          "avg_rt_ms": 3.70,
+          "p50_ms": 3.0,
+          "p90_ms": 6.0,
+          "p95_ms": 7.0,
+          "p99_ms": 12.0,
+          "max_rt_ms": 29.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 6.26
+        },
+        "POST /api/categories": {
+          "description": "Create category (Continuous write transactions over 10 minutes)",
+          "samples": 1697,
+          "avg_rt_ms": 9.53,
+          "p50_ms": 9.0,
+          "p90_ms": 14.0,
+          "p95_ms": 16.0,
+          "p99_ms": 20.0,
+          "max_rt_ms": 34.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 2.60
+        },
+        "PUT /api/categories/:id": {
+          "description": "Update category (Continuous updates over 10 minutes)",
+          "samples": 1690,
+          "avg_rt_ms": 9.61,
+          "p50_ms": 9.0,
+          "p90_ms": 14.0,
+          "p95_ms": 16.0,
+          "p99_ms": 22.0,
+          "max_rt_ms": 59.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 2.62
+        },
+        "POST /api/admin/import-products": {
+          "description": "Bulk import products (Continuous batch inserts over 10 minutes)",
+          "samples": 1017,
+          "avg_rt_ms": 9.55,
+          "p50_ms": 9.0,
+          "p90_ms": 14.0,
+          "p95_ms": 15.0,
+          "p99_ms": 19.0,
+          "max_rt_ms": 27.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 1.57
+        }
+      }
     }
   }
 }
