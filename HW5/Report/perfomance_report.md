@@ -239,9 +239,10 @@ Bộ công cụ tự động hóa kiểm định hồi quy hiệu năng gồm 2 
 
 > 📄 **Tài liệu tham khảo chi tiết Task 3:**
 > - Thiết kế kiến trúc & Sơ đồ Mermaid: [`HW5/Task3/continuous_performance_testing_pipeline.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/continuous_performance_testing_pipeline.md)
-> - Báo cáo kiểm định Load Test: [`HW5/Task3/load_regression_report.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/load_regression_report.md)
-> - Báo cáo kiểm định Stress Test: [`HW5/Task3/stress_regression_report.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/stress_regression_report.md)
-> - Báo cáo kiểm định Endurance Test: [`HW5/Task3/endurance_regression_report.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/endurance_regression_report.md)
-> - Báo cáo kiểm định chặn PR (Hard Block): [`HW5/Task3/spike_regression_fail_gate_demo.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/spike_regression_fail_gate_demo.md)
+> - Báo cáo kiểm định Load Test: [`HW5/Task3/report/load_regression_report.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/report/load_regression_report.md)
+> - Báo cáo kiểm định Stress Test: [`HW5/Task3/report/stress_regression_report.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/report/stress_regression_report.md)
+> - Báo cáo kiểm định Endurance Test: [`HW5/Task3/report/endurance_regression_report.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/report/endurance_regression_report.md)
+> - Báo cáo kiểm định chặn PR (Hard Block): [`HW5/Task3/report/spike_regression_fail_gate_demo.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/report/spike_regression_fail_gate_demo.md)
+
 
 
