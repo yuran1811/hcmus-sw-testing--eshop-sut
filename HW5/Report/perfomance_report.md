@@ -218,6 +218,52 @@ Mô hình kiểm thử hiệu năng liên tục được thiết kế nhằm m�
    - **🟡 SOFT WARNING ($+10\% < \Delta P95 \le +20\%$ VÀ $E_R \le 0.1\%$):** Gắn nhãn review, yêu cầu phê duyệt từ Tech Lead / SRE (`exit 0`).
    - **🔴 HARD BLOCK ($\Delta P95 > +20\%$ HOẶC $E_R > 0.1\%$ HOẶC SQLite Lock):** Tự động khóa nút merge trên GitHub CI/CD (`exit 1`).
 
+### Sơ Đồ Luồng Quyết Định (Mermaid Flowchart):
+
+```mermaid
+flowchart TD
+    Start(["🚀 Developer Pushes Code / Opens PR"]) --> SmartWatcher{"🔍 Smart Commit Watcher<br/>(Git Diff & Path Inspection)"}
+
+    %% Filtering Path
+    SmartWatcher -->|"Chỉ có Docs / Frontend / UI"| SkipTest["⏩ Skip Performance Pipeline<br/>(Only Run Lint & Unit Tests)"]
+    SkipTest --> PRReady["✅ CI Passed (No Perf Impact)"]
+
+    %% Backend Paths
+    SmartWatcher -->|"Backend Logic (Controllers/Routes)"| RunTier1["⚡ Tier 1: Micro-Perf Smoke Test<br/>(1 min | 25 VUs | Smoke APIs)"]
+    SmartWatcher -->|"DB / Query / Schema (Models/Migrations)"| RunTier2["🎯 Tier 2: Targeted Load Regression<br/>(3 mins | 100 VUs | Heavy Queries)"]
+    SmartWatcher -->|"Nightly Cron on Main/Staging"| RunTier3["🌙 Tier 3: Nightly Full Suite<br/>(15 mins | Stress + Endurance)"]
+
+    %% Execution & Data Extraction
+    RunTier1 --> CollectMetrics["📊 Collect JMeter/k6 Metrics<br/>(P95 Latency, RPS, Error Rate)"]
+    RunTier2 --> CollectMetrics
+    RunTier3 --> UpdateBaseline["💾 Update Dynamic Baseline<br/>(Save to CI Cache / S3)"]
+
+    %% Analysis Engine
+    CollectMetrics --> FetchBaseline["📥 Fetch Latest Dynamic Baseline<br/>(Last 7 Successful Main Runs)"]
+    FetchBaseline --> CalcDelta["🧮 Compute Metrics:<br/>ΔP95 = ((P95_PR - P95_Base)/P95_Base) * 100<br/>Error_Rate = (Failed / Total) * 100"]
+
+    %% Decision Gate
+    CalcDelta --> DecisionGate{"⚖️ Evaluate Rules Matrix"}
+
+    %% Decision Branches
+    DecisionGate -->|"ΔP95 <= +10% AND Error Rate <= 0.1%"| PassBranch["🟢 PASS"]
+    DecisionGate -->|"+10% < ΔP95 <= +20% AND Error Rate <= 0.1%"| WarnBranch["🟡 SOFT WARNING"]
+    DecisionGate -->|"ΔP95 > +20% OR Error Rate > 0.1% OR SQLite Lock"| BlockBranch["🔴 HARD BLOCK"]
+
+    %% Bot Actions
+    PassBranch --> BotPass["🤖 GitHub Bot:<br/>1. Post Performance Summary Report<br/>2. Add Label: 'perf:passed'<br/>3. Set Status: SUCCESS"]
+    BotPass --> PRAllowed["✅ Allow Merge"]
+
+    WarnBranch --> BotWarn["🤖 GitHub Bot:<br/>1. Post Detailed Latency Warning<br/>2. Add Label: 'perf:needs-review'<br/>3. Request SRE/Tech Lead Approval"]
+    BotWarn --> ManualReview{"🧑‍💻 SRE / Lead Sign-off?"}
+    ManualReview -->|"Approved (Intentional Feature)"| PRAllowed
+    ManualReview -->|"Rejected"| BlockBranch
+
+    BlockBranch --> BotBlock["🤖 GitHub Bot:<br/>1. Post Failure Analysis & Lock Details<br/>2. Add Label: 'perf:blocker'<br/>3. Set Status: FAILURE (Block Merge)"]
+    BotBlock --> DevFix["🛠️ Dev Must Optimize & Push New Commit"]
+    DevFix --> Start
+```
+
 ---
 
 ## 5.2. Bộ Công Cụ Tự Động Hóa & Kết Quả Thực Nghiệm (Automation Tooling & CI Gate Verification)
