@@ -223,6 +223,11 @@ sqlite3 backend/database.sqlite \
   "UPDATE users SET login_attempts = 0, locked_until = NULL WHERE email LIKE 'perf_user%@eshop.com';"
 ```
 
+Ghi chú bằng chứng:
+
+- Các official run trong `test-summary.md` đều ghi rõ đã reseed lại dữ liệu trước mỗi scenario.
+- Nếu trong lúc quay video hoặc chạy lại xuất hiện lockout thật, hãy chạy lệnh trên ngay trên terminal và giữ nó trong cùng chuỗi bằng chứng với lần chạy kế tiếp.
+
 ### Xóa file .jtl cũ trong thư mục test-runs (nếu muốn chạy lại từ đầu)
 
 ```bash
@@ -253,3 +258,4 @@ rm submission/tests/2-test-runs/checkout-with-coupon/soak/*.jtl
 3. **Fail-fast extractor assertions** — Bản cuối thêm `JSR223 Assertion` để fail ngay khi không lấy được `access_token`, `user_id`, `product_id_resp`, `product_name`, `product_price`, `final_amount`, hoặc `order_id`.
 4. **Stress profile fix** — Stress test không còn dùng linear 200-VU ramp duy nhất; bản cuối dùng 4 stage độc lập để tạo tải cộng dồn 50 → 100 → 150 → 200 VU.
 5. **Data accumulation** — Mỗi run vẫn tạo thêm đơn hàng trong DB. Không cần xóa ngay trước run kế tiếp, nhưng phải ghi nhận khi phân tích log và số liệu.
+6. **Observed degradation worth manual review** — Stress có cửa sổ suy giảm gần phút 12 và Spike có cụm lỗi/outlier cuối run. Nếu cần nộp GitHub issue, dùng số liệu chính thức trong `submission/tests/3-test-summary/checkout-with-coupon/test-summary.md` và checklist tại `submission/docs/test-report/task1-manual-evidence-checklist.md`.

@@ -32,12 +32,12 @@ The following JMX fixes were applied before the official runs:
 
 ## 3. Execution Matrix
 
-| Scenario         | Plan file                      | Official artifact folder                                       | Actual run date | Actual status      |
-| ---------------- | ------------------------------ | -------------------------------------------------------------- | --------------- | ------------------ |
-| Load             | `23127115_Load_20260813.jmx`   | `submission/tests/2-test-runs/checkout-with-coupon/load/`      | `2026-08-13`    | `Executed`         |
-| Stress           | `23127115_Stress_20260813.jmx` | `submission/tests/2-test-runs/checkout-with-coupon/stress/`    | `2026-08-13`    | `Executed`         |
-| Spike            | `23127115_Spike_20260813.jmx`  | `submission/tests/2-test-runs/checkout-with-coupon/spike/`     | `2026-08-13`    | `Executed`         |
-| Endurance / Soak | `23127115_Soak_20260815.jmx`  | `submission/tests/2-test-runs/checkout-with-coupon/soak/`      | `2026-08-15`    | `Executed`         |
+| Scenario         | Plan file                      | Official artifact folder                                    | Actual run date | Actual status |
+| ---------------- | ------------------------------ | ----------------------------------------------------------- | --------------- | ------------- |
+| Load             | `23127115_Load_20260813.jmx`   | `submission/tests/2-test-runs/checkout-with-coupon/load/`   | `2026-08-13`    | `Executed`    |
+| Stress           | `23127115_Stress_20260813.jmx` | `submission/tests/2-test-runs/checkout-with-coupon/stress/` | `2026-08-13`    | `Executed`    |
+| Spike            | `23127115_Spike_20260813.jmx`  | `submission/tests/2-test-runs/checkout-with-coupon/spike/`  | `2026-08-13`    | `Executed`    |
+| Endurance / Soak | `23127115_Soak_20260815.jmx`   | `submission/tests/2-test-runs/checkout-with-coupon/soak/`   | `2026-08-15`    | `Executed`    |
 
 ## 4. Scenario Results
 
@@ -166,16 +166,16 @@ The following JMX fixes were applied before the official runs:
 
 ### 4.5 Hardware Context
 
-| Item | Value |
-| --- | --- |
-| Computer name | `QUOCTAN` |
-| Operating system | `Windows 11 Pro 64-bit (10.0, Build 26200)` |
-| Manufacturer | `LENOVO` |
-| Model | `21BV000SUS` |
-| CPU | `12th Gen Intel(R) Core(TM) i7-1260P` |
-| Logical CPUs | `16` |
-| RAM | `16 GB` |
-| DirectX | `DirectX 12` |
+| Item                | Value                                                                            |
+| ------------------- | -------------------------------------------------------------------------------- |
+| Computer name       | `QUOCTAN`                                                                        |
+| Operating system    | `Windows 11 Pro 64-bit (10.0, Build 26200)`                                      |
+| Manufacturer        | `LENOVO`                                                                         |
+| Model               | `21BV000SUS`                                                                     |
+| CPU                 | `12th Gen Intel(R) Core(TM) i7-1260P`                                            |
+| Logical CPUs        | `16`                                                                             |
+| RAM                 | `16 GB`                                                                          |
+| DirectX             | `DirectX 12`                                                                     |
 | Hardware screenshot | `submission/tests/2-test-runs/checkout-with-coupon/hardware/hardware-dxdiag.png` |
 
 ## 5. Human Review of AI-generated Plans
@@ -190,45 +190,50 @@ The following JMX fixes were applied before the official runs:
 
 ## 6. Evidence Checklist
 
-| Artifact                           | Expected location                                                                       | Status  | Notes                                                |
-| ---------------------------------- | --------------------------------------------------------------------------------------- | ------- | ---------------------------------------------------- |
-| Load JMX                           | `submission/tests/1-test-plans/checkout-with-coupon/23127115_Load_20260813.jmx`         | Present |                                                      |
-| Stress JMX                         | `submission/tests/1-test-plans/checkout-with-coupon/23127115_Stress_20260813.jmx`       | Present |                                                      |
-| Spike JMX                          | `submission/tests/1-test-plans/checkout-with-coupon/23127115_Spike_20260813.jmx`        | Present |                                                      |
-| CSV test data                      | `submission/tests/1-test-plans/checkout-with-coupon/test-data/`                         | Present | Regenerated before official runs                     |
-| Seed script                        | `submission/tests/1-test-plans/checkout-with-coupon/seed_perf_users.js`                 | Present | Executed before each official run                    |
-| Load raw JTL                       | `submission/tests/2-test-runs/checkout-with-coupon/load/20260813-load-official.jtl`     | Present |                                                      |
-| Stress raw JTL                     | `submission/tests/2-test-runs/checkout-with-coupon/stress/20260813-stress-official.jtl` | Present |                                                      |
-| Spike raw JTL                      | `submission/tests/2-test-runs/checkout-with-coupon/spike/20260813-spike-official.jtl`   | Present |                                                      |
-| Soak raw JTL (130 / 180 / 230 VU)  | `submission/tests/2-test-runs/checkout-with-coupon/soak/20260815-soak-*.jtl`             | Present | Three threshold runs completed                       |
-| Load HTML report                   | `submission/tests/2-test-runs/checkout-with-coupon/load/html-report/`                   | Present |                                                      |
-| Stress HTML report                 | `submission/tests/2-test-runs/checkout-with-coupon/stress/html-report/`                 | Present |                                                      |
-| Spike HTML report                  | `submission/tests/2-test-runs/checkout-with-coupon/spike/html-report/`                  | Present |                                                      |
-| Soak HTML reports                  | `submission/tests/2-test-runs/checkout-with-coupon/soak/html-report-*/`                  | Present | Reports exist for `130`, `180`, and `230 VUs`       |
-| Resource screenshots               | `submission/tests/2-test-runs/checkout-with-coupon/load/load-resource.png`, `.../stress/stress-resource.png`, `.../spike/spike-resource.png` | Present | Load, Stress, and Spike resource screenshots are available |
-| Soak resource screenshots          | `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-*-mid.png` and `...-late.png` | Present | Mid-run and late-run screenshots captured for `130`, `180`, and `230 VUs` |
-| Hardware screenshot and spec table | `submission/tests/2-test-runs/checkout-with-coupon/hardware/hardware-dxdiag.png`        | Present | Hardware spec table is documented in section 4.5     |
-| Endurance / soak plan              | `submission/tests/1-test-plans/checkout-with-coupon/23127115_Soak_20260815.jmx`        | Present | Parameterized for `130 / 180 / 230 VUs`             |
-| Endurance / soak artifact          | `submission/tests/2-test-runs/checkout-with-coupon/soak/`                              | Present | `130`, `180`, and `230 VU` runs are all available   |
-| Video demo link                    | Main report / README                                                                    | Missing |                                                      |
+| Artifact                           | Expected location                                                                                                                            | Status         | Notes                                                                                            |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------ |
+| Load JMX                           | `submission/tests/1-test-plans/checkout-with-coupon/23127115_Load_20260813.jmx`                                                              | Present        |                                                                                                  |
+| Stress JMX                         | `submission/tests/1-test-plans/checkout-with-coupon/23127115_Stress_20260813.jmx`                                                            | Present        |                                                                                                  |
+| Spike JMX                          | `submission/tests/1-test-plans/checkout-with-coupon/23127115_Spike_20260813.jmx`                                                             | Present        |                                                                                                  |
+| CSV test data                      | `submission/tests/1-test-plans/checkout-with-coupon/test-data/`                                                                              | Present        | Regenerated before official runs                                                                 |
+| Seed script                        | `submission/tests/1-test-plans/checkout-with-coupon/seed_perf_users.js`                                                                      | Present        | Executed before each official run                                                                |
+| Load raw JTL                       | `submission/tests/2-test-runs/checkout-with-coupon/load/20260813-load-official.jtl`                                                          | Present        |                                                                                                  |
+| Stress raw JTL                     | `submission/tests/2-test-runs/checkout-with-coupon/stress/20260813-stress-official.jtl`                                                      | Present        |                                                                                                  |
+| Spike raw JTL                      | `submission/tests/2-test-runs/checkout-with-coupon/spike/20260813-spike-official.jtl`                                                        | Present        |                                                                                                  |
+| Soak raw JTL (130 / 180 / 230 VU)  | `submission/tests/2-test-runs/checkout-with-coupon/soak/20260815-soak-*.jtl`                                                                 | Present        | Three threshold runs completed                                                                   |
+| Load HTML report                   | `submission/tests/2-test-runs/checkout-with-coupon/load/html-report/`                                                                        | Present        |                                                                                                  |
+| Stress HTML report                 | `submission/tests/2-test-runs/checkout-with-coupon/stress/html-report/`                                                                      | Present        |                                                                                                  |
+| Spike HTML report                  | `submission/tests/2-test-runs/checkout-with-coupon/spike/html-report/`                                                                       | Present        |                                                                                                  |
+| Soak HTML reports                  | `submission/tests/2-test-runs/checkout-with-coupon/soak/html-report-*/`                                                                      | Present        | Reports exist for `130`, `180`, and `230 VUs`                                                    |
+| Resource screenshots               | `submission/tests/2-test-runs/checkout-with-coupon/load/load-resource.png`, `.../stress/stress-resource.png`, `.../spike/spike-resource.png` | Present        | Load, Stress, and Spike resource screenshots are available                                       |
+| Soak resource screenshots          | `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-*-mid.png` and `...-late.png`                                          | Present        | Mid-run and late-run screenshots captured for `130`, `180`, and `230 VUs`                        |
+| Hardware screenshot and spec table | `submission/tests/2-test-runs/checkout-with-coupon/hardware/hardware-dxdiag.png`                                                             | Present        | Hardware spec table is documented in section 4.5                                                 |
+| Endurance / soak plan              | `submission/tests/1-test-plans/checkout-with-coupon/23127115_Soak_20260815.jmx`                                                              | Present        | Parameterized for `130 / 180 / 230 VUs`                                                          |
+| Endurance / soak artifact          | `submission/tests/2-test-runs/checkout-with-coupon/soak/`                                                                                    | Present        | `130`, `180`, and `230 VU` runs are all available                                                |
+| Lockout reset procedure            | `submission/tests/1-test-plans/checkout-with-coupon/README.md`                                                                               | Present        | SQL reset command is documented and reseed was run before each official scenario                 |
+| Issue report evidence              | `submission/tests/3-test-summary/checkout-with-coupon/issue-reports/ISSUE-CWC-001.md`                                                        | Present        | Stress degradation observation is documented and ready to be copied into GitHub Issues if needed |
+| Video demo link                    | Main report / README                                                                                                                         | Pending manual | Recording checklist prepared; final YouTube link is not recorded yet                             |
 
 ## 7. Current Completion Status
 
-| Area                             | Status   | Notes                                                          |
-| -------------------------------- | -------- | -------------------------------------------------------------- |
-| Workflow scope defined           | Complete | Same E2E flow used across all official scenarios               |
-| 3 JMX files created and repaired | Complete | CLI-compatible and officially executed                         |
-| Data-driven CSV setup            | Complete | Seeded and regenerated before runs                             |
-| Human review documented          | Complete | Fixes and rationale captured                                   |
-| Load execution                   | Complete | Official artifacts present                                     |
-| Stress execution                 | Complete | Official artifacts present                                     |
-| Spike execution                  | Complete | Official artifacts present                                     |
-| Endurance threshold              | Complete | `180 VU` is the conservative stable threshold; `230 VU` shows the first clear latency rise |
-| HTML reports                     | Complete | Official HTML report folders generated for all three scenarios |
-| Resource / hardware evidence     | Complete | Hardware screenshot/spec table and load/stress/spike resource screenshots exist |
-| Video demo                       | Missing  | No link recorded                                               |
+| Area                             | Status         | Notes                                                                                      |
+| -------------------------------- | -------------- | ------------------------------------------------------------------------------------------ |
+| Workflow scope defined           | Complete       | Same E2E flow used across all official scenarios                                           |
+| 3 JMX files created and repaired | Complete       | CLI-compatible and officially executed                                                     |
+| Data-driven CSV setup            | Complete       | Seeded and regenerated before runs                                                         |
+| Human review documented          | Complete       | Fixes and rationale captured                                                               |
+| Load execution                   | Complete       | Official artifacts present                                                                 |
+| Stress execution                 | Complete       | Official artifacts present                                                                 |
+| Spike execution                  | Complete       | Official artifacts present                                                                 |
+| Endurance threshold              | Complete       | `180 VU` is the conservative stable threshold; `230 VU` shows the first clear latency rise |
+| HTML reports                     | Complete       | Official HTML report folders generated for all three scenarios                             |
+| Resource / hardware evidence     | Complete       | Hardware screenshot/spec table and load/stress/spike resource screenshots exist            |
+| Lockout reset documentation      | Complete       | Reset SQL command is documented and reseed was executed before each official scenario      |
+| Issue reporting stance           | Complete       | Submission-side issue report is prepared; GitHub posting remains optional                  |
+| Video demo                       | Pending manual | Checklist is prepared, but no link recorded yet                                            |
 
 ## 8. Remaining Actions
 
-1. Add the final video demo link if it is required in the submission package.
-2. Commit the soak artifacts and the updated summary documents.
+1. Record the final unlisted YouTube demo and add the link to the main submission README or report.
+2. If you want maximum defensibility, copy the prepared stress observation from `issue-reports/` into GitHub Issues and attach the final issue link.
+3. Reuse `submission/docs/test-report/task1-manual-evidence-checklist.md` as the final manual close-out checklist.

@@ -7,6 +7,8 @@ Recommended structure:
 - `checkout-with-coupon/load/`
 - `checkout-with-coupon/stress/`
 - `checkout-with-coupon/spike/`
+- `checkout-with-coupon/soak/`
+- `checkout-with-coupon/hardware/`
 
 Use this folder for final run artifacts that support the submission, such as:
 
@@ -14,5 +16,7 @@ Use this folder for final run artifacts that support the submission, such as:
 - `.log` JMeter run logs
 - exported listener reports or screenshots
 - short run notes with command, date, and environment
+- hardware evidence such as `dxdiag` screenshots
+- soak threshold evidence such as multiple JTL files and mid/late run screenshots
 
 Do not use this folder for temporary smoke-test output unless that output is part of the final evidence set.
