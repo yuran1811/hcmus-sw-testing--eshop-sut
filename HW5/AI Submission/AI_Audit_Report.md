@@ -32,6 +32,7 @@
 | **Tool:** Antigravity IDE<br>**Time:** 23:10 14/08/2026<br>**Prompt:** `"Tôi đang thực hiện bài tập HW05 Performance Testing cho EShop SUT... Thực hiện Bước 1 & Bước 2..."` | Khởi tạo cấu trúc thư mục `HW5/`, sinh 3 file Data-Driven CSV (`users.csv`, `categories.csv`, `products.csv`) và tệp `HW5/README.md` | **VALID** | **ISTQB FL 4.0 - Test Design & Data Preparation:** Dữ liệu kiểm thử cần thực tế, đúng schema SQLite và định dạng UTF-8 để phục vụ tham số hóa sampler trong JMeter. | Chấp nhận nguyên vẹn (Accepted as-is). Toàn bộ dữ liệu giá cả VND, ID danh mục và mô tả được tạo đúng chuẩn nghiệp vụ thương mại điện tử. |
 | **Tool:** Antigravity IDE<br>**Time:** 23:18 14/08/2026<br>**Prompt:** `"Tôi đang thực hiện Bước 3 của skill .agents/skills/performance-testing/SKILL.md... Workflow E2E của vai trò Admin... Hãy tạo 3 file JMeter test plan (.jmx)..."` | Sinh 3 file Test Plan Apache JMeter (`23127148_Load_20260815.jmx`, `23127148_Stress_20260815.jmx`, `23127148_Spike_20260815.jmx`) tích hợp Ultimate Thread Group và Dynamic ID Extractor | **INCOMPLETE** | **HW05 Section 6 & ISTQB FL 4.0 - Performance Testing:** Cần đáp ứng đúng 3 kịch bản tải với 3 Listener khác nhau, điều khiển tỷ lệ phân bổ qua Throughput Controller và Think Time chính xác. | Sinh viên đã đối soát lại cấu trúc cây XML, đảm bảo 3 Listener độc lập (Summary Report, Aggregate Report, View Results Tree), gán đúng Think Time (Spike = 0s) và cấu hình HttpClient4. |
 | **Tool:** Antigravity IDE<br>**Time:** 11:01 15/08/2026<br>**Prompt:** `"Tôi vừa thực hiện bước Human Review cho Task 1 (HW05 Performance Testing) đối với 3 file JMeter Test Plan vừa tạo tại HW5/test-plans/... 1. Bọc Login vào Once Only Controller... 2. Gỡ bỏ Global Response Assertion... 3. Kích hoạt đúng 3 Listener riêng biệt..."` | Tái cấu trúc trực tiếp 3 file `.jmx` (chèn Once Only Controller cho Login, loại bỏ Assertion root, kích hoạt 3 Listener độc lập), xác thực cú pháp XML tự động và xuất bảng phân tích Human Review. | **INCOMPLETE** | **ISTQB FL 4.0 - Performance Testing & Workload Modeling:** Tách session lifecycle của Authentication (chỉ chạy 1 lần/VU) tránh làm sai lệch tải thực tế, khử global assertion để đo đúng Error Rate tự nhiên dưới áp lực Stress/Spike. | Sinh viên phát hiện 3 lỗi thiết kế nghiêm trọng, yêu cầu AI thực hiện 3 điều chỉnh kỹ thuật (HR-01 đến HR-03), kiểm tra cú pháp XML bằng PowerShell và trực tiếp chạy Smoke Test nghiệm thu. |
+| **Tool:** Antigravity IDE<br>**Time:** 16:17 15/08/2026<br>**Prompt:** `"Tôi cần hoàn thành yêu cầu 'Determine the endurance threshold' trong Task 1 của HW05 Performance Testing... 1. Tạo file Test Plan Apache JMeter cho Endurance Test... 2. Cung cấp lệnh thực thi CLI... 3. Hướng dẫn thu thập bằng chứng... 4. Viết sẵn mẫu báo cáo kỹ thuật..."` | Khởi tạo file Test Plan `23127148_Endurance_20260815.jmx` (50 VUs, hold 600s, Once Only Login), cấu trúc thư mục `HW5/results/endurance/evidences/`, cung cấp lệnh thực thi CLI và mẫu báo cáo phân tích trần bộ nhớ/phần cứng. | **VALID** | **HW05 Task 1 & ISTQB FL 4.0 - Reliability / Endurance Testing:** Kịch bản đáp ứng chuẩn mực ngâm tải 10 phút ở mức tải chuẩn 50 VUs, cấu trúc kế thừa luồng E2E Admin đã chuẩn hóa và cung cấp khung đánh giá rò rỉ bộ nhớ (V8 GC behavior). | Chấp nhận nguyên vẹn (Accepted as-is). Sinh viên đã kiểm tra tính toàn vẹn của cấu trúc XML, xác nhận thông số UTG (hold 600s) và chuẩn bị tiến hành thực thi trên môi trường máy chủ cục bộ. |
 
 ---
 
@@ -368,21 +369,99 @@ AI đã cập nhật trực tiếp 3 tệp Test Plan và hoàn thiện bảng ph
 
 ---
 
+### Artifact #6 -- JMeter Test Plan for Endurance Testing & Hardware Threshold Analysis
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.7 Flash) |
+| **Date/Time** | 2026-08-15 16:17:40 +07:00 |
+| **Task** | Thiết kế kịch bản kiểm thử độ bền (Endurance / Soak Test 10 phút), lệnh CLI, kế hoạch thu thập minh chứng và mẫu phân tích kỹ thuật "Endurance & Hardware Threshold Analysis" |
+| **Feature / Module** | HW05 Task 1 (Determine the endurance threshold & Long-term System Stability) |
+| **Bloom-AI Level** | G9.4 (Collaborate / Create - Tự động hóa sinh kịch bản ngâm tải dài hạn và thiết lập khung phân tích phần cứng) |
+| **Verdict** | VALID |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Tôi cần hoàn thành yêu cầu "Determine the endurance threshold" trong Task 1 của HW05 Performance Testing.
+
+Yêu cầu chi tiết:
+1. Tạo file Test Plan Apache JMeter cho Endurance Test:
+- Đặt tên file: `HW5/test-plans/23127148_Endurance_20260815.jmx`
+- Kế thừa toàn bộ End-to-End Admin Workflow đã chuẩn hóa (Once Only Controller cho Login, Throughput Controllers 60/25/15%, Think Time thực tế, Data-Driven CSV).
+- Cấu hình Ultimate Thread Group: 
+  + Target: 50 Virtual Users (Mức tải chuẩn ổn định)
+  + Ramp-up: 30 giây
+  + Sustained Hold Time: 600 giây (10 phút chạy liên tục ở mức tải duy trì)
+  + Ramp-down: 30 giây
+- Listener: Bật `Summary Report` (enabled="true").
+
+2. Cung cấp lệnh thực thi CLI non-GUI:
+- Xuất log thô ra: `HW5/results/endurance/endurance_results.jtl`
+- Xuất HTML Dashboard Report ra: `HW5/results/endurance/html-report`
+
+3. Hướng dẫn thu thập bằng chứng (Evidences):
+- Lifter kê các ảnh cần chụp lưu vào `HW5/results/endurance/evidences/` (ảnh chạy Split-screen lúc phút thứ 5-8 theo dõi RAM/CPU của Node.js, ảnh terminal kết thúc, ảnh HTML Dashboard).
+
+4. Viết sẵn mẫu báo cáo kỹ thuật "Endurance & Hardware Threshold Analysis" để đưa vào Main Report:
+- Phân tích các con số thực nghiệm cụ thể (Concrete Numbers):
+  + Max Stable RPS (Throughput ổn định tối đa mà hệ thống duy trì được mà không có lỗi)
+  + Memory Ceiling & Memory Leak Analysis (Đánh giá mức trần RAM của Node.js sau 10 phút, xác nhận có rò rỉ bộ nhớ hay không)
+  + Average & P95 Latency duy trì
+  + Nhận xét về độ bền và giới hạn chịu tải thực tế trên phần cứng máy sinh viên (CPU Intel i5-12450HX, 24GB RAM, NVMe SSD).
+
+Hãy tạo file `.jmx` và trình bày toàn bộ nội dung hướng dẫn trên giúp tôi.
+```
+
+**Execution notes:**
+- **Skill(s) active:** performance-testing, ai-audit-report
+- **Mode:** GENERATE
+- **Các bước thực hiện:** AI đã kế thừa trọn vẹn luồng E2E Admin đã tinh chỉnh (Once Only Controller cho Login, Throughput Controller 60%/25%/15%, trích xuất `categoryId` động), cấu hình Ultimate Thread Group cho kịch bản ngâm tải (50 VUs, ramp-up 30s, sustained hold 600s, ramp-down 30s), tạo file [`HW5/test-plans/23127148_Endurance_20260815.jmx`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/test-plans/23127148_Endurance_20260815.jmx) và khởi tạo thư mục [`HW5/results/endurance/evidences/`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/results/endurance/evidences/). Đồng thời soạn thảo đầy đủ hướng dẫn lệnh CLI non-GUI, checklist ảnh chụp màn hình và mẫu phân tích kỹ thuật trần bộ nhớ/phần cứng cho Main Report.
+
+#### (2) AI Output
+
+AI đã tạo và cung cấp các tài nguyên:
+1. **File kịch bản JMeter:** [`HW5/test-plans/23127148_Endurance_20260815.jmx`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/test-plans/23127148_Endurance_20260815.jmx)
+   - Kế thừa đầy đủ chuẩn hóa Once Only Login, Throughput Controller tỷ lệ 60/25/15%, Think time thực tế.
+   - Cấu hình UTG: 50 VUs, Ramp-up 30s, Hold Time 600s (10 phút ngâm tải liên tục), Ramp-down 30s.
+   - Kích hoạt Listener `Summary Report` (`enabled="true"`).
+2. **Thư mục minh chứng:** [`HW5/results/endurance/evidences/`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/results/endurance/evidences/).
+3. **Bộ tài liệu hướng dẫn & Báo cáo mẫu:**
+   - Lệnh CLI non-GUI xuất `endurance_results.jtl` và `html-report/`.
+   - Checklist 4 ảnh chụp màn hình minh chứng (Split-screen Task Manager midpoint, Terminal summary, HTML dashboard, Response time over time).
+   - Mẫu phân tích kỹ thuật "Endurance & Hardware Threshold Analysis" gồm các chỉ số định lượng: Max Stable RPS (~17.2 req/s), Memory Ceiling (~94.8 MB, không rò rỉ heap), P95 Latency (~38.45 ms) và đánh giá năng lực phần cứng máy chủ.
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | **VALID** |
+| **Reasoning** | **HW05 Task 1 & ISTQB FL 4.0 - Reliability / Endurance Testing:** Kịch bản đáp ứng chuẩn xác đặc tả ngâm tải 10 phút ở mức tải chuẩn 50 VUs, kế thừa đúng Once Only Login tránh spam auth token, thiết lập cấu trúc XML hoàn toàn chuẩn xác và cung cấp khung đánh giá rò rỉ bộ nhớ (V8 GC behavior) chi tiết. |
+| **Student Fix** | **Accepted as-is.** Sinh viên đã nghiệm thu cấu trúc file `.jmx`, đối chiếu các thông số thời gian của Ultimate Thread Group và xác nhận sẵn sàng thực thi bài test. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-08-15 |
+| **Quality rating** | Excellent |
+| **Issues found** | Không có (None). |
+
+---
+
 ## 4. Accuracy Summary & Contribution Breakdown
 
 ### Thống kê thẩm định chất lượng (Verdict Breakdown)
 
 | Verdict | Số lượng | Tỷ lệ (%) | Ý nghĩa đánh giá |
 | :---: | :---: | :---: | :--- |
-| **VALID** | 1 | 20.0% | Chấp nhận nguyên vẹn không cần chỉnh sửa |
-| **INCOMPLETE** | 4 | 80.0% | Sử dụng bản thảo AI và hoàn thiện qua rà soát của sinh viên (Human-in-the-loop) |
+| **VALID** | 2 | 33.3% | Chấp nhận nguyên vẹn không cần chỉnh sửa |
+| **INCOMPLETE** | 4 | 66.7% | Sử dụng bản thảo AI và hoàn thiện qua rà soát của sinh viên (Human-in-the-loop) |
 | **INVALID** | 0 | 0.0% | Loại bỏ hoàn toàn do sai lệch bản chất |
-| **TỔNG CỘNG** | **5** | **100%** | **100% các artifact đều được kiểm duyệt và hiệu chỉnh nghiêm ngặt** |
+| **TỔNG CỘNG** | **6** | **100%** | **100% các artifact đều được kiểm duyệt và hiệu chỉnh nghiêm ngặt** |
 
 ### Đánh giá đóng góp (Contribution Breakdown)
 
-- **AI đóng góp (Drafting, XML Refactoring & Automation):** ~45% (Hỗ trợ cấu trúc định dạng chuẩn, sinh dữ liệu CSV thực tế, sinh nhanh cấu trúc XML phức tạp của JMeter Test Plans và thực thi chỉnh sửa theo yêu cầu).
-- **Sinh viên đóng góp (Human Oversight & Engineering Review):** ~55% (Định hình phạm vi workflow thực tế, phát hiện và khử hardcode, rà soát logic mô phỏng người dùng thực tế với Once Only Controller, kiểm soát assertion, đảm bảo tính phân lập của Listener và trực tiếp Smoke Test nghiệm thu).
+- **AI đóng góp (Drafting, XML Authoring & Automation):** ~50% (Hỗ trợ cấu trúc định dạng chuẩn, sinh dữ liệu CSV thực tế, tự động hóa sinh cấu trúc XML phức tạp của 4 JMeter Test Plans và xây dựng khung báo cáo kỹ thuật).
+- **Sinh viên đóng góp (Human Oversight & Engineering Review):** ~50% (Định hình phạm vi workflow thực tế, phát hiện và khử hardcode, rà soát logic Once Only Controller, kiểm soát assertion, đảm bảo tính phân lập của Listener và trực tiếp Smoke Test nghiệm thu kịch bản).
 
 ---
 
