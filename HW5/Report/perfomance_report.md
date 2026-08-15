@@ -286,6 +286,51 @@ Bộ công cụ tự động hóa kiểm định hồi quy hiệu năng gồm 2 
 
 ---
 
+## 5.3. Phân Tích Đánh Đổi Kỹ Thuật (Trade-Offs Analysis: Cost vs. False Alarms vs. Developer Velocity)
+
+Trong thực tế triển khai CI/CD, không có kiến trúc nào là hoàn hảo tuyệt đối; mọi quyết định thiết kế đều là sự cân bằng giữa các yếu tố xung đột (*Engineering Trade-Offs*). Dưới đây là phân tích chuyên sâu 3 trục đánh đổi cốt lõi của mô hình Continuous Performance Testing Pipeline:
+
+```
+                  [ Độ nhạy phát hiện hồi quy ]
+                  (Regression Sensitivity)
+                            ▲
+                           ╱ ╲
+                          ╱   ╲
+                         ╱  ★  ╲  [ Optimal Balance ]
+                        ╱       ╲
+[ Tối ưu chi phí Compute ] ─────── [ Tốc độ Feedback PR ]
+(Low CI Cost & Noise)              (Fast Developer Velocity)
+```
+
+### 1. Chi Phí Tính Toán vs. Tốc Độ Phản Hồi (Compute Cost vs. Feedback Velocity)
+
+| Yếu tố so sánh | Phương án truyền thống (Naive Full Suite) | Giải pháp Phân tầng (Tiered Continuous Pipeline) | Đánh giá Trade-Off |
+| :--- | :--- | :--- | :--- |
+| **Thời gian chạy trên PR** | 15 – 30 phút (Chạy toàn bộ Load, Stress, Soak) | **1 – 3 phút** (Tier 1 Smoke 1m / Tier 2 Targeted 3m) | ⚡ **Tăng tốc độ feedback x10 lần**, giảm thời gian chờ của lập trình viên. |
+| **Tần suất kích hoạt** | Mọi commit / push lên GitHub | **Lọc theo path (`Path-Based Filtering`)** | 💰 **Tiết kiệm 65–75% chi phí CI Compute** (bỏ qua commit docs, UI, CSS). |
+| **Rủi ro đánh đổi** | Tốn kém tài nguyên, nghẽn hàng đợi CI runner | Có thể bỏ sót lỗi rò rỉ bộ nhớ dài hạn trên PR | 🛡️ **Giải pháp giảm thiểu:** Bù đắp bằng Tier 3 Nightly Full Suite (chạy định kỳ 02:00 AM). |
+
+### 2. Báo Động Giả vs. Lọt Lỗi Hồi Quy (False Positives vs. False Negatives)
+
+Hiện tượng **Báo động giả (*False Alarms / False Positives*)** là nguyên nhân số một khiến lập trình viên mất niềm tin vào hệ thống kiểm thử hiệu năng tự động và tìm cách bỏ qua (*bypass*) các cổng kiểm soát.
+
+| Thách thức kỹ thuật | Nguyên nhân gốc rễ | Giải pháp kỹ thuật áp dụng | Lợi ích đạt được |
+| :--- | :--- | :--- | :--- |
+| **Nhiễu phần cứng CI (Noisy Neighbor)** | Hạ tầng CI ảo hóa (GitHub Actions / Cloud Runners) chia sẻ CPU dẫn tới biến động ngẫu nhiên | **Sử dụng Dynamic Baseline (Trimmed Mean 10% của 7 run gần nhất)** | Khử bỏ các đột biến dị biệt do phần cứng, đảm bảo baseline luôn phản ánh đúng năng lực hệ thống hiện tại. |
+| **Outliers làm lệch Mean** | Một vài request rớt mạng làm tăng vọt giá trị trung bình ($Avg$) | **Đo lường bằng phân vị $P95$ kết hợp $P99$** | Tập trung vào 95% trải nghiệm thực tế của người dùng, không bị méo mó bởi ngoại lệ đơn lẻ. |
+| **PR thêm tính năng mới nặng hơn** | Tính năng mới phức tạp hơn chủ đích (ví dụ thêm mã hóa, tính toán nâng cao) | **Phân chia vùng Soft Warning (+10% đến +20%)** | Cho phép **Tech Lead / SRE Manual Override** gắn nhãn phê duyệt mà không làm gãy toàn bộ pipeline. |
+
+### 3. Tính Cách Ly Môi Trường vs. Ô Nhiễm Trạng Thái Dữ Liệu (Test Isolation vs. State Pollution)
+
+- **Vấn đề:** Các kịch bản kiểm thử có thao tác ghi (`POST /api/categories`, `POST /api/admin/import-products`) làm phình to database SQLite và thay đổi chỉ mục sau mỗi lần chạy. Nếu dùng chung một file DB, kết quả test của PR sau sẽ bị ảnh hưởng bởi dữ liệu rác của PR trước.
+- **Quyết định thiết kế:**
+  1. Mỗi job kiểm thử khởi tạo một container chứa **file SQLite DB sạch (In-Memory hoặc freshly-seeded `test.sqlite`)**.
+  2. Bật chế độ **WAL (`PRAGMA journal_mode = WAL;`)** ngay trong bước setup container kiểm thử để giả lập chính xác môi trường production.
+  3. Hủy bỏ (*teardown*) hoàn toàn container và dữ liệu tạm ngay sau khi kết thúc quá trình thu thập log `.jtl`.
+- **Đánh đổi:** Tốn thêm ~10–15 giây cho bước khởi tạo container và nạp seed data ban đầu, nhưng đảm bảo tính **tái lặp 100% (Deterministic Reproducibility)** cho mọi lần đo lường.
+
+---
+
 > 📄 **Tài liệu tham khảo chi tiết Task 3:**
 >
 > - Thiết kế kiến trúc & Sơ đồ Mermaid: [`HW5/Task3/continuous_performance_testing_pipeline.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/continuous_performance_testing_pipeline.md)
@@ -293,3 +338,4 @@ Bộ công cụ tự động hóa kiểm định hồi quy hiệu năng gồm 2 
 > - Báo cáo kiểm định Stress Test: [`HW5/Task3/report/stress_regression_report.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/report/stress_regression_report.md)
 > - Báo cáo kiểm định Endurance Test: [`HW5/Task3/report/endurance_regression_report.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/report/endurance_regression_report.md)
 > - Báo cáo kiểm định chặn PR (Hard Block): [`HW5/Task3/report/spike_regression_fail_gate_demo.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/report/spike_regression_fail_gate_demo.md)
+
