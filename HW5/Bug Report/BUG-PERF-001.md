@@ -1,8 +1,8 @@
-# [PERF-01][Spike Test] Suy giảm hiệu năng nghiêm trọng (P95 Latency > 1.8s) do tranh chấp Single-Writer Lock của SQLite dưới áp lực tải đột biến 250 VUs
+# [BUG-PERF-001][Spike Test] Suy giảm hiệu năng nghiêm trọng (P95 Latency > 1.8s) do tranh chấp Single-Writer Lock của SQLite dưới áp lực tải đột biến 250 VUs
 
 ## Found by Test Scenario
 
-- Kịch bản **Spike Testing (Flash Sale Simulation)** — File: [`23127148_Spike_20260815.jmx`](../../test-plans/23127148_Spike_20260815.jmx)
+- Kịch bản **Spike Testing (Flash Sale Simulation)** — File: [`23127148_Spike_20260815.jmx`](../test-plans/23127148_Spike_20260815.jmx)
 
 ## Requirement / Endpoint liên quan
 
@@ -82,7 +82,7 @@
 ## Evidence
 
 - **Response Time Over Time:**  
-  ![Spike Response Time](../../results/spike/evidences/spike_response_time_over_time.png)
+  ![Spike Response Time](../results/spike/evidences/spike_response_time_over_time.png)
 
 - **Statistics Table Report:**  
-  ![Spike Statistics Table](../../results/spike/evidences/spike_statistics_table.png)
+  ![Spike Statistics Table](../results/spike/evidences/spike_statistics_table.png)

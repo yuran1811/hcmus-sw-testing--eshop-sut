@@ -1,4 +1,4 @@
-# [PERF-03][Auth Service] Cơ chế phạt Lockout tăng bậc số nhân (login_attempts += 2) gây nguy cơ Denial-of-Service (DoS) cho tài khoản Admin dưới tải phân tán
+# [BUG-PERF-003][Auth Service] Cơ chế phạt Lockout tăng bậc số nhân (login_attempts += 2) gây nguy cơ Denial-of-Service (DoS) cho tài khoản Admin dưới tải phân tán
 
 ## Found by Test Scenario
 

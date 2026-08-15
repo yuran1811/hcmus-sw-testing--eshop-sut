@@ -1,4 +1,4 @@
-# [PERF-02][Admin Bulk Import] Nghẽn I/O và tắc nghẽn Event Loop do xử lý Import sản phẩm dạng Synchronous lặp dòng trong Request Context
+# [BUG-PERF-002][Admin Bulk Import] Nghẽn I/O và tắc nghẽn Event Loop do xử lý Import sản phẩm dạng Synchronous lặp dòng trong Request Context
 
 ## Found by Test Scenario
 
@@ -82,4 +82,4 @@
 ## Evidence
 
 - **Endurance Statistics Table:**  
-  ![Endurance Statistics Table](../../results/endurance/evidences/endurance_statistics_table.png)
+  ![Endurance Statistics Table](../results/endurance/evidences/endurance_statistics_table.png)
