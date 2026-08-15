@@ -37,7 +37,7 @@ The following JMX fixes were applied before the official runs:
 | Load             | `23127115_Load_20260813.jmx`   | `submission/tests/2-test-runs/checkout-with-coupon/load/`      | `2026-08-13`    | `Executed`         |
 | Stress           | `23127115_Stress_20260813.jmx` | `submission/tests/2-test-runs/checkout-with-coupon/stress/`    | `2026-08-13`    | `Executed`         |
 | Spike            | `23127115_Spike_20260813.jmx`  | `submission/tests/2-test-runs/checkout-with-coupon/spike/`     | `2026-08-13`    | `Executed`         |
-| Endurance / Soak | `TBD`                          | `submission/tests/2-test-runs/checkout-with-coupon/endurance/` | `Not executed`  | `Missing plan/run` |
+| Endurance / Soak | `23127115_Soak_20260815.jmx`  | `submission/tests/2-test-runs/checkout-with-coupon/soak/`      | `2026-08-15`    | `Executed`         |
 
 ## 4. Scenario Results
 
@@ -116,9 +116,53 @@ The following JMX fixes were applied before the official runs:
 
 ### 4.4 Endurance / Soak Test
 
-- Status: `Not executed`
-- Reason: No separate endurance / soak plan or official artifact set was prepared in the current scope.
-- Conclusion: Endurance threshold is still missing from the submission evidence and remains an open item if explicitly required.
+- Plan file: `submission/tests/1-test-plans/checkout-with-coupon/23127115_Soak_20260815.jmx`
+- Status: `Executed`
+- Default profile:
+  - `users=130`
+  - `rampup=180s`
+  - `duration=720s`
+  - `think_mean=1500ms`
+  - `think_range=200ms`
+- Threshold runs executed:
+  - `130 VUs`
+  - `180 VUs`
+  - `230 VUs`
+- Run results:
+  - `130 VUs`
+    - JTL path: `submission/tests/2-test-runs/checkout-with-coupon/soak/20260815-soak-130vu.jtl`
+    - HTML report path: `submission/tests/2-test-runs/checkout-with-coupon/soak/html-report-130vu/`
+    - Resource screenshots:
+      - `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-130vu-mid.png`
+      - `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-130vu-late.png`
+    - Key metrics: `54,364` samples, `0` failures, `75.687 req/s`, `avg 6.35 ms`, `p95 21 ms`, `p99 28 ms`, `max 691 ms`
+    - Highest p95 sampler: `Step 6 POST checkout` at `27 ms`
+  - `180 VUs`
+    - JTL path: `submission/tests/2-test-runs/checkout-with-coupon/soak/20260815-soak-180vu.jtl`
+    - HTML report path: `submission/tests/2-test-runs/checkout-with-coupon/soak/html-report-180vu/`
+    - Resource screenshots:
+      - `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-180vu-mid.png`
+      - `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-180vu-late.png`
+    - Key metrics: `75,207` samples, `0` failures, `104.724 req/s`, `avg 6.59 ms`, `p95 20 ms`, `p99 30 ms`, `max 71 ms`
+    - Highest p95 sampler: `Step 6 POST checkout` at `26 ms`
+  - `230 VUs`
+    - JTL path: `submission/tests/2-test-runs/checkout-with-coupon/soak/20260815-soak-230vu.jtl`
+    - HTML report path: `submission/tests/2-test-runs/checkout-with-coupon/soak/html-report-230vu/`
+    - Resource screenshots:
+      - `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-230vu-mid.png`
+      - `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-230vu-late.png`
+    - Key metrics: `95,747` samples, `0` failures, `133.280 req/s`, `avg 10.96 ms`, `p95 75 ms`, `p99 144 ms`, `max 311 ms`
+    - Highest p95 sampler: `Step 5 POST apply-coupon` at `46 ms`
+- Decision rule:
+  - Highest run that still keeps `error rate <= 1%`, `overall p95 <= 300 ms`, and no late-run degradation trend is treated as the empirical stable hardware threshold.
+- Planned artifact location:
+  - Raw logs: `submission/tests/2-test-runs/checkout-with-coupon/soak/`
+  - HTML reports: `submission/tests/2-test-runs/checkout-with-coupon/soak/html-report-*/`
+  - Resource screenshots: `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-*.png`
+- Final soak conclusion:
+  - `130 VUs` and `180 VUs` stayed fully stable with `0%` error rate and very low tail latency.
+  - `230 VUs` still completed with `0%` error rate and improved throughput, but it is the first level where latency rose noticeably: overall `p95` increased to `75 ms` and `p99` to `144 ms`.
+  - Based on the executed profiles, the conservative empirical stable threshold for this localhost environment is `180 VUs`, while `230 VUs` is the first observed early-degradation zone rather than a failure point.
 
 ### 4.5 Hardware Context
 
@@ -132,7 +176,7 @@ The following JMX fixes were applied before the official runs:
 | Logical CPUs | `16` |
 | RAM | `16 GB` |
 | DirectX | `DirectX 12` |
-| Hardware screenshot | `submission/tests/2-test-runs/checkout-with-coupon/hardware-dxdiag.png` |
+| Hardware screenshot | `submission/tests/2-test-runs/checkout-with-coupon/hardware/hardware-dxdiag.png` |
 
 ## 5. Human Review of AI-generated Plans
 
@@ -156,12 +200,16 @@ The following JMX fixes were applied before the official runs:
 | Load raw JTL                       | `submission/tests/2-test-runs/checkout-with-coupon/load/20260813-load-official.jtl`     | Present |                                                      |
 | Stress raw JTL                     | `submission/tests/2-test-runs/checkout-with-coupon/stress/20260813-stress-official.jtl` | Present |                                                      |
 | Spike raw JTL                      | `submission/tests/2-test-runs/checkout-with-coupon/spike/20260813-spike-official.jtl`   | Present |                                                      |
+| Soak raw JTL (130 / 180 / 230 VU)  | `submission/tests/2-test-runs/checkout-with-coupon/soak/20260815-soak-*.jtl`             | Present | Three threshold runs completed                       |
 | Load HTML report                   | `submission/tests/2-test-runs/checkout-with-coupon/load/html-report/`                   | Present |                                                      |
 | Stress HTML report                 | `submission/tests/2-test-runs/checkout-with-coupon/stress/html-report/`                 | Present |                                                      |
 | Spike HTML report                  | `submission/tests/2-test-runs/checkout-with-coupon/spike/html-report/`                  | Present |                                                      |
-| Resource screenshots               | `submission/docs/test-report/evidence/`                                                 | Missing | No CPU/RAM screenshots captured during official runs |
-| Hardware screenshot and spec table | `submission/tests/2-test-runs/checkout-with-coupon/hardware-dxdiag.png`                 | Present | Hardware spec table is documented in section 4.5     |
-| Endurance / soak artifact          | `submission/tests/2-test-runs/checkout-with-coupon/endurance/`                          | Missing | No run performed                                     |
+| Soak HTML reports                  | `submission/tests/2-test-runs/checkout-with-coupon/soak/html-report-*/`                  | Present | Reports exist for `130`, `180`, and `230 VUs`       |
+| Resource screenshots               | `submission/tests/2-test-runs/checkout-with-coupon/load/load-resource.png`, `.../stress/stress-resource.png`, `.../spike/spike-resource.png` | Present | Load, Stress, and Spike resource screenshots are available |
+| Soak resource screenshots          | `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-*-mid.png` and `...-late.png` | Present | Mid-run and late-run screenshots captured for `130`, `180`, and `230 VUs` |
+| Hardware screenshot and spec table | `submission/tests/2-test-runs/checkout-with-coupon/hardware/hardware-dxdiag.png`        | Present | Hardware spec table is documented in section 4.5     |
+| Endurance / soak plan              | `submission/tests/1-test-plans/checkout-with-coupon/23127115_Soak_20260815.jmx`        | Present | Parameterized for `130 / 180 / 230 VUs`             |
+| Endurance / soak artifact          | `submission/tests/2-test-runs/checkout-with-coupon/soak/`                              | Present | `130`, `180`, and `230 VU` runs are all available   |
 | Video demo link                    | Main report / README                                                                    | Missing |                                                      |
 
 ## 7. Current Completion Status
@@ -175,13 +223,12 @@ The following JMX fixes were applied before the official runs:
 | Load execution                   | Complete | Official artifacts present                                     |
 | Stress execution                 | Complete | Official artifacts present                                     |
 | Spike execution                  | Complete | Official artifacts present                                     |
-| Endurance threshold              | Missing  | No soak run                                                    |
+| Endurance threshold              | Complete | `180 VU` is the conservative stable threshold; `230 VU` shows the first clear latency rise |
 | HTML reports                     | Complete | Official HTML report folders generated for all three scenarios |
-| Resource / hardware evidence     | Partial complete | Hardware screenshot and spec table exist; resource-monitor screenshots are still missing |
+| Resource / hardware evidence     | Complete | Hardware screenshot/spec table and load/stress/spike resource screenshots exist |
 | Video demo                       | Missing  | No link recorded                                               |
 
 ## 8. Remaining Actions
 
-1. Add resource-monitor screenshots for Load, Stress, and Spike to complete the evidence set for Task 1.
-2. Decide whether an endurance / soak run is mandatory for your submission strategy; if yes, create and execute it.
-3. Commit the official run artifacts and the updated summary documents.
+1. Add the final video demo link if it is required in the submission package.
+2. Commit the soak artifacts and the updated summary documents.

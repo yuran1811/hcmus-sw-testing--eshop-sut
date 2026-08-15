@@ -116,15 +116,13 @@ submission/tests/1-test-plans/checkout-with-coupon/
 ├── 23127115_Load_20260813.jmx      # Load test (50 VUs · 10 phút)
 ├── 23127115_Stress_20260813.jmx    # Stress test staged load (50 → 100 → 150 → 200 VUs)
 ├── 23127115_Spike_20260813.jmx     # Spike test (100 VUs · burst 10s)
+├── 23127115_Soak_20260815.jmx      # Soak test (130 / 180 / 230 VUs)
 ├── seed_perf_users.js              # Script seed dữ liệu (bước 3)
 ├── test-data/
 │   ├── users.csv                   # 300 tài khoản test (7 cột)
 │   ├── coupons.csv                 # Định nghĩa coupon PERFTEST
 │   └── keywords.csv                # Từ khóa tìm kiếm sản phẩm
-└── results/                        # JMeter ghi file .jtl vào đây
-    ├── load.jtl
-    ├── stress.jtl
-    └── spike.jtl
+└── (artifact chính thức)           # Ghi vào submission/tests/2-test-runs/checkout-with-coupon/
 ```
 
 ---
@@ -148,20 +146,27 @@ jmeter -t submission/tests/1-test-plans/checkout-with-coupon/23127115_Load_20260
 # ── LOAD TEST ──────────────────────────────────────────────────────
 jmeter -n \
   -t submission/tests/1-test-plans/checkout-with-coupon/23127115_Load_20260813.jmx \
-  -l submission/tests/1-test-plans/checkout-with-coupon/results/load.jtl \
-  -e -o submission/tests/1-test-plans/checkout-with-coupon/results/load-report/
+  -l submission/tests/2-test-runs/checkout-with-coupon/load/20260813-load-official.jtl \
+  -e -o submission/tests/2-test-runs/checkout-with-coupon/load/html-report/
 
 # ── STRESS TEST ────────────────────────────────────────────────────
 jmeter -n \
   -t submission/tests/1-test-plans/checkout-with-coupon/23127115_Stress_20260813.jmx \
-  -l submission/tests/1-test-plans/checkout-with-coupon/results/stress.jtl \
-  -e -o submission/tests/1-test-plans/checkout-with-coupon/results/stress-report/
+  -l submission/tests/2-test-runs/checkout-with-coupon/stress/20260813-stress-official.jtl \
+  -e -o submission/tests/2-test-runs/checkout-with-coupon/stress/html-report/
 
 # ── SPIKE TEST ─────────────────────────────────────────────────────
 jmeter -n \
   -t submission/tests/1-test-plans/checkout-with-coupon/23127115_Spike_20260813.jmx \
-  -l submission/tests/1-test-plans/checkout-with-coupon/results/spike.jtl \
-  -e -o submission/tests/1-test-plans/checkout-with-coupon/results/spike-report/
+  -l submission/tests/2-test-runs/checkout-with-coupon/spike/20260813-spike-official.jtl \
+  -e -o submission/tests/2-test-runs/checkout-with-coupon/spike/html-report/
+
+# ── SOAK TEST ──────────────────────────────────────────────────────
+jmeter -n \
+  -Jusers=130 -Jrampup=180 -Jduration=720 -Jthink_mean=1500 -Jthink_range=200.0 \
+  -t submission/tests/1-test-plans/checkout-with-coupon/23127115_Soak_20260815.jmx \
+  -l submission/tests/2-test-runs/checkout-with-coupon/soak/20260815-soak-130vu.jtl \
+  -e -o submission/tests/2-test-runs/checkout-with-coupon/soak/html-report-130vu/
 ```
 
 Cờ `-e -o <dir>` tự động sinh **HTML Dashboard Report** vào thư mục chỉ định.
@@ -195,7 +200,7 @@ db.run(\"UPDATE users SET login_attempts = 0, locked_until = NULL WHERE email LI
 
 - [ ] Backend đang chạy tại `http://localhost:3000` và trả về 200 cho `/api/categories`
 - [ ] `seed_perf_users.js` đã chạy thành công (300 users, coupon PERFTEST tồn tại trong DB)
-- [ ] Thư mục `results/` tồn tại và JMeter có quyền ghi vào
+- [ ] Thư mục `submission/tests/2-test-runs/checkout-with-coupon/` tồn tại và JMeter có quyền ghi vào
 - [ ] Không có file `.jtl` cũ cùng tên (xóa hoặc đổi tên trước nếu muốn giữ lại)
 - [ ] Verify response shape bằng Postman trước lần chạy đầu tiên (xem phần Lưu ý bên dưới)
 
@@ -213,6 +218,19 @@ db.run(\"UPDATE users SET login_attempts = 0, locked_until = NULL WHERE email LI
 | Cart payload fields       | `{id, name, price, quantity}`   | Xem backend source hoặc test Postman                 |
 | Products search response  | Mảng JSON, `$[0].id`            | `GET /api/products?search=iPhone` → inspect          |
 | Coupon total input        | `cart_total = product × quantity` | So sánh request body với dữ liệu CSV và backend    |
+
+---
+
+## Kết quả soak đã xác nhận
+
+- `130 VUs`: ổn định, `0%` lỗi, `p95 21 ms`
+- `180 VUs`: ổn định, `0%` lỗi, `p95 20 ms`
+- `230 VUs`: vẫn `0%` lỗi nhưng `p95 75 ms`, `p99 144 ms`, cho thấy mức tăng latency đầu tiên
+
+Kết luận thực nghiệm hiện tại:
+
+- Ngưỡng ổn định bảo thủ: `180 VUs`
+- Vùng bắt đầu suy giảm sớm: `230 VUs`
 
 ---
 
