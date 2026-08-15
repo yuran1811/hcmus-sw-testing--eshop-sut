@@ -1,0 +1,195 @@
+{
+  "schema_version": "1.0",
+  "project": "EShop SUT Performance Benchmark",
+  "system": "Node.js Express + SQLite (WAL Mode)",
+  "hardware_environment": {
+    "cpu": "Intel Core i5-12450HX (8C/12T, Turbo 4.40GHz)",
+    "ram": "24GB DDR5 4800MHz",
+    "disk": "512GB NVMe PCIe 4.0 SSD"
+  },
+  "gate_thresholds": {
+    "soft_warning_p95_delta_pct": 10.0,
+    "hard_block_p95_delta_pct": 20.0,
+    "max_allowed_error_rate_pct": 0.10
+  },
+  "scenarios": {
+    "load": {
+      "description": "Standard Load Test with 50 Virtual Users (VUs) with Think Time",
+      "target_vus": 50,
+      "overall": {
+        "samples": 4842,
+        "avg_rt_ms": 7.13,
+        "p50_ms": 5.0,
+        "p90_ms": 14.0,
+        "p95_ms": 16.0,
+        "p99_ms": 30.0,
+        "max_rt_ms": 76.0,
+        "error_rate_pct": 0.0,
+        "throughput_rps": 16.29
+      },
+      "endpoints": {
+        "POST /api/login": {
+          "description": "Admin Authentication & JWT generation (CPU-bound bcrypt)",
+          "samples": 50,
+          "avg_rt_ms": 6.24,
+          "p50_ms": 5.0,
+          "p90_ms": 7.0,
+          "p95_ms": 9.0,
+          "p99_ms": 75.0,
+          "max_rt_ms": 75.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 0.85
+        },
+        "GET /api/products": {
+          "description": "Product catalog query (Read-heavy)",
+          "samples": 1571,
+          "avg_rt_ms": 7.71,
+          "p50_ms": 5.0,
+          "p90_ms": 16.0,
+          "p95_ms": 22.0,
+          "p99_ms": 32.0,
+          "max_rt_ms": 76.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 5.37
+        },
+        "GET /api/coupons": {
+          "description": "Coupon list lookup (Read-only query)",
+          "samples": 1560,
+          "avg_rt_ms": 3.70,
+          "p50_ms": 3.0,
+          "p90_ms": 6.0,
+          "p95_ms": 7.0,
+          "p99_ms": 12.0,
+          "max_rt_ms": 25.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 5.38
+        },
+        "POST /api/categories": {
+          "description": "Create new category (Database Write Lock)",
+          "samples": 645,
+          "avg_rt_ms": 10.07,
+          "p50_ms": 9.0,
+          "p90_ms": 15.0,
+          "p95_ms": 17.0,
+          "p99_ms": 28.0,
+          "max_rt_ms": 76.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 2.24
+        },
+        "PUT /api/categories/:id": {
+          "description": "Update category record (Database Write Contention)",
+          "samples": 634,
+          "avg_rt_ms": 9.52,
+          "p50_ms": 9.0,
+          "p90_ms": 14.0,
+          "p95_ms": 16.0,
+          "p99_ms": 26.0,
+          "max_rt_ms": 29.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 2.26
+        },
+        "POST /api/admin/import-products": {
+          "description": "Bulk import products (Disk I/O Write Transaction)",
+          "samples": 382,
+          "avg_rt_ms": 10.02,
+          "p50_ms": 9.0,
+          "p90_ms": 15.0,
+          "p95_ms": 18.0,
+          "p99_ms": 20.0,
+          "max_rt_ms": 22.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 1.31
+        }
+      }
+    },
+    "stress": {
+      "description": "Stepped Stress Test ramping up to 200 Virtual Users (VUs)",
+      "target_vus": 200,
+      "overall": {
+        "samples": 16546,
+        "avg_rt_ms": 8.26,
+        "p50_ms": 7.0,
+        "p90_ms": 15.0,
+        "p95_ms": 19.0,
+        "p99_ms": 31.0,
+        "max_rt_ms": 66.0,
+        "error_rate_pct": 0.0,
+        "throughput_rps": 42.61
+      },
+      "endpoints": {
+        "POST /api/login": {
+          "description": "Admin Authentication & JWT generation (CPU-bound bcrypt)",
+          "samples": 500,
+          "avg_rt_ms": 4.80,
+          "p50_ms": 4.0,
+          "p90_ms": 7.0,
+          "p95_ms": 10.0,
+          "p99_ms": 15.0,
+          "max_rt_ms": 32.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 1.67
+        },
+        "GET /api/products": {
+          "description": "Product catalog query (Read-heavy under stress)",
+          "samples": 5364,
+          "avg_rt_ms": 11.65,
+          "p50_ms": 9.0,
+          "p90_ms": 21.0,
+          "p95_ms": 27.0,
+          "p99_ms": 36.0,
+          "max_rt_ms": 66.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 13.94
+        },
+        "GET /api/coupons": {
+          "description": "Coupon list lookup (Read-only query under stress)",
+          "samples": 5244,
+          "avg_rt_ms": 4.15,
+          "p50_ms": 3.0,
+          "p90_ms": 8.0,
+          "p95_ms": 10.0,
+          "p99_ms": 16.0,
+          "max_rt_ms": 41.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 13.72
+        },
+        "POST /api/categories": {
+          "description": "Create new category (Database Write Lock under stress)",
+          "samples": 2130,
+          "avg_rt_ms": 9.32,
+          "p50_ms": 9.0,
+          "p90_ms": 14.0,
+          "p95_ms": 16.0,
+          "p99_ms": 23.0,
+          "max_rt_ms": 36.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 5.56
+        },
+        "PUT /api/categories/:id": {
+          "description": "Update category record (Database Write Contention under stress)",
+          "samples": 2040,
+          "avg_rt_ms": 8.86,
+          "p50_ms": 8.0,
+          "p90_ms": 13.0,
+          "p95_ms": 15.0,
+          "p99_ms": 21.0,
+          "max_rt_ms": 36.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 5.39
+        },
+        "POST /api/admin/import-products": {
+          "description": "Bulk import products (Disk I/O Write Transaction under stress)",
+          "samples": 1268,
+          "avg_rt_ms": 9.56,
+          "p50_ms": 9.0,
+          "p90_ms": 14.0,
+          "p95_ms": 17.0,
+          "p99_ms": 24.0,
+          "max_rt_ms": 35.0,
+          "error_rate_pct": 0.0,
+          "throughput_rps": 3.30
+        }
+      }
+    }
+  }
+}
