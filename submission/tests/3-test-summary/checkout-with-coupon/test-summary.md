@@ -55,7 +55,7 @@ Ba plan bắt buộc dùng ba listener khác nhau: Load — View Results Tree; S
 | Soak 180 VU       |  75,207 |        0 |     0.000% |       104.725 req/s |       6.59 ms |  20.00 ms |  29.00 ms |      71 ms | Đạt — baseline ổn định bảo thủ                          |
 | Soak 230 VU       |  95,747 |        0 |     0.000% |       133.280 req/s |      10.96 ms |  35.00 ms |  84.00 ms |     311 ms | Cảnh báo biên trên — p95 cuối lần chạy tăng             |
 
-> **Lưu ý hiệu chỉnh:** Các giá trị Soak 230 `p95=35 ms`, `p99=84 ms` được tính lại trực tiếp trên cột `elapsed` của JTL thô. Giá trị `75/144 ms` trong bản tóm tắt cũ không được tiếp tục sử dụng.
+> **Số liệu chuẩn:** Soak 230 có p95 toàn phiên `35 ms`, p99 `84 ms`; p95 ở cửa sổ cuối là `94 ms`. Các giá trị này được tính trực tiếp trên cột `elapsed` của JTL thô.
 
 ## 5. Kết quả theo từng kịch bản
 
@@ -136,28 +136,29 @@ Các kết quả chỉ là regression reference cho môi trường localhost nà
 
 ## 7. Trạng thái bằng chứng
 
-| Hạng mục                              | Trạng thái               | Ghi chú                                                                |
-| ------------------------------------- | ------------------------ | ---------------------------------------------------------------------- |
-| Workflow E2E bao phủ ba nhóm endpoint | Hoàn thành               | Cùng workflow trong mọi JMX/JTL                                        |
-| Ba JMX bắt buộc và đúng naming        | Hoàn thành               | Load/Stress/Spike                                                      |
-| CSV và seed script                    | Hoàn thành               | 300 users, coupon `PERFTEST`                                           |
-| Ba listener/report khác nhau          | Hoàn thành               | View Results Tree/Aggregate/Summary                                    |
-| Lần chạy chính thức Load/Stress/Spike | Hoàn thành               | Có JTL thô, HTML và ảnh tài nguyên                                     |
-| Soak 130/180/230                      | Hoàn thành               | Có JTL, HTML và ảnh mid/late                                           |
-| Hardware evidence                     | Hoàn thành               | DxDiag và bảng thông số                                                |
-| Reset lockout/data state              | Hoàn thành               | Reseed trước run; SQL reset trong README test plan                     |
-| Đánh giá của con người đối với AI/JMX | Hoàn thành               | Các sửa chữa và lý do đã ghi                                           |
-| Issue hiệu năng                       | Có bản nháp              | [ISSUE-CWC-001.md](./issue-reports/ISSUE-CWC-001.md); chưa đăng GitHub |
-| Nhiệm vụ 2                            | Hoàn thành               | Có đầu ra AI, đánh giá của con người và đề xuất đã lọc                 |
-| Nhiệm vụ 3                            | Hoàn thành ở mức đề xuất | Có đề xuất, sơ đồ luồng và blueprint CI/CLI                            |
-| Video demo                            | Chờ bổ sung thủ công     | URL YouTube đang để trống trong main report                            |
+| Hạng mục                              | Trạng thái               | Ghi chú                                                                                                                                         |
+| ------------------------------------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Workflow E2E bao phủ ba nhóm endpoint | Hoàn thành               | Cùng workflow trong mọi JMX/JTL                                                                                                                 |
+| Ba JMX bắt buộc và đúng naming        | Hoàn thành               | Load/Stress/Spike                                                                                                                               |
+| CSV và seed script                    | Hoàn thành               | 300 users, coupon `PERFTEST`                                                                                                                    |
+| Ba listener/report khác nhau          | Hoàn thành               | View Results Tree/Aggregate/Summary                                                                                                             |
+| Lần chạy chính thức Load/Stress/Spike | Hoàn thành               | Có JTL thô, HTML và ảnh tài nguyên                                                                                                              |
+| Soak 130/180/230                      | Hoàn thành               | Có JTL, HTML và ảnh mid/late                                                                                                                    |
+| Hardware evidence                     | Hoàn thành               | DxDiag và bảng thông số                                                                                                                         |
+| Reset lockout/data state              | Hoàn thành               | Reseed trước run; SQL reset trong README test plan                                                                                              |
+| Đánh giá của con người đối với AI/JMX | Hoàn thành               | Các sửa chữa và lý do đã ghi                                                                                                                    |
+| Issue hiệu năng                       | Hoàn thành (Đã đăng)     | [ISSUE-CWC-001.md](./issue-reports/ISSUE-CWC-001.md) / [GitHub Issue #293](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/293) |
+| Nhiệm vụ 2                            | Hoàn thành               | Có đầu ra AI, đánh giá của con người và đề xuất đã lọc                                                                                          |
+| Nhiệm vụ 3                            | Hoàn thành ở mức đề xuất | Có đề xuất, sơ đồ luồng và blueprint CI/CLI                                                                                                     |
+| Video demo Task 1                     | Hoàn thành               | [https://youtu.be/RM_GT7frNXw](https://youtu.be/RM_GT7frNXw)                                                                                    |
+| Video Agent Skill                     | Hoàn thành               | [https://youtu.be/9uhWSAUw3YY](https://youtu.be/9uhWSAUw3YY)                                                                                    |
 
-## 8. Việc còn lại trước khi nộp
+## 8. Liên kết bằng chứng bổ sung
 
-1. Quay và thêm URL YouTube unlisted tối thiểu 6 phút vào [main-report.md](../../../docs/test-report/main-report.md).
-2. Nếu đăng issue, sao chép [ISSUE-CWC-001.md](./issue-reports/ISSUE-CWC-001.md) lên GitHub Issues và thêm URL thật.
-3. Xuất các tài liệu Markdown bắt buộc sang PDF và kiểm tra Mermaid/ảnh/liên kết.
-4. Xuất Git log thành file văn bản riêng nếu checklist đóng gói yêu cầu.
+1. Video Task 1: [https://youtu.be/RM_GT7frNXw](https://youtu.be/RM_GT7frNXw).
+2. Video Agent Skill: [https://youtu.be/9uhWSAUw3YY](https://youtu.be/9uhWSAUw3YY).
+3. Issue hiệu năng: [GitHub Issue #293](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/293).
+4. Nhật ký Git: [git-commit-log.txt](../../../git-commit-log.txt).
 
 ## 9. Kết luận — Đề xuất kiểm thử hiệu năng liên tục
 

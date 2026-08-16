@@ -1,6 +1,6 @@
 # Xem xét và sửa chữa (đánh giá của con người)
 
-> **Phạm vi:** Phản biện phân tích AI trong `submission/docs/ai-report/task2/jtl-analysis-raw.md`.
+> **Phạm vi:** Phản biện phân tích AI trong `submission/ai-report/task2/jtl-analysis-raw.md`.
 > **Dữ liệu đối chiếu:** Sáu raw JTL trong `submission/tests/2-test-runs/checkout-with-coupon/`.
 > **Nguyên tắc:** Với mỗi lỗi, trích dẫn claim của AI, nêu giá trị đúng từ raw JTL, chỉ rõ cách tính và giải thích vì sao cách đọc của AI sai hoặc chưa đủ.
 

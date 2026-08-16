@@ -11,5 +11,4 @@ Thư mục này chứa sáu Agent Skills thực sự được dùng trong bài H
 | [`ai-audit-report`](./ai-audit-report/SKILL.md) | Ghi prompt/output/change theo từng tương tác thật |
 | [`perf-ai-audit-writer`](./perf-ai-audit-writer/SKILL.md) | Kiểm tra AI Audit Log và AI Critique 200–300 từ |
 
-Các file reference phải được giữ cùng skill khi đóng gói. Video minh họa được điền tại [`submission/links-to-fill.md`](../../links-to-fill.md).
-
+Các file reference phải được giữ cùng skill khi đóng gói. Video minh họa Agent Skill: [https://youtu.be/9uhWSAUw3YY](https://youtu.be/9uhWSAUw3YY).

@@ -2,10 +2,10 @@
 
 ## Phạm vi và tiêu chí phân loại
 
-Tài liệu này kiểm chứng từng đề xuất trong [`optimization-recommendations.md`](../../test-report/optimization-recommendations.md) dựa trên:
+Tài liệu này kiểm chứng từng đề xuất trong [`optimization-recommendations.md`](../../docs/test-report/optimization-recommendations.md) dựa trên:
 
 - Mã nguồn thực tế tại `backend/database.js` và `backend/server.js`.
-- Raw-JTL metrics đã được tổng hợp trong [`jtl-analysis.md`](../../test-report/jtl-analysis.md).
+- Raw-JTL metrics đã được tổng hợp trong [`jtl-analysis.md`](../../docs/test-report/jtl-analysis.md).
 - Schema/index hiện có trong `backend/database.sqlite`.
 
 Trong báo cáo này, **khả thi** bao gồm cả đề xuất cần điều kiện tiên quyết hoặc cần benchmark A/B trước khi triển khai. **Ảo giác (hallucinated)** nghĩa là đề xuất giả định công nghệ không có trong SUT, hoặc được trình bày như một giải pháp áp dụng trực tiếp dù kiến trúc hiện tại không hỗ trợ.

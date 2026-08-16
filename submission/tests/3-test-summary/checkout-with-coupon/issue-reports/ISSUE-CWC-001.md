@@ -33,16 +33,20 @@ assignees: ''
 
 1. Khởi động backend EShop tại `http://localhost:3000`.
 2. Chạy script seed:
+
    ```bash
    node submission/tests/1-test-plans/checkout-with-coupon/seed_perf_users.js
    ```
+
 3. Chạy stress test:
+
    ```bash
    jmeter -n \
      -t submission/tests/1-test-plans/checkout-with-coupon/23127115_Stress_20260813.jmx \
      -l submission/tests/2-test-runs/checkout-with-coupon/stress/20260813-stress-official.jtl \
      -e -o submission/tests/2-test-runs/checkout-with-coupon/stress/html-report/
    ```
+
 4. Mở JTL hoặc HTML report và quan sát phân bố lỗi / latency theo từng cửa sổ thời gian.
 
 ## Expected result
@@ -108,4 +112,4 @@ Tuy vậy, đây vẫn là tín hiệu đáng theo dõi vì sự tăng đột ng
 
 ## GitHub Issue
 
-- Not yet.
+- https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/293
