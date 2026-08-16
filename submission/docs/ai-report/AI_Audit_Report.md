@@ -79,3 +79,44 @@
   > AI đọc skill `perf-jtl-analyzer` và `ai-audit-report`, phân tích 6 file JTL chính thức gồm Load, Stress, Spike, và Soak `130/180/230 VUs`. AI tính metric ground-truth từ raw `.jtl` theo cột `elapsed`, `success`, và `timeStamp`, tạo file `submission/docs/test-report/task2-jtl-analysis.md` với bảng metric, đề xuất ngưỡng hiệu năng, misinterpretation hunt, và bảng phân loại optimization recommendation theo stack Node.js/Express/SQLite.
 - **What the student changed/kept from this output:** Giữ lại cách tính metric từ raw `.jtl` thay vì chỉ dựa vào HTML dashboard. Cần tự review lại các threshold đề xuất trước khi đưa vào báo cáo chính, đặc biệt là quyết định dùng `180 VUs` làm ngưỡng ổn định bảo thủ và xem `230 VUs` là upper-bound/cảnh báo thay vì failure point.
 
+### Entry 6
+
+- **Tool:** Codex (GPT-5)
+- **Date/time:** 2026-08-16 18:34
+- **Task context:** Task 2 - phản biện phân tích AI bằng raw JTL
+- **Prompt used (verbatim):**
+  > hãy đọc báo cáo này 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW5/hcmus-sw-testing--eshop-sut/submission/docs/test-report/task2-jtl-analysis.md' dựa trên 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW5/hcmus-sw-testing--eshop-sut/submission/tests', xem xét một cách phê phán phân tích của AI và xác định những chỗ AI hiểu sai hoặc đọc sai các chỉ số. Với mỗi lỗi hiểu sai, hãy trích dẫn giá trị đúng từ log `.jtl` thô của bạn và giải thích lỗi đó. Viết cái đó vào trong 1 file md để ở 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW5/hcmus-sw-testing--eshop-sut/submission/docs/ai-report'
+- **AI output (faithful summary):** Đọc báo cáo Task 2, tính lại percentile/error/throughput từ sáu raw JTL, kiểm tra failure row và minute-window, sau đó tạo `submission/docs/ai-report/ai-critique.md` với các lỗi diễn giải và giá trị raw đúng.
+- **What the student changed/kept from this output:** Giữ các metric tổng thể đã khớp raw; sửa cách diễn giải Spike, Stress degradation, loại failure và throughput Soak sau khi đối chiếu trực tiếp với JTL.
+
+### Entry 7
+
+- **Tool:** Codex (GPT-5)
+- **Date/time:** 2026-08-16 19:10
+- **Task context:** Task 2 - viết lại báo cáo JTL theo human review
+- **Prompt used (verbatim):**
+  > vậy với những nhận xét thì hãy viết lại 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW5/hcmus-sw-testing--eshop-sut/submission/docs/test-report/task2-jtl-analysis.md' dựa trên những đánh giá 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW5/hcmus-sw-testing--eshop-sut/submission/docs/test-report/task2-human-review.md', viết lại thật chi tiết và toàn diện, đầy đủ
+- **AI output (faithful summary):** Viết lại toàn bộ `task2-jtl-analysis.md` với mục lục, phương pháp, metric tổng thể, metric theo sampler, phân loại failure, minute-window Stress/Spike/Soak, ngưỡng regression và đánh giá tối ưu hóa đã hiệu chỉnh; đồng thời tạo bản PDF tương ứng.
+- **What the student changed/kept from this output:** Giữ các số liệu raw đã kiểm chứng, sửa kết luận Spike/Stress/Soak theo human review và hạ mức chắc chắn của các nguyên nhân tối ưu hóa chưa được JTL chứng minh.
+
+### Entry 8
+
+- **Tool:** Codex (GPT-5)
+- **Date/time:** 2026-08-16 19:13
+- **Task context:** Task 2 - đề xuất phương án tối ưu hóa dựa trên raw JTL và code backend
+- **Prompt used (verbatim):**
+  > viết một file trong 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW5/hcmus-sw-testing--eshop-sut/submission/docs/test-report' đề xuất các phương án tối ưu hóa (ví dụ: thêm chỉ mục cơ sở dữ liệu, connection pool, hoặc bật SQLite WAL)
+- **AI output (faithful summary):** Tạo `submission/docs/test-report/optimization-recommendations.md`. Báo cáo đối chiếu các hotspot trong raw JTL với schema/query hiện tại của backend, sau đó đề xuất index cho `users.email`, `orders(user_id, id DESC)`, `coupon_usage(coupon_id, user_id)`, và `coupons(code, is_active)`; thử nghiệm SQLite WAL cùng `busyTimeout`; dùng prepared statement/FTS5 cho tìm kiếm; transaction cho checkout/coupon usage; cache có kiểm soát; và migration sang PostgreSQL/MySQL nếu cần connection pool/horizontal scaling.
+- **What the student changed/kept from this output:** Giữ các đề xuất có liên hệ trực tiếp với code và số liệu, nhưng ghi rõ đây là giả thuyết cần A/B benchmark. Không khẳng định index, WAL hoặc connection pool chắc chắn là nguyên nhân của failure; giữ các caveat về `database.js` đang drop/recreate table, về khả năng index duy nhất của `coupons.code`, và việc connection pool không phải giải pháp trực tiếp cho SQLite singleton hiện tại.
+
+---
+
+### Entry 9
+
+- **Tool:** Codex (GPT-5)
+- **Date/time:** 2026-08-16 19:45
+- **Task context:** Task 2 - cập nhật đề xuất tối ưu hóa sau review và loại bỏ đề xuất ảo giác
+- **Prompt used (verbatim):**
+  > 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW5/hcmus-sw-testing--eshop-sut/submission/docs/test-report/optimization-recommendations.md' cập nhật lại nội dung dựa trên 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW5/hcmus-sw-testing--eshop-sut/submission/docs/ai-report/task2/optimization-recommendations-review.md', những cái ảo giác hãy loại bỏ đi, giữ lại những cái khả thi
+- **AI output (faithful summary):** Đối chiếu review Task 2 với báo cáo đề xuất tối ưu hóa, giữ lại các đề xuất khả thi hoặc khả thi có điều kiện (index, WAL/busy timeout, parameterized query, transaction, projection/pagination, cache có kiểm soát, migration và connection pool sau migration). Loại khỏi phạm vi đề xuất trực tiếp các phương án không phù hợp với SUT hiện tại: nhiều connection/connection pool cho SQLite và horizontal scaling trực tiếp khi cart còn in-memory; JVM heap tuning không xuất hiện trong báo cáo gốc nên không được thêm vào.
+- **What the student changed/kept from this output:** Cập nhật `submission/docs/test-report/optimization-recommendations.md` từ phiên bản 1.0 lên 1.1; xóa mục thí nghiệm nhiều connection/pool cho SQLite, xóa đề xuất horizontal scaling trực tiếp, giữ connection pool chỉ như lựa chọn sau migration sang PostgreSQL/MySQL, đồng thời chỉnh mục lục, lộ trình và kết luận cho nhất quán với review.
