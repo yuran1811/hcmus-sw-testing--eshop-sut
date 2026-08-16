@@ -22,7 +22,7 @@
 | **1** | **Task 1 — Load testing** (Baseline 50 VUs, data-driven CSV, Once Only Login, HTML dashboard & logs) | 20 | **20** | `23127148_Load_20260815.jmx`, `load_results.jtl`, HTML Report |
 | **2** | **Task 1 — Stress testing** (Stepped 50 $\rightarrow$ 200 VUs, xác định điểm gãy, HTML dashboard & logs) | 20 | **20** | `23127148_Stress_20260815.jmx`, `stress_results.jtl`, HTML Report |
 | **3** | **Task 1 — Spike testing** (Flash sale 250 VUs tức thời, Think Time = 0s, HTML dashboard & logs) | 20 | **20** | `23127148_Spike_20260815.jmx`, `spike_results.jtl`, HTML Report |
-| **4** | **Task 2 — AI analysis + misinterpretation hunt** (Vạch trần 5 sai lệch phân vị, 4 ngộ nhận kiến trúc, đối soát log gốc) | 10 | **10** | [Mục 4 trong Báo cáo chính](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Report/perfomance_report.md#L48-L204), [AI_Audit_Report.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/AI%20Submission/AI_Audit_Report.md) |
+| **4** | **Task 2 — AI analysis + misinterpretation hunt** (Vạch trần 5 sai lệch phân vị, 4 ngộ nhận kiến trúc, đối soát log gốc) | 10 | **10** | [Mục 4 trong Báo cáo chính](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Report/23127148_HW05_Performance_Testing_Report.md#4-task-2--ai-analysis--misinterpretation-hunt), [AI_Audit_Report.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/AI%20Submission/AI_Audit_Report.md) |
 | **5** | **Task 3 — Continuous Performance Testing proposal** (Bloom-AI G9.6 Disrupt, Smart Watcher, Dynamic Baseline, Gatekeeping Flowchart & Python CLI Guard) | 10 | **10** | [continuous_performance_testing_pipeline.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/continuous_performance_testing_pipeline.md), [p95_regression_guard.py](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/scripts/p95_regression_guard.py) |
 | **6** | **Agent Skills** (Reusable skill 8 bước, Workload Model reference, tham số hóa tổng quát) | 10 | **10** | [.agents/skills/performance-testing/SKILL.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/performance-testing/SKILL.md) |
 | **TỔNG** | **Tổng điểm tự đánh giá** | **100** | **100 / 100** | **Đạt trọn vẹn 100% tất cả các yêu cầu và ràng buộc chống gian lận** |
@@ -92,7 +92,8 @@
 HW5/
 ├── README.md                                # Tài liệu tổng quan & bảng tự đánh giá (File này)
 ├── Report/
-│   └── perfomance_report.md                 # Báo cáo hiệu năng kỹ thuật chi tiết toàn diện
+│   ├── 23127148_HW05_Performance_Testing_Report.md   # Báo cáo hiệu năng kỹ thuật chi tiết toàn diện (MD)
+│   └── 23127148_HW05_Performance_Testing_Report.pdf  # Báo cáo hiệu năng định dạng PDF nộp bài
 ├── AI Submission/
 │   ├── AI_Audit_Report.md                   # Báo cáo kiểm toán AI 5 phần chuẩn AI-02
 │   └── AI_Critique.md                       # Đoạn văn phê biện AI bắt buộc (Mục 10)
