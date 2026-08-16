@@ -1,239 +1,174 @@
-# Test Summary — Performance Test Execution
+# Tóm tắt thực thi kiểm thử hiệu năng
 
-> Scope: Performance Testing  
-> Workflow: Checkout with Coupon  
-> Base URL: `http://localhost:3000`  
-> Tool: Apache JMeter 5.6.3  
-> Student ID: `23127115`  
-> Official run date: `2026-08-13`
+> **Phạm vi:** Kiểm thử hiệu năng API
+> **Luồng công việc:** Checkout with Coupon — Thanh toán có mã giảm giá
+> **Base URL:** `http://localhost:3000`
+> **Công cụ:** Apache JMeter `5.6.3`
+> **MSSV:** `23127115`
+> **Ngày chạy chính thức:** Load/Stress/Spike — `2026-08-13`; Soak — `2026-08-15`
 
-## 1. Objective
+## 1. Mục tiêu và phạm vi
 
-This document summarizes the official execution results for three performance scenarios, `Load`, `Stress`, and `Spike`, against the same end-to-end workflow:
+Tài liệu này tổng hợp kết quả thực thi chính thức của các kịch bản Load, Stress, Spike và ba lần chạy Soak trên cùng workflow E2E:
 
 `POST /api/login` → `GET /api/categories` → `GET /api/products?search=` → `POST /api/cart` → `POST /api/apply-coupon` → `POST /api/checkout` → `GET /api/orders/my-orders`
 
-The workflow covers:
+Workflow bao phủ ba nhóm endpoint bắt buộc:
 
-- `auth-heavy`: `POST /api/login`
-- `read-heavy`: `GET /api/categories`, `GET /api/products?search=`, `GET /api/orders/my-orders`
-- `transactional`: `POST /api/cart`, `POST /api/apply-coupon`, `POST /api/checkout`
+- **Auth-heavy:** `POST /api/login`.
+- **Read-heavy:** `GET /api/categories`, `GET /api/products?search=`, `GET /api/orders/my-orders`.
+- **Transactional:** `POST /api/cart`, `POST /api/apply-coupon`, `POST /api/checkout`.
 
-## 2. Pre-run Review Findings Applied
+JTL thô là nguồn dữ liệu chuẩn để tính `elapsed`, p95/p99, tỷ lệ lỗi và thông lượng. Báo cáo HTML chỉ là bằng chứng trực quan hỗ trợ. Phân tích chi tiết nằm tại [jtl-analysis.md](../../../docs/test-report/jtl-analysis.md).
 
-The following JMX fixes were applied before the official runs:
+## 2. Các sửa chữa sau khi xem xét test plan do AI tạo
 
-1. `POST /api/apply-coupon` now sends `${cart_total}` instead of `${product_price}`.
-2. `cart_total` is computed as `product_price * quantity` before coupon application.
-3. The checkout extractor reads `orderId` from the actual backend response.
-4. Critical extractors are guarded by `JSR223 Assertion` so the workflow fails clearly if `access_token`, `user_id`, `product_id_resp`, `final_amount`, or `order_id` is missing.
-5. The old extractor/plugin compatibility issues were removed by switching to core-compatible Groovy post-processors.
-6. The stress plan was rebuilt as staged cumulative load rather than a single linear ramp.
+Các thay đổi sau được áp dụng trước khi chạy chính thức:
 
-## 3. Execution Matrix
+1. `POST /api/apply-coupon` gửi `${cart_total}` thay cho `${product_price}`.
+2. `${cart_total}` được tính bằng `product_price × quantity` trước bước áp mã giảm giá.
+3. Extractor của checkout đọc `orderId` đúng theo response thật của backend.
+4. Các biến quan trọng được bảo vệ bằng `JSR223 Assertion`; workflow fail rõ ràng nếu thiếu `access_token`, `user_id`, `product_id_resp`, `product_name`, `product_price`, `final_amount` hoặc `order_id`.
+5. JSON extractor/plugin không tương thích được thay bằng Groovy post-processor dùng thành phần lõi của JMeter.
+6. Cấu trúc `hashTree` và Response Assertion XML được sửa để JMeter `5.6.3` chạy được bằng CLI.
+7. Stress plan được thiết kế lại thành bốn stage cộng dồn `50 → 100 → 150 → 200 VU`, thay cho một linear ramp duy nhất.
 
-| Scenario         | Plan file                      | Official artifact folder                                    | Actual run date | Actual status |
-| ---------------- | ------------------------------ | ----------------------------------------------------------- | --------------- | ------------- |
-| Load             | `23127115_Load_20260813.jmx`   | `submission/tests/2-test-runs/checkout-with-coupon/load/`   | `2026-08-13`    | `Executed`    |
-| Stress           | `23127115_Stress_20260813.jmx` | `submission/tests/2-test-runs/checkout-with-coupon/stress/` | `2026-08-13`    | `Executed`    |
-| Spike            | `23127115_Spike_20260813.jmx`  | `submission/tests/2-test-runs/checkout-with-coupon/spike/`  | `2026-08-13`    | `Executed`    |
-| Endurance / Soak | `23127115_Soak_20260815.jmx`   | `submission/tests/2-test-runs/checkout-with-coupon/soak/`   | `2026-08-15`    | `Executed`    |
+## 3. Ma trận thực thi
 
-## 4. Scenario Results
+| Kịch bản       | Test plan                                                                                            | Thư mục bằng chứng                                       | Ngày chạy    | Trạng thái thực thi      |
+| -------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------- | ------------ | ------------------------ |
+| Load           | [23127115_Load_20260813.jmx](../../1-test-plans/checkout-with-coupon/23127115_Load_20260813.jmx)     | [load](../../2-test-runs/checkout-with-coupon/load/)     | `2026-08-13` | Đã chạy                  |
+| Stress         | [23127115_Stress_20260813.jmx](../../1-test-plans/checkout-with-coupon/23127115_Stress_20260813.jmx) | [stress](../../2-test-runs/checkout-with-coupon/stress/) | `2026-08-13` | Đã chạy                  |
+| Spike          | [23127115_Spike_20260813.jmx](../../1-test-plans/checkout-with-coupon/23127115_Spike_20260813.jmx)   | [spike](../../2-test-runs/checkout-with-coupon/spike/)   | `2026-08-13` | Đã chạy                  |
+| Endurance/Soak | [23127115_Soak_20260815.jmx](../../1-test-plans/checkout-with-coupon/23127115_Soak_20260815.jmx)     | [soak](../../2-test-runs/checkout-with-coupon/soak/)     | `2026-08-15` | Đã chạy ở 130/180/230 VU |
 
-### 4.1 Load Test
+Ba plan bắt buộc dùng ba listener khác nhau: Load — View Results Tree; Stress — Aggregate Report; Spike — Summary Report. Các lần chạy chính thức được thực thi ở chế độ non-GUI; JTL thô được ghi bằng cờ `-l`.
 
-- Plan file: `submission/tests/1-test-plans/checkout-with-coupon/23127115_Load_20260813.jmx`
-- Command used: `jmeter -n -t submission/tests/1-test-plans/checkout-with-coupon/23127115_Load_20260813.jmx -l submission/tests/2-test-runs/checkout-with-coupon/load/20260813-load-official.jtl -j submission/tests/2-test-runs/checkout-with-coupon/load/20260813-load-official.log`
-- Start / End time: `2026-08-13 20:39:12` → `2026-08-13 21:00:32`
-- Data seed used: `seed_perf_users.js` executed before the run
-- JTL path: `submission/tests/2-test-runs/checkout-with-coupon/load/20260813-load-official.jtl`
-- HTML report path: `submission/tests/2-test-runs/checkout-with-coupon/load/html-report/`
-- Key metrics:
-  - Total samples: `5,996`
-  - Error rate: `0.00%`
-  - Throughput: `4.698 req/s`
-  - Avg response time: `17.41 ms`
-  - p95: `25 ms`
-  - p99: `58 ms`
-  - Max: `2360 ms`
-- Sampler with highest p95: `Step 6 POST checkout` at `29 ms`
-- Result summary: The load scenario completed cleanly with `0` failures and low latency across all samplers. This run established a stable baseline for the workflow under normal traffic.
+## 4. Kết quả tổng thể từ JTL thô
 
-### 4.2 Stress Test
+| Kịch bản          | Samples | Failures | Error rate | Throughput toàn run | Avg `elapsed` |       p95 |       p99 |        Max | Kết luận                                                |
+| ----------------- | ------: | -------: | ---------: | ------------------: | ------------: | --------: | --------: | ---------: | ------------------------------------------------------- |
+| Load 50 VU        |   5,996 |        0 |     0.000% |         4.698 req/s |      17.41 ms |  25.00 ms |  51.35 ms |   2,360 ms | Đạt — baseline sạch                                     |
+| Stress đến 200 VU | 138,180 |       41 |  0.029671% |       115.276 req/s |      55.98 ms | 259.00 ms | 925.00 ms |   3,486 ms | Cảnh báo — có degradation và Duration Assertion failure |
+| Spike 100 VU      |  45,436 |       34 |  0.074831% |        63.266 req/s |      91.21 ms |  40.25 ms |  68.00 ms | 481,450 ms | Cần điều tra — có cụm lỗi nghiêm trọng                  |
+| Soak 130 VU       |  54,364 |        0 |     0.000% |        75.687 req/s |       6.35 ms |  21.00 ms |  28.00 ms |     691 ms | Đạt                                                     |
+| Soak 180 VU       |  75,207 |        0 |     0.000% |       104.725 req/s |       6.59 ms |  20.00 ms |  29.00 ms |      71 ms | Đạt — baseline ổn định bảo thủ                          |
+| Soak 230 VU       |  95,747 |        0 |     0.000% |       133.280 req/s |      10.96 ms |  35.00 ms |  84.00 ms |     311 ms | Cảnh báo biên trên — p95 cuối lần chạy tăng             |
 
-- Plan file: `submission/tests/1-test-plans/checkout-with-coupon/23127115_Stress_20260813.jmx`
-- Command used: `jmeter -n -t submission/tests/1-test-plans/checkout-with-coupon/23127115_Stress_20260813.jmx -l submission/tests/2-test-runs/checkout-with-coupon/stress/20260813-stress-official.jtl -j submission/tests/2-test-runs/checkout-with-coupon/stress/20260813-stress-official.log`
-- Start / End time: `2026-08-13 21:03:35` → `2026-08-13 21:23:36`
-- Data seed used: `seed_perf_users.js` re-executed before the run
-- JTL path: `submission/tests/2-test-runs/checkout-with-coupon/stress/20260813-stress-official.jtl`
-- HTML report path: `submission/tests/2-test-runs/checkout-with-coupon/stress/html-report/`
-- Key metrics:
-  - Total samples: `138,180`
-  - Failures: `41`
-  - Error rate: `0.03%`
-  - Throughput: `115.276 req/s`
-  - Avg response time: `55.98 ms`
-  - p95: `259 ms`
-  - p99: `925 ms`
-  - Max: `3486 ms`
-- Highest p95 sampler: `Step 5 POST apply-coupon` at `427 ms`
-- First clear degradation point: around `minute 12`, where minute-window error rate reached `0.585%` and minute-window `p95` rose to `1247 ms`
-- Notes:
-  - Error concentration was not uniform. Most failures occurred in:
-    - `Step 3 GET products search`: `17` failures
-    - `Step 7 GET my-orders`: `18` failures
-    - `Step 2 GET categories`: `6` failures
-  - Despite the degradation window, overall stress-test error rate remained very low.
-- Result summary: The stress scenario successfully pushed the system through cumulative load up to the highest configured stage. The system showed a short degradation period near minute `12`, but overall throughput stayed high and the final error rate remained under the stress-test acceptance threshold.
+> **Lưu ý hiệu chỉnh:** Các giá trị Soak 230 `p95=35 ms`, `p99=84 ms` được tính lại trực tiếp trên cột `elapsed` của JTL thô. Giá trị `75/144 ms` trong bản tóm tắt cũ không được tiếp tục sử dụng.
 
-### 4.3 Spike Test
+## 5. Kết quả theo từng kịch bản
 
-- Plan file: `submission/tests/1-test-plans/checkout-with-coupon/23127115_Spike_20260813.jmx`
-- Command used: `jmeter -n -t submission/tests/1-test-plans/checkout-with-coupon/23127115_Spike_20260813.jmx -l submission/tests/2-test-runs/checkout-with-coupon/spike/20260813-spike-official.jtl -j submission/tests/2-test-runs/checkout-with-coupon/spike/20260813-spike-official.log`
-- Start / End time: `2026-08-13 21:24:31` → `2026-08-13 21:37:32`
-- Data seed used: `seed_perf_users.js` re-executed before the run
-- JTL path: `submission/tests/2-test-runs/checkout-with-coupon/spike/20260813-spike-official.jtl`
-- HTML report path: `submission/tests/2-test-runs/checkout-with-coupon/spike/html-report/`
-- Key metrics:
-  - Total samples: `45,436`
-  - Failures: `34`
-  - Overall error rate: `0.07%`
-  - Throughput: `63.266 req/s`
-  - Avg response time: `91.21 ms`
-  - p95: `41 ms`
-  - p99: `68 ms`
-  - Max: `481450 ms`
-- Highest p95 sampler: `Step 5 POST apply-coupon` at `52 ms`
-- Spike behavior notes:
-  - Minute windows `0-2` stayed clean with `0%` errors and `p95` around `35-38 ms`.
-  - A failure cluster appeared late in the run:
-    - minute window `11`: `29.032%` error rate on the small residual sample set
-  - The extreme max values near `480s` are outliers created near end-of-test behavior and should not be treated as representative steady-state latency.
-  - Failure concentration by sampler was highest at `Step 7 GET my-orders` with `17` failures.
-- Recovery note: The current artifact set is sufficient for official execution evidence, but it does not include an explicit chart or per-phase monitor screenshot to prove recovery time visually within two minutes.
-- Result summary: The spike scenario completed and remained low-error overall, but it produced a late outlier/failure cluster that should be called out in the report as a spike-specific instability rather than normal baseline behavior.
+### 5.1. Kiểm thử tải (Load)
 
-### 4.4 Endurance / Soak Test
+- **JTL thô:** [20260813-load-official.jtl](../../2-test-runs/checkout-with-coupon/load/20260813-load-official.jtl)
+- **HTML report:** [index.html](../../2-test-runs/checkout-with-coupon/load/html-report/index.html)
+- **Ảnh tài nguyên:** [load-resource.png](../../2-test-runs/checkout-with-coupon/load/load-resource.png)
+- **Thời gian:** `2026-08-13 20:39:12` → `2026-08-13 21:00:32`.
+- **Dữ liệu:** chạy `seed_perf_users.js` trước test.
+- **Sampler có p95 cao nhất:** `Step 6 POST checkout`, khoảng `29 ms`.
 
-- Plan file: `submission/tests/1-test-plans/checkout-with-coupon/23127115_Soak_20260815.jmx`
-- Status: `Executed`
-- Default profile:
-  - `users=130`
-  - `rampup=180s`
-  - `duration=720s`
-  - `think_mean=1500ms`
-  - `think_range=200ms`
-- Threshold runs executed:
-  - `130 VUs`
-  - `180 VUs`
-  - `230 VUs`
-- Run results:
-  - `130 VUs`
-    - JTL path: `submission/tests/2-test-runs/checkout-with-coupon/soak/20260815-soak-130vu.jtl`
-    - HTML report path: `submission/tests/2-test-runs/checkout-with-coupon/soak/html-report-130vu/`
-    - Resource screenshots:
-      - `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-130vu-mid.png`
-      - `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-130vu-late.png`
-    - Key metrics: `54,364` samples, `0` failures, `75.687 req/s`, `avg 6.35 ms`, `p95 21 ms`, `p99 28 ms`, `max 691 ms`
-    - Highest p95 sampler: `Step 6 POST checkout` at `27 ms`
-  - `180 VUs`
-    - JTL path: `submission/tests/2-test-runs/checkout-with-coupon/soak/20260815-soak-180vu.jtl`
-    - HTML report path: `submission/tests/2-test-runs/checkout-with-coupon/soak/html-report-180vu/`
-    - Resource screenshots:
-      - `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-180vu-mid.png`
-      - `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-180vu-late.png`
-    - Key metrics: `75,207` samples, `0` failures, `104.724 req/s`, `avg 6.59 ms`, `p95 20 ms`, `p99 30 ms`, `max 71 ms`
-    - Highest p95 sampler: `Step 6 POST checkout` at `26 ms`
-  - `230 VUs`
-    - JTL path: `submission/tests/2-test-runs/checkout-with-coupon/soak/20260815-soak-230vu.jtl`
-    - HTML report path: `submission/tests/2-test-runs/checkout-with-coupon/soak/html-report-230vu/`
-    - Resource screenshots:
-      - `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-230vu-mid.png`
-      - `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-230vu-late.png`
-    - Key metrics: `95,747` samples, `0` failures, `133.280 req/s`, `avg 10.96 ms`, `p95 75 ms`, `p99 144 ms`, `max 311 ms`
-    - Highest p95 sampler: `Step 5 POST apply-coupon` at `46 ms`
-- Decision rule:
-  - Highest run that still keeps `error rate <= 1%`, `overall p95 <= 300 ms`, and no late-run degradation trend is treated as the empirical stable hardware threshold.
-- Planned artifact location:
-  - Raw logs: `submission/tests/2-test-runs/checkout-with-coupon/soak/`
-  - HTML reports: `submission/tests/2-test-runs/checkout-with-coupon/soak/html-report-*/`
-  - Resource screenshots: `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-*.png`
-- Final soak conclusion:
-  - `130 VUs` and `180 VUs` stayed fully stable with `0%` error rate and very low tail latency.
-  - `230 VUs` still completed with `0%` error rate and improved throughput, but it is the first level where latency rose noticeably: overall `p95` increased to `75 ms` and `p99` to `144 ms`.
-  - Based on the executed profiles, the conservative empirical stable threshold for this localhost environment is `180 VUs`, while `230 VUs` is the first observed early-degradation zone rather than a failure point.
+Load hoàn thành với 0 failure và tail latency thấp. Đây là baseline chính cho tải bình thường trên localhost. Max `2,360 ms` được giữ để theo dõi nhưng không đại diện cho phần lớn phân phối.
 
-### 4.5 Hardware Context
+### 5.2. Kiểm thử chịu tải (Stress)
 
-| Item                | Value                                                                            |
-| ------------------- | -------------------------------------------------------------------------------- |
-| Computer name       | `QUOCTAN`                                                                        |
-| Operating system    | `Windows 11 Pro 64-bit (10.0, Build 26200)`                                      |
-| Manufacturer        | `LENOVO`                                                                         |
-| Model               | `21BV000SUS`                                                                     |
-| CPU                 | `12th Gen Intel(R) Core(TM) i7-1260P`                                            |
-| Logical CPUs        | `16`                                                                             |
-| RAM                 | `16 GB`                                                                          |
-| DirectX             | `DirectX 12`                                                                     |
-| Hardware screenshot | `submission/tests/2-test-runs/checkout-with-coupon/hardware/hardware-dxdiag.png` |
+- **JTL thô:** [20260813-stress-official.jtl](../../2-test-runs/checkout-with-coupon/stress/20260813-stress-official.jtl)
+- **HTML report:** [index.html](../../2-test-runs/checkout-with-coupon/stress/html-report/index.html)
+- **Ảnh tài nguyên:** [stress-resource.png](../../2-test-runs/checkout-with-coupon/stress/stress-resource.png)
+- **Thời gian:** `2026-08-13 21:03:35` → `2026-08-13 21:23:36`.
+- **Sampler có p95 cao nhất:** `Step 5 POST apply-coupon`, `427 ms`.
 
-## 5. Human Review of AI-generated Plans
+Stress có 41 failures. Tất cả 41 rows đều có HTTP `200` nhưng `success=false` do Duration Assertion vượt `2,000 ms`; vì vậy không được chỉ đếm HTTP 4xx/5xx. Failure tập trung ở:
 
-| Item reviewed                 | What AI / draft plan proposed                     | Issue found                                | Correction made                                                        | Why correction was needed                  |
-| ----------------------------- | ------------------------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------- | ------------------------------------------ |
-| Coupon calculation input      | `total_amount = ${product_price}`                 | Ignores `quantity`                         | Replaced with `${cart_total}` computed from `product_price * quantity` | Coupon must apply to cart total            |
-| Checkout extractor            | `$.id`                                            | Backend returns `orderId`                  | Changed extractor to `$.orderId`                                       | Wrong JSONPath would hide order creation   |
-| Extracted-variable validation | Missing                                           | Defaults can mask failures                 | Added `JSR223 Assertion` checks for critical extracted variables       | Need hard evidence of workflow correctness |
-| JMeter CLI compatibility      | `JSONPathExtractor` and malformed hashTree layout | JMeter 5.6.3 CLI failed to parse the plans | Replaced with Groovy post-processors and repaired `hashTree` structure | Official runs must execute from CLI        |
-| Response assertions           | Old XML format without `stringProp name`          | Parser compatibility issue in JMeter 5.6.3 | Normalized response assertion XML                                      | Prevents parser failure before execution   |
+- `Step 3 GET products search`: 17 failures.
+- `Step 7 GET my-orders`: 18 failures.
+- `Step 2 GET categories`: 6 failures.
 
-## 6. Evidence Checklist
+Phút 12 là cửa sổ đầu tiên có lỗi: tỷ lệ lỗi `0.585%`, p95 `1,246.75 ms`. Độ trễ đuôi vẫn cao tới phút 17 và trở về khoảng `49 ms` ở phút 18. Kết luận đúng là **cảnh báo suy giảm**, không phải một lần chạy đạt sạch.
 
-| Artifact                           | Expected location                                                                                                                            | Status         | Notes                                                                                            |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------ |
-| Load JMX                           | `submission/tests/1-test-plans/checkout-with-coupon/23127115_Load_20260813.jmx`                                                              | Present        |                                                                                                  |
-| Stress JMX                         | `submission/tests/1-test-plans/checkout-with-coupon/23127115_Stress_20260813.jmx`                                                            | Present        |                                                                                                  |
-| Spike JMX                          | `submission/tests/1-test-plans/checkout-with-coupon/23127115_Spike_20260813.jmx`                                                             | Present        |                                                                                                  |
-| CSV test data                      | `submission/tests/1-test-plans/checkout-with-coupon/test-data/`                                                                              | Present        | Regenerated before official runs                                                                 |
-| Seed script                        | `submission/tests/1-test-plans/checkout-with-coupon/seed_perf_users.js`                                                                      | Present        | Executed before each official run                                                                |
-| Load raw JTL                       | `submission/tests/2-test-runs/checkout-with-coupon/load/20260813-load-official.jtl`                                                          | Present        |                                                                                                  |
-| Stress raw JTL                     | `submission/tests/2-test-runs/checkout-with-coupon/stress/20260813-stress-official.jtl`                                                      | Present        |                                                                                                  |
-| Spike raw JTL                      | `submission/tests/2-test-runs/checkout-with-coupon/spike/20260813-spike-official.jtl`                                                        | Present        |                                                                                                  |
-| Soak raw JTL (130 / 180 / 230 VU)  | `submission/tests/2-test-runs/checkout-with-coupon/soak/20260815-soak-*.jtl`                                                                 | Present        | Three threshold runs completed                                                                   |
-| Load HTML report                   | `submission/tests/2-test-runs/checkout-with-coupon/load/html-report/`                                                                        | Present        |                                                                                                  |
-| Stress HTML report                 | `submission/tests/2-test-runs/checkout-with-coupon/stress/html-report/`                                                                      | Present        |                                                                                                  |
-| Spike HTML report                  | `submission/tests/2-test-runs/checkout-with-coupon/spike/html-report/`                                                                       | Present        |                                                                                                  |
-| Soak HTML reports                  | `submission/tests/2-test-runs/checkout-with-coupon/soak/html-report-*/`                                                                      | Present        | Reports exist for `130`, `180`, and `230 VUs`                                                    |
-| Resource screenshots               | `submission/tests/2-test-runs/checkout-with-coupon/load/load-resource.png`, `.../stress/stress-resource.png`, `.../spike/spike-resource.png` | Present        | Load, Stress, and Spike resource screenshots are available                                       |
-| Soak resource screenshots          | `submission/tests/2-test-runs/checkout-with-coupon/soak/soak-resource-*-mid.png` and `...-late.png`                                          | Present        | Mid-run and late-run screenshots captured for `130`, `180`, and `230 VUs`                        |
-| Hardware screenshot and spec table | `submission/tests/2-test-runs/checkout-with-coupon/hardware/hardware-dxdiag.png`                                                             | Present        | Hardware spec table is documented in section 4.5                                                 |
-| Endurance / soak plan              | `submission/tests/1-test-plans/checkout-with-coupon/23127115_Soak_20260815.jmx`                                                              | Present        | Parameterized for `130 / 180 / 230 VUs`                                                          |
-| Endurance / soak artifact          | `submission/tests/2-test-runs/checkout-with-coupon/soak/`                                                                                    | Present        | `130`, `180`, and `230 VU` runs are all available                                                |
-| Lockout reset procedure            | `submission/tests/1-test-plans/checkout-with-coupon/README.md`                                                                               | Present        | SQL reset command is documented and reseed was run before each official scenario                 |
-| Issue report evidence              | `submission/tests/3-test-summary/checkout-with-coupon/issue-reports/ISSUE-CWC-001.md`                                                        | Present        | Stress degradation observation is documented and ready to be copied into GitHub Issues if needed |
-| Video demo link                    | Main report / README                                                                                                                         | Pending manual | Recording checklist prepared; final YouTube link is not recorded yet                             |
+### 5.3. Kiểm thử tải đột biến (Spike)
 
-## 7. Current Completion Status
+- **JTL thô:** [20260813-spike-official.jtl](../../2-test-runs/checkout-with-coupon/spike/20260813-spike-official.jtl)
+- **HTML report:** [index.html](../../2-test-runs/checkout-with-coupon/spike/html-report/index.html)
+- **Ảnh tài nguyên:** [spike-resource.png](../../2-test-runs/checkout-with-coupon/spike/spike-resource.png)
+- **Thời gian:** `2026-08-13 21:24:31` → `2026-08-13 21:37:32`.
+- **Sampler có p95 cao nhất:** `Step 5 POST apply-coupon`, `52 ms`.
 
-| Area                             | Status         | Notes                                                                                      |
-| -------------------------------- | -------------- | ------------------------------------------------------------------------------------------ |
-| Workflow scope defined           | Complete       | Same E2E flow used across all official scenarios                                           |
-| 3 JMX files created and repaired | Complete       | CLI-compatible and officially executed                                                     |
-| Data-driven CSV setup            | Complete       | Seeded and regenerated before runs                                                         |
-| Human review documented          | Complete       | Fixes and rationale captured                                                               |
-| Load execution                   | Complete       | Official artifacts present                                                                 |
-| Stress execution                 | Complete       | Official artifacts present                                                                 |
-| Spike execution                  | Complete       | Official artifacts present                                                                 |
-| Endurance threshold              | Complete       | `180 VU` is the conservative stable threshold; `230 VU` shows the first clear latency rise |
-| HTML reports                     | Complete       | Official HTML report folders generated for all three scenarios                             |
-| Resource / hardware evidence     | Complete       | Hardware screenshot/spec table and load/stress/spike resource screenshots exist            |
-| Lockout reset documentation      | Complete       | Reset SQL command is documented and reseed was executed before each official scenario      |
-| Issue reporting stance           | Complete       | Submission-side issue report is prepared; GitHub posting remains optional                  |
-| Video demo                       | Pending manual | Checklist is prepared, but no link recorded yet                                            |
+P95/p99 của phần lớn samples vẫn thấp, nhưng run không sạch:
 
-## 8. Remaining Actions
+- 34 failures trong toàn run.
+- 7 samples có `elapsed > 5,000 ms`.
+- Khoảng giây `237.485` xuất hiện 6 Duration Assertion failures dài khoảng 480–481 giây và 1 `SocketException`.
+- Cuối run có thêm 27 Duration Assertion failures khoảng 2.0–2.2 giây.
 
-1. Record the final unlisted YouTube demo and add the link to the main submission README or report.
-2. If you want maximum defensibility, copy the prepared stress observation from `issue-reports/` into GitHub Issues and attach the final issue link.
-3. Reuse `submission/docs/test-report/task1-manual-evidence-checklist.md` as the final manual close-out checklist.
+Do đó max `481,450 ms` không phải “một outlier ở cuối run”. Kịch bản được phân loại **cần điều tra**, đồng thời artifact hiện tại chưa chứng minh trực quan thời gian recovery theo từng phase.
+
+### 5.4. Kiểm thử độ bền (Endurance/Soak)
+
+Soak plan được parameterize bằng `-Jusers`, `-Jrampup`, `-Jduration`, `-Jthink_mean` và `-Jthink_range`. Cấu hình chung: ramp-up `180 s`, duration `720 s`, think time `1500 ± 200 ms`.
+
+| Mức tải | JTL thô                                                                    | Báo cáo HTML                                                                     | Ảnh tài nguyên                                                                                                                                                    | Kết quả                  |
+| ------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| 130 VU  | [JTL](../../2-test-runs/checkout-with-coupon/soak/20260815-soak-130vu.jtl) | [HTML](../../2-test-runs/checkout-with-coupon/soak/html-report-130vu/index.html) | [mid](../../2-test-runs/checkout-with-coupon/soak/soak-resource-130vu-mid.png), [late](../../2-test-runs/checkout-with-coupon/soak/soak-resource-130vu-late.png)  | Đạt, 0 failure           |
+| 180 VU  | [JTL](../../2-test-runs/checkout-with-coupon/soak/20260815-soak-180vu.jtl) | [HTML](../../2-test-runs/checkout-with-coupon/soak/html-report-180vu/index.html) | [mid](../../2-test-runs/checkout-with-coupon/soak/soak-resource-180vu-mid.png), [late](../../2-test-runs/checkout-with-coupon/soak/soak-resource-180vu-late.png)  | Baseline ổn định bảo thủ |
+| 230 VU  | [JTL](../../2-test-runs/checkout-with-coupon/soak/20260815-soak-230vu.jtl) | [HTML](../../2-test-runs/checkout-with-coupon/soak/html-report-230vu/index.html) | [giữa](../../2-test-runs/checkout-with-coupon/soak/soak-resource-230vu-mid.png), [cuối](../../2-test-runs/checkout-with-coupon/soak/soak-resource-230vu-late.png) | Cảnh báo biên trên       |
+
+Trong lát sau ramp-up `180–660 s`, throughput lần lượt khoảng `86.292`, `119.385` và `152.192 req/s`. Soak 180 giữ p95/p99 khoảng `20/29 ms` và late-run ổn định. Soak 230 vẫn 0 failure nhưng late-run p95 lên `94 ms`.
+
+**Kết luận endurance:** `180 VU`, khoảng `119.385 req/s` sau ramp-up, là ngưỡng ổn định bảo thủ. `230 VU` là mức đầu tiên có tail-latency warning, chưa phải failure point và cũng chưa chứng minh capacity tối đa.
+
+Ảnh Task Manager cho thấy tiến trình backend chính khoảng `61.3–65.2 MB` ở 180 VU và `63.1–63.6 MB` ở 230 VU. Vì đây là ảnh chụp tại một thời điểm, chỉ kết luận mức bộ nhớ quan sát cao nhất khoảng `65.2 MB`, không gọi là đỉnh RSS tuyệt đối.
+
+## 6. Ngữ cảnh phần cứng
+
+| Hạng mục           | Giá trị                                                                                    |
+| ------------------ | ------------------------------------------------------------------------------------------ |
+| Tên máy            | `QUOCTAN`                                                                                  |
+| Hệ điều hành       | Windows 11 Pro 64-bit, build `26200`                                                       |
+| Nhà sản xuất/model | Lenovo `21BV000SUS`                                                                        |
+| CPU                | Intel Core i7-1260P thế hệ 12                                                              |
+| Logical CPU        | 16                                                                                         |
+| RAM                | 16 GB                                                                                      |
+| DirectX            | DirectX 12                                                                                 |
+| Bằng chứng         | [hardware-dxdiag.png](../../2-test-runs/checkout-with-coupon/hardware/hardware-dxdiag.png) |
+
+Các kết quả chỉ là regression reference cho môi trường localhost này, không phải production SLO.
+
+## 7. Trạng thái bằng chứng
+
+| Hạng mục                              | Trạng thái               | Ghi chú                                                                |
+| ------------------------------------- | ------------------------ | ---------------------------------------------------------------------- |
+| Workflow E2E bao phủ ba nhóm endpoint | Hoàn thành               | Cùng workflow trong mọi JMX/JTL                                        |
+| Ba JMX bắt buộc và đúng naming        | Hoàn thành               | Load/Stress/Spike                                                      |
+| CSV và seed script                    | Hoàn thành               | 300 users, coupon `PERFTEST`                                           |
+| Ba listener/report khác nhau          | Hoàn thành               | View Results Tree/Aggregate/Summary                                    |
+| Lần chạy chính thức Load/Stress/Spike | Hoàn thành               | Có JTL thô, HTML và ảnh tài nguyên                                     |
+| Soak 130/180/230                      | Hoàn thành               | Có JTL, HTML và ảnh mid/late                                           |
+| Hardware evidence                     | Hoàn thành               | DxDiag và bảng thông số                                                |
+| Reset lockout/data state              | Hoàn thành               | Reseed trước run; SQL reset trong README test plan                     |
+| Đánh giá của con người đối với AI/JMX | Hoàn thành               | Các sửa chữa và lý do đã ghi                                           |
+| Issue hiệu năng                       | Có bản nháp              | [ISSUE-CWC-001.md](./issue-reports/ISSUE-CWC-001.md); chưa đăng GitHub |
+| Nhiệm vụ 2                            | Hoàn thành               | Có đầu ra AI, đánh giá của con người và đề xuất đã lọc                 |
+| Nhiệm vụ 3                            | Hoàn thành ở mức đề xuất | Có đề xuất, sơ đồ luồng và blueprint CI/CLI                            |
+| Video demo                            | Chờ bổ sung thủ công     | URL YouTube đang để trống trong main report                            |
+
+## 8. Việc còn lại trước khi nộp
+
+1. Quay và thêm URL YouTube unlisted tối thiểu 6 phút vào [main-report.md](../../../docs/test-report/main-report.md).
+2. Nếu đăng issue, sao chép [ISSUE-CWC-001.md](./issue-reports/ISSUE-CWC-001.md) lên GitHub Issues và thêm URL thật.
+3. Xuất các tài liệu Markdown bắt buộc sang PDF và kiểm tra Mermaid/ảnh/liên kết.
+4. Xuất Git log thành file văn bản riêng nếu checklist đóng gói yêu cầu.
+
+## 9. Kết luận — Đề xuất kiểm thử hiệu năng liên tục
+
+Nhiệm vụ 3 đề xuất mô hình theo rủi ro, theo dõi commit bằng GitHub Actions nhưng không chạy toàn bộ bộ kiểm thử cho mọi thay đổi. Commit chỉ sửa tài liệu được ghi `SKIPPED`; backend PR từ nguồn tin cậy chạy smoke; merge/main và nightly chạy Load; lịch tuần chạy Soak 180 VU; release candidate chạy Load/Stress/Spike/Soak. Stress và Spike giữ ở chế độ cảnh báo cho tới khi xử lý vấn đề đã biết và có ít nhất năm lần chạy sạch, tương đương.
+
+Hồi quy p95 được so với trung vị trượt của năm lần chạy `PASS` gần nhất và baseline chuẩn đã phê duyệt. Phép so sánh chỉ hợp lệ khi cùng kịch bản, sampler, hash JMX/dữ liệu/cấu hình, runtime và lớp runner. Tín hiệu đáng ngờ được xác nhận bằng tối đa ba lần chạy tuần tự; hồi quy nghiêm trọng chỉ trở thành lỗi chặn khi lặp ít nhất `2/3`. Môi trường không hợp lệ trả `INVALID`, không quy kết cho commit.
+
+Đánh đổi chính là chi phí runner và quản trị baseline để đổi lấy phát hiện regression sớm hơn. Path filter, profile phân tầng, rerun có điều kiện và self-hosted runner cố định giúp giảm chi phí/cảnh báo giả. Không được chạy code từ fork không tin cậy trên self-hosted performance runner.
+
+Tài liệu đầy đủ:
+
+- [Đề xuất kiểm thử hiệu năng liên tục](../../../docs/test-report/continuous-performance-testing.md)
+- [Sơ đồ luồng](../../../docs/test-report/continuous-performance-flowchart.md)
+- [Blueprint GitHub Actions và JMeter CLI](../../../docs/test-report/continuous-performance-ci-blueprint.md)
