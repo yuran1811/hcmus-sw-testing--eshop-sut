@@ -38,19 +38,33 @@
 3. **Spike Test (Flash Sale Shock):** Đột biến tức thời 250 VUs trong 10s với Think Time = 0s, tổng xử lý 31,357 requests, Throughput 158.03 req/s, Error Rate 0.00%, Avg Response Time 397.87ms, P95 vọt lên 1,733ms (Max 3,278ms do tranh chấp khóa ghi SQLite).
 4. **Endurance / Soak Test (Ngâm tải độ bền):** 50 VUs chạy liên tục trong 660s (11 phút: 30s ramp-up + 600s sustain + 30s ramp-down), tổng xử lý 10,482 requests.
 
-### 3.2. Nhóm Endpoint được bao phủ (Endpoint Groups Covered)
-Bao phủ trọn vẹn luồng nghiệp vụ Quản trị viên (**Admin E2E Workflow**) theo phân công nhóm:
+### 3.2. Phân Công Nhóm & Nhóm Endpoint Được Bao Phủ (Endpoint Scope & Non-overlapping Justification)
+
+#### 👥 Bảng Phân Công Nhóm & Phân Tách Phạm Vi Kiểm Thử (Team Endpoint Allocation)
+
+| Thành viên | Phân vai (Persona / Role) | Authentication | Read-Heavy Endpoints | Transactional & Bulk Endpoints | Số EP |
+| :--- | :--- | :--- | :--- | :--- | :---: |
+| **Khoa Nguyen** | Khách mới — Mua rồi đổi ý | `POST /api/login` | `GET /api/categories` $\rightarrow$ `GET /api/products/:id` | `POST /api/cart` $\rightarrow$ `POST /api/checkout` $\rightarrow$ ... | 5 |
+| **Tuan Anh** | Admin — Quản lý đơn hàng & User | `POST /api/login` (Admin) | `GET /api/admin/orders` $\rightarrow$ `GET /api/admin/users` | `PUT /api/admin/orders/:id/status` (id lấy động) $\rightarrow$ `POST /api/admin/coupons` | 5 |
+| **Nguyen An** *(Bản nộp này)* | **Admin — Quản lý danh mục & sản phẩm** | `POST /api/login` (Admin) | `GET /api/products` $\rightarrow$ `GET /api/coupons` | `POST /api/categories` $\rightarrow$ `PUT /api/categories/:id` (id lấy động) $\rightarrow$ `POST /api/admin/import-products` | **6** |
+
+> 💡 **Giải trình lý do chọn Admin và tính Độc lập (Non-overlapping Justification):**  
+> Nhóm có 2 thành viên cùng chọn vai trò Quản trị viên (**Admin**), tuy nhiên mục tiêu kiểm thử và các nhóm endpoint được phân định độc lập **100% không trùng lặp**:
+> - **Tuan Anh:** Tập trung vào nghiệp vụ **Quản lý Đơn hàng & Người dùng** (`/api/admin/orders`, `/api/admin/users`, đổi trạng thái đơn và phát hành coupon).
+> - **Nguyen An (Bài nộp này):** Tập trung vào nghiệp vụ **Quản trị Danh mục & Hàng hóa / Bulk Import** (`/api/categories` CRUD với Dynamic ID Extractor, `POST /api/admin/import-products` đọc dữ liệu Data-driven CSV, tra cứu danh mục & sản phẩm).
+> 
+> Sự phân tách này giúp nhóm bao phủ toàn diện 2 mảng nghiệp vụ backend phức tạp nhất của SUT mà vẫn đảm bảo tính độc lập tuyệt đối giữa các bài nộp cá nhân theo đúng yêu cầu đề bài.
+
+#### 🎯 Chi Tiết Luồng E2E Quản Trị Danh Mục & Sản Phẩm (Nguyen An - 6 Endpoints):
 - **Authentication (1 lần / VU):** `POST /api/login` (Bọc trong `Once Only Controller`, trích xuất Bearer Token động).
 - **Read-Heavy Operations (60% Throughput):**
   - `GET /api/products` (Tra cứu danh sách sản phẩm)
-  - `GET /api/categories` (Tra cứu danh mục)
-  - `GET /api/coupons` (Tra cứu mã giảm giá)
-  - `GET /api/admin/orders` (Tra cứu đơn hàng)
+  - `GET /api/coupons` (Tra cứu danh sách mã giảm giá)
 - **Transactional CRUD (25% Throughput):**
   - `POST /api/categories` (Tạo danh mục mới từ `categories.csv`)
-  - `PUT /api/categories/:id` (Cập nhật danh mục theo ID động)
+  - `PUT /api/categories/:id` (Cập nhật danh mục với `id` được trích xuất động từ sampler tạo mới qua JSON Extractor)
 - **Bulk Operations (15% Throughput):**
-  - `POST /api/admin/import-products` (Import hàng loạt sản phẩm từ `products.csv`)
+  - `POST /api/admin/import-products` (Import hàng loạt 25 sản phẩm từ `products.csv`)
 
 ### 3.3. Ngưỡng chịu tải bền vững (Endurance Threshold with Concrete Numbers)
 - **Max Sustainable Concurrency:** **50 Virtual Users (VUs)**.
