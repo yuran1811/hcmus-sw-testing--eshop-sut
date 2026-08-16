@@ -29,7 +29,7 @@ Sơ đồ quyết định đầy đủ được trình bày tại [continuous-pe
 
 ## 2. Kiến trúc đề xuất
 
-Pipeline đề xuất dùng **GitHub Actions** làm commit observer và orchestrator; các bước có trạng thái được đặt trong script riêng để cùng một lệnh có thể chạy trên CI hoặc máy local. Pipeline gồm năm khối:
+Pipeline đề xuất dùng **GitHub Actions** làm commit observer và orchestrator; các bước có trạng thái được đặt trong script Bash riêng để cùng một lệnh có thể chạy trên CI hoặc máy local. Pipeline gồm năm khối:
 
 1. **Commit observer:** nhận sự kiện từ pull request, merge vào nhánh chính, lịch chạy định kỳ, release candidate hoặc yêu cầu chạy thủ công.
 2. **Change classifier:** dùng `git diff` để phân loại commit theo đường dẫn và loại thay đổi.
@@ -46,15 +46,15 @@ Nếu pull request có commit mới trong khi job cũ đang chờ hoặc đang c
 Blueprint triển khai cụ thể nằm tại [continuous-performance-ci-blueprint.md](./continuous-performance-ci-blueprint.md). Cấu trúc đề xuất gồm:
 
 - `.github/workflows/performance.yml`: nhận `pull_request`, `push` vào `main`, `schedule` và `workflow_dispatch`; áp dụng path/risk classifier, `concurrency` và upload artifact kể cả khi gate thất bại.
-- `scripts/perf/classify-change.ps1`: đọc `git diff` và trả về `skip`, `smoke`, `load`, `soak` hoặc `release`.
-- `scripts/perf/prepare-sut.ps1`: cài dependency, seed/reset dữ liệu, khởi động backend và kiểm tra health/readiness ở cổng `3000`.
-- `scripts/perf/restore-baseline.ps1`: đọc golden baseline đã version hóa và tải rolling baseline từ lần chạy `main` PASS gần nhất có cùng baseline key.
-- `scripts/perf/invoke-performance-gate.ps1`: điều phối reset → run → analyze → compare; chỉ chạy attempt 2 và 3 khi attempt đầu là `WARNING`.
-- `scripts/perf/run-jmeter.ps1`: ánh xạ profile sang đúng JMX, chạy JMeter **non-GUI** bằng `jmeter -n -t ... -l ... -j ... -e -o ...`, và ghi metadata của run.
-- `scripts/perf/analyze-jtl.ps1`: đọc raw JTL để sinh `metrics.json` theo toàn run/sampler, gồm p95, p99, error rate, throughput và sample count.
-- `scripts/perf/compare-baseline.ps1`: áp dụng rolling/golden baseline và quy tắc ở Mục 4; exit code `0/2/3/4` lần lượt biểu diễn `PASS/WARNING/FAIL/INVALID`.
-- `scripts/perf/publish-summary.ps1`: ghi bảng kết quả vào GitHub Step Summary và tạo dữ liệu cho status check/PR comment.
-- `scripts/perf/stop-sut.ps1`: dừng backend trong bước cleanup chạy với `if: always()`.
+- `scripts/perf/classify-change.sh`: đọc `git diff` và trả về `skip`, `smoke`, `load`, `soak` hoặc `release`.
+- `scripts/perf/prepare-sut.sh`: cài dependency, seed/reset dữ liệu, khởi động backend và kiểm tra health/readiness ở cổng `3000`.
+- `scripts/perf/restore-baseline.sh`: đọc golden baseline đã version hóa và tải rolling baseline từ lần chạy `main` PASS gần nhất có cùng baseline key.
+- `scripts/perf/invoke-performance-gate.sh`: điều phối reset → run → analyze → compare; chỉ chạy attempt 2 và 3 khi attempt đầu là `WARNING`.
+- `scripts/perf/run-jmeter.sh`: ánh xạ profile sang đúng JMX, chạy JMeter **non-GUI** bằng `jmeter -n -t ... -l ... -j ... -e -o ...`, và ghi metadata của run.
+- `scripts/perf/analyze-jtl.sh`: đọc raw JTL để sinh `metrics.json` theo toàn run/sampler, gồm p95, p99, error rate, throughput và sample count.
+- `scripts/perf/compare-baseline.sh`: áp dụng rolling/golden baseline và quy tắc ở Mục 4; exit code `0/2/3/4` lần lượt biểu diễn `PASS/WARNING/FAIL/INVALID`.
+- `scripts/perf/publish-summary.sh`: ghi bảng kết quả vào GitHub Step Summary và tạo dữ liệu cho status check/PR comment.
+- `scripts/perf/stop-sut.sh`: dừng backend trong bước cleanup chạy với `if: always()`.
 
 JMeter CLI phải chạy từ repo root vì các JMX hiện dùng đường dẫn tương đối `test-data/users.csv`. Raw JTL chỉ do cờ `-l` sở hữu; listener trong JMX không được ghi thêm một raw file cạnh tranh. Mỗi run dùng thư mục duy nhất theo `${commit SHA}/${profile}/${attempt}` để `-o` luôn trỏ đến thư mục HTML chưa tồn tại.
 

@@ -6,20 +6,22 @@ Tài liệu này cụ thể hóa cách triển khai mô hình trong [continuous-
 
 ```text
 .github/workflows/performance.yml
-scripts/perf/classify-change.ps1
-scripts/perf/prepare-sut.ps1
-scripts/perf/restore-baseline.ps1
-scripts/perf/invoke-performance-gate.ps1
-scripts/perf/run-jmeter.ps1
-scripts/perf/analyze-jtl.ps1
-scripts/perf/compare-baseline.ps1
-scripts/perf/publish-summary.ps1
-scripts/perf/stop-sut.ps1
+scripts/perf/classify-change.sh
+scripts/perf/prepare-sut.sh
+scripts/perf/restore-baseline.sh
+scripts/perf/invoke-performance-gate.sh
+scripts/perf/run-jmeter.sh
+scripts/perf/analyze-jtl.sh
+scripts/perf/compare-baseline.sh
+scripts/perf/publish-summary.sh
+scripts/perf/stop-sut.sh
 perf-baselines/<baseline-key>/golden.json
 artifacts/current/baseline/rolling.json  # generated from main PASS history
 ```
 
 Script là ranh giới tái lập: GitHub Actions chỉ chọn trigger/profile và gọi script; logic tính p95 hoặc gate không viết trực tiếp rải rác trong YAML. Cùng script phải chạy được từ repo root trên máy local để điều tra một job CI.
+
+Mỗi file `.sh` dùng shebang `#!/usr/bin/env bash`, bật `set -euo pipefail`, quote mọi đường dẫn/biến và được đánh dấu executable bằng `chmod +x scripts/perf/*.sh`. Runner chuẩn cần Bash 4+ cùng `curl`, `jq`, `git`, Node.js, Java và JMeter. Các option của wrapper dùng dạng GNU dài như `--profile`, `--maximum-attempts` và `--run-directory` để lệnh local giống hệt lệnh CI.
 
 ## 2. Workflow GitHub Actions minh họa
 
@@ -65,19 +67,19 @@ jobs:
         with:
           fetch-depth: 0
       - id: classify
-        shell: pwsh
+        shell: bash
         env:
           EVENT_NAME: ${{ github.event_name }}
           EVENT_SCHEDULE: ${{ github.event.schedule }}
           MANUAL_PROFILE: ${{ inputs.profile || 'auto' }}
           PR_HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
           CURRENT_REPOSITORY: ${{ github.repository }}
-        run: ./scripts/perf/classify-change.ps1
+        run: ./scripts/perf/classify-change.sh
 
   performance:
     needs: classify
     if: needs.classify.outputs.profile != 'skip' && needs.classify.outputs.trusted == 'true'
-    runs-on: [self-hosted, Windows, X64, perf-eshop-standard]
+    runs-on: [self-hosted, Linux, X64, perf-eshop-standard]
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
@@ -91,21 +93,21 @@ jobs:
           distribution: temurin
           java-version: '17'
       - name: Prepare SUT and test data
-        shell: pwsh
-        run: ./scripts/perf/prepare-sut.ps1
+        shell: bash
+        run: ./scripts/perf/prepare-sut.sh
       - name: Restore approved baselines
-        shell: pwsh
+        shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-        run: ./scripts/perf/restore-baseline.ps1 -Profile '${{ needs.classify.outputs.profile }}'
+        run: ./scripts/perf/restore-baseline.sh --profile '${{ needs.classify.outputs.profile }}'
       - name: Run p95 gate with conditional 2-of-3 confirmation
         id: gate
-        shell: pwsh
-        run: ./scripts/perf/invoke-performance-gate.ps1 -Profile '${{ needs.classify.outputs.profile }}' -MaximumAttempts 3
+        shell: bash
+        run: ./scripts/perf/invoke-performance-gate.sh --profile '${{ needs.classify.outputs.profile }}' --maximum-attempts 3
       - name: Publish summary
         if: always()
-        shell: pwsh
-        run: ./scripts/perf/publish-summary.ps1 -RunDirectory artifacts/current
+        shell: bash
+        run: ./scripts/perf/publish-summary.sh --run-directory artifacts/current
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -121,15 +123,15 @@ jobs:
           retention-days: 90
       - name: Stop backend
         if: always()
-        shell: pwsh
-        run: ./scripts/perf/stop-sut.ps1
+        shell: bash
+        run: ./scripts/perf/stop-sut.sh
 ```
 
 Tên label `perf-eshop-standard` chỉ là ví dụ; khi triển khai phải thay bằng label runner thật. Nên pin action bằng full commit SHA trong pipeline chính thức để giảm rủi ro supply-chain. Hai lịch cron chạy theo UTC; comment trong YAML ghi rõ giờ quy đổi sang Asia/Saigon. Trong workflow thật, bước upload artifact và cleanup nên đặt trong một job/finally pattern bảo đảm cleanup vẫn chạy nếu upload gặp lỗi.
 
 ## 3. Trình tự của các script
 
-### 3.1. `classify-change.ps1`
+### 3.1. `classify-change.sh`
 
 Script xác định base/head SHA theo event GitHub, chạy `git diff --name-only`, rồi áp dụng ma trận ở Mục 3 của tài liệu chính. Kết quả phải ghi `profile` và `trusted` vào `$GITHUB_OUTPUT` khi ở CI, đồng thời in ra stdout khi chạy local. Mapping sự kiện được xác định rõ:
 
@@ -144,7 +146,7 @@ Script xác định base/head SHA theo event GitHub, chạy `git diff --name-onl
 
 `workflow_dispatch` với profile khác `auto` được ưu tiên, nhưng `release` vẫn là advisory cho Stress/Spike theo chính sách hiện tại. Pull request từ fork trả `trusted=false`; không được checkout và thực thi code không tin cậy trên self-hosted runner. Nếu cần tín hiệu cho fork PR, chỉ chạy validation tĩnh hoặc smoke observe trên GitHub-hosted runner. Không dùng `pull_request_target` để thực thi code của PR.
 
-### 3.2. `prepare-sut.ps1`
+### 3.2. `prepare-sut.sh`
 
 Trình tự tối thiểu:
 
@@ -156,35 +158,35 @@ Trình tự tối thiểu:
 
 Mỗi attempt phải reset database/lockout/cart/order state về cùng điều kiện. Process backend phải được dừng trong cleanup `finally` hoặc bước `if: always()`.
 
-### 3.3. `restore-baseline.ps1` và baseline bền vững
+### 3.3. `restore-baseline.sh` và baseline bền vững
 
 Golden baseline được review như code và lưu tại `perf-baselines/<baseline-key>/golden.json` trên nhánh chính. Chỉ pull request có lý do và người phê duyệt mới được đổi file này.
 
-Rolling baseline không commit tự động vào source branch. Mỗi run `main` PASS upload `rolling.json` cùng artifact có commit SHA và baseline key. `restore-baseline.ps1` dùng GitHub Actions API với quyền `actions: read` để tìm artifact của lần `main` PASS gần nhất, tải về và chỉ nhận nếu baseline key khớp tuyệt đối. Nếu artifact hết retention, hỏng hoặc không khớp key, run chuyển sang `BOOTSTRAP/OBSERVE`; không được lấy baseline của profile/runner khác. Golden baseline vẫn là mốc chống drift khi rolling artifact không tồn tại.
+Rolling baseline không commit tự động vào source branch. Mỗi run `main` PASS upload `rolling.json` cùng artifact có commit SHA và baseline key. `restore-baseline.sh` dùng GitHub Actions API với quyền `actions: read` để tìm artifact của lần `main` PASS gần nhất, tải về và chỉ nhận nếu baseline key khớp tuyệt đối. Nếu artifact hết retention, hỏng hoặc không khớp key, run chuyển sang `BOOTSTRAP/OBSERVE`; không được lấy baseline của profile/runner khác. Golden baseline vẫn là mốc chống drift khi rolling artifact không tồn tại.
 
 Artifact rolling nên giữ tối thiểu 90 ngày hoặc mirror sang object storage nếu lịch chạy thưa hơn retention. Việc publish rolling mới chỉ xảy ra sau trạng thái cuối `PASS` trên `main`; PR, `WARNING`, `FAIL`, `INVALID` và exploratory run không được cập nhật baseline.
 
-### 3.4. `run-jmeter.ps1`
+### 3.4. `run-jmeter.sh`
 
 Lệnh lõi cho Load hiện tại:
 
-```powershell
-jmeter -n `
-  -t submission/tests/1-test-plans/checkout-with-coupon/23127115_Load_20260813.jmx `
-  -l artifacts/current/results.jtl `
-  -j artifacts/current/jmeter.log `
+```bash
+jmeter -n \
+  -t submission/tests/1-test-plans/checkout-with-coupon/23127115_Load_20260813.jmx \
+  -l artifacts/current/results.jtl \
+  -j artifacts/current/jmeter.log \
   -e -o artifacts/current/html-report
 ```
 
 Lệnh Soak 180 VU có thể parameterize đúng với JMX hiện có:
 
-```powershell
-jmeter -n `
-  -Jusers=180 -Jrampup=180 -Jduration=720 `
-  -Jthink_mean=1500 -Jthink_range=200.0 `
-  -t submission/tests/1-test-plans/checkout-with-coupon/23127115_Soak_20260815.jmx `
-  -l artifacts/current/results.jtl `
-  -j artifacts/current/jmeter.log `
+```bash
+jmeter -n \
+  -Jusers=180 -Jrampup=180 -Jduration=720 \
+  -Jthink_mean=1500 -Jthink_range=200.0 \
+  -t submission/tests/1-test-plans/checkout-with-coupon/23127115_Soak_20260815.jmx \
+  -l artifacts/current/results.jtl \
+  -j artifacts/current/jmeter.log \
   -e -o artifacts/current/html-report
 ```
 
@@ -199,7 +201,7 @@ PR smoke 10–20 VU, 2–5 phút chưa thể tạo bằng `-Jusers/-Jduration` t
 
 Sau đó script mới được phép gọi `-Jusers=10 -Jrampup=30 -Jduration=300`. Thay đổi JMX làm baseline cũ không còn tương đương và phải bootstrap baseline mới.
 
-### 3.6. `invoke-performance-gate.ps1`, analyzer và comparator
+### 3.6. `invoke-performance-gate.sh`, analyzer và comparator
 
 Wrapper thực hiện vòng lặp tuần tự, không chạy ba attempt song song. Khi chạy trong GitHub Actions, wrapper ghi `verdict` và `baseline_id` dạng hash ngắn, an toàn cho tên artifact, vào `$GITHUB_OUTPUT`:
 
