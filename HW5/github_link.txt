@@ -1,0 +1,26 @@
+# HW05 — Public GitHub Repository & Resource Links
+# Student: Ân Tiến Nguyên An (MSSV: 23127148)
+# Class: 23CLC08
+# Assignment: HW05 Performance Testing (EShop SUT)
+
+# 1. Main Public Repository Link:
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut
+
+# 2. Working Branch Link:
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw05/23127148-nguyenan
+
+# 3. Direct Links to Test Plans & Data Files:
+- HW05 Root Directory:
+  https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw05/23127148-nguyenan/HW5
+
+- Test Plans (.jmx files - Load, Stress, Spike, Endurance):
+  https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw05/23127148-nguyenan/HW5/Task1/test-plans
+
+- Test Data Files (Data-Driven CSV - users, categories, products):
+  https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw05/23127148-nguyenan/HW5/Task1/test-data
+
+- Raw Execution Results & .jtl Logs:
+  https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw05/23127148-nguyenan/HW5/Task1/results
+
+- Reusable Agent Skill (Performance Testing Workflow):
+  https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw05/23127148-nguyenan/.agents/skills/performance-testing
