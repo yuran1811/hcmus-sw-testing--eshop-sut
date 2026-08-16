@@ -8,15 +8,15 @@
 
 ## Endpoint Map
 
-| Category      | Method | Path                        | Purpose                                                        |
-| :------------ | :----- | :-------------------------- | :------------------------------------------------------------- |
-| auth-heavy    | POST   | `/api/login`                | Xác thực người dùng, lấy JWT token                            |
-| read-heavy    | GET    | `/api/categories`           | Lấy danh sách danh mục để chọn ngữ cảnh duyệt sản phẩm       |
-| read-heavy    | GET    | `/api/products?search=`     | Tìm kiếm sản phẩm theo từ khoá trong CSV                      |
-| transactional | POST   | `/api/cart`                 | Thêm sản phẩm vào giỏ hàng (ghi trạng thái)                   |
-| transactional | POST   | `/api/apply-coupon`         | Tính toán giá trị đơn hàng sau khi áp mã giảm giá             |
-| transactional | POST   | `/api/checkout`             | Đặt hàng — điểm transactional cuối, sinh đơn hàng mới        |
-| read-heavy    | GET    | `/api/orders/my-orders`     | Xác nhận đơn hàng vừa tạo thành công, đọc lịch sử đơn hàng   |
+| Category      | Method | Path                    | Purpose                                                    |
+| :------------ | :----- | :---------------------- | :--------------------------------------------------------- |
+| auth-heavy    | POST   | `/api/login`            | Xác thực người dùng, lấy JWT token                         |
+| read-heavy    | GET    | `/api/categories`       | Lấy danh sách danh mục để chọn ngữ cảnh duyệt sản phẩm     |
+| read-heavy    | GET    | `/api/products?search=` | Tìm kiếm sản phẩm theo từ khoá trong CSV                   |
+| transactional | POST   | `/api/cart`             | Thêm sản phẩm vào giỏ hàng (ghi trạng thái)                |
+| transactional | POST   | `/api/apply-coupon`     | Tính toán giá trị đơn hàng sau khi áp mã giảm giá          |
+| transactional | POST   | `/api/checkout`         | Đặt hàng — điểm transactional cuối, sinh đơn hàng mới      |
+| read-heavy    | GET    | `/api/orders/my-orders` | Xác nhận đơn hàng vừa tạo thành công, đọc lịch sử đơn hàng |
 
 ---
 
@@ -24,7 +24,7 @@
 
 ### Step 1 — Đăng nhập `[auth-heavy]`
 
-```
+```http
 POST /api/login
 Header:  Content-Type: application/json
 Body:    { "email": "${email}", "password": "${password}" }
@@ -40,7 +40,7 @@ Expects: 200 OK
 
 ### Step 2 — Lấy danh sách danh mục `[read-heavy]`
 
-```
+```http
 GET /api/categories
 Header:  (không bắt buộc auth theo spec; kiểm tra lại khi chạy thực tế)
 Input:   không có
@@ -54,7 +54,7 @@ Expects: 200 OK
 
 ### Step 3 — Tìm kiếm sản phẩm `[read-heavy]`
 
-```
+```http
 GET /api/products?search=${keyword}
 Header:  (không bắt buộc auth)
 Input:   ${keyword} từ CSV (keywords.csv) — VD: "áo", "giày", "túi"
@@ -70,7 +70,7 @@ Expects: 200 OK
 
 ### Step 4 — Thêm vào giỏ hàng `[transactional]`
 
-```
+```http
 POST /api/cart
 Header:  Authorization: Bearer ${access_token}
          Content-Type: application/json
@@ -90,7 +90,7 @@ Expects: 200 OK (theo spec, body là giỏ hàng đã cập nhật)
 
 ### Step 5 — Áp dụng mã giảm giá `[transactional]`
 
-```
+```http
 POST /api/apply-coupon
 Header:  Content-Type: application/json
          (spec không yêu cầu auth nhưng có trường user_id trong body)
@@ -111,7 +111,7 @@ Expects: 200 OK
 
 ### Step 6 — Đặt hàng (Checkout) `[transactional]`
 
-```
+```http
 POST /api/checkout
 Header:  Authorization: Bearer ${access_token}
          Content-Type: application/json
@@ -131,7 +131,7 @@ Expects: 201 Created  (hoặc 200 OK — xác nhận lại bằng Postman trư�
 
 ### Step 7 — Xem lịch sử đơn hàng `[read-heavy]`
 
-```
+```http
 GET /api/orders/my-orders
 Header:  Authorization: Bearer ${access_token}
 Input:   ${access_token} từ Step 1
@@ -145,44 +145,48 @@ Expects: 200 OK
 
 ## Variables and Dependencies
 
-| Biến               | Nguồn                                    | Dùng tại bước          |
-| :----------------- | :--------------------------------------- | :--------------------- |
-| `${email}`         | CSV: `users.csv` (cột `email`)           | Step 1                 |
-| `${password}`      | CSV: `users.csv` (cột `password`)        | Step 1                 |
-| `${access_token}`  | Response Step 1 → trường `token`         | Step 4, 6, 7           |
-| `${user_id}`       | Response Step 1 → trường `user.id`       | Step 5                 |
-| `${keyword}`       | CSV: `keywords.csv` (cột `keyword`)      | Step 3                 |
-| `${product_id}`    | Response Step 3 → `[0].id`              | Step 4                 |
-| `${product_name}`  | Response Step 3 → `[0].name`            | Step 4                 |
-| `${product_price}` | Response Step 3 → `[0].price`           | Step 4, 5              |
-| `${quantity}`      | CSV: `users.csv` (cột `quantity`)        | Step 4, 5              |
-| `${cart_total}`    | Tính: `product_price × quantity`         | Step 5                 |
-| `${coupon_code}`   | CSV: `users.csv` (cột `coupon_code`)     | Step 5                 |
-| `${final_amount}`  | Response Step 5 → `final_amount`         | Step 6                 |
-| `${shipping_address}` | CSV: `users.csv` (cột `shipping_address`) | Step 6             |
-| `${order_id}`      | Response Step 6 → `id` (nếu có)         | (Tuỳ chọn — dùng để verify) |
+| Biến                  | Nguồn                                     | Dùng tại bước               |
+| :-------------------- | :---------------------------------------- | :-------------------------- |
+| `${email}`            | CSV: `users.csv` (cột `email`)            | Step 1                      |
+| `${password}`         | CSV: `users.csv` (cột `password`)         | Step 1                      |
+| `${access_token}`     | Response Step 1 → trường `token`          | Step 4, 6, 7                |
+| `${user_id}`          | Response Step 1 → trường `user.id`        | Step 5                      |
+| `${keyword}`          | CSV: `keywords.csv` (cột `keyword`)       | Step 3                      |
+| `${product_id}`       | Response Step 3 → `[0].id`                | Step 4                      |
+| `${product_name}`     | Response Step 3 → `[0].name`              | Step 4                      |
+| `${product_price}`    | Response Step 3 → `[0].price`             | Step 4, 5                   |
+| `${quantity}`         | CSV: `users.csv` (cột `quantity`)         | Step 4, 5                   |
+| `${cart_total}`       | Tính: `product_price × quantity`          | Step 5                      |
+| `${coupon_code}`      | CSV: `users.csv` (cột `coupon_code`)      | Step 5                      |
+| `${final_amount}`     | Response Step 5 → `final_amount`          | Step 6                      |
+| `${shipping_address}` | CSV: `users.csv` (cột `shipping_address`) | Step 6                      |
+| `${order_id}`         | Response Step 6 → `id` (nếu có)           | (Tuỳ chọn — dùng để verify) |
 
 ---
 
 ## Edge Case Notes
 
 ### 1. Account Lockout (Khóa tài khoản)
+
 - **Hiện trạng:** Theo spec, có endpoint `POST /api/forgot-password` → hệ thống có cơ chế reset mật khẩu, ngụ ý có thể có lockout sau N lần đăng nhập sai.
 - **Rủi ro:** Nếu JMeter gửi password sai (lỗi CSV, biến rỗng), account bị khóa → toàn bộ VU dùng account đó fail.
-- **Biện pháp:** 
+- **Biện pháp:**
   - Chuẩn bị CSV với số lượng account đủ lớn (≥ VU_count × số_lần_lặp).
   - Validate CSV trước khi run để đảm bảo không có giá trị rỗng.
   - Sử dụng `perf-data-generator` skill để sinh `users.csv`.
 
 ### 2. Rate Limiting
+
 - **Hiện trạng:** Spec không đề cập rate limiting. Cần chạy thử với 10–20 VU để quan sát HTTP 429.
 - **Biện pháp:** Nếu xuất hiện 429, thêm `sleep(1)` hoặc `Timer` giữa các request.
 
 ### 3. Token Expiry (Hết hạn JWT)
+
 - **Hiện trạng:** Spec không ghi rõ TTL của token. JWT thường expire sau 1–24h.
 - **Biện pháp:** Nếu test chạy lâu (> 30 phút trong stress/endurance test), cần thêm bước refresh hoặc re-login trong script. Kiểm tra trường `exp` trong JWT payload để biết TTL thực tế.
 
 ### 4. Stateful Side Effects (Tích lũy dữ liệu)
+
 - **Vấn đề:** Mỗi lần chạy test, `POST /api/checkout` tạo 1 đơn hàng thật trong DB. Sau N VU × M vòng lặp, sẽ có rất nhiều đơn hàng rác.
 - **Chiến lược dọn dẹp:**
   - Dùng tài khoản test riêng biệt (không dùng production accounts).
@@ -190,8 +194,9 @@ Expects: 200 OK
   - Hoặc: admin endpoint `PUT /api/admin/orders/:id/status` để hủy đơn → không xóa nhưng tránh ảnh hưởng business logic.
 
 ### 5. POST /api/apply-coupon — Giới hạn sử dụng coupon
+
 - **Vấn đề:** Theo spec, coupon có thể có trường `max_uses_per_user`. Nếu giới hạn là 1 lần/user, sau lần đầu coupon sẽ bị từ chối.
-- **Biện pháp:** 
+- **Biện pháp:**
   - Dùng coupon không giới hạn (liên hệ admin tạo loại coupon test với `max_uses_per_user` = 999).
   - Hoặc bỏ qua step apply-coupon, dùng `total_amount` thô từ cart.
 

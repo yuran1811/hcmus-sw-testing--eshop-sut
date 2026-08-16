@@ -111,7 +111,7 @@ Các file `.jmx` trong repo **không yêu cầu plugin** — dùng `ThreadGroup`
 
 ## Bước 6 — Cấu trúc thư mục test
 
-```
+```text
 submission/tests/1-test-plans/checkout-with-coupon/
 ├── 23127115_Load_20260813.jmx      # Load test (50 VUs · 10 phút)
 ├── 23127115_Stress_20260813.jmx    # Stress test staged load (50 → 100 → 150 → 200 VUs)
@@ -210,14 +210,14 @@ db.run(\"UPDATE users SET login_attempts = 0, locked_until = NULL WHERE email LI
 
 > Các điểm sau cần kiểm tra bằng **Postman hoặc curl** trước khi chạy, vì JMX đã giả định một số response shape:
 
-| Vấn đề                    | Giả định trong JMX            | Cách verify                                    |
-| ------------------------- | ----------------------------- | ---------------------------------------------- |
-| Login response field name | `$.token` và `$.user.id`        | `POST /api/login` → inspect response JSON            |
-| Checkout response field   | `$.orderId`                     | `POST /api/checkout` → inspect response JSON         |
-| Checkout status code      | 200 hoặc 201 (OR assertion)     | `POST /api/checkout` → xem status code thực tế       |
-| Cart payload fields       | `{id, name, price, quantity}`   | Xem backend source hoặc test Postman                 |
-| Products search response  | Mảng JSON, `$[0].id`            | `GET /api/products?search=iPhone` → inspect          |
-| Coupon total input        | `cart_total = product × quantity` | So sánh request body với dữ liệu CSV và backend    |
+| Vấn đề                    | Giả định trong JMX                | Cách verify                                     |
+| ------------------------- | --------------------------------- | ----------------------------------------------- |
+| Login response field name | `$.token` và `$.user.id`          | `POST /api/login` → inspect response JSON       |
+| Checkout response field   | `$.orderId`                       | `POST /api/checkout` → inspect response JSON    |
+| Checkout status code      | 200 hoặc 201 (OR assertion)       | `POST /api/checkout` → xem status code thực tế  |
+| Cart payload fields       | `{id, name, price, quantity}`     | Xem backend source hoặc test Postman            |
+| Products search response  | Mảng JSON, `$[0].id`              | `GET /api/products?search=iPhone` → inspect     |
+| Coupon total input        | `cart_total = product × quantity` | So sánh request body với dữ liệu CSV và backend |
 
 ---
 
@@ -225,7 +225,7 @@ db.run(\"UPDATE users SET login_attempts = 0, locked_until = NULL WHERE email LI
 
 - `130 VUs`: ổn định, `0%` lỗi, `p95 21 ms`
 - `180 VUs`: ổn định, `0%` lỗi, `p95 20 ms`
-- `230 VUs`: vẫn `0%` lỗi nhưng `p95 75 ms`, `p99 144 ms`, cho thấy mức tăng latency đầu tiên
+- `230 VUs`: vẫn `0%` lỗi, raw `p95 35 ms`, raw `p99 84 ms`; late-run p95 tăng đến `94 ms`, cho thấy tail latency bắt đầu suy giảm
 
 Kết luận thực nghiệm hiện tại:
 
@@ -236,22 +236,18 @@ Kết luận thực nghiệm hiện tại:
 
 ## Giám sát tài nguyên trong khi test
 
-Chạy song song với JMeter để capture resource usage:
-
-```powershell
-# Windows — Task Manager (GUI)
-# Hoặc PowerShell để log theo thời gian:
-while ($true) {
-  $cpu = (Get-Counter '\Processor(_Total)\% Processor Time').CounterSamples[0].CookedValue
-  $mem = (Get-Counter '\Memory\Available MBytes').CounterSamples[0].CookedValue
-  "$(Get-Date -Format 'HH:mm:ss') CPU: $([math]::Round($cpu,1))%  RAM avail: ${mem}MB" | Tee-Object -Append perf_resource.log
-  Start-Sleep 5
-}
-```
+Chạy song song với JMeter để capture resource usage. Các lệnh dưới đây dùng Bash trên Linux/macOS hoặc môi trường có `procps`/`sysstat`:
 
 ```bash
-# Linux/macOS
+# Quan sát tương tác toàn hệ thống
 htop
-# Hoặc
-vmstat 5 > resource.log &
+
+# Hoặc ghi CPU/RAM toàn hệ thống mỗi 5 giây
+vmstat 5 | tee resource.log
+
+# Theo dõi riêng tiến trình backend Node.js nếu đã cài pidstat
+backend_pid=$(pgrep -n -f 'node backend/server.js')
+pidstat -p "$backend_pid" -r -u 5 | tee backend-resource.log
 ```
+
+Nếu lần chạy chính thức thực hiện trên Windows, vẫn có thể dùng Task Manager để chụp bằng chứng GUI; các lệnh tự động hóa và ví dụ CLI trong hồ sơ được chuẩn hóa theo Bash.
