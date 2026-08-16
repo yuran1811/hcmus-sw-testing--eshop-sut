@@ -120,3 +120,29 @@
   > 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW5/hcmus-sw-testing--eshop-sut/submission/docs/test-report/optimization-recommendations.md' cập nhật lại nội dung dựa trên 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW5/hcmus-sw-testing--eshop-sut/submission/docs/ai-report/task2/optimization-recommendations-review.md', những cái ảo giác hãy loại bỏ đi, giữ lại những cái khả thi
 - **AI output (faithful summary):** Đối chiếu review Task 2 với báo cáo đề xuất tối ưu hóa, giữ lại các đề xuất khả thi hoặc khả thi có điều kiện (index, WAL/busy timeout, parameterized query, transaction, projection/pagination, cache có kiểm soát, migration và connection pool sau migration). Loại khỏi phạm vi đề xuất trực tiếp các phương án không phù hợp với SUT hiện tại: nhiều connection/connection pool cho SQLite và horizontal scaling trực tiếp khi cart còn in-memory; JVM heap tuning không xuất hiện trong báo cáo gốc nên không được thêm vào.
 - **What the student changed/kept from this output:** Cập nhật `submission/docs/test-report/optimization-recommendations.md` từ phiên bản 1.0 lên 1.1; xóa mục thí nghiệm nhiều connection/pool cho SQLite, xóa đề xuất horizontal scaling trực tiếp, giữ connection pool chỉ như lựa chọn sau migration sang PostgreSQL/MySQL, đồng thời chỉnh mục lục, lộ trình và kết luận cho nhất quán với review.
+
+---
+
+### Entry 10
+
+- **Tool:** Codex (GPT-5)
+- **Date/time:** 2026-08-16 21:07
+- **Task context:** Task 3 - đề xuất mô hình kiểm thử hiệu năng liên tục và regression gate p95
+- **Prompt used (verbatim):**
+  > hãy đề xuất một mô hình kiểm thử hiệu năng liên tục theo dõi các commit của SUT, quyết định khi nào nên chạy kiểm thử hiệu năng, và gắn cờ các trường hợp hồi quy (regression) p95. Bao gồm một sơ đồ luồng (flow chart) và phần thảo luận về các đánh đổi (trade-offs) (chi phí, cảnh báo giả), viết các đề xuất và sơ đồ vào các file md để trong 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW5/hcmus-sw-testing--eshop-sut/submission/docs/test-report', log lại trong 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW5/hcmus-sw-testing--eshop-sut/submission/docs/ai-report/AI_Audit_Report.md'
+- **AI output (faithful summary):**
+  > AI tạo `submission/docs/test-report/continuous-performance-testing.md` và `continuous-performance-flowchart.md`. Đề xuất pipeline theo dõi commit/PR/merge/schedule/release, phân loại thay đổi bằng path và rủi ro, chạy PR smoke, Load gate, weekly Soak 180 VU hoặc full release suite. Regression p95 được so với rolling median của 5 run PASS cùng môi trường và ngưỡng tuyệt đối đã kiểm chứng; tín hiệu warning được chạy lại hai lần và chỉ fail khi lặp lại ít nhất 2/3. Tài liệu bao gồm artifact/metadata cần lưu, cách xử lý run invalid, Mermaid flow chart, biện pháp giảm cảnh báo giả, phân tích chi phí và lộ trình bật gate theo giai đoạn.
+- **What the student changed/kept from this output:** Giữ mô hình phân tầng theo rủi ro, baseline median 5 run PASS, điều kiện kép phần trăm + millisecond và cơ chế xác nhận 2/3. Sau self-review, em cập nhật bản Task 3 lên v1.3: bổ sung rolling + golden baseline, baseline key gồm scenario/sampler/JMX hash/dataset hash/backend config/runtime/runner, minimum sample rule, cancel stale job, serialized runner, hard/advisory gate mode, trusted-source guard cho self-hosted runner, và chuyển Stress/Spike sang advisory cho đến khi có đủ lịch sử clean run. Em cũng thêm kết luận Task 3 vào `submission/tests/3-test-summary/checkout-with-coupon/test-summary.md` để nối trực tiếp yêu cầu "trong phần kết luận" với các file đề xuất/flow chart/blueprint. Các con số được giữ như ngưỡng đề xuất cho môi trường kiểm thử hiện tại, không mô tả như pipeline đã triển khai thực tế.
+
+---
+
+### Entry 11
+
+- **Tool:** Codex (GPT-5)
+- **Date/time:** 2026-08-16 21:43
+- **Task context:** Task 3 - bổ sung blueprint GitHub Actions, script và JMeter CLI
+- **Prompt used (verbatim):**
+  > trong task 3 có đề xuất sử dụng github action và các test script để chạy, chạy bằng cli jmeter các thứ, cập nhật thêm nếu chưa có trong nhiệm vụ 3 của 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW5/hcmus-sw-testing--eshop-sut/submission/docs/\_requirement/HW05_Performance_Testing_VI.md'
+- **AI output (faithful summary):**
+  > AI đối chiếu Task 3 với tài liệu hiện tại và xác định yêu cầu chỉ bắt buộc một mô hình đề xuất, nhưng bản 1.1 chưa nêu cách triển khai cụ thể. AI cập nhật `continuous-performance-testing.md` lên bản 1.2, tạo `continuous-performance-ci-blueprint.md`, và mở rộng flow chart với GitHub Actions, concurrency, script chuẩn bị SUT, JMeter CLI non-GUI, phân tích JTL, baseline gate và artifact. Blueprint có workflow YAML minh họa, lệnh `jmeter -n -t -l -j -e -o`, lựa chọn self-hosted runner và lưu ý PR smoke chưa thể dùng `-Jusers` với Load JMX đang hard-code.
+- **What the student changed/kept from this output:** Giữ GitHub Actions làm orchestrator và các script dùng chung giữa local/CI; giữ raw JTL từ `-l` làm nguồn canonical. Em mở rộng blueprint thành tài liệu triển khai đề xuất gồm workflow YAML minh họa, mapping event-to-profile, runner isolation, artifact retention, baseline persistence qua golden file và rolling artifact, wrapper rerun 2/3, lệnh JMeter CLI chuẩn `jmeter -n -t -l -j -e -o`, và danh sách script PowerShell dự kiến (`classify-change`, `prepare-sut`, `run-jmeter`, `analyze-jtl`, `compare-baseline`, `publish-summary`, `stop-sut`). Ghi rõ đây chỉ là blueprint chưa chạy thật, và yêu cầu tạo Smoke JMX riêng hoặc parameterize Load JMX trước khi bật PR smoke để không mô tả sai khả năng của test plan hiện tại.
