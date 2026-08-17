@@ -150,13 +150,13 @@ Các kết quả chỉ là regression reference cho môi trường localhost nà
 | Issue hiệu năng                       | Hoàn thành (Đã đăng)     | [ISSUE-CWC-001.md](./issue-reports/ISSUE-CWC-001.md) / [GitHub Issue #293](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/293) |
 | Nhiệm vụ 2                            | Hoàn thành               | Có đầu ra AI, đánh giá của con người và đề xuất đã lọc                                                                                          |
 | Nhiệm vụ 3                            | Hoàn thành ở mức đề xuất | Có đề xuất, sơ đồ luồng và blueprint CI/CLI                                                                                                     |
-| Video demo Task 1                     | Hoàn thành               | [https://youtu.be/RM_GT7frNXw](https://youtu.be/RM_GT7frNXw)                                                                                    |
-| Video Agent Skill                     | Hoàn thành               | [https://youtu.be/9uhWSAUw3YY](https://youtu.be/9uhWSAUw3YY)                                                                                    |
+| Video demo Task 1                     | Hoàn thành               | [https://youtu.be/l4fiLiSnpyI](https://youtu.be/l4fiLiSnpyI)                                                                                    |
+| Video Agent Skill                     | Hoàn thành               | [https://youtu.be/MjByvUU5z4k](https://youtu.be/MjByvUU5z4k)                                                                                    |
 
 ## 8. Liên kết bằng chứng bổ sung
 
-1. Video Task 1: [https://youtu.be/RM_GT7frNXw](https://youtu.be/RM_GT7frNXw).
-2. Video Agent Skill: [https://youtu.be/9uhWSAUw3YY](https://youtu.be/9uhWSAUw3YY).
+1. Video Task 1: [https://youtu.be/l4fiLiSnpyI](https://youtu.be/l4fiLiSnpyI).
+2. Video Agent Skill: [https://youtu.be/MjByvUU5z4k](https://youtu.be/MjByvUU5z4k).
 3. Issue hiệu năng: [GitHub Issue #293](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/293).
 4. Nhật ký Git: [git-commit-log.txt](../../../git-commit-log.txt).
 
