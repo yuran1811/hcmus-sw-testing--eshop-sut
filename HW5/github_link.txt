@@ -24,3 +24,11 @@ https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw05/23127148-nguy
 
 - Reusable Agent Skill (Performance Testing Workflow):
   https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw05/23127148-nguyenan/.agents/skills/performance-testing
+
+# 4. Unlisted YouTube Demo Video Links:
+- Video 1 (Performance Testing & Resource Monitoring Demo — JMeter GUI):
+  https://youtu.be/2lgwT1Cp1Bc
+
+- Video 2 (Continuous Performance Testing & Agent Skill Workflow Demo):
+  https://youtu.be/i3POH-9-uHA
+

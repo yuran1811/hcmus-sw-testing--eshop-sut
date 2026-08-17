@@ -7,7 +7,8 @@
 **Giảng viên:** TS. Lâm Quang Vũ / TS. Trần Duy Hoàng / ThS. Trần Thị Bích Hạnh / ThS. Trương Phước Lộc / ThS. Hồ Tuấn Thành  
 **Ngày nộp:** 2026-08-16  
 **Repository:** [yuran1811/hcmus-sw-testing--eshop-sut](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut) — Branch: `hw05/23127148-nguyenan`  
-**Demo Video Link:** `https://youtu.be/PLACEHOLDER_DEMO_VIDEO`
+**Demo Video 1 (Performance Testing & Resource Monitor):** [https://youtu.be/2lgwT1Cp1Bc](https://youtu.be/2lgwT1Cp1Bc)  
+**Demo Video 2 (Agent Skill & CI Workflow Automation):** [https://youtu.be/i3POH-9-uHA](https://youtu.be/i3POH-9-uHA)
 
 ---
 
@@ -53,7 +54,8 @@
 | **Branch** | `hw05/23127148-nguyenan` |
 | **Công cụ kiểm thử** | Apache JMeter 5.6.3 (Java OpenJDK 17) — CLI Non-GUI Mode |
 | **Công cụ AI** | Antigravity IDE (Gemini 3.7 Flash, Claude Opus 4.6) |
-| **Demo Video** | `https://youtu.be/PLACEHOLDER_DEMO_VIDEO` |
+| **Demo Video 1 (JMeter + Resource Monitor)** | [https://youtu.be/2lgwT1Cp1Bc](https://youtu.be/2lgwT1Cp1Bc) |
+| **Demo Video 2 (Agent Skill Automation)** | [https://youtu.be/i3POH-9-uHA](https://youtu.be/i3POH-9-uHA) |
 
 ### 1.2. Báo Cáo Phần Cứng Thực Nghiệm
 

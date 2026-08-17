@@ -8,8 +8,8 @@
 - **Môn học:** Software Testing (Kiểm thử phần mềm) — FIT @ HCMUS
 - **Repository:** [yuran1811/hcmus-sw-testing--eshop-sut](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut)
 - **Branch:** `hw05/23127148-nguyenan`
-- **Demo Video Link (Performance Testing & Resource Monitor):** `https://youtu.be/PLACEHOLDER_DEMO_VIDEO`
-- **Agent Skill Demo Video Link (End-to-End Workflow Demonstration):** `https://youtu.be/PLACEHOLDER_AGENT_SKILL_DEMO`
+- **Demo Video Link (Performance Testing & Resource Monitor):** [https://youtu.be/2lgwT1Cp1Bc](https://youtu.be/2lgwT1Cp1Bc)
+- **Agent Skill Demo Video Link (End-to-End Workflow Demonstration):** [https://youtu.be/i3POH-9-uHA](https://youtu.be/i3POH-9-uHA)
 
 ---
 
