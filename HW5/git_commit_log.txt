@@ -1,3 +1,21 @@
+* commit e010bfde1a45276b7fe437ea84ce7c0966cf53e8
+| Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| Date:   Mon Aug 17 09:37:36 2026 +0700
+| 
+|     docs(hw05): update self-assessment table with Rule of Three normalized to 100
+| 
+|  HW5/README.md | 9 ++++++---
+|  1 file changed, 6 insertions(+), 3 deletions(-)
+| 
+* commit 1a93b73e84589c5049b5f3230fda37ae8972e4d0
+| Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| Date:   Mon Aug 17 09:36:01 2026 +0700
+| 
+|     chore(hw05): update git commit log snapshot
+| 
+|  HW5/git_commit_log.txt | 15 +++++++++++++++
+|  1 file changed, 15 insertions(+)
+| 
 * commit e487e8188b35f772dc5f063916cff6392e0b8f8c
 | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
 | Date:   Mon Aug 17 09:35:27 2026 +0700
