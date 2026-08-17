@@ -15,7 +15,7 @@
 
 ## 2. Bảng Tự Đánh Giá (Self-Assessment Table)
 
-> Theo thang điểm chuẩn quy định tại **Mục 15 (Assessment Template)** của đề bài HW05:
+> Theo thang điểm chuẩn quy định tại **Mục 15 (Assessment Template)** của đề bài HW05 (Tổng điểm 6 mục: 20 + 20 + 20 + 10 + 10 + 10 = **90 điểm**):
 
 | No. | Criteria / Tiêu chí đánh giá | Max Grade | Self-Assessed Grade | Ghi chú minh chứng |
 | :---: | :--- | :---: | :---: | :--- |
@@ -25,7 +25,7 @@
 | **4** | **Task 2 — AI analysis + misinterpretation hunt** (Vạch trần 5 sai lệch phân vị, 4 ngộ nhận kiến trúc, đối soát log gốc) | 10 | **10** | [Mục 4 trong Báo cáo chính](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Report/23127148_HW05_Performance_Testing_Report.md#4-task-2--ai-analysis--misinterpretation-hunt), [AI_Audit_Report.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/AI%20Submission/AI_Audit_Report.md) |
 | **5** | **Task 3 — Continuous Performance Testing proposal** (Bloom-AI G9.6 Disrupt, Smart Watcher, Dynamic Baseline, Gatekeeping Flowchart & Python CLI Guard) | 10 | **10** | [continuous_performance_testing_pipeline.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/continuous_performance_testing_pipeline.md), [p95_regression_guard.py](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/scripts/p95_regression_guard.py) |
 | **6** | **Agent Skills** (Reusable skill 8 bước, Workload Model reference, tham số hóa tổng quát) | 10 | **10** | [.agents/skills/performance-testing/SKILL.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/performance-testing/SKILL.md) |
-| **TỔNG** | **Tổng điểm tự đánh giá** | **100** | **100 / 100** | **Đạt trọn vẹn 100% tất cả các yêu cầu và ràng buộc chống gian lận** |
+| **TỔNG** | **Tổng điểm tự đánh giá** | **90** | **90 / 90** | **Đạt trọn vẹn 100% tất cả các tiêu chí đánh giá quy định (90/90 điểm)** |
 
 ---
 
@@ -91,6 +91,11 @@
 ```text
 HW5/
 ├── README.md                                # Tài liệu tổng quan & bảng tự đánh giá (File này)
+├── Video_Scripts/                           # Kịch bản phân cảnh & lời thoại chi tiết quay 2 Video nộp bài
+│   ├── VIDEO_1_PERFORMANCE_TESTING_SCRIPT.md # Kịch bản Video 1 (≥6 phút, JMeter + Resource Monitor)
+│   └── VIDEO_2_AGENT_SKILL_DEMO_SCRIPT.md    # Kịch bản Video 2 (~5 phút, End-to-End Agent Skill Demo)
+├── scripts/
+│   └── run_video_demos.ps1                  # Script PowerShell menu tự động hỗ trợ quay video mượt mà
 ├── Report/
 │   ├── 23127148_HW05_Performance_Testing_Report.md   # Báo cáo hiệu năng kỹ thuật chi tiết toàn diện (MD)
 │   └── 23127148_HW05_Performance_Testing_Report.pdf  # Báo cáo hiệu năng định dạng PDF nộp bài
