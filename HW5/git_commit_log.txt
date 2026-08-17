@@ -1,3 +1,18 @@
+* commit e487e8188b35f772dc5f063916cff6392e0b8f8c
+| Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| Date:   Mon Aug 17 09:35:27 2026 +0700
+| 
+|     docs(hw05): finalize video links, git commit log, and Task2 judging proposals
+| 
+|  HW5/Task1/test-plans/23127148_Load_20260815.jmx   |    20 +-
+|  HW5/Task1/test-plans/23127148_Spike_20260815.jmx  |    18 +-
+|  HW5/Task1/test-plans/23127148_Stress_20260815.jmx |    20 +-
+|  HW5/Task2/performance_analysis_report.md          |    30 +
+|  HW5/git_commit_log.txt                            | 14873 ++++++++++++++++++
+|  HW5/github_link.txt                               |     7 -
+|  HW5/video_link.txt                                |     6 +
+|  7 files changed, 14938 insertions(+), 36 deletions(-)
+| 
 * commit 3702880308607e03a795d064b394aa3d0ebaa0c6
 | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
 | Date:   Mon Aug 17 09:30:19 2026 +0700
