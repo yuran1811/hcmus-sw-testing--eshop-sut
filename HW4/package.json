@@ -1,0 +1,14 @@
+{
+  "name": "hw04-automation-testing",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:matrix": "node scripts/run-matrix.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^26.2.0",
+    "typescript": "^5.8.0"
+  }
+}

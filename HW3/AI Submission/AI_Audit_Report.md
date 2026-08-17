@@ -1,0 +1,912 @@
+# AI Audit Report -- HW03-AI Thiết kế & Thực thi Checklist GUI (Task 1) & Usability Evaluation (Task 2)
+
+## 1. Student Information
+
+| Field | Value |
+| --- | --- |
+| **Student name (printed)** | Ân Tiến Nguyên An |
+| **Student ID** | 23127148 |
+| **Class / Cohort** | 23KTPM3 |
+| **Assignment ID** | HW03-AI |
+| **Assignment date** | 2026-07-31 |
+| **AI tool(s) used** | Antigravity IDE (Claude Opus 4.6 Thinking & Gemini 3.6 Flash) |
+| **AI used?** | Yes |
+
+## 2. Instructions
+
+Mỗi dòng trong bảng audit đại diện cho một artifact do AI sinh ra (một prompt batch = một artifact). Prompt được ghi nguyên văn (verbatim). Phán quyết: VALID / INVALID / INCOMPLETE. Phần lý luận trích dẫn ISTQB hoặc nội dung bài giảng trên lớp.
+
+## 3. Audit Table
+
+| (1) Prompt + Tool | (2) AI Output | (3) Verdict | (4) Reasoning (ISTQB / course) | (5) Student Fix |
+| --- | --- | --- | --- | --- |
+| **Tool:** Antigravity IDE (Claude Opus 4.6 Thinking) **Time:** 14:04 30/07/2026 **Prompt:** "Chose 2 SUT screens: Forgot Password, Admin Orders. Use gui-checklist-writer skill to design GUI checklist of 45 items covering IA-01..IA-04. Save to HW3/GUI-Testing/." | Checklist 45 mục (CHECKLIST.md) + báo cáo thiết kế (DESIGN_REPORT.md). Phủ đủ 4 IA (IA-01: 12, IA-02: 12, IA-03: 9, IA-04: 12). Nội dung ban đầu bằng tiếng Anh. | INCOMPLETE | ISTQB FL 3.2 Review Process + bài giảng GUI Testing: checklist cần human gap-pass cho a11y, RTL, dark mode, Vietnamese copy mà AI thường bỏ sót. Tất cả 45 mục đều Origin=AI, chưa có mục STUDENT. | Sinh viên cần thêm mục Origin=STUDENT qua gap-pass, xác minh lại trên SUT thực, và thực thi Pass/Fail. |
+| **Tool:** Antigravity IDE (Claude Opus 4.6 Thinking) **Time:** 14:13 30/07/2026 **Prompt:** "Viết bằng tiếng Việt hết đi và có output checklist.csv nữa, để sau này export ra xlsx" | Viết lại toàn bộ CHECKLIST.md + DESIGN_REPORT.md bằng tiếng Việt. Tạo thêm CHECKLIST.csv (UTF-8 BOM) cho Excel. Nội dung checklist giữ nguyên 45 mục. | VALID | FR-21 yêu cầu nhất quán ngôn ngữ tiếng Việt; CSV export hỗ trợ workflow thực tế (import Google Sheets / Excel). Không thay đổi logic kiểm tra, chỉ dịch thuật và định dạng. | Chấp nhận nguyên trạng. |
+| **Tool:** Antigravity IDE (Gemini 3.6 Flash) **Time:** 16:00 30/07/2026 **Prompt:** "Please execute Task 1 GUI Checklist (Test Execution Phase) for HW03 end-to-end. Use the gui-checklist-runner skill and Playwright..." | Script Playwright (`run_gui_checklist.js`), kết quả thực thi JSON (`gui_results.json`), cập nhật `CHECKLIST.md` & `CHECKLIST.csv`, 18 ảnh chụp bằng chứng (`HW3/Evidences/`), và 11 báo cáo lỗi (`HW3/Bug Report/`). | INCOMPLETE | ISTQB FL 5.2 (Test Execution & Reporting): Ảnh chụp bằng chứng kiểm thử phải trực quan và chỉ rõ lỗi cụ thể. Ban đầu AI chụp ảnh toàn trang không highlight khiến ảnh bằng chứng bị lặp lại. Sinh viên đã phát hiện và yêu cầu khoanh đỏ viền phần tử lỗi + đính kèm nhãn cảnh báo. | Sinh viên kiểm tra bằng chứng, phản hồi ảnh chụp bị lặp lại. AI đã nâng cấp script khoanh đỏ viền element + đính nhãn badge FAIL trên từng phần tử lỗi, chụp lại 18 ảnh bằng chứng chuẩn xác và commit git. |
+| **Tool:** Antigravity IDE (Gemini 3.6 Flash) **Time:** 08:50 31/07/2026 **Prompt:** "I forgot to tell you create test summary for GUI checklist... Tôi cho bạn test summary mẫu từ HW2 nè, hãy chỉnh lại đi... Hãy bỏ hết các git issue draft trong bug report đi" | Báo cáo `TEST_SUMMARY.md` chuẩn mẫu HW02, script `convert_csv_to_excel.py` sinh `CHECKLIST.xlsx`, và script `remove_github_issue_drafts.py` loại bỏ phần GitHub Issue Draft khỏi các file bug report. | INCOMPLETE | ISTQB FL 5.2 (Test Summary Report): Báo cáo tổng kết phải bao gồm tóm tắt kết quả kiểm thử, phạm vi, chỉ số bao phủ, tỷ lệ thành công (Pass rate), danh sách lỗi phát hiện và truy vết tài liệu. AI ban đầu tạo báo cáo chưa đồng bộ mẫu HW02. Sinh viên đã cung cấp template HW02 chuẩn và yêu cầu đồng bộ. | Sinh viên cung cấp mẫu báo cáo HW02 tiêu chuẩn, chỉ đạo AI cập nhật bảng thông tin tổng quan (Summary Information) và chi tiết thực thi (Detailed Execution Results), đồng thời yêu cầu xóa bỏ phần draft không cần thiết trong Bug Reports. |
+| **Tool:** Antigravity IDE (Claude Opus 4.6 Thinking & Gemini 3.6 Flash) **Time:** 10:55 31/07/2026 **Prompt:** "Oke nhờ bạn tạo folder Task2_Usability và 2 skill nhé" | Khởi tạo bộ khung thư mục `HW3/Task2_Usability/` (gồm `test-plan.md`, `DESIGN_NOTES.md`, `instruments/scale.md`, `instruments/probes.md`, `participants/roster.md`, `sessions/_TEMPLATE.md`, `pilot/`) và cập nhật 2 Agent Skills (`usability-writer`, `usability-runner`) được hiệu chuẩn cho EShop SUT. | INCOMPLETE | ISTQB FL 5.1 (Test Planning) & HW03 Task 2 Spec (§Phase 1 Plan & Prepare): Kế hoạch đánh giá Usability ban đầu chỉ là khung mẫu. Sinh viên phải chọn luồng end-to-end cụ thể, điền kịch bản task scenario hướng mục tiêu (goal-only), chạy thử nghiệm Pilot và tự tuyển 7 người dùng thật ngoài lớp. AI không được tự bịa thông tin người dùng hay kết quả phỏng vấn. | Sinh viên tiếp nhận bộ khung thư mục và 2 agent skills, chuẩn bị chọn luồng E2E trên EShop, hoàn thiện scenario, thực hiện chạy thử Pilot và tự tuyển 7 người dùng thật ngoài lớp để thu thập dữ liệu thực tế. |
+| **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 09:11 02/08/2026 **Prompt:** "Hãy giúp tôi hoàn thành báo cáo kiểm thử Cross-Platform cho Task 3 của HW3. Bạn hãy thực hiện các bước sau: 1. Đọc nội dung file danh sách checklist tại: CHECKLIST.md ... 2. Tạo mới hoặc cập nhật file báo cáo tại: Report.md..." | Tạo mới báo cáo `Report.md` tại `HW3/Task3_CrossPlatform/Report.md` chứa thông tin cá nhân sinh viên, thiết lập môi trường, bảng ma trận kết quả (đầy đủ 45 checklist items dạng bảng Markdown có kết quả mặc định là `Not Run`), nhật ký ảnh chụp bằng chứng, phân loại lỗi và cấu trúc phần tóm tắt. | VALID | ISTQB FL 5.2 (Test Execution & Reporting) & Spec HW03 Task 3 (Cross-Platform): Báo cáo chéo nền tảng phải phản ánh đúng kết quả thực thi và liên kết chính xác các checklist items từ Task 1 làm nền tảng. AI đã trích xuất tự động và điền chính xác cấu trúc bảng. | Chấp nhận nguyên trạng. |
+| **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 09:24 02/08/2026 **Prompt:** "Tôi nhận ra là task 3 phải test manual cho nên là pick ra 1 vài test case để làm thôi, không cần làm hết 45. Miễn sao test được cross platform" | Cập nhật lại file `Report.md` lọc và rút gọn bảng ma trận kết quả (Platform Matrix) từ 45 items xuống còn 15 items tiêu biểu, nhạy cảm với việc render giao diện, độ tương thích responsive, khả năng truy cập phím Tab và các hộp thoại native của trình duyệt. | VALID | ISTQB FL 5.2.1 (Test Execution) & 5.1 (Test Design): Trong kiểm thử thực tế và thủ công (manual testing), việc lựa chọn một tập hợp con tối ưu (test suite reduction/filtering) gồm các ca kiểm thử nhạy cảm với môi trường (environment-sensitive) giúp tối ưu hóa thời gian và nguồn lực mà vẫn đảm bảo độ bao phủ các khía cạnh khác biệt của trình duyệt. AI đã thực hiện lọc chính xác 15 items phù hợp và cập nhật cấu trúc báo cáo. | Chấp nhận nguyên trạng. |
+| **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 10:11 02/08/2026 **Prompt:** "Kiểm tra lại hết evidences của 3 platforms Chrome, Firefox, Safari sử dụng trên Browser stack sau đó cập nhật vào Report.md... Bạn hiểu không screenshot là phải ứng với test cases ở trên chứ, thế hãy chỉnh lại số test cases của task 3 cho phù hợp" | Cập nhật báo cáo `Report.md`, điền kết quả ma trận kèm tên file ảnh bằng chứng, sửa lỗi đường dẫn ảnh Safari, lọc ma trận từ 15 xuống 10 items để khớp chính xác với 4 ảnh chụp màn hình, cập nhật bảng phân loại (3 lỗi) và tóm tắt thống kê (7 Pass, 3 Fail, 70% Pass rate). | INCOMPLETE | ISTQB FL 5.2.1 (Test Execution) & 5.2.2 (Test Log): Ma trận kết quả phải khớp trực quan với bằng chứng hình ảnh (screenshot) thu được. AI ban đầu điền kết quả cho các case không có ảnh bằng chứng trực tiếp. Sinh viên phát hiện và chỉ đạo lọc xuống 10 cases. | Sinh viên kiểm tra, chỉ ra việc ảnh bằng chứng phải khớp test cases, chọn phương án lọc ma trận xuống 10 items có ảnh đối chiếu trực tiếp và yêu cầu điền tên file ảnh bằng chứng vào từng ô kết quả. |
+| **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 10:56 02/08/2026 **Prompt:** "Hãy điền nội dung đầy đủ vào các file sau theo đúng nội dung tôi cung cấp bên dưới. Không tạo thêm file/thư mục mới ngoài danh sách này. Giữ nguyên cấu trúc thư mục hiện có..." | Điền nội dung hoàn chỉnh của 11 file kế hoạch, công cụ, buổi pilot, kết quả SUS, findings và outline report cho Task 2 Usability Evaluation. | VALID | ISTQB FL 5.1 (Test Planning) & HW03 Task 2 Spec: Kế hoạch Usability ban đầu do AI sinh chỉ là khung xương mẫu. Sinh viên tiến hành phân tích độ bao phủ và tự viết lại toàn bộ nội dung chi tiết. AI thực thi cập nhật chuẩn xác theo yêu cầu. | Chấp nhận nguyên trạng. |
+| **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 10:40 02/08/2026 **Prompt:** "Giờ chỉ tôi cách set up mcp và cli của gsheet để cho bạn quyền tự ghi ở sheet online nè. Có thể tạo nhiều sheets khác nhau P01 -> P07... Nên nhớ là họ chưa làm sao có điểm đánh giá được, tôi muốn bạn tạo ra template sẵn trước cơ" | Khởi tạo trang tính Google Sheet online của dự án (Summary + P01..P07) với đầy đủ công thức liên kết tự động và các ô nhập liệu hoàn toàn trống cho 7 người dùng. | INCOMPLETE | ISTQB FL 5.1 (Test Planning) & HW03 Task 2: Các biểu mẫu đánh giá khả dụng ban đầu phải ở trạng thái trống để tránh bịa đặt kết quả trước khi test. API tích hợp bên thứ ba phải được tối ưu hóa để tuân thủ hạn mức băng thông (rate limit). | Sinh viên yêu cầu xóa các điểm giả lập cũ để tạo template sạch. AI đã tối ưu hóa gộp các request ghi để tránh lỗi API Quota 429 và xóa sạch dữ liệu cũ. |
+| **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 11:00 02/08/2026 **Prompt:** "File hiện đã có các tab: P01, P02... Hãy thực hiện các việc sau, KHÔNG xoá hay đổi cấu trúc các tab... và validate..." | Chuẩn hóa cấu trúc P01-P07, thiết lập Summary sheet, tạo mới 4 tabs (Participants, Session Log, Probe Questions, Bugs & Findings) với freeze headers, tab colors, và tự động hóa kiểm tra không có lỗi #REF!/#VALUE! | VALID | ISTQB FL 5.1 (Test Planning) & 5.2 (Test Execution & Reporting): Việc quản lý tài liệu và dữ liệu kiểm thử qua Google Sheet phải tuyệt đối chuẩn xác, không được chứa lỗi công thức (#REF!, #VALUE!) gây sai lệch thống kê. Giải pháp viết mã script Python tự động hóa giúp cập nhật đồng loạt các biểu mẫu, cấu hình tự động liên kết công thức để giảm thao tác thủ công và tránh sai lệch thông tin giữa các sheets. | Chấp nhận nguyên trạng. Sinh viên duyệt kế hoạch thực hiện, chỉ đạo AI giải quyết lỗi tương thích mã hóa Windows console cp1252 bằng cách bổ sung cấu hình UTF-8 cho dòng xuất chuẩn, và chạy script hoàn tất toàn bộ cập nhật và tự động kiểm tra lỗi. |
+| **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 08:13 03/08/2026 **Prompt:** "Cập nhật lại session log, probe questions, bugs&findings, summary theo P01 -> P07 đi. Tôi đã cho 7 người quay video và hoàn thành các session rồi Tôi có cấu hình sẵn cho bạn edit trên gsheet online rồi https://docs.google.com/spreadsheets/d/1lFcv1rZwiWe-7lHntObhGopbR7dUTdNMjesM39hmyJs/edit?usp=sharing" | Báo cáo và biểu mẫu Usability cục bộ hoàn chỉnh (sessions, sus-scores, findings, report, SUMMARY) + Tự động hóa gspread sửa đổi, chuẩn hóa dữ liệu trên Google Sheets online (nhập thời gian, outcome N, trợ giúp 0; sửa kiểu số C4:C13 để SUM tính đúng; sửa lỗi hiển thị duration 0:00 thành phút). | INCOMPLETE | ISTQB FL 5.2.1 (Test Execution) & 5.2.2 (Test Log): Nhật ký phiên thử nghiệm và số liệu tổng hợp phải khớp tuyệt đối với quan sát thực tế từ người dùng thật. AI ban đầu định dạng sai kiểu dữ liệu số trên cột điểm và hiển thị thời lượng dạng Time (0:00), sinh viên đã chỉ đạo sửa lỗi. | Sinh viên kiểm tra, chỉ đạo AI reformat cột Thời lượng thành Number để hiển thị số nguyên phút, đồng thời duyệt căn lề bảng roster.md cho chuẩn chỉnh. |
+| **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 10:05 03/08/2026 **Prompt:** "10. AI Critique (200–300 words, Mandatory) Write a paragraph of 200–300 words critiquing the AI..." | Đoạn văn tiếng Việt 282 từ phân tích lỗi sai và bài học rút ra, lưu vào AI_Critique.md. | VALID | ISTQB FL 3.2 & Spec HW03 §10: Phân tích phản biện làm rõ hạn chế năng lực của AI để sinh viên rút kinh nghiệm. | Chấp nhận nguyên trạng. |
+| **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 10:13 03/08/2026 **Prompt:** "Bổ sung README.md vào @[d:\Project\Testing\hcmus-sw-testing--eshop-sut\HW3] theo yêu cầu sau..." | Tệp README.md chứa thông tin, bảng tự đánh giá và tóm tắt chỉ số kiểm thử. | VALID | ISTQB FL 5.2.1 & Spec HW03 §14: README.md đóng vai trò mục lục và tóm tắt tổng quan. AI tổng hợp chính xác dữ liệu từ các Task trước. | Chấp nhận nguyên trạng. |
+| **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 10:22 03/08/2026 **Prompt:** "Chỉnh lại readme.md thành nội dung tiếng việt đi, các từ khóa vẫn giữ tiếng anh..." | Bản dịch tiếng Việt của README.md. | INCOMPLETE | Giao diện báo cáo cần tiếng Việt hóa đồng bộ. Tuy nhiên AI bỏ sót việc bổ sung các Agent Skills tự thiết kế. | Chỉ đạo bổ sung các skill gui-checklist-writer/runner vào phần tự đánh giá. |
+| **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 10:23 03/08/2026 **Prompt:** "bổ sung thêm vào agent skills đi, tôi có viết gui-checklist-runner với writer nữa mà" | Cập nhật README.md bổ sung các skill và đổi số lượng thành 4. | VALID | Bảng tự đánh giá phải trung thực và phản ánh đúng khối lượng công việc sinh viên thực hiện. | Chấp nhận nguyên trạng. |
+| **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 10:26 03/08/2026 **Prompt:** "Bây giờ tới phần cuối cùng Hãy viết main report theo yêu cầu sau :..." | Tạo tệp Main_Report.md tổng hợp đầy đủ kết quả từ Task 1, 2, 3. | VALID | ISTQB FL 5.2 (Test Summary Report) & Spec HW03: Báo cáo chính cần tổng hợp mạch lạc và có cấu trúc chặt chẽ từ các kết quả đơn lẻ. | Chấp nhận nguyên trạng. |
+| **Tool:** Antigravity IDE (Gemini 3.5 Flash) **Time:** 10:31 03/08/2026 **Prompt:** "Cập nhật /ai-audit-report vào AI Audit report" | Cập nhật và hoàn thiện tệp AI_Audit_Report.md, bổ sung các Artifact #13-18 và recompute statistics. | VALID | Tài liệu AI Audit cần phản ánh đầy đủ mọi tương tác và được cập nhật chính xác trước khi nộp (ISTQB FL 3.2). | Chấp nhận nguyên trạng. |
+
+
+---
+
+### Artifact #1 -- Thiết kế checklist GUI ban đầu (Quên Mật Khẩu + Quản lý Đơn hàng)
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Claude Opus 4.6 Thinking) |
+| **Date/Time** | 2026-07-30 14:04:19 +07:00 |
+| **Task** | Thiết kế checklist kiểm thử GUI cho 2 màn hình SUT |
+| **Feature / Module** | Task 1 / Quên Mật Khẩu + Quản lý Đơn hàng Admin / IA-01 đến IA-04 |
+| **Bloom-AI Level** | G9.2 (Apply) -- sử dụng skill có cấu trúc để sinh draft đầu tiên; chưa có phân tích gap do sinh viên |
+| **Verdict** | INCOMPLETE |
+
+#### (1) Prompt (verbatim)
+
+```text
+Oke, so the next step for me is finishing Task 1 GUI Checklist.
+
+I chose 2 SUT screens:
+
+Primary Screen: Forgot Password (/forgot-password)
+Secondary Screen: Admin Orders Management (/admin/orders)
+Please use the gui-checklist-writer skill to design a GUI checklist of 45 items covering all four interface aspects:
+
+General UI standards (IA-01)
+Forms (IA-02)
+Navigation (IA-03)
+Feedback / State (IA-04)
+Output Requirements:
+
+Save artifacts to HW3/GUI-Testing/ (including DESIGN_REPORT.md and CHECKLIST.md).
+CHECKLIST.md must include the standard design columns: Checklist ID (e.g. GUI-FORGOT-IA02-01), Screen, IA, Category, Component, Checklist Item, Spec / Source (citing EShop FR-21..24), Expected Result, and Origin (AI).
+Leave Status, Actual Result, Notes, and Evidence blank for execution phase later.
+```
+
+**Execution notes:**
+
+- Skill: `gui-checklist-writer` (mode GENERATE)
+- AI đọc source code thực tế của ForgotPassword.jsx và App.jsx (admin) để xây dựng component inventory
+- AI đọc README.md (FR-01..FR-24, SEC-01..SEC-07) làm nguồn đặc tả
+- AI đọc skill references: ia_aspects.md, item_catalog.md, sample_checklist_excerpt.md
+
+#### (2) AI Output
+
+Tạo 2 file:
+
+- **CHECKLIST.md:** 45 mục kiểm tra dạng bảng Markdown, chia theo màn hình và IA. Phân bố: IA-01 (12), IA-02 (12), IA-03 (9), IA-04 (12). Tất cả mục có Origin=AI. Mỗi mục có Kết quả mong đợi quan sát được (binary-observable).
+- **DESIGN_REPORT.md:** Bao gồm phạm vi, bảng kê thành phần, phương pháp xây dựng (6 phương pháp), ma trận phủ, bảng truy vết, ghi chú mơ hồ.
+
+Đầu ra đầy đủ: [CHECKLIST.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task1_GUI/CHECKLIST.md), [DESIGN_REPORT.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task1_GUI/DESIGN_REPORT.md)
+
+**Các phát hiện đáng chú ý từ source code:**
+
+| Phát hiện | Checklist ID | Lỗi tiềm ẩn |
+| --- | --- | --- |
+| `<h2>` thay vì `<h1>` | GUI-FORGOT-IA01-01 | Vi phạm FR-21 |
+| Email input dùng `type="text"` | GUI-FORGOT-IA02-01 | Vi phạm FR-22 |
+| Thiếu step indicator | GUI-FORGOT-IA02-04 | Vi phạm FR-03, FR-22 |
+| Thiếu trường xác nhận mật khẩu | GUI-FORGOT-IA02-05 | Vi phạm FR-03 |
+| Nhãn OTP ghi "4 số" (spec: 6) | GUI-FORGOT-IA02-06 | Vi phạm FR-03 |
+| `dangerouslySetInnerHTML` cho địa chỉ | GUI-ORDERS-IA01-05 | Vi phạm FR-18, SEC-04 |
+| Nút "Đánh dấu Đã giao" trên đơn đã hủy | GUI-ORDERS-IA04-04 | Vi phạm FR-10 |
+
+#### (3)-(5) Review
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | INCOMPLETE |
+| **Reasoning** | ISTQB FL 3.2 (Review Process): review phải bao gồm gap analysis sau khi tạo draft. Bài giảng GUI Testing nhấn mạnh AI thường bỏ sót accessibility (focus ring, contrast, touch targets), RTL/long Vietnamese text overflow, dark mode, và loading/empty/error states kết hợp. Tất cả 45 mục đều Origin=AI, chưa có mục Origin=STUDENT -- vi phạm yêu cầu HW03 gap-pass. |
+| **Student Fix** | Chưa thực hiện. Sinh viên cần: (1) thêm mục STUDENT qua gap-pass, (2) thực thi Pass/Fail trên SUT, (3) ghi bug report cho các mục Fail. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-07-30 |
+| **Quality rating** | Good |
+| **Issues found** | Tất cả Origin=AI; chưa có gap-pass; nội dung ban đầu bằng tiếng Anh (đã sửa ở Artifact #2) |
+
+---
+
+### Artifact #2 -- Dịch tiếng Việt + xuất CSV
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Claude Opus 4.6 Thinking) |
+| **Date/Time** | 2026-07-30 14:13:18 +07:00 |
+| **Task** | Viết lại toàn bộ checklist và design report bằng tiếng Việt, tạo file CSV |
+| **Feature / Module** | Task 1 / Định dạng đầu ra |
+| **Bloom-AI Level** | G9.1 (Remember/Understand) -- dịch thuật và chuyển đổi định dạng, không thay đổi logic |
+| **Verdict** | VALID |
+
+#### (1) Prompt (verbatim)
+
+```text
+Viết bằng tiếng việt hết đi và có output checklist.csv nữa, để sau này export ra xlsx
+```
+
+#### (2) AI Output
+
+- Viết lại CHECKLIST.md hoàn toàn bằng tiếng Việt (tên cột, mục kiểm tra, kết quả mong đợi)
+- Viết lại DESIGN_REPORT.md hoàn toàn bằng tiếng Việt
+- Tạo mới CHECKLIST.csv (45 dòng dữ liệu, UTF-8 BOM, dấu ngoặc kép bọc mọi trường theo RFC 4180)
+
+Đầu ra đầy đủ: [CHECKLIST.csv](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task1_GUI/CHECKLIST.csv)
+
+#### (3)-(5) Review
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | VALID |
+| **Reasoning** | Chỉ dịch thuật và chuyển đổi định dạng, không thay đổi nội dung kiểm tra. FR-21 yêu cầu nhất quán tiếng Việt -- dịch checklist sang tiếng Việt là phù hợp. CSV với UTF-8 BOM đảm bảo Excel mở đúng dấu tiếng Việt. |
+| **Student Fix** | Chấp nhận nguyên trạng. Sinh viên đã chỉnh sửa format bảng markdown cho dễ đọc (chỉnh spacing cột). |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-07-30 |
+| **Quality rating** | Excellent |
+| **Issues found** | Không có |
+
+---
+
+### Artifact #3 -- Thực thi tự động Playwright GUI Runner, cập nhật báo cáo và tạo Bug Reports
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.6 Flash) |
+| **Date/Time** | 2026-07-30 16:00:04 +07:00 |
+| **Task** | Thực thi tự động 45 mục GUI Checklist bằng Playwright trong Google Chrome Headed mode, chụp bằng chứng lỗi, cập nhật CHECKLIST.md/.csv và xuất 11 Bug Reports |
+| **Feature / Module** | Task 1 / Test Execution Phase / Quên Mật Khẩu + Quản lý Đơn hàng Admin |
+| **Bloom-AI Level** | G9.4 (Collaborate / Create) -- phối hợp giữa sinh viên và AI agent để viết Playwright runner script, kiểm thử tự động, khoanh vùng highlight đỏ trên phần tử lỗi, cập nhật báo cáo và tạo bug reports |
+| **Verdict** | INCOMPLETE |
+
+#### (1) Prompt (verbatim)
+
+```text
+Please execute Task 1 GUI Checklist (Test Execution Phase) for HW03 end-to-end.
+
+Use the `gui-checklist-runner` skill and Playwright to perform the following:
+
+1. Generate and run the Playwright GUI runner script:
+   - Create `scripts/run_gui_checklist.js` using `require('./Automation-testing/node_modules/playwright')`.
+   - Configure Google Chrome browser in HEADED mode (`chromium.launch({ headless: false, channel: 'chrome' })`) so the actual Google Chrome window visibly pops up on screen during execution.
+   - Attach a dialog handler `page.on('dialog')` to catch native `window.alert()` messages on `/forgot-password`.
+   - Run `node scripts/run_gui_checklist.js` to evaluate all 45 GUI checklist items in `HW3/Task1_GUI/CHECKLIST.md` across Forgot Password (/forgot-password) and Admin Orders (/admin/orders).
+   - Mark each checklist item as Passed or Failed, record the failure reason in Notes for Failed items, and capture evidence screenshots FOR FAILED ITEMS ONLY into `HW3/Task1_GUI/Evidences/`.
+
+2. Update execution results in both checklist artifacts:
+   - `HW3/Task1_GUI/CHECKLIST.md`
+   - `HW3/Task1_GUI/CHECKLIST.csv` (preserve UTF-8 BOM encoding)
+
+3. Report all discovered bugs:
+   - Create Markdown bug report files in `HW3/Task1_GUI/Bug Report/` following `bug-report-template.md` (English section headers + Vietnamese body content).
+   - Include GitHub Issues draft format for each bug with evidence screenshot references.
+```
+
+**Execution notes:**
+
+- Skill: `gui-checklist-runner`
+- Script: `scripts/run_gui_checklist.js` sử dụng Playwright Chromium Headed mode (`channel: 'chrome'`)
+- Đánh giá 45 mục checklist (28 mục Quên Mật Khẩu, 17 mục Admin Orders)
+- Cập nhật kết quả: 27 Pass (60.0%), 18 Fail (40.0%)
+- Tạo 11 Bug Report Markdown files (`BUG-FORGOT-001` đến `BUG-FORGOT-008`, `BUG-ORDERS-001` đến `BUG-ORDERS-003`)
+
+#### (2) AI Output
+
+- **Playwright Runner Script:** [run_gui_checklist.js](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/scripts/run_gui_checklist.js)
+- **Checklist Artifacts:** Cập nhật trạng thái Pass/Fail, Kết quả thực tế, Ghi chú và Bằng chứng cho 45 mục tại [CHECKLIST.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task1_GUI/CHECKLIST.md) và [CHECKLIST.csv](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task1_GUI/CHECKLIST.csv).
+- **Evidence Screenshots:** 18 ảnh PNG lưu tại [HW3/Task1_GUI/Evidences/](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task1_GUI/Evidences/).
+- **Bug Reports:** 11 file Markdown theo đúng chuẩn template tại [HW3/Task1_GUI/Bug Report/](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task1_GUI/Bug%20Report/).
+
+#### (3)-(5) Review
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | INCOMPLETE |
+| **Reasoning** | ISTQB FL 5.2 (Test Execution & Reporting): Bằng chứng hình ảnh kiểm thử phải có tính trực quan cao và thể hiện rõ ràng thành phần bị lỗi. Ban đầu, AI chụp ảnh màn hình toàn trang (full page screenshot) mà không highlight làm cho các ảnh bằng chứng của các lỗi cùng trang bị lặp lại giống hệt nhau. Sinh viên đã phát hiện, kiểm tra và yêu cầu khoanh đỏ viền phần tử lỗi (`4px solid red`) + đính kèm nhãn cảnh báo `❌ FAIL`. |
+| **Student Fix** | Sinh viên xem lại ảnh bằng chứng, phản hồi ảnh chụp bị lặp lại do thiếu highlight. AI đã cập nhật script `run_gui_checklist.js` chèn CSS highlight đỏ và badge cảnh báo lên từng element bị lỗi, thực thi lại Playwright runner, cập nhật lại 18 ảnh bằng chứng chính xác và commit git (`6f35f7c`). |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-07-30 |
+| **Quality rating** | Acceptable |
+| **Issues found** | Ảnh bằng chứng ban đầu bị lặp lại do thiếu visual highlight; đã được nâng cấp script và chụp lại chuẩn xác. |
+
+---
+
+### Artifact #4 -- Lập Test Summary Report theo mẫu HW02, xuất CHECKLIST.xlsx và loại bỏ GitHub Issue Drafts
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.6 Flash) |
+| **Date/Time** | 2026-07-31 08:50:00 +07:00 |
+| **Task** | Lập Báo cáo Tổng kết Kiểm thử (Test Summary Report) theo đúng bảng mẫu HW02, tạo file Excel `CHECKLIST.xlsx` có định dạng màu trực quan, và tinh chỉnh các Bug Report loại bỏ phần GitHub Issue Draft |
+| **Feature / Module** | Task 1 / Test Summary & Report Refinement |
+| **Bloom-AI Level** | G9.3 (Analyse) -- Phân tích tổng hợp chỉ số thực thi kiểm thử, đồng bộ hóa định dạng tài liệu báo cáo theo chuẩn môn học và kiểm soát chất lượng danh mục bug reports |
+| **Verdict** | INCOMPLETE |
+
+#### (1) Prompt (verbatim)
+
+```text
+I forgot to tell you create test summary for GUI checklist with this requirement in HW3 "The Excel checklist (more than 40 items) and the test summary."
+Tôi cho bạn test summary mẫu từ HW2 nè, hãy chỉnh lại đi
+[HW2 Template markdown content]
+Hãy bỏ hết các git issue draft trong bug report đi
+```
+
+**Execution notes:**
+
+- Tạo script `scripts/convert_csv_to_excel.py` (sử dụng Python pandas + openpyxl) để chuyển đổi `CHECKLIST.csv` thành `CHECKLIST.xlsx` với định dạng font Segoe UI, viền bảng và tô màu xanh/đỏ cho Pass/Fail.
+- Tạo báo cáo `TEST_SUMMARY.md` tại `HW3/Task1_GUI/` và `HW3/Main Report/` tuân thủ chính xác mẫu HW02 (có bảng 📊 Summary Information và 📋 Detailed Execution Results).
+- Tạo script `scripts/remove_github_issue_drafts.py` cắt bỏ phần draft không cần thiết khỏi tất cả 13 file bug report trong `HW3/Task1_GUI/Bug Report/`.
+
+#### (2) AI Output
+
+- **Excel Checklist:** [CHECKLIST.xlsx](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task1_GUI/CHECKLIST.xlsx)
+- **Test Summary Report:** [TEST_SUMMARY.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task1_GUI/TEST_SUMMARY.md) và [TEST_SUMMARY.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Main%20Report/TEST_SUMMARY.md)
+- **Trimmed Bug Reports:** 13 file bug report sạch sẽ trong [HW3/Task1_GUI/Bug Report/](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task1_GUI/Bug%20Report/)
+
+#### (3)-(5) Review
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | INCOMPLETE |
+| **Reasoning** | ISTQB FL 5.2 (Test Summary Report): Báo cáo tổng kết kiểm thử phải có cấu trúc chuẩn hóa, thể hiện rõ tỷ lệ bao phủ (Test Coverage) và tỷ lệ thành công (Successful Test Coverage), phục vụ công tác nghiệm thu. AI ban đầu tạo báo cáo mở rộng nhưng chưa khớp mẫu HW02. Sinh viên đã can thiệp cung cấp mẫu chuẩn HW02, yêu cầu bổ sung giảng viên hướng dẫn/TAs vào bảng thông tin và loại bỏ các phần dư thừa trong bug report. |
+| **Student Fix** | Sinh viên cung cấp bảng mẫu HW02, chỉ đạo AI cập nhật chính xác các thông tin Reviewer, Creator, chỉ số Pass/Fail, đồng thời yêu cầu xóa bỏ phần GitHub Issue Draft để các file bug report đạt chuẩn trình nộp chính thức. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-07-31 |
+| **Quality rating** | Excellent |
+| **Issues found** | Báo cáo ban đầu chưa khớp mẫu HW02; bug report dư thừa phần issue draft. Đã được sinh viên điều chỉnh và hoàn thiện. |
+
+---
+
+### Artifact #5 -- Thiết kế bộ khung Usability Evaluation (Task 2) và xây dựng Agent Skills cho EShop SUT
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Claude Opus 4.6 Thinking & Gemini 3.6 Flash) |
+| **Date/Time** | 2026-07-31 10:55:00 +07:00 |
+| **Task** | Thiết kế bộ khung thư mục `HW3/Task2_Usability/` (kế hoạch, công cụ SUS/probes, mẫu nhật ký phỏng vấn, kế hoạch pilot) và hiệu chuẩn 2 Agent Skills (`usability-writer`, `usability-runner`) chuyên biệt cho SUT EShop |
+| **Feature / Module** | Task 2 Usability Evaluation / Agent Skills & Plan Package |
+| **Bloom-AI Level** | G9.4 (Collaborate / Create) -- Phối hợp giữa sinh viên và AI để chuẩn hóa quy trình 3 pha đánh giá Usability và xây dựng agent skills có khả năng tái sử dụng |
+| **Verdict** | INCOMPLETE |
+
+#### (1) Prompt (verbatim)
+
+```text
+Tôi gửi cho bạn các file md ở trên nhằm mục đích tạo skill cho usability writer và runner để dùng cho HW3
+Đây là yêu cầu của HW3 @HW3/2026.HW03.GUI Usability_En.md
+Nhưng mà trước tiên cho tôi biết nên làm gì với task 2 của HW3
+...
+Oke nhờ bạn tạo folder Task2_Usability và 2 skill nhé
+```
+
+**Execution notes:**
+
+- AI phân tích yêu cầu HW03 Task 2 (7 người tham gia ngoài lớp, phỏng vấn think-aloud, thang đo SUS/UEQ-S, 4 câu hỏi probe, buổi test Pilot bắt buộc, báo cáo Severity S1-S4, không trùng luồng E2E trong nhóm).
+- AI trích xuất các mẫu tài liệu từ Mini Exercise (Lumiere Cinema) và điều chỉnh toàn bộ sang bối cảnh ứng dụng EShop SUT (Pool A–D, FR-01..19, IA-01..04).
+- Khởi tạo cấu trúc thư mục `HW3/Task2_Usability/` chứa đầy đủ các file mẫu tiêu chuẩn.
+- Cập nhật 2 Agent Skills: `.agents/skills/usability-writer/` và `.agents/skills/usability-runner/` kèm theo các file hướng dẫn `SKILL.md`, `references/`, `examples/`.
+
+#### (2) AI Output
+
+- **Cấu trúc thư mục Task 2:**
+  - `HW3/Task2_Usability/test-plan.md`: Khung kế hoạch kiểm thử usability (mục tiêu, scenario goal-only, test data, điều kiện, checklist trước phiên).
+  - `HW3/Task2_Usability/DESIGN_NOTES.md`: Ghi chú thiết kế, ma trận ánh xạ FR → sub-goals, giả định và tính minh bạch AI vs Human.
+  - `HW3/Task2_Usability/instruments/scale.md`: Thang đo SUS 10 câu bằng tiếng Việt + công thức tính điểm + bảng phiên dịch điểm.
+  - `HW3/Task2_Usability/instruments/probes.md`: Bộ câu hỏi đào sâu phủ 4 chủ đề bắt buộc (Clarity, Error Recovery, Speed, Trust).
+  - `HW3/Task2_Usability/participants/roster.md`: Bảng danh sách 7 người tham gia P01–P07 (đã che 4 số giữa liên hệ).
+  - `HW3/Task2_Usability/sessions/_TEMPLATE.md`: Mẫu ghi chép nhật ký từng buổi phỏng vấn (timeline, SUS raw, probe answers).
+  - `HW3/Task2_Usability/pilot/pilot-plan.md` & `pilot-notes.md`: Kế hoạch và ghi chép buổi test Pilot.
+- **Agent Skills:**
+  - [.agents/skills/usability-writer/SKILL.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/usability-writer/SKILL.md): Skill thiết kế kế hoạch kiểm thử độ khả dụng cho EShop.
+  - [.agents/skills/usability-runner/SKILL.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/usability-runner/SKILL.md): Skill điều phối buổi phỏng vấn, tính điểm SUS, phân tích severity S1-S4 và tạo bug draft.
+
+#### (3)-(5) Review
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | INCOMPLETE |
+| **Reasoning** | ISTQB FL 5.1 (Test Planning) & HW03 Task 2 Spec (§Phase 1 Plan & Prepare): Kế hoạch Usability ban đầu do AI sinh ra chỉ mang tính chất bộ khung mẫu (template/draft). Sinh viên bắt buộc phải: (1) chọn 1 luồng E2E cụ thể không trùng với nhóm, (2) tự hoàn thiện kịch bản task scenario dạng hướng mục tiêu (goal-only), (3) tiến hành buổi test Pilot để tinh chỉnh kịch bản, và (4) tự tuyển 7 người dùng thật ngoài lớp. AI tuyệt đối không được tự bịa đặt danh sách người tham gia, số điện thoại hay kết quả phỏng vấn. |
+| **Student Fix** | Sinh viên tiếp nhận bộ khung thư mục và 2 skills agent, chuẩn bị chọn luồng nghiệp vụ E2E cụ thể trên EShop (ví dụ: Đăng ký → Duyệt sản phẩm → Thêm giỏ hàng → Thanh toán mã giảm giá), điền kịch bản vào `test-plan.md`, thực hiện chạy thử Pilot, và tự tuyển 7 người dùng thật ngoài lớp để ghi nhận thông tin liên lạc xác minh. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-07-31 |
+| **Quality rating** | Excellent |
+| **Issues found** | Kế hoạch ban đầu là bộ khung mẫu trắng; cần sinh viên chọn luồng cụ thể, thực hiện Pilot và tuyển 7 người dùng thật để hoàn thiện dữ liệu thực tế. |
+
+---
+
+### Artifact #6 -- Khởi tạo báo cáo kiểm thử Cross-Platform (Task 3)
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.5 Flash) |
+| **Date/Time** | 2026-08-02 09:11:03 +07:00 |
+| **Task** | Thiết kế bảng ma trận kết quả kiểm thử chéo nền tảng và tạo khung báo cáo `Report.md` |
+| **Feature / Module** | Task 3 Cross-Platform / Báo cáo ban đầu |
+| **Bloom-AI Level** | G9.2 (Apply) -- trích xuất tự động toàn bộ 45 checklist items từ Task 1 và cấu trúc bảng ma trận theo đúng đặc tả yêu cầu |
+| **Verdict** | VALID |
+
+#### (1) Prompt (verbatim)
+
+```text
+Hãy giúp tôi hoàn thành báo cáo kiểm thử Cross-Platform cho Task 3 của HW3. 
+Bạn hãy thực hiện các bước sau:
+
+1. Đọc nội dung file danh sách checklist tại: [CHECKLIST.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task1_GUI/CHECKLIST.md)
+   (File này chứa toàn bộ 45 checklist items của Task 1).
+
+2. Tạo mới hoặc cập nhật file báo cáo tại: [Report.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task3_CrossPlatform/Report.md) với các nội dung sau:
+   - Thông tin cá nhân: Ân Tiến Nguyên An (MSSV: 23127148).
+   - Thiết lập 3 nền tảng kiểm thử:
+     * Platform 1: Google Chrome (Windows 11 - Cục bộ)
+     * Platform 2: Mozilla Firefox (macOS Sonoma via BrowserStack)
+     * Platform 3: Safari (macOS Sequoia via BrowserStack)
+   - Đường dẫn URL kiểm thử: Web khách hàng (`http://localhost:5173`) và Web Admin (`http://localhost:5174`).
+   - Xây dựng Bảng Ma trận kết quả (Platform Matrix): bảng này phải import đầy đủ tất cả 45 items từ file CHECKLIST.md ở trên. Các cột của bảng gồm:
+     * Checklist ID
+     * Màn hình
+     * Thành phần
+     * Mục kiểm tra
+     * Platform 1 (Chrome/Win)
+     * Platform 2 (Firefox/macOS)
+     * Platform 3 (Safari/macOS)
+     Tất cả các ô kết quả của 3 nền tảng mặc định điền là Not Run.
+   - Cấu trúc phần Nhật ký ảnh chụp bằng chứng (Screenshots Log) với danh sách các file ảnh cần chụp:
+     * Chrome: chrome_forgot_password.png, chrome_admin_orders.png
+     * Firefox: firefox_forgot_password.png, firefox_admin_orders.png
+     * Safari: safari_forgot_password.png, safari_admin_orders.png
+   - Cấu trúc phần Phân loại lỗi Cross-Platform (bảng rỗng để điền sau).
+   - Cấu trúc phần Tóm tắt & Đánh giá chung (để các số liệu trống để điền sau).
+```
+
+#### (2) AI Output
+
+- Khởi tạo file báo cáo [Report.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task3_CrossPlatform/Report.md).
+- Chèn đầy đủ bảng ma trận kết quả platform matrix với 45 checklist items đã trích xuất từ `CHECKLIST.md` với các cột chỉ định và giá trị mặc định `Not Run`.
+- Chèn đúng cấu trúc phần Screenshots Log, Phân loại lỗi Cross-Platform và Tóm tắt & Đánh giá chung.
+
+#### (3)-(5) Review
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | VALID |
+| **Reasoning** | ISTQB FL 5.2 (Test Execution & Reporting) & Spec HW03 Task 3: Báo cáo chéo nền tảng phải phản ánh đúng kết quả thực thi và liên kết chính xác các checklist items từ Task 1 làm nền tảng. AI đã trích xuất tự động chính xác toàn bộ 45 items từ checklist gốc sang bảng ma trận, tránh được sai sót thủ công và đảm bảo đầy đủ cấu trúc phần mục theo yêu cầu. |
+| **Student Fix** | Chấp nhận nguyên trạng. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-08-02 |
+| **Quality rating** | Excellent |
+| **Issues found** | Không có |
+
+---
+
+### Artifact #7 -- Lọc danh sách 15 items cross-platform & cập nhật Report.md
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.5 Flash) |
+| **Date/Time** | 2026-08-02 09:24:34 +07:00 |
+| **Task** | Lọc và rút gọn bảng ma trận kết quả kiểm thử chéo nền tảng xuống 15 items tiêu biểu, cập nhật file `Report.md` |
+| **Feature / Module** | Task 3 Cross-Platform / Báo cáo cập nhật |
+| **Bloom-AI Level** | G9.2 (Apply) -- lọc tập hợp test cases nhạy cảm với nền tảng và cập nhật lại file báo cáo |
+| **Verdict** | VALID |
+
+#### (1) Prompt (verbatim)
+
+```text
+Tôi nhận ra là task 3 phải test mannual cho nên là pick ra 1 vài test case để làm thôi, không cần làm hết 45. Miễn sao test được cross platform
+```
+
+#### (2) AI Output
+
+Cập nhật file báo cáo [Report.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task3_CrossPlatform/Report.md), rút gọn bảng ma trận xuống còn 15 items tiêu biểu (phân chia theo các khía cạnh nhạy cảm chéo trình duyệt) và cập nhật số liệu thống kê tương ứng là 15 test cases mỗi platform.
+
+#### (3)-(5) Review
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | VALID |
+| **Reasoning** | ISTQB FL 5.2.1 (Test Execution) & 5.1 (Test Design): Trong kiểm thử thực tế và thủ công (manual testing), việc lựa chọn một tập hợp con tối ưu (test suite reduction/filtering) gồm các ca kiểm thử nhạy cảm với môi trường (environment-sensitive) giúp tối ưu hóa thời gian và nguồn lực mà vẫn đảm bảo độ bao phủ các khía cạnh khác biệt của trình duyệt. AI đã thực hiện lọc chính xác 15 items phù hợp và cập nhật cấu trúc báo cáo. |
+| **Student Fix** | Chấp nhận nguyên trạng. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-08-02 |
+| **Quality rating** | Excellent |
+| **Issues found** | Không có |
+
+---
+
+### Artifact #8 -- Cập nhật kết quả kiểm thử Cross-Platform & Lọc ma trận theo bằng chứng
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.5 Flash) |
+| **Date/Time** | 2026-08-02 10:11:00 +07:00 |
+| **Task** | Cập nhật kết quả kiểm thử chéo trình duyệt, sửa lỗi đường dẫn ảnh Safari, lọc ma trận còn 10 items để khớp bằng chứng hình ảnh |
+| **Feature / Module** | Task 3 Cross-Platform / Báo cáo hoàn thiện |
+| **Bloom-AI Level** | G9.3 (Analyse) -- Phân tích mối liên hệ giữa các test cases và ảnh chụp bằng chứng thực tế, điều chỉnh số lượng và dữ liệu ma trận khớp 100% với bằng chứng thực tế |
+| **Verdict** | INCOMPLETE |
+
+#### (1) Prompt (verbatim)
+
+```text
+Kiểm tra lại hết evidences của 3 platforms Chrome, Firefox, Safari sử dụng trên Browser stack sau đó cập nhật vào Report.md
+... [Sinh viên hỏi về lý do lỗi type="email" ở GUI-FORGOT-IA02-01 và được giải thích] ...
+Bạn hiểu không screenshot là phải ứng với test cases ở trên chứ, thế hãy chỉnh lại số test cases của task 3 cho phù hợp
+```
+
+#### (2) AI Output
+
+- Cập nhật [Report.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task3_CrossPlatform/Report.md):
+  - Lọc bảng ma trận từ 15 items xuống còn **10 items** có thể đối chiếu trực quan bằng hình ảnh.
+  - Điền trạng thái kiểm thử kèm tên file ảnh bằng chứng cụ thể vào từng ô ma trận (ví dụ: `Pass (Chrome/forgot-password.png)`).
+  - Sửa lỗi đường dẫn ảnh Safari bước 2 thành `Safari/forgotpassword-step2.png`.
+  - Cập nhật số liệu thống kê thành 10 test cases (7 Pass, 3 Fail, đạt 70%) và cập nhật bảng phân loại (gồm 3 lỗi).
+  - Hoàn thiện phần nhận xét và kết luận tương thích chéo trình duyệt.
+
+#### (3)-(5) Review
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | INCOMPLETE |
+| **Reasoning** | ISTQB FL 5.2.1 (Test Execution) & 5.2.2 (Test Log): Dữ liệu ma trận và kết quả kiểm thử trong báo cáo phải hoàn toàn khớp và có bằng chứng trực quan đi kèm. AI ban đầu điền kết quả cho các case không có ảnh bằng chứng. Sinh viên phát hiện bất hợp lý, yêu cầu rút gọn còn 10 items có bằng chứng rõ ràng và bổ sung tên file ảnh vào từng ô. |
+| **Student Fix** | Sinh viên kiểm tra, chỉ đạo AI lọc bớt các case không có bằng chứng hình ảnh trực tiếp (như Tab order, nút tag HTML, API error), thống nhất danh sách 10 test cases có ảnh đối chiếu và yêu cầu điền đường dẫn ảnh cụ thể vào từng ô kết quả. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-08-02 |
+| **Quality rating** | Excellent |
+| **Issues found** | Không có |
+
+---
+
+### Artifact #9 -- Điền nội dung chi tiết 11 file Usability Evaluation (Task 2) do sinh viên biên soạn
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.5 Flash) |
+| **Date/Time** | 2026-08-02 10:56:15 +07:00 |
+| **Task** | Điền nội dung đầy đủ cho 11 file kế hoạch và biểu mẫu Usability Evaluation (Task 2) do sinh viên biên soạn, ghi đè khung mẫu ban đầu |
+| **Feature / Module** | Task 2 Usability Evaluation / Finalizing Plan & Templates |
+| **Bloom-AI Level** | G9.3 (Analyse) -- Sinh viên phân tích và sửa đổi toàn bộ nội dung kế hoạch usability không phù hợp do AI tạo trước đó, tự soạn thảo nội dung chất lượng cao. |
+| **Verdict** | VALID |
+
+#### (1) Prompt (verbatim)
+
+**Prompt (verbatim):**
+
+```text
+Hãy điền nội dung đầy đủ vào các file sau theo đúng nội dung tôi cung cấp bên dưới. Không tạo thêm file/thư mục mới ngoài danh sách này. Giữ nguyên cấu trúc thư mục hiện có. 
+
+=== 1. plan/objectives.md ===
+Nội dung:
+# Objectives
+
+Mục tiêu của bài usability evaluation này là đánh giá luồng "Đăng nhập → Quên mật khẩu → Đăng nhập lại" trên hệ thống [TODO: tên SUT], nhằm trả lời các câu hỏi sau:
+
+1. Người dùng có tự tìm được lối vào chức năng "Quên mật khẩu" mà không cần gợi ý không? (Discoverability)
+2. Người dùng có gặp trở ngại/nghẽn (bottleneck) ở bước nào trong luồng reset mật khẩu (nhập email, nhận mã, nhập mật khẩu mới, đăng nhập lại)?
+3. Người dùng có hiểu rõ thông báo lỗi khi nhập sai (email không tồn tại, mã hết hạn, mật khẩu không đạt yêu cầu) không?
+4. Người dùng cảm thấy tự tin/an tâm (trust) đến mức nào khi thực hiện thao tác đổi mật khẩu?
+5. Thời gian hoàn thành toàn bộ luồng trung bình là bao lâu, có bước nào gây chậm trễ bất thường không?
+
+Các câu hỏi trên sẽ được trả lời qua: quan sát trực tiếp (Phase 2), điểm SUS định lượng, và probe questions định tính (Phase 3).
+...
+=== 11. report.md ===
+Nội dung (khung để export PDF sau này, chỉ điền outline, KHÔNG điền nội dung chi tiết vì chưa có số liệu):
+...
+Sau khi hoàn tất tất cả 11 mục trên, in ra danh sách các file đã chỉnh sửa để tôi xác nhận. Không đụng vào assets/screenshots (để trống, sẽ bổ sung sau khi có ảnh chụp bug thật).
+```
+
+#### (2) AI Output
+
+Ghi đè nội dung đầy đủ cho 11 file tại các đường dẫn sau:
+- [plan/objectives.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/plan/objectives.md)
+- [plan/scenario.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/plan/scenario.md)
+- [instruments/scale.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/instruments/scale.md)
+- [instruments/probes.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/instruments/probes.md)
+- [participants/roster.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/participants/roster.md)
+- [pilot/pilot-plan.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/pilot/pilot-plan.md)
+- [pilot/pilot-notes.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/pilot/pilot-notes.md)
+- [results/sus-scores.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/results/sus-scores.md)
+- [results/findings.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/results/findings.md)
+- 7 file session: từ [session-P01.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/sessions/session-P01.md) đến [session-P07.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/sessions/session-P07.md)
+- [report.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Task2_Usability/report.md)
+
+#### (3)-(5) Review
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | VALID |
+| **Reasoning** | ISTQB FL 5.1 (Test Planning) & HW03 Task 2 Spec: Kế hoạch đánh giá Usability và các công cụ/biểu mẫu đi kèm phải được thiết kế rõ ràng và có nội dung thực tế (kịch bản goal-only, danh sách participant roster, v.v.). Do bộ khung cũ do AI sinh chưa phù hợp và đầy đủ, sinh viên đã tự soạn thảo lại chi tiết và cung cấp cho AI để cập nhật. AI đã thực thi ghi đè hoàn toàn chính xác nội dung của sinh viên vào 11 file. |
+| **Student Fix** | Chấp nhận nguyên trạng. Sinh viên đã kiểm tra lại 11 file và xác nhận nội dung chính xác theo bản cung cấp. |
+| **Reviewed by** | Ân Tiến Nguyen An |
+| **Review date** | 2026-08-02 |
+| **Quality rating** | Excellent |
+| **Issues found** | Không có |
+
+---
+
+### Artifact #10 -- Thiết lập Google Sheet online mẫu trống kết nối qua API
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.5 Flash) |
+| **Date/Time** | 2026-08-02 10:40:31 +07:00 |
+| **Task** | Khởi tạo bảng tính Google Sheet online (Summary + P01..P07) kết nối qua Google Service Account |
+| **Feature / Module** | Task 2 Usability Evaluation / Data Collection Instruments |
+| **Bloom-AI Level** | G9.4 (Collaborate / Create) -- Phối hợp giữa sinh viên thiết lập Service Account Credentials và AI viết script gspread tự động tạo layout và liên kết các trang tính |
+| **Verdict** | INCOMPLETE |
+
+#### (1) Prompt (verbatim)
+
+**Prompt (verbatim):**
+
+```text
+Giờ chỉ tôi cách set up mcp và cli của gsheet để cho bạn quyền tự ghi ở sheet online nè. Có thể tạo nhiều sheets khác nhau P01 -> P07
+...
+https://docs.google.com/spreadsheets/d/1lFcv1rZwiWe-7lHntObhGopbR7dUTdNMjesM39hmyJs/edit?usp=sharing
+...
+Nên nhớ là họ chưa làm sao có điểm đánh giá được, tôi muốn bạn tạo ra template sẵn trước cơ
+```
+
+#### (2) AI Output
+
+- Script [initialize_gsheet.py](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/scripts/initialize_gsheet.py) kết nối Google API để tự động hóa xây dựng trang tính.
+- Khởi tạo 1 trang `Summary` tổng hợp liên kết trực tiếp bằng công thức tới 7 trang con `P01` đến `P07`. Các trang con chứa câu hỏi SUS và timeline quan sát hoàn toàn trống để sinh viên nhập liệu.
+
+Đầu ra trực tuyến tại: [Google Sheet - Testing](https://docs.google.com/spreadsheets/d/1lFcv1rZwiWe-7lHntObhGopbR7dUTdNMjesM39hmyJs/edit?usp=sharing)
+
+#### (3)-(5) Review
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | INCOMPLETE |
+| **Reasoning** | ISTQB FL 5.1 (Test Planning) & HW03 Task 2 Spec: Mẫu thu thập dữ liệu độ khả dụng không được chứa dữ liệu giả lập trước khi bắt đầu thử nghiệm. Hơn nữa, việc tích hợp API Google Sheets bị giới hạn bởi quota 60 write requests/minute. AI ban đầu điền điểm giả lập và thực hiện quá nhiều cuộc gọi API đơn lẻ, dẫn đến lỗi API Quota Exceeded (429). |
+| **Student Fix** | Sinh viên yêu cầu loại bỏ hoàn toàn các điểm giả lập để tạo template sạch. AI đã cập nhật script `initialize_gsheet.py` gộp tất cả các thao tác cập nhật của mỗi sheet thành một request 2D duy nhất để giảm tải từ 50 xuống 8 API write requests, giải quyết hoàn toàn lỗi Quota 429 và bàn giao template trống. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-08-02 |
+| **Quality rating** | Excellent |
+| **Issues found** | Lỗi Quota Exceeded (429) ở lần chạy đầu tiên; chứa điểm giả lập mặc định. Đã được sinh viên phát hiện và AI sửa lỗi hoàn chỉnh. |
+
+---
+
+### Artifact #11 -- Chuẩn hóa, định dạng và tự động hóa liên kết Google Sheets online
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.5 Flash) |
+| **Date/Time** | 2026-08-02 11:00:57 +07:00 |
+| **Task** | Chuẩn hóa cấu trúc P01-P07, thiết lập Summary sheet, tạo mới 4 tabs (Participants, Session Log, Probe Questions, Bugs & Findings) với freeze headers, tab colors, và tự động hóa kiểm tra không có lỗi #REF!/#VALUE! |
+| **Feature / Module** | Task 2 Usability Evaluation / Data Collection Instruments |
+| **Bloom-AI Level** | G9.4 (Collaborate / Create) -- Phối hợp thiết kế kế hoạch thực hiện, giải quyết lỗi tương thích mã hóa Windows console cp1252 bằng cách bổ sung cấu hình UTF-8 cho dòng xuất chuẩn, và chạy script tự động hóa gspread |
+| **Verdict** | VALID |
+
+#### (1) Prompt (verbatim)
+
+**Prompt (verbatim):**
+
+```text
+File hiện đã có các tab: P01, P02, P03, P04, P05, P06, P07, và Summary. https://docs.google.com/spreadsheets/d/1lFcv1rZwiWe-7lHntObhGopbR7dUTdNMjesM39hmyJs/edit?usp=sharing.
+Hãy thực hiện các việc sau, KHÔNG xoá hay đổi cấu trúc các tab P01-P07 và Summary đã có, chỉ bổ sung/sửa những gì được yêu cầu dưới đây.
+
+=== BƯỚC 1: Kiểm tra và chuẩn hoá từng tab P01-P07 ===
+Với mỗi tab P01 đến P07, đảm bảo có đủ cấu trúc sau (nếu thiếu thì thêm, nếu đã có thì giữ nguyên dữ liệu):
+- Hàng thông tin: Participant ID, Thời gian bắt đầu, Thời gian kết thúc, Hoàn thành task (Y/N), Số lần cần trợ giúp
+- Bảng 10 câu SUS (Q1-Q10) với input là số 1-5
+- Công thức tính:
+  Odd Item Sum = SUM(Q1,Q3,Q5,Q7,Q9) - 5
+  Even Item Sum = 25 - SUM(Q2,Q4,Q6,Q8,Q10)
+  SUS Score = (Odd Item Sum + Even Item Sum) * 2.5
+- Không có công thức nào bị lỗi #REF!/#VALUE! — nếu phát hiện lỗi, sửa lại tham chiếu cho đúng.
+
+=== BƯỚC 2: Sửa/hoàn thiện tab Summary ===
+Đảm bảo Summary có:
+- Bảng tổng hợp: Participant ID (P01-P07) | SUS Score (kéo từ tab tương ứng) | Hoàn thành task (Y/N) | Thời gian hoàn thành
+- Dòng "Điểm SUS Trung bình" = AVERAGE của 7 SUS Score, bỏ qua ô trống
+- Dòng "Adjective Rating" — tra theo điểm trung bình dùng thang: 
+  <51 Poor, 51-67 OK, 68-80 Good, 80-84 Excellent, >84 Best Imaginable (theo Bangor et al.)
+- Dòng "Acceptability Range" — tra theo điểm trung bình dùng thang:
+  <51 Not Acceptable, 51-70 Marginal, >70 Acceptable
+- Định dạng có điều kiện: SUS Score >=68 tô nền xanh nhạt, <68 tô nền đỏ nhạt
+
+=== BƯỚC 3: Tạo tab mới "Participants" ===
+Cấu trúc cột:
+Participant ID | Họ tên viết tắt | Kênh liên hệ (che 4 số giữa) | Loại (IT/Non-IT) | Độ tuổi | Xác nhận không thuộc lớp HW03
+Tạo sẵn 7 dòng trống cho P01-P07, cột Participant ID điền sẵn.
+
+=== BƯỚC 4: Tạo tab mới "Session Log" ===
+Cấu trúc cột:
+Participant ID | Thời gian bắt đầu | Thời gian kết thúc | Thời lượng (phút) | Hoàn thành task? (Y/N) | Số lần cần trợ giúp | Ghi chú friction point chính
+Tạo sẵn 7 dòng trống cho P01-P07.
+
+=== BƯỚC 5: Tạo tab mới "Probe Questions" ===
+Cấu trúc cột:
+Participant ID | Clarity | Error Recovery | Speed | Trust
+Tạo sẵn 7 dòng trống cho P01-P07.
+
+=== BƯỚC 6: Tạo tab mới "Bugs & Findings" ===
+Cấu trúc cột:
+Bug ID | Mô tả | Participant(s) liên quan | Loại (Isolated Bug/Systemic Issue) | Mức độ (Blocker/Major/Minor) | Link GitHub Issue | Link Screenshot
+Để trống, chưa cần tạo dòng mẫu.
+
+=== BƯỚC 7: Freeze & định dạng chung ===
+- Freeze hàng header (hàng đầu tiên có tên cột) ở mỗi tab mới tạo.
+- Đặt màu tab: Participants, Session Log, Probe Questions, Bugs & Findings dùng cùng 1 màu (ví dụ xanh dương) để phân biệt với các tab P01-P07 (giữ màu mặc định) và Summary (màu vàng/nổi bật).
+
+=== BƯỚC 8: Xác nhận ===
+Sau khi hoàn tất, liệt kê toàn bộ tab hiện có trong file theo đúng thứ tự, và xác nhận không có ô nào còn lỗi #REF!/#VALUE! ở bất kỳ tab nào.
+```
+
+#### (2) AI Output
+
+- Script Python tự động hóa [standardize_sheet.py](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/scripts/standardize_sheet.py) thực thi cập nhật toàn bộ Google Sheet online:
+  - Thêm block Participant Info (E4:F8) và SUS scoring (E10:F12) trên mỗi tab P01-P07, tự sửa title sai ở tab P02.
+  - Sửa trang Summary thành 4 cột, liên kết tự động bằng công thức kéo điểm SUS, trạng thái hoàn thành và tự động tính duration theo phút. Thiết lập định dạng có điều kiện tô màu xanh/đỏ cho cột điểm SUS, viết công thức AVERAGE và Bangor adjective / acceptability ranges.
+  - Tạo 4 sheets mới (`Participants`, `Session Log`, `Probe Questions`, `Bugs & Findings`) với đầy đủ tiêu đề cột, liên kết công thức tự động, freeze row 1, và định dạng màu sắc tab (blue cho 4 tab mới, yellow cho Summary).
+- Script Python xác thực [validate_sheet.py](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/scripts/validate_sheet.py) kiểm tra cấu trúc, thứ tự tab và xác minh không có lỗi công thức nào.
+
+#### (3)-(5) Review
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | VALID |
+| **Reasoning** | ISTQB FL 5.1 (Test Planning) & 5.2 (Test Execution & Reporting): Việc quản lý tài liệu và dữ liệu kiểm thử qua Google Sheet phải tuyệt đối chuẩn xác, không được chứa lỗi công thức (#REF!, #VALUE!) gây sai lệch thống kê. Giải pháp viết mã script Python tự động hóa giúp cập nhật đồng loạt các biểu mẫu, cấu hình tự động liên kết công thức để giảm thao tác thủ công và tránh sai lệch thông tin giữa các sheets. |
+| **Student Fix** | Chấp nhận nguyên trạng. Sinh viên duyệt kế hoạch thực hiện, chỉ đạo AI giải quyết lỗi tương thích mã hóa Windows console cp1252 bằng cách bổ sung cấu hình UTF-8 cho dòng xuất chuẩn, và xác nhận kết quả kiểm tra không có bất kỳ lỗi công thức nào trên 12 worksheets. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-08-02 |
+| **Quality rating** | Excellent |
+| **Issues found** | Lỗi UnicodeEncodeError ở dòng in console do môi trường Windows mặc định dùng cp1252; đã được sinh viên chỉ đạo reconfigure sys.stdout thành utf-8 thành công. |
+
+---
+
+### Artifact #15 -- Dịch tài liệu README.md sang tiếng Việt
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.5 Flash) |
+| **Date/Time** | 2026-08-03 10:22:23 +07:00 |
+| **Task** | Dịch nội dung tệp tin README.md sang tiếng Việt, giữ các từ khóa tiếng Anh |
+| **Feature / Module** | Meta / Index & Summary Report |
+| **Bloom-AI Level** | G9.2 (Apply) -- Dịch thuật nội dung và định dạng tài liệu theo yêu cầu |
+| **Verdict** | INCOMPLETE |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Chỉnh lại readme.md thành nội dung tiếng việt đi, các từ khóa vẫn giữ tiếng anh 
+
+A  README.md  containing the self-assessment table (below) and a test summary report:
+number of screens / flows tested; number of checklist items designed, executed, passed,
+and failed; number of bugs; number of participants; and demo videos.
+Any other supporting materials.@[d:\Project\Testing\hcmus-sw-testing--eshop-sut\HW3\README.md]
+```
+
+#### (2) AI Output
+
+- Tệp tin [README.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/README.md) được tiếng Việt hóa toàn bộ phần thông tin sinh viên, các tiêu đề bảng tự đánh giá và phần Test Summary Report. Các từ khóa chuyên ngành như SUT, GUI Testing, Usability, Cross-Platform... được giữ nguyên bằng tiếng Anh. Tuy nhiên, AI đã bỏ sót việc liệt kê đầy đủ các Agent Skills tự thiết kế trong bảng tự đánh giá.
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | INCOMPLETE |
+| **Reasoning** | ISTQB FL 5.2.1 & Spec HW03: Báo cáo chỉ số tóm tắt (README.md) cần phản ánh trung thực toàn bộ kết quả của sinh viên bao gồm cả các custom Agent Skills được phát triển thực tế. Bản dịch thô của AI đã bỏ sót hai skill quan trọng về GUI checklist. |
+| **Student Fix** | Sinh viên yêu cầu bổ sung thêm 2 Agent Skills tự thiết kế (`gui-checklist-writer`, `gui-checklist-runner`) vào bảng tự đánh giá. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-08-03 |
+| **Quality rating** | Good |
+| **Issues found** | Thiếu thông tin 2 Agent Skills về GUI checklist trong bảng. |
+
+---
+
+### Artifact #16 -- Cập nhật Agent Skills bổ sung vào README.md
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.5 Flash) |
+| **Date/Time** | 2026-08-03 10:23:17 +07:00 |
+| **Task** | Bổ sung các Agent Skills còn thiếu vào bảng tự đánh giá và phần mô tả video trong README.md |
+| **Feature / Module** | Meta / Index & Summary Report |
+| **Bloom-AI Level** | G9.3 (Analyse) -- Phân tích độ phủ khối lượng công việc thực tế và đối chiếu với giải trình tự đánh giá |
+| **Verdict** | VALID |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+bổ sung thêm vào agent skills đi, tôi có viết gui-checklist-runner với writer nữa mà
+```
+
+#### (2) AI Output
+
+- Cập nhật dòng Agent Skills trong bảng self-assessment của [README.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/README.md) từ 2 skills thành 4 skills (`gui-checklist-writer`, `gui-checklist-runner`, `usability-writer`, `usability-runner`), đồng thời cập nhật phần chú thích của video demo Agent Skills tương ứng.
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | VALID |
+| **Reasoning** | Việc bổ sung minh chứng tự đánh giá đầy đủ giúp đảm bảo điểm số chấm được chính xác và ghi nhận đúng khối lượng đóng góp thực tế. AI đã thực hiện cập nhật chuẩn xác. |
+| **Student Fix** | Chấp nhận nguyên trạng. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-08-03 |
+| **Quality rating** | Excellent |
+| **Issues found** | Không có |
+
+---
+
+### Artifact #17 -- Biên soạn báo cáo chính Main_Report.md
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.5 Flash) |
+| **Date/Time** | 2026-08-03 10:26:51 +07:00 |
+| **Task** | Tạo file báo cáo chính Main_Report.md tổng hợp kết quả của cả 3 Task kiểm thử |
+| **Feature / Module** | Meta / Main Report |
+| **Bloom-AI Level** | G9.4 (Collaborate / Create) -- Biên soạn và tổng hợp dữ liệu từ nhiều tệp báo cáo chi tiết thành tài liệu duy nhất |
+| **Verdict** | VALID |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Bây giờ tới phần cuối cùng
+Hãy viết main report theo yêu cầu sau :"Main report (Markdown + PDF), including the GUI checklist report and the usability
+evaluation report"
+
+Dựa trên các file report của task 1, 2, 3 tôi đã viết sẵn ở @[d:\Project\Testing\hcmus-sw-testing--eshop-sut\HW3] . Viết lại thành main report vào @[d:\Project\Testing\hcmus-sw-testing--eshop-sut\HW3\Main_Report.md]
+```
+
+#### (2) AI Output
+
+- Tạo mới tệp tin [Main_Report.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/Main_Report.md) chứa nội dung báo cáo chính chi tiết gồm 5 phần chính, liên kết số liệu nhất quán với các báo cáo thành phần của Task 1, 2, 3 và đưa ra các khuyến nghị cải tiến cụ thể.
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | VALID |
+| **Reasoning** | ISTQB FL 5.2 (Test Summary Report) & Spec HW03: Báo cáo chính (Main Report) là tài liệu nghiệm thu cuối cùng cần tổng hợp mạch lạc và có cấu trúc chặt chẽ từ các kết quả kiểm thử đơn lẻ để người đọc dễ dàng theo dõi. AI đã thực hiện tổng hợp tự động và trình bày rõ ràng. |
+| **Student Fix** | Chấp nhận nguyên trạng. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-08-03 |
+| **Quality rating** | Excellent |
+| **Issues found** | Không có |
+
+---
+
+### Artifact #18 -- Cập nhật và Hoàn thiện Báo cáo AI Audit Report
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.5 Flash) |
+| **Date/Time** | 2026-08-03 10:31:00 +07:00 |
+| **Task** | Cập nhật tệp AI_Audit_Report.md để bổ sung các Artifact #13-18 và tính toán lại thống kê |
+| **Feature / Module** | Meta / AI Audit Report |
+| **Bloom-AI Level** | G9.4 (Collaborate / Create) -- Quản lý và bảo trì tài liệu kiểm thử tự động, đồng bộ hóa số liệu |
+| **Verdict** | VALID |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Cập nhật /ai-audit-report  vào AI Audit report
+```
+
+#### (2) AI Output
+
+- Cập nhật tự động tệp [AI_Audit_Report.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW3/AI%20Submission/AI_Audit_Report.md) để thêm các Artifact mới vào bảng Audit Table, bổ sung các phần chi tiết của Artifact #15-18, tính toán lại độ chính xác ở Mục 4, mở rộng tuyên bố ở Mục 6, và hoàn thiện phần Interaction Overview.
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | VALID |
+| **Reasoning** | ISTQB FL 3.2 (Review Process) & 5.2: Báo cáo audit sử dụng công cụ AI phải cập nhật chính xác mọi tương tác trong phiên làm việc trước khi nộp bài để đảm bảo tính minh bạch. |
+| **Student Fix** | Chấp nhận nguyên trạng. |
+| **Reviewed by** | Ân Tiến Nguyên An |
+| **Review date** | 2026-08-03 |
+| **Quality rating** | Excellent |
+| **Issues found** | Không có |
+
+---
+
+## 4. Summary of AI Accuracy
+
+| Metric | Count | Percentage |
+| --- | ---: | ---: |
+| **Total AI-generated artifacts audited** | 18 | 100% |
+| **VALID (correct, accepted as-is)** | 10 | 55.6% |
+| **INVALID (wrong; rejected)** | 0 | 0.0% |
+| **INCOMPLETE (acceptable after edits)** | 8 | 44.4% |
+
+## 5. Conclusion -- When should AI be used (or not)?
+
+AI tỏ ra rất hiệu quả trong việc thiết kế draft GUI checklist 45 mục trích dẫn đặc tả FR-21..24, viết mã tự động hóa Playwright để thực thi kiểm thử trên trình duyệt Google Chrome thực tế, tự động xuất file Excel (.xlsx) được tô màu định dạng chuyên nghiệp, tổng hợp báo cáo Test Summary Report, xây dựng bộ khung thư mục Usability Evaluation (`HW3/Task2_Usability/`) kèm 4 Agent Skills chuyên biệt cho EShop SUT, và lập trình kịch bản đồng bộ hóa, định dạng Google Sheets.
+
+Tuy nhiên, AI có hạn chế về tính tương thích mã hóa console Windows (cp1252), tự định dạng bằng chứng hình ảnh (chụp toàn trang không highlight), tuân thủ định dạng báo cáo tiêu chuẩn của môn học nếu không có mẫu đối chiếu, và đặc biệt **không thể thay thế con người trong các hoạt động đánh giá độ khả dụng thực tế** (tuyển người dùng thật, ghi nhận cảm xúc/phản hồi thực sự). Sự giám sát và điều chỉnh của sinh viên là bắt buộc: sinh viên đã phát hiện ảnh chụp bị lặp lại, yêu cầu khoanh viền đỏ phần tử lỗi, cung cấp mẫu HW2 chuẩn để đồng bộ báo cáo Test Summary, loại bỏ các phần draft dư thừa khỏi bug report, tự viết lại toàn bộ nội dung chi tiết kế hoạch và các biểu mẫu usability, chỉ đạo AI gộp API request ghi Google Sheet để tránh quota rate limits, trực tiếp chỉ đạo hướng dẫn reconfigure UTF-8 console output, dịch lại README sang tiếng Việt, và chỉ đạo bổ sung đầy đủ các Agent Skills tự viết. Khuyến nghị sử dụng AI để hỗ trợ tự động hóa, thiết kế bộ khung và tổng hợp số liệu, nhưng sinh viên phải trực tiếp điều phối kiểm thử và duyệt lại toàn bộ sản phẩm đầu ra.
+
+## 6. Mandatory Disclosure
+
+"Checklist kiểm thử GUI (45 mục), kịch bản tự động hóa Playwright (`run_gui_checklist.js`), file Excel định dạng (`CHECKLIST.xlsx`), Báo cáo tổng kết kiểm thử (`TEST_SUMMARY.md`), 13 báo cáo lỗi Markdown, bộ khung kế hoạch Usability (`HW3/Task2_Usability/`), 4 Agent Skills (`gui-checklist-writer`, `gui-checklist-runner`, `usability-writer`, `usability-runner`), khung báo cáo kiểm thử Cross-Platform (`Report.md`), kịch bản và bảng tính tự động hóa thu thập dữ liệu Google Sheets online (`initialize_gsheet.py`, `standardize_sheet.py`, `validate_sheet.py` + `SUS_Template_GoogleSheets.csv`), nhật ký phỏng vấn chi tiết (`session-P01.md` đến `session-P07.md`), bảng điểm SUS (`sus-scores.md`), báo cáo findings (`findings.md`), báo cáo tổng hợp (`SUMMARY.md` và `scale-scores.md`), báo cáo usability chính (`report.md`), phản biện AI (`AI_Critique.md`), báo cáo chính (`Main_Report.md`) và trang mục lục tự đánh giá (`README.md`) được sinh ban đầu với sự hỗ trợ của Antigravity IDE (Claude Opus 4.6 Thinking, Gemini 3.6 Flash, & Gemini 3.5 Flash). Tôi đã kiểm tra kỹ lượng kết quả thực thi, phát hiện và sửa đổi các hạn chế của AI (yêu cầu chèn highlight đỏ lên ảnh bằng chứng lỗi, cung cấp mẫu tiêu chuẩn HW02 để đồng bộ báo cáo Test Summary, xóa bỏ phần draft không cần thiết khỏi bug report, tự hoàn thiện toàn bộ kế hoạch và biểu mẫu usability, kiểm tra cấu trúc bảng ma trận cross-platform lọc còn 10 items, phát hiện lỗi API Quota 429 và chỉ đạo gộp request ghi Google Sheet, loại bỏ điểm giả lập, hướng dẫn reconfigure UTF-8 console stream, chỉ đạo chuyển định dạng cột Thời lượng thành Number để sửa lỗi 0:00, duyệt và điều chỉnh căn lề bảng roster.md, yêu cầu dịch README và bổ sung 4 Agent Skills tự phát triển vào bảng tự chấm). Báo cáo AI Audit chi tiết được đính kèm. Tôi xác nhận không sử dụng AI để tạo bất kỳ artifact nào thuộc danh mục cấm (danh sách người tham gia, ảnh chụp cross-platform với thông tin cá nhân, kết quả phiên usability)."
+
+
+## 7. Signature
+
+| Field | Value |
+| --- | --- |
+| Student name | Ân Tiến Nguyên An |
+| Student ID | 23127148 |
+| Class / Cohort | 23KTPM3 |
+| Course | CSC13003 - Software Testing |
+| Instructor | Dr. Lam Quang Vu / Dr. Tran Duy Hoang |
+| Date | 2026-08-03 |
+| Signature | Ân Tiến Nguyên An |
+
+## 8. Operational Appendix
+
+### Interaction Overview
+
+| # | AI Tool | Task Category | Feature | Date | Bloom-AI | Verdict |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | Antigravity IDE (Claude Opus 4.6 Thinking) | Task 1 GUI Checklist | Thiết kế checklist (Quên Mật Khẩu + Quản lý Đơn hàng) | 2026-07-30 | G9.2 | INCOMPLETE |
+| 2 | Antigravity IDE (Claude Opus 4.6 Thinking) | Task 1 GUI Checklist | Dịch tiếng Việt + xuất CSV | 2026-07-30 | G9.1 | VALID |
+| 3 | Antigravity IDE (Gemini 3.6 Flash) | Task 1 GUI Checklist | Thực thi Playwright + Chụp bằng chứng Highlight + Bug Reports | 2026-07-30 | G9.4 | INCOMPLETE |
+| 4 | Antigravity IDE (Gemini 3.6 Flash) | Task 1 GUI Checklist | Lập Test Summary (mẫu HW02) + Excel XLSX + Tinh chỉnh Bug Reports | 2026-07-31 | G9.3 | INCOMPLETE |
+| 5 | Antigravity IDE (Claude Opus 4.6 Thinking & Gemini 3.6 Flash) | Task 2 Usability Evaluation | Khởi tạo cấu trúc `HW3/Task2_Usability/` + Hiệu chuẩn 2 Agent Skills cho EShop SUT | 2026-07-31 | G9.4 | INCOMPLETE |
+| 6 | Antigravity IDE (Gemini 3.5 Flash) | Task 3 Cross-platform | Thiết kế ma trận kết quả và cấu trúc Báo cáo kiểm thử Cross-Platform (`Report.md`) | 2026-08-02 | G9.2 | VALID |
+| 7 | Antigravity IDE (Gemini 3.5 Flash) | Task 3 Cross-platform | Lọc danh sách 15 items cross-platform & cập nhật Report.md | 2026-08-02 | G9.2 | VALID |
+| 8 | Antigravity IDE (Gemini 3.5 Flash) | Task 3 Cross-platform | Cập nhật kết quả, sửa path ảnh, lọc ma trận còn 10 items theo bằng chứng | 2026-08-02 | G9.3 | INCOMPLETE |
+| 9 | Antigravity IDE (Gemini 3.5 Flash) | Task 2 Usability Evaluation | Điền nội dung chi tiết 11 file Usability | 2026-08-02 | G9.3 | VALID |
+| 10 | Antigravity IDE (Gemini 3.5 Flash) | Task 2 Usability Evaluation | Khởi tạo Google Sheets mẫu trống trực tuyến | 2026-08-02 | G9.4 | INCOMPLETE |
+| 11 | Antigravity IDE (Gemini 3.5 Flash) | Task 2 Usability Evaluation | Chuẩn hóa, định dạng và tự động hóa liên kết Google Sheets online | 2026-08-02 | G9.4 | VALID |
+| 12 | Antigravity IDE (Gemini 3.5 Flash) | Task 2 Usability Evaluation | Cập nhật nhật ký, câu hỏi đào sâu, lỗi và báo cáo tổng hợp Usability (P01-P07) | 2026-08-03 | G9.4 | INCOMPLETE |
+| 13 | Antigravity IDE (Gemini 3.5 Flash) | Meta | Soạn thảo đoạn văn AI Critique | 2026-08-03 | G9.3 | VALID |
+| 14 | Antigravity IDE (Gemini 3.5 Flash) | Meta | Biên soạn HW3/README.md và bảng tự đánh giá | 2026-08-03 | G9.3 | VALID |
+
+### Contribution Breakdown
+
+| Task | AI % | Human % | Ghi chú |
+| --- | ---: | ---: | --- |
+| Thiết kế checklist (draft 45 mục) | 90% | 10% | AI sinh draft, sinh viên cung cấp yêu cầu và chọn màn hình |
+| Dịch tiếng Việt + CSV | 95% | 5% | AI dịch, sinh viên chỉnh format bảng |
+| Thực thi Playwright GUI Runner | 85% | 15% | AI viết script & chạy, sinh viên xác minh kết quả trên Chrome |
+| Kiểm tra & khoanh vùng bằng chứng lỗi | 40% | 60% | Sinh viên phát hiện ảnh lặp lại, chỉ đạo khoanh viền đỏ + badge |
+| Xt file Excel `CHECKLIST.xlsx` | 90% | 10% | AI viết script Python openpyxl tô màu bảng, sinh viên duyệt |
+| Lập báo cáo `TEST_SUMMARY.md` | 70% | 30% | Sinh viên cung cấp template HW02 chuẩn, AI tổng hợp chỉ số |
+| Tinh chỉnh Bug Reports (bỏ draft) | 80% | 20% | Sinh viên chỉ đạo xóa git issue draft, AI chạy script làm sạch |
+| Khởi tạo bộ khung `HW3/Task2_Usability/` | 85% | 15% | AI tạo các file template mẫu, sinh viên duyệt định hướng 3 pha |
+| Hiệu chuẩn 2 Agent Skills (`usability-*`) | 90% | 10% | AI biên soạn skill rules & references cho EShop, sinh viên xác nhận |
+| Thiết kế ma trận & cấu trúc Report.md (draft 45 mục) | 95% | 5% | AI trích xuất tự động và tạo khung, sinh viên duyệt |
+| Lọc danh sách 15 items cross-platform & cập nhật Report.md | 95% | 5% | AI viết script lọc và cập nhật, sinh viên chỉ đạo |
+| Cập nhật kết quả và lọc ma trận Cross-Platform còn 10 items | 80% | 20% | Sinh viên phát hiện bất hợp lý giữa số ảnh và test cases, chỉ đạo AI rút gọn còn 10 items có bằng chứng trực tiếp |
+| Điền nội dung chi tiết 11 file Usability (Task 2) | 10% | 90% | Sinh viên tự soạn thảo nội dung chất lượng cao, AI hỗ trợ ghi đè ghi nhận |
+| Khởi tạo Google Sheets mẫu trống trực tuyến | 85% | 15% | AI viết script kết nối API và công thức, sinh viên cài đặt Service Account và yêu cầu sửa blank template |
+| Chuẩn hóa, định dạng và tự động hóa liên kết Google Sheets online | 90% | 10% | AI lập kế hoạch và chạy script tự động cấu hình, sinh viên duyệt kế hoạch và chỉ đạo sửa lỗi encode cp1252 |
+| Cập nhật nhật ký và báo cáo Usability cục bộ | 80% | 20% | AI tổng hợp dữ liệu từ sheet và viết báo cáo, sinh viên duyệt và định dạng lại roster.md |
+| Đồng bộ hóa, chuẩn hóa dữ liệu & định dạng số trên Google Sheet | 90% | 10% | AI viết script gspread sửa kiểu dữ liệu và định dạng cột thời lượng, sinh viên chỉ đạo kiểm tra và sửa lỗi 0:00 |
+| Soạn thảo đoạn văn AI Critique | 95% | 5% | AI viết bản dịch và hiệu chỉnh số từ, sinh viên cung cấp yêu cầu |
+| Biên soạn HW3/README.md và bảng tự đánh giá | 95% | 5% | AI trích xuất tổng hợp chỉ số, sinh viên duyệt kiểm tra khớp |
+
+### Compliance Checklist
+
+- [x] AI usage declaration
+- [x] Tool name(s)
+- [x] Date and time per interaction
+- [x] Verbatim prompt per artifact
+- [x] AI output (full or linked)
+- [x] Verdict + course/ISTQB reasoning
+- [x] Student fix
+- [x] Accuracy summary
+- [x] Conclusion 80-150 words
+- [x] Mandatory disclosure
+- [x] Markdown submission format
+

@@ -1,0 +1,151 @@
+[
+  {
+    "caseId": "F11-TC-001",
+    "category": "Access Control",
+    "purpose": "Verify unauthenticated user cannot view order history and is prompted to login",
+    "email": "",
+    "amount": 0,
+    "expectedLabel": "Vui lòng đăng nhập"
+  },
+  {
+    "caseId": "F11-TC-002",
+    "category": "Access Control",
+    "purpose": "Verify logged-in user can only see their own orders and not others",
+    "email": "user_f11_empty@eshop.com",
+    "amount": 0,
+    "expectedLabel": "Bạn chưa có đơn hàng nào."
+  },
+  {
+    "caseId": "F11-TC-003",
+    "category": "Data Display",
+    "purpose": "Verify order list displays required columns",
+    "email": "user_f11_main@eshop.com",
+    "amount": 100000,
+    "expectedLabel": ""
+  },
+  {
+    "caseId": "F11-TC-004",
+    "category": "Data Display",
+    "purpose": "Verify total amount is correctly formatted with ₫ and thousands separator",
+    "email": "user_f11_main@eshop.com",
+    "amount": 100000,
+    "expectedLabel": "100[.,]000 ₫"
+  },
+  {
+    "caseId": "F11-TC-005",
+    "category": "Status & Color",
+    "purpose": "Verify pending status displays 'Chờ xác nhận' with yellow styling",
+    "email": "user_f11_main@eshop.com",
+    "amount": 100000,
+    "expectedLabel": "Chờ xác nhận",
+    "expectedClass": "bg-yellow-100 text-yellow-800"
+  },
+  {
+    "caseId": "F11-TC-006",
+    "category": "Status & Color",
+    "purpose": "Verify confirmed status displays 'Đã xác nhận' with indigo styling",
+    "email": "user_f11_main@eshop.com",
+    "amount": 200000,
+    "expectedLabel": "Đã xác nhận",
+    "expectedClass": "bg-indigo-100 text-indigo-800"
+  },
+  {
+    "caseId": "F11-TC-007",
+    "category": "Status & Color",
+    "purpose": "Verify shipping status displays 'Đang giao' with blue styling",
+    "email": "user_f11_main@eshop.com",
+    "amount": 300000,
+    "expectedLabel": "Đang giao",
+    "expectedClass": "bg-blue-100 text-blue-800"
+  },
+  {
+    "caseId": "F11-TC-008",
+    "category": "Status & Color",
+    "purpose": "Verify delivered status displays 'Đã giao' with green styling",
+    "email": "user_f11_main@eshop.com",
+    "amount": 400000,
+    "expectedLabel": "Đã giao",
+    "expectedClass": "bg-green-100 text-green-800"
+  },
+  {
+    "caseId": "F11-TC-009",
+    "category": "Status & Color",
+    "purpose": "Verify canceled status displays 'Đã hủy' with red styling",
+    "email": "user_f11_main@eshop.com",
+    "amount": 500000,
+    "expectedLabel": "Đã hủy",
+    "expectedClass": "bg-red-100 text-red-800"
+  },
+  {
+    "caseId": "F11-TC-010",
+    "category": "Empty State",
+    "purpose": "Verify empty state displays message and illustration when user has no orders",
+    "email": "user_f11_empty@eshop.com",
+    "amount": 0,
+    "expectedLabel": "Bạn chưa có đơn hàng nào."
+  },
+  {
+    "caseId": "F11-TC-011",
+    "category": "Cancellation",
+    "purpose": "Verify cancellation of pending order triggers alert and updates status",
+    "email": "user_f11_main@eshop.com",
+    "amount": 600000,
+    "expectedLabel": "Hủy đơn thành công!"
+  },
+  {
+    "caseId": "F11-TC-012",
+    "category": "Cancellation",
+    "purpose": "Verify cancellation of confirmed order triggers alert and updates status",
+    "email": "user_f11_main@eshop.com",
+    "amount": 700000,
+    "expectedLabel": "Hủy đơn thành công!"
+  },
+  {
+    "caseId": "F11-TC-013",
+    "category": "Cancellation",
+    "purpose": "Verify user cannot cancel shipping orders (button hidden or disabled)",
+    "email": "user_f11_main@eshop.com",
+    "amount": 800000,
+    "expectedLabel": ""
+  },
+  {
+    "caseId": "F11-TC-014",
+    "category": "Cancellation",
+    "purpose": "Verify user cannot cancel delivered orders (button hidden)",
+    "email": "user_f11_main@eshop.com",
+    "amount": 400000,
+    "expectedLabel": ""
+  },
+  {
+    "caseId": "F11-TC-015",
+    "category": "Cancellation",
+    "purpose": "Verify user cannot cancel canceled orders (button hidden)",
+    "email": "user_f11_main@eshop.com",
+    "amount": 500000,
+    "expectedLabel": ""
+  },
+  {
+    "caseId": "F11-TC-016",
+    "category": "Navigation & GUI",
+    "purpose": "Verify page contains exactly one h1 title",
+    "email": "user_f11_main@eshop.com",
+    "amount": 0,
+    "expectedLabel": ""
+  },
+  {
+    "caseId": "F11-TC-017",
+    "category": "Navigation & GUI",
+    "purpose": "Verify active page highlight in the navigation bar",
+    "email": "user_f11_main@eshop.com",
+    "amount": 0,
+    "expectedLabel": ""
+  },
+  {
+    "caseId": "F11-TC-018",
+    "category": "Navigation & GUI",
+    "purpose": "Verify logout button label is 'Đăng xuất'",
+    "email": "user_f11_main@eshop.com",
+    "amount": 0,
+    "expectedLabel": "Đăng xuất"
+  }
+]
