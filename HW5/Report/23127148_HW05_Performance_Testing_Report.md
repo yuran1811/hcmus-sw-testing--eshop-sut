@@ -153,6 +153,8 @@
 
 ![Load Test — JMeter CLI + Task Manager](../Task1/results/load/evidences/load_execution_taskmgr.png)
 
+![Load Test — Task Manager Performance Monitor](../Task1/results/load/evidences/load_execution_taskmgr_perf.png)
+
 ![Load Test — HTML Dashboard](../Task1/results/load/evidences/load_html_dashboard.png)
 
 ![Load Test — Statistics Table](../Task1/results/load/evidences/load_statistics_table.png)
@@ -194,6 +196,8 @@
 **Nhận xét:** Hệ thống EShop SUT xử lý tải bậc thang 200 VUs hoàn hảo — Error Rate 0%, P95 chỉ 19ms. Điều này cho thấy với Think Time hợp lý, hệ thống có thể duy trì ổn định lên tới 200 VUs mà không bị suy giảm hiệu năng đáng kể.
 
 **Ảnh minh chứng thực thi:**
+
+![Stress Test — JMeter GUI + Task Manager](../Task1/results/stress/evidences/stress_gui_execution_taskmgr.png)
 
 ![Stress Test — JMeter CLI + Task Manager](../Task1/results/stress/evidences/stress_execution_taskmgr.png)
 
@@ -249,6 +253,8 @@
 **Nhận xét:** Mặc dù Error Rate = 0%, hệ thống bị **suy giảm độ trễ nghiêm trọng** (P95 vọt từ 16ms lên 1,733ms). Error Rate 0% chỉ phản ánh rằng hàng đợi TCP socket của Node.js chưa bị tràn, **không phải** hệ thống chịu tải tốt. Về mặt UX, độ trễ 1.7s – 3.3s tương đương "đóng băng", người dùng thực tế sẽ từ bỏ phiên giao dịch.
 
 **Ảnh minh chứng thực thi:**
+
+![Spike Test — JMeter GUI + Task Manager](../Task1/results/spike/evidences/spike_gui_execution_taskmgr.png)
 
 ![Spike Test — JMeter CLI + Task Manager](../Task1/results/spike/evidences/spike_execution_taskmgr.png)
 
