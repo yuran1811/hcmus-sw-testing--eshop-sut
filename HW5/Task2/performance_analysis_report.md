@@ -210,4 +210,34 @@ app.get('/api/products', cacheMiddleware('products_'), getProductsHandler);
 | **Mức độ Tận Dụng CPU** | Chỉ dùng 1 Core (~12%) | Dàn đều 8-12 Cores (~85%) | Tối ưu hóa 100% phần cứng |
 
 ---
+
+## V. Đánh Giá Của Sinh Viên Về Đề Xuất Tối Ưu Của AI (Judging AI's Optimization Proposals)
+
+Sinh viên đối chiếu từng đề xuất với source code thực tế (`server.js`, `database.js`, `package.json`) để phân loại tính khả thi:
+
+| STT | Đề xuất tối ưu của AI | Phân loại | Đánh giá & Luận cứ kỹ thuật |
+| :---: | :--- | :---: | :--- |
+| **OP-01** | **Bật SQLite WAL Mode + PRAGMAs (`journal_mode=WAL`, `synchronous=NORMAL`, `cache_size=-64000`, `temp_store=MEMORY`)** | ✅ **FEASIBLE** | **Khả thi cao.** Kiểm tra `database.js` xác nhận SUT không set PRAGMA nào — mặc định là Rollback Journal (DELETE mode). WAL cho phép đọc đồng thời khi đang ghi, giải quyết triệt để write lock contention. **Tuy nhiên**, code mẫu AI dùng `better-sqlite3` (sync API: `db.pragma(...)`) trong khi SUT thực tế dùng package `sqlite3` (async callback API) — cần đổi thành `db.run("PRAGMA journal_mode = WAL")`. |
+| **OP-02** | **Đánh chỉ mục chiến lược trên `category_id`, `price`, `code`, `email`** | ✅ **FEASIBLE** | **Khả thi, dễ triển khai.** `database.js` không có `CREATE INDEX` nào. `GET /api/products` chạy `SELECT * FROM products` — full table scan thật sự. Index trên `category_id` và `email` sẽ giảm chi phí tìm kiếm từ $O(N)$ xuống $O(\log N)$. |
+| **OP-03** | **In-Memory Cache (Node-Cache/Redis) cho `GET /api/products` và `GET /api/coupons`** | ✅ **FEASIBLE** | **Khả thi.** SUT không có cache layer nào. Code mẫu middleware caching của AI hợp lý về mặt logic. |
+| **OP-04** | **PM2 Cluster Mode + `UV_THREADPOOL_SIZE=16`** | ⚠️ **FEASIBLE nhưng LẬP LUẬN SAI** | **Giải pháp đúng, lý do sai.** AI ghi tiêu đề "*Giải Quyết Điểm Nghẽn CPU Auth — bcrypt*" nhưng kiểm tra `server.js` dòng 46 cho thấy: `if (user.password === password)` — SUT **so sánh mật khẩu plaintext** bằng `===`, không dùng bcrypt. `package.json` cũng **không có dependency `bcrypt` hay `argon2`**. Login chậm (Avg 759ms trong Spike) thực chất do mỗi request cần 1 SELECT + 1 UPDATE gây **write lock contention trên SQLite**, không phải CPU-bound. PM2 Cluster vẫn khả thi nhưng vì lý do chia tải I/O đồng thời, không phải giảm tải CPU hashing. |
+| **OP-05** | **Batch Transaction cho `POST /api/admin/import-products` (`db.transaction()`)** | ⚠️ **FEASIBLE nhưng CODE MẪU SAI DRIVER** | **Nguyên lý đúng, implementation sai.** AI dùng `db.transaction()` — đây là API của `better-sqlite3`, không tồn tại trong package `sqlite3` mà SUT sử dụng. Cần thay bằng `db.run("BEGIN")` / `db.run("COMMIT")`. Ngoài ra, `server.js` dòng 209-234 cho thấy SUT **đã dùng `db.prepare()` + `stmt.finalize()`** — không hoàn toàn rời rạc như AI mô tả, chỉ thiếu gom transaction. |
+| **OP-06** | **Async Job Queue trả `202 Accepted` cho Bulk Import** | ✅ **FEASIBLE** | **Khả thi cho production.** Tuy nhiên đây là tối ưu kiến trúc nâng cao, quá mức cần thiết cho SUT demo. |
+
+### Tổng kết phân loại
+
+| Phân loại | Số lượng | Chi tiết |
+| :--- | :---: | :--- |
+| ✅ Feasible (Khả thi hoàn toàn) | **3/6** | OP-01 (WAL), OP-02 (Indexing), OP-03 (Cache) |
+| ⚠️ Feasible nhưng có lỗi | **2/6** | OP-04 (bcrypt hallucination), OP-05 (sai driver API) |
+| ✅ Feasible nhưng Over-scope | **1/6** | OP-06 (Async Queue — quá mức cho demo) |
+
+### Phát hiện Hallucination nghiêm trọng nhất
+
+AI chẩn đoán `/api/login` là **"CPU-Bound do bcrypt hashing"** xuyên suốt báo cáo (Section II.1 và III.2). Đây là **hallucination về implementation** — AI suy luận từ kiến thức chung rằng "login endpoint thường dùng bcrypt" mà không kiểm tra source code thực tế. Bằng chứng:
+
+- `server.js:46` → `if (user.password === password)` (plaintext comparison, chi phí CPU ≈ 0)
+- `package.json` → Không có `bcrypt`, `bcryptjs`, hay `argon2` trong dependencies
+
+---
 *Báo cáo được lưu trữ chính thức tại thư mục kết quả kiểm thử của dự án.*
