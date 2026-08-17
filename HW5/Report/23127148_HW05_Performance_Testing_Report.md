@@ -149,6 +149,8 @@
 
 **Ảnh minh chứng thực thi:**
 
+![Load Test — JMeter GUI + Task Manager](../Task1/results/load/evidences/load_gui_execution_taskmgr.png)
+
 ![Load Test — JMeter CLI + Task Manager](../Task1/results/load/evidences/load_execution_taskmgr.png)
 
 ![Load Test — HTML Dashboard](../Task1/results/load/evidences/load_html_dashboard.png)
