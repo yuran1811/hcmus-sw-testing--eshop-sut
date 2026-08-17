@@ -15,9 +15,12 @@
 
 ## 2. Bảng Tự Đánh Giá (Self-Assessment Table)
 
-> Theo thang điểm chuẩn quy định tại **Mục 15 (Assessment Template)** của đề bài HW05 (Tổng điểm 6 mục: 20 + 20 + 20 + 10 + 10 + 10 = **90 điểm**):
+> **Ghi chú về thang điểm (Mục 15 — Assessment Template):**  
+> Tổng điểm thô của 6 tiêu chí theo rubric đề bài là $20 + 20 + 20 + 10 + 10 + 10 = 90$ điểm, trong khi dòng Total ở cuối bảng đề bài ghi **100 điểm**.  
+> Do đó, theo **quy tắc tam suất (Rule of Three)**, điểm số tự đánh giá được quy đổi chuẩn hóa từ thang 90 về thang điểm 100 tuyệt đối:
+> $$\text{Điểm quy đổi (Scale 100)} = \frac{\text{Điểm thô đạt được}}{90} \times 100 = \frac{90}{90} \times 100 = \mathbf{100 / 100}$$
 
-| No. | Criteria / Tiêu chí đánh giá | Max Grade | Self-Assessed Grade | Ghi chú minh chứng |
+| No. | Criteria / Tiêu chí đánh giá | Max Grade (Raw) | Self-Assessed Grade | Ghi chú minh chứng |
 | :---: | :--- | :---: | :---: | :--- |
 | **1** | **Task 1 — Load testing** (Baseline 50 VUs, data-driven CSV, Once Only Login, HTML dashboard & logs) | 20 | **20** | `23127148_Load_20260815.jmx`, `load_results.jtl`, HTML Report |
 | **2** | **Task 1 — Stress testing** (Stepped 50 $\rightarrow$ 200 VUs, xác định điểm gãy, HTML dashboard & logs) | 20 | **20** | `23127148_Stress_20260815.jmx`, `stress_results.jtl`, HTML Report |
@@ -25,7 +28,7 @@
 | **4** | **Task 2 — AI analysis + misinterpretation hunt** (Vạch trần 5 sai lệch phân vị, 4 ngộ nhận kiến trúc, đối soát log gốc) | 10 | **10** | [Mục 4 trong Báo cáo chính](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Report/23127148_HW05_Performance_Testing_Report.md#4-task-2--ai-analysis--misinterpretation-hunt), [AI_Audit_Report.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/AI%20Submission/AI_Audit_Report.md) |
 | **5** | **Task 3 — Continuous Performance Testing proposal** (Bloom-AI G9.6 Disrupt, Smart Watcher, Dynamic Baseline, Gatekeeping Flowchart & Python CLI Guard) | 10 | **10** | [continuous_performance_testing_pipeline.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/continuous_performance_testing_pipeline.md), [p95_regression_guard.py](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW5/Task3/scripts/p95_regression_guard.py) |
 | **6** | **Agent Skills** (Reusable skill 8 bước, Workload Model reference, tham số hóa tổng quát) | 10 | **10** | [.agents/skills/performance-testing/SKILL.md](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/performance-testing/SKILL.md) |
-| **TỔNG** | **Tổng điểm tự đánh giá** | **90** | **90 / 90** | **Đạt trọn vẹn 100% tất cả các tiêu chí đánh giá quy định (90/90 điểm)** |
+| **TỔNG** | **Tổng điểm (Raw / Thang 100 chuẩn hóa tam suất)** | **90 / 100** | **90 (Raw) $\rightarrow$ 100 / 100** | **Đạt trọn vẹn 100% tất cả các tiêu chí đánh giá quy định (100/100 điểm)** |
 
 ---
 
