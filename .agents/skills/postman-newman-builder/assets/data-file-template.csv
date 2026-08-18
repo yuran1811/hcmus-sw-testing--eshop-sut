@@ -1,0 +1,12 @@
+tcId,description,email,password,expectedStatus,expectedErrorCode,note
+TC-A-LOGIN-DP-001,Email và mật khẩu hợp lệ,qa.user.a@eshop.test,Valid@Pass123,200,,happy path
+TC-A-LOGIN-DP-002,Email đúng định dạng nhưng chưa đăng ký,notexist@eshop.test,Valid@Pass123,401,INVALID_CREDENTIALS,không được lộ email tồn tại hay không
+TC-A-LOGIN-DP-003,Sai mật khẩu,qa.user.a@eshop.test,WrongPass123,401,INVALID_CREDENTIALS,message phải giống case trên
+TC-A-LOGIN-DP-004,Thiếu ký tự @ trong email,qa.user.a.eshop.test,Valid@Pass123,400,VALIDATION_ERROR,domain partition - email format
+TC-A-LOGIN-DP-005,Email rỗng,,Valid@Pass123,400,VALIDATION_ERROR,required field
+TC-A-LOGIN-DP-006,Mật khẩu rỗng,qa.user.a@eshop.test,,400,VALIDATION_ERROR,required field
+TC-A-LOGIN-DP-007,Email chỉ có khoảng trắng,   ,Valid@Pass123,400,VALIDATION_ERROR,kiểm tra có trim không
+TC-A-LOGIN-DP-008,Email vượt 255 ký tự,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@eshop.test,Valid@Pass123,400,VALIDATION_ERROR,boundary max+1
+TC-A-LOGIN-DP-009,Mật khẩu dài hơn 72 byte,qa.user.a@eshop.test,AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,401,INVALID_CREDENTIALS,giới hạn bcrypt - kiểm tra có cắt âm thầm không
+TC-A-LOGIN-SEC-001,SQL injection trong email,' OR '1'='1,anything,400|401,,không được trả 200 hoặc 500
+TC-A-LOGIN-SEC-002,XSS payload trong email,<script>alert(1)</script>,Valid@Pass123,400,VALIDATION_ERROR,response không echo payload

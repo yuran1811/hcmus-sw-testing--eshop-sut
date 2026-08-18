@@ -1,0 +1,127 @@
+# .github/workflows/api-tests.yml
+# HW06 - API Testing: chạy Postman collection bằng Newman trong GitHub Actions.
+#
+# Nguyên tắc thiết kế: dựng SUT NGAY TRONG JOB rồi mới chạy Newman.
+# Nếu trỏ Newman tới một server bên ngoài, run sẽ fail vì lỗi kết nối chứ không
+# phải fail nghiệp vụ - và bằng chứng "one failing test" sẽ không thuyết phục.
+#
+# ĐIỀU CHỈNH: các bước "Install SUT" / "Start SUT" bên dưới viết cho SUT Node.js.
+# Nếu eshop-sut dùng stack khác (docker compose, .NET, Java), thay bằng lệnh tương ứng.
+
+name: API Tests (Newman)
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:        # cho phép bấm chạy tay để tạo 2 run mẫu
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      BASE_URL: http://localhost:3000
+      STUDENT_ID: ${{ secrets.STUDENT_ID }}     # đặt trong Settings > Secrets
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # ---------------------------------------------------------------
+      # Dựng SUT
+      # ---------------------------------------------------------------
+      - name: Install SUT dependencies
+        run: npm ci || npm install
+
+      - name: Seed test database
+        run: npm run seed || echo "Không có script seed - bỏ qua"
+
+      - name: Start SUT in background
+        run: |
+          npm start &
+          echo "SUT_PID=$!" >> $GITHUB_ENV
+
+      - name: Wait for SUT to be healthy
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf "$BASE_URL" > /dev/null 2>&1; then
+              echo "SUT sẵn sàng sau ${i}s"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "SUT không khởi động được trong 30s"
+          exit 1
+
+      # ---------------------------------------------------------------
+      # Chạy test
+      # ---------------------------------------------------------------
+      - name: Install Newman
+        run: npm install -g newman newman-reporter-htmlextra
+
+      - name: Create reports directory
+        run: mkdir -p reports
+
+      - name: Run Newman - API test suite
+        run: |
+          newman run collections/eshop-hw06.postman_collection.json \
+            -e envs/ci.postman_environment.json \
+            --env-var "baseUrl=$BASE_URL" \
+            --env-var "studentId=$STUDENT_ID" \
+            --reporters cli,htmlextra,json \
+            --reporter-htmlextra-export reports/newman-report.html \
+            --reporter-htmlextra-title "HW06 - EShop API Tests" \
+            --reporter-json-export reports/newman-report.json \
+            --timeout-request 10000 \
+            --verbose
+
+      # Data-driven run tách riêng để thấy rõ số iteration trong log
+      - name: Run Newman - data-driven (domain partition)
+        run: |
+          newman run collections/eshop-hw06.postman_collection.json \
+            --folder "API1 - Login DP (data-driven)" \
+            -e envs/ci.postman_environment.json \
+            --env-var "baseUrl=$BASE_URL" \
+            --env-var "studentId=$STUDENT_ID" \
+            -d data/login-dp.csv \
+            --reporters cli,htmlextra \
+            --reporter-htmlextra-export reports/newman-datadriven.html
+
+      # ---------------------------------------------------------------
+      # Bằng chứng
+      # ---------------------------------------------------------------
+      # if: always() để report vẫn được upload khi có test fail (run mẫu B)
+      - name: Upload Newman reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-reports-${{ github.run_number }}
+          path: reports/
+          retention-days: 30
+
+      - name: Write summary to GitHub Step Summary
+        if: always()
+        run: |
+          echo "## Newman Test Summary" >> $GITHUB_STEP_SUMMARY
+          if [ -f reports/newman-report.json ]; then
+            node -e "
+              const r = require('./reports/newman-report.json').run.stats;
+              const line = (k) => \`| \${k} | \${r[k].total} | \${r[k].failed} |\`;
+              console.log('| Metric | Total | Failed |');
+              console.log('|---|---|---|');
+              ['requests','assertions','testScripts'].forEach(k => console.log(line(k)));
+            " >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Stop SUT
+        if: always()
+        run: kill $SUT_PID || true
