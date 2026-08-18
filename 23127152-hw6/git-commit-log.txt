@@ -1,0 +1,36 @@
+# HW06 Git Commit Log — 23127152
+
+> Export bằng: `git log --oneline --grep="hw06" > git-commit-log.txt`
+> Hoặc: `git log --oneline -- 23127152-hw6/`
+
+---
+
+## Expected Commits (1 per pipeline step)
+
+| # | Commit message (suggested) | Step | Status |
+|---|---------------------------|------|--------|
+| 1 | `hw06: setup skeleton & postman env` | Setup | ☐ |
+| 2 | `hw06/api1-generate-test-cases` | API1 Generate | ☐ |
+| 3 | `hw06/api1-audit-test-cases` | API1 Audit | ☐ |
+| 4 | `hw06/api1-extend-test-cases` | API1 Extend | ☐ |
+| 5 | `hw06/api1-execute-postman-newman` | API1 Execute | ☐ |
+| 6 | `hw06/api2-generate-test-cases` | API2 Generate | ☐ |
+| 7 | `hw06/api2-audit-test-cases` | API2 Audit | ☐ |
+| 8 | `hw06/api2-extend-test-cases` | API2 Extend | ☐ |
+| 9 | `hw06/api2-execute-postman-newman` | API2 Execute | ☐ |
+| 10 | `hw06/api3-generate-test-cases` | API3 Generate | ☐ |
+| 11 | `hw06/api3-audit-test-cases` | API3 Audit | ☐ |
+| 12 | `hw06/api3-extend-test-cases` | API3 Extend | ☐ |
+| 13 | `hw06/api3-execute-postman-newman` | API3 Execute | ☐ |
+| 14 | `hw06/postman-collection-final` | Postman export | ☐ |
+| 15 | `hw06/cicd-github-actions` | CI/CD | ☐ |
+| 16 | `hw06/agent-skill-design` | Agent Skill | ☐ |
+| 17 | `hw06/final-report-and-submission` | Report | ☐ |
+
+---
+
+## Actual Log
+
+```
+(paste git log output here before submission)
+```

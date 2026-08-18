@@ -1,0 +1,111 @@
+{
+  "info": {
+    "name": "EShop HW06 — API Testing (23127152)",
+    "description": "HW06 API test collection for EShop SUT.\n\nEvery request must include header `X-Student-Id: 23127152` via collection pre-request script.\n\nFolders:\n- API1 — Pool A\n- API2 — Pool B\n- API3 — Pool C\n- Setup — auth helpers",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.request.headers.add({",
+          "    key: 'X-Student-Id',",
+          "    value: pm.environment.get('studentId') || '23127152'",
+          "});"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Setup",
+      "item": [
+        {
+          "name": "Register Test User",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"HW06 Test User\",\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\"\n}"
+            },
+            "url": "{{baseUrl}}/api/register"
+          }
+        },
+        {
+          "name": "Login User (save token)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const json = pm.response.json();",
+                  "    pm.environment.set('userToken', json.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\"\n}"
+            },
+            "url": "{{baseUrl}}/api/login"
+          }
+        },
+        {
+          "name": "Login Admin (save token)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const json = pm.response.json();",
+                  "    pm.environment.set('adminToken', json.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@eshop.com\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/login"
+          }
+        }
+      ]
+    },
+    {
+      "name": "API1 — Pool A (TBD)",
+      "description": "Replace folder name after API selection. Add ≥ 40 requests (35 AI + 5 extended).",
+      "item": []
+    },
+    {
+      "name": "API2 — Pool B (TBD)",
+      "description": "Replace folder name after API selection. Add ≥ 40 requests.",
+      "item": []
+    },
+    {
+      "name": "API3 — Pool C (TBD)",
+      "description": "Replace folder name after API selection. Add ≥ 40 requests.",
+      "item": []
+    }
+  ],
+  "variable": [
+    {"key": "baseUrl", "value": "http://localhost:3000"},
+    {"key": "studentId", "value": "23127152"}
+  ]
+}

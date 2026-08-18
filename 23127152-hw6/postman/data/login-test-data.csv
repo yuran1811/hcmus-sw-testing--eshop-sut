@@ -1,0 +1,4 @@
+email,password,expected_status,description
+valid@example.com,Password123!,200,Valid login
+invalid@example.com,wrongpass,401,Wrong password
+not-an-email,Password123!,400,Invalid email format

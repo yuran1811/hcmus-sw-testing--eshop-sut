@@ -1,0 +1,25 @@
+%% AI-Driven API Test Generator — Mermaid source
+%% Export to diagram.png after editing (self-drawn design decisions)
+
+flowchart TD
+    A[api_specification.md] --> B[Spec Parser]
+    B --> C[Domain Partition Generator]
+    B --> D[State Transition Analyzer]
+    B --> E[Security Test Generator]
+    B --> F[Schema Validator Generator]
+
+    C --> G[Test Case Aggregator]
+    D --> G
+    E --> G
+    F --> G
+
+    G --> H{Human Audit}
+    H -->|VALID| I[Final Test Suite]
+    H -->|INVALID| J[Correct & Re-audit]
+    H -->|INCOMPLETE| K[Manual Extension ≥ 5 TC]
+    J --> H
+    K --> I
+
+    I --> L[Postman Collection Export]
+    I --> M[Newman Runner]
+    M --> N[HTML Report + Bug Reports]
