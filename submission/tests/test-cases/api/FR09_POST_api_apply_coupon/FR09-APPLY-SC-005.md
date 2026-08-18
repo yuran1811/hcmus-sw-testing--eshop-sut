@@ -35,7 +35,7 @@ Coupon API / API Testing / Schema Validation
 
 ## Expected result
 
-Status 400. Body lỗi mô tả validation input và không chứa `discount_amount/final_amount` như response thành công.
+Input invalid không được tạo kết quả thành công hoặc áp dụng coupon; response lỗi không nên chứa `discount_amount/final_amount` của một phép tính thành công. Status và error schema được ghi nhận theo behavior.
 
 ## Status / Related bugs
 

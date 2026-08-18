@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống từ chối tổng tiền có ký tự lạ.
+Hệ thống không dùng chuỗi có ký tự lạ để tạo kết quả giảm giá và không lỗi 5xx; status validation được ghi nhận theo behavior.
 
 ## Status / Related bugs
 

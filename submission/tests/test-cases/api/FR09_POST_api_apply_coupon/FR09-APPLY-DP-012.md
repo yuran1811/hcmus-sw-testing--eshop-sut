@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request hoặc 404 Not Found. Hệ thống xử lý code dài an toàn, không lỗi 5xx.
+Hệ thống xử lý code dài an toàn, không lỗi 5xx và không áp dụng nhầm coupon; giới hạn độ dài/status được ghi nhận theo behavior vì spec chưa quy định.
 
 ## Status / Related bugs
 

@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống từ chối `code` null.
+Hệ thống không áp dụng nhầm coupon và không phát sinh lỗi 5xx. Ghi nhận behavior/status thực tế vì spec chưa định nghĩa nullability của `code`.
 
 ## Status / Related bugs
 

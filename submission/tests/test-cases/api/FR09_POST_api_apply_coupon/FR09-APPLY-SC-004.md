@@ -35,7 +35,7 @@ Coupon API / API Testing / Schema Validation
 
 ## Expected result
 
-Status 401. Body lỗi là JSON an toàn, không chứa stack trace hoặc token nội bộ.
+Request không có JWT hợp lệ không được trả discount; response không chứa stack trace, token nội bộ hoặc dữ liệu nhạy cảm. Status/error schema được ghi nhận theo behavior vì spec chưa định nghĩa exact schema.
 
 ## Status / Related bugs
 

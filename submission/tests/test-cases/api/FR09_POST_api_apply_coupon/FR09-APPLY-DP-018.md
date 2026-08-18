@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-200 OK hoặc 400 Bad Request có kiểm soát. Hệ thống không overflow, không trả `Infinity`/`NaN`.
+Hệ thống không overflow, không trả `Infinity`/`NaN` và không lỗi 5xx; chấp nhận hay giới hạn giá trị phải theo behavior vì spec chưa có max `total_amount`.
 
 ## Status / Related bugs
 

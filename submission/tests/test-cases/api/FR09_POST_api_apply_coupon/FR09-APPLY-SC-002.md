@@ -35,7 +35,7 @@ Coupon API / API Testing / Schema Validation
 
 ## Expected result
 
-`discount_amount` không âm, `final_amount = total_amount - discount_amount`, và `final_amount` không âm.
+Kiểm tra công thức được đặc tả: `final_amount = total_amount - discount_amount`; đồng thời ghi nhận kiểu dữ liệu, làm tròn và behavior khi kết quả âm vì các điểm này chưa được schema đặc tả.
 
 ## Status / Related bugs
 

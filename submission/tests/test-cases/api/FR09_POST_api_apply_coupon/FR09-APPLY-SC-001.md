@@ -35,7 +35,7 @@ Coupon API / API Testing / Schema Validation
 
 ## Expected result
 
-Status 200. Response JSON bắt buộc có `discount_amount` và `final_amount`, cả hai là number.
+Response thành công là JSON và có `discount_amount`, `final_amount` như spec mô tả. Kiểu dữ liệu và chính sách field dư được ghi nhận theo response thực tế vì spec chưa chốt exact schema.
 
 ## Status / Related bugs
 

@@ -12,7 +12,7 @@ Coupon API / API Testing / State Transition
 
 - Backend API đang chạy tại `http://localhost:3000`
 - Đặc tả API tham chiếu: mục 5.1 Áp dụng mã giảm giá trong `api_specification.md`
-- User đã dùng VIP100 đủ 2 lần.
+- Trước request, dữ liệu đã xác nhận user có `use_count(VIP100) = 2`; `max_uses_per_user = 2`.
 
 ## Test data
 
@@ -35,7 +35,7 @@ Coupon API / API Testing / State Transition
 
 ## Expected result
 
-400 Bad Request. Hệ thống từ chối lần dùng thứ ba vì vượt `max_uses_per_user`.
+Hệ thống không áp dụng giảm giá vì `use_count(VIP100)` không nhỏ hơn `max_uses_per_user`. Ghi nhận status code thực tế; không được trả kết quả giảm giá thành công.
 
 ## Status / Related bugs
 

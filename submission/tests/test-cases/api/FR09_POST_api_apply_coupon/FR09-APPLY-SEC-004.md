@@ -35,7 +35,7 @@ Coupon API / API Testing / Security / SEC-05
 
 ## Expected result
 
-400 Bad Request. Hệ thống không ép kiểu chuỗi injection thành số hợp lệ.
+Không ép chuỗi injection thành số hợp lệ, không tính discount sai và không lỗi 5xx; status cụ thể phụ thuộc schema `total_amount` chưa được đặc tả.
 
 ## Status / Related bugs
 

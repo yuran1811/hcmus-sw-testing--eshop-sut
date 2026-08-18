@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống từ chối vì tổng đơn hàng nhỏ hơn `min_order_amount`.
+Coupon không được áp dụng vì tổng đơn hàng nhỏ hơn `min_order_amount`; ghi nhận status code thực tế vì API specification chưa chốt mã lỗi.
 
 ## Status / Related bugs
 

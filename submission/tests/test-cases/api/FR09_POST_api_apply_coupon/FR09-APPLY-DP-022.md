@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống từ chối `user_id` sai kiểu.
+Hệ thống không dùng giá trị sai kiểu để truy cập hoặc tiêu lượt của user khác và không phát sinh lỗi 5xx; status validation được ghi nhận theo behavior thực tế.
 
 ## Status / Related bugs
 

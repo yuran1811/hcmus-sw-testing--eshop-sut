@@ -35,7 +35,7 @@ Coupon API / API Testing / Security / SEC-04
 
 ## Expected result
 
-400 Bad Request hoặc 404 Not Found. Response không render/echo HTML nguy hiểm.
+Response API không render HTML/script nguy hiểm và không áp dụng nhầm coupon. Kiểm tra escaping ở UI/consumer phải thực hiện ở suite phù hợp, không kết luận từ API response đơn lẻ.
 
 ## Status / Related bugs
 

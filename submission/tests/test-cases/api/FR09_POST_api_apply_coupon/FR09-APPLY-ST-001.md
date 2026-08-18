@@ -35,7 +35,7 @@ Coupon API / API Testing / State Transition
 
 ## Expected result
 
-Lần áp dụng đầu tiên thành công và ghi nhận lượt dùng của user cho mã SAVE10 nếu flow checkout xác nhận sử dụng mã.
+Response thành công và có `discount_amount = 50000`, `final_amount = 450000`. Việc tăng bộ đếm sử dụng chỉ được kiểm tra nếu contract của flow checkout quy định rõ request nào ghi nhận lượt dùng; bản thân API specification hiện chỉ mô tả phép tính.
 
 ## Status / Related bugs
 

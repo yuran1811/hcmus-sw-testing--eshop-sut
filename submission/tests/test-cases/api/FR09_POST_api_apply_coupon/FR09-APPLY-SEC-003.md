@@ -35,7 +35,7 @@ Coupon API / API Testing / Security / SEC-05
 
 ## Expected result
 
-400 Bad Request hoặc 404 Not Found. Truy vấn phải parameterized, không áp dụng nhầm coupon.
+Không áp dụng nhầm coupon, không lỗi 5xx và không làm lộ SQL/database detail. Việc dùng parameterized query phải được xác nhận thêm bằng source review theo SEC-05, không kết luận chỉ từ status response.
 
 ## Status / Related bugs
 

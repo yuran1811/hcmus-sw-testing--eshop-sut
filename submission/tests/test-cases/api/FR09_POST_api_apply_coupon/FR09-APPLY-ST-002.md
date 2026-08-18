@@ -12,7 +12,7 @@ Coupon API / API Testing / State Transition
 
 - Backend API đang chạy tại `http://localhost:3000`
 - Đặc tả API tham chiếu: mục 5.1 Áp dụng mã giảm giá trong `api_specification.md`
-- User đã dùng SAVE10 đủ 1 lần.
+- Trước request, dữ liệu đã xác nhận user có `use_count(SAVE10) = 1`; không dùng một request trước đó trong cùng test để tạo state.
 
 ## Test data
 
@@ -35,7 +35,7 @@ Coupon API / API Testing / State Transition
 
 ## Expected result
 
-400 Bad Request. Hệ thống từ chối vì số lần đã dùng của user không còn nhỏ hơn `max_uses_per_user`.
+Hệ thống không áp dụng giảm giá vì tại thời điểm kiểm tra `use_count(SAVE10) = max_uses_per_user = 1`. Ghi nhận status code thực tế; không được trả kết quả giảm giá thành công.
 
 ## Status / Related bugs
 

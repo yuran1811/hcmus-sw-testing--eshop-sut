@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-200 OK hoặc 400 Bad Request theo quy ước tiền tệ của hệ thống; nếu chấp nhận thì discount/final_amount phải tính chính xác và không lỗi làm tròn bất thường.
+Nếu hệ thống chấp nhận giá trị thập phân thì phải tính theo công thức và quy tắc làm tròn thực tế; nếu không chấp nhận thì phải xử lý có kiểm soát. Spec hiện chưa chốt quy ước tiền tệ.
 
 ## Status / Related bugs
 

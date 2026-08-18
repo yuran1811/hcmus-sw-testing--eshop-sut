@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống từ chối vì mã đã hết hạn, không trả discount hợp lệ.
+Coupon không được áp dụng vì ngày hiện tại không trước `expired_at`; ghi nhận status code thực tế vì API specification chưa chốt mã lỗi.
 
 ## Status / Related bugs
 

@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request hoặc xử lý có kiểm soát theo schema server; không được tính sai do ép kiểu không an toàn.
+Hệ thống xử lý theo schema thực tế, không ép kiểu mơ hồ làm sai discount/final amount và không lỗi 5xx.
 
 ## Status / Related bugs
 

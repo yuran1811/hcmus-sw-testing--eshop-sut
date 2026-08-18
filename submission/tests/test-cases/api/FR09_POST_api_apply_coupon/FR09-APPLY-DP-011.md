@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request hoặc 404 Not Found nếu code phân biệt hoa/thường; không được áp dụng sai mã khác.
+Không được áp dụng sai coupon. Ghi nhận behavior về phân biệt hoa/thường vì spec chưa quy định hệ thống có canonicalize code hay không.
 
 ## Status / Related bugs
 

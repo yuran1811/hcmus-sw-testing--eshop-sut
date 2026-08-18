@@ -35,7 +35,7 @@ Coupon API / API Testing / Schema Validation
 
 ## Expected result
 
-Status 400 hoặc 404. Body lỗi là JSON có `message` hoặc `error` dạng string, không trả HTML.
+Request bị từ chối, response lỗi là JSON nếu SUT có quy định JSON error; không được trả các field kết quả thành công. Status và tên field lỗi được ghi nhận vì spec chưa định nghĩa.
 
 ## Status / Related bugs
 

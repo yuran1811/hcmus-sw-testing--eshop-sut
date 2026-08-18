@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống từ chối `code` chỉ gồm khoảng trắng.
+Hệ thống xử lý input an toàn và không áp dụng nhầm coupon. Việc trim hay mã HTTP cụ thể được ghi nhận theo behavior thực tế vì spec chưa quy định.
 
 ## Status / Related bugs
 

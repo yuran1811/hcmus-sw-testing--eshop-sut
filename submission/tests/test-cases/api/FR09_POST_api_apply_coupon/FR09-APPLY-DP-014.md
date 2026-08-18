@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống từ chối tổng tiền âm.
+Hệ thống không áp dụng giảm giá cho tổng tiền âm và không trả kết quả tính toán sai; status cụ thể được ghi nhận theo behavior vì miền số của `total_amount` chưa được đặc tả.
 
 ## Status / Related bugs
 
