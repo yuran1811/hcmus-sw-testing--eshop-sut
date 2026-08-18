@@ -35,7 +35,7 @@ User Profile API / API Testing / Security / SEC-04
 
 ## Expected result
 
-400 Bad Request hoặc dữ liệu được escape an toàn; UI sau đó không thực thi script.
+payload XSS có thể được lưu như text, nhưng SEC-04 yêu cầu kiểm tra ở lúc hiển thị UI. Case API phải thêm bước mở UI/đọc DOM và xác nhận script không chạy; không bắt buộc 400.
 
 ## Status / Related bugs
 

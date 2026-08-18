@@ -35,7 +35,7 @@ User Profile API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống không lưu địa chỉ rỗng khi trường này được gửi trong request cập nhật.
+FR-04 không quy định địa chỉ là bắt buộc hoặc không được rỗng. Ghi nhận response và trạng thái sau request; chỉ yêu cầu 400 khi đặc tả được bổ sung.
 
 ## Status / Related bugs
 

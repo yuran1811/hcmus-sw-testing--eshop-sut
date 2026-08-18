@@ -35,7 +35,7 @@ User Profile API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống không chấp nhận họ tên chỉ gồm khoảng trắng.
+FR-04 không nêu quy tắc trim hoặc cấm họ tên chỉ gồm khoảng trắng. Ghi nhận response và dữ liệu lưu; không áp đặt 400 nếu chưa có yêu cầu bổ sung.
 
 ## Status / Related bugs
 

@@ -35,7 +35,7 @@ User Profile API / API Testing / Security / SEC-05
 
 ## Expected result
 
-Không thực thi SQL injection; bảng `users` vẫn tồn tại; lỗi nếu có không để lộ SQL hoặc stack trace.
+Behavioral oracle: payload được xử lý như dữ liệu literal, bảng `users` và các hồ sơ vẫn tồn tại, không gây lỗi 5xx và không lộ SQL/stack trace. Việc dùng parameterized query phải được xác minh thêm bằng source-code review theo SEC-05.
 
 ## Status / Related bugs
 

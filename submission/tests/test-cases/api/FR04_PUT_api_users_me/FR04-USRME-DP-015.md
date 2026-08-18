@@ -35,7 +35,7 @@ User Profile API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống từ chối sai kiểu dữ liệu để tránh mất số 0 ở đầu.
+body mẫu chỉ minh họa `phone` dạng chuỗi, nhưng FR-04 chưa quy định schema/type error cho JSON number. Kiểm tra SUT không âm thầm biến đổi hoặc mất số 0; ghi nhận response thực tế thay vì bắt buộc 400.
 
 ## Status / Related bugs
 

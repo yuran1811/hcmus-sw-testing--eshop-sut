@@ -35,7 +35,7 @@ User Profile API / API Testing / State Transition
 
 ## Expected result
 
-Lần cập nhật thứ hai ghi đè đúng các trường được gửi; hệ thống không sinh bản ghi user mới.
+nếu partial update được hỗ trợ, lần hai ghi đè đúng trường gửi và giữ các trường khác; nếu không, trả lỗi rõ ràng. Việc không sinh bản ghi mới là oracle bổ sung chưa được đặc tả.
 
 ## Status / Related bugs
 

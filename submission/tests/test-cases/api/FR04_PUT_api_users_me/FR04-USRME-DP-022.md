@@ -35,7 +35,7 @@ User Profile API / API Testing / Domain Partition
 
 ## Expected result
 
-415 Unsupported Media Type hoặc 400 Bad Request. Hệ thống không xử lý sai định dạng thành cập nhật hợp lệ.
+JSON là định dạng được minh họa nhưng FR-04 chưa quy định mã 415/400. Request không được gây cập nhật ngoài ý muốn; ghi nhận hành vi thực tế.
 
 ## Status / Related bugs
 

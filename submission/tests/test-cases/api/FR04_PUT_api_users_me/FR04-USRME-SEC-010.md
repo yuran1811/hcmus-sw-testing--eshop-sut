@@ -35,7 +35,7 @@ User Profile API / API Testing / Security / SEC-01
 
 ## Expected result
 
-API bỏ qua hoặc từ chối `password/passwordHash`; không lưu plaintext và không trả về mật khẩu trong response.
+API phải bỏ qua hoặc từ chối `password/passwordHash`; response không chứa các trường này. Kiểm tra việc không ghi plaintext cần đọc database/hash hoặc review source code, không thể kết luận chỉ từ response của endpoint profile.
 
 ## Status / Related bugs
 

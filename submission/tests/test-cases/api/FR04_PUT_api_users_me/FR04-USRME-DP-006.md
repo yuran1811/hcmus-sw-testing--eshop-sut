@@ -35,7 +35,7 @@ User Profile API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request hoặc 413 Payload Too Large. Hệ thống không lưu họ tên quá dài và không để lộ stack trace.
+đặc tả không đặt giới hạn độ dài `name`, và 413 không suy ra từ FR-04. Ghi nhận SUT có chấp nhận/trả lỗi an toàn hay không; không yêu cầu một trong hai mã này.
 
 ## Status / Related bugs
 

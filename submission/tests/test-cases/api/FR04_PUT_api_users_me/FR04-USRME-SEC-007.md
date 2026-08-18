@@ -35,7 +35,7 @@ User Profile API / API Testing / Security / SEC-04
 
 ## Expected result
 
-400 Bad Request hoặc dữ liệu được escape khi hiển thị; hệ thống không render HTML nguy hiểm.
+cần kiểm tra escaping khi UI render địa chỉ theo SEC-04. API case chỉ nên xác nhận dữ liệu không gây lỗi; không bắt buộc 400 nếu không có input validation tương ứng.
 
 ## Status / Related bugs
 

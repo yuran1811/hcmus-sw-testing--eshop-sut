@@ -35,7 +35,7 @@ User Profile API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống không ghi `null` vào trường số điện thoại.
+FR-04 không quy định `phone` nullable hay bắt buộc. Kiểm tra SUT xử lý `null` nhất quán và không làm mất dữ liệu ngoài ý muốn; không áp đặt 400 nếu chưa có schema bổ sung.
 
 ## Status / Related bugs
 

@@ -35,7 +35,7 @@ User Profile API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request hoặc 413 Payload Too Large. Hệ thống không bị lỗi server/DB và thông báo lỗi an toàn.
+đặc tả không đặt giới hạn độ dài địa chỉ và không quy định 413. Chỉ yêu cầu hệ thống không lỗi 5xx, không làm hỏng dữ liệu, và trả lỗi an toàn nếu có giới hạn triển khai.
 
 ## Status / Related bugs
 

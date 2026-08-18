@@ -35,7 +35,7 @@ User Profile API / API Testing / State Transition
 
 ## Expected result
 
-400 Bad Request. Toàn bộ request bị từ chối; `name` và `shipping_address` không bị cập nhật một phần.
+phone sai chắc chắn phải không được chấp nhận theo FR-04; việc toàn bộ request có atomic hay không chưa được nêu. Phải đọc lại hồ sơ để ghi nhận name/address có bị cập nhật một phần hay không.
 
 ## Status / Related bugs
 

@@ -35,7 +35,7 @@ User Profile API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống yêu cầu ít nhất một trường hợp lệ để cập nhật.
+FR-04 không quy định body rỗng phải có mã lỗi nào hoặc phải chứa ít nhất một trường; ghi nhận response và bảo đảm không có cập nhật ngoài ý muốn.
 
 ## Status / Related bugs
 

@@ -35,7 +35,7 @@ User Profile API / API Testing / Schema Validation
 
 ## Expected result
 
-Status 400. Body lỗi có thông báo rõ ràng về `phone`; dữ liệu hồ sơ không bị cập nhật.
+phone sai phải không được chấp nhận theo FR-04, nhưng status/schema thông báo lỗi chưa được đặc tả. Đọc lại hồ sơ để xác nhận không có cập nhật ngoài ý muốn.
 
 ## Status / Related bugs
 

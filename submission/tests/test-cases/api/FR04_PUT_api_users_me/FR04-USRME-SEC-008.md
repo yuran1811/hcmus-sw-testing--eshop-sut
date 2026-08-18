@@ -35,7 +35,7 @@ User Profile API / API Testing / Security / SEC-05
 
 ## Expected result
 
-Không cập nhật nhầm nhiều dòng và không bypass truy vấn; DB không lỗi; nếu trả lỗi thì không lộ SQL/stack trace.
+Behavioral oracle: payload được xử lý như dữ liệu literal, không làm thay đổi user khác, không gây lỗi 5xx và không lộ SQL/stack trace. Việc dùng parameterized query phải được xác minh thêm bằng source-code review theo SEC-05; không kết luận chỉ từ response API.
 
 ## Status / Related bugs
 

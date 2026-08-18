@@ -35,7 +35,7 @@ User Profile API / API Testing / Domain Partition
 
 ## Expected result
 
-200 OK nếu đặc tả không quy định độ dài tối thiểu cho họ tên; các trường khác không bị cập nhật sai.
+Case exploratory, không phải kiểm tra một boundary được đặc tả: FR-04 không quy định độ dài tối thiểu của `name`. Ghi nhận SUT chấp nhận hay từ chối giá trị `A`; nếu thành công, các trường khác phải không bị cập nhật sai.
 
 ## Status / Related bugs
 

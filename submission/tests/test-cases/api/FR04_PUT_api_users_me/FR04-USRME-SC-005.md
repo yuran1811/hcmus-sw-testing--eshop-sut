@@ -35,7 +35,7 @@ User Profile API / API Testing / Schema Validation
 
 ## Expected result
 
-Response thành công/lỗi phải đúng JSON schema; nếu thành công thì `role` trong response không bị đổi thành `admin`.
+API specification chưa định nghĩa JSON schema response nên không được yêu cầu một schema cụ thể. Nếu request thành công, `role` của user vẫn phải giữ nguyên và không thành `admin`; nếu trường `role` không có trong response thì xác minh bằng `GET /api/users/me` hoặc nguồn dữ liệu đối chứng.
 
 ## Status / Related bugs
 

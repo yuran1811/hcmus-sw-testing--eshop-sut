@@ -35,7 +35,7 @@ User Profile API / API Testing / Schema Validation
 
 ## Expected result
 
-Status 200. Response JSON có các trường hồ sơ mong đợi như `id`, `name`, `email`, `phone`, `shipping_address`, `role` nếu API trả user; kiểu dữ liệu đúng.
+chỉ status 200 và các giá trị cập nhật có căn cứ; api_specification không định nghĩa response schema, cũng không cam kết mọi trường `id/email/role` phải xuất hiện. Ghi nhận schema thực tế để phát hiện regression.
 
 ## Status / Related bugs
 

@@ -35,7 +35,7 @@ User Profile API / API Testing / Schema Validation
 
 ## Expected result
 
-Status 401. Body lỗi là JSON có trường `message` hoặc `error` dạng string; không trả HTML hoặc stack trace.
+status 401 phù hợp SEC-02; JSON field `message/error` và content type lỗi chưa được api_specification quy định. Vẫn phải kiểm tra không lộ stack trace/internal detail.
 
 ## Status / Related bugs
 

@@ -35,7 +35,7 @@ User Profile API / API Testing / Security / SEC-07
 
 ## Expected result
 
-API bỏ qua hoặc từ chối `resetToken`; chức năng cập nhật hồ sơ không ảnh hưởng OTP đặt lại mật khẩu.
+API phải bỏ qua hoặc từ chối `resetToken` và không đưa trường này vào response. Ảnh hưởng tới OTP phải được kiểm tra riêng trên flow FR-03 hoặc database; endpoint profile không đủ oracle để kết luận toàn bộ SEC-07.
 
 ## Status / Related bugs
 

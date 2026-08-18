@@ -35,7 +35,7 @@ User Profile API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống không chấp nhận địa chỉ chỉ gồm khoảng trắng.
+FR-04 không nêu quy tắc trim hoặc cấm địa chỉ chỉ gồm khoảng trắng. Ghi nhận hành vi thực tế và bảo đảm không có lỗi 5xx/stack trace.
 
 ## Status / Related bugs
 

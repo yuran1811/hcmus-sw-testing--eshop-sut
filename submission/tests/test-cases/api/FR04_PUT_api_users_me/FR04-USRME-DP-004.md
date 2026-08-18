@@ -35,7 +35,7 @@ User Profile API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống từ chối họ tên rỗng và trả về thông báo lỗi phù hợp.
+FR-04 không quy định `name` là bắt buộc hoặc cấm chuỗi rỗng. Ghi nhận hành vi thực tế; chỉ kết luận lỗi đặc tả nếu có yêu cầu bổ sung.
 
 ## Status / Related bugs
 

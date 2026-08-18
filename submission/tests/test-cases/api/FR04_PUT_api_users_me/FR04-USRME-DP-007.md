@@ -35,7 +35,7 @@ User Profile API / API Testing / Domain Partition
 
 ## Expected result
 
-200 OK. Chỉ trường `name` thay đổi; `phone` và `shipping_address` hiện có được giữ nguyên.
+PUT và body mẫu được mô tả, nhưng đặc tả không nói cập nhật một phần có được hỗ trợ hay không. Nếu hỗ trợ thì kỳ vọng 200 và hai trường không gửi giữ nguyên; nếu không, lỗi rõ ràng và không đổi hồ sơ.
 
 ## Status / Related bugs
 
