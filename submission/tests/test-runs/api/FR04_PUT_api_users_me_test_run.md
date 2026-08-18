@@ -1,6 +1,6 @@
 # FR04 PUT /api/users/me Test Run
 
-- **Ngày kiểm thử (Test Date):** 2026-08-18
+- **Ngày kiểm thử (Test Date):**
 - **API:** `PUT /api/users/me`
 - **Requirement:** FR-04 - Quản lý hồ sơ cá nhân
 - **Tham chiếu đặc tả API:** Mục 2.2 trong `api_specification.md`
