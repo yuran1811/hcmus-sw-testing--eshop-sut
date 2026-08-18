@@ -43,3 +43,14 @@ Tôi sử dụng công cụ AI cho các nhiệm vụ sau,
 - Kết quả AI trả về (nguyên văn hoặc tóm tắt trung thực nếu quá dài - có ghi chú nếu đã rút gọn):
   > Đã tạo `submission/tests/test-runs/api/FR04_PUT_api_users_me_test_run.md` theo cấu trúc của `CATEGORY-test-run.md`. File test run liệt kê đủ 44 test case của FR-04 `PUT /api/users/me` với các cột module, tester, result, related bug và note. Tất cả kết quả được để là `Not Run` vì chưa có kết quả chạy thực tế hoặc bug ID thật.
 - Những gì sinh viên thay đổi/giữ lại từ kết quả này: Chờ thực thi; sinh viên sẽ cập nhật Result và Related Bug sau khi chạy test.
+
+### Entry 5
+
+- Công cụ: Codex
+- Ngày/giờ: 2026-08-18 21:01
+- Ngữ cảnh nhiệm vụ: HW06 API Testing - Sinh test case API cho FR-09 `POST /api/apply-coupon` và FR-17 `POST /api/admin/coupons`
+- Prompt đã dùng (nguyên văn):
+  > dựa vào cấu trúc hiện tại của 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW6/hcmus-sw-testing--eshop-sut/submission/tests' và sử dụng skill 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW6/hcmus-sw-testing--eshop-sut/.agents/skills/api-test-case-generator', đọc 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW6/hcmus-sw-testing--eshop-sut/README.md' về FR09 và FR17, 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW6/hcmus-sw-testing--eshop-sut/api_specification.md' mục 5.1 và 6.4 viết cho tôi các test cases cho POST /api/apply-coupon và POST /api/admin/coupons
+- Kết quả AI trả về (nguyên văn hoặc tóm tắt trung thực nếu quá dài - có ghi chú nếu đã rút gọn):
+  > Đã đọc skill `api-test-case-generator`, các checklist domain/security/schema, FR-09 và FR-17 trong `README.md`, cùng mục 5.1 và 6.4 trong `api_specification.md`. Đã sinh 40 test case Markdown cho `POST /api/apply-coupon` trong `submission/tests/test-cases/api/FR09_POST_api_apply_coupon/` và 42 test case Markdown cho `POST /api/admin/coupons` trong `submission/tests/test-cases/api/FR17_POST_api_admin_coupons/`. Đã append thêm Phần 2 và Phần 3 vào `Generated_API_Test_Suites_Review_List.md` để sinh viên tự đánh giá từng test case theo Label/Ghi chú.
+- Những gì sinh viên thay đổi/giữ lại từ kết quả này: Chờ review thủ công; sinh viên sẽ đánh nhãn từng test case coupon là VALID, INVALID hoặc INCOMPLETE.
