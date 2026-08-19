@@ -205,3 +205,36 @@
 > - Issue: https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/296
 
 **Human review:** Confirmed PII leak `Addr B Secret` in unauth response.
+
+---
+
+### Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 3.1–3.3 Generate/Audit/Extend FR-15
+
+**AI Tool:** Cursor (Cursor Grok 4.5)  
+**Date/Time:** 2026-08-19 21:52 +07
+
+**Prompt:**
+> Using `api-test-generate` A–D then `api-test-audit` then `api-test-extend` for FR-15 POST/PUT/DELETE `/api/products` (admin). Spec requires JWT+admin; emphasize SEC-02/SEC-03.
+
+**AI Output:**
+> - `API3_PoolC/generated.md` (40 TCs)
+> - `audit.md` (33 VALID / 3 INVALID / 4 INCOMPLETE)
+> - `extended.md` (TC-C3-E01…E06)
+
+**Human review:** Security expected = 401/403 per spec, not current unauthenticated success.
+
+---
+
+### Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 3.4–3.5 Execute + Bugs
+
+**AI Tool:** Cursor (Cursor Grok 4.5)  
+**Date/Time:** 2026-08-19 21:54 +07
+
+**Prompt:**
+> Using `api-test-execute` + `bug-report`: Newman FR-15 suite; file SEC-02/03 + validation + DELETE semantics bugs and GitHub Issues.
+
+**AI Output:**
+> - `newman-api3-fr15.html` — 22 req, 25 assertions, 12 failed
+> - Issues: #297 (auth), #298 (validation), #299 (DELETE 200 on missing)
+
+**Human review:** Confirmed unauth create returns 200 with new id.
