@@ -1,3 +1,6 @@
+7b6e81b hw06/phase4-checklist-tick
+1702bca hw06/postman-collection-final
+4fa58f9 hw06/api3-refresh-commit-log
 cc67eff hw06/api3-execute-postman-newman
 0ee9588 hw06/api3-extend-test-cases
 a8ee468 hw06/api3-audit-test-cases
