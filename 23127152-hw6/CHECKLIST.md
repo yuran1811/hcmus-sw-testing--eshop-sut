@@ -84,7 +84,7 @@
 - [x] Evidence pre-request + Newman → `postman/screenshots/` (+ `x-student-id-console.html`)
 - [x] Liệt kê Postman features đã dùng trong `README.md`
 - [x] Notes → `postman/PHASE4_NOTES.md`
-- [ ] **Git commit:** `hw06/postman-collection-final`
+- [x] **Git commit:** `hw06/postman-collection-final`
 
 ---
 
