@@ -11,10 +11,10 @@
         "exec": [
           "const studentId = pm.environment.get('studentId');",
           "if (!studentId) {",
-          "    console.error('[X-Student-Id] CHUA set bien environment studentId');",
+          "    console.warn('[X-Student-Id] Environment variable \"studentId\" is not set');",
           "} else {",
           "    pm.request.headers.upsert({ key: 'X-Student-Id', value: studentId });",
-          "    console.log('[X-Student-Id] Header da set = ' + studentId + ' | Request: ' + pm.info.requestName);",
+          "    console.log('[X-Student-Id] Header set = ' + studentId + ' | Request: ' + pm.info.requestName);",
           "}"
         ]
       }
@@ -28,9 +28,7 @@
           "name": "TC-A-001 Login success (VALID)",
           "request": {
             "method": "POST",
-            "header": [
-              { "key": "Content-Type", "value": "application/json" }
-            ],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"email\": \"valid.user@example.com\",\n  \"password\": \"CorrectPass123!\"\n}"
@@ -43,11 +41,11 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
                   "const body = pm.response.json();",
-                  "pm.test('Response co token', function () { pm.expect(body).to.have.property('token'); });",
+                  "pm.test('Response contains token', function () { pm.expect(body).to.have.property('token'); });",
                   "if (body.token) { pm.environment.set('authToken', body.token); }",
-                  "pm.test('Khong lo password trong response', function () {",
+                  "pm.test('Password is not exposed in response', function () {",
                   "    pm.expect(JSON.stringify(body)).to.not.include('password');",
                   "});"
                 ]
@@ -56,12 +54,10 @@
           ]
         },
         {
-          "name": "TC-A-002 Login sai password (VALID - negative)",
+          "name": "TC-A-002 Login with invalid password (VALID - negative)",
           "request": {
             "method": "POST",
-            "header": [
-              { "key": "Content-Type", "value": "application/json" }
-            ],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"email\": \"valid.user@example.com\",\n  \"password\": \"wrongpass\"\n}"
@@ -74,7 +70,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 401', function () { pm.response.to.have.status(401); });"
+                  "pm.test('Status code is 401', function () { pm.response.to.have.status(401); });"
                 ]
               }
             }

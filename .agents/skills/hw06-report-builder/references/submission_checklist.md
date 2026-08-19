@@ -16,6 +16,7 @@
 - [ ] Any other supporting documentation
 
 ## Zero-grade risks to avoid
+
 - Missing ANY item above
 - Late submission
 - API selection overlapping with another team member (including overlapping prompts)
