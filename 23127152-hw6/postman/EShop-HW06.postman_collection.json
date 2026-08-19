@@ -798,28 +798,950 @@
     },
     {
       "name": "API2 — FR-11 Order History & Detail",
-      "description": "GET /api/orders/my-orders (JWT) + GET /api/orders/:id (no auth per selection). Target ≥ 40 requests.",
+      "description": "Setup users/orders + TC-B2-* executable suite",
       "item": [
         {
-          "name": "My orders (with user token)",
+          "name": "FR11 Register User A",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "register"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"HW06 UserA\",\"email\":\"hw06-a@example.com\",\"password\":\"Password123!\"}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('register A ok-ish', () => pm.expect(pm.response.code).to.be.oneOf([200,400,500]));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FR11 Register User B",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "register"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"HW06 UserB\",\"email\":\"hw06-b@example.com\",\"password\":\"Password123!\"}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('register B ok-ish', () => pm.expect(pm.response.code).to.be.oneOf([200,400,500]));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FR11 Login User A",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "login"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"hw06-a@example.com\",\"password\":\"Password123!\"}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('login A 200', () => pm.response.to.have.status(200));",
+                  "const t=pm.response.json().token; pm.environment.set('userToken', t); pm.environment.set('tokenA', t);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FR11 Login User B",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "login"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"hw06-b@example.com\",\"password\":\"Password123!\"}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('login B 200', () => pm.response.to.have.status(200));",
+                  "pm.environment.set('tokenB', pm.response.json().token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FR11 Login Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "login"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"admin@eshop.com\",\"password\":\"Admin123!\"}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('login admin 200', () => pm.response.to.have.status(200));",
+                  "pm.environment.set('adminToken', pm.response.json().token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FR11 Checkout A",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenA}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/checkout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "checkout"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"total_amount\":100000,\"shipping_address\":\"Addr A Private\"}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('checkout A', () => pm.response.to.have.status(200));",
+                  "pm.environment.set('orderIdA', String(pm.response.json().orderId));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "FR11 Checkout B",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenB}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/checkout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "checkout"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"total_amount\":200000,\"shipping_address\":\"Addr B Secret\"}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('checkout B', () => pm.response.to.have.status(200));",
+                  "pm.environment.set('orderIdB', String(pm.response.json().orderId));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-021 my-orders no auth → 401",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/my-orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "my-orders"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-B2-021 401', () => pm.response.to.have.status(401));",
+                  "pm.test('TC-B2-037/E05 JSON error', () => { pm.expect(pm.response.headers.get('Content-Type')).to.include('json'); pm.expect(pm.response.json()).to.have.property('error'); });",
+                  "pm.test('X-Student-Id', () => { pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127152'); console.log('X-Student-Id=' + pm.request.headers.get('X-Student-Id')); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-022 my-orders bad JWT → 403",
           "request": {
             "method": "GET",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{userToken}}"
+                "value": "Bearer not-a-jwt"
               }
             ],
-            "url": "{{baseUrl}}/api/orders/my-orders"
-          }
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/my-orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "my-orders"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-B2-022 403', () => pm.response.to.have.status(403));"
+                ]
+              }
+            }
+          ]
         },
         {
-          "name": "Order detail by id",
+          "name": "TC-B2-001 my-orders with token A",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenA}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/my-orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "my-orders"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-B2-001 200 array', () => { pm.response.to.have.status(200); const j=pm.response.json(); pm.expect(j).to.be.an('array'); pm.environment.set('countA', String(j.length)); });",
+                  "pm.test('TC-B2-031/032 schema', () => { pm.expect(pm.response.headers.get('Content-Type')).to.include('json'); pm.expect(pm.response.json()).to.be.an('array'); });",
+                  "pm.test('TC-B2-014/028 only own user_id', () => { const j=pm.response.json(); if(j.length){ const uid=j[0].user_id; j.forEach(o => pm.expect(o.user_id).to.eql(uid)); } });",
+                  "pm.test('TC-B2-033 fields', () => { const j=pm.response.json(); if(j.length){ ['id','user_id','total_amount','status','shipping_address'].forEach(k => pm.expect(j[0]).to.have.property(k)); } });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-E06 count before checkout",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenA}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/my-orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "my-orders"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.set('countBefore', String(pm.response.json().length)); pm.test('captured count', () => true);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-E06 checkout then +1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenA}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/checkout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "checkout"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"total_amount\":111000,\"shipping_address\":\"Addr A Private 2\"}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('checkout ok', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-E06 verify count +1",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenA}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/my-orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "my-orders"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-B2-E06 count +1', () => { const before=Number(pm.environment.get('countBefore')); pm.expect(pm.response.json().length).to.eql(before+1); });",
+                  "pm.test('TC-B2-015 pending present', () => { pm.expect(pm.response.json().some(o => o.status==='pending')).to.be.true; });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-003 detail own order OA",
           "request": {
             "method": "GET",
             "header": [],
-            "url": "{{baseUrl}}/api/orders/{{orderId}}"
-          }
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{orderIdA}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{orderIdA}}"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-B2-003 200 object', () => { pm.response.to.have.status(200); pm.expect(pm.response.json()).to.be.an('object'); });",
+                  "pm.test('TC-B2-034/035 schema types', () => { const o=pm.response.json(); pm.expect(o).to.have.property('id'); pm.expect(o.status).to.be.a('string'); });",
+                  "pm.test('TC-B2-010 shipping_address', () => pm.expect(pm.response.json()).to.have.property('shipping_address'));",
+                  "pm.test('TC-B2-011 status enum', () => pm.expect(['pending','confirmed','shipping','delivered','canceled']).to.include(pm.response.json().status));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-004 detail missing → 404",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "999999"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-B2-004/036 404 JSON', () => { pm.response.to.have.status(404); pm.expect(pm.response.json()).to.have.property('error'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-025 IDOR unauth detail OB deny",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{orderIdB}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{orderIdB}}"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-B2-025 IDOR deny (401/403/404)', () => pm.expect([401,403,404]).to.include(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-E01 PII not leaked unauth",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{orderIdB}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{orderIdB}}"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-B2-E01 no Addr B Secret on unauth success', () => {",
+                  "  const body=pm.response.text();",
+                  "  if (pm.response.code === 200) {",
+                  "    pm.expect(body, 'PII leak').to.not.include('Addr B Secret');",
+                  "  } else {",
+                  "    pm.expect([401,403,404]).to.include(pm.response.code);",
+                  "  }",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-026 IDOR A reads OB deny",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenA}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{orderIdB}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{orderIdB}}"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-B2-026/E02 A cannot read B order', () => pm.expect([401,403,404]).to.include(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-E03 admin detail OB ownership",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{orderIdB}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{orderIdB}}"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-B2-E03 admin on user detail API should not silently expose (expect deny OR flagged)', () => {",
+                  "  // Secure ownership: deny. If 200, treat as bug (will fail).",
+                  "  pm.expect([401,403,404]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-E04 owner A reads OA OK",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenA}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{orderIdA}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{orderIdA}}"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-B2-E04 owner can read', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-E04 stranger B reads OA deny",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenB}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{orderIdA}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{orderIdA}}"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-B2-E04 stranger deny', () => pm.expect([401,403,404]).to.include(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-007 non-numeric id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/abc",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "abc"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-B2-007 404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-030 SQLi-like id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1%20OR%201=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "1%20OR%201=1"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-B2-030 no 500', () => pm.expect(pm.response.code).to.not.eql(500));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-039 POST my-orders → 404",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenA}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/my-orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "my-orders"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-B2-039 404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-040 PUT detail → 404",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenA}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{orderIdA}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{orderIdA}}"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-B2-040 404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-B2-020 idempotent my-orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tokenA}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/my-orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "my-orders"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-B2-020 stable', () => { const n=pm.response.json().length; const prev=Number(pm.environment.get('countA')||n); pm.expect(n).to.be.at.least(prev); });"
+                ]
+              }
+            }
+          ]
         }
       ]
     },

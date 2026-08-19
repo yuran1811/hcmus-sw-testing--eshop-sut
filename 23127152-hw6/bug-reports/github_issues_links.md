@@ -7,6 +7,7 @@
 |--------|-------|----------|--------------|------------------------|
 | BUG-PRODUCTS-001 | SQLi search dumps full catalog | Critical | [#294](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/294) | `screenshots/BUG-PRODUCTS-001-sqli.json` |
 | BUG-PRODUCTS-002 | Search quote → HTML 500 DB error | Major | [#295](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/295) | `screenshots/BUG-PRODUCTS-002-body.html` |
+| BUG-ORDERS-001 | IDOR on GET /api/orders/:id (PII leak) | Critical | [#296](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/296) | `screenshots/BUG-ORDERS-001-idor.json` |
 
 ---
 
@@ -16,7 +17,7 @@
 |-----------|-----|-----|--------|
 | SQLi in `search` | FR-05 | `LIKE '%${searchQuery}%'` | ✅ Confirmed BUG-PRODUCTS-001 |
 | HTML 500 on bad SQL | FR-05 | `res.send(<h1>Database Error…)` | ✅ Confirmed BUG-PRODUCTS-002 |
-| IDOR on order detail | FR-11 | `GET /api/orders/:id` has no auth | ☐ Phase 2 |
+| IDOR on order detail | FR-11 | `GET /api/orders/:id` has no auth | ✅ Confirmed BUG-ORDERS-001 [#296] |
 | Missing auth on product CRUD | FR-15 | no JWT/role check | ☐ Phase 3 |
 | Plaintext password in login response | Setup | Admin login returns `user.password` | ☐ later |
 

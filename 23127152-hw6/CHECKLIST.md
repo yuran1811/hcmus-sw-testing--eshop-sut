@@ -57,11 +57,11 @@
 
 ## Phase 2 — API 2: FR-11 Orders (`my-orders` + `:id`) (~2.5h)
 
-- [ ] **Generate** ≥ 35 TC → `test-cases/API2_PoolB/generated.md` → commit
-- [ ] **Audit** VALID/INVALID/INCOMPLETE → `audit.md` → commit
-- [ ] **Extend** ≥ 5 TC → `extended.md` + `.xlsx` → commit
-- [ ] **Execute** Postman + Newman → commit
-- [ ] **Report bugs** → GitHub Issues
+- [x] **Generate** ≥ 35 TC → `test-cases/API2_PoolB/generated.md` (40) → commit
+- [x] **Audit** VALID/INVALID/INCOMPLETE → `audit.md` (34/2/4) → commit
+- [x] **Extend** ≥ 5 TC → `extended.md` (6) + `API2_PoolB.xlsx` → commit
+- [x] **Execute** Postman + Newman → `newman-api2-fr11.html` (35 assert, 5 fail) → commit
+- [x] **Report bugs** → BUG-ORDERS-001 [#296](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/296)
 
 ---
 

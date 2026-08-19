@@ -38,7 +38,7 @@ Orchestrator: `hw06-api-testing` · Report templates: restored from `hw5/2312715
 | API | TC Generated (AI) | TC Added (manual) | TC Executed | Passed | Failed | Bugs Found |
 |-----|-------------------|-------------------|-------------|--------|--------|------------|
 | API 1 — FR-05 Products | 40 | 6 | 20 req / 26 assert | 22 | 4 | 2 |
-| API 2 — FR-11 Orders | — (target ≥ 35) | — (target ≥ 5) | — | — | — | — |
+| API 2 — FR-11 Orders | 40 | 6 | 26 req / 35 assert | 30 | 5 | 1 |
 | API 3 — FR-15 Product CRUD | — (target ≥ 35) | — (target ≥ 5) | — | — | — | — |
 | **Total** | **— (≥ 105)** | **— (≥ 15)** | **—** | **—** | **—** | **—** |
 
