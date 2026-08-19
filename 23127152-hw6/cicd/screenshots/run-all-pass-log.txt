@@ -1,0 +1,21 @@
+Start SUT + Newman CI Smoke	Wait for localhost:3000	2026-08-19T15:16:36.4030087Z ^[[36;1mecho "Backend failed to start:"^[[0m
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.4151471Z ↳ CI-01 GET /api/products → 200 array
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.4294118Z   │ '[HW06 pre-request] X-Student-Id=23127152'
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.4707308Z   ✓  CI-01 status
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.4713608Z   ✓  CI-01 JSON array
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.4718413Z   │ '[CI] X-Student-Id=23127152'
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.4721935Z   ✓  CI-01 X-Student-Id
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.4784845Z ↳ CI-02 GET /api/products?search=iPhone → 200
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.4825177Z   │ '[HW06 pre-request] X-Student-Id=23127152'
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.4983552Z   ✓  CI-02 status 200
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.4988418Z   ✓  CI-02 array with match
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.5064449Z ↳ CI-03 GET /api/categories → 200
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.5098984Z   │ '[HW06 pre-request] X-Student-Id=23127152'
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.5216060Z   ✓  CI-03 status 200
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.5218689Z   ✓  CI-03 JSON array
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.5267319Z ↳ CI-04 Admin login → 200 token
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.5307821Z   │ '[HW06 pre-request] X-Student-Id=23127152'
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.5565048Z   ✓  CI-04 login 200
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.5570868Z   ✓  CI-04 has token
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.6872391Z │                         │         executed │          failed │
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:16:45.6881542Z │              assertions │                9 │               0 │

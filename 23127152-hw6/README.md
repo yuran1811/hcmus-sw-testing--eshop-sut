@@ -108,10 +108,10 @@ Orchestrator: `hw06-api-testing` · Report templates: restored from `hw5/2312715
 
 | Item | URL |
 |------|-----|
-| Public repository | TBD |
-| Postman collection (in repo) | TBD |
-| CI/CD workflow | TBD |
-| GitHub Issues (bugs) | TBD |
+| Public repository | https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw6/23127152 |
+| Postman collection (in repo) | `23127152-hw6/postman/EShop-HW06.postman_collection.json` |
+| CI/CD workflow | https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/actions/workflows/hw06-api-tests.yml |
+| GitHub Issues (bugs) | #294 #295 #296 #297 #298 #299 |
 | Agent Skill demo video (optional) | TBD |
 
 ---

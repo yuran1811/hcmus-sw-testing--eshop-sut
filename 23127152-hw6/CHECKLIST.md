@@ -90,13 +90,13 @@
 
 ## Phase 5 — CI/CD Integration (~1.5h)
 
-- [ ] Tạo GitHub Actions workflow (Newman trong pipeline)
-- [ ] Commit 1: pipeline **all pass** → screenshot + link
-- [ ] Commit 2: cố ý fail 1 TC → screenshot + link
-- [ ] Viết `report/CI_CD_Report.md` (config + 2 runs)
-- [ ] Screenshot → `cicd/screenshots/`
-- [ ] Links → `cicd/sample-commits.md`
-- [ ] **Git commit:** `hw06/cicd-github-actions`
+- [x] Tạo GitHub Actions workflow (Newman trong pipeline) → `.github/workflows/hw06-api-tests.yml`
+- [x] Commit 1: pipeline **all pass** → `8b44b66` · [run 32269053058](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/actions/runs/32269053058)
+- [x] Commit 2: cố ý fail 1 TC → `2fe51ee` · [run 32269286455](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/actions/runs/32269286455)
+- [x] Viết `report/CI_CD_Report.md` (config + 2 runs)
+- [x] Screenshot → `cicd/screenshots/run-all-pass.png` / `run-one-fail.png`
+- [x] Links → `cicd/sample-commits.md`
+- [ ] **Git commit:** restore green + docs (`hw06/cicd-restore-and-report`)
 
 ---
 

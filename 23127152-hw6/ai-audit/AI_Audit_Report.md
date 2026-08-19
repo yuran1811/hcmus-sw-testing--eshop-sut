@@ -255,3 +255,21 @@
 > - `postman/PHASE4_NOTES.md`, mock example, README feature table updated
 
 **Human review:** Accepted; Monitors deferred to CI/CD Phase 5.
+
+---
+
+### Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 5 CI/CD
+
+**AI Tool:** Cursor (Cursor Grok 4.5)  
+**Date/Time:** 2026-08-19 22:16 +07
+
+**Prompt:**
+> Using `api-test-cicd`: add GitHub Actions Newman workflow, CI Smoke folder, push pass + intentional fail sample runs, document with screenshots/links.
+
+**AI Output:**
+> - Workflow: `.github/workflows/hw06-api-tests.yml`
+> - Pass: commit `8b44b66` → Actions run 32269053058 (success)
+> - Fail: commit `2fe51ee` → Actions run 32269286455 (failure, CI-01 expect 201)
+> - Reports: `report/CI_CD_Report.md`, `cicd/sample-commits.md`, screenshots
+
+**Human review:** Confirmed live Actions conclusions; restored `ciExpectStatus=200`.

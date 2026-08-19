@@ -1,0 +1,21 @@
+Start SUT + Newman CI Smoke	Wait for localhost:3000	2026-08-19T15:18:57.7184552Z ^[[36;1m    exit 0^[[0m
+Start SUT + Newman CI Smoke	Wait for localhost:3000	2026-08-19T15:18:57.7185687Z ^[[36;1mecho "Backend failed to start:"^[[0m
+Start SUT + Newman CI Smoke	Wait for localhost:3000	2026-08-19T15:18:57.7186931Z ^[[36;1mexit 1^[[0m
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:04.9629212Z ↳ CI-01 GET /api/products → 200 array
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:05.0231390Z   1. CI-01 status
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:05.0237578Z   ✓  CI-01 JSON array
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:05.0246359Z   ✓  CI-01 X-Student-Id
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:05.0310639Z ↳ CI-02 GET /api/products?search=iPhone → 200
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:05.0484999Z   ✓  CI-02 status 200
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:05.0489815Z   ✓  CI-02 array with match
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:05.0577202Z ↳ CI-03 GET /api/categories → 200
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:05.0743168Z   ✓  CI-03 status 200
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:05.0747083Z   ✓  CI-03 JSON array
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:05.0784241Z ↳ CI-04 Admin login → 200 token
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:05.1060840Z   ✓  CI-04 login 200
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:05.1064816Z   ✓  CI-04 has token
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:05.2298416Z │                         │         executed │          failed │
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:05.2421645Z  1.  AssertionError  CI-01 status                                                        
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:05.2422502Z                      expected response to have status code 201 but got 200               
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:05.2424432Z                      inside "CI Smoke — Must Pass / CI-01 GET /api/products → 200 array" 
+Start SUT + Newman CI Smoke	Run CI Smoke (Must Pass)	2026-08-19T15:19:05.2575339Z ##[error]Process completed with exit code 1.
