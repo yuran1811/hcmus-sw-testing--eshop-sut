@@ -10,14 +10,14 @@
 
 ---
 
-## Known Bugs from HW02 (candidates for API re-verification)
+## Known bugs / candidates relevant to locked APIs
 
-| HW02 Bug | API relevance | Re-test in HW06? |
-|----------|---------------|------------------|
-| BUG-01 | FR-02 login lockout `+= 2` | ☐ API1 |
-| BUG-05 | SEC-01 plaintext password | ☐ API1 |
-| BUG-06 | FR-10 canceled → delivered | ☐ API2/API3 |
-| BUG-07 | Cancel shipping order | ☐ API2 |
-| BUG-14 | SEC-03 missing admin role check | ☐ API3 |
+| Candidate | API | Why |
+|-----------|-----|-----|
+| SQLi in `search` | FR-05 | `LIKE '%${searchQuery}%'` string concat |
+| IDOR on order detail | FR-11 | `GET /api/orders/:id` has no auth |
+| Missing auth on product CRUD | FR-15 | `POST/PUT/DELETE /api/products` no JWT/role check |
+| Plaintext password in login response | Setup | Admin login returns `user.password` |
+| BUG-14 (HW02) | Admin APIs | Missing role check pattern — same class as FR-15 |
 
 > Tạo GitHub Issue mới cho mỗi bug xác nhận qua API testing (kèm screenshot).

@@ -9,7 +9,7 @@
 
 | # | Commit message (suggested) | Step | Status |
 |---|---------------------------|------|--------|
-| 1 | `hw06: setup skeleton & postman env` | Setup | ☐ |
+| 1 | `hw06: setup skeleton & phase0 planning (FR05/FR11/FR15)` | Setup | ☐ |
 | 2 | `hw06/api1-generate-test-cases` | API1 Generate | ☐ |
 | 3 | `hw06/api1-audit-test-cases` | API1 Audit | ☐ |
 | 4 | `hw06/api1-extend-test-cases` | API1 Extend | ☐ |

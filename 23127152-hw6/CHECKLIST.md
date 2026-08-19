@@ -6,16 +6,18 @@
 
 ## Phase 0 — Setup & Planning (~1h)
 
-- [ ] Đọc đề bài PDF và `api_specification.md`
-- [ ] Chốt 3 API (1 Pool A + 1 Pool B + 1 Pool C), xác nhận không trùng nhóm
-- [ ] Cập nhật bảng API Selection trong `README.md`
-- [ ] Chạy SUT backend: `http://localhost:3000`
-- [ ] Cài Postman + Newman (`npm install -g newman newman-reporter-htmlextra`)
-- [ ] Tạo Postman workspace + environment (base URL, tokens, student ID)
+- [x] Đọc đề bài PDF và `api_specification.md`
+- [x] Chốt 3 API (FR-05 / FR-11 / FR-15), xác nhận không trùng nhóm
+- [x] Cập nhật bảng API Selection trong `README.md`
+- [x] Cài Postman + Newman (`npm install -g newman newman-reporter-htmlextra`)
+- [x] Tạo Postman workspace + environment (base URL, tokens, student ID)
+- [x] Chạy SUT backend: `http://localhost:3000`
+- [x] Ghi planning notes: `PHASE0_PLANNING.md`
+- [x] Agent Skills HW06: `.agents/skills/README-HW06.md`
 
 ---
 
-## Phase 1 — API 1: Pool A (~2.5h)
+## Phase 1 — API 1: FR-05 Products (`GET /api/products`) (~2.5h)
 
 ### 1.1 Generate with AI (≥ 35 TC)
 - [ ] Log AI Audit: tool, datetime, prompt, output
@@ -53,7 +55,7 @@
 
 ---
 
-## Phase 2 — API 2: Pool B (~2.5h)
+## Phase 2 — API 2: FR-11 Orders (`my-orders` + `:id`) (~2.5h)
 
 - [ ] **Generate** ≥ 35 TC → `test-cases/API2_PoolB/generated.md` → commit
 - [ ] **Audit** VALID/INVALID/INCOMPLETE → `audit.md` → commit
@@ -63,7 +65,7 @@
 
 ---
 
-## Phase 3 — API 3: Pool C (~2.5h)
+## Phase 3 — API 3: FR-15 Product CRUD (`POST/PUT/DELETE`) (~2.5h)
 
 - [ ] **Generate** ≥ 35 TC → `test-cases/API3_PoolC/generated.md` → commit
 - [ ] **Audit** VALID/INVALID/INCOMPLETE → `audit.md` → commit

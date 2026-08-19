@@ -1,7 +1,10 @@
-# API 2 — Pool B: AI-Generated Test Cases
+# API 2 — Pool B / FR-11: AI-Generated Test Cases
 
-**API:** TBD (e.g. `POST /api/checkout`, `PUT /api/orders/:id/cancel`)  
-**Feature:** TBD (e.g. FR-08 Checkout, FR-10 Order state)  
+**APIs:**
+- `GET /api/orders/my-orders` — Auth: JWT · Role: user
+- `GET /api/orders/:id` — Auth: None (per selection) · Role: None
+
+**Feature:** FR-11 Order history view (user) + order detail  
 **Target:** ≥ 35 test cases
 
 ---
@@ -10,7 +13,7 @@
 
 | TC ID | Category | Description | Input | Expected | Priority |
 |-------|----------|-------------|-------|----------|----------|
-| TC-B2-001 | Domain | TBD | | | |
-| ... | | | | | |
+| TC-B2-001 | Security | TBD | | | |
+| TC-B2-002 | Domain | TBD | | | |
 
-<!-- Thêm đủ ≥ 35 rows. Ưu tiên state transitions: pending→confirmed→shipping→delivered + cancel rules -->
+<!-- ≥ 35 rows. Cover: JWT missing/invalid; empty list; IDOR on :id; schema; status enum -->

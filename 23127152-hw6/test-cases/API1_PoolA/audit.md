@@ -1,5 +1,6 @@
-# API 1 — Pool A: Audit Results
+# API 1 — Pool A / FR-05: Audit Results
 
+**API:** `GET /api/products`  
 **Auditor:** 23127152  
 **Date:** TBD
 
@@ -10,8 +11,8 @@
 | Label | Count | Action taken |
 |-------|-------|--------------|
 | VALID | — | Kept as-is |
-| INVALID | — | Corrected (see below) |
-| INCOMPLETE | — | Extended (see below) |
+| INVALID | — | Corrected |
+| INCOMPLETE | — | Extended |
 | **Total** | **—** | |
 
 ---
@@ -20,7 +21,4 @@
 
 | TC ID | Label | Reasoning | Correction (if any) |
 |-------|-------|-----------|----------------------|
-| TC-A1-001 | VALID | Correct input/output per spec | — |
-| TC-A1-002 | INVALID | Expected 401 but spec says 403 for admin | Fixed expected status |
-| TC-A1-003 | INCOMPLETE | Missing assertion on response schema | Added schema checks |
-| ... | | | |
+| TC-A1-001 | TBD | | |

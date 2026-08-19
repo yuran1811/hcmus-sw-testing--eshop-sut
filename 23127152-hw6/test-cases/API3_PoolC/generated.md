@@ -1,8 +1,14 @@
-# API 3 — Pool C: AI-Generated Test Cases
+# API 3 — Pool C / FR-15: AI-Generated Test Cases
 
-**API:** TBD (e.g. `PUT /api/admin/orders/:id/status`)  
-**Feature:** TBD (e.g. FR-18 Admin order management)  
+**APIs:**
+- `POST /api/products` — Auth: Yes · Role: admin
+- `PUT /api/products/:id` — Auth: Yes · Role: admin
+- `DELETE /api/products/:id` — Auth: Yes · Role: admin
+
+**Feature:** FR-15 Product management (CRUD)  
 **Target:** ≥ 35 test cases
+
+**Body (create/update):** `name`, `price`, `description`, `imageUrl`, `category_id`
 
 ---
 
@@ -10,8 +16,7 @@
 
 | TC ID | Category | Description | Input | Expected | Priority |
 |-------|----------|-------------|-------|----------|----------|
-| TC-C3-001 | Security | Non-admin token → 403 | | 403 | High |
-| TC-C3-002 | State | pending → confirmed | | 200 | High |
-| ... | | | | | |
+| TC-C3-001 | Security | Non-admin token → denied | | 403 | High |
+| TC-C3-002 | Domain | TBD | | | |
 
-<!-- Thêm đủ ≥ 35 rows. Ưu tiên SEC-03 role check + state machine -->
+<!-- ≥ 35 rows. Cover SEC-02/SEC-03, domain on price/name, schema, missing id -->

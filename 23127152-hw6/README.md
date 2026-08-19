@@ -4,13 +4,20 @@
 
 ## API Selection
 
-| Pool | Feature | Endpoint(s) | Status |
-|------|---------|-------------|--------|
-| A | FR-02 Login & lockout | `POST /api/login` | ☐ Chọn & xác nhận không trùng nhóm |
-| B | FR-10 Order state / FR-08 Checkout | `POST /api/checkout`, `PUT /api/orders/:id/cancel` | ☐ Chọn & xác nhận không trùng nhóm |
-| C | FR-18 Admin order management | `PUT /api/admin/orders/:id/status` | ☐ Chọn & xác nhận không trùng nhóm |
+| Pool | Feature | Endpoint(s) | Auth / Role (spec) | Status |
+|------|---------|-------------|--------------------|--------|
+| **A** | FR-05 Product listing & search | `GET /api/products` (`?search=`) | None / None | ✅ Locked |
+| **B** | FR-11 Order history + order detail | `GET /api/orders/my-orders`<br>`GET /api/orders/:id` | JWT (user) / None on `:id` | ✅ Locked |
+| **C** | FR-15 Product management CRUD | `POST /api/products`<br>`PUT /api/products/:id`<br>`DELETE /api/products/:id` | JWT / admin | ✅ Locked |
 
-> Cập nhật bảng trên sau khi chốt 3 API. Tham khảo `api_specification.md` và `CHECKLIST.md`.
+> Xác nhận không trùng bộ 3 API với thành viên nhóm. Chi tiết Phase 0: [`PHASE0_PLANNING.md`](./PHASE0_PLANNING.md).
+
+---
+
+## Agent Skills (HW06)
+
+Index: [`.agents/skills/README-HW06.md`](../.agents/skills/README-HW06.md)  
+Orchestrator: `hw06-api-testing` · Report templates: restored from `hw5/23127152` (`ai-audit-report`, `bug-report`)
 
 ---
 
@@ -30,9 +37,9 @@
 
 | API | TC Generated (AI) | TC Added (manual) | TC Executed | Passed | Failed | Bugs Found |
 |-----|-------------------|-------------------|-------------|--------|--------|------------|
-| API 1 — Pool A | — (target ≥ 35) | — (target ≥ 5) | — | — | — | — |
-| API 2 — Pool B | — (target ≥ 35) | — (target ≥ 5) | — | — | — | — |
-| API 3 — Pool C | — (target ≥ 35) | — (target ≥ 5) | — | — | — | — |
+| API 1 — FR-05 Products | — (target ≥ 35) | — (target ≥ 5) | — | — | — | — |
+| API 2 — FR-11 Orders | — (target ≥ 35) | — (target ≥ 5) | — | — | — | — |
+| API 3 — FR-15 Product CRUD | — (target ≥ 35) | — (target ≥ 5) | — | — | — | — |
 | **Total** | **— (≥ 105)** | **— (≥ 15)** | **—** | **—** | **—** | **—** |
 
 ---
@@ -43,6 +50,7 @@
 23127152-hw6/
 ├── README.md                          ← (this file)
 ├── CHECKLIST.md                       ← master checklist
+├── PHASE0_PLANNING.md                 ← locked APIs + recon notes
 ├── 2026.HW06.API Testing_En.pdf       ← đề bài
 ├── report/
 │   ├── 23127152_HW06_Report.md        ← main report (export PDF)
@@ -51,15 +59,9 @@
 │   ├── AI_Audit_Report.md             ← appendix (export PDF)
 │   └── AI_Critique.md                 ← 200–300 words
 ├── test-cases/
-│   ├── API1_PoolA/
-│   │   ├── generated.md               ← AI-generated TCs
-│   │   ├── audit.md                   ← VALID/INVALID/INCOMPLETE labels
-│   │   ├── extended.md                ← ≥ 5 manual TCs + why AI missed
-│   │   └── API1_PoolA.xlsx            ← Excel export
-│   ├── API2_PoolB/
-│   │   └── ...
-│   └── API3_PoolC/
-│       └── ...
+│   ├── API1_PoolA/                    ← FR-05 GET /api/products
+│   ├── API2_PoolB/                    ← FR-11 my-orders + order detail
+│   └── API3_PoolC/                    ← FR-15 product CRUD
 ├── postman/
 │   ├── EShop-HW06.postman_collection.json
 │   ├── EShop-HW06.postman_environment.json

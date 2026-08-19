@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "EShop HW06 — API Testing (23127152)",
-    "description": "HW06 API test collection for EShop SUT.\n\nEvery request must include header `X-Student-Id: 23127152` via collection pre-request script.\n\nFolders:\n- API1 — Pool A\n- API2 — Pool B\n- API3 — Pool C\n- Setup — auth helpers",
+    "description": "HW06 API tests for EShop SUT.\n\nAPIs locked:\n- Pool A FR-05: GET /api/products\n- Pool B FR-11: GET /api/orders/my-orders, GET /api/orders/:id\n- Pool C FR-15: POST/PUT/DELETE /api/products\n\nEvery request includes header X-Student-Id via collection pre-request script.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "event": [
@@ -10,7 +10,7 @@
       "script": {
         "type": "text/javascript",
         "exec": [
-          "pm.request.headers.add({",
+          "pm.request.headers.upsert({",
           "    key: 'X-Student-Id',",
           "    value: pm.environment.get('studentId') || '23127152'",
           "});"
@@ -29,7 +29,7 @@
             "header": [{"key": "Content-Type", "value": "application/json"}],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"HW06 Test User\",\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\"\n}"
+              "raw": "{\n  \"name\": \"HW06 Student 23127152\",\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\"\n}"
             },
             "url": "{{baseUrl}}/api/register"
           }
@@ -81,7 +81,7 @@
             "header": [{"key": "Content-Type", "value": "application/json"}],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"admin@eshop.com\",\n  \"password\": \"admin123\"\n}"
+              "raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\"\n}"
             },
             "url": "{{baseUrl}}/api/login"
           }
@@ -89,19 +89,115 @@
       ]
     },
     {
-      "name": "API1 — Pool A (TBD)",
-      "description": "Replace folder name after API selection. Add ≥ 40 requests (35 AI + 5 extended).",
-      "item": []
+      "name": "API1 — FR-05 Products List/Search",
+      "description": "GET /api/products — public listing & search. Target ≥ 40 requests (35 AI + 5 extended).",
+      "item": [
+        {
+          "name": "List all products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products"
+          }
+        },
+        {
+          "name": "Search products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?search={{search}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products"],
+              "query": [{"key": "search", "value": "{{search}}"}]
+            }
+          }
+        }
+      ]
     },
     {
-      "name": "API2 — Pool B (TBD)",
-      "description": "Replace folder name after API selection. Add ≥ 40 requests.",
-      "item": []
+      "name": "API2 — FR-11 Order History & Detail",
+      "description": "GET /api/orders/my-orders (JWT) + GET /api/orders/:id (no auth per selection). Target ≥ 40 requests.",
+      "item": [
+        {
+          "name": "My orders (with user token)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{userToken}}"}
+            ],
+            "url": "{{baseUrl}}/api/orders/my-orders"
+          }
+        },
+        {
+          "name": "Order detail by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/orders/{{orderId}}"
+          }
+        }
+      ]
     },
     {
-      "name": "API3 — Pool C (TBD)",
-      "description": "Replace folder name after API selection. Add ≥ 40 requests.",
-      "item": []
+      "name": "API3 — FR-15 Product CRUD (Admin)",
+      "description": "POST/PUT/DELETE /api/products — admin required per spec. Target ≥ 40 requests.",
+      "item": [
+        {
+          "name": "Create product (admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const json = pm.response.json();",
+                  "    if (json.id) pm.environment.set('productId', String(json.id));",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{adminToken}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"HW06 Test Product\",\n  \"price\": 100000,\n  \"description\": \"Created by HW06\",\n  \"imageUrl\": \"http://example.com/p.png\",\n  \"category_id\": 1\n}"
+            },
+            "url": "{{baseUrl}}/api/products"
+          }
+        },
+        {
+          "name": "Update product (admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{adminToken}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"HW06 Updated Product\",\n  \"price\": 120000,\n  \"description\": \"Updated by HW06\",\n  \"imageUrl\": \"http://example.com/p2.png\",\n  \"category_id\": 1\n}"
+            },
+            "url": "{{baseUrl}}/api/products/{{productId}}"
+          }
+        },
+        {
+          "name": "Delete product (admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{adminToken}}"}
+            ],
+            "url": "{{baseUrl}}/api/products/{{productId}}"
+          }
+        }
+      ]
     }
   ],
   "variable": [
