@@ -2659,7 +2659,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "const expectStatus = Number(pm.environment.get('ciExpectStatus') || 200);",
+                  "const expectStatus = Number(pm.environment.get('ciExpectStatus') || 201); // INTENTIONAL CI FAIL",
                   "pm.test('CI-01 status', () => pm.response.to.have.status(expectStatus));",
                   "pm.test('CI-01 JSON array', () => pm.expect(pm.response.json()).to.be.an('array'));",
                   "pm.test('CI-01 X-Student-Id', () => {",
