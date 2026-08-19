@@ -26,7 +26,12 @@
           "name": "Register Test User",
           "request": {
             "method": "POST",
-            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"name\": \"HW06 Student 23127152\",\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\"\n}"
@@ -52,7 +57,12 @@
           ],
           "request": {
             "method": "POST",
-            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\"\n}"
@@ -78,7 +88,12 @@
           ],
           "request": {
             "method": "POST",
-            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\"\n}"
@@ -90,28 +105,694 @@
     },
     {
       "name": "API1 — FR-05 Products List/Search",
-      "description": "GET /api/products — public listing & search. Target ≥ 40 requests (35 AI + 5 extended).",
+      "description": "Executable suite mapped to TC-A1-* / TC-A1-E* (≥35 designed; subset automated in Newman).",
       "item": [
         {
-          "name": "List all products",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{baseUrl}}/api/products"
-          }
-        },
-        {
-          "name": "Search products",
+          "name": "TC-A1-001 List all products",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/products?search={{search}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "products"],
-              "query": [{"key": "search", "value": "{{search}}"}]
+              "raw": "{{baseUrl}}/api/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": []
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-001 status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('TC-A1-001 JSON array ≥1', () => { const j=pm.response.json(); pm.expect(j).to.be.an('array'); pm.expect(j.length).to.be.above(0); pm.environment.set('baselineCount', String(j.length)); });",
+                  "pm.test('TC-A1-031 Content-Type JSON', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json'));",
+                  "pm.test('TC-A1-033 required fields', () => { const p=pm.response.json()[0]; ['id','name','price','description','imageUrl','category_id'].forEach(k => pm.expect(p).to.have.property(k)); });",
+                  "pm.test('TC-A1-034/035 types', () => { const p=pm.response.json()[0]; pm.expect(p.id).to.be.a('number'); pm.expect(p.name).to.be.a('string'); pm.expect(p.price).to.be.a('number'); });",
+                  "pm.test('X-Student-Id was sent', () => { const h=pm.request.headers.get('X-Student-Id'); pm.expect(h).to.eql('23127152'); console.log('X-Student-Id=' + h); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-002 Search iPhone",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?search=iPhone",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "iPhone"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-002 status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('TC-A1-002 all names contain iPhone', () => { const j=pm.response.json(); pm.expect(j.length).to.be.above(0); j.forEach(p => pm.expect(p.name.toLowerCase()).to.include('iphone')); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-004 No match empty array",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?search=NoSuchProductXYZ",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "NoSuchProductXYZ"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-004/037 empty []', () => { pm.response.to.have.status(200); const j=pm.response.json(); pm.expect(j).to.eql([]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-005 Empty search equals list-all",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?search=",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-005 200 full list', () => { pm.response.to.have.status(200); const j=pm.response.json(); pm.expect(j).to.be.an('array'); pm.expect(j.length).to.be.above(0); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-007 Unicode search Bàn",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?search=B%C3%A0n",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "B%C3%A0n"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-007 200 array', () => { pm.response.to.have.status(200); pm.expect(pm.response.json()).to.be.an('array'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-013 Search AirPods Pro encoded",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?search=AirPods%20Pro",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "AirPods%20Pro"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-013 match AirPods', () => { pm.response.to.have.status(200); const j=pm.response.json(); pm.expect(j.some(p => p.name.includes('AirPods'))).to.be.true; });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-015 Extra query foo ignored",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?foo=bar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "foo",
+                  "value": "bar"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-015 200 array', () => { pm.response.to.have.status(200); pm.expect(pm.response.json()).to.be.an('array'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-017 DELETE products no id → 404",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-017 status 404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-018 PUT products no id → 404",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-018 status 404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-019 Idempotent second GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-019 same baseline count', () => { const n=pm.response.json().length; const b=Number(pm.environment.get('baselineCount')||n); pm.expect(n).to.eql(b); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-021 SEC-05 SQLi OR no dump",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?search=' OR '1'='1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "' OR '1'='1"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-021 SEC-05 no tautology dump', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "  const j=pm.response.json();",
+                  "  const baseline=Number(pm.environment.get('baselineCount')||0);",
+                  "  // Secure behavior: must NOT return full catalog for a non-name payload",
+                  "  pm.expect(j.length, 'SQLi must not return full catalog').to.not.eql(baseline);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-023 SEC-05 quote not HTML 500",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?search='",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "'"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-023/038 not HTML DB error', () => {",
+                  "  const ct=pm.response.headers.get('Content-Type')||'';",
+                  "  const body=pm.response.text();",
+                  "  pm.expect(pm.response.code).to.not.eql(500);",
+                  "  pm.expect(ct).to.not.include('text/html');",
+                  "  pm.expect(body).to.not.include('<h1>Database Error</h1>');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-E01 Encoded SQLi no dump",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?search=%27%20OR%20%271%27%3D%271",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "%27%20OR%20%271%27%3D%271"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-E01 encoded SQLi no full dump', () => {",
+                  "  const j=pm.response.json();",
+                  "  const baseline=Number(pm.environment.get('baselineCount')||0);",
+                  "  pm.expect(j.length).to.not.eql(baseline);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-E02 Quote Content-Type not HTML",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?search=%27",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "%27"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-E02/E06 no HTML error page', () => {",
+                  "  const ct=pm.response.headers.get('Content-Type')||'';",
+                  "  const body=pm.response.text();",
+                  "  const bad = pm.response.code===500 && ct.includes('text/html');",
+                  "  pm.expect(bad, 'must not return HTML 500 SQLITE error').to.be.false;",
+                  "  pm.expect(body).to.not.include('<h1>Database Error</h1>');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-026 XSS-like search JSON",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?search=%3Cscript%3Ealert(1)%3C%2Fscript%3E",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "%3Cscript%3Ealert(1)%3C%2Fscript%3E"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-026 200 JSON array', () => { pm.response.to.have.status(200); pm.expect(pm.response.json()).to.be.an('array'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-027 Public no Authorization",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-027 public 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-029 Malformed Bearer still 200",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer not-a-jwt"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-029 200 not 500', () => { pm.expect(pm.response.code).to.eql(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-036 Search Samsung schema",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?search=Samsung",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "Samsung"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-036 schema fields', () => { const j=pm.response.json(); pm.expect(j.length).to.be.above(0); ['id','name','price'].forEach(k => pm.expect(j[0]).to.have.property(k)); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-E05 After DROP probe catalog intact",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?search=a';DROP TABLE products;--",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "a';DROP TABLE products;--"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-E05 interim response ok-ish', () => pm.expect(pm.response.code).to.be.oneOf([200,400,500]));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-A1-E05b List after DROP probe",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": []
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('TC-A1-E05 catalog still ≥1', () => { pm.response.to.have.status(200); pm.expect(pm.response.json().length).to.be.above(0); });"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -124,7 +805,10 @@
           "request": {
             "method": "GET",
             "header": [
-              {"key": "Authorization", "value": "Bearer {{userToken}}"}
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
             ],
             "url": "{{baseUrl}}/api/orders/my-orders"
           }
@@ -162,8 +846,14 @@
           "request": {
             "method": "POST",
             "header": [
-              {"key": "Content-Type", "value": "application/json"},
-              {"key": "Authorization", "value": "Bearer {{adminToken}}"}
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
             ],
             "body": {
               "mode": "raw",
@@ -177,8 +867,14 @@
           "request": {
             "method": "PUT",
             "header": [
-              {"key": "Content-Type", "value": "application/json"},
-              {"key": "Authorization", "value": "Bearer {{adminToken}}"}
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
             ],
             "body": {
               "mode": "raw",
@@ -192,7 +888,10 @@
           "request": {
             "method": "DELETE",
             "header": [
-              {"key": "Authorization", "value": "Bearer {{adminToken}}"}
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
             ],
             "url": "{{baseUrl}}/api/products/{{productId}}"
           }
@@ -201,7 +900,13 @@
     }
   ],
   "variable": [
-    {"key": "baseUrl", "value": "http://localhost:3000"},
-    {"key": "studentId", "value": "23127152"}
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "studentId",
+      "value": "23127152"
+    }
   ]
 }

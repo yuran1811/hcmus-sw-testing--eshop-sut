@@ -20,38 +20,38 @@
 ## Phase 1 — API 1: FR-05 Products (`GET /api/products`) (~2.5h)
 
 ### 1.1 Generate with AI (≥ 35 TC)
-- [ ] Log AI Audit: tool, datetime, prompt, output
-- [ ] Domain partitions — mọi parameter (email, password, …)
-- [ ] State transitions (nếu API liên quan)
-- [ ] Security SEC-01–SEC-07 (SQLi, IDOR, role, …)
-- [ ] Schema validation — response khớp spec
-- [ ] Lưu vào `test-cases/API1_PoolA/generated.md`
+- [x] Log AI Audit: tool, datetime, prompt, output
+- [x] Domain partitions — mọi parameter (`search`)
+- [x] State transitions (N/A + idempotent compensating cases)
+- [x] Security SEC-01–SEC-07 (SQLi, …)
+- [x] Schema validation — response khớp spec
+- [x] Lưu vào `test-cases/API1_PoolA/generated.md` (40 TC)
 - [ ] **Git commit:** `hw06/api1-generate-test-cases`
 
 ### 1.2 Audit (human review)
-- [ ] Gắn nhãn VALID / INVALID / INCOMPLETE + lý do cho từng TC
-- [ ] Sửa TC sai/thiếu
-- [ ] Lưu vào `test-cases/API1_PoolA/audit.md`
+- [x] Gắn nhãn VALID / INVALID / INCOMPLETE + lý do cho từng TC
+- [x] Sửa TC sai/thiếu
+- [x] Lưu vào `test-cases/API1_PoolA/audit.md` (32/3/5)
 - [ ] **Git commit:** `hw06/api1-audit-test-cases`
 
 ### 1.3 Extend (≥ 5 TC manual)
-- [ ] Thêm TC AI bỏ sót (ưu tiên security + state transition)
-- [ ] Giải thích vì sao AI miss
-- [ ] Lưu vào `test-cases/API1_PoolA/extended.md`
-- [ ] Export Excel → `test-cases/API1_PoolA/API1_PoolA.xlsx`
+- [x] Thêm TC AI bỏ sót (ưu tiên security) — 6 TC
+- [x] Giải thích vì sao AI miss
+- [x] Lưu vào `test-cases/API1_PoolA/extended.md`
+- [x] Export Excel → `test-cases/API1_PoolA/API1_PoolA.xlsx`
 - [ ] **Git commit:** `hw06/api1-extend-test-cases`
 
 ### 1.4 Execute (Postman + Newman)
-- [ ] Implement requests trong Postman collection
-- [ ] Pre-request script: `X-Student-Id: 23127152` trên mọi request
-- [ ] Chụp screenshot pre-request script console
-- [ ] Chạy Newman → HTML report
+- [x] Implement requests trong Postman collection (20 requests)
+- [x] Pre-request script: `X-Student-Id: 23127152` trên mọi request
+- [x] Evidence pre-request / header: `postman/screenshots/newman-api1-fr05-cli.txt`
+- [x] Chạy Newman → `postman/reports/newman-api1-fr05.html` (26 assert, 4 fail)
 - [ ] **Git commit:** `hw06/api1-execute-postman-newman`
 
 ### 1.5 Report bugs
-- [ ] Ghi bug vào `bug-reports/BUG-XX.md`
-- [ ] Tạo GitHub Issue + screenshot
-- [ ] Cập nhật `bug-reports/github_issues_links.md`
+- [x] Ghi bug: `BUG-PRODUCTS-001.md`, `BUG-PRODUCTS-002.md`
+- [x] Tạo GitHub Issue + evidence: [#294](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/294), [#295](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/295)
+- [x] Cập nhật `bug-reports/github_issues_links.md`
 
 ---
 

@@ -1,0 +1,135 @@
+newman
+
+EShop HW06 — API Testing (23127152)
+
+❏ API1 — FR-05 Products List/Search
+↳ TC-A1-001 List all products
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 14ms]
+  ✓  TC-A1-001 status 200
+  ✓  TC-A1-001 JSON array ≥1
+  ✓  TC-A1-031 Content-Type JSON
+  ✓  TC-A1-033 required fields
+  ✓  TC-A1-034/035 types
+  ┌
+  │ 'X-Student-Id=23127152'
+  └
+  ✓  X-Student-Id was sent
+
+↳ TC-A1-002 Search iPhone
+  GET http://localhost:3000/api/products?search=iPhone [200 OK, 453B, 2ms]
+  ✓  TC-A1-002 status 200
+  ✓  TC-A1-002 all names contain iPhone
+
+↳ TC-A1-004 No match empty array
+  GET http://localhost:3000/api/products?search=NoSuchProductXYZ [200 OK, 267B, 1ms]
+  ✓  TC-A1-004/037 empty []
+
+↳ TC-A1-005 Empty search equals list-all
+  GET http://localhost:3000/api/products?search= [200 OK, 1.24kB, 1ms]
+  ✓  TC-A1-005 200 full list
+
+↳ TC-A1-007 Unicode search Bàn
+  GET http://localhost:3000/api/products?search=B%C3%A0n [200 OK, 469B, 1ms]
+  ✓  TC-A1-007 200 array
+
+↳ TC-A1-013 Search AirPods Pro encoded
+  GET http://localhost:3000/api/products?search=AirPods%20Pro [200 OK, 461B, 1ms]
+  ✓  TC-A1-013 match AirPods
+
+↳ TC-A1-015 Extra query foo ignored
+  GET http://localhost:3000/api/products?foo=bar [200 OK, 1.24kB, 1ms]
+  ✓  TC-A1-015 200 array
+
+↳ TC-A1-017 DELETE products no id → 404
+  DELETE http://localhost:3000/api/products [404 Not Found, 458B, 1ms]
+  ✓  TC-A1-017 status 404
+
+↳ TC-A1-018 PUT products no id → 404
+  PUT http://localhost:3000/api/products [404 Not Found, 455B, 2ms]
+  ✓  TC-A1-018 status 404
+
+↳ TC-A1-019 Idempotent second GET
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 1ms]
+  ✓  TC-A1-019 same baseline count
+
+↳ TC-A1-021 SEC-05 SQLi OR no dump
+  GET http://localhost:3000/api/products?search=' OR '1'='1 [200 OK, 1.24kB, 1ms]
+  1. TC-A1-021 SEC-05 no tautology dump
+
+↳ TC-A1-023 SEC-05 quote not HTML 500
+  GET http://localhost:3000/api/products?search=' [500 Internal Server Error, 346B, 1ms]
+  2. TC-A1-023/038 not HTML DB error
+
+↳ TC-A1-E01 Encoded SQLi no dump
+  GET http://localhost:3000/api/products?search=%27%20OR%20%271%27%3D%271 [200 OK, 1.24kB, 1ms]
+  3. TC-A1-E01 encoded SQLi no full dump
+
+↳ TC-A1-E02 Quote Content-Type not HTML
+  GET http://localhost:3000/api/products?search=%27 [500 Internal Server Error, 346B, 1ms]
+  4. TC-A1-E02/E06 no HTML error page
+
+↳ TC-A1-026 XSS-like search JSON
+  GET http://localhost:3000/api/products?search=%3Cscript%3Ealert(1)%3C%2Fscript%3E [200 OK, 267B, 1ms]
+  ✓  TC-A1-026 200 JSON array
+
+↳ TC-A1-027 Public no Authorization
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 1ms]
+  ✓  TC-A1-027 public 200
+
+↳ TC-A1-029 Malformed Bearer still 200
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 1ms]
+  ✓  TC-A1-029 200 not 500
+
+↳ TC-A1-036 Search Samsung schema
+  GET http://localhost:3000/api/products?search=Samsung [200 OK, 480B, 1ms]
+  ✓  TC-A1-036 schema fields
+
+↳ TC-A1-E05 After DROP probe catalog intact
+  GET http://localhost:3000/api/products?search=a';DROP TABLE products;-- [200 OK, 480B, 1ms]
+  ✓  TC-A1-E05 interim response ok-ish
+
+↳ TC-A1-E05b List after DROP probe
+  GET http://localhost:3000/api/products [200 OK, 1.24kB, 1ms]
+  ✓  TC-A1-E05 catalog still ≥1
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │              20 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │              20 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │              20 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │              26 │               4 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 266ms                                   │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 10.17kB (approx)                       │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 1ms [min: 1ms, max: 14ms, s.d.: 2ms] │
+└─────────────────────────────────────────────────────────────┘
+
+  #  failure         detail                                                                             
+                                                                                                        
+ 1.  AssertionError  TC-A1-021 SEC-05 no tautology dump                                                 
+                     SQLi must not return full catalog: expected 5 to not deeply equal 5                
+                     at assertion:0 in test-script                                                      
+                     inside "API1 — FR-05 Products List/Search / TC-A1-021 SEC-05 SQLi OR no dump"      
+                                                                                                        
+ 2.  AssertionError  TC-A1-023/038 not HTML DB error                                                    
+                     expected 500 to not deeply equal 500                                               
+                     at assertion:0 in test-script                                                      
+                     inside "API1 — FR-05 Products List/Search / TC-A1-023 SEC-05 quote not HTML 500"   
+                                                                                                        
+ 3.  AssertionError  TC-A1-E01 encoded SQLi no full dump                                                
+                     expected 5 to not deeply equal 5                                                   
+                     at assertion:0 in test-script                                                      
+                     inside "API1 — FR-05 Products List/Search / TC-A1-E01 Encoded SQLi no dump"        
+                                                                                                        
+ 4.  AssertionError  TC-A1-E02/E06 no HTML error page                                                   
+                     must not return HTML 500 SQLITE error: expected true to be false                   
+                     at assertion:0 in test-script                                                      
+                     inside "API1 — FR-05 Products List/Search / TC-A1-E02 Quote Content-Type not HTML" 

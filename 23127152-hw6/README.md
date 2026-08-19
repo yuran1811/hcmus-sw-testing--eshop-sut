@@ -37,7 +37,7 @@ Orchestrator: `hw06-api-testing` · Report templates: restored from `hw5/2312715
 
 | API | TC Generated (AI) | TC Added (manual) | TC Executed | Passed | Failed | Bugs Found |
 |-----|-------------------|-------------------|-------------|--------|--------|------------|
-| API 1 — FR-05 Products | — (target ≥ 35) | — (target ≥ 5) | — | — | — | — |
+| API 1 — FR-05 Products | 40 | 6 | 20 req / 26 assert | 22 | 4 | 2 |
 | API 2 — FR-11 Orders | — (target ≥ 35) | — (target ≥ 5) | — | — | — | — |
 | API 3 — FR-15 Product CRUD | — (target ≥ 35) | — (target ≥ 5) | — | — | — | — |
 | **Total** | **— (≥ 105)** | **— (≥ 15)** | **—** | **—** | **—** | **—** |
@@ -92,13 +92,12 @@ Orchestrator: `hw06-api-testing` · Report templates: restored from `hw5/2312715
 
 | Feature | Used | Notes |
 |---------|------|-------|
-| Workspaces | ☐ | |
-| Collections | ☐ | |
-| Variables (collection / environment) | ☐ | |
-| Environments | ☐ | |
-| Pre-request scripts (`X-Student-Id`) | ☐ | Screenshot required |
-| Tests / assertions | ☐ | |
-| Collection Runner + data file | ☐ | |
+| Collections | ☑ | `EShop-HW06.postman_collection.json` |
+| Variables (collection / environment) | ☑ | `baseUrl`, `studentId`, tokens |
+| Environments | ☑ | Local env JSON |
+| Pre-request scripts (`X-Student-Id`) | ☑ | Collection-level; Newman log proves header |
+| Tests / assertions | ☑ | FR-05 folder |
+| Collection Runner + data file | ☐ | CSV prepared (`products-search-data.csv`) |
 | Monitors | ☐ | |
 | Mock servers | ☐ | |
 
