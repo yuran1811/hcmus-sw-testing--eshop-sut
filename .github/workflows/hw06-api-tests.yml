@@ -1,0 +1,81 @@
+name: HW06 API Tests (Newman)
+
+on:
+  push:
+    branches: [hw6/23127152, main]
+    paths:
+      - "23127152-hw6/**"
+      - "backend/**"
+      - ".github/workflows/hw06-api-tests.yml"
+  pull_request:
+    paths:
+      - "23127152-hw6/**"
+      - "backend/**"
+      - ".github/workflows/hw06-api-tests.yml"
+  workflow_dispatch:
+
+jobs:
+  newman-api:
+    name: Start SUT + Newman CI Smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+
+      - name: Start EShop backend
+        working-directory: backend
+        run: |
+          nohup node server.js > /tmp/eshop-backend.log 2>&1 &
+          echo $! > /tmp/eshop-backend.pid
+
+      - name: Wait for localhost:3000
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:3000/api/products >/dev/null; then
+              echo "SUT is up"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Backend failed to start:"
+          cat /tmp/eshop-backend.log || true
+          exit 1
+
+      - name: Install Newman + htmlextra
+        run: npm install -g newman newman-reporter-htmlextra
+
+      - name: Run CI Smoke (Must Pass)
+        working-directory: 23127152-hw6
+        run: |
+          mkdir -p postman/reports
+          newman run postman/EShop-HW06.postman_collection.json \
+            -e postman/EShop-HW06.postman_environment.json \
+            --folder "CI Smoke — Must Pass" \
+            --env-var "baseUrl=http://127.0.0.1:3000" \
+            --env-var "studentId=23127152" \
+            --env-var "ciExpectStatus=200" \
+            -r cli,htmlextra \
+            --reporter-htmlextra-export postman/reports/newman-ci-smoke.html
+
+      - name: Upload Newman HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-ci-smoke-report
+          path: 23127152-hw6/postman/reports/newman-ci-smoke.html
+
+      - name: Backend log (on failure)
+        if: failure()
+        run: cat /tmp/eshop-backend.log || true

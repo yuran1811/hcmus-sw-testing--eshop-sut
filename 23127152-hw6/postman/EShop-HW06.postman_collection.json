@@ -2641,6 +2641,125 @@
           ]
         }
       ]
+    },
+    {
+      "name": "CI Smoke — Must Pass",
+      "description": "Green suite for GitHub Actions. Spec-correct happy paths only (no SEC negative expects).",
+      "item": [
+        {
+          "name": "CI-01 GET /api/products → 200 array",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const expectStatus = Number(pm.environment.get('ciExpectStatus') || 200);",
+                  "pm.test('CI-01 status', () => pm.response.to.have.status(expectStatus));",
+                  "pm.test('CI-01 JSON array', () => pm.expect(pm.response.json()).to.be.an('array'));",
+                  "pm.test('CI-01 X-Student-Id', () => {",
+                  "  pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127152');",
+                  "  console.log('[CI] X-Student-Id=' + pm.request.headers.get('X-Student-Id'));",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "CI-02 GET /api/products?search=iPhone → 200",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?search=iPhone",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "iPhone"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('CI-02 status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('CI-02 array with match', () => {",
+                  "  const j = pm.response.json();",
+                  "  pm.expect(j).to.be.an('array');",
+                  "  pm.expect(j.length).to.be.above(0);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "CI-03 GET /api/categories → 200",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/categories"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('CI-03 status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('CI-03 JSON array', () => pm.expect(pm.response.json()).to.be.an('array'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "CI-04 Admin login → 200 token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"admin@eshop.com\",\"password\":\"Admin123!\"}"
+            },
+            "url": "{{baseUrl}}/api/login"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('CI-04 login 200', () => pm.response.to.have.status(200));",
+                  "pm.test('CI-04 has token', () => pm.expect(pm.response.json().token).to.be.a('string'));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
     }
   ],
   "variable": [
