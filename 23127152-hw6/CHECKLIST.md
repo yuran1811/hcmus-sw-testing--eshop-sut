@@ -67,11 +67,11 @@
 
 ## Phase 3 — API 3: FR-15 Product CRUD (`POST/PUT/DELETE`) (~2.5h)
 
-- [ ] **Generate** ≥ 35 TC → `test-cases/API3_PoolC/generated.md` → commit
-- [ ] **Audit** VALID/INVALID/INCOMPLETE → `audit.md` → commit
-- [ ] **Extend** ≥ 5 TC → `extended.md` + `.xlsx` → commit
-- [ ] **Execute** Postman + Newman → commit
-- [ ] **Report bugs** → GitHub Issues
+- [x] **Generate** ≥ 35 TC → `test-cases/API3_PoolC/generated.md` (40) → commit
+- [x] **Audit** VALID/INVALID/INCOMPLETE → `audit.md` (33/3/4) → commit
+- [x] **Extend** ≥ 5 TC → `extended.md` (6) + `API3_PoolC.xlsx` → commit
+- [x] **Execute** Postman + Newman → `newman-api3-fr15.html` (25 assert, 12 fail) → commit
+- [x] **Report bugs** → [#297](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/297) [#298](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/298) [#299](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/299)
 
 ---
 

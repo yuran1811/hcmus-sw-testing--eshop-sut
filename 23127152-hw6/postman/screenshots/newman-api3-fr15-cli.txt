@@ -1,0 +1,180 @@
+newman
+
+EShop HW06 — API Testing (23127152)
+
+❏ API3 — FR-15 Product CRUD (Admin)
+↳ FR15 Login Admin
+  POST http://localhost:3000/api/login [200 OK, 640B, 16ms]
+  ✓  admin login
+
+↳ FR15 Login User
+  POST http://localhost:3000/api/login [200 OK, 643B, 2ms]
+  ✓  user login
+
+↳ TC-C3-024/E01 POST no auth → 401
+  POST http://localhost:3000/api/products [200 OK, 303B, 3ms]
+  1. TC-C3-024/E01 expect 401
+  ┌
+  │ 'X-Student-Id=23127152'
+  └
+  ✓  X-Student-Id
+
+↳ TC-C3-027/E02 POST user token → 403
+  POST http://localhost:3000/api/products [200 OK, 303B, 2ms]
+  2. TC-C3-027/E02 expect 403
+
+↳ TC-C3-030 POST bad JWT → 403
+  POST http://localhost:3000/api/products [200 OK, 303B, 2ms]
+  3. TC-C3-030 expect 403
+
+↳ TC-C3-001/031/032/035/037 Create admin OK
+  POST http://localhost:3000/api/products [200 OK, 304B, 3ms]
+  ✓  TC-C3-001 status 200
+  ✓  TC-C3-032/037 schema
+  ✓  TC-C3-035 JSON CT
+
+↳ TC-C3-019 Create then search
+  GET http://localhost:3000/api/products [200 OK, 1.84kB, 1ms]
+  ✓  TC-C3-019 list contains new id
+
+↳ TC-C3-012/033 Update admin
+  PUT http://localhost:3000/api/products/10 [200 OK, 296B, 3ms]
+  ✓  TC-C3-012/033 200 message
+
+↳ TC-C3-020 Update reflected on GET detail
+  GET http://localhost:3000/api/products/10 [200 OK, 396B, 2ms]
+  ✓  TC-C3-020 name updated
+
+↳ TC-C3-025/E04 PUT no auth → 401
+  PUT http://localhost:3000/api/products/10 [200 OK, 296B, 2ms]
+  4. TC-C3-025/E04 expect 401
+
+↳ TC-C3-028 PUT user → 403
+  PUT http://localhost:3000/api/products/10 [200 OK, 296B, 2ms]
+  5. TC-C3-028 expect 403
+
+↳ TC-C3-005 Create neg price (admin)
+  POST http://localhost:3000/api/products [200 OK, 304B, 2ms]
+  6. TC-C3-005 expect 400 (validation)
+
+↳ TC-C3-038 Empty body
+  POST http://localhost:3000/api/products [200 OK, 304B, 2ms]
+  7. TC-C3-038 expect 400
+
+↳ TC-C3-040 PATCH → 404
+  PATCH http://localhost:3000/api/products [404 Not Found, 457B, 1ms]
+  ✓  TC-C3-040 404
+
+↳ TC-C3-026/E03 DELETE no auth → 401
+  DELETE http://localhost:3000/api/products/10 [200 OK, 296B, 2ms]
+  8. TC-C3-026/E03 expect 401
+
+↳ TC-C3-029 DELETE user → 403
+  DELETE http://localhost:3000/api/products/10 [200 OK, 296B, 1ms]
+  9. TC-C3-029 expect 403
+
+↳ TC-C3-015/034 Delete admin OK
+  DELETE http://localhost:3000/api/products/10 [200 OK, 296B, 1ms]
+  ✓  TC-C3-015/034 200 message
+
+↳ TC-C3-021 After delete absent from list
+  GET http://localhost:3000/api/products [200 OK, 1.91kB, 2ms]
+  ✓  TC-C3-021 id absent
+
+↳ TC-C3-E06 GET detail after delete
+  GET http://localhost:3000/api/products/10 [200 OK, 267B, 1ms]
+  ✓  TC-C3-E06 not a normal product object (prefer 404)
+
+↳ TC-C3-E05 Impact: unauth create must not succeed
+  POST http://localhost:3000/api/products [200 OK, 304B, 2ms]
+ 10. TC-C3-E05 unauth create blocked
+
+↳ TC-C3-016 Delete missing id
+  DELETE http://localhost:3000/api/products/999999 [200 OK, 296B, 1ms]
+ 11. TC-C3-016 prefer 404
+
+↳ TC-C3-017 Delete abc
+  DELETE http://localhost:3000/api/products/abc [200 OK, 296B, 1ms]
+ 12. TC-C3-017 404
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │              22 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │              22 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │              22 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │              25 │              12 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 313ms                                   │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 4.72kB (approx)                        │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 2ms [min: 1ms, max: 16ms, s.d.: 3ms] │
+└─────────────────────────────────────────────────────────────┘
+
+   #  failure         detail                                                                                        
+                                                                                                                    
+ 01.  AssertionError  TC-C3-024/E01 expect 401                                                                      
+                      expected response to have status code 401 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-024/E01 POST no auth → 401"                 
+                                                                                                                    
+ 02.  AssertionError  TC-C3-027/E02 expect 403                                                                      
+                      expected response to have status code 403 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-027/E02 POST user token → 403"              
+                                                                                                                    
+ 03.  AssertionError  TC-C3-030 expect 403                                                                          
+                      expected response to have status code 403 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-030 POST bad JWT → 403"                     
+                                                                                                                    
+ 04.  AssertionError  TC-C3-025/E04 expect 401                                                                      
+                      expected response to have status code 401 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-025/E04 PUT no auth → 401"                  
+                                                                                                                    
+ 05.  AssertionError  TC-C3-028 expect 403                                                                          
+                      expected response to have status code 403 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-028 PUT user → 403"                         
+                                                                                                                    
+ 06.  AssertionError  TC-C3-005 expect 400 (validation)                                                             
+                      expected response to have status code 400 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-005 Create neg price (admin)"               
+                                                                                                                    
+ 07.  AssertionError  TC-C3-038 expect 400                                                                          
+                      expected response to have status code 400 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-038 Empty body"                             
+                                                                                                                    
+ 08.  AssertionError  TC-C3-026/E03 expect 401                                                                      
+                      expected response to have status code 401 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-026/E03 DELETE no auth → 401"               
+                                                                                                                    
+ 09.  AssertionError  TC-C3-029 expect 403                                                                          
+                      expected response to have status code 403 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-029 DELETE user → 403"                      
+                                                                                                                    
+ 10.  AssertionError  TC-C3-E05 unauth create blocked                                                               
+                      expected response to have status code 401 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-E05 Impact: unauth create must not succeed" 
+                                                                                                                    
+ 11.  AssertionError  TC-C3-016 prefer 404                                                                          
+                      expected response to have status code 404 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-016 Delete missing id"                      
+                                                                                                                    
+ 12.  AssertionError  TC-C3-017 404                                                                                 
+                      expected response to have status code 404 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-017 Delete abc"                             
