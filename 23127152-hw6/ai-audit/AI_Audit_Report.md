@@ -143,3 +143,65 @@
 > Issues: https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/294 · https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/295
 
 **Human review:** Confirmed evidence paths and issue links.
+
+---
+
+### Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 2.1 Generate FR-11
+
+**AI Tool:** Cursor (Cursor Grok 4.5)  
+**Date/Time:** 2026-08-19 21:47 +07
+
+**Prompt:**
+> Using `api-test-generate` Steps A–D separately for FR-11: `GET /api/orders/my-orders` (JWT) and `GET /api/orders/:id` (no auth per selection). Cover domain, compensating state (status visibility), SEC-02 + IDOR, schema. ≥35 TCs → `API2_PoolB/generated.md`.
+
+**AI Output:**
+> See `23127152-hw6/test-cases/API2_PoolB/generated.md` (40 TCs TC-B2-001…040).
+
+**Human review:** Kept; IDOR expected = deny despite public detail surface.
+
+---
+
+### Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 2.2 Audit
+
+**AI Tool:** Cursor (Cursor Grok 4.5)  
+**Date/Time:** 2026-08-19 21:48 +07
+
+**Prompt:**
+> Using `api-test-audit`: label all FR-11 generated TCs VALID/INVALID/INCOMPLETE; human owns labels.
+
+**AI Output:**
+> `API2_PoolB/audit.md` — 34 VALID / 2 INVALID / 4 INCOMPLETE.
+
+**Human review:** Confirmed.
+
+---
+
+### Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 2.3 Extend
+
+**AI Tool:** Cursor (Cursor Grok 4.5)  
+**Date/Time:** 2026-08-19 21:48 +07
+
+**Prompt:**
+> Using `api-test-extend`: gaps for FR-11 IDOR/PII; human selects ≥5.
+
+**AI Output:**
+> Candidates; human kept TC-B2-E01…E06 in `extended.md`.
+
+**Human review:** Accepted 6 extended TCs.
+
+---
+
+### Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 2.4–2.5 Execute + Bugs
+
+**AI Tool:** Cursor (Cursor Grok 4.5)  
+**Date/Time:** 2026-08-19 21:50 +07
+
+**Prompt:**
+> Using `api-test-execute` + `bug-report`: implement FR-11 Postman folder (setup A/B orders + assertions), Newman run, file IDOR bug + GitHub Issue.
+
+**AI Output:**
+> - `postman/reports/newman-api2-fr11.html` — 26 requests, 35 assertions, 5 failed (all IDOR)
+> - `bug-reports/BUG-ORDERS-001.md`
+> - Issue: https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/296
+
+**Human review:** Confirmed PII leak `Addr B Secret` in unauth response.
