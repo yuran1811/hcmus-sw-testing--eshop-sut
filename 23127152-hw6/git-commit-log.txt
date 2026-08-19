@@ -1,3 +1,8 @@
+4e55c42 hw06/api2-execute-postman-newman
+0f3e3bd hw06/api2-extend-test-cases
+caa2c2e hw06/api2-audit-test-cases
+6049d83 hw06/api2-generate-test-cases
+00e7098 hw06/api1-checklist-commit-log
 b57b7d7 hw06/api1-execute-postman-newman
 3b274d1 hw06/api1-extend-test-cases
 63aa667 hw06/api1-audit-test-cases
