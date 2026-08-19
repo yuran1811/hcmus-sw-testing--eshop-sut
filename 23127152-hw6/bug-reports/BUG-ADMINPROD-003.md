@@ -33,4 +33,4 @@ HTTP **200** `{ "message": "Product deleted" }` even when nothing was deleted (`
 
 - `bug-reports/screenshots/BUG-ADMINPROD-003-delete-missing.txt`
 - Newman failures TC-C3-016/017
-- GitHub Issue: [#299](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/299)
+- GitHub Issue: [#305](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/305) (Anhnguyenk835)

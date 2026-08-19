@@ -50,7 +50,7 @@
 
 ### 1.5 Report bugs
 - [x] Ghi bug: `BUG-PRODUCTS-001.md`, `BUG-PRODUCTS-002.md`
-- [x] Tạo GitHub Issue + evidence: [#294](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/294), [#295](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/295)
+- [x] Tạo GitHub Issue + evidence: [#300](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/300), [#301](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/301) (Anhnguyenk835)
 - [x] Cập nhật `bug-reports/github_issues_links.md`
 
 ---
@@ -61,7 +61,7 @@
 - [x] **Audit** VALID/INVALID/INCOMPLETE → `audit.md` (34/2/4) → commit
 - [x] **Extend** ≥ 5 TC → `extended.md` (6) + `API2_PoolB.xlsx` → commit
 - [x] **Execute** Postman + Newman → `newman-api2-fr11.html` (35 assert, 5 fail) → commit
-- [x] **Report bugs** → BUG-ORDERS-001 [#296](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/296)
+- [x] **Report bugs** → BUG-ORDERS-001 [#302](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/302) (Anhnguyenk835)
 
 ---
 
@@ -71,7 +71,7 @@
 - [x] **Audit** VALID/INVALID/INCOMPLETE → `audit.md` (33/3/4) → commit
 - [x] **Extend** ≥ 5 TC → `extended.md` (6) + `API3_PoolC.xlsx` → commit
 - [x] **Execute** Postman + Newman → `newman-api3-fr15.html` (25 assert, 12 fail) → commit
-- [x] **Report bugs** → [#297](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/297) [#298](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/298) [#299](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/299)
+- [x] **Report bugs** → [#303](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/303) [#304](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/304) [#305](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/305) (Anhnguyenk835)
 
 ---
 

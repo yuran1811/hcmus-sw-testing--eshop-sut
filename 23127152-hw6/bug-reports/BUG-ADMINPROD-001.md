@@ -38,7 +38,7 @@ All of the above return **HTTP 200** and perform the mutation (create/update/del
 - Newman 12 assertion failures (auth subset) — `postman/screenshots/newman-api3-fr15-cli.txt`
 - Unauth create response: `bug-reports/screenshots/BUG-ADMINPROD-001-unauth-create.json`
 - Report: `postman/reports/newman-api3-fr15.html`
-- GitHub Issue: [#297](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/297)
+- GitHub Issue: [#303](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/303) (Anhnguyenk835)
 
 ## Related HW02 Bug
 

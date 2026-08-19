@@ -37,7 +37,7 @@ HTTP 200 with **all 5 products** — same as unfiltered list. Confirms string-co
 - Newman failures: TC-A1-021, TC-A1-E01 (`postman/screenshots/newman-api1-fr05-cli.txt`)
 - Response dump: `bug-reports/screenshots/BUG-PRODUCTS-001-sqli.json`
 - HTML report: `postman/reports/newman-api1-fr05.html`
-- GitHub Issue: [#294](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/294)
+- GitHub Issue: [#300](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/300) (Anhnguyenk835)
 
 ## Root Cause (if known)
 

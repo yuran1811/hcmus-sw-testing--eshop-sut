@@ -42,7 +42,7 @@ Root cause: `app.get("/api/orders/:id", …)` in `backend/server.js` has **no** 
 - Newman: 5 failed assertions in `postman/screenshots/newman-api2-fr11-cli.txt`
 - Dump: `bug-reports/screenshots/BUG-ORDERS-001-idor.json`
 - Report: `postman/reports/newman-api2-fr11.html`
-- GitHub Issue: [#296](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/296)
+- GitHub Issue: [#302](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/302) (Anhnguyenk835)
 
 ## Related HW02 Bug
 

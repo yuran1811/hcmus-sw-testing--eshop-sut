@@ -38,7 +38,7 @@ HTTP **500**, `Content-Type: text/html`, body:
 - Newman failures: TC-A1-023, TC-A1-E02
 - Saved body: `bug-reports/screenshots/BUG-PRODUCTS-002-body.html`
 - CLI log: `postman/screenshots/newman-api1-fr05-cli.txt`
-- GitHub Issue: [#295](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/295)
+- GitHub Issue: [#301](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/301) (Anhnguyenk835)
 
 ## Root Cause (if known)
 

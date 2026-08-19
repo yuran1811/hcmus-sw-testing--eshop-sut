@@ -33,4 +33,4 @@ HTTP **200** `Product created` for negative price and empty body (null columns i
 
 - Newman failures TC-C3-005, TC-C3-038
 - Related unauth create with `price:-99`: `screenshots/BUG-ADMINPROD-001-unauth-create.json`
-- GitHub Issue: [#298](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/298)
+- GitHub Issue: [#304](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/304) (Anhnguyenk835)

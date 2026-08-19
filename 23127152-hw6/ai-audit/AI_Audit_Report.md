@@ -140,7 +140,7 @@
 
 **AI Output:**
 > Local MD: `bug-reports/BUG-PRODUCTS-001.md`, `BUG-PRODUCTS-002.md`  
-> Issues: https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/294 · https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/295
+> Issues: https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/300 · https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/301 (Anhnguyenk835)
 
 **Human review:** Confirmed evidence paths and issue links.
 
@@ -202,7 +202,7 @@
 **AI Output:**
 > - `postman/reports/newman-api2-fr11.html` — 26 requests, 35 assertions, 5 failed (all IDOR)
 > - `bug-reports/BUG-ORDERS-001.md`
-> - Issue: https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/296
+> - Issue: https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/302 (Anhnguyenk835)
 
 **Human review:** Confirmed PII leak `Addr B Secret` in unauth response.
 
@@ -235,7 +235,7 @@
 
 **AI Output:**
 > - `newman-api3-fr15.html` — 22 req, 25 assertions, 12 failed
-> - Issues: #297 (auth), #298 (validation), #299 (DELETE 200 on missing)
+> - Issues: #303 (auth), #304 (validation), #305 (DELETE 200 on missing) — Anhnguyenk835
 
 **Human review:** Confirmed unauth create returns 200 with new id.
 
