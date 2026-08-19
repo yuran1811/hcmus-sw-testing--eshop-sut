@@ -21,6 +21,7 @@ Coupon API / API Testing / State Transition
 | Method   | `POST`                                                              |
 | Endpoint | `/api/apply-coupon`                                                 |
 | Category | State Transition                                                    |
+| SEC Ref  | N/A                                                                 |
 | Priority | High                                                                |
 | Input    | Code không tồn tại hoặc `SAVE10` với `total_amount` thấp hơn 300000 |
 

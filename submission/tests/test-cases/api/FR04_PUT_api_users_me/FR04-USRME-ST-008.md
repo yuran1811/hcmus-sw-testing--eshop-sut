@@ -4,13 +4,25 @@
 
 FR-04
 
+## Module / Test type / Technique
+
+User Profile API / API Testing / State Transition + Resilience
+
 ## Preconditions
 
 - Token hợp lệ của user A; có thể mô phỏng timeout ở client sau khi request đã gửi.
 
 ## Test data
 
-Body hợp lệ cố định được gửi lại một lần sau timeout.
+| Field    | Value                                                 |
+| -------- | ----------------------------------------------------- |
+| API      | `PUT /api/users/me`                                   |
+| Method   | `PUT`                                                 |
+| Endpoint | `/api/users/me`                                       |
+| Category | State Transition + Resilience                         |
+| SEC Ref  | N/A                                                   |
+| Priority | Medium                                                |
+| Input    | Body hợp lệ cố định được gửi lại một lần sau timeout. |
 
 ## Test steps
 
@@ -22,6 +34,6 @@ Body hợp lệ cố định được gửi lại một lần sau timeout.
 
 Hồ sơ cuối chỉ có một user A với dữ liệu đúng; retry không tạo bản ghi mới, không đổi role/email và không làm hỏng dữ liệu.
 
-## Review
+## Status / Related bugs
 
-Đây là kiểm tra exploratory về resilience; ghi nhận hành vi SUT khi retry sau timeout, không dùng kết quả này để kết luận pass/fail FR-04.
+Not Run / None

@@ -20,6 +20,7 @@ Coupon API / API Testing / Security
 | Method   | `POST`                                                                                                                                 |
 | Endpoint | `/api/apply-coupon`                                                                                                                    |
 | Category | Security                                                                                                                               |
+| SEC Ref  | SEC-06                                                                                                                                 |
 | Priority | High                                                                                                                                   |
 | Input    | `{"code":"SAVE10","total_amount":500000,"user_id":1,"discount_amount":0,"final_amount":0,"is_active":true,"max_uses_per_user":999999}` |
 

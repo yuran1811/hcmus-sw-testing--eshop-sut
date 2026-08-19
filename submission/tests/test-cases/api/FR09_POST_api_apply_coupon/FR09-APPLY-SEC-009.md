@@ -21,6 +21,7 @@ Coupon API / API Testing / Security + State Transition
 | Method   | `POST`                                                |
 | Endpoint | `/api/apply-coupon`                                   |
 | Category | Security                                              |
+| SEC Ref  | SEC-07                                                |
 | Priority | High                                                  |
 | Input    | `{"code":"SAVE10","total_amount":500000,"user_id":1}` |
 

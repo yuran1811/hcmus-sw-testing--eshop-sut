@@ -4,13 +4,25 @@
 
 FR-04 / SEC-02 / SEC-06
 
+## Module / Test type / Technique
+
+User Profile API / API Testing / Security
+
 ## Preconditions
 
 - Có user A và B, lưu snapshot cả hai; token là của A.
 
 ## Test data
 
-Body hợp lệ của A kèm đồng thời `id`, `userId`, `user_id` mang giá trị của B.
+| Field    | Value                                                                         |
+| -------- | ----------------------------------------------------------------------------- |
+| API      | `PUT /api/users/me`                                                           |
+| Method   | `PUT`                                                                         |
+| Endpoint | `/api/users/me`                                                               |
+| Category | Security                                                                      |
+| SEC Ref  | SEC-02 / SEC-06                                                               |
+| Priority | High                                                                          |
+| Input    | Body hợp lệ của A kèm đồng thời `id`, `userId`, `user_id` mang giá trị của B. |
 
 ## Test steps
 
@@ -21,6 +33,6 @@ Body hợp lệ của A kèm đồng thời `id`, `userId`, `user_id` mang giá 
 
 Chỉ A có thể thay đổi (hoặc request bị từ chối); B giữ nguyên hoàn toàn. Không khóa cập nhật theo một định danh do client gửi.
 
-## Review
+## Status / Related bugs
 
-VALID. Case cũ SEC-005 chỉ nêu một khóa `id`; case này kiểm tra các alias thường gặp trong payload.
+Not Run / None

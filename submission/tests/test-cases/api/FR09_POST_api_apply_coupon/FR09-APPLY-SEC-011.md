@@ -20,6 +20,7 @@ Coupon API / API Testing / Security
 | Method   | `POST`                                                                 |
 | Endpoint | `/api/apply-coupon`                                                    |
 | Category | Security                                                               |
+| SEC Ref  | SEC-04 / SEC-05                                                        |
 | Priority | High                                                                   |
 | Input    | Code chứa null byte, newline, URL encoding và chuỗi HTML/SQL đã mã hóa |
 

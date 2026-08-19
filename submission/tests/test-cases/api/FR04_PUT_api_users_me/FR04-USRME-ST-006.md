@@ -4,13 +4,25 @@
 
 FR-04
 
+## Module / Test type / Technique
+
+User Profile API / API Testing / State Transition
+
 ## Preconditions
 
 - Token hợp lệ của user A; lưu snapshot `name`, `phone`, `shipping_address`.
 
 ## Test data
 
-`{"name":"Tên mới","phone":"09ABC","shipping_address":"Địa chỉ mới"}`.
+| Field    | Value                                                                 |
+| -------- | --------------------------------------------------------------------- |
+| API      | `PUT /api/users/me`                                                   |
+| Method   | `PUT`                                                                 |
+| Endpoint | `/api/users/me`                                                       |
+| Category | State Transition                                                      |
+| SEC Ref  | N/A                                                                   |
+| Priority | High                                                                  |
+| Input    | `{"name":"Tên mới","phone":"09ABC","shipping_address":"Địa chỉ mới"}` |
 
 ## Test steps
 
@@ -21,6 +33,6 @@ FR-04
 
 Request bị từ chối do phone không hợp lệ; cả ba trường vẫn đúng snapshot trước request, không xảy ra cập nhật một phần.
 
-## Review
+## Status / Related bugs
 
-VALID. Cụ thể hóa chuyển trạng thái lỗi -> giữ nguyên mà ST-005 chưa kiểm tra bằng bước đọc lại.
+Not Run / None

@@ -21,6 +21,7 @@ Coupon API / API Testing / Domain Partition + State Transition
 | Method   | `POST`                                                                        |
 | Endpoint | `/api/apply-coupon`                                                           |
 | Category | Domain Partition + State Transition                                           |
+| SEC Ref  | N/A                                                                           |
 | Priority | High                                                                          |
 | Input    | Cùng một coupon và tổng đơn đạt ngưỡng, gửi ở ba thời điểm quanh `expired_at` |
 

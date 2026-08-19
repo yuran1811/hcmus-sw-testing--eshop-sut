@@ -4,13 +4,25 @@
 
 FR-04 / SEC-02
 
+## Module / Test type / Technique
+
+User Profile API / API Testing / Security
+
 ## Preconditions
 
 - API đang chạy và có token hợp lệ của user A để làm đối chứng.
 
 ## Test data
 
-`Authorization: Basic <valid-jwt>` hoặc `Authorization: Token <valid-jwt>`; body hợp lệ: `{"name":"A security check","phone":"0912345678","shipping_address":"1 A"}`.
+| Field    | Value                                                                                                                                                                |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| API      | `PUT /api/users/me`                                                                                                                                                  |
+| Method   | `PUT`                                                                                                                                                                |
+| Endpoint | `/api/users/me`                                                                                                                                                      |
+| Category | Security                                                                                                                                                             |
+| SEC Ref  | SEC-02                                                                                                                                                               |
+| Priority | High                                                                                                                                                                 |
+| Input    | `Authorization: Basic <valid-jwt>` hoặc `Authorization: Token <valid-jwt>`; body hợp lệ: `{"name":"A security check","phone":"0912345678","shipping_address":"1 A"}` |
 
 ## Test steps
 
@@ -21,6 +33,6 @@ FR-04 / SEC-02
 
 Mỗi request trả `401 Unauthorized`, không cập nhật hồ sơ và không lộ chi tiết xác thực nội bộ.
 
-## Review
+## Status / Related bugs
 
-VALID. Bổ sung biến thể header bị thiếu phần `Bearer`, là điều SEC-02 yêu cầu nhưng case cũ chưa bao phủ.
+Not Run / None

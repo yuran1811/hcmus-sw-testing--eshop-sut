@@ -21,6 +21,7 @@ Coupon API / API Testing / State Transition
 | Method   | `POST`                                                |
 | Endpoint | `/api/apply-coupon`                                   |
 | Category | State Transition                                      |
+| SEC Ref  | N/A                                                   |
 | Priority | Medium                                                |
 | Input    | `{"code":"SAVE10","total_amount":500000,"user_id":1}` |
 

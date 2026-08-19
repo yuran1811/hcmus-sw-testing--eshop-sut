@@ -4,13 +4,25 @@
 
 FR-04 / SEC-06
 
+## Module / Test type / Technique
+
+User Profile API / API Testing / Security
+
 ## Preconditions
 
 - Token JWT hợp lệ của user A; lưu snapshot hồ sơ trước request.
 
 ## Test data
 
-`{"name":"A","phone":"0912345678","shipping_address":"1 A","__proto__":{"role":"admin"},"constructor":{"prototype":{"role":"admin"}}}`.
+| Field    | Value                                                                                                                                  |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| API      | `PUT /api/users/me`                                                                                                                    |
+| Method   | `PUT`                                                                                                                                  |
+| Endpoint | `/api/users/me`                                                                                                                        |
+| Category | Security                                                                                                                               |
+| SEC Ref  | SEC-06                                                                                                                                 |
+| Priority | High                                                                                                                                   |
+| Input    | `{"name":"A","phone":"0912345678","shipping_address":"1 A","__proto__":{"role":"admin"},"constructor":{"prototype":{"role":"admin"}}}` |
 
 ## Test steps
 
@@ -21,6 +33,6 @@ FR-04 / SEC-06
 
 API từ chối hoặc bỏ qua các trường ngoài allow-list; `role` không đổi, không tạo thuộc tính kế thừa nguy hiểm và hồ sơ hợp lệ không bị ảnh hưởng.
 
-## Review
+## Status / Related bugs
 
-VALID. Đây là biến thể mass assignment/prototype pollution chưa có trong bộ AI.
+Not Run / None
