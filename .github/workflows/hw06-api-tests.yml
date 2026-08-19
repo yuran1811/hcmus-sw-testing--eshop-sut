@@ -65,7 +65,6 @@ jobs:
             --folder "CI Smoke — Must Pass" \
             --env-var "baseUrl=http://127.0.0.1:3000" \
             --env-var "studentId=23127152" \
-            --env-var "ciExpectStatus=200" \
             -r cli,htmlextra \
             --reporter-htmlextra-export postman/reports/newman-ci-smoke.html
 
