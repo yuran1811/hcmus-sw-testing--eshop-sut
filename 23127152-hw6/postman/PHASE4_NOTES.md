@@ -35,7 +35,13 @@
 | Failed | **0** |
 | Header | `X-Student-Id=23127152` logged each iteration |
 
-### Full collection (Setup + API1 + API2 + API3 + Data-Driven folder once)
+### Full collection (Setup + API1 + API2 + API3 + Data-Driven folder)
+
+| Metric | Approx. |
+|--------|---------|
+| Assertion failures | 19 (known Phase 1–3 product bugs) |
+| Hostname | `localhost:3000` |
+| Header | `[HW06 pre-request] X-Student-Id=23127152` on every request |
 
 Known assertion failures remain from Phase 1–3 security/validation bugs (SEC-05 SQLi, IDOR, missing CRUD auth, etc.). Report retained as attributable execution evidence against `localhost:3000`.
 
