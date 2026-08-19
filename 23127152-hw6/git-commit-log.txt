@@ -1,3 +1,9 @@
+5b8383d hw06/cicd-restore-and-report
+2fe51ee hw06/cicd-intentional-fail-v2
+86cd4a6 hw06/cicd-intentional-fail
+8b44b66 hw06/cicd-github-actions
+bf0ac41 hw06/phase4-notes-stats
+b4c7302 hw06/phase4-refresh-commit-log
 7b6e81b hw06/phase4-checklist-tick
 1702bca hw06/postman-collection-final
 4fa58f9 hw06/api3-refresh-commit-log
