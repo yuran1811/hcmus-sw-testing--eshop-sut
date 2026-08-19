@@ -56,3 +56,25 @@ Tôi sử dụng công cụ AI cho các nhiệm vụ sau,
 - Những gì em thay đổi/giữ lại từ kết quả này: Em đã hoàn thành audit, đánh nhãn và mở rộng cho cả hai API Coupon:
   - **FR-09 (`POST /api/apply-coupon`)**: Đánh nhãn 40 case AI (`VALID: 18`, `INCOMPLETE: 22`, `INVALID: 0`), hiệu chỉnh expected result theo hướng quan sát status, response và `use_count` trước/sau thay vì áp đặt mã HTTP hoặc tác dụng phụ chưa có căn cứ. Em tự thiết kế thêm 6 test case human (SEC-009 đến SEC-011, ST-006 đến ST-008) bao phủ race condition, giả mạo dữ liệu kết hợp, encoded payload và biên thời gian `expired_at` (tổng cộng 46 test cases).
   - **FR-17 (`POST /api/admin/coupons`)**: Đánh nhãn 42 case AI (`VALID: 18`, `INCOMPLETE: 24`, `INVALID: 0`), hiệu chỉnh các case áp đặt schema/format/status chưa có trong đặc tả bằng cách ghi nhận response, trạng thái coupon và kết quả tạo/xóa/tái tạo để đối chiếu với contract hiện có. Em tự thiết kế thêm 6 test case human (SEC-007 đến SEC-009, ST-006 đến ST-008) bao phủ giả mạo quyền role trong body, race condition tạo trùng, SQL/XSS mã hóa và vòng đời coupon sau xóa (tổng cộng 48 test cases).
+
+### Entry 6
+
+- Công cụ: Codex
+- Ngày/giờ: 2026-08-19 23:59
+- Ngữ cảnh nhiệm vụ: HW06 API Testing - Tạo dữ liệu data-driven cho FR-04 `PUT /api/users/me`
+- Prompt đã dùng (nguyên văn):
+  > sử dụng skill 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW6/hcmus-sw-testing--eshop-sut/.agents/skills/postman-newman-runner', hãy đọc 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW6/hcmus-sw-testing--eshop-sut/submission/tests/test-cases/api/FR04_PUT_api_users_me' và xây dựng file dữ liệu để hỗ trợ việc test theo hướng data driven, file đặt tại 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW6/hcmus-sw-testing--eshop-sut/submission/tests/test-runs/api/FR04_PUT_api_users_me', đọc kĩ 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW6/hcmus-sw-testing--eshop-sut/api_specification.md' và 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW6/hcmus-sw-testing--eshop-sut/README.md' để xem các dữ liệu có sẵn trong cơ sở dữ liệu cho việc kiểm thử, tạo file dữ liệu chi tiết và toàn diện hỗ trợ tốt, là file json
+- Kết quả AI trả về (nguyên văn hoặc tóm tắt trung thực nếu quá dài - có ghi chú nếu đã rút gọn):
+  > Đã tạo `submission/tests/test-runs/api/FR04_PUT_api_users_me/FR04_PUT_api_users_me_data_driven.json` là mảng JSON tương thích Postman/Newman, bao phủ 51/51 test case FR04. Mỗi iteration có body, header Authorization, Content-Type, expected status hoặc status class, kiểm tra profile sau request và setup/teardown. File dùng dữ liệu seed user test `id=2` và admin `id=1`; token được tham chiếu bằng biến môi trường. Đã kiểm tra JSON parse được, body JSON hợp lệ, đủ mã test case và format Prettier.
+- Những gì em thay đổi/giữ lại từ kết quả này: Em giữ lại toàn bộ 51 iteration data và các dữ liệu seed đã xác nhận. Em dùng `expected_status: null` cùng `expected_status_class: "observe"` cho các case chưa có oracle status trong specification để ghi nhận kết quả thực thi rồi đánh giá, không tự coi là pass.
+
+### Entry 7
+
+- Công cụ: Codex
+- Ngày/giờ: 2026-08-20 00:21
+- Ngữ cảnh nhiệm vụ: HW06 API Testing - Tạo dữ liệu data-driven cho FR-09 và FR-17
+- Prompt đã dùng (nguyên văn):
+  > thực hiện tạo các file dữ liệu data drive cho 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW6/hcmus-sw-testing--eshop-sut/submission/tests/test-cases/api/FR09_POST_api_apply_coupon' và 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW6/hcmus-sw-testing--eshop-sut/submission/tests/test-cases/api/FR17_POST_api_admin_coupons' vào các thư mục 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW6/hcmus-sw-testing--eshop-sut/submission/tests/test-runs/api/FR09_POST_api_apply_coupon' và 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW6/hcmus-sw-testing--eshop-sut/submission/tests/test-runs/api/FR17_POST_api_admin_coupons' tương ứng, đọc kĩ 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW6/hcmus-sw-testing--eshop-sut/api_specification.md' và 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW6/hcmus-sw-testing--eshop-sut/README.md' để biết các dữ liệu có trong hệ thống, lấy 'g:/HCMUS/NAM3-HK3/Testing/Homework/HW6/hcmus-sw-testing--eshop-sut/submission/tests/test-runs/api/FR04_PUT_api_users_me' làm mẫu
+- Kết quả AI trả về (nguyên văn hoặc tóm tắt trung thực nếu quá dài - có ghi chú nếu đã rút gọn):
+  > Đã tạo hai mảng JSON tương thích Postman/Newman: `FR09_POST_api_apply_coupon_data_driven.json` gồm 46/46 iteration và `FR17_POST_api_admin_coupons_data_driven.json` gồm 48/48 iteration. Mỗi iteration có header Authorization, Content-Type, body JSON, expected status/status class, kiểm tra state và setup/teardown. Dữ liệu dùng các fixture seed admin `id=1`, user test `id=2`, và coupon `SAVE10`, `BIGBUY`, `VIP100`, `EXPIRED`. Đã kiểm tra hai chiều với test case source, parse toàn bộ body JSON và format bằng Prettier.
+- Những gì em thay đổi/giữ lại từ kết quả này: Em giữ lại toàn bộ 94 iteration data và cấu trúc nhất quán với FR04. Em dùng oracle theo FR/API specification thay vì source code để các sai lệch như FR09 thiếu JWT/kiểm tra ngưỡng sai và FR17 không kiểm tra role admin được ghi nhận là Fail khi thực thi; các case chưa có oracle status cố định vẫn dùng `observe` để đánh giá sau khi quan sát response/state.
