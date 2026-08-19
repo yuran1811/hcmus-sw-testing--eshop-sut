@@ -35,7 +35,7 @@ Coupon API / API Testing / Schema Validation
 
 ## Expected result
 
-Status 403. Body lỗi là JSON an toàn, không lộ stack trace hoặc thông tin secret.
+User không có role admin không tạo được coupon; response không lộ stack trace, secret hoặc dữ liệu nhạy cảm. Status và error schema cần được đối chiếu theo behavior vì spec chưa chốt exact schema.
 
 ## Status / Related bugs
 

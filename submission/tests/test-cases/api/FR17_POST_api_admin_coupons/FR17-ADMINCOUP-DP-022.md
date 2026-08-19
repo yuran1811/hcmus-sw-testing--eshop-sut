@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống từ chối ngày không tồn tại.
+Hệ thống không tạo coupon với ngày không tồn tại và không lỗi 5xx; status/schema lỗi được ghi nhận theo behavior vì spec chưa định nghĩa chi tiết.
 
 ## Status / Related bugs
 

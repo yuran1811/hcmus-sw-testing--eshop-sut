@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-201 Created hoặc 200 OK. `min_order_amount = 0` hợp lệ theo FR-17.
+`min_order_amount = 0` được chấp nhận vì FR-17 quy định miền `>= 0`; coupon được tạo đúng dữ liệu. Ghi nhận mã trạng thái thực tế.
 
 ## Status / Related bugs
 

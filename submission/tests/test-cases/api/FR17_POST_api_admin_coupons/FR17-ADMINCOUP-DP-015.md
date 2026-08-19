@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-201 Created hoặc 200 OK nếu hệ thống cho phép percent 100; không được tạo final_amount âm khi áp dụng.
+Ghi nhận hệ thống cho phép hay từ chối `discount_value = 100`; nếu tạo thì coupon phải lưu đúng dữ liệu. API tạo coupon không được suy ra thêm quy tắc `final_amount` của API áp dụng coupon.
 
 ## Status / Related bugs
 

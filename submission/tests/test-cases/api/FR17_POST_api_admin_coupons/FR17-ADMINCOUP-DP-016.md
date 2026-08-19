@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request nếu hệ thống giới hạn percent tối đa 100; nếu đặc tả không quy định thì cần review thủ công oracle.
+Ghi nhận hệ thống cho phép hay từ chối `discount_value = 101`; spec chưa quy định percent tối đa 100 nên không ép status cụ thể.
 
 ## Status / Related bugs
 

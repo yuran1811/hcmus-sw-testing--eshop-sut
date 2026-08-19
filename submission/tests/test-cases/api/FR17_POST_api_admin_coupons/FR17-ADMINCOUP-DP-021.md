@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống từ chối ngày sai định dạng ISO `YYYY-MM-DD`.
+Hệ thống không tạo coupon với giá trị ngày không xử lý được và không lỗi 5xx. Ghi nhận format được chấp nhận vì spec chỉ cung cấp ví dụ ngày, chưa chốt schema ISO bắt buộc.
 
 ## Status / Related bugs
 

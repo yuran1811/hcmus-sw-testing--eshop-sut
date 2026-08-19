@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. `max_uses_per_user` phải >= 1.
+Hệ thống không tạo coupon với `max_uses_per_user = 0` vì field này phải `>= 1`. Ghi nhận mã trạng thái thực tế.
 
 ## Status / Related bugs
 

@@ -35,7 +35,7 @@ Coupon API / API Testing / Schema Validation
 
 ## Expected result
 
-Status 401. Body lỗi là JSON an toàn, không trả HTML.
+Request không có JWT không tạo coupon; response không trả HTML nguy hiểm, stack trace hoặc token nội bộ. Status và error schema được ghi nhận theo behavior vì spec chưa chốt exact schema.
 
 ## Status / Related bugs
 

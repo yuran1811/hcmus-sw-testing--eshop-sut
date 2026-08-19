@@ -1,4 +1,4 @@
-# FR17-ADMINCOUP-ST-003: Coupon mới tạo có thể được áp dụng
+# FR17-ADMINCOUP-ST-007: Coupon mới tạo đi qua các trạng thái sử dụng
 
 ## Requirement ID
 
@@ -10,9 +10,8 @@ Coupon API / API Testing / State Transition
 
 ## Preconditions
 
-- Backend API đang chạy tại `http://localhost:3000`
-- Đặc tả API tham chiếu: mục 6.4 Quản lý Mã Giảm Giá trong `api_specification.md`
-- Admin tạo coupon APPLYNEXT thành công.
+- Admin JWT hợp lệ.
+- Có user JWT hợp lệ và dữ liệu coupon mới tạo có `is_active` được xác định.
 
 ## Test data
 
@@ -24,18 +23,17 @@ Coupon API / API Testing / State Transition
 | Category | State Transition                                                                                                                      |
 | SEC Ref  | N/A                                                                                                                                   |
 | Priority | High                                                                                                                                  |
-| Input    | `{"code":"APPLYNEXT","type":"percent","discount_value":10,"min_order_amount":100000,"expired_at":"2099-01-31","max_uses_per_user":1}` |
+| Input    | `{"code":"LIFECYCLE2026","type":"fixed","discount_value":10000,"min_order_amount":0,"expired_at":"2099-12-31","max_uses_per_user":1}` |
 
 ## Test steps
 
-1. Chuẩn bị request `POST http://localhost:3000/api/admin/coupons`.
-2. Cấu hình header theo precondition, bao gồm `Authorization: Bearer <token>` nếu test case yêu cầu.
-3. Gửi body JSON hoặc dữ liệu đầu vào như bảng Test data.
-4. Quan sát status code, response body và trạng thái dữ liệu liên quan sau request nếu test case yêu cầu.
+1. Admin tạo coupon.
+2. Kiểm tra coupon qua API xem danh sách.
+3. Nếu coupon active theo contract, user đủ điều kiện thử áp dụng qua `POST /api/apply-coupon`.
 
 ## Expected result
 
-Sau khi tạo, kiểm tra coupon có trạng thái active và có thể được dùng bởi user đủ điều kiện nếu hệ thống quy định coupon mới mặc định active. Nếu default active hoặc liên kết với FR09 chưa được đặc tả, ghi nhận behavior thay vì kết luận bắt buộc.
+Coupon xuất hiện đúng một lần với dữ liệu đã tạo. Khả năng áp dụng phải phù hợp với `is_active`, hạn dùng và contract liên kết FR-09; không tự giả định trạng thái mặc định nếu đặc tả chưa chốt.
 
 ## Status / Related bugs
 

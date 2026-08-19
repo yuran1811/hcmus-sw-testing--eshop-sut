@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. `discount_value` phải dương.
+Hệ thống không tạo coupon với `discount_value = 0` vì field này phải dương. Ghi nhận mã trạng thái thực tế.
 
 ## Status / Related bugs
 

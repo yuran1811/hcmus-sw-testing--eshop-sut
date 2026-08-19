@@ -35,7 +35,7 @@ Coupon API / API Testing / Security / SEC-02
 
 ## Expected result
 
-401 Unauthorized. Không tạo coupon và không tin role trong token bị sửa.
+JWT bị sửa không được chấp nhận; không tạo coupon và không tin role trong token bị sửa. Ghi nhận mã trạng thái thực tế.
 
 ## Status / Related bugs
 

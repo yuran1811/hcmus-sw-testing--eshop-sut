@@ -35,7 +35,7 @@ Coupon API / API Testing / Schema Validation
 
 ## Expected result
 
-Status 409 hoặc 400. Body lỗi mô tả code đã tồn tại; không trả dữ liệu nhạy cảm.
+Code trùng không tạo bản ghi mới và response không lộ dữ liệu nhạy cảm. Status, message và error schema được ghi nhận theo behavior vì spec chưa định nghĩa.
 
 ## Status / Related bugs
 

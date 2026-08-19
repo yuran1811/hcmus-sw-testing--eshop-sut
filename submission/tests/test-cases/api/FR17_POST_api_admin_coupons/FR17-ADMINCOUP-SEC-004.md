@@ -35,7 +35,7 @@ Coupon API / API Testing / Security / SEC-05
 
 ## Expected result
 
-400 Bad Request hoặc tạo literal an toàn; không bypass unique check, không lỗi SQL và không cập nhật nhầm bản ghi.
+Không bypass unique check, không lỗi SQL/5xx và không cập nhật nhầm bản ghi; payload được xử lý như dữ liệu literal nếu request được chấp nhận. Việc dùng parameterized query cần source review bổ sung.
 
 ## Status / Related bugs
 

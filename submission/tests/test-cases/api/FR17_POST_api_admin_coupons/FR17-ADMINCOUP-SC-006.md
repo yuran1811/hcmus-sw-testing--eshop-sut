@@ -35,7 +35,7 @@ Coupon API / API Testing / Schema Validation
 
 ## Expected result
 
-Status 400. Response lỗi không chứa object coupon thành công và không có field dư nhạy cảm.
+Type ngoài enum không tạo coupon hoặc object thành công; response không lộ dữ liệu nhạy cảm. Status và validation-error schema được ghi nhận theo behavior vì spec chưa định nghĩa.
 
 ## Status / Related bugs
 

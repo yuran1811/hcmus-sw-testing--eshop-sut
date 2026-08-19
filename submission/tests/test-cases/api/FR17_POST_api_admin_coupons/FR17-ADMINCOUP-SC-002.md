@@ -35,7 +35,7 @@ Coupon API / API Testing / Schema Validation
 
 ## Expected result
 
-Status 400. Body lỗi là JSON có `message` hoặc `error` dạng string, không tạo coupon.
+Request thiếu field không tạo coupon. Ghi nhận status và error body thực tế vì API specification chưa định nghĩa error schema.
 
 ## Status / Related bugs
 

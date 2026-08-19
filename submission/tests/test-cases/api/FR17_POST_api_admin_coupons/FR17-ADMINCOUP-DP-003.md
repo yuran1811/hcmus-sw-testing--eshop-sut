@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống từ chối vì thiếu `code` bắt buộc.
+Hệ thống từ chối request vì thiếu `code` bắt buộc và không tạo coupon. Ghi nhận mã trạng thái thực tế.
 
 ## Status / Related bugs
 

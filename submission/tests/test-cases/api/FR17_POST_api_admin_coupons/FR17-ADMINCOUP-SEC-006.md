@@ -35,7 +35,7 @@ Coupon API / API Testing / Security / SEC-03
 
 ## Expected result
 
-403 Forbidden. Body không được nâng quyền cho user thường.
+Body không được nâng quyền cho user thường; request không tạo coupon nếu JWT không có role admin. Ghi nhận mã trạng thái thực tế.
 
 ## Status / Related bugs
 

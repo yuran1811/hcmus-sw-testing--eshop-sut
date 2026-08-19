@@ -35,7 +35,7 @@ Coupon API / API Testing / Schema Validation
 
 ## Expected result
 
-Status 201 hoặc 200. Response JSON có thông báo hoặc object coupon; nếu trả object thì các field có đúng kiểu dữ liệu.
+Response thành công phải được parse theo content type thực tế và không lộ dữ liệu nhạy cảm. Status, field bắt buộc, kiểu dữ liệu và extra-field policy cần được bổ sung vào API specification trước khi kiểm tra exact schema.
 
 ## Status / Related bugs
 

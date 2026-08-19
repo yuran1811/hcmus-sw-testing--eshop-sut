@@ -35,7 +35,7 @@ Coupon API / API Testing / Security / SEC-02
 
 ## Expected result
 
-401 Unauthorized. Không tạo coupon.
+Không có JWT hợp lệ thì không được tạo coupon. Ghi nhận mã trạng thái thực tế vì spec chưa chốt exact status.
 
 ## Status / Related bugs
 

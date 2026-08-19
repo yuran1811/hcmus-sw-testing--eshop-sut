@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. `min_order_amount` phải >= 0.
+Hệ thống không tạo coupon với `min_order_amount` âm vì field này phải `>= 0`. Ghi nhận mã trạng thái thực tế.
 
 ## Status / Related bugs
 

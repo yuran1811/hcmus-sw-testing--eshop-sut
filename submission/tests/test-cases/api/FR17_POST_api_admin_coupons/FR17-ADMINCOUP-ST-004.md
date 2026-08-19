@@ -35,7 +35,7 @@ Coupon API / API Testing / State Transition
 
 ## Expected result
 
-400 Bad Request. Không có coupon `PARTIALBAD` được tạo trong danh sách sau request.
+Request invalid không tạo coupon `PARTIALBAD` hoặc dữ liệu một phần. Ghi nhận status thực tế vì spec chưa chốt mã lỗi và atomicity cho request đơn.
 
 ## Status / Related bugs
 

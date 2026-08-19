@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. `type` chỉ được là `percent` hoặc `fixed`.
+Hệ thống không tạo coupon với `type` ngoài enum; chỉ chấp nhận `percent` hoặc `fixed`. Ghi nhận mã trạng thái thực tế.
 
 ## Status / Related bugs
 

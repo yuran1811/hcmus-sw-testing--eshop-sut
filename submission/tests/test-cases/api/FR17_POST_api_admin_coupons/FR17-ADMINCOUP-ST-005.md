@@ -35,7 +35,7 @@ Coupon API / API Testing / State Transition
 
 ## Expected result
 
-Nếu xóa là hard delete thì tạo lại được; nếu soft delete giữ unique code thì trả lỗi rõ ràng. Không được tạo dữ liệu trùng mơ hồ.
+Ghi nhận behavior sau khi xóa và tạo lại cùng code. Không được tạo hai bản ghi active trùng code; hard-delete/soft-delete và khả năng tái sử dụng code cần được đặc tả trước khi kết luận pass/fail cụ thể.
 
 ## Status / Related bugs
 

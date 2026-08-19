@@ -35,7 +35,7 @@ Coupon API / API Testing / Security / SEC-03
 
 ## Expected result
 
-403 Forbidden. API admin phải kiểm tra `role = admin`, không chỉ kiểm tra token tồn tại.
+User không có `role = admin` thì không được tạo coupon; API phải kiểm tra quyền chứ không chỉ token tồn tại. Ghi nhận mã trạng thái thực tế.
 
 ## Status / Related bugs
 

@@ -35,7 +35,7 @@ Coupon API / API Testing / Security / SEC-04
 
 ## Expected result
 
-400 Bad Request hoặc dữ liệu được escape an toàn khi hiển thị; Web Admin không thực thi script.
+API không thực thi payload và không lỗi 5xx. Việc escape khi hiển thị phải được kiểm tra thêm ở Web Admin; không ép API create trả 400 nếu spec chưa quy định.
 
 ## Status / Related bugs
 

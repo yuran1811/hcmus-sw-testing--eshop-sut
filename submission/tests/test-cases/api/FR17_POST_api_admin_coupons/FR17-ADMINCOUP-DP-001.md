@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-201 Created hoặc 200 OK. Coupon mới được tạo với đúng các trường bắt buộc.
+Coupon được tạo với đúng các trường bắt buộc và không tạo bản ghi ngoài ý muốn. Ghi nhận status code thực tế vì API specification chưa chốt mã thành công.
 
 ## Status / Related bugs
 

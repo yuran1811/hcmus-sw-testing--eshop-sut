@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request nếu enum phân biệt hoa/thường; không được tự tạo type không chuẩn.
+Không được tạo coupon với type ngoài hai giá trị được đặc tả là `percent` và `fixed`. Ghi nhận behavior về phân biệt hoa/thường vì spec chưa chốt quy tắc này.
 
 ## Status / Related bugs
 

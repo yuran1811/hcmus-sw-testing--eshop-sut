@@ -35,7 +35,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-400 Bad Request. Hệ thống từ chối code rỗng.
+Code rỗng không tạo coupon hợp lệ hoặc bản ghi ngoài ý muốn. Ghi nhận behavior/status thực tế vì spec chưa quy định rõ code rỗng và trim.
 
 ## Status / Related bugs
 
