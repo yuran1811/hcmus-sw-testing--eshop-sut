@@ -96,7 +96,7 @@
 - [x] Viết `report/CI_CD_Report.md` (config + 2 runs)
 - [x] Screenshot → `cicd/screenshots/run-all-pass.png` / `run-one-fail.png`
 - [x] Links → `cicd/sample-commits.md`
-- [ ] **Git commit:** restore green + docs (`hw06/cicd-restore-and-report`)
+- [x] **Git commit:** restore green + docs (`hw06/cicd-restore-and-report`)
 
 ---
 
