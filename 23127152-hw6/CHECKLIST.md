@@ -77,12 +77,13 @@
 
 ## Phase 4 — Postman & Newman (~1h)
 
-- [ ] Export collection → `postman/EShop-HW06.postman_collection.json`
-- [ ] Export environment → `postman/EShop-HW06.postman_environment.json`
-- [ ] Data-driven runs: CSV/JSON trong `postman/data/`
-- [ ] Newman HTML report → `postman/reports/newman-report.html`
-- [ ] Screenshot pre-request + Newman output → `postman/screenshots/`
-- [ ] Liệt kê Postman features đã dùng trong `README.md`
+- [x] Export collection → `postman/EShop-HW06.postman_collection.json`
+- [x] Export environment → `postman/EShop-HW06.postman_environment.json`
+- [x] Data-driven runs: CSV `postman/data/products-search-data.csv` (8/8 pass)
+- [x] Newman HTML report → `postman/reports/newman-report.html` (+ data-driven HTML)
+- [x] Evidence pre-request + Newman → `postman/screenshots/` (+ `x-student-id-console.html`)
+- [x] Liệt kê Postman features đã dùng trong `README.md`
+- [x] Notes → `postman/PHASE4_NOTES.md`
 - [ ] **Git commit:** `hw06/postman-collection-final`
 
 ---

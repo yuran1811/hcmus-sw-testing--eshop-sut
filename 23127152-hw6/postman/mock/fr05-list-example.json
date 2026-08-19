@@ -1,0 +1,12 @@
+[
+  {
+    "name": "List all products (mock example)",
+    "status": "OK",
+    "code": 200,
+    "header": [
+      { "key": "Content-Type", "value": "application/json; charset=utf-8" },
+      { "key": "X-Student-Id", "value": "23127152" }
+    ],
+    "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"iPhone 15 Pro Max\",\n    \"price\": 30000000,\n    \"description\": \"Điện thoại cao cấp của Apple\",\n    \"imageUrl\": \"https://placehold.co/300x300/png?text=iPhone+15\",\n    \"category_id\": 1\n  }\n]"
+  }
+]

@@ -1,0 +1,659 @@
+newman
+
+EShop HW06 — API Testing (23127152)
+
+❏ Setup
+↳ Register Test User
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 15ms]
+
+↳ Login User (save token)
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/login [200 OK, 644B, 2ms]
+
+↳ Login Admin (save token)
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/login [200 OK, 640B, 1ms]
+
+❏ API1 — FR-05 Products List/Search
+↳ TC-A1-001 List all products
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products [200 OK, 2.14kB, 1ms]
+  ✓  TC-A1-001 status 200
+  ✓  TC-A1-001 JSON array ≥1
+  ✓  TC-A1-031 Content-Type JSON
+  ✓  TC-A1-033 required fields
+  ✓  TC-A1-034/035 types
+  ┌
+  │ 'X-Student-Id=23127152'
+  └
+  ✓  X-Student-Id was sent
+
+↳ TC-A1-002 Search iPhone
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=iPhone [200 OK, 453B, 2ms]
+  ✓  TC-A1-002 status 200
+  ✓  TC-A1-002 all names contain iPhone
+
+↳ TC-A1-004 No match empty array
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=NoSuchProductXYZ [200 OK, 267B, 1ms]
+  ✓  TC-A1-004/037 empty []
+
+↳ TC-A1-005 Empty search equals list-all
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search= [200 OK, 2.14kB, 1ms]
+  ✓  TC-A1-005 200 full list
+
+↳ TC-A1-007 Unicode search Bàn
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=B%C3%A0n [200 OK, 469B, 2ms]
+  ✓  TC-A1-007 200 array
+
+↳ TC-A1-013 Search AirPods Pro encoded
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=AirPods%20Pro [200 OK, 461B, 2ms]
+  ✓  TC-A1-013 match AirPods
+
+↳ TC-A1-015 Extra query foo ignored
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?foo=bar [200 OK, 2.14kB, 2ms]
+  ✓  TC-A1-015 200 array
+
+↳ TC-A1-017 DELETE products no id → 404
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  DELETE http://localhost:3000/api/products [404 Not Found, 458B, 1ms]
+  ✓  TC-A1-017 status 404
+
+↳ TC-A1-018 PUT products no id → 404
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  PUT http://localhost:3000/api/products [404 Not Found, 455B, 1ms]
+  ✓  TC-A1-018 status 404
+
+↳ TC-A1-019 Idempotent second GET
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products [200 OK, 2.14kB, 1ms]
+  ✓  TC-A1-019 same baseline count
+
+↳ TC-A1-021 SEC-05 SQLi OR no dump
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=' OR '1'='1 [200 OK, 2.05kB, 1ms]
+  ✓  TC-A1-021 SEC-05 no tautology dump
+
+↳ TC-A1-023 SEC-05 quote not HTML 500
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=' [500 Internal Server Error, 346B, 1ms]
+  1. TC-A1-023/038 not HTML DB error
+
+↳ TC-A1-E01 Encoded SQLi no dump
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=%27%20OR%20%271%27%3D%271 [200 OK, 2.05kB, 1ms]
+  ✓  TC-A1-E01 encoded SQLi no full dump
+
+↳ TC-A1-E02 Quote Content-Type not HTML
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=%27 [500 Internal Server Error, 346B, 1ms]
+  2. TC-A1-E02/E06 no HTML error page
+
+↳ TC-A1-026 XSS-like search JSON
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=%3Cscript%3Ealert(1)%3C%2Fscript%3E [200 OK, 267B, 1ms]
+  ✓  TC-A1-026 200 JSON array
+
+↳ TC-A1-027 Public no Authorization
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products [200 OK, 2.14kB, 2ms]
+  ✓  TC-A1-027 public 200
+
+↳ TC-A1-029 Malformed Bearer still 200
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products [200 OK, 2.14kB, 1ms]
+  ✓  TC-A1-029 200 not 500
+
+↳ TC-A1-036 Search Samsung schema
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=Samsung [200 OK, 480B, 1ms]
+  ✓  TC-A1-036 schema fields
+
+↳ TC-A1-E05 After DROP probe catalog intact
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=a';DROP TABLE products;-- [200 OK, 480B, 1ms]
+  ✓  TC-A1-E05 interim response ok-ish
+
+↳ TC-A1-E05b List after DROP probe
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products [200 OK, 2.14kB, 0µs]
+  ✓  TC-A1-E05 catalog still ≥1
+
+❏ API2 — FR-11 Order History & Detail
+↳ FR11 Register User A
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 2ms]
+  ✓  register A ok-ish
+
+↳ FR11 Register User B
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/register [200 OK, 317B, 2ms]
+  ✓  register B ok-ish
+
+↳ FR11 Login User A
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/login [200 OK, 643B, 1ms]
+  ✓  login A 200
+
+↳ FR11 Login User B
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/login [200 OK, 643B, 1ms]
+  ✓  login B 200
+
+↳ FR11 Login Admin
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/login [200 OK, 640B, 1ms]
+  ✓  login admin 200
+
+↳ FR11 Checkout A
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/checkout [200 OK, 312B, 2ms]
+  ✓  checkout A
+
+↳ FR11 Checkout B
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/checkout [200 OK, 312B, 1ms]
+  ✓  checkout B
+
+↳ TC-B2-021 my-orders no auth → 401
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/orders/my-orders [401 Unauthorized, 301B, 1ms]
+  ✓  TC-B2-021 401
+  ✓  TC-B2-037/E05 JSON error
+  ┌
+  │ 'X-Student-Id=23127152'
+  └
+  ✓  X-Student-Id
+
+↳ TC-B2-022 my-orders bad JWT → 403
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/orders/my-orders [403 Forbidden, 295B, 1ms]
+  ✓  TC-B2-022 403
+
+↳ TC-B2-001 my-orders with token A
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 804B, 1ms]
+  ✓  TC-B2-001 200 array
+  ✓  TC-B2-031/032 schema
+  ✓  TC-B2-014/028 only own user_id
+  ✓  TC-B2-033 fields
+
+↳ TC-B2-E06 count before checkout
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 804B, 1ms]
+  ✓  captured count
+
+↳ TC-B2-E06 checkout then +1
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/checkout [200 OK, 312B, 2ms]
+  ✓  checkout ok
+
+↳ TC-B2-E06 verify count +1
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 939B, 1ms]
+  ✓  TC-B2-E06 count +1
+  ✓  TC-B2-015 pending present
+
+↳ TC-B2-003 detail own order OA
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/orders/6 [200 OK, 400B, 1ms]
+  ✓  TC-B2-003 200 object
+  ✓  TC-B2-034/035 schema types
+  ✓  TC-B2-010 shipping_address
+  ✓  TC-B2-011 status enum
+
+↳ TC-B2-004 detail missing → 404
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/orders/999999 [404 Not Found, 301B, 0µs]
+  ✓  TC-B2-004/036 404 JSON
+
+↳ TC-B2-025 IDOR unauth detail OB deny
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/orders/7 [200 OK, 399B, 1ms]
+  3. TC-B2-025 IDOR deny (401/403/404)
+
+↳ TC-B2-E01 PII not leaked unauth
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/orders/7 [200 OK, 399B, 2ms]
+  4. TC-B2-E01 no Addr B Secret on unauth success
+
+↳ TC-B2-026 IDOR A reads OB deny
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/orders/7 [200 OK, 399B, 1ms]
+  5. TC-B2-026/E02 A cannot read B order
+
+↳ TC-B2-E03 admin detail OB ownership
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/orders/7 [200 OK, 399B, 1ms]
+  6. TC-B2-E03 admin on user detail API should not silently expose (expect deny OR flagged)
+
+↳ TC-B2-E04 owner A reads OA OK
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/orders/6 [200 OK, 400B, 1ms]
+  ✓  TC-B2-E04 owner can read
+
+↳ TC-B2-E04 stranger B reads OA deny
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/orders/6 [200 OK, 400B, 1ms]
+  7. TC-B2-E04 stranger deny
+
+↳ TC-B2-007 non-numeric id
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/orders/abc [404 Not Found, 301B, 1ms]
+  ✓  TC-B2-007 404
+
+↳ TC-B2-030 SQLi-like id
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/orders/1%20OR%201=1 [404 Not Found, 301B, 1ms]
+  ✓  TC-B2-030 no 500
+
+↳ TC-B2-039 POST my-orders → 404
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/orders/my-orders [404 Not Found, 464B, 1ms]
+  ✓  TC-B2-039 404
+
+↳ TC-B2-040 PUT detail → 404
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  PUT http://localhost:3000/api/orders/6 [404 Not Found, 455B, 1ms]
+  ✓  TC-B2-040 404
+
+↳ TC-B2-020 idempotent my-orders
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/orders/my-orders [200 OK, 939B, 1ms]
+  ✓  TC-B2-020 stable
+
+❏ API3 — FR-15 Product CRUD (Admin)
+↳ FR15 Login Admin
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/login [200 OK, 640B, 2ms]
+  ✓  admin login
+
+↳ FR15 Login User
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/login [200 OK, 643B, 1ms]
+  ✓  user login
+
+↳ TC-C3-024/E01 POST no auth → 401
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/products [200 OK, 304B, 2ms]
+  8. TC-C3-024/E01 expect 401
+  ┌
+  │ 'X-Student-Id=23127152'
+  └
+  ✓  X-Student-Id
+
+↳ TC-C3-027/E02 POST user token → 403
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/products [200 OK, 304B, 2ms]
+  9. TC-C3-027/E02 expect 403
+
+↳ TC-C3-030 POST bad JWT → 403
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/products [200 OK, 304B, 1ms]
+ 10. TC-C3-030 expect 403
+
+↳ TC-C3-001/031/032/035/037 Create admin OK
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/products [200 OK, 304B, 2ms]
+  ✓  TC-C3-001 status 200
+  ✓  TC-C3-032/037 schema
+  ✓  TC-C3-035 JSON CT
+
+↳ TC-C3-019 Create then search
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products [200 OK, 2.64kB, 1ms]
+  ✓  TC-C3-019 list contains new id
+
+↳ TC-C3-012/033 Update admin
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  PUT http://localhost:3000/api/products/18 [200 OK, 296B, 1ms]
+  ✓  TC-C3-012/033 200 message
+
+↳ TC-C3-020 Update reflected on GET detail
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products/18 [200 OK, 396B, 1ms]
+  ✓  TC-C3-020 name updated
+
+↳ TC-C3-025/E04 PUT no auth → 401
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  PUT http://localhost:3000/api/products/18 [200 OK, 296B, 2ms]
+ 11. TC-C3-025/E04 expect 401
+
+↳ TC-C3-028 PUT user → 403
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  PUT http://localhost:3000/api/products/18 [200 OK, 296B, 2ms]
+ 12. TC-C3-028 expect 403
+
+↳ TC-C3-005 Create neg price (admin)
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/products [200 OK, 304B, 1ms]
+ 13. TC-C3-005 expect 400 (validation)
+
+↳ TC-C3-038 Empty body
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/products [200 OK, 304B, 2ms]
+ 14. TC-C3-038 expect 400
+
+↳ TC-C3-040 PATCH → 404
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  PATCH http://localhost:3000/api/products [404 Not Found, 457B, 1ms]
+  ✓  TC-C3-040 404
+
+↳ TC-C3-026/E03 DELETE no auth → 401
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  DELETE http://localhost:3000/api/products/18 [200 OK, 296B, 2ms]
+ 15. TC-C3-026/E03 expect 401
+
+↳ TC-C3-029 DELETE user → 403
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  DELETE http://localhost:3000/api/products/18 [200 OK, 296B, 1ms]
+ 16. TC-C3-029 expect 403
+
+↳ TC-C3-015/034 Delete admin OK
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  DELETE http://localhost:3000/api/products/18 [200 OK, 296B, 1ms]
+  ✓  TC-C3-015/034 200 message
+
+↳ TC-C3-021 After delete absent from list
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products [200 OK, 2.71kB, 1ms]
+  ✓  TC-C3-021 id absent
+
+↳ TC-C3-E06 GET detail after delete
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products/18 [200 OK, 267B, 1ms]
+  ✓  TC-C3-E06 not a normal product object (prefer 404)
+
+↳ TC-C3-E05 Impact: unauth create must not succeed
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  POST http://localhost:3000/api/products [200 OK, 304B, 2ms]
+ 17. TC-C3-E05 unauth create blocked
+
+↳ TC-C3-016 Delete missing id
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  DELETE http://localhost:3000/api/products/999999 [200 OK, 296B, 1ms]
+ 18. TC-C3-016 prefer 404
+
+↳ TC-C3-017 Delete abc
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  DELETE http://localhost:3000/api/products/abc [200 OK, 296B, 1ms]
+ 19. TC-C3-017 404
+
+❏ Data-Driven — FR-05 Search
+↳ DD Search products (CSV row)
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=iPhone [200 OK, 453B, 1ms]
+  ✓  DD status matches CSV
+  ✓  DD body is JSON array
+  ✓  DD min_count
+  ┌
+  │ '[DD] X-Student-Id=23127152 search=undefined'
+  └
+  ✓  X-Student-Id present
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │              72 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │              71 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │              72 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │              90 │              19 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 856ms                                   │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 30.54kB (approx)                       │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 1ms [min: 1ms, max: 15ms, s.d.: 1ms] │
+└─────────────────────────────────────────────────────────────┘
+
+   #  failure         detail                                                                                        
+                                                                                                                    
+ 01.  AssertionError  TC-A1-023/038 not HTML DB error                                                               
+                      expected 500 to not deeply equal 500                                                          
+                      at assertion:0 in test-script                                                                 
+                      inside "API1 — FR-05 Products List/Search / TC-A1-023 SEC-05 quote not HTML 500"              
+                                                                                                                    
+ 02.  AssertionError  TC-A1-E02/E06 no HTML error page                                                              
+                      must not return HTML 500 SQLITE error: expected true to be false                              
+                      at assertion:0 in test-script                                                                 
+                      inside "API1 — FR-05 Products List/Search / TC-A1-E02 Quote Content-Type not HTML"            
+                                                                                                                    
+ 03.  AssertionError  TC-B2-025 IDOR deny (401/403/404)                                                             
+                      expected [ 401, 403, 404 ] to include 200                                                     
+                      at assertion:0 in test-script                                                                 
+                      inside "API2 — FR-11 Order History & Detail / TC-B2-025 IDOR unauth detail OB deny"           
+                                                                                                                    
+ 04.  AssertionError  TC-B2-E01 no Addr B Secret on unauth success                                                  
+                      PII leak: expected '{"id":7,"user_id":5,"total_amount":20…' to not include 'Addr B Secret'    
+                      at assertion:0 in test-script                                                                 
+                      inside "API2 — FR-11 Order History & Detail / TC-B2-E01 PII not leaked unauth"                
+                                                                                                                    
+ 05.  AssertionError  TC-B2-026/E02 A cannot read B order                                                           
+                      expected [ 401, 403, 404 ] to include 200                                                     
+                      at assertion:0 in test-script                                                                 
+                      inside "API2 — FR-11 Order History & Detail / TC-B2-026 IDOR A reads OB deny"                 
+                                                                                                                    
+ 06.  AssertionError  TC-B2-E03 admin on user detail API should not silently expose (expect deny OR flagged)        
+                      expected [ 401, 403, 404 ] to include 200                                                     
+                      at assertion:0 in test-script                                                                 
+                      inside "API2 — FR-11 Order History & Detail / TC-B2-E03 admin detail OB ownership"            
+                                                                                                                    
+ 07.  AssertionError  TC-B2-E04 stranger deny                                                                       
+                      expected [ 401, 403, 404 ] to include 200                                                     
+                      at assertion:0 in test-script                                                                 
+                      inside "API2 — FR-11 Order History & Detail / TC-B2-E04 stranger B reads OA deny"             
+                                                                                                                    
+ 08.  AssertionError  TC-C3-024/E01 expect 401                                                                      
+                      expected response to have status code 401 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-024/E01 POST no auth → 401"                 
+                                                                                                                    
+ 09.  AssertionError  TC-C3-027/E02 expect 403                                                                      
+                      expected response to have status code 403 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-027/E02 POST user token → 403"              
+                                                                                                                    
+ 10.  AssertionError  TC-C3-030 expect 403                                                                          
+                      expected response to have status code 403 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-030 POST bad JWT → 403"                     
+                                                                                                                    
+ 11.  AssertionError  TC-C3-025/E04 expect 401                                                                      
+                      expected response to have status code 401 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-025/E04 PUT no auth → 401"                  
+                                                                                                                    
+ 12.  AssertionError  TC-C3-028 expect 403                                                                          
+                      expected response to have status code 403 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-028 PUT user → 403"                         
+                                                                                                                    
+ 13.  AssertionError  TC-C3-005 expect 400 (validation)                                                             
+                      expected response to have status code 400 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-005 Create neg price (admin)"               
+                                                                                                                    
+ 14.  AssertionError  TC-C3-038 expect 400                                                                          
+                      expected response to have status code 400 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-038 Empty body"                             
+                                                                                                                    
+ 15.  AssertionError  TC-C3-026/E03 expect 401                                                                      
+                      expected response to have status code 401 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-026/E03 DELETE no auth → 401"               
+                                                                                                                    
+ 16.  AssertionError  TC-C3-029 expect 403                                                                          
+                      expected response to have status code 403 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-029 DELETE user → 403"                      
+                                                                                                                    
+ 17.  AssertionError  TC-C3-E05 unauth create blocked                                                               
+                      expected response to have status code 401 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-E05 Impact: unauth create must not succeed" 
+                                                                                                                    
+ 18.  AssertionError  TC-C3-016 prefer 404                                                                          
+                      expected response to have status code 404 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-016 Delete missing id"                      
+                                                                                                                    
+ 19.  AssertionError  TC-C3-017 404                                                                                 
+                      expected response to have status code 404 but got 200                                         
+                      at assertion:0 in test-script                                                                 
+                      inside "API3 — FR-15 Product CRUD (Admin) / TC-C3-017 Delete abc"                             

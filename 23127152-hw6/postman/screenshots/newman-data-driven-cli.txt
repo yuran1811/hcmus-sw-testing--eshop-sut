@@ -1,0 +1,144 @@
+newman
+
+EShop HW06 — API Testing (23127152)
+
+Iteration 1/8
+
+❏ Data-Driven — FR-05 Search
+↳ DD Search products (CSV row)
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search= [200 OK, 2.14kB, 13ms]
+  ✓  DD status matches CSV
+  ✓  DD body is JSON array
+  ✓  DD min_count
+  ┌
+  │ '[DD] X-Student-Id=23127152 search='
+  └
+  ✓  X-Student-Id present
+
+Iteration 2/8
+
+↳ DD Search products (CSV row)
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=iPhone [200 OK, 453B, 2ms]
+  ✓  DD status matches CSV
+  ✓  DD body is JSON array
+  ✓  DD min_count
+  ┌
+  │ '[DD] X-Student-Id=23127152 search=iPhone'
+  └
+  ✓  X-Student-Id present
+
+Iteration 3/8
+
+↳ DD Search products (CSV row)
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=Samsung [200 OK, 480B, 1ms]
+  ✓  DD status matches CSV
+  ✓  DD body is JSON array
+  ✓  DD min_count
+  ┌
+  │ '[DD] X-Student-Id=23127152 search=Samsung'
+  └
+  ✓  X-Student-Id present
+
+Iteration 4/8
+
+↳ DD Search products (CSV row)
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=NoSuchProductXYZ [200 OK, 267B, 1ms]
+  ✓  DD status matches CSV
+  ✓  DD body is JSON array
+  ✓  DD min_count
+  ┌
+  │ '[DD] X-Student-Id=23127152 search=NoSuchProductXYZ'
+  └
+  ✓  X-Student-Id present
+
+Iteration 5/8
+
+↳ DD Search products (CSV row)
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=MacBook [200 OK, 450B, 4ms]
+  ✓  DD status matches CSV
+  ✓  DD body is JSON array
+  ✓  DD min_count
+  ┌
+  │ '[DD] X-Student-Id=23127152 search=MacBook'
+  └
+  ✓  X-Student-Id present
+
+Iteration 6/8
+
+↳ DD Search products (CSV row)
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=AirPods [200 OK, 461B, 2ms]
+  ✓  DD status matches CSV
+  ✓  DD body is JSON array
+  ✓  DD min_count
+  ┌
+  │ '[DD] X-Student-Id=23127152 search=AirPods'
+  └
+  ✓  X-Student-Id present
+
+Iteration 7/8
+
+↳ DD Search products (CSV row)
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=zzzz-not-a-product [200 OK, 267B, 1ms]
+  ✓  DD status matches CSV
+  ✓  DD body is JSON array
+  ✓  DD min_count
+  ┌
+  │ '[DD] X-Student-Id=23127152 search=zzzz-not-a-product'
+  └
+  ✓  X-Student-Id present
+
+Iteration 8/8
+
+↳ DD Search products (CSV row)
+  ┌
+  │ '[HW06 pre-request] X-Student-Id=23127152'
+  └
+  GET http://localhost:3000/api/products?search=Bàn [200 OK, 469B, 2ms]
+  ✓  DD status matches CSV
+  ✓  DD body is JSON array
+  ✓  DD min_count
+  ┌
+  │ '[DD] X-Student-Id=23127152 search=Bàn'
+  └
+  ✓  X-Student-Id present
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               8 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │               8 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │               8 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │               8 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │              32 │               0 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 151ms                                   │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 2.85kB (approx)                        │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 3ms [min: 1ms, max: 13ms, s.d.: 3ms] │
+└─────────────────────────────────────────────────────────────┘

@@ -92,14 +92,15 @@ Orchestrator: `hw06-api-testing` · Report templates: restored from `hw5/2312715
 
 | Feature | Used | Notes |
 |---------|------|-------|
-| Collections | ☑ | `EShop-HW06.postman_collection.json` |
-| Variables (collection / environment) | ☑ | `baseUrl`, `studentId`, tokens |
-| Environments | ☑ | Local env JSON |
-| Pre-request scripts (`X-Student-Id`) | ☑ | Collection-level; Newman log proves header |
-| Tests / assertions | ☑ | FR-05 folder |
-| Collection Runner + data file | ☐ | CSV prepared (`products-search-data.csv`) |
-| Monitors | ☐ | |
-| Mock servers | ☐ | |
+| Workspaces | ☑ | Import collection + environment into local Postman workspace |
+| Collections | ☑ | `EShop-HW06.postman_collection.json` (Setup, API1–3, Data-Driven) |
+| Variables (collection / environment) | ☑ | `baseUrl`, `studentId`, `search`, tokens, `orderId*`, `productId` |
+| Environments | ☑ | `EShop-HW06.postman_environment.json` |
+| Pre-request scripts (`X-Student-Id`) | ☑ | Collection-level; evidence in `postman/screenshots/` |
+| Tests / assertions | ☑ | All API folders + data-driven |
+| Collection Runner + data file | ☑ | `postman/data/products-search-data.csv` → `newman-report-data-driven.html` |
+| Examples / Mock seed | ☑ | Request examples + `postman/mock/fr05-list-example.json` |
+| Monitors | ☐ | Requires Postman Cloud; scheduled runs deferred to Phase 5 CI/CD |
 
 ---
 

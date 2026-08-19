@@ -1,6 +1,9 @@
-search,expected_status,description
-,200,List all products (no search)
-Laptop,200,Normal keyword search
-' OR 1=1 --,200,SQL injection probe (SEC-05)
-<script>alert(1)</script>,200,XSS-like search string
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,200,Very long search string
+search,expected_status,min_count,description
+,200,1,Empty search treated as list-all (or full list)
+iPhone,200,1,Known substring match
+Samsung,200,1,Samsung product present in seed
+NoSuchProductXYZ,200,0,No match returns empty array
+MacBook,200,1,Laptop name substring
+AirPods,200,1,Accessory match
+zzzz-not-a-product,200,0,Another miss
+Bàn,200,0,Unicode probe (may be 0 or 1 depending on DB)

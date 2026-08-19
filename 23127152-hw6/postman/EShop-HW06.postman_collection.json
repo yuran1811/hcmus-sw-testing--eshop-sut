@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "EShop HW06 — API Testing (23127152)",
-    "description": "HW06 API tests for EShop SUT.\n\nAPIs locked:\n- Pool A FR-05: GET /api/products\n- Pool B FR-11: GET /api/orders/my-orders, GET /api/orders/:id\n- Pool C FR-15: POST/PUT/DELETE /api/products\n\nEvery request includes header X-Student-Id via collection pre-request script.",
+    "description": "HW06 API Testing — EShop SUT (Student 23127152)\n\nLocked APIs:\n- Pool A FR-05: GET /api/products\n- Pool B FR-11: GET /api/orders/my-orders, GET /api/orders/:id\n- Pool C FR-15: POST/PUT/DELETE /api/products\n\nCollection pre-request injects X-Student-Id on every request.\nFolders: Setup, API1, API2, API3, Data-Driven — FR-05 Search.\nMock example responses: see postman/mock/fr05-list-example.json",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "event": [
@@ -10,10 +10,9 @@
       "script": {
         "type": "text/javascript",
         "exec": [
-          "pm.request.headers.upsert({",
-          "    key: 'X-Student-Id',",
-          "    value: pm.environment.get('studentId') || '23127152'",
-          "});"
+          "const sid = pm.environment.get('studentId') || pm.collectionVariables.get('studentId') || '23127152';",
+          "pm.request.headers.upsert({ key: 'X-Student-Id', value: sid });",
+          "console.log('[HW06 pre-request] X-Student-Id=' + sid);"
         ]
       }
     }
@@ -138,6 +137,24 @@
                   "pm.test('X-Student-Id was sent', () => { const h=pm.request.headers.get('X-Student-Id'); pm.expect(h).to.eql('23127152'); console.log('X-Student-Id=' + h); });"
                 ]
               }
+            }
+          ],
+          "response": [
+            {
+              "name": "List all products (mock example)",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "X-Student-Id",
+                  "value": "23127152"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"iPhone 15 Pro Max\",\n    \"price\": 30000000,\n    \"description\": \"Điện thoại cao cấp của Apple\",\n    \"imageUrl\": \"https://placehold.co/300x300/png?text=iPhone+15\",\n    \"category_id\": 1\n  }\n]"
             }
           ]
         },
@@ -2555,6 +2572,75 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Data-Driven — FR-05 Search",
+      "description": "Collection Runner / Newman -d postman/data/products-search-data.csv. Uses {{search}}, {{expected_status}}, {{min_count}}.",
+      "item": [
+        {
+          "name": "DD Search products (CSV row)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?search={{search}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "{{search}}"
+                }
+              ]
+            },
+            "description": "Data-driven iteration over products-search-data.csv"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const expected = Number(pm.iterationData.get('expected_status') || 200);",
+                  "const minCount = Number(pm.iterationData.get('min_count') || 0);",
+                  "pm.test('DD status matches CSV', () => pm.response.to.have.status(expected));",
+                  "pm.test('DD body is JSON array', () => pm.expect(pm.response.json()).to.be.an('array'));",
+                  "pm.test('DD min_count', () => pm.expect(pm.response.json().length).to.be.at.least(minCount));",
+                  "pm.test('X-Student-Id present', () => {",
+                  "  const h = pm.request.headers.get('X-Student-Id');",
+                  "  pm.expect(h).to.eql('23127152');",
+                  "  console.log('[DD] X-Student-Id=' + h + ' search=' + pm.iterationData.get('search'));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "Example — search iPhone",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "X-Student-Id",
+                  "value": "23127152"
+                }
+              ],
+              "body": "[{\"id\":1,\"name\":\"iPhone 15 Pro Max\",\"price\":30000000,\"description\":\"Điện thoại cao cấp của Apple\",\"imageUrl\":\"https://placehold.co/300x300/png?text=iPhone+15\",\"category_id\":1}]"
+            }
+          ]
+        }
+      ]
     }
   ],
   "variable": [
@@ -2565,6 +2651,10 @@
     {
       "key": "studentId",
       "value": "23127152"
+    },
+    {
+      "key": "search",
+      "value": "iPhone"
     }
   ]
 }

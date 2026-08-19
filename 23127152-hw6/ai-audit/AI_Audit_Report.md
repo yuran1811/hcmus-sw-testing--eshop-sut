@@ -238,3 +238,20 @@
 > - Issues: #297 (auth), #298 (validation), #299 (DELETE 200 on missing)
 
 **Human review:** Confirmed unauth create returns 200 with new id.
+
+---
+
+### Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 4 Postman/Newman final
+
+**AI Tool:** Cursor (Cursor Grok 4.5)  
+**Date/Time:** 2026-08-19 22:04 +07
+
+**Prompt:**
+> Using `api-test-execute`: finalize Phase 4 — data-driven CSV run, consolidated `newman-report.html`, header evidence, list Postman features, update scripts/run-newman.sh.
+
+**AI Output:**
+> - Data-driven: 8 iterations, 32 assertions, 0 failed → `newman-report-data-driven.html`
+> - Full collection → `newman-report.html` (failures = known Phase1–3 bugs)
+> - `postman/PHASE4_NOTES.md`, mock example, README feature table updated
+
+**Human review:** Accepted; Monitors deferred to CI/CD Phase 5.
