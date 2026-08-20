@@ -273,3 +273,36 @@
 > - Reports: `report/CI_CD_Report.md`, `cicd/sample-commits.md`, screenshots
 
 **Human review:** Confirmed live Actions conclusions; restored `ciExpectStatus=200`.
+
+---
+
+### Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 6 Agent Skill design
+
+**AI Tool:** Cursor (Cursor Grok 4.5)  
+**Date/Time:** 2026-08-19 23:50 +07
+
+**Prompt:**
+> Using `api-test-generator-design`: refine `agent-skill/pseudocode.md` to match HW06 pipeline (parser → domain/state/security/schema → human audit → extend → Postman/Newman). Keep diagram topology from hand-authored `diagram.mmd` / SVG.
+
+**AI Output:**
+> Updated `23127152-hw6/agent-skill/pseudocode.md` (components table + extended pseudocode). Diagram PNG from student-authored SVG/Mermaid topology (`diagram.png`).
+
+**Human review:** Confirmed human audit gate and ≥5 extend hook remain mandatory on diagram.
+
+---
+
+### Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 7 Reports + Critique
+
+**AI Tool:** Cursor (Cursor Grok 4.5)  
+**Date/Time:** 2026-08-19 23:52 +07
+
+**Prompt:**
+> Using `hw06-main-report` + `ai-critique`: fill main report, AI Critique 200–300 words grounded in extended TC oracles / bugs #300–#305, update README self-assessment, refresh CI/CD screenshot paths, export git-commit-log.
+
+**AI Output:**
+> - `report/23127152_HW06_Report.md`
+> - `ai-audit/AI_Critique.md` (268 words)
+> - README self-assessment + evidence links
+> - `git-commit-log.txt`
+
+**Human review:** Counts cross-checked with Newman notes and Issues #300–#305 (Anhnguyenk835).

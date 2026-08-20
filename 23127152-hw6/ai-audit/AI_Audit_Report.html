@@ -1,0 +1,302 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>ai-audit/AI_Audit_Report</title><style>
+body{font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:900px;margin:24px auto;padding:0 18px;line-height:1.45;font-size:12.5px;color:#111}
+h1{font-size:22px}h2{font-size:16px;border-bottom:1px solid #ddd;padding-bottom:4px;margin-top:22px}h3{font-size:14px}
+code,pre{font-family:ui-monospace,Menlo,monospace;font-size:11px}pre{background:#f6f8fa;padding:10px;overflow:auto;white-space:pre-wrap}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:11px}th,td{border:1px solid #ccc;padding:4px 6px;vertical-align:top}th{background:#f0f0f0}
+a{color:#0969da}blockquote{border-left:3px solid #ddd;margin:8px 0;padding-left:10px;color:#444}
+img{max-width:100%}
+</style></head><body><h1>AI Audit Report — HW06</h1>
+<p><strong>Student ID:</strong> 23127152<br />
+<strong>Declaration:</strong> I use AI tools for the following tasks.</p>
+<p><strong>Công cụ AI:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Skill đã dùng:</strong> <code>hw06-api-testing</code>, <code>api-test-generate</code>, <code>api-test-audit</code>, <code>api-test-extend</code>, <code>api-test-execute</code>, <code>bug-report</code>, <code>ai-audit-report</code><br />
+<strong>Quy tắc audit:</strong> mỗi tương tác AI được ghi <strong>ngay sau</strong> khi xảy ra.<br />
+<strong>Bắt đầu audit:</strong> 2026-08-19</p>
+<hr />
+<h2>Tools Declared</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Version / Model</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cursor</td>
+<td>Cursor Grok 4.5</td>
+<td>Generate / audit assist / Postman suite / bugs</td>
+</tr>
+<tr>
+<td>Postman + Newman</td>
+<td>Newman 6.2.2 · htmlextra</td>
+<td>Execute API tests</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 1.1 Step A Domain</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 21:38 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Using skill <code>api-test-generate</code> Step A only: for FR-05 <code>GET /api/products</code> optional query <code>search</code>, generate domain partition test cases (valid/invalid/boundary/charset/encoding). Spec excerpt from <code>api_specification.md</code> §3.1. Output rows for <code>generated.md</code> template. Do not generate security or schema yet.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<p>See <code>23127152-hw6/test-cases/API1_PoolA/generated.md</code> rows TC-A1-001…016 (and robustness 017–018 drafted with domain misuse) — AI-assisted generation under Step A, then merged into final file.</p>
+</blockquote>
+<p><strong>Human review:</strong> Kept partitions; clarified empty <code>search=</code> expectation as “document actual”.</p>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 1.1 Step B State</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 21:38 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Step B only: state transitions for <code>GET /api/products</code>. If N/A for read-only list, say so and propose compensating idempotent-read cases instead of inventing a fake state machine.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<p>N/A for FR-10-style machine. Compensating cases TC-A1-019, TC-A1-020 (idempotent GET / search does not mutate). Recorded in <code>generated.md</code>.</p>
+</blockquote>
+<p><strong>Human review:</strong> Accepted N/A + two compensating cases.</p>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 1.1 Step C Security</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 21:39 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Step C only: map SEC-01…07 to concrete HTTP tests for public <code>GET /api/products</code>. Emphasize SEC-05 SQLi on <code>search</code>. Include payloads and expected secure behavior (parameterized query), not implementation bugs as expected.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<p>TC-A1-021…030 in <code>generated.md</code> (SQLi variants, public auth probes, LIKE <code>%</code>).</p>
+</blockquote>
+<p><strong>Human review:</strong> Expected results written against SEC-05 (no dump / no HTML 500), not against current buggy SUT.</p>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 1.1 Step D Schema</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 21:39 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Step D only: schema validation cases for list/search responses — Content-Type, array root, required fields/types, empty array, error must not be raw HTML.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<p>TC-A1-031…040 in <code>generated.md</code>.</p>
+</blockquote>
+<p><strong>Human review:</strong> Accepted; total 40 ≥ 35.</p>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 1.2 Audit</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 21:40 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Using skill <code>api-test-audit</code>: label every TC in <code>API1_PoolA/generated.md</code> VALID/INVALID/INCOMPLETE with reasoning and corrections. Human owns final labels. Spec-first; do not treat buggy implementation as expected for SEC-05.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<p>See <code>23127152-hw6/test-cases/API1_PoolA/audit.md</code> — draft labels assisted by AI, confirmed by human (32 VALID / 3 INVALID / 5 INCOMPLETE).</p>
+</blockquote>
+<p><strong>Human review:</strong> Adjusted TC-A1-017 rewrite to DELETE without id; pinned empty-search behavior.</p>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 1.3 Extend</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 21:41 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Using skill <code>api-test-extend</code>: propose gaps AI missed for FR-05 after audit, focus security/encoding. I will keep ≥5 human-chosen rows only.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<p>Candidate gaps (encoding, Content-Type on error, row-count oracle, sequenced DROP). Human selected TC-A1-E01…E06 in <code>extended.md</code>.</p>
+</blockquote>
+<p><strong>Human review:</strong> Kept 6 extended TCs with taxonomy codes.</p>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 1.4 Execute</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 21:40 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Using skill <code>api-test-execute</code>: implement FR-05 Postman folder with assertions mapped to audited/extended TCs, ensure <code>X-Student-Id: 23127152</code>, run Newman + htmlextra against localhost:3000.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<p>Artifacts:<br />
+- <code>postman/EShop-HW06.postman_collection.json</code> (20 FR-05 requests)<br />
+- <code>postman/reports/newman-api1-fr05.html</code><br />
+- <code>postman/screenshots/newman-api1-fr05-cli.txt</code> (includes <code>X-Student-Id=23127152</code>)<br />
+- <code>test-cases/API1_PoolA/execution-notes.md</code></p>
+<p>Result: 20 requests, 26 assertions, <strong>4 failed</strong> (SEC-05 bugs).</p>
+</blockquote>
+<p><strong>Human review:</strong> Failures accepted as genuine SEC-05 defects → bug reports.</p>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 1.5 Bugs</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 21:42 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Using skill <code>bug-report</code> + HW5 template: file BUG-PRODUCTS-001 (SQLi dump) and BUG-PRODUCTS-002 (HTML 500) with evidence; open GitHub Issues.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<p>Local MD: <code>bug-reports/BUG-PRODUCTS-001.md</code>, <code>BUG-PRODUCTS-002.md</code><br />
+Issues: https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/300 · https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/301 (Anhnguyenk835)</p>
+</blockquote>
+<p><strong>Human review:</strong> Confirmed evidence paths and issue links.</p>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 2.1 Generate FR-11</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 21:47 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Using <code>api-test-generate</code> Steps A–D separately for FR-11: <code>GET /api/orders/my-orders</code> (JWT) and <code>GET /api/orders/:id</code> (no auth per selection). Cover domain, compensating state (status visibility), SEC-02 + IDOR, schema. ≥35 TCs → <code>API2_PoolB/generated.md</code>.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<p>See <code>23127152-hw6/test-cases/API2_PoolB/generated.md</code> (40 TCs TC-B2-001…040).</p>
+</blockquote>
+<p><strong>Human review:</strong> Kept; IDOR expected = deny despite public detail surface.</p>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 2.2 Audit</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 21:48 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Using <code>api-test-audit</code>: label all FR-11 generated TCs VALID/INVALID/INCOMPLETE; human owns labels.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<p><code>API2_PoolB/audit.md</code> — 34 VALID / 2 INVALID / 4 INCOMPLETE.</p>
+</blockquote>
+<p><strong>Human review:</strong> Confirmed.</p>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 2.3 Extend</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 21:48 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Using <code>api-test-extend</code>: gaps for FR-11 IDOR/PII; human selects ≥5.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<p>Candidates; human kept TC-B2-E01…E06 in <code>extended.md</code>.</p>
+</blockquote>
+<p><strong>Human review:</strong> Accepted 6 extended TCs.</p>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 2.4–2.5 Execute + Bugs</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 21:50 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Using <code>api-test-execute</code> + <code>bug-report</code>: implement FR-11 Postman folder (setup A/B orders + assertions), Newman run, file IDOR bug + GitHub Issue.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<ul>
+<li><code>postman/reports/newman-api2-fr11.html</code> — 26 requests, 35 assertions, 5 failed (all IDOR)</li>
+<li><code>bug-reports/BUG-ORDERS-001.md</code></li>
+<li>Issue: https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/302 (Anhnguyenk835)</li>
+</ul>
+</blockquote>
+<p><strong>Human review:</strong> Confirmed PII leak <code>Addr B Secret</code> in unauth response.</p>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 3.1–3.3 Generate/Audit/Extend FR-15</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 21:52 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Using <code>api-test-generate</code> A–D then <code>api-test-audit</code> then <code>api-test-extend</code> for FR-15 POST/PUT/DELETE <code>/api/products</code> (admin). Spec requires JWT+admin; emphasize SEC-02/SEC-03.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<ul>
+<li><code>API3_PoolC/generated.md</code> (40 TCs)</li>
+<li><code>audit.md</code> (33 VALID / 3 INVALID / 4 INCOMPLETE)</li>
+<li><code>extended.md</code> (TC-C3-E01…E06)</li>
+</ul>
+</blockquote>
+<p><strong>Human review:</strong> Security expected = 401/403 per spec, not current unauthenticated success.</p>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 3.4–3.5 Execute + Bugs</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 21:54 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Using <code>api-test-execute</code> + <code>bug-report</code>: Newman FR-15 suite; file SEC-02/03 + validation + DELETE semantics bugs and GitHub Issues.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<ul>
+<li><code>newman-api3-fr15.html</code> — 22 req, 25 assertions, 12 failed</li>
+<li>Issues: #303 (auth), #304 (validation), #305 (DELETE 200 on missing) — Anhnguyenk835</li>
+</ul>
+</blockquote>
+<p><strong>Human review:</strong> Confirmed unauth create returns 200 with new id.</p>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 4 Postman/Newman final</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 22:04 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Using <code>api-test-execute</code>: finalize Phase 4 — data-driven CSV run, consolidated <code>newman-report.html</code>, header evidence, list Postman features, update scripts/run-newman.sh.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<ul>
+<li>Data-driven: 8 iterations, 32 assertions, 0 failed → <code>newman-report-data-driven.html</code></li>
+<li>Full collection → <code>newman-report.html</code> (failures = known Phase1–3 bugs)</li>
+<li><code>postman/PHASE4_NOTES.md</code>, mock example, README feature table updated</li>
+</ul>
+</blockquote>
+<p><strong>Human review:</strong> Accepted; Monitors deferred to CI/CD Phase 5.</p>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 5 CI/CD</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 22:16 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Using <code>api-test-cicd</code>: add GitHub Actions Newman workflow, CI Smoke folder, push pass + intentional fail sample runs, document with screenshots/links.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<ul>
+<li>Workflow: <code>.github/workflows/hw06-api-tests.yml</code></li>
+<li>Pass: commit <code>8b44b66</code> → Actions run 32269053058 (success)</li>
+<li>Fail: commit <code>2fe51ee</code> → Actions run 32269286455 (failure, CI-01 expect 201)</li>
+<li>Reports: <code>report/CI_CD_Report.md</code>, <code>cicd/sample-commits.md</code>, screenshots</li>
+</ul>
+</blockquote>
+<p><strong>Human review:</strong> Confirmed live Actions conclusions; restored <code>ciExpectStatus=200</code>.</p>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 6 Agent Skill design</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 23:50 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Using <code>api-test-generator-design</code>: refine <code>agent-skill/pseudocode.md</code> to match HW06 pipeline (parser → domain/state/security/schema → human audit → extend → Postman/Newman). Keep diagram topology from hand-authored <code>diagram.mmd</code> / SVG.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<p>Updated <code>23127152-hw6/agent-skill/pseudocode.md</code> (components table + extended pseudocode). Diagram PNG from student-authored SVG/Mermaid topology (<code>diagram.png</code>).</p>
+</blockquote>
+<p><strong>Human review:</strong> Confirmed human audit gate and ≥5 extend hook remain mandatory on diagram.</p>
+<hr />
+<h3>Session — Cursor (Grok 4.5) — 2026-08-19 — Phase 7 Reports + Critique</h3>
+<p><strong>AI Tool:</strong> Cursor (Cursor Grok 4.5)<br />
+<strong>Date/Time:</strong> 2026-08-19 23:52 +07</p>
+<p><strong>Prompt:</strong></p>
+<blockquote>
+<p>Using <code>hw06-main-report</code> + <code>ai-critique</code>: fill main report, AI Critique 200–300 words grounded in extended TC oracles / bugs #300–#305, update README self-assessment, refresh CI/CD screenshot paths, export git-commit-log.</p>
+</blockquote>
+<p><strong>AI Output:</strong></p>
+<blockquote>
+<ul>
+<li><code>report/23127152_HW06_Report.md</code></li>
+<li><code>ai-audit/AI_Critique.md</code> (268 words)</li>
+<li>README self-assessment + evidence links</li>
+<li><code>git-commit-log.txt</code></li>
+</ul>
+</blockquote>
+<p><strong>Human review:</strong> Counts cross-checked with Newman notes and Issues #300–#305 (Anhnguyenk835).</p></body></html>

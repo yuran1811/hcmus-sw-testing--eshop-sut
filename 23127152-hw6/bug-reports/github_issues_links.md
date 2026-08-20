@@ -6,14 +6,14 @@
 
 | Bug ID | Title | Severity | GitHub Issue | Screenshot / evidence |
 |--------|-------|----------|--------------|------------------------|
-| BUG-PRODUCTS-001 | SQLi search dumps full catalog | Critical | [#300](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/300) | `screenshots/BUG-PRODUCTS-001-sqli.json` |
-| BUG-PRODUCTS-002 | Search quote → HTML 500 DB error | Major | [#301](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/301) | `screenshots/BUG-PRODUCTS-002-body.html` |
-| BUG-ORDERS-001 | IDOR on GET /api/orders/:id (PII leak) | Critical | [#302](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/302) | `screenshots/BUG-ORDERS-001-idor.json` |
-| BUG-ADMINPROD-001 | Product CRUD missing JWT/admin checks | Critical | [#303](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/303) | `screenshots/BUG-ADMINPROD-001-unauth-create.json` |
-| BUG-ADMINPROD-002 | Create accepts neg price / empty body | Major | [#304](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/304) | Newman TC-C3-005/038 |
-| BUG-ADMINPROD-003 | DELETE missing id returns 200 | Minor | [#305](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/305) | `screenshots/BUG-ADMINPROD-003-delete-missing.txt` |
+| BUG-PRODUCTS-001 | SQLi search dumps full catalog | Critical | [#300](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/300) | `screenshots/BUG-PRODUCTS-001-sqli.json` · `issue-300-BUG-PRODUCTS-001.png` |
+| BUG-PRODUCTS-002 | Search quote → HTML 500 DB error | Major | [#301](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/301) | `screenshots/BUG-PRODUCTS-002-body.html` · `issue-301-BUG-PRODUCTS-002.png` |
+| BUG-ORDERS-001 | IDOR on GET /api/orders/:id (PII leak) | Critical | [#302](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/302) | `screenshots/BUG-ORDERS-001-idor.json` · `issue-302-BUG-ORDERS-001.png` |
+| BUG-ADMINPROD-001 | Product CRUD missing JWT/admin checks | Critical | [#303](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/303) | `screenshots/BUG-ADMINPROD-001-unauth-create.json` · `issue-303-BUG-ADMINPROD-001.png` |
+| BUG-ADMINPROD-002 | Create accepts neg price / empty body | Major | [#304](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/304) | Newman TC-C3-005/038 · `issue-304-BUG-ADMINPROD-002.png` |
+| BUG-ADMINPROD-003 | DELETE missing id returns 200 | Minor | [#305](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/305) | `screenshots/BUG-ADMINPROD-003-delete-missing.txt` · `issue-305-BUG-ADMINPROD-003.png` |
 
-> **Note:** #294–#299 were MCP-authored under `thanhngo-beroka` and are superseded by #300–#305. Close #294–#299 as duplicates if desired.
+> **Note:** #294–#299 were MCP-authored under `thanhngo-beroka` and are superseded by #300–#305.
 
 ---
 

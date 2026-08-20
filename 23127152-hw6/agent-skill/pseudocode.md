@@ -1,58 +1,98 @@
 # AI-Driven API Test Generator — Design
 
 **Student ID:** 23127152  
-**Bloom-AI Level:** G9.5 (Create)
+**Bloom-AI Level:** G9.5 (Create)  
+**Diagram tool:** Mermaid (hand-authored `diagram.mmd` → exported PNG) — design decisions by student; not an AI image.
 
-> Diagram phải **tự thiết kế** — không AI-generate. Export PNG vào `diagram.png`.
+> Anti-cheat: diagram is **self-designed**. PNG exported from authored Mermaid source.
 
 ---
 
 ## 1. Overview
 
-<!-- Mô tả: input = API spec, output = test cases + Postman collection -->
+**Input:** `api_specification.md` (+ SEC-01…07 from course README)  
+**Output:** Markdown/Excel test suites + Postman collection + Newman-ready assertions  
+
+Generator mirrors the HW06 human pipeline: domain → state → security → schema → **human audit gate** → manual extend (≥5) → export/execute.
+
+---
 
 ## 2. Architecture Diagram
 
 ![Architecture](diagram.png)
 
-<!-- Optional Mermaid source in diagram.mmd -->
+Source: [`diagram.mmd`](diagram.mmd)
+
+**Data flow (summary):** Spec Parser fans out to four generators → Aggregator → Human Audit (VALID / INVALID→correct / INCOMPLETE→extend) → Final suite → Postman export + Newman + bug reports.
+
+---
 
 ## 3. Components
 
-| Component | Responsibility |
-|-----------|----------------|
-| Spec Parser | Parse `api_specification.md` → structured endpoints |
-| Partition Generator | Domain partitions per parameter |
-| State Machine Analyzer | Extract transitions (FR-10) |
-| Security Test Generator | Map SEC-01–07 to test cases |
-| Schema Validator Generator | Response shape assertions |
-| Human Review Gate | Audit VALID/INVALID/INCOMPLETE |
-| Postman Exporter | Generate collection JSON |
+| Component | Responsibility | Maps to skill |
+|-----------|----------------|---------------|
+| Spec Parser | Parse endpoints, params, auth, response shapes | `api-test-generate` prep |
+| Domain Partition Generator | Valid/invalid/boundary/charset per parameter | Step A |
+| State Machine Analyzer | FR-10-style transitions **or** compensating idempotent cases if N/A | Step B |
+| Security Test Generator | Map SEC-01…07 → concrete HTTP + **oracles** | Step C |
+| Schema Validator Generator | Status, Content-Type, fields/types, error ≠ HTML | Step D |
+| Test Case Aggregator | Merge + IDs (`TC-{pool}-{nnn}`) | — |
+| Human Review Gate | VALID / INVALID / INCOMPLETE | `api-test-audit` |
+| Manual Extension Hook | ≥5 TCs AI missed + taxonomy | `api-test-extend` |
+| Postman Exporter | Collection JSON + env + pre-request `X-Student-Id` | `api-test-execute` |
+| Newman Runner | CLI + htmlextra; CI Smoke subset | `api-test-execute` / `api-test-cicd` |
+
+---
 
 ## 4. Pseudocode
 
 ```
-FUNCTION generate_api_tests(api_spec):
-    endpoints = PARSE(api_spec)
-    test_cases = []
+FUNCTION generate_api_tests(api_spec, sec_requirements):
+    endpoints ← PARSE(api_spec)
+    suite ← []
 
     FOR EACH endpoint IN endpoints:
-        test_cases += GENERATE_DOMAIN_PARTITIONS(endpoint.params)
-        test_cases += GENERATE_SCHEMA_TESTS(endpoint.response)
-        test_cases += GENERATE_SECURITY_TESTS(endpoint, SEC_REQUIREMENTS)
+        suite ← suite + GENERATE_DOMAIN_PARTITIONS(endpoint.params)
+        suite ← suite + GENERATE_SCHEMA_TESTS(endpoint.response_schema)
 
-        IF endpoint HAS state_machine:
-            test_cases += GENERATE_STATE_TRANSITIONS(endpoint.states)
+        IF endpoint.has_state_machine:
+            suite ← suite + GENERATE_STATE_TRANSITIONS(endpoint.states)
+        ELSE:
+            suite ← suite + GENERATE_IDEMPOTENT_READ_CASES(endpoint)
 
-    test_cases = HUMAN_AUDIT(test_cases)  // VALID / INVALID / INCOMPLETE
-    test_cases += MANUAL_EXTEND(test_cases, min_count=5)
+        suite ← suite + GENERATE_SECURITY_TESTS(endpoint, sec_requirements)
+            // each case MUST include observable oracle
+            // (row-count, forbidden field, Content-Type, status 401/403)
 
-    collection = EXPORT_POSTMAN(test_cases)
-    RETURN test_cases, collection
+    labeled ← HUMAN_AUDIT(suite)
+        // VALID | INVALID (correct then re-queue) | INCOMPLETE
+
+    suite ← APPLY_CORRECTIONS(labeled)
+    suite ← suite + MANUAL_EXTEND(suite, min_count=5, focus=security)
+
+    collection ← EXPORT_POSTMAN(suite,
+        pre_request="upsert X-Student-Id from studentId")
+    reports ← RUN_NEWMAN(collection, baseUrl=localhost:3000)
+
+    IF reports.has_spec_vs_sut_failures:
+        FILE_BUG_REPORTS(reports)
+
+    RETURN suite, collection, reports
 ```
 
-## 5. Agent Skill Integration (Optional)
+---
 
-<!-- Mô tả skill file, trigger, demo video link -->
+## 5. Agent Skill Integration
 
-**Demo video:** TBD
+Implemented as repo skills under `.agents/skills/` (orchestrator `hw06-api-testing`):
+
+1. `api-test-generate` — Steps A–D  
+2. `api-test-audit` — human-owned labels  
+3. `api-test-extend` — ≥5 manual + why AI missed  
+4. `api-test-execute` — Postman/Newman + header evidence  
+5. `api-test-cicd` — GitHub Actions CI Smoke  
+6. `api-test-generator-design` — this G9.5 artifact  
+
+**Demo video (optional):** not recorded for this submission.
+
+**Validation on EShop:** used end-to-end for FR-05, FR-11, FR-15 (120 AI + 18 extended TCs, 6 GitHub bugs).

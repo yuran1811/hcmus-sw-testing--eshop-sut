@@ -47,7 +47,7 @@ newman run postman/EShop-HW06.postman_collection.json \
 | Commit message | `hw06/cicd-github-actions` |
 | Pipeline URL | https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/actions/runs/32269053058 |
 | Result | ✅ success — all CI Smoke assertions passed |
-| Screenshot | `cicd/screenshots/run-all-pass.png` (+ `.html` / `-log.txt`) |
+| Screenshot | [`cicd/screenshots/run-all-pass.png`](../cicd/screenshots/run-all-pass.png) (Actions UI) · log: `run-all-pass-log.txt` |
 
 CI Smoke: 4 requests · 9 assertions · 0 failed. Backend booted on Actions runner; Newman talked to real SUT on `127.0.0.1:3000`.
 
@@ -62,7 +62,7 @@ CI Smoke: 4 requests · 9 assertions · 0 failed. Backend booted on Actions runn
 | Pipeline URL | https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/actions/runs/32269286455 |
 | Result | ❌ failure |
 | Failed test | **CI-01 status** — expected **201**, got **200** |
-| Screenshot | `cicd/screenshots/run-one-fail.png` (+ `.html` / `-log.txt`) |
+| Screenshot | [`cicd/screenshots/run-one-fail.png`](../cicd/screenshots/run-one-fail.png) (Actions UI) · log: `run-one-fail-log.txt` |
 
 **Why intentional:** demonstrate a red pipeline by changing only the expected status for CI-01 (`ciExpectStatus=201` / expect 201), not by breaking the SUT. Job still started backend successfully; Newman exit code 1 failed the workflow.
 

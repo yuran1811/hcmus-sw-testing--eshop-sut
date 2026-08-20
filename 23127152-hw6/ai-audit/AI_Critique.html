@@ -1,0 +1,12 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>ai-audit/AI_Critique</title><style>
+body{font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:900px;margin:24px auto;padding:0 18px;line-height:1.45;font-size:12.5px;color:#111}
+h1{font-size:22px}h2{font-size:16px;border-bottom:1px solid #ddd;padding-bottom:4px;margin-top:22px}h3{font-size:14px}
+code,pre{font-family:ui-monospace,Menlo,monospace;font-size:11px}pre{background:#f6f8fa;padding:10px;overflow:auto;white-space:pre-wrap}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:11px}th,td{border:1px solid #ccc;padding:4px 6px;vertical-align:top}th{background:#f0f0f0}
+a{color:#0969da}blockquote{border-left:3px solid #ddd;margin:8px 0;padding-left:10px;color:#444}
+img{max-width:100%}
+</style></head><body><h1>AI Critique — HW06 — 23127152</h1>
+<p>AI sinh bộ FR-05/FR-11/FR-15 khá đầy domain và schema, nhưng sai hoặc thiếu đúng chỗ bài cần: <strong>oracle bảo mật cụ thể</strong>. Với FR-05, Step C chỉ nêu payload SQLi cổ điển và kỳ vọng “không dump catalog”, không viết so sánh số dòng baseline (TC-A1-E03), không encode URL (TC-A1-E01), và không assert <code>Content-Type</code>/<code>&lt;h1&gt;Database Error</code> trên kênh lỗi (TC-A1-E02/E06). Newman sau đó fail đúng vì SUT nối chuỗi SQL — nhưng nếu chỉ tin mô tả định tính của AI thì khó chứng minh bug. Với FR-11, AI nói “không lộ PII” mà không neo vào field <code>shipping_address</code> của nạn nhân; extended TC-B2-E01 mới biến IDOR thành assert đo được và dẫn tới <a href="https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/302">#302</a>. Với FR-15, model viết expected 401/403 theo spec nhưng không nhấn “200 + tạo thành công khi không JWT” như oracle lỗi; phải đọc <code>server.js</code> (không <code>authenticateToken</code>) mới thành BUG-ADMINPROD-001 <a href="https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/303">#303</a>.</p>
+<p>Nguyên nhân chính: prompt dựa spec chung, thiếu nguồn SUT và thiếu yêu cầu “mỗi SEC case phải có oracle quan sát được”; model ưu tiên danh sách payload quen thuộc hơn chuỗi kiểm chứng. Audit AI cũng dễ gắn VALID khi expected còn mơ hồ.</p>
+<p>Bài học: cộng tác AI trong API testing nghĩa là dùng nó để <strong>đề xuất ứng viên TC</strong>, rồi human audit/extend buộc mỗi security claim thành assert so sánh được trước khi chạy Newman. Số fail trên report chỉ đáng tin khi expected đã chốt theo spec, không theo hành vi lỗi hiện tại của SUT.</p>
+<p><strong>Word count:</strong> 271</p></body></html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>report/CI_CD_Report</title><style>
+body{font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:900px;margin:24px auto;padding:0 18px;line-height:1.45;font-size:12.5px;color:#111}
+h1{font-size:22px}h2{font-size:16px;border-bottom:1px solid #ddd;padding-bottom:4px;margin-top:22px}h3{font-size:14px}
+code,pre{font-family:ui-monospace,Menlo,monospace;font-size:11px}pre{background:#f6f8fa;padding:10px;overflow:auto;white-space:pre-wrap}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:11px}th,td{border:1px solid #ccc;padding:4px 6px;vertical-align:top}th{background:#f0f0f0}
+a{color:#0969da}blockquote{border-left:3px solid #ddd;margin:8px 0;padding-left:10px;color:#444}
+img{max-width:100%}
+</style></head><body><h1>CI/CD Report — HW06 API Testing</h1>
+<p><strong>Student ID:</strong> 23127152<br />
+<strong>Pipeline:</strong> GitHub Actions + Newman<br />
+<strong>Date:</strong> 2026-08-19</p>
+<hr />
+<h2>1. Pipeline Configuration</h2>
+<p><strong>Workflow file:</strong> <a href="../../.github/workflows/hw06-api-tests.yml"><code>.github/workflows/hw06-api-tests.yml</code></a></p>
+<p><strong>Trigger:</strong> <code>push</code> / <code>pull_request</code> on <code>hw6/23127152</code> (paths: <code>23127152-hw6/**</code>, <code>backend/**</code>, workflow file) + <code>workflow_dispatch</code>.</p>
+<p><strong>Job steps (summary):</strong></p>
+<ol>
+<li>Checkout repository  </li>
+<li>Setup Node.js 20  </li>
+<li><code>npm install</code> in <code>backend/</code>  </li>
+<li>Start SUT: <code>node server.js</code> in background (<code>127.0.0.1:3000</code>)  </li>
+<li>Wait until <code>GET /api/products</code> succeeds  </li>
+<li>Install <code>newman</code> + <code>newman-reporter-htmlextra</code>  </li>
+<li>Run folder <strong><code>CI Smoke — Must Pass</code></strong> (green happy-path suite; full SEC negative suite stays local/Phase 1–3)  </li>
+<li>Upload HTML artifact <code>newman-ci-smoke-report</code>  </li>
+<li>Every request still carries <code>X-Student-Id: 23127152</code> via collection pre-request  </li>
+</ol>
+<pre><code class="language-yaml"># Key Newman invocation (from workflow)
+newman run postman/EShop-HW06.postman_collection.json \
+  -e postman/EShop-HW06.postman_environment.json \
+  --folder &quot;CI Smoke — Must Pass&quot; \
+  --env-var &quot;baseUrl=http://127.0.0.1:3000&quot; \
+  --env-var &quot;studentId=23127152&quot; \
+  -r cli,htmlextra \
+  --reporter-htmlextra-export postman/reports/newman-ci-smoke.html
+</code></pre>
+<p><code>ciExpectStatus</code> is read from the Postman environment (default <strong>200</strong>). The intentional-fail sample set it to <strong>201</strong> so CI-01 expects the wrong status.</p>
+<hr />
+<h2>2. Sample Run — All Passing</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commit SHA</td>
+<td><code>8b44b66</code></td>
+</tr>
+<tr>
+<td>Commit message</td>
+<td><code>hw06/cicd-github-actions</code></td>
+</tr>
+<tr>
+<td>Pipeline URL</td>
+<td>https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/actions/runs/32269053058</td>
+</tr>
+<tr>
+<td>Result</td>
+<td>✅ success — all CI Smoke assertions passed</td>
+</tr>
+<tr>
+<td>Screenshot</td>
+<td><a href="../cicd/screenshots/run-all-pass.png"><code>cicd/screenshots/run-all-pass.png</code></a> (Actions UI) · log: <code>run-all-pass-log.txt</code></td>
+</tr>
+</tbody>
+</table>
+<p>CI Smoke: 4 requests · 9 assertions · 0 failed. Backend booted on Actions runner; Newman talked to real SUT on <code>127.0.0.1:3000</code>.</p>
+<hr />
+<h2>3. Sample Run — One Test Failing</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commit SHA</td>
+<td><code>2fe51ee</code></td>
+</tr>
+<tr>
+<td>Commit message</td>
+<td><code>hw06/cicd-intentional-fail-v2</code></td>
+</tr>
+<tr>
+<td>Pipeline URL</td>
+<td>https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/actions/runs/32269286455</td>
+</tr>
+<tr>
+<td>Result</td>
+<td>❌ failure</td>
+</tr>
+<tr>
+<td>Failed test</td>
+<td><strong>CI-01 status</strong> — expected <strong>201</strong>, got <strong>200</strong></td>
+</tr>
+<tr>
+<td>Screenshot</td>
+<td><a href="../cicd/screenshots/run-one-fail.png"><code>cicd/screenshots/run-one-fail.png</code></a> (Actions UI) · log: <code>run-one-fail-log.txt</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why intentional:</strong> demonstrate a red pipeline by changing only the expected status for CI-01 (<code>ciExpectStatus=201</code> / expect 201), not by breaking the SUT. Job still started backend successfully; Newman exit code 1 failed the workflow.</p>
+<hr />
+<h2>4. Observations</h2>
+<ul>
+<li>Separating <strong>CI Smoke</strong> (always-green contract) from the full security suite (expected fails documenting bugs) keeps the pipeline useful as a regression gate.  </li>
+<li>First intentional-fail attempt (<code>86cd4a6</code>) stayed green because the workflow hard-coded <code>--env-var ciExpectStatus=200</code>, overriding the env file — fixed in <code>2fe51ee</code> by removing that override.  </li>
+<li>After the red sample, suite was restored to <code>ciExpectStatus=200</code> so subsequent pushes are green again.</li>
+</ul>
+<hr />
+<h2>5. Related links</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Workflow runs (branch)</td>
+<td>https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/actions/workflows/hw06-api-tests.yml</td>
+</tr>
+<tr>
+<td>Pass run</td>
+<td>https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/actions/runs/32269053058</td>
+</tr>
+<tr>
+<td>Fail run</td>
+<td>https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/actions/runs/32269286455</td>
+</tr>
+</tbody>
+</table></body></html>

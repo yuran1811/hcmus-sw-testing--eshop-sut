@@ -1,0 +1,524 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>report/23127152_HW06_Report</title><style>
+body{font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:900px;margin:24px auto;padding:0 18px;line-height:1.45;font-size:12.5px;color:#111}
+h1{font-size:22px}h2{font-size:16px;border-bottom:1px solid #ddd;padding-bottom:4px;margin-top:22px}h3{font-size:14px}
+code,pre{font-family:ui-monospace,Menlo,monospace;font-size:11px}pre{background:#f6f8fa;padding:10px;overflow:auto;white-space:pre-wrap}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:11px}th,td{border:1px solid #ccc;padding:4px 6px;vertical-align:top}th{background:#f0f0f0}
+a{color:#0969da}blockquote{border-left:3px solid #ddd;margin:8px 0;padding-left:10px;color:#444}
+img{max-width:100%}
+</style></head><body><h1>HW06 — API Testing Report</h1>
+<p><strong>Sinh viên:</strong> 23127152 Nguyễn Tuấn Anh<br />
+<strong>Môn:</strong> Kiểm thử phần mềm — HW06 (AI-first API Testing)<br />
+<strong>SUT:</strong> EShop (<code>http://localhost:3000</code>, Node.js + Express + SQLite)<br />
+<strong>Công cụ:</strong> Postman · Newman 6.2.2 · newman-reporter-htmlextra · GitHub Actions<br />
+<strong>Ngày:</strong> 2026-08-19<br />
+<strong>Máy:</strong> <code>Spartans-MB-Pro---C2F3HXFHWV</code> (Apple M3 Pro, macOS)<br />
+<strong>Repo:</strong> https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw6/23127152</p>
+<hr />
+<h2>1. Introduction</h2>
+<p>Bài tập yêu cầu pipeline kiểm thử API theo Bloom-AI: <strong>generate → audit → extend → execute → report bugs</strong>, kèm Postman/Newman, CI/CD, Agent Skill (G9.5) và AI Audit/Critique.</p>
+<p>Ba API đã khóa (không trùng nhóm):</p>
+<table>
+<thead>
+<tr>
+<th>Pool</th>
+<th>Feature</th>
+<th>Endpoint(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>FR-05 Product listing &amp; search</td>
+<td><code>GET /api/products</code></td>
+</tr>
+<tr>
+<td>B</td>
+<td>FR-11 Order history + detail</td>
+<td><code>GET /api/orders/my-orders</code>, <code>GET /api/orders/:id</code></td>
+</tr>
+<tr>
+<td>C</td>
+<td>FR-15 Product management CRUD</td>
+<td><code>POST/PUT/DELETE /api/products</code></td>
+</tr>
+</tbody>
+</table>
+<p>Chi tiết Phase 0: <a href="../PHASE0_PLANNING.md"><code>PHASE0_PLANNING.md</code></a>.</p>
+<hr />
+<h2>2. API Selection</h2>
+<table>
+<thead>
+<tr>
+<th>Pool</th>
+<th>Feature</th>
+<th>Endpoint(s)</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>FR-05 Product listing &amp; search</td>
+<td><code>GET /api/products</code></td>
+<td>Public API; domain partitions trên <code>search</code>; bề mặt SEC-05 SQLi</td>
+</tr>
+<tr>
+<td>B</td>
+<td>FR-11 Order history + detail</td>
+<td><code>GET /api/orders/my-orders</code>, <code>GET /api/orders/:id</code></td>
+<td>Cặp JWT vs no-auth; kiểm IDOR / ownership / PII</td>
+</tr>
+<tr>
+<td>C</td>
+<td>FR-15 Product management CRUD</td>
+<td><code>POST/PUT/DELETE /api/products</code></td>
+<td>Admin CRUD theo spec; SEC-02/SEC-03</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>3. API 1 — Pool A (FR-05)</h2>
+<h3>3.1 AI Generation Process</h3>
+<p>Sinh TC <strong>từng bước</strong> (skill <code>api-test-generate</code>), không một prompt chung:</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Nội dung</th>
+<th>TC IDs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A Domain</td>
+<td>Valid/invalid/boundary/charset/encoding cho <code>search</code></td>
+<td>TC-A1-001…018</td>
+</tr>
+<tr>
+<td>B State</td>
+<td>N/A state machine + 2 case idempotent GET</td>
+<td>TC-A1-019…020</td>
+</tr>
+<tr>
+<td>C Security</td>
+<td>SEC-01…07, trọng tâm SEC-05 SQLi</td>
+<td>TC-A1-021…030</td>
+</tr>
+<tr>
+<td>D Schema</td>
+<td>Content-Type, array root, fields/types, error ≠ HTML</td>
+<td>TC-A1-031…040</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tổng AI:</strong> 40 TC (≥ 35) → <a href="../test-cases/API1_PoolA/generated.md"><code>test-cases/API1_PoolA/generated.md</code></a>.</p>
+<h3>3.2 Audit Summary</h3>
+<p>Human audit (skill <code>api-test-audit</code>): <strong>32 VALID / 3 INVALID / 5 INCOMPLETE</strong> → <a href="../test-cases/API1_PoolA/audit.md"><code>audit.md</code></a>.</p>
+<p>Ví dụ sửa: pin hành vi <code>search=</code> rỗng (= list-all); expected SEC-05 viết theo <strong>spec an toàn</strong>, không theo SUT đang lỗi.</p>
+<h3>3.3 Extended Test Cases</h3>
+<p>6 TC manual (skill <code>api-test-extend</code>) → <a href="../test-cases/API1_PoolA/extended.md"><code>extended.md</code></a>:</p>
+<table>
+<thead>
+<tr>
+<th>TC</th>
+<th>Gap AI miss</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TC-A1-E01…E04</td>
+<td>URL-encoded / double-encoded SQLi; Content-Type trên lỗi</td>
+</tr>
+<tr>
+<td>TC-A1-E03</td>
+<td>Oracle so sánh số dòng baseline vs tautology</td>
+</tr>
+<tr>
+<td>TC-A1-E05…E06</td>
+<td>Sequence sau DROP probe; assert không có <code>&lt;h1&gt;Database Error</code></td>
+</tr>
+</tbody>
+</table>
+<p>Excel: <a href="../test-cases/API1_PoolA/API1_PoolA.xlsx"><code>API1_PoolA.xlsx</code></a>.</p>
+<h3>3.4 Execution Results</h3>
+<p>Newman folder <strong>API1 — FR-05</strong> trên <code>http://localhost:3000</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Requests</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Assertions</td>
+<td>26</td>
+</tr>
+<tr>
+<td>Passed</td>
+<td>22</td>
+</tr>
+<tr>
+<td>Failed</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>HTML: <a href="../postman/reports/newman-api1-fr05.html"><code>postman/reports/newman-api1-fr05.html</code></a>  </li>
+<li>CLI: <a href="../postman/screenshots/newman-api1-fr05-cli.txt"><code>postman/screenshots/newman-api1-fr05-cli.txt</code></a>  </li>
+<li>Evidence header: <a href="../postman/screenshots/postman-prerequest.png"><code>postman-prerequest.png</code></a>, <a href="../postman/screenshots/postman-console-x-student-id.png"><code>postman-console-x-student-id.png</code></a>, <a href="../postman/screenshots/newman-cli.png"><code>newman-cli.png</code></a></li>
+</ul>
+<p>4 fail = SEC-05 (SQLi dump / HTML 500) — đúng kỳ vọng secure behavior.</p>
+<h3>3.5 Bugs Found</h3>
+<table>
+<thead>
+<tr>
+<th>Bug</th>
+<th>Severity</th>
+<th>GitHub Issue</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG-PRODUCTS-001 SQLi search dumps catalog</td>
+<td>Critical</td>
+<td><a href="https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/300">#300</a></td>
+<td><code>bug-reports/screenshots/BUG-PRODUCTS-001-sqli.json</code>, <code>issue-300-*.png</code></td>
+</tr>
+<tr>
+<td>BUG-PRODUCTS-002 HTML 500 on bad SQL</td>
+<td>Major</td>
+<td><a href="https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/301">#301</a></td>
+<td><code>BUG-PRODUCTS-002-body.html</code>, <code>issue-301-*.png</code></td>
+</tr>
+</tbody>
+</table>
+<p>Author issues: <strong>Anhnguyenk835</strong>.</p>
+<hr />
+<h2>4. API 2 — Pool B (FR-11)</h2>
+<h3>4.1 AI Generation Process</h3>
+<p>Steps A–D cho <code>my-orders</code> (JWT) + <code>GET /api/orders/:id</code> (no auth theo selection): domain token/id, compensating state (status visibility), SEC-02 + IDOR, schema.</p>
+<p><strong>Tổng AI:</strong> 40 TC → <a href="../test-cases/API2_PoolB/generated.md"><code>API2_PoolB/generated.md</code></a>.</p>
+<h3>4.2 Audit Summary</h3>
+<p><strong>34 VALID / 2 INVALID / 4 INCOMPLETE</strong> → <a href="../test-cases/API2_PoolB/audit.md"><code>audit.md</code></a>.</p>
+<p>Expected IDOR = <strong>deny</strong> (403/404), dù surface detail công khai theo selection.</p>
+<h3>4.3 Extended Test Cases</h3>
+<p>6 TC → <a href="../test-cases/API2_PoolB/extended.md"><code>extended.md</code></a>: oracle PII <code>shipping_address</code>, horizontal IDOR với token A đọc đơn B, admin trên detail user, dual-actor compare, 401 JSON, count sau checkout.</p>
+<p>Excel: <a href="../test-cases/API2_PoolB/API2_PoolB.xlsx"><code>API2_PoolB.xlsx</code></a>.</p>
+<h3>4.4 Execution Results</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Requests</td>
+<td>26</td>
+</tr>
+<tr>
+<td>Assertions</td>
+<td>35</td>
+</tr>
+<tr>
+<td>Passed</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Failed</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>HTML: <a href="../postman/reports/newman-api2-fr11.html"><code>newman-api2-fr11.html</code></a>  </li>
+<li>CLI: <a href="../postman/screenshots/newman-api2-fr11-cli.txt"><code>newman-api2-fr11-cli.txt</code></a></li>
+</ul>
+<h3>4.5 Bugs Found</h3>
+<table>
+<thead>
+<tr>
+<th>Bug</th>
+<th>Severity</th>
+<th>Issue</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG-ORDERS-001 IDOR + PII leak on <code>GET /api/orders/:id</code></td>
+<td>Critical</td>
+<td><a href="https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/302">#302</a></td>
+<td><code>BUG-ORDERS-001-idor.json</code>, <code>issue-302-*.png</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>5. API 3 — Pool C (FR-15)</h2>
+<h3>5.1 AI Generation Process</h3>
+<p>Steps A–D cho POST/PUT/DELETE <code>/api/products</code>: domain (price &gt; 0, name, …), state (create→update→delete), SEC-02/SEC-03, schema.</p>
+<p><strong>Tổng AI:</strong> 40 TC → <a href="../test-cases/API3_PoolC/generated.md"><code>API3_PoolC/generated.md</code></a>.</p>
+<h3>5.2 Audit Summary</h3>
+<p><strong>33 VALID / 3 INVALID / 4 INCOMPLETE</strong> → <a href="../test-cases/API3_PoolC/audit.md"><code>audit.md</code></a>.</p>
+<p>Security expected = <strong>401/403 theo spec</strong>, không theo SUT hiện không có middleware.</p>
+<h3>5.3 Extended Test Cases</h3>
+<p>6 TC → <a href="../test-cases/API3_PoolC/extended.md"><code>extended.md</code></a>: unauth mutate success-as-bug, user vs admin, impact chain list sau create, quirk <code>GET /api/products/:id</code> sau DELETE.</p>
+<p>Excel: <a href="../test-cases/API3_PoolC/API3_PoolC.xlsx"><code>API3_PoolC.xlsx</code></a>.</p>
+<h3>5.4 Execution Results</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Requests</td>
+<td>22</td>
+</tr>
+<tr>
+<td>Assertions</td>
+<td>25</td>
+</tr>
+<tr>
+<td>Passed</td>
+<td>13</td>
+</tr>
+<tr>
+<td>Failed</td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>HTML: <a href="../postman/reports/newman-api3-fr15.html"><code>newman-api3-fr15.html</code></a>  </li>
+<li>CLI: <a href="../postman/screenshots/newman-api3-fr15-cli.txt"><code>newman-api3-fr15-cli.txt</code></a></li>
+</ul>
+<h3>5.5 Bugs Found</h3>
+<table>
+<thead>
+<tr>
+<th>Bug</th>
+<th>Severity</th>
+<th>Issue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG-ADMINPROD-001 CRUD thiếu JWT/admin</td>
+<td>Critical</td>
+<td><a href="https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/303">#303</a></td>
+</tr>
+<tr>
+<td>BUG-ADMINPROD-002 Neg price / empty body accepted</td>
+<td>Major</td>
+<td><a href="https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/304">#304</a></td>
+</tr>
+<tr>
+<td>BUG-ADMINPROD-003 DELETE missing id → 200</td>
+<td>Minor</td>
+<td><a href="https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/305">#305</a></td>
+</tr>
+</tbody>
+</table>
+<p>Evidence: <code>bug-reports/screenshots/issue-303|304|305-*.png</code> + JSON/TXT dumps.</p>
+<hr />
+<h2>6. Postman Features Used</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Cách dùng</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Workspaces</td>
+<td>Import collection + environment local</td>
+</tr>
+<tr>
+<td>Collections</td>
+<td><code>EShop-HW06.postman_collection.json</code> (Setup, API1–3, Data-Driven, CI Smoke)</td>
+</tr>
+<tr>
+<td>Variables / Environments</td>
+<td><code>baseUrl</code>, <code>studentId</code>, tokens, order/product ids</td>
+</tr>
+<tr>
+<td>Pre-request scripts</td>
+<td>Collection-level inject <code>X-Student-Id: 23127152</code></td>
+</tr>
+<tr>
+<td>Tests / assertions</td>
+<td>Status, JSON schema, security oracles</td>
+</tr>
+<tr>
+<td>Collection Runner + data file</td>
+<td><code>products-search-data.csv</code> → 8/8 pass</td>
+</tr>
+<tr>
+<td>Examples / mock seed</td>
+<td><code>postman/mock/fr05-list-example.json</code></td>
+</tr>
+<tr>
+<td>Monitors</td>
+<td>☐ — thay bằng GitHub Actions (Phase 5)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Phase 4 Newman:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Run</th>
+<th>Result</th>
+<th>Report</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data-driven FR-05</td>
+<td>8 iter · 32 assert · 0 fail</td>
+<td><code>newman-report-data-driven.html</code></td>
+</tr>
+<tr>
+<td>Full collection</td>
+<td>Failures = known Phase 1–3 bugs</td>
+<td><code>newman-report.html</code></td>
+</tr>
+</tbody>
+</table>
+<p>Chi tiết: <a href="../postman/PHASE4_NOTES.md"><code>postman/PHASE4_NOTES.md</code></a>.</p>
+<hr />
+<h2>7. CI/CD Integration</h2>
+<p>Workflow: <a href="../../.github/workflows/hw06-api-tests.yml"><code>.github/workflows/hw06-api-tests.yml</code></a><br />
+Báo cáo đầy đủ: <a href="./CI_CD_Report.md"><code>CI_CD_Report.md</code></a></p>
+<table>
+<thead>
+<tr>
+<th>Sample</th>
+<th>Commit</th>
+<th>Actions run</th>
+<th>Screenshot</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All pass ✅</td>
+<td><code>8b44b66</code></td>
+<td><a href="https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/actions/runs/32269053058">32269053058</a></td>
+<td><code>cicd/screenshots/run-all-pass.png</code></td>
+</tr>
+<tr>
+<td>One fail ❌</td>
+<td><code>2fe51ee</code></td>
+<td><a href="https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/actions/runs/32269286455">32269286455</a></td>
+<td><code>cicd/screenshots/run-one-fail.png</code></td>
+</tr>
+</tbody>
+</table>
+<p>CI Smoke (Must Pass) tách khỏi suite security (expected fail = bug evidence). Intentional fail chỉ đổi <code>ciExpectStatus</code> 200→201.</p>
+<hr />
+<h2>8. Agent Skill — AI Test Generator (G9.5)</h2>
+<p>Thiết kế generator: <strong>API spec → TC (domain/state/security/schema) → human audit → extend ≥5 → Postman/Newman</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Artifact</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Architecture diagram (self-drawn Mermaid → PNG)</td>
+<td><a href="../agent-skill/diagram.png"><code>agent-skill/diagram.png</code></a></td>
+</tr>
+<tr>
+<td>Mermaid source</td>
+<td><a href="../agent-skill/diagram.mmd"><code>agent-skill/diagram.mmd</code></a></td>
+</tr>
+<tr>
+<td>Pseudocode + design</td>
+<td><a href="../agent-skill/pseudocode.md"><code>agent-skill/pseudocode.md</code></a></td>
+</tr>
+<tr>
+<td>Working pipeline skills</td>
+<td><a href="../../.agents/skills/README-HW06.md"><code>.agents/skills/README-HW06.md</code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Pipeline skills thực tế: <code>api-test-generate</code> → <code>api-test-audit</code> → <code>api-test-extend</code> → <code>api-test-execute</code> → <code>api-test-cicd</code>.</p>
+<hr />
+<h2>9. Conclusion</h2>
+<table>
+<thead>
+<tr>
+<th>Hạng mục</th>
+<th>Số liệu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TC AI generated</td>
+<td><strong>120</strong> (40×3)</td>
+</tr>
+<tr>
+<td>TC manual extended</td>
+<td><strong>18</strong> (6×3)</td>
+</tr>
+<tr>
+<td>Bugs filed (GitHub)</td>
+<td><strong>6</strong> (#300–#305, Anhnguyenk835)</td>
+</tr>
+<tr>
+<td>Newman reports</td>
+<td>API1/2/3 + full + data-driven + CI artifact</td>
+</tr>
+<tr>
+<td>CI samples</td>
+<td>1 green + 1 intentional red</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Bài học:</strong> AI sinh nhanh domain/schema nhưng thiếu oracle cụ thể (row-count, PII field, Content-Type trên lỗi) và dễ nhầm “SUT đang trả 200” với expected. Human audit + extend security là bước bắt buộc trước khi tin Newman fail là bug thật.</p>
+<hr />
+<h2>Appendix</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI Audit Report</td>
+<td><a href="../ai-audit/AI_Audit_Report.md"><code>ai-audit/AI_Audit_Report.md</code></a></td>
+</tr>
+<tr>
+<td>AI Critique</td>
+<td><a href="../ai-audit/AI_Critique.md"><code>ai-audit/AI_Critique.md</code></a></td>
+</tr>
+<tr>
+<td>Bug index</td>
+<td><a href="../bug-reports/github_issues_links.md"><code>bug-reports/github_issues_links.md</code></a></td>
+</tr>
+<tr>
+<td>Git commit log</td>
+<td><a href="../git-commit-log.txt"><code>git-commit-log.txt</code></a></td>
+</tr>
+<tr>
+<td>Checklist</td>
+<td><a href="../CHECKLIST.md"><code>CHECKLIST.md</code></a></td>
+</tr>
+</tbody>
+</table></body></html>

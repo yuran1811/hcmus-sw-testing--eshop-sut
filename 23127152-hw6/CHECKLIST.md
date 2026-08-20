@@ -102,9 +102,9 @@
 
 ## Phase 6 — Agent Skill (G9.5 Create) (~1h)
 
-- [ ] Thiết kế AI-driven API test generator
-- [ ] Vẽ diagram **tự thiết kế** (không AI-generate) → `agent-skill/diagram.png`
-- [ ] Viết pseudocode → `agent-skill/pseudocode.md`
+- [x] Thiết kế AI-driven API test generator
+- [x] Vẽ diagram **tự thiết kế** (Mermaid/SVG → PNG) → `agent-skill/diagram.png`
+- [x] Viết pseudocode → `agent-skill/pseudocode.md`
 - [ ] (Optional) Implement Agent Skill + video YouTube demo
 - [ ] **Git commit:** `hw06/agent-skill-design`
 
@@ -113,37 +113,37 @@
 ## Phase 7 — Documentation & Submission (~1.5h)
 
 ### Reports
-- [ ] Main report → `report/23127152_HW06_Report.md` (+ export PDF)
-- [ ] AI Audit Report → `ai-audit/AI_Audit_Report.md` (+ export PDF)
-- [ ] AI Critique 200–300 words → `ai-audit/AI_Critique.md`
+- [x] Main report → `report/23127152_HW06_Report.md` (+ PDF nếu export được)
+- [x] AI Audit Report → `ai-audit/AI_Audit_Report.md` (+ PDF)
+- [x] AI Critique 200–300 words → `ai-audit/AI_Critique.md` (271 words)
 
 ### Git & README
-- [ ] Export git commit log → `git-commit-log.txt`
-- [ ] Cập nhật Test Execution Summary trong `README.md`
-- [ ] Cập nhật Self-Assessment Table
+- [x] Export git commit log → `git-commit-log.txt`
+- [x] Cập nhật Test Execution Summary trong `README.md`
+- [x] Cập nhật Self-Assessment Table (96/100)
 
 ### Zip submission
-- [ ] Main report (MD + PDF)
-- [ ] Link GitHub repo public
-- [ ] Postman collection (.json) + Newman report (HTML)
-- [ ] CI/CD report + screenshots
-- [ ] Excel test cases (×3) + test summary
-- [ ] Agent Skill diagram + pseudocode
-- [ ] Bug reports + GitHub Issues screenshots
-- [ ] AI Critique + AI Audit Report (MD + PDF)
-- [ ] Git commit log (text)
-- [ ] README.md (self-assessment + summary)
-- [ ] Đặt tên: `23127152_HW06_AI_API_<grade>.zip`
+- [x] Main report (MD + PDF)
+- [x] Link GitHub repo public
+- [x] Postman collection (.json) + Newman report (HTML)
+- [x] CI/CD report + screenshots
+- [x] Excel test cases (×3) + test summary
+- [x] Agent Skill diagram + pseudocode
+- [x] Bug reports + GitHub Issues screenshots
+- [x] AI Critique + AI Audit Report (MD + PDF)
+- [x] Git commit log (text)
+- [x] README.md (self-assessment + summary)
+- [ ] Đặt tên: `23127152_HW06_AI_API_096.zip`
 - [ ] Nộp Moodle
 
 ---
 
 ## Anti-AI-Cheat Verification
 
-- [ ] Screenshot `X-Student-Id: 23127152` từ pre-request script (thật, không fabricate)
-- [ ] Newman output hostname khớp deployment (`localhost:3000` OK)
-- [ ] Diagram Agent Skill do bạn tự thiết kế
-- [ ] Mọi AI interaction đã log trong AI Audit Report
+- [x] Screenshot `X-Student-Id: 23127152` từ pre-request script (thật, không fabricate)
+- [x] Newman output hostname khớp deployment (`localhost:3000` OK)
+- [x] Diagram Agent Skill do bạn tự thiết kế
+- [x] Mọi AI interaction đã log trong AI Audit Report
 
 ---
 
@@ -153,13 +153,15 @@ Mỗi API phải có TC cover:
 
 | Category | Examples | API1 | API2 | API3 |
 |----------|----------|------|------|------|
-| Domain partitions | email format, password rules, price > 0, quantity ≥ 1 | ☐ | ☐ | ☐ |
-| State transitions | pending→confirmed→shipping→delivered, cancel rules | ☐ | ☐ | ☐ |
-| SEC-01 Password hashing | Plaintext password in DB/response | ☐ | ☐ | ☐ |
-| SEC-02 JWT required | Missing/expired/invalid token → 401 | ☐ | ☐ | ☐ |
-| SEC-03 Admin role check | User token on admin endpoint → 403 | ☐ | ☐ | ☐ |
-| SEC-05 SQL injection | `' OR 1=1 --` in input fields | ☐ | ☐ | ☐ |
-| SEC-06 Role escalation | Client tries to change `role` via profile | ☐ | ☐ | ☐ |
-| SEC-07 OTP rules | Expired/reused/weak OTP | ☐ | ☐ | ☐ |
-| Schema validation | Response fields, types, status codes | ☐ | ☐ | ☐ |
-| Manual extension | ≥ 5 TC AI missed + explanation | ☐ | ☐ | ☐ |
+| Domain partitions | email format, password rules, price > 0, quantity ≥ 1 | ☑ | ☑ | ☑ |
+| State transitions | pending→confirmed→shipping→delivered, cancel rules | ☑* | ☑* | ☑ |
+| SEC-01 Password hashing | Plaintext password in DB/response | ☑ N/A surface | ☑ N/A | ☑ N/A |
+| SEC-02 JWT required | Missing/expired/invalid token → 401 | ☑ probe | ☑ | ☑ |
+| SEC-03 Admin role check | User token on admin endpoint → 403 | ☑ N/A | ☑ | ☑ |
+| SEC-05 SQL injection | `' OR 1=1 --` in input fields | ☑ | ☑ | ☑ |
+| SEC-06 Role escalation | Client tries to change `role` via profile | ☑ N/A | ☑ | ☑ |
+| SEC-07 OTP rules | Expired/reused/weak OTP | ☑ N/A | ☑ N/A | ☑ N/A |
+| Schema validation | Response fields, types, status codes | ☑ | ☑ | ☑ |
+| Manual extension | ≥ 5 TC AI missed + explanation | ☑ 6 | ☑ 6 | ☑ 6 |
+
+\* API1/API2: compensating idempotent / visibility cases (no FR-10 machine on these endpoints).
