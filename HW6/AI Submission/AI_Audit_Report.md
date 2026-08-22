@@ -25,6 +25,7 @@ This report documents all interactions with AI tools during the completion of HW
 | Prompt + Tool | AI Output | Verdict | Reasoning (ISTQB / Course) | Student Fix |
 |---|---|---|---|---|
 | **Tool:** Antigravity IDE (Claude Opus 4.6)<br>**Time:** 19:32 22/08/2026<br>**Prompt:** "Oke first of all, i need to write agent skill first. I will give you this guide.md for more context @postman-contract-test-prompt-guide.md [...] But the agent skill will not hard code for any api. By the way, i will give you more context to refine the agent skill @report.md And fit with the right scope of HW6 and in the future with similar tasks @2026.HW06.API Testing_En (2).md" | Generated two reusable Agent Skills:<br>1. `.agents/skills/api-test-generator/SKILL.md`<br>2. `.agents/skills/api-test-executor/SKILL.md`<br>Covering 5-phase generation (domain partitions, state transitions, security SEC-01–07, schema validation) and Newman execution pipeline. | **INCOMPLETE** | Initial AI drafts hardcoded endpoints and mixed seminar contract testing (Pact) with HW06 scope. HW06 §7 requires a generic AI-driven API test generator (G9.5 Create) with $\ge 35$ cases across 4 distinct coverage dimensions and Newman CI execution. | Guided AI through multi-turn refinements: removed hardcoded API assumptions, eliminated Pact scope, aligned naming to `api-test-generator` and `api-test-executor`, enforced 5-phase generation, added anti-cheat `X-Student-Id` header handling, and separated self-drawn diagram requirements from automated skill generation. |
+| **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 20:10 22/08/2026<br>**Prompt:** "Should we add diagram.md and pseudocode.md in agent skills and WHY" $\to$ "Yes generate for me" | Generated formal design specifications:<br>1. `.agents/skills/api-test-generator/references/pseudocode.md`<br>2. `.agents/skills/api-test-generator/references/diagram.md`<br>Documenting the formal algorithm and Mermaid architecture diagram blueprint. | **VALID** | Satisfies HW06 Section 7 (pseudocode representation of test generator algorithm), Section 11 (blueprint for student self-drawing), and Section 14 (zip package contents). The pseudocode rigorously formalizes parameter analysis, EP/BVA calculation, state machine traversal, security checks, and Postman v2.1 export. | Accepted as-is. Verified alignment with the 5-phase pipeline in SKILL.md; utilized the Mermaid diagram and component specifications as the blueprint for self-drawing the architecture diagram in Excalidraw. |
 
 ---
 
@@ -90,28 +91,77 @@ Oke first of all, i need to write agent skill first. I will give you this guide.
 
 ---
 
+### Artifact #2 -- Generator Architecture Specification & Formal Pseudocode
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.7 Flash) |
+| **Date/Time** | 2026-08-22 20:10:16 +07:00 |
+| **Task** | Formalize generator design via algorithmic pseudocode and architectural diagram specification |
+| **Feature / Module** | Architecture & Design Deliverables (HW06 §7, §11, §14 / Bloom-AI G9.5 Create) |
+| **Bloom-AI Level** | G9.5 Create (Formal architectural specification and algorithmic modeling) |
+| **Verdict** | VALID |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Should we add diagram.md and pseudocode.md in agent skills and WHY
+
+[Follow-up Prompt]: Yes generate for me
+```
+
+**Execution notes:**
+
+- Mode: GENERATE
+- Tools called: `write_to_file`, `run_command`
+- Stored locations:
+  - `.agents/skills/api-test-generator/references/pseudocode.md`
+  - `.agents/skills/api-test-generator/references/diagram.md`
+
+#### (2) AI Output
+
+- Generated formal algorithm in structured pseudocode (`AI_Driven_API_Test_Generator`) with helper routines for EP/BVA calculation, security injection (SEC-01–07), state transition traversal, and Postman v2.1 collection building.
+- Generated architectural blueprint with 4-tier Mermaid diagram (Inputs $\to$ Engine $\to$ Deliverables $\to$ Human-in-the-Loop Review & Execution loop) and component breakdown.
+- Included drawing guidelines to satisfy HW06 §11 "self-drawn diagram" anti-cheat constraints.
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | VALID |
+| **Reasoning** | The generated pseudocode accurately captures the 5-phase algorithm without syntactic errors or missing edge cases. The architecture blueprint clearly distinguishes automated generation from human-in-the-loop audit and Newman execution, providing an exact, compliant foundation for self-drawing the required submission diagram in Excalidraw. |
+| **Student Fix** | Accepted as-is. Reviewed the algorithmic boundaries and verified that all four HW06 coverage dimensions are formalized in the pseudocode. |
+| **Reviewed by** | Nguyen An |
+| **Review date** | 2026-08-22 |
+| **Quality rating** | Excellent |
+| **Issues found** | None |
+
+---
+
 ## 4. Summary of AI Accuracy
 
 | Metric | Count | Percentage |
 | --- | ---: | ---: |
-| **Total AI-generated artifacts audited** | 1 | 100% |
-| **VALID (correct, accepted as-is)** | 0 | 0.0% |
+| **Total AI-generated artifacts audited** | 2 | 100% |
+| **VALID (correct, accepted as-is)** | 1 | 50.0% |
 | **INVALID (wrong; rejected)** | 0 | 0.0% |
-| **INCOMPLETE (acceptable after edits)** | 1 | 100.0% |
+| **INCOMPLETE (acceptable after edits)** | 1 | 50.0% |
 
 ---
 
 ## 5. Conclusion -- When should AI be used (or not)?
 
-AI assistants are exceptionally capable at drafting repetitive structural artifacts, boilerplate Postman test scripts, JSON schemas, and multi-file agent skills when supplied with comprehensive specification context. However, unguided AI tends to make implicit assumptions—such as hardcoding domain entities, hallucinating unspecified constraints, or conflating distinct project scopes (e.g., mixing seminar contract testing with homework API testing). 
+AI assistants excel at generating structured boilerplate, formalizing algorithms into standard pseudocode, and scaffolding executable agent skills when provided with explicit specifications and clear boundary constraints. As demonstrated in this session, AI was able to draft a fully compliant pseudocode algorithm and architecture specification (Artifact #2, VALID) once the underlying engineering principles were locked down.
 
-AI must not be used as a black-box generator without human oversight. Strict human steering, verification against syllabus criteria (ISTQB FL domain partitioning, state machines, and OWASP API security), and explicit boundary setting are mandatory to ensure generated test suites are rigorous, reusable, and academically honest.
+However, when given broad or mixed context without prior filtering, AI frequently introduces scope creep—such as importing out-of-scope seminar testing methodologies (Pact) or making premature assumptions about hardcoded endpoints (Artifact #1, INCOMPLETE). AI should therefore be used as a collaborative drafting and formalization partner, but must never be trusted without active human steering, constraint enforcement, and strict review against course rubrics.
 
 ---
 
 ## 6. Mandatory Disclosure
 
-The agent skills (`api-test-generator` and `api-test-executor`) were initially scaffolded and refined by Antigravity IDE (Claude Opus 4.6 & Gemini 3.7 Flash); I reviewed, guided the architecture, corrected the scope boundaries, and specified the 5-phase generation pipeline and anti-cheat constraints. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any artifact listed in the prohibited category (such as fabricating test execution logs, forged headers, or self-drawn architecture diagrams).
+The agent skills (`api-test-generator` and `api-test-executor`) and design specifications (`pseudocode.md` and `diagram.md`) were initially scaffolded and refined by Antigravity IDE (Claude Opus 4.6 & Gemini 3.7 Flash); I reviewed, guided the architecture, corrected the scope boundaries, specified the 5-phase generation pipeline, and enforced anti-cheat constraints. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any artifact listed in the prohibited category (such as fabricating test execution logs, forged headers, or self-drawn architecture diagrams).
 
 ---
 
@@ -136,12 +186,14 @@ The agent skills (`api-test-generator` and `api-test-executor`) were initially s
 | # | AI Tool | Task Category | Feature | Date | Bloom-AI | Verdict |
 |---|---|---|---|---|---|---|
 | 1 | Claude Opus 4.6 / Gemini 3.7 Flash | Agent Skill Design | HW06 §7 Test Generator & Executor | 2026-08-22 | G9.5 Create | INCOMPLETE |
+| 2 | Gemini 3.7 Flash | Architectural Design | Pseudocode & Diagram Specification | 2026-08-22 | G9.5 Create | VALID |
 
 ### Contribution Breakdown
 
 | Task | AI % | Human % | Key Human Contribution |
 |---|---:|---:|---|
 | Agent Skills (`api-test-generator`, `api-test-executor`) | 60% | 40% | Architecture design, HW06 scope scoping, multi-turn refinement, anti-cheat header enforcement |
+| Design References (`pseudocode.md`, `diagram.md`) | 75% | 25% | Requirements verification, anti-cheat drawing blueprint validation |
 
 ### Compliance Checklist
 
