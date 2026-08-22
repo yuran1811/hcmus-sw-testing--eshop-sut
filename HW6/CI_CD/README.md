@@ -49,8 +49,22 @@ Theo yêu cầu đề bài §6.6, sinh viên đã thiết lập và kiểm thử
   - Bước **CI Quality Gate** kích hoạt `exit 1` và đánh trượt pipeline với trạng thái **MÀU ĐỎ (Failed)**.
   - Chặn đứng hoàn toàn việc merge mã nguồn lỗi vào các nhánh chính.
 
-#### Minh chứng kết quả chạy GitHub Actions:
-![GitHub Actions Pipeline Run Result](./images/image.png)
+### 3.3 Minh Chứng Hình Ảnh Thực Nghiệm Trên GitHub Actions
+
+#### 1. Tổng quan danh sách Workflow Runs (Quality Gate Red & Green Runs):
+Minh chứng danh sách thực thi thể hiện rõ ràng Run Thất bại (Red ❌) khi phát hiện lỗi assertion và Run Thành công (Green ✅) khi toàn bộ 135 test cases pass:
+
+![Tổng quan Workflow Runs](./images/overview-runs.png)
+
+#### 2. Chi tiết Pipeline Run Thành công (Green Build - 100% Pass):
+Minh chứng chi tiết các bước từ Khởi động Backend, thực thi Newman cho 3 Collections, upload Artifacts và vượt qua Quality Gate:
+
+![Chi tiết Green Run](./images/green-run-detail.png)
+
+#### 3. Chi tiết Pipeline Run Thất bại (Red Build - Quality Gate Detection):
+Minh chứng Quality Gate tự động bắt lỗi và đánh trượt pipeline khi phát hiện test case thất bại:
+
+![Chi tiết Red Run](./images/ci-fail.png)
 
 ---
 

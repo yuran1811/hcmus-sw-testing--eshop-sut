@@ -292,15 +292,26 @@ Theo yêu cầu mục §6.5 và §14, toàn bộ 10 lỗi phát hiện được 
   4. Thực thi tuần tự 3 bộ sưu tập Postman Collection.
   5. Đóng gói và tải lên các file báo cáo HTML làm GitHub Artifacts lưu trữ 14 ngày.
 
-### 9.2 Minh Chứng 2 Commit Mẫu (Two Sample Commits)
+### 9.2 Minh Chứng 2 Commit Mẫu & Kết Quả Thực Nghiệm
 
-Theo yêu cầu đề bài, sinh viên thiết lập 2 commit mẫu để minh chứng khả năng kiểm soát chất lượng (Quality Gate) của pipeline:
+Theo yêu cầu đề bài §6.6, sinh viên thiết lập 2 commit mẫu để minh chứng khả năng kiểm soát chất lượng (Quality Gate) của pipeline:
 
-1. **Commit 1 (Passing / Green Run — Tất cả test case đạt):**
-   - **Kịch bản:** Chạy bộ kiểm thử với các endpoint và assertion chuẩn hóa hợp lệ.
-   - **Kết quả:** Pipeline hoàn thành thành công (Màu xanh lá - Status: Success, Exit code: 0).
+1. **Commit 1 (Passing / Green Run — Toàn bộ 135 test cases đạt 100%):**
+   - **Commit SHA:** `a2313bd` / `2bce709` (`feat(hw06): run full automated test suite with passing assertions`)
+   - **Kịch bản:** Chạy toàn bộ 3 bộ kiểm thử với các endpoint và assertion chuẩn hóa.
+   - **Kết quả:** Pipeline hoàn thành thành công (**Status: Success ✅**), Quality Gate cho phép pass build.
+
 2. **Commit 2 (Failing / Red Run — Bắt được lỗi SUT và đánh trượt build):**
-   - **Kịch bản:** Chạy kiểm thử với test case `TC-CANCEL-003` kiểm tra không được hủy đơn hàng đang `shipping`. Do SUT bị lỗi dòng 329 trả về 200 OK thay vì 400 Bad Request, assertion bị thất bại $\to$ Newman trả về Exit code 1 $\to$ Pipeline chuyển sang trạng thái **Failed (Màu đỏ)**, ngăn chặn thành công việc đẩy code lỗi lên production.
+   - **Commit SHA:** `ea37a9f` (`ci(hw06): configure github actions api testing pipeline with quality gate and htmlextra artifacts`)
+   - **Kịch bản:** Chạy kiểm thử tự động phát hiện lỗi nghiệp vụ trong SUT. Assertion thất bại $\to$ Newman trả về Exit code 1 $\to$ Bước **CI Quality Gate** đánh trượt pipeline sang trạng thái **Failed (Màu đỏ ❌)**, ngăn chặn việc đẩy code lỗi lên production.
+
+![Tổng Quan Workflow Runs](../CI_CD/images/overview-runs.png)
+*Hình 9.1: Minh chứng tổng quan danh sách Workflow Runs thể hiện cả Run Thành công (Xanh) và Run Thất bại (Đỏ)*
+
+| Chi Tiết Pipeline Run Thành Công (Green Build) | Chi Tiết Pipeline Run Thất Bại (Red Build) |
+| :---: | :---: |
+| ![Green Run Detail](../CI_CD/images/green-run-detail.png) | ![Red Run Detail](../CI_CD/images/ci-fail.png) |
+| *Hình 9.2: Chi tiết các bước thực thi thành công 100%* | *Hình 9.3: Chi tiết Quality Gate phát hiện lỗi và đánh trượt build* |
 
 ---
 
