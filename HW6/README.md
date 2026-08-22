@@ -112,6 +112,7 @@ HW6/
 └── Test/
     ├── Bug_Reports/                                # 10 Báo cáo lỗi chi tiết kèm bước tái hiện
     │   ├── README.md
+    │   ├── Github_Issues/                          # 4 Ảnh chụp minh chứng tạo Issues thực tế trên GitHub
     │   ├── ForgotPassword/ (BUG-001 .. BUG-005)
     │   ├── OrderCancel/ (BUG-001 .. BUG-002)
     │   └── ImportProducts/ (BUG-001 .. BUG-003)

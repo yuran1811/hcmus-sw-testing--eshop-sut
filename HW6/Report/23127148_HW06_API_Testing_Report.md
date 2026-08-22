@@ -264,6 +264,18 @@ graph LR
    - **Mô tả:** Khi nhận request với `Content-Type: text/plain`, `req.body` bị `undefined`. Lệnh `const { email } = req.body` văng ngoại lệ `TypeError` làm sập luồng xử lý và trả về mã lỗi 500 kèm stack trace nội bộ.
    - **Cách sửa:** Bổ sung kiểm tra an toàn `if (!req.body || typeof req.body !== 'object') return res.status(400).json({ error: "Invalid body format" });`.
 
+### 8.2 Minh Chứng Báo Cáo Lỗi Trên GitHub Issues (Live Issues Evidence)
+
+Theo yêu cầu mục §6.5 và §14, toàn bộ 10 lỗi phát hiện được đã được sinh viên lập phiếu báo cáo lỗi chính thức trên trang **GitHub Issues** của repository kèm ảnh chụp màn hình minh chứng:
+
+![Danh Sách 10 Issues Trên GitHub](../Test/Bug_Reports/Github_Issues/10-bug-issues.png)
+*Hình 8.1: Danh sách 10 lỗi SUT được quản lý chính thức trên GitHub Issues*
+
+| Minh Chứng Issue #1 (BFLA Admin) | Minh Chứng Issue #2 (FSM Shipping Cancel) |
+| :---: | :---: |
+| ![Issue 1](../Test/Bug_Reports/Github_Issues/issue-1.png) | ![Issue 2](../Test/Bug_Reports/Github_Issues/issue-2.png) |
+| *Hình 8.2: Chi tiết Issue #1* | *Hình 8.3: Chi tiết Issue #2* |
+
 ---
 
 ## 9. Tích Hợp CI/CD Pipeline (GitHub Actions Automation)

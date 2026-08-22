@@ -28,6 +28,11 @@
 ```
 HW6/Test/Bug_Reports/
 ├── README.md
+├── Github_Issues/
+│   ├── 10-bug-issues.png
+│   ├── issue-1.png
+│   ├── issue-2.png
+│   └── issue-3.png
 ├── ForgotPassword/
 │   ├── BUG-FORGOT-001.md
 │   ├── BUG-FORGOT-002.md
@@ -42,3 +47,25 @@ HW6/Test/Bug_Reports/
     ├── BUG-IMPORT-002.md
     └── BUG-IMPORT-003.md
 ```
+
+---
+
+## 3. Minh Chứng Báo Cáo Lỗi Trên GitHub Issues (Live Issues Evidence)
+
+Toàn bộ 10 lỗi phát hiện được đã được sinh viên lập phiếu báo cáo lỗi chính thức trên mục **Issues** của GitHub Repository với đầy đủ nhãn phân loại (labels `bug`, `security`, `fsm`, `critical`), độ ưu tiên và các bước tái hiện kèm ảnh chụp kiểm thử:
+
+### 3.1 Danh Sách 10 Issues Trên GitHub:
+![Danh Sách 10 Issues Trên GitHub](Github_Issues/10-bug-issues.png)
+*Hình 1: Danh sách 10 lỗi SUT được quản lý chính thức trên GitHub Issues*
+
+### 3.2 Minh Chứng Chi Tiết Các Phiếu Báo Lỗi Mẫu:
+
+#### Issue #1: Lỗ hổng BFLA Admin Phân Quyền (`POST /api/admin/import-products`)
+![GitHub Issue 1](Github_Issues/issue-1.png)
+
+#### Issue #2: Vi phạm FSM cho phép hủy đơn hàng `shipping` (`PUT /api/orders/:id/cancel`)
+![GitHub Issue 2](Github_Issues/issue-2.png)
+
+#### Issue #3: Lộ OTP Cleartext trong Response Body (`POST /api/forgot-password`)
+![GitHub Issue 3](Github_Issues/issue-3.png)
+

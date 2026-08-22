@@ -44,6 +44,7 @@ jobs:
         run: mkdir -p reports/newman
 
       - name: Execute API 1 - Forgot Password Tests (FR-03)
+        id: run_api1
         run: |
           newman run "HW6/Postman/ForgotPassword.postman_collection.json" \
             -e "HW6/Postman/eshop.postman_environment.json" \
@@ -54,6 +55,7 @@ jobs:
         continue-on-error: true
 
       - name: Execute API 2 - Order Cancel Tests (FR-10)
+        id: run_api2
         run: |
           newman run "HW6/Postman/OrderCancel.postman_collection.json" \
             -e "HW6/Postman/eshop.postman_environment.json" \
@@ -64,6 +66,7 @@ jobs:
         continue-on-error: true
 
       - name: Execute API 3 - Import Products Tests (FR-16)
+        id: run_api3
         run: |
           newman run "HW6/Postman/ImportProducts.postman_collection.json" \
             -e "HW6/Postman/eshop.postman_environment.json" \
@@ -80,3 +83,26 @@ jobs:
           name: newman-api-test-reports
           path: reports/newman/
           retention-days: 14
+
+      - name: CI Quality Gate (Assert All Test Suites Passed)
+        run: |
+          echo "=== Kiểm tra kết quả thực thi kiểm thử tự động ==="
+          FAIL_COUNT=0
+          if [ "${{ steps.run_api1.outcome }}" != "success" ]; then
+            echo "::error::API 1 (Forgot Password) có test case bị thất bại!"
+            FAIL_COUNT=$((FAIL_COUNT + 1))
+          fi
+          if [ "${{ steps.run_api2.outcome }}" != "success" ]; then
+            echo "::error::API 2 (Order Cancel) có test case bị thất bại!"
+            FAIL_COUNT=$((FAIL_COUNT + 1))
+          fi
+          if [ "${{ steps.run_api3.outcome }}" != "success" ]; then
+            echo "::error::API 3 (Import Products) có test case bị thất bại!"
+            FAIL_COUNT=$((FAIL_COUNT + 1))
+          fi
+
+          if [ $FAIL_COUNT -gt 0 ]; then
+            echo "❌ CI Quality Gate Failed: Phát hiện $FAIL_COUNT bộ kiểm thử có lỗi assertion!"
+            exit 1
+          fi
+          echo "✅ CI Quality Gate Passed: Tất cả 3 bộ API test suites đã pass 100%!"
