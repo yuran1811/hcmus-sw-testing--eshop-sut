@@ -527,7 +527,7 @@
           "request": {
             "method": "PUT",
             "header": [
-              { "key": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJleHAiOjF9.invalid", "type": "text" },
+              { "key": "Authorization", "value": "Bearer MOCK_EXPIRED_JWT_TOKEN_TEST_23127148", "type": "text" },
               { "key": "X-Student-Id", "value": "23127148", "type": "text" }
             ],
             "url": {
@@ -555,7 +555,7 @@
           "request": {
             "method": "PUT",
             "header": [
-              { "key": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIifQ.tampered_signature_secret", "type": "text" },
+              { "key": "Authorization", "value": "Bearer MOCK_TAMPERED_JWT_SIGNATURE_TEST_23127148", "type": "text" },
               { "key": "X-Student-Id", "value": "23127148", "type": "text" }
             ],
             "url": {
