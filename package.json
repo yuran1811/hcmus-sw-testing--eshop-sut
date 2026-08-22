@@ -1,0 +1,22 @@
+{
+  "name": "hcmus-sw-testing-eshop-sut",
+  "private": true,
+  "scripts": {
+    "format:md": "prettier \"**/*.md\" \".agents/**/*.md\" --write",
+    "format:md:check": "prettier \"**/*.md\" \".agents/**/*.md\" --check",
+    "format:json": "prettier \"**/*.json\" --write",
+    "format:json:check": "prettier \"**/*.json\" --check",
+    "lint:md": "markdownlint-cli2",
+    "prepare:api-tests": "node submission/tests/test-runs/api/support/finalize-test-oracles.cjs && node submission/tests/test-runs/api/support/build-postman-collections.cjs",
+    "validate:api-tests": "node submission/tests/test-runs/api/support/validate-api-artifacts.cjs",
+    "test:api": "node submission/tests/test-runs/api/support/run-api-tests.cjs",
+    "test:api:smoke": "node submission/tests/test-runs/api/support/run-api-tests.cjs --smoke",
+    "test:api:verify-special": "node submission/tests/test-runs/api/support/run-api-tests.cjs --verify-special"
+  },
+  "devDependencies": {
+    "markdownlint-cli2": "^0.23.2",
+    "newman": "^6.2.2",
+    "newman-reporter-htmlextra": "^1.23.1",
+    "prettier": "^3.3.3"
+  }
+}
