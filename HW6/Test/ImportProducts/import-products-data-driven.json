@@ -1,0 +1,239 @@
+[
+  {
+    "tcId": "TC-IMPORT-016",
+    "description": "Valid single product import",
+    "payload": {
+      "products": [
+        {
+          "name": "Data Driven Product 1",
+          "price": 150000,
+          "description": "Valid single product description",
+          "imageUrl": "https://placehold.co/300x300/png?text=DD+Product+1",
+          "category_id": 1
+        }
+      ]
+    },
+    "expectedStatus": 200,
+    "expectedInserted": 1,
+    "category": "Domain Partitioning (Valid)"
+  },
+  {
+    "tcId": "TC-IMPORT-017",
+    "description": "Valid multi-product batch import (3 items)",
+    "payload": {
+      "products": [
+        {
+          "name": "DD Batch Product A",
+          "price": 200000,
+          "description": "Batch item A",
+          "imageUrl": "https://placehold.co/300x300/png?text=DD+Batch+A",
+          "category_id": 1
+        },
+        {
+          "name": "DD Batch Product B",
+          "price": 350000,
+          "description": "Batch item B",
+          "imageUrl": "https://placehold.co/300x300/png?text=DD+Batch+B",
+          "category_id": 2
+        },
+        {
+          "name": "DD Batch Product C",
+          "price": 500000,
+          "description": "Batch item C",
+          "imageUrl": "https://placehold.co/300x300/png?text=DD+Batch+C",
+          "category_id": 3
+        }
+      ]
+    },
+    "expectedStatus": 200,
+    "expectedInserted": 3,
+    "category": "Domain Partitioning (Valid Batch)"
+  },
+  {
+    "tcId": "TC-IMPORT-018",
+    "description": "Empty array payload",
+    "payload": {
+      "products": []
+    },
+    "expectedStatus": 400,
+    "expectedInserted": 0,
+    "category": "Boundary Value Analysis"
+  },
+  {
+    "tcId": "TC-IMPORT-019",
+    "description": "Missing products root key",
+    "payload": {},
+    "expectedStatus": 400,
+    "expectedInserted": 0,
+    "category": "Equivalence Partitioning (Negative)"
+  },
+  {
+    "tcId": "TC-IMPORT-020",
+    "description": "Null products value",
+    "payload": {
+      "products": null
+    },
+    "expectedStatus": 400,
+    "expectedInserted": 0,
+    "category": "Equivalence Partitioning (Negative)"
+  },
+  {
+    "tcId": "TC-IMPORT-021",
+    "description": "Non-array string products",
+    "payload": {
+      "products": "Invalid String Value"
+    },
+    "expectedStatus": 400,
+    "expectedInserted": 0,
+    "category": "Type Violation (Negative)"
+  },
+  {
+    "tcId": "TC-IMPORT-022",
+    "description": "Non-array number products",
+    "payload": {
+      "products": 99999
+    },
+    "expectedStatus": 400,
+    "expectedInserted": 0,
+    "category": "Type Violation (Negative)"
+  },
+  {
+    "tcId": "TC-IMPORT-023",
+    "description": "Non-array object products",
+    "payload": {
+      "products": {
+        "name": "Single Object Not Array"
+      }
+    },
+    "expectedStatus": 400,
+    "expectedInserted": 0,
+    "category": "Type Violation (Negative)"
+  },
+  {
+    "tcId": "TC-IMPORT-024",
+    "description": "Item missing mandatory name field",
+    "payload": {
+      "products": [
+        {
+          "price": 100000,
+          "description": "No name provided"
+        }
+      ]
+    },
+    "expectedStatus": 200,
+    "expectedInserted": 0,
+    "category": "Partial Error Reporting"
+  },
+  {
+    "tcId": "TC-IMPORT-025",
+    "description": "Item missing optional description field",
+    "payload": {
+      "products": [
+        {
+          "name": "Product Without Description",
+          "price": 75000,
+          "category_id": 1
+        }
+      ]
+    },
+    "expectedStatus": 200,
+    "expectedInserted": 1,
+    "category": "Default Fallback Partition"
+  },
+  {
+    "tcId": "TC-IMPORT-026",
+    "description": "Item missing optional imageUrl field",
+    "payload": {
+      "products": [
+        {
+          "name": "Product Without ImageUrl",
+          "price": 85000,
+          "description": "Image omitted",
+          "category_id": 2
+        }
+      ]
+    },
+    "expectedStatus": 200,
+    "expectedInserted": 1,
+    "category": "Default Fallback Partition"
+  },
+  {
+    "tcId": "TC-IMPORT-027",
+    "description": "Item missing optional category_id field",
+    "payload": {
+      "products": [
+        {
+          "name": "Product Without Category ID",
+          "price": 95000,
+          "description": "Category omitted"
+        }
+      ]
+    },
+    "expectedStatus": 200,
+    "expectedInserted": 1,
+    "category": "Default Fallback Partition"
+  },
+  {
+    "tcId": "TC-IMPORT-028",
+    "description": "Boundary: Zero Price",
+    "payload": {
+      "products": [
+        {
+          "name": "Zero Price Product",
+          "price": 0,
+          "description": "Free giveaway product",
+          "category_id": 1
+        }
+      ]
+    },
+    "expectedStatus": 200,
+    "expectedInserted": 1,
+    "category": "Boundary Value Analysis"
+  },
+  {
+    "tcId": "TC-IMPORT-030",
+    "description": "Boundary: Floating-point decimal price",
+    "payload": {
+      "products": [
+        {
+          "name": "Float Price Product",
+          "price": 199.99,
+          "description": "Decimal price product",
+          "category_id": 1
+        }
+      ]
+    },
+    "expectedStatus": 200,
+    "expectedInserted": 1,
+    "category": "Boundary Value Analysis"
+  },
+  {
+    "tcId": "TC-IMPORT-036",
+    "description": "Partial Failure Atomicity (Mixed valid and invalid items)",
+    "payload": {
+      "products": [
+        {
+          "name": "Valid Batch Item 1",
+          "price": 50000,
+          "category_id": 1
+        },
+        {
+          "price": 60000,
+          "description": "Invalid Item Missing Name"
+        },
+        {
+          "name": "Valid Batch Item 2",
+          "price": 70000,
+          "category_id": 2
+        },
+        {
+          "price": 80000,
+          "description": "Another Invalid Item"
+        }
+      ]
+    },
+    "expectedStatus": 200,
+    "expectedInserted": 2,
+    "category": "Data Integrity"
+  }
+]
