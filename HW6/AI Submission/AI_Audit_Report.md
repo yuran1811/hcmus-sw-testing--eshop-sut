@@ -28,6 +28,7 @@ This report documents all interactions with AI tools during the completion of HW
 | **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 20:10 22/08/2026<br>**Prompt:** "Should we add diagram.md and pseudocode.md in agent skills and WHY" $\to$ "Yes generate for me" | Generated formal design specifications:<br>1. `.agents/skills/api-test-generator/references/pseudocode.md`<br>2. `.agents/skills/api-test-generator/references/diagram.md`<br>Documenting the formal algorithm and Mermaid architecture diagram blueprint. | **VALID** | Satisfies HW06 Section 7 (pseudocode representation of test generator algorithm), Section 11 (blueprint for student self-drawing), and Section 14 (zip package contents). The pseudocode rigorously formalizes parameter analysis, EP/BVA calculation, state machine traversal, security checks, and Postman v2.1 export. | Accepted as-is. Verified alignment with the 5-phase pipeline in SKILL.md; utilized the Mermaid diagram and component specifications as the blueprint for self-drawing the architecture diagram in Excalidraw. |
 | **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 20:18 22/08/2026<br>**Prompt:** "Act as a Senior QA Automation Engineer and ISTQB Certified Tester. We are testing the API: POST /api/forgot-password (FR-03: Password Reset / OTP Generation) of the EShop SUT. [...] Please generate a comprehensive suite of at least 35 distinct, executable API test cases covering the following 4 dimensions [...] Output in @HW6\Test\ForgotPassword" $\to$ "Follow this template of test case and change with the test case in forgot password and move all tests cases into folder test-cases/" | Generated 40 executable test cases in `HW6/Test/ForgotPassword/test-cases/` (`TC-FORGOT-001.md` to `TC-FORGOT-040.md`), `coverage-matrix.md`, `audit-checklist.md`, `forgot-password-data-driven.json`, and `ForgotPassword.postman_collection.json`. | **INCOMPLETE** | Initial output generated complete test cases and Postman scripts but used an expanded header/script markdown layout and placed them at the module root rather than following the faculty's standard test case template (`Test data` table, `Test steps` numbering) and subfolder structure (`test-cases/`). | Provided the exact course template (`TC-LOGIN-001`), instructed AI to restructure all 40 test cases into `HW6/Test/ForgotPassword/test-cases/`, and verified that every test case matches the standard layout with explicit preconditions, test data, numbered steps, expected results, and status fields. |
 | **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 20:23 22/08/2026<br>**Prompt:** "Update skill @.agents\skills\api-test-generator with this template test case" | Updated `.agents/skills/api-test-generator/SKILL.md` (Phase 4.1 Test case documentation template and Output file paths section). | **VALID** | Correctly embeds the faculty-standardized markdown test case template and `test-cases/` directory structure into the reusable generator skill, ensuring future API test generation runs automatically conform to course submission standards without manual reformatting. | Accepted as-is. Inspected diffs in SKILL.md and verified full synchronization between generator specifications and homework deliverables. |
+| **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 20:26 22/08/2026<br>**Prompt:** "Act as a Principal QA Automation Architect and ISTQB Test Specialist. We need to generate a complete, automated API test suite for API 2 in the EShop SUT testing suite: Endpoint: PUT /api/orders/:id/cancel, Feature: FR-10 (Order State Machine & Order Cancellation) [...] Please systematically generate at least 35+ executable test cases covering all 4 required testing dimensions [...] Required Deliverables to Generate in HW6/Test/OrderCancel/" | Generated 40 executable test cases in `HW6/Test/OrderCancel/test-cases/` (`TC-CANCEL-001.md` to `TC-CANCEL-040.md`), `OrderCancel_Master_Document.md`, `coverage-matrix.md`, `audit-checklist.md`, `order-cancel-data-driven.json`, and `OrderCancel.postman_collection.json`. | **VALID** | Comprehensive coverage across all 4 dimensions. Rigorously models the Finite State Machine (FSM), catches the planted SUT bug at `server.js:329` (missing `shipping` state guard), validates BOLA/IDOR protection via scoped SQL queries, and adheres 100% to the faculty template and directory structure established in Artifact #4 without any manual reformatting. | Accepted as-is. Verified that the test generator skill executed seamlessly, correctly produced 40 formatted test case files in `test-cases/`, and accurately flagged the `shipping` order cancellation defect in `TC-CANCEL-003` and the audit checklist. |
 
 ---
 
@@ -316,28 +317,137 @@ Update skill @[d:\Project\Testing\hcmus-sw-testing--eshop-sut\.agents\skills\api
 
 ---
 
+### Artifact #5 -- Test Suite for PUT /api/orders/:id/cancel (FR-10)
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.7 Flash) |
+| **Date/Time** | 2026-08-22 20:26:01 +07:00 |
+| **Task** | Generate $\ge 35$ executable test cases, Postman collection, coverage matrix, and data-driven suite for FR-10 |
+| **Feature / Module** | Order Cancellation (FR-10: Order State Machine & Order Cancellation) |
+| **Bloom-AI Level** | G9.5 Create (Comprehensive automated test suite generation across 4 dimensions) |
+| **Verdict** | VALID |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Act as a Principal QA Automation Architect and ISTQB Test Specialist.
+
+We need to generate a complete, automated API test suite for API 2 in the EShop SUT testing suite:
+- Endpoint: PUT /api/orders/:id/cancel
+- Feature: FR-10 (Order State Machine & Order Cancellation)
+- Base URL: http://localhost:3000
+- Authentication: Bearer JWT Token (Header: Authorization: Bearer <user_token>, Role: user)
+- Student ID: 23127148 (Mandatory Request Header: X-Student-Id: 23127148)
+- Specification Contract:
+  * Description: Changes order status to "canceled". Only allowed when order has not been delivered/shipped.
+  * Success Response (200 OK): {"message": "Order canceled successfully"}
+  * Error Responses: 400 Bad Request ("Cannot cancel this order."), 401 Unauthorized, 403 Forbidden, 404 Not Found ("Order not found")
+
+Please systematically generate at least 35+ executable test cases covering all 4 required testing dimensions:
+
+1. State Transitions & Finite State Machine (FSM - FR-10):
+   - Valid transition: Order in 'pending' status -> 'canceled' (Expect 200 OK)
+   - Valid transition: Order in 'confirmed' status -> 'canceled' (Expect 200 OK)
+   - Invalid transition: Order in 'shipping' status -> 'canceled' (Business rule forbids; expect 400 Bad Request. Catch SUT line 329 defect!)
+   - Invalid transition: Order in 'delivered' status -> 'canceled' (Terminal state; expect 400 Bad Request)
+   - Invalid transition: Order in 'canceled' status -> 'canceled' (Double cancellation / Idempotency; expect 400 Bad Request)
+
+2. Security Testing (OWASP & SEC-01 to SEC-07):
+   - IDOR / BOLA (SEC-01): User A attempts to cancel an order belonging to User B (Expect 404 Not Found / 403 Forbidden)
+   - Authentication Bypass (SEC-02): Missing Authorization header (Expect 401 Unauthorized)
+   - Broken Authentication (SEC-02): Malformed JWT, expired JWT, invalid JWT signature (Expect 403 Forbidden)
+   - SQL Injection (SEC-05) on path parameter :id:
+     * Boolean tautology: 1' OR '1'='1
+     * Stacked / Destructive queries: 1; DROP TABLE orders;--
+     * Union-based injection: 1 UNION SELECT 1,2,3,4--
+     * Time-based / Sleep payloads
+   - Mass Assignment / Body Tampering (SEC-07): Sending request bodies with manipulated fields (e.g. {"status": "delivered"}, {"total_amount": 0})
+   - HTTP Method Tampering: POST, GET, DELETE against /api/orders/:id/cancel (Expect 404 / 405)
+
+3. Domain Partitioning & Boundary Value Analysis (EP & BVA on :id):
+   - Non-existent high integer ID (e.g. 999999) -> Expect 404 Not Found
+   - Boundary values: Zero (0), Negative numbers (-1, -99999)
+   - Type violations: Alphabetic strings ('abc'), alphanumeric ('order_123'), floating-point decimals (1.5)
+   - Extreme boundary / Overflow: 64-bit integer max (9223372036854775807), oversized URL string (>1000 chars)
+   - Special characters & Path Traversal: URL encoded spaces, null bytes (%00), traversal sequences (../)
+
+4. Schema & Contract Validation:
+   - Strict JSON Schema assertions for 200 OK success payloads
+   - Strict JSON Schema assertions for 4xx error payloads (error string)
+   - Response header verification (Content-Type: application/json; charset=utf-8)
+   - Mandatory header verification: X-Student-Id: 23127148 present and logged
+
+Required Deliverables to Generate in `HW6/Test/OrderCancel/`:
+1. `OrderCancel_Master_Document.md` — Master specification listing all 35+ test cases (TC-CANCEL-001 to TC-CANCEL-035+)
+2. `OrderCancel.postman_collection.json` — Fully executable Postman v2.1 collection with Pre-request script injecting `X-Student-Id: 23127148` and comprehensive `pm.test` assertions
+3. `coverage-matrix.md` — Matrix mapping test cases against FSM states, OWASP rules, and EP/BVA boundaries
+4. `audit-checklist.md` — Human audit table with VALID / INVALID / INCOMPLETE verdicts and technical reasoning
+5. `order-cancel-data-driven.json` — Data file for Postman Collection Runner
+6. Individual test case documentation files `test-cases/TC-CANCEL-001.md` through `TC-CANCEL-035+.md`
+```
+
+**Execution notes:**
+
+- Mode: GENERATE (Direct execution from updated generator skill)
+- Tools called: `write_to_file`, `list_dir`, `view_file`, `run_command`
+- Stored locations:
+  - `HW6/Test/OrderCancel/test-cases/TC-CANCEL-001.md` ... `TC-CANCEL-040.md`
+  - `HW6/Test/OrderCancel/OrderCancel_Master_Document.md`
+  - `HW6/Test/OrderCancel/coverage-matrix.md`
+  - `HW6/Test/OrderCancel/audit-checklist.md`
+  - `HW6/Test/OrderCancel/order-cancel-data-driven.json`
+  - `HW6/Test/OrderCancel/OrderCancel.postman_collection.json`
+  - `HW6/Postman/OrderCancel.postman_collection.json`
+
+#### (2) AI Output
+
+- Generated 40 distinct, fully documented test cases across all 4 required testing dimensions:
+  - **State Transitions & FSM (6 cases):** Valid transitions (`pending`, `confirmed`), invalid terminal states (`delivered`, `canceled` double cancel), and negative transition for `shipping` status (catching the SUT Line 329 bug).
+  - **Security Testing (16 cases):** Missing/Empty/Malformed/Expired/Tampered JWT (SEC-02), BOLA / IDOR user isolation (`WHERE id = ? AND user_id = ?`) (SEC-04), RBAC isolation (SEC-03), SQL Injection on path parameter (SEC-05), Mass Assignment (SEC-07), and Method Tampering.
+  - **Domain Partitioning (13 cases):** Non-existent IDs, invalid type partitions (`abc`, `order_123`, `1.5`), boundary value analysis (`-1`, `0`, `-999999999`, 64-bit max, 32-bit max), oversized buffer (>1000 chars), path traversal (`../../`), and null byte poisoning (`%00`).
+  - **Schema Validation & Traceability (5 cases):** Strict Draft-07 JSON Schema assertions for 200/400/404 responses, MIME verification, and mandatory `X-Student-Id: 23127148` header check.
+- Delivered complete Postman v2.1 Collection with setup folders (authentication, order creation), Pre-request scripts injecting `X-Student-Id`, and complete test assertions.
+- Delivered data-driven JSON runner dataset (`order-cancel-data-driven.json`), traceability matrix, and audit checklist.
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | VALID |
+| **Reasoning** | The generated test suite strictly covers all 4 required dimensions under ISTQB Foundation Level and HW06 Section 6.1. It accurately models the Finite State Machine (FSM) for orders (`pending`, `confirmed`, `shipping`, `delivered`, `canceled`), catches the real SUT bug at `backend/server.js:329` (where orders in `shipping` state are erroneously allowed to cancel because the guard only checks `delivered` or `canceled`), validates BOLA/IDOR protection via scoped SQL queries (`WHERE id = ? AND user_id = ?`), handles parameter injection, and outputs all 40 test cases in full compliance with the faculty's template and `test-cases/` directory standard without requiring manual reformatting. |
+| **Student Fix** | Accepted as-is. Verified that the test generator skill properly leveraged the synchronized template from Artifact #4, confirmed all 40 test cases were placed directly in `test-cases/`, and verified that the SUT line 329 defect is accurately flagged in TC-CANCEL-003 and the audit checklist. |
+| **Reviewed by** | Nguyen An |
+| **Review date** | 2026-08-22 |
+| **Quality rating** | Excellent |
+| **Issues found** | None |
+
+---
+
 ## 4. Summary of AI Accuracy
 
 | Metric | Count | Percentage |
 | --- | ---: | ---: |
-| **Total AI-generated artifacts audited** | 4 | 100% |
-| **VALID (correct, accepted as-is)** | 2 | 50.0% |
+| **Total AI-generated artifacts audited** | 5 | 100% |
+| **VALID (correct, accepted as-is)** | 3 | 60.0% |
 | **INVALID (wrong; rejected)** | 0 | 0.0% |
-| **INCOMPLETE (acceptable after edits)** | 2 | 50.0% |
+| **INCOMPLETE (acceptable after edits)** | 2 | 40.0% |
 
 ---
 
 ## 5. Conclusion -- When should AI be used (or not)?
 
-AI assistants are extraordinarily effective at generating combinatorial test partitions, crafting executable Postman test collections with JSON Schema assertions, and discovering security edge cases (such as CWE-200 cleartext token exposure, CWE-330 weak RNG, and CWE-203 enumeration side-channels). As seen in Artifacts #2 and #4 (both VALID), AI efficiently formalizes algorithms and maintains skill definitions.
+AI assistants are extraordinarily effective at generating combinatorial test partitions, crafting executable Postman test collections with JSON Schema assertions, and discovering subtle security and state machine defects (such as the planted flaw in `server.js:329` where `shipping` orders bypass cancellation restrictions, and CWE-200 cleartext token exposure). 
 
-However, AI frequently diverges in documentation structure and file placement unless given a strict template (Artifact #3, INCOMPLETE). AI should be leveraged to generate exhaustive domain test matrices and executable code, but the human engineer must actively enforce submission formatting standards, verify test validity against the real SUT implementation, and ensure academic integrity constraints.
+Crucially, the progression from Artifact #3 (INCOMPLETE due to initial non-standard formatting) to Artifact #4 (skill template synchronization) and Artifact #5 (VALID on first generation) demonstrates the power of iterative agent skill design: once the human engineer codifies the exact submission schema and architectural constraints into the reusable skill, the AI achieves 100% first-pass accuracy on subsequent endpoints. AI should be used extensively for combinatorial exploration and test harness authoring, guided by human domain review for business logic edge cases and academic compliance.
 
 ---
 
 ## 6. Mandatory Disclosure
 
-The agent skills (`api-test-generator`, `api-test-executor`), design specifications (`pseudocode.md`, `diagram.md`), and the Forgot Password test suite (`TC-FORGOT-001` to `TC-FORGOT-040`) were initially generated by Antigravity IDE (Claude Opus 4.6 & Gemini 3.7 Flash); I reviewed, guided the architecture, restructured the test case format to match course standards, moved test files into `test-cases/`, verified security vulnerabilities in the SUT, and synchronized the generator skill. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any artifact listed in the prohibited category.
+The agent skills (`api-test-generator`, `api-test-executor`), design specifications (`pseudocode.md`, `diagram.md`), the Forgot Password test suite (`TC-FORGOT-001` to `TC-FORGOT-040`), and the Order Cancel test suite (`TC-CANCEL-001` to `TC-CANCEL-040`) were initially generated by Antigravity IDE (Claude Opus 4.6 & Gemini 3.7 Flash); I reviewed, guided the architecture, restructured the test case format to match course standards, moved test files into `test-cases/`, verified security vulnerabilities and state machine defects in the SUT, and synchronized the generator skill. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any artifact listed in the prohibited category.
 
 ---
 
@@ -365,6 +475,7 @@ The agent skills (`api-test-generator`, `api-test-executor`), design specificati
 | 2 | Gemini 3.7 Flash | Architectural Design | Pseudocode & Diagram Specification | 2026-08-22 | G9.5 Create | VALID |
 | 3 | Gemini 3.7 Flash | Test Case Generation | POST /api/forgot-password (FR-03) Suite | 2026-08-22 | G9.5 Create | INCOMPLETE |
 | 4 | Gemini 3.7 Flash | Skill Maintenance | Template Synchronization in SKILL.md | 2026-08-22 | G9.5 Create | VALID |
+| 5 | Gemini 3.7 Flash | Test Case Generation | PUT /api/orders/:id/cancel (FR-10) Suite | 2026-08-22 | G9.5 Create | VALID |
 
 ### Contribution Breakdown
 
@@ -374,6 +485,7 @@ The agent skills (`api-test-generator`, `api-test-executor`), design specificati
 | Design References (`pseudocode.md`, `diagram.md`) | 75% | 25% | Requirements verification, anti-cheat drawing blueprint validation |
 | Forgot Password Test Suite (40 test cases, Postman, Matrix) | 70% | 30% | Test scope prompt design, template enforcement, SUT vulnerability analysis, folder restructuring |
 | Skill Template Synchronization | 85% | 15% | Standard validation and diff verification |
+| Order Cancel Test Suite (40 test cases, Postman, Matrix, FSM) | 75% | 25% | FSM state transition scoping, SUT line 329 defect validation, BOLA & SQLi coverage verification |
 
 ### Compliance Checklist
 
@@ -384,7 +496,7 @@ The agent skills (`api-test-generator`, `api-test-executor`), design specificati
 - [x] AI output referenced with exact paths
 - [x] Verdict + ISTQB/course reasoning documented
 - [x] Student fix detailed
-- [x] Accuracy summary table computed (4 artifacts: 2 VALID, 2 INCOMPLETE, 0 INVALID)
+- [x] Accuracy summary table computed (5 artifacts: 3 VALID, 2 INCOMPLETE, 0 INVALID)
 - [x] Conclusion (80-150 words) written
 - [x] Mandatory disclosure completed without placeholders
 - [x] Markdown submission format verified
