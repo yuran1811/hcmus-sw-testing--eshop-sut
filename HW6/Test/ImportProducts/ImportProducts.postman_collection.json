@@ -380,7 +380,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTAwMDAwMDAwLCJleHAiOjE1MDAwMDAwMDB9.invalid",
+                "value": "Bearer MOCK_EXPIRED_JWT_TOKEN_TEST_23127148",
                 "type": "text"
               },
               {
@@ -432,7 +432,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzA4NTYwMDAwfQ.WRONG_SIGNATURE_KEY_TEST_STRING_X",
+                "value": "Bearer MOCK_TAMPERED_JWT_SIGNATURE_TEST_23127148",
                 "type": "text"
               },
               {

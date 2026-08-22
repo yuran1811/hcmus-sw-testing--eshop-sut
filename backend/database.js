@@ -110,6 +110,16 @@ function initDatabase() {
         insertCoupon.run('EXPIRED', 'percent', 20, 100000, '2020-01-01', 1, 1);  // 20% off, EXPIRED
         insertCoupon.finalize();
 
+        // Seed Orders for test suite consistency
+        const insertOrder = db.prepare('INSERT INTO orders (id, user_id, total_amount, status, shipping_address) VALUES (?, ?, ?, ?, ?)');
+        insertOrder.run(1, 2, 150000, 'pending', '123 Nguyen Trai, Q5');
+        insertOrder.run(2, 2, 250000, 'confirmed', '123 Nguyen Trai, Q5');
+        insertOrder.run(3, 2, 350000, 'shipping', '123 Nguyen Trai, Q5');
+        insertOrder.run(4, 2, 450000, 'delivered', '123 Nguyen Trai, Q5');
+        insertOrder.run(5, 2, 550000, 'canceled', '123 Nguyen Trai, Q5');
+        insertOrder.run(999, 1, 990000, 'pending', 'Admin HQ');
+        insertOrder.finalize();
+
         console.log('Database initialized and seeded (Phase 2).');
     });
 }
