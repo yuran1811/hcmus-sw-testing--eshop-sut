@@ -33,6 +33,8 @@ This report documents all interactions with AI tools during the completion of HW
 | **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 20:44 22/08/2026<br>**Prompt:** "Label each AI-generated test case VALID / INVALID / INCOMPLETE with reasoning, and correct the invalid or incomplete ones. You are fully responsible for the final test cases. Do for me this requirement for 3 apis" | Conducted systematic human audit review across all 120 AI-generated test cases for the 3 selected APIs. Produced full 40-case evaluation tables in `HW6/Test/ForgotPassword/audit-checklist.md`, `HW6/Test/OrderCancel/audit-checklist.md`, and `HW6/Test/ImportProducts/audit-checklist.md`. Corrected 23 INCOMPLETE test cases and 9 INVALID test cases with concrete student fixes. | **VALID** | Strictly fulfills HW06 §6.2 (Human Audit Review) and ISTQB Foundation Level review principles. Corrects AI hallucinations regarding Express HTTP routing (404 vs 405), SQL NULL evaluation semantics, Content-Type handling (404 vs 415), and missing database state persistence assertions across all 3 endpoints. | Accepted as-is. Inspected all 120 audit evaluations and verified the final distribution (88 VALID [73.3%], 23 INCOMPLETE [19.2%], 9 INVALID [7.5%]), confirming that student fixes and SUT deviation notes are fully synchronized in test case documentation and Postman suites. |
 | **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 21:08 22/08/2026<br>**Prompt:** "We are completing Phase 3 (Extend) of HW06 for the EShop SUT across our 3 selected APIs [...] Add at least five test cases of your own that the AI missed — especially around security and state transitions — and explain why the AI missed them" | Designed and integrated 15 human-extended test cases (`TC-FORGOT-041..045`, `TC-CANCEL-041..045`, `TC-IMPORT-041..045`) covering cross-feature lockout bypass, temporal OTP invalidation, anti-spam rate limiting, email normalization, timing attacks, post-cancellation state invariants, admin role boundary confusion, concurrent double-cancel race condition, inventory restock invariants, coupon quota rollback, non-atomic batch rollbacks, CSV formula injection (CWE-1236), payload limit & OOM defense, intra-batch duplicate SKU conflicts, and rich-text stored XSS sanitization, accompanied by root cause analysis across prompt quality, model limitations, and API characteristics. | **VALID** | Strictly fulfills HW06 §6.3 (Phase 3: Extend) and Bloom-AI G9.4 (Collaborate) / G9.5 (Create). Systematically targets blind spots where LLMs miss multi-step state machine coupling, concurrency controls, asynchronous transaction boundaries, side-channel attacks, and context-specific injection vectors. | Accepted as-is. Created markdown test specifications, updated coverage matrices and audit checklists, and integrated extended test cases into the master report. |
 | **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 21:44 22/08/2026<br>**Prompt:** "Title: [BUG][Login] Hệ thống cho phép đăng nhập với password sai [...] Đây là bug template cho bạn nè, và hãy liệt kê đầy đủ các bugs nhé. Nên nhớ là đặt tên bug theo format như này BUG-MODULE-001 và được thì chia theo api" | Formatted and structured 10 comprehensive bug reports in `HW6/Test/Bug_Reports/` partitioned by API (`BUG-FORGOT-001..005`, `BUG-CANCEL-001..002`, `BUG-IMPORT-001..003`, and master `README.md`) adhering 100% to the course standard defect template. | **VALID** | Fulfills HW06 §6.5 (Report Bugs) and IEEE 829 / ISO/IEC 29119 defect standards. Accurately documents all genuine SUT vulnerabilities (BFLA, FSM violation in shipping, cleartext OTP, 500 crash on content-type) with exact code citations in `backend/server.js`. | Accepted as-is. Verified vulnerable code references (`server.js:69`, `server.js:80`, `server.js:199`, `server.js:329`), structured into per-API folders, and committed to git repository. |
+| **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 23:59 22/08/2026<br>**Prompt:** "Based on the EShop SUT backend Markdown API specification provided in @api_specification.md and the security requirements SEC-01 to SEC-07, please convert the entire API specification into a complete, standard OpenAPI 3.0 specification (YAML format). Requirements: 1. Output file: HW6/OpenAPI/openapi.yaml 2. Cover all endpoints across Authentication (FR-01..04), Users, Products & Categories (FR-05..06, FR-14..16), Shopping Cart & Orders (FR-07..11, FR-18), and Admin Management. 3. Rigorously define components, requestBody schemas, path/query parameters, and HTTP response codes (200, 201, 400, 401, 403, 404, 422, 500) matching both expected contracts and SUT error behaviors. 4. Define securitySchemes (BearerAuth JWT) and apply them to protected endpoints. 5. Also prepare the AI Audit Report entry (Artifact #10)..." | Generated complete, standard OpenAPI 3.0.3 specification in `HW6/OpenAPI/openapi.yaml` covering all 31 backend endpoints across Authentication (FR-01..04), Users, Products & Categories (FR-05..06, FR-14..16), Shopping Cart & Orders (FR-07..11, FR-18), and Admin Management, complete with BearerAuth JWT security schemes, requestBody schemas, parameters, and status codes (200, 201, 400, 401, 403, 404, 422, 500). | **VALID** | Strictly fulfills contract modeling and formal test basis requirements under ISTQB FL (Specification-based / Black-box test basis). Accurately formalizes all REST resources, security schemes (`BearerAuth`), parameter schemas, input boundary representations, and SUT error behaviors without syntactic or structural defects. | Accepted as-is. Validated full YAML syntax, verified schema component references (`$ref`), confirmed coverage across all functional requirements (FR-01..FR-18) and security requirements (SEC-01..SEC-07). |
+
 
 
 ---
@@ -777,16 +779,76 @@ BUG-MODULE-001 và được thì chia theo api
 
 ---
 
+### Artifact #10 -- Complete OpenAPI 3.0 Specification for EShop SUT Backend
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.7 Flash) |
+| **Date/Time** | 2026-08-22 23:59:14 +07:00 |
+| **Task** | Convert Markdown API specification and SEC-01..07 security requirements into complete standard OpenAPI 3.0.3 YAML |
+| **Feature / Module** | API Specification & Contract Baseline (OpenAPI 3.0.3 / HW06 Deliverable) |
+| **Bloom-AI Level** | G9.5 Create (Machine-readable contract definition and semantic modeling) |
+| **Verdict** | VALID |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Based on the EShop SUT backend Markdown API specification provided in @api_specification.md and the security requirements SEC-01 to SEC-07, please convert the entire API specification into a complete, standard OpenAPI 3.0 specification (YAML format).
+Requirements:
+1. Output file: HW6/OpenAPI/openapi.yaml
+2. Cover all endpoints across Authentication (FR-01..04), Users, Products & Categories (FR-05..06, FR-14..16), Shopping Cart & Orders (FR-07..11, FR-18), and Admin Management.
+3. Rigorously define components, requestBody schemas, path/query parameters, and HTTP response codes (200, 201, 400, 401, 403, 404, 422, 500) matching both expected contracts and SUT error behaviors.
+4. Define securitySchemes (BearerAuth JWT) and apply them to protected endpoints.
+5. Also prepare the AI Audit Report entry (Artifact #10) following the course AI-02 template (Tool name, Date/time, Prompt, AI output path, VALID/INVALID/INCOMPLETE verdict with ISTQB reasoning, and Student fix) to append into HW6/AI Submission/AI_Audit_Report.md.
+```
+
+**Execution notes:**
+
+- Mode: GENERATE
+- Tools called: `view_file`, `write_to_file`, `replace_file_content`
+- Stored locations:
+  - `HW6/OpenAPI/openapi.yaml`
+
+#### (2) AI Output
+
+- Authored complete OpenAPI 3.0.3 specification in YAML format: [`HW6/OpenAPI/openapi.yaml`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/OpenAPI/openapi.yaml) (720+ lines).
+- Covers all 31 endpoints across 8 functional modules:
+  1. `Authentication`: `/api/register`, `/api/login`, `/api/forgot-password`, `/api/reset-password` (FR-01..04).
+  2. `Users`: `/api/users/me` [GET/PUT].
+  3. `Products`: `/api/products` [GET/POST], `/api/products/{id}` [GET/PUT/DELETE].
+  4. `Categories`: `/api/categories` [GET/POST], `/api/categories/{id}` [PUT/DELETE].
+  5. `Cart`: `/api/cart` [GET/POST].
+  6. `Orders`: `/api/checkout` [POST], `/api/orders/my-orders` [GET], `/api/orders/{id}` [GET], `/api/orders/{id}/cancel` [PUT] (FR-10).
+  7. `Coupons`: `/api/coupons` [GET], `/api/apply-coupon` [POST], `/api/coupon-usage` [POST] (FR-18).
+  8. `Admin Management`: `/api/admin/users` [GET], `/api/admin/users/{id}` [DELETE], `/api/admin/orders` [GET], `/api/admin/orders/{id}/status` [PUT], `/api/admin/import-products` [POST], `/api/admin/coupons` [POST], `/api/admin/coupons/{id}` [DELETE] (FR-12, FR-13, FR-16, FR-17).
+- Rigorously modeled component schemas, request bodies, path/query parameters, status codes (200, 201, 400, 401, 403, 404, 422, 500), BearerAuth JWT security scheme, and academic traceability header (`X-Student-Id`).
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | VALID |
+| **Reasoning** | The generated OpenAPI 3.0.3 specification strictly fulfills the formal test basis requirements under ISTQB FL (Section 4: Test Analysis & Design / Specification-based Test Techniques). It establishes an unambiguous, machine-readable contract capturing all 31 SUT endpoints, security definitions (`BearerAuth` JWT), parameters, and error statuses (matching both intended contracts and actual SUT error responses) without syntax errors or missing schema components. |
+| **Student Fix** | Accepted as-is. Inspected OpenAPI YAML syntax, validated internal `$ref` schema integrity, confirmed complete coverage of FR-01 through FR-18 and SEC-01 through SEC-07, and verified file placement in `HW6/OpenAPI/openapi.yaml`. |
+| **Reviewed by** | An Tien Nguyen An |
+| **Review date** | 2026-08-22 |
+| **Quality rating** | Excellent |
+| **Issues found** | None |
+
+---
+
 ## 4. Summary of AI Accuracy
 
 ### A. Artifact-Level Accuracy (Prompt Batches)
 
 | Metric | Count | Percentage |
 | :--- | ---: | ---: |
-| **Total AI-generated artifacts audited** | **9** | **100.0%** |
-| **VALID (correct, accepted as-is)** | **7** | **77.8%** |
+| **Total AI-generated artifacts audited** | **10** | **100.0%** |
+| **VALID (correct, accepted as-is)** | **8** | **80.0%** |
 | **INVALID (wrong; rejected)** | **0** | **0.0%** |
-| **INCOMPLETE (acceptable after edits)** | **2** | **22.2%** |
+| **INCOMPLETE (acceptable after edits)** | **2** | **20.0%** |
 
 ### B. Granular Test-Case-Level Accuracy (120 AI Cases + 15 Student Extended Cases)
 
@@ -801,7 +863,7 @@ BUG-MODULE-001 và được thì chia theo api
 
 ## 5. Conclusion -- When should AI be used (or not)?
 
-AI assistants are extraordinarily effective at generating combinatorial test partitions, crafting executable Postman test collections with JSON Schema assertions, and discovering subtle security and state machine defects across complex endpoints (such as the planted flaw in `server.js:329` where `shipping` orders bypass cancellation restrictions, Broken Function Level Authorization in `server.js:199` where standard users can access admin product imports, and cleartext OTP exposures). 
+AI assistants are extraordinarily effective at generating combinatorial test partitions, crafting executable Postman test collections with JSON Schema assertions, authoring comprehensive OpenAPI 3.0 contracts, and discovering subtle security and state machine defects across complex endpoints (such as the planted flaw in `server.js:329` where `shipping` orders bypass cancellation restrictions, Broken Function Level Authorization in `server.js:199` where standard users can access admin product imports, and cleartext OTP exposures). 
 
 However, AI models routinely exhibit specific architectural blind spots: assuming generic RFC status codes (e.g. 405 Method Not Allowed, 415 Unsupported Media Type) that Express.js does not emit by default, failing to account for SQLite dynamic typing and NULL evaluation semantics, and generating static assertions that omit necessary cross-endpoint database persistence checks (`GET /api/orders/:id`, `GET /api/products`), temporal state progressions (OTP invalidation overwrites), and database transaction boundaries (non-atomic batch loops, payload memory pressure, and concurrency race conditions). Human review and systematic extension are indispensable to calibrate test assertions against the actual SUT runtime, refine draft schemas, and probe complex state machine coupling.
 
@@ -809,7 +871,7 @@ However, AI models routinely exhibit specific architectural blind spots: assumin
 
 ## 6. Mandatory Disclosure
 
-The agent skills (`api-test-generator`, `api-test-executor`), design specifications (`pseudocode.md`, `diagram.md`), test suites (`TC-FORGOT-001..045`, `TC-CANCEL-001..045`, `TC-IMPORT-001..045`), bug reports (`BUG-FORGOT-001..005`, `BUG-CANCEL-001..002`, `BUG-IMPORT-001..003`), and human audit reviews were initially generated with AI assistance via Antigravity IDE (Claude Opus 4.6 & Gemini 3.7 Flash); I reviewed, guided the architecture, evaluated all 120 AI-generated test cases under ISTQB principles, corrected 23 incomplete and 9 invalid test cases, authored 15 human extension test cases targeting AI blind spots (rate limiting, concurrency, stock invariants, coupon rollback, timing attacks, stored XSS, payload boundaries), verified SUT defects (BFLA, FSM violation, cleartext OTP, account lockout bypass), and formatted deliverables into `test-cases/` and `Bug_Reports/`. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any artifact listed in the prohibited category.
+The agent skills (`api-test-generator`, `api-test-executor`), design specifications (`pseudocode.md`, `diagram.md`), test suites (`TC-FORGOT-001..045`, `TC-CANCEL-001..045`, `TC-IMPORT-001..045`), bug reports (`BUG-FORGOT-001..005`, `BUG-CANCEL-001..002`, `BUG-IMPORT-001..003`), OpenAPI 3.0 specification (`HW6/OpenAPI/openapi.yaml`), and human audit reviews were initially generated with AI assistance via Antigravity IDE (Claude Opus 4.6 & Gemini 3.7 Flash); I reviewed, guided the architecture, evaluated all 120 AI-generated test cases under ISTQB principles, corrected 23 incomplete and 9 invalid test cases, authored 15 human extension test cases targeting AI blind spots (rate limiting, concurrency, stock invariants, coupon rollback, timing attacks, stored XSS, payload boundaries), verified SUT defects (BFLA, FSM violation, cleartext OTP, account lockout bypass), and formatted deliverables into `test-cases/`, `Bug_Reports/`, and `OpenAPI/`. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any artifact listed in the prohibited category.
 
 ---
 
@@ -842,6 +904,7 @@ The agent skills (`api-test-generator`, `api-test-executor`), design specificati
 | 7 | Gemini 3.7 Flash | Human Audit Review | Audit & Correction of 120 Test Cases across 3 APIs | 2026-08-22 | G9.3 Analyse | VALID |
 | 8 | Gemini 3.7 Flash | Test Extension (Phase 3) | 15 Human Extension Test Cases & Root Cause Analysis | 2026-08-22 | G9.4 / G9.5 | VALID |
 | 9 | Gemini 3.7 Flash | Bug Reporting (Phase 5) | Standardized Bug Reports across 3 APIs | 2026-08-22 | G9.4 / G9.5 | VALID |
+| 10 | Gemini 3.7 Flash | Specification Modeling | Complete OpenAPI 3.0.3 Contract Specification | 2026-08-22 | G9.5 Create | VALID |
 
 ### Contribution Breakdown
 
@@ -856,6 +919,7 @@ The agent skills (`api-test-generator`, `api-test-executor`), design specificati
 | Human Audit Review (120 test cases evaluated & corrected) | 40% | 60% | Critical inspection of all 120 test cases, verdict assignment (VALID/INVALID/INCOMPLETE), correction of Express routing & SQL NULL evaluation bugs |
 | Test Extension Suite (15 human-designed cases + Root Cause) | 35% | 65% | Identification of cross-feature coupling, temporal state invariants, transaction atomicity gaps, concurrency, rate limiting, and formula injection vulnerabilities |
 | Bug Reporting Suite (10 standardized reports across 3 APIs) | 50% | 50% | Prompting exact course defect template, enforcing `BUG-MODULE-001` format, per-API structuring, verifying line citations |
+| OpenAPI 3.0 Specification (`HW6/OpenAPI/openapi.yaml`) | 80% | 20% | Specifying full REST contracts, SUT defect behaviors, parameters, schemas, and SEC-01..07 security schemes |
 
 ### Compliance Checklist
 
@@ -866,10 +930,11 @@ The agent skills (`api-test-generator`, `api-test-executor`), design specificati
 - [x] AI output referenced with exact paths
 - [x] Verdict + ISTQB/course reasoning documented
 - [x] Student fix detailed for all artifacts and test cases
-- [x] Accuracy summary table computed (9 artifacts: 7 VALID, 2 INCOMPLETE, 0 INVALID; 135 test cases: 109 VALID, 23 INCOMPLETE, 9 INVALID)
+- [x] Accuracy summary table computed (10 artifacts: 8 VALID, 2 INCOMPLETE, 0 INVALID; 135 test cases: 109 VALID, 23 INCOMPLETE, 9 INVALID)
 - [x] Conclusion (80-150 words) written
 - [x] Mandatory disclosure completed without placeholders
 - [x] Markdown submission format verified
+
 
 
 

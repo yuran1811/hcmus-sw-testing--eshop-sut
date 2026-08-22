@@ -1,0 +1,1774 @@
+openapi: 3.0.3
+info:
+  title: EShop SUT Backend API
+  description: |
+    Complete OpenAPI 3.0.3 specification for the EShop System Under Test (SUT) backend API.
+    Designed for CS423 / CSC13003 Software Testing (HW06 API Testing), covering:
+    - Functional Requirements: FR-01 through FR-18 (Authentication, Users, Products, Categories, Cart, Orders, Coupons, Admin Management)
+    - Security Requirements: SEC-01 through SEC-07 (Password hashing, JWT Bearer verification, RBAC / Role checks, XSS escaping, Parameterized queries, Mass assignment prevention, OTP entropy)
+    - Conforms to both contractual specifications and SUT runtime error responses (HTTP 200, 201, 400, 401, 403, 404, 422, 500).
+  version: 1.0.0
+  contact:
+    name: An Tien Nguyen An
+    email: 23127148@student.hcmus.edu.vn
+
+servers:
+  - url: http://localhost:3000
+    description: Local EShop SUT Backend Server
+
+tags:
+  - name: Authentication
+    description: User registration, login, password recovery, and password reset (FR-01..FR-04)
+  - name: Users
+    description: User profile retrieval and personal data updates
+  - name: Products
+    description: Product catalog browsing, searching, and CRUD operations (FR-05..FR-06, FR-14..FR-15)
+  - name: Categories
+    description: Category listing and management
+  - name: Cart
+    description: Shopping cart management (FR-07..FR-08)
+  - name: Orders
+    description: Checkout, order history, order lookup, and cancellation state machine (FR-09..FR-11)
+  - name: Coupons
+    description: Discount coupon lookup, validation, and checkout application (FR-18)
+  - name: Admin Management
+    description: Administrative endpoints for users, orders, batch CSV product import, and coupons (FR-12, FR-13, FR-16, FR-17)
+
+paths:
+  # ==========================================
+  # AUTHENTICATION ENDPOINTS (FR-01..04)
+  # ==========================================
+  /api/register:
+    post:
+      tags:
+        - Authentication
+      summary: Register a new user account (FR-01)
+      description: |
+        Registers a new user account with full name, email, and password.
+        - Security SEC-01: Passwords should be hashed securely (SUT stores plaintext).
+        - Returns HTTP 200/201 on success with new user ID.
+      operationId: registerUser
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '200':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/login:
+    post:
+      tags:
+        - Authentication
+      summary: Authenticate user & issue JWT (FR-02)
+      description: |
+        Authenticates credentials and returns a signed JWT Bearer token with user details.
+        - Enforces login attempt tracking (locks account for 3 minutes after $\ge 3$ failed attempts).
+        - Security SEC-02: Issues token used in subsequent protected endpoints.
+      operationId: loginUser
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful, returns JWT token and user profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          description: Invalid email or password
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Invalid email or password"
+        '403':
+          description: Account is temporarily locked due to excessive failed attempts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Tài khoản đã bị khóa. Vui lòng thử lại sau."
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/forgot-password:
+    post:
+      tags:
+        - Authentication
+      summary: Generate password reset OTP (FR-03)
+      description: |
+        Generates a 4-digit numeric OTP reset token for the specified email address.
+        - Security SEC-07: OTP entropy requirement (SUT uses 4-digit Math.random and leaks resetToken in response).
+        - User Enumeration (CWE-203): Returns 404 when email is not found.
+      operationId: forgotPassword
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPasswordRequest'
+      responses:
+        '200':
+          description: Password reset token created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForgotPasswordResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          description: User email not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "User not found"
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/reset-password:
+    post:
+      tags:
+        - Authentication
+      summary: Reset password with OTP token (FR-04)
+      description: |
+        Updates user password using the OTP reset token generated via `/api/forgot-password`.
+        - Once consumed, the `reset_token` is cleared in the database.
+      operationId: resetPassword
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordRequest'
+      responses:
+        '200':
+          description: Password reset successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+              example:
+                message: "Password reset successfully"
+        '400':
+          description: Invalid reset token or email
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Invalid token or email"
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  # ==========================================
+  # USERS ENDPOINTS
+  # ==========================================
+  /api/users/me:
+    get:
+      tags:
+        - Users
+      summary: Get current authenticated user profile
+      description: |
+        Retrieves the personal profile details of the user identified by the Bearer JWT token.
+        - Security SEC-02: Requires valid JWT token.
+      operationId: getCurrentUserProfile
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      responses:
+        '200':
+          description: Current user profile data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    put:
+      tags:
+        - Users
+      summary: Update current user profile
+      description: |
+        Updates profile fields (name, shipping address, phone).
+        - Security SEC-06: Client must not be allowed to escalate privileges by updating `role` (SUT defect: allows dynamic role update if passed).
+      operationId: updateCurrentUserProfile
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProfileRequest'
+      responses:
+        '200':
+          description: Profile updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+              example:
+                message: "Profile updated"
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  # ==========================================
+  # PRODUCTS ENDPOINTS (FR-05..06, FR-14..15)
+  # ==========================================
+  /api/products:
+    get:
+      tags:
+        - Products
+      summary: Get product list with optional search query (FR-05)
+      description: |
+        Returns list of all products or filters products by name using the `search` query parameter.
+        - Security SEC-05: SQL query parameterized check (SUT vulnerability: raw string concatenation on search).
+      operationId: listProducts
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+        - $ref: '#/components/parameters/ProductSearchQuery'
+      responses:
+        '200':
+          description: List of products matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    post:
+      tags:
+        - Products
+      summary: Create a new product (FR-14)
+      description: |
+        Creates a new product record in the catalog.
+        - Expected to require Admin privileges.
+      operationId: createProduct
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductInput'
+      responses:
+        '200':
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCreationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/products/{id}:
+    get:
+      tags:
+        - Products
+      summary: Get product details by ID (FR-06)
+      description: |
+        Retrieves detailed information for a specific product by integer ID.
+        - SUT quirk: Returns even ID prices as string, odd ID prices as integer; returns empty object `{}` if not found.
+      operationId: getProductById
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+        - $ref: '#/components/parameters/ProductId'
+      responses:
+        '200':
+          description: Product details or empty object if not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    put:
+      tags:
+        - Products
+      summary: Update product by ID (FR-14)
+      description: Updates product information by ID.
+      operationId: updateProductById
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+        - $ref: '#/components/parameters/ProductId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductInput'
+      responses:
+        '200':
+          description: Product updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+              example:
+                message: "Product updated"
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    delete:
+      tags:
+        - Products
+      summary: Delete product by ID (FR-15)
+      description: Removes a product from the database by ID.
+      operationId: deleteProductById
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+        - $ref: '#/components/parameters/ProductId'
+      responses:
+        '200':
+          description: Product deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+              example:
+                message: "Product deleted"
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  # ==========================================
+  # CATEGORIES ENDPOINTS
+  # ==========================================
+  /api/categories:
+    get:
+      tags:
+        - Categories
+      summary: List all product categories
+      description: Returns all categories in the system.
+      operationId: listCategories
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      responses:
+        '200':
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    post:
+      tags:
+        - Categories
+      summary: Create a new category
+      description: Creates a new category. Requires Bearer JWT authentication.
+      operationId: createCategory
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryInput'
+      responses:
+        '200':
+          description: Category created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryCreationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/categories/{id}:
+    put:
+      tags:
+        - Categories
+      summary: Update category by ID
+      description: Updates an existing category name. Requires Bearer JWT authentication.
+      operationId: updateCategoryById
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+        - $ref: '#/components/parameters/CategoryId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryInput'
+      responses:
+        '200':
+          description: Category updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+              example:
+                message: "Category updated"
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    delete:
+      tags:
+        - Categories
+      summary: Delete category by ID
+      description: Deletes a category by ID. Requires Bearer JWT authentication.
+      operationId: deleteCategoryById
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+        - $ref: '#/components/parameters/CategoryId'
+      responses:
+        '200':
+          description: Category deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+              example:
+                message: "Category deleted"
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  # ==========================================
+  # CART & CHECKOUT ENDPOINTS (FR-07..09)
+  # ==========================================
+  /api/cart:
+    get:
+      tags:
+        - Cart
+      summary: Get current user shopping cart items (FR-07)
+      description: Retrieves in-memory shopping cart items for the authenticated user.
+      operationId: getCart
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      responses:
+        '200':
+          description: Array of cart items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CartItem'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    post:
+      tags:
+        - Cart
+      summary: Add product item to cart (FR-08)
+      description: Adds a product with price and quantity to the user's cart.
+      operationId: addToCart
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddToCartRequest'
+      responses:
+        '200':
+          description: Item added to cart successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+              example:
+                message: "Added to cart"
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/checkout:
+    post:
+      tags:
+        - Orders
+      summary: Create order from cart (Checkout) (FR-09)
+      description: |
+        Processes checkout, records a new order in `pending` status, and associates it with the authenticated user.
+      operationId: checkoutOrder
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckoutRequest'
+      responses:
+        '200':
+          description: Checkout successful, returns created orderId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckoutResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/orders/my-orders:
+    get:
+      tags:
+        - Orders
+      summary: Get order history for current user (FR-11)
+      description: Retrieves all past and current orders belonging exclusively to the authenticated user.
+      operationId: getMyOrders
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      responses:
+        '200':
+          description: List of user orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/orders/{id}:
+    get:
+      tags:
+        - Orders
+      summary: Get order details by ID
+      description: |
+        Retrieves details of an order by ID.
+        - Security SEC-04 / BOLA consideration: Publicly exposed in SUT without authentication or user scoping.
+      operationId: getOrderById
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+        - $ref: '#/components/parameters/OrderId'
+      responses:
+        '200':
+          description: Order details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Order not found"
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/orders/{id}/cancel:
+    put:
+      tags:
+        - Orders
+      summary: Cancel an order by user (FR-10)
+      description: |
+        Transitions an order to `canceled` status if it belongs to the authenticated user and has not been delivered.
+        - State Machine Guard: Forbidden on `delivered` and `canceled`.
+        - SUT Defect (Line 329): Erroneously allows cancellation when order is in `shipping` status.
+        - Security SEC-04 / BOLA: Scoped to user (`WHERE id = ? AND user_id = ?`).
+      operationId: cancelOrder
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+        - $ref: '#/components/parameters/OrderId'
+      responses:
+        '200':
+          description: Order canceled successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelOrderResponse'
+        '400':
+          description: Cannot cancel order in current state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Cannot cancel this order."
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          description: Order not found or does not belong to user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Order not found"
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  # ==========================================
+  # COUPONS ENDPOINTS (FR-18)
+  # ==========================================
+  /api/coupons:
+    get:
+      tags:
+        - Coupons
+      summary: Get all coupons list
+      description: Retrieves all coupons. Requires Bearer JWT token.
+      operationId: listCoupons
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      responses:
+        '200':
+          description: List of coupons
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Coupon'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/apply-coupon:
+    post:
+      tags:
+        - Coupons
+      summary: Apply coupon code to compute order discount (FR-18)
+      description: |
+        Validates coupon code, expiration date, minimum order amount, and per-user usage quota (`max_uses_per_user`).
+        Returns calculated `discount_amount` and `final_amount`.
+      operationId: applyCoupon
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplyCouponRequest'
+      responses:
+        '200':
+          description: Coupon applied successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplyCouponResponse'
+        '400':
+          description: Coupon code missing, expired, min order amount not reached, or max usage reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Đơn hàng chưa đủ giá trị tối thiểu 300,000 ₫ để áp dụng mã này"
+        '404':
+          description: Coupon not found or inactive
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Mã giảm giá không tồn tại hoặc đã bị vô hiệu hóa"
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/coupon-usage:
+    post:
+      tags:
+        - Coupons
+      summary: Record coupon usage upon checkout completion
+      description: Records coupon usage event for authenticated user into `coupon_usage` table.
+      operationId: recordCouponUsage
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecordCouponUsageRequest'
+      responses:
+        '200':
+          description: Usage recorded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+              example:
+                message: "Usage recorded"
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  # ==========================================
+  # ADMIN MANAGEMENT ENDPOINTS (FR-12, FR-13, FR-16, FR-17)
+  # ==========================================
+  /api/admin/users:
+    get:
+      tags:
+        - Admin Management
+      summary: Admin - List all registered users (FR-12)
+      description: |
+        Retrieves user records (id, name, email, role, login_attempts, locked_until, shipping_address).
+        - Security SEC-03: Requires Bearer JWT with `role: 'admin'`.
+      operationId: adminListUsers
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      responses:
+        '200':
+          description: List of system users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AdminUser'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/admin/users/{id}:
+    delete:
+      tags:
+        - Admin Management
+      summary: Admin - Delete a user account (FR-12)
+      description: Deletes a user by ID. Requires Admin role.
+      operationId: adminDeleteUser
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: User deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+              example:
+                message: "User deleted"
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/admin/orders:
+    get:
+      tags:
+        - Admin Management
+      summary: Admin - List all system orders (FR-13)
+      description: Retrieves all orders across all users with joined user names. Requires Admin role.
+      operationId: adminListOrders
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      responses:
+        '200':
+          description: List of all customer orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AdminOrder'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/admin/orders/{id}/status:
+    put:
+      tags:
+        - Admin Management
+      summary: Admin - Update order status along state machine (FR-13)
+      description: |
+        Transitions an order status adhering to the administrative Finite State Machine (FSM):
+        - `pending` -> `confirmed` | `canceled`
+        - `confirmed` -> `shipping` | `canceled`
+        - `shipping` -> `delivered`
+        - `canceled` -> `delivered` (SUT transition)
+        - Invalid transitions reject with HTTP 400.
+      operationId: adminUpdateOrderStatus
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+        - $ref: '#/components/parameters/OrderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrderStatusRequest'
+      responses:
+        '200':
+          description: Order status updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+              example:
+                message: "Order status updated"
+        '400':
+          description: Invalid state transition
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Invalid state transition from delivered to pending"
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Order not found"
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/admin/import-products:
+    post:
+      tags:
+        - Admin Management
+      summary: Admin - Batch import products parsed from CSV (FR-16)
+      description: |
+        Accepts a JSON array of product objects (parsed from CSV) and executes batch insertion.
+        - Security SEC-03 (BFLA): SUT vulnerability in `server.js:199` fails to enforce `req.user.role === 'admin'`.
+        - Batch Execution: Validates each row, records partial errors in `errors` array, and returns count of `inserted` items.
+      operationId: adminImportProducts
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportProductsRequest'
+      responses:
+        '200':
+          description: Batch import completed with summary of inserted products and row errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportProductsResponse'
+        '400':
+          description: Missing or empty products array
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Không có dữ liệu để import"
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/admin/coupons:
+    post:
+      tags:
+        - Admin Management
+      summary: Admin - Create a new coupon (FR-17)
+      description: |
+        Creates a new discount coupon with type (`percent` or `fixed`), discount value, minimum order amount, and expiration date.
+      operationId: adminCreateCoupon
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCouponInput'
+      responses:
+        '200':
+          description: Coupon created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CouponCreationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/admin/coupons/{id}:
+    delete:
+      tags:
+        - Admin Management
+      summary: Admin - Delete a coupon by ID (FR-17)
+      description: Removes a coupon from the system by ID. Requires Admin role.
+      operationId: adminDeleteCoupon
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StudentIdHeader'
+        - $ref: '#/components/parameters/CouponId'
+      responses:
+        '200':
+          description: Coupon deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+              example:
+                message: "Coupon deleted"
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+# ==========================================
+# COMPONENTS & SCHEMAS
+# ==========================================
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "JSON Web Token (JWT) issued via `/api/login`. Pass as `Authorization: Bearer <token>`"
+
+  parameters:
+    StudentIdHeader:
+      name: X-Student-Id
+      in: header
+      required: false
+      description: Student ID header required for academic traceability & anti-cheat audit (HW06 §7).
+      schema:
+        type: string
+        example: "23127148"
+
+    ProductId:
+      name: id
+      in: path
+      required: true
+      description: Unique integer ID of the product
+      schema:
+        type: integer
+        example: 1
+
+    CategoryId:
+      name: id
+      in: path
+      required: true
+      description: Unique integer ID of the category
+      schema:
+        type: integer
+        example: 1
+
+    OrderId:
+      name: id
+      in: path
+      required: true
+      description: Unique integer ID of the order
+      schema:
+        type: integer
+        example: 1
+
+    CouponId:
+      name: id
+      in: path
+      required: true
+      description: Unique integer ID of the coupon
+      schema:
+        type: integer
+        example: 1
+
+    UserId:
+      name: id
+      in: path
+      required: true
+      description: Unique integer ID of the user
+      schema:
+        type: integer
+        example: 2
+
+    ProductSearchQuery:
+      name: search
+      in: query
+      required: false
+      description: Keyword to filter products by name
+      schema:
+        type: string
+        example: "iPhone"
+
+  schemas:
+    # Auth Schemas
+    RegisterRequest:
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name:
+          type: string
+          example: "Nguyen Van A"
+        email:
+          type: string
+          format: email
+          example: "test@domain.com"
+        password:
+          type: string
+          format: password
+          example: "Password123!"
+
+    RegisterResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "User registered successfully"
+        id:
+          type: integer
+          example: 3
+
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: "test@eshop.com"
+        password:
+          type: string
+          format: password
+          example: "Test1234!"
+
+    LoginResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Login successful"
+        token:
+          type: string
+          description: Signed JWT access token
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        user:
+          $ref: '#/components/schemas/UserProfile'
+
+    ForgotPasswordRequest:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+          example: "test@eshop.com"
+
+    ForgotPasswordResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Mã đặt lại mật khẩu đã được tạo"
+        resetToken:
+          type: string
+          description: 4-digit OTP reset token (SUT leaks token in body)
+          example: "5821"
+
+    ResetPasswordRequest:
+      type: object
+      required:
+        - email
+        - resetToken
+        - newPassword
+      properties:
+        email:
+          type: string
+          format: email
+          example: "test@eshop.com"
+        resetToken:
+          type: string
+          example: "5821"
+        newPassword:
+          type: string
+          format: password
+          example: "NewPassword123!"
+
+    # User Profile Schemas
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: "Test User"
+        email:
+          type: string
+          format: email
+          example: "test@eshop.com"
+        role:
+          type: string
+          enum: [user, admin]
+          example: "user"
+        login_attempts:
+          type: integer
+          example: 0
+        locked_until:
+          type: string
+          nullable: true
+          example: null
+        shipping_address:
+          type: string
+          nullable: true
+          example: "123 Le Loi, Q1, TP.HCM"
+        phone:
+          type: string
+          nullable: true
+          example: "0912345678"
+
+    UpdateProfileRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Nguyen Van A"
+        shipping_address:
+          type: string
+          example: "123 Le Loi, Q1, TP.HCM"
+        phone:
+          type: string
+          example: "0912345678"
+        role:
+          type: string
+          description: Forbidden privilege escalation field (SEC-06)
+          example: "admin"
+
+    AdminUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: "Test User"
+        email:
+          type: string
+          format: email
+          example: "test@eshop.com"
+        role:
+          type: string
+          example: "user"
+        login_attempts:
+          type: integer
+          example: 0
+        locked_until:
+          type: string
+          nullable: true
+          example: null
+        shipping_address:
+          type: string
+          nullable: true
+          example: "123 Le Loi, Q1, TP.HCM"
+
+    # Product Schemas
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "iPhone 15 Pro Max"
+        price:
+          oneOf:
+            - type: integer
+            - type: string
+          example: 30000000
+        description:
+          type: string
+          example: "Điện thoại cao cấp của Apple"
+        imageUrl:
+          type: string
+          example: "https://placehold.co/300x300/png?text=iPhone+15"
+        category_id:
+          type: integer
+          example: 1
+
+    ProductInput:
+      type: object
+      required:
+        - name
+        - price
+      properties:
+        name:
+          type: string
+          example: "Tai nghe Bluetooth EShop"
+        price:
+          type: integer
+          example: 500000
+        description:
+          type: string
+          example: "Tai nghe chống ồn"
+        imageUrl:
+          type: string
+          example: "https://placehold.co/300x300/png"
+        category_id:
+          type: integer
+          example: 3
+
+    ProductCreationResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Product created"
+        id:
+          type: integer
+          example: 6
+
+    # Batch Product Import Schemas (FR-16)
+    ImportProductItem:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: "Bàn phím không dây K2"
+        price:
+          type: integer
+          example: 1500000
+        description:
+          type: string
+          example: "Bàn phím cơ Bluetooth"
+        imageUrl:
+          type: string
+          example: "https://placehold.co/300x300/png"
+        category_id:
+          type: integer
+          example: 3
+
+    ImportProductsRequest:
+      type: object
+      required:
+        - products
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImportProductItem'
+
+    ImportProductsResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Import hoàn tất: 2/2 sản phẩm được thêm"
+        inserted:
+          type: integer
+          example: 2
+        errors:
+          type: array
+          items:
+            type: string
+          example: []
+
+    # Category Schemas
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Điện thoại"
+
+    CategoryInput:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: "Đồng hồ thông minh"
+
+    CategoryCreationResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Category created"
+        id:
+          type: integer
+          example: 4
+
+    # Cart & Order Schemas
+    CartItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "iPhone 15 Pro Max"
+        price:
+          type: integer
+          example: 30000000
+        quantity:
+          type: integer
+          example: 1
+
+    AddToCartRequest:
+      type: object
+      required:
+        - id
+        - name
+        - price
+        - quantity
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "iPhone 15 Pro Max"
+        price:
+          type: integer
+          example: 30000000
+        quantity:
+          type: integer
+          example: 2
+
+    CheckoutRequest:
+      type: object
+      required:
+        - total_amount
+        - shipping_address
+      properties:
+        total_amount:
+          type: integer
+          example: 60000000
+        shipping_address:
+          type: string
+          example: "123 Le Loi, TP.HCM"
+
+    CheckoutResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Checkout successful"
+        orderId:
+          type: integer
+          example: 7
+
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        user_id:
+          type: integer
+          example: 2
+        total_amount:
+          type: integer
+          example: 150000
+        status:
+          type: string
+          enum: [pending, confirmed, shipping, delivered, canceled]
+          example: "pending"
+        shipping_address:
+          type: string
+          example: "123 Nguyen Trai, Q5"
+        created_at:
+          type: string
+          example: "2026-08-22 12:00:00"
+
+    AdminOrder:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        user_id:
+          type: integer
+          example: 2
+        total_amount:
+          type: integer
+          example: 150000
+        status:
+          type: string
+          example: "pending"
+        shipping_address:
+          type: string
+          example: "123 Nguyen Trai, Q5"
+        created_at:
+          type: string
+          example: "2026-08-22 12:00:00"
+        user_name:
+          type: string
+          nullable: true
+          example: "Test User"
+
+    UpdateOrderStatusRequest:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum: [pending, confirmed, shipping, delivered, canceled]
+          example: "confirmed"
+
+    CancelOrderResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Order canceled successfully"
+
+    # Coupon Schemas
+    Coupon:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        code:
+          type: string
+          example: "SAVE10"
+        type:
+          type: string
+          enum: [percent, fixed]
+          example: "percent"
+        discount_value:
+          type: integer
+          example: 10
+        min_order_amount:
+          type: integer
+          example: 300000
+        expired_at:
+          type: string
+          example: "2099-12-31"
+        is_active:
+          type: integer
+          example: 1
+        max_uses_per_user:
+          type: integer
+          example: 1
+
+    AdminCouponInput:
+      type: object
+      required:
+        - code
+        - type
+        - discount_value
+      properties:
+        code:
+          type: string
+          example: "TET2026"
+        type:
+          type: string
+          enum: [percent, fixed]
+          example: "percent"
+        discount_value:
+          type: integer
+          example: 15
+        min_order_amount:
+          type: integer
+          example: 200000
+        expired_at:
+          type: string
+          example: "2026-02-28"
+        max_uses_per_user:
+          type: integer
+          example: 1
+
+    CouponCreationResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Coupon created"
+        id:
+          type: integer
+          example: 5
+
+    ApplyCouponRequest:
+      type: object
+      required:
+        - code
+        - total_amount
+      properties:
+        code:
+          type: string
+          example: "SAVE10"
+        total_amount:
+          type: integer
+          example: 500000
+        user_id:
+          type: integer
+          nullable: true
+          example: 2
+
+    ApplyCouponResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        coupon_id:
+          type: integer
+          example: 1
+        discount_amount:
+          type: integer
+          example: 50000
+        final_amount:
+          type: integer
+          example: 450000
+        message:
+          type: string
+          example: "Áp dụng thành công! Giảm 10%"
+
+    RecordCouponUsageRequest:
+      type: object
+      required:
+        - coupon_id
+      properties:
+        coupon_id:
+          type: integer
+          example: 1
+
+    # Standard Feedback Responses
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Operation completed successfully"
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Detailed error message"
+
+  responses:
+    BadRequestError:
+      description: Bad Request - Missing required parameters or invalid request syntax (HTTP 400)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: "Bad request parameters"
+
+    UnauthorizedError:
+      description: Unauthorized - Missing or invalid Bearer JWT authentication token (HTTP 401)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: "Unauthorized"
+
+    ForbiddenError:
+      description: Forbidden - Invalid token signature, expired token, or insufficient role permissions (HTTP 403)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: "Forbidden"
+
+    NotFoundError:
+      description: Not Found - Requested resource, entity ID, or route does not exist (HTTP 404)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: "Resource not found"
+
+    UnprocessableEntityError:
+      description: Unprocessable Entity - Semantic or schema validation failure (HTTP 422)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: "Validation failed"
+
+    InternalServerError:
+      description: Internal Server Error - Unhandled exception or database error (HTTP 500)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: "Internal database failure"
