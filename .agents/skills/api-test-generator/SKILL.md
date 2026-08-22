@@ -237,7 +237,7 @@ For data-driven test runs. Include `expectedStatus` and `description` columns.
 
 #### 4.1 Individual test case files
 
-For each test case, create `TC-<API>-<NNN>.md` following the project convention:
+For each test case, create `TC-<API>-<NNN>.md` inside `test-cases/` following the project template:
 
 ```markdown
 # TC-<API>-<NNN>: <Title>
@@ -246,22 +246,26 @@ For each test case, create `TC-<API>-<NNN>.md` following the project convention:
 <FR-XX or SEC-XX>
 
 ## Module / Test type / Technique
-<API Name> / <Functional|Contract|Security> / <EP|BVA|State Transition|...>
+<API Name> / <Functional|Contract|Security|Negative Validation|Boundary Analysis> / <Equivalence Partitioning|Boundary Value Analysis|State Transition|...>
 
 ## Preconditions
 - <list preconditions>
 
 ## Test data
 | Field | Value |
-|-------|-------|
-| ... | ... |
+|---|---|
+| Endpoint | <HTTP Method> <Endpoint Path> |
+| Header Content-Type | application/json |
+| Header X-Student-Id | <StudentId> |
+| <Field Name> | <Field Value> |
 
 ## Test steps
-1. <step>
-2. <step>
+1. <step 1>
+2. <step 2>
+3. <step 3>
 
 ## Expected result
-<expected behavior and status code>
+<expected behavior, HTTP status code, and response attributes>
 
 ## Status / Related bugs
 Not Run / None
@@ -315,19 +319,20 @@ VALID/INVALID/INCOMPLETE review (HW06 §6.2):
 ## Output file paths
 
 ```
-tests/
-├── collections/
-│   └── <api-name>.postman_collection.json
-├── environments/
-│   └── eshop.postman_environment.json
-├── data/
-│   └── <api-name>-data-driven.json
-├── test-cases/
-│   └── <api-name>/
-│       ├── TC-<API>-001.md
-│       ├── ...
+HW6/
+├── Test/
+│   └── <FeatureName>/
+│       ├── test-cases/
+│       │   ├── TC-<API>-001.md
+│       │   ├── ...
+│       │   └── TC-<API>-<NNN>.md
 │       ├── coverage-matrix.md
-│       └── audit-checklist.md
+│       ├── audit-checklist.md
+│       ├── <feature-name>-data-driven.json
+│       └── <FeatureName>.postman_collection.json
+└── Postman/
+    ├── <FeatureName>.postman_collection.json
+    └── eshop.postman_environment.json
 ```
 
 If the `tests/` directory structure does not exist, create it.

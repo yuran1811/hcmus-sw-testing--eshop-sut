@@ -26,6 +26,8 @@ This report documents all interactions with AI tools during the completion of HW
 |---|---|---|---|---|
 | **Tool:** Antigravity IDE (Claude Opus 4.6)<br>**Time:** 19:32 22/08/2026<br>**Prompt:** "Oke first of all, i need to write agent skill first. I will give you this guide.md for more context @postman-contract-test-prompt-guide.md [...] But the agent skill will not hard code for any api. By the way, i will give you more context to refine the agent skill @report.md And fit with the right scope of HW6 and in the future with similar tasks @2026.HW06.API Testing_En (2).md" | Generated two reusable Agent Skills:<br>1. `.agents/skills/api-test-generator/SKILL.md`<br>2. `.agents/skills/api-test-executor/SKILL.md`<br>Covering 5-phase generation (domain partitions, state transitions, security SEC-01–07, schema validation) and Newman execution pipeline. | **INCOMPLETE** | Initial AI drafts hardcoded endpoints and mixed seminar contract testing (Pact) with HW06 scope. HW06 §7 requires a generic AI-driven API test generator (G9.5 Create) with $\ge 35$ cases across 4 distinct coverage dimensions and Newman CI execution. | Guided AI through multi-turn refinements: removed hardcoded API assumptions, eliminated Pact scope, aligned naming to `api-test-generator` and `api-test-executor`, enforced 5-phase generation, added anti-cheat `X-Student-Id` header handling, and separated self-drawn diagram requirements from automated skill generation. |
 | **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 20:10 22/08/2026<br>**Prompt:** "Should we add diagram.md and pseudocode.md in agent skills and WHY" $\to$ "Yes generate for me" | Generated formal design specifications:<br>1. `.agents/skills/api-test-generator/references/pseudocode.md`<br>2. `.agents/skills/api-test-generator/references/diagram.md`<br>Documenting the formal algorithm and Mermaid architecture diagram blueprint. | **VALID** | Satisfies HW06 Section 7 (pseudocode representation of test generator algorithm), Section 11 (blueprint for student self-drawing), and Section 14 (zip package contents). The pseudocode rigorously formalizes parameter analysis, EP/BVA calculation, state machine traversal, security checks, and Postman v2.1 export. | Accepted as-is. Verified alignment with the 5-phase pipeline in SKILL.md; utilized the Mermaid diagram and component specifications as the blueprint for self-drawing the architecture diagram in Excalidraw. |
+| **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 20:18 22/08/2026<br>**Prompt:** "Act as a Senior QA Automation Engineer and ISTQB Certified Tester. We are testing the API: POST /api/forgot-password (FR-03: Password Reset / OTP Generation) of the EShop SUT. [...] Please generate a comprehensive suite of at least 35 distinct, executable API test cases covering the following 4 dimensions [...] Output in @HW6\Test\ForgotPassword" $\to$ "Follow this template of test case and change with the test case in forgot password and move all tests cases into folder test-cases/" | Generated 40 executable test cases in `HW6/Test/ForgotPassword/test-cases/` (`TC-FORGOT-001.md` to `TC-FORGOT-040.md`), `coverage-matrix.md`, `audit-checklist.md`, `forgot-password-data-driven.json`, and `ForgotPassword.postman_collection.json`. | **INCOMPLETE** | Initial output generated complete test cases and Postman scripts but used an expanded header/script markdown layout and placed them at the module root rather than following the faculty's standard test case template (`Test data` table, `Test steps` numbering) and subfolder structure (`test-cases/`). | Provided the exact course template (`TC-LOGIN-001`), instructed AI to restructure all 40 test cases into `HW6/Test/ForgotPassword/test-cases/`, and verified that every test case matches the standard layout with explicit preconditions, test data, numbered steps, expected results, and status fields. |
+| **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 20:23 22/08/2026<br>**Prompt:** "Update skill @.agents\skills\api-test-generator with this template test case" | Updated `.agents/skills/api-test-generator/SKILL.md` (Phase 4.1 Test case documentation template and Output file paths section). | **VALID** | Correctly embeds the faculty-standardized markdown test case template and `test-cases/` directory structure into the reusable generator skill, ensuring future API test generation runs automatically conform to course submission standards without manual reformatting. | Accepted as-is. Inspected diffs in SKILL.md and verified full synchronization between generator specifications and homework deliverables. |
 
 ---
 
@@ -140,28 +142,202 @@ Should we add diagram.md and pseudocode.md in agent skills and WHY
 
 ---
 
+### Artifact #3 -- Test Suite for POST /api/forgot-password (FR-03)
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.7 Flash) |
+| **Date/Time** | 2026-08-22 20:18:47 +07:00 |
+| **Task** | Generate $\ge 35$ executable test cases, Postman collection, coverage matrix, and data-driven suite for FR-03 |
+| **Feature / Module** | Forgot Password (FR-03: Password Reset / OTP Generation) |
+| **Bloom-AI Level** | G9.5 Create (Comprehensive automated test suite generation across 4 dimensions) |
+| **Verdict** | INCOMPLETE |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Act as a Senior QA Automation Engineer and ISTQB Certified Tester.
+
+We are testing the API: POST /api/forgot-password (FR-03: Password Reset / OTP Generation) of the EShop SUT.
+Base URL: http://localhost:3000
+Authentication: Public (No token required)
+Request Body:
+{
+  "email": "string"
+}
+Expected Success Response (200 OK):
+{
+  "message": "Mã đặt lại mật khẩu đã được tạo",
+  "resetToken": "123456"
+}
+
+Please generate a comprehensive suite of at least 35 distinct, executable API test cases covering the following 4 dimensions:
+
+1. Domain Partitioning (Equivalence Partitioning & Boundary Value Analysis):
+   - Valid registered email formats (standard, subdomain, dots, plus signs).
+   - Non-existent/unregistered email.
+   - Invalid email syntax (missing @, missing domain, special symbols, spaces).
+   - Extreme inputs (empty string, null, undefined, non-string types: int, boolean, array, object).
+   - Boundary length (1 character, 255 characters, >1000 characters).
+   - Whitespace handling (leading/trailing spaces, unicode characters).
+
+2. Security Testing (OWASP & SEC-01 to SEC-07):
+   - User Enumeration (CWE-203): Analyzing response code/body discrepancies between existing vs non-existing emails.
+   - Sensitive Data Exposure (CWE-200): Inspecting if resetToken is leaked directly in the HTTP response body.
+   - Weak Cryptography & RNG (CWE-330): Entropy and brute-force feasibility of the OTP.
+   - Rate Limiting / DoS: Rapid repeated requests to trigger spamming or token collision.
+   - SQL Injection / NoSQL Injection payloads in the email field.
+   - Content-Type tampering (application/x-www-form-urlencoded, multipart, text/plain).
+
+3. Schema & Status Code Validation:
+   - Exact JSON Schema matching (types of message, resetToken, error).
+   - HTTP status codes (200, 400, 404, 422, 500).
+
+4. Format per test case:
+   - Test Case ID: TC-FORGOT-001 to TC-FORGOT-035+
+   - Test Name & Category
+   - HTTP Method & Endpoint
+   - Headers (including X-Student-Id: 23127148)
+   - Request Body
+   - Expected Status Code & Expected Response Body
+   - Postman assertion logic (pm.test
+
+Output in @[d:\Project\Testing\hcmus-sw-testing--eshop-sut\HW6\Test\ForgotPassword]
+
+[Refinement Prompt]:
+# TC-LOGIN-001: Đăng nhập thành công
+
+## Requirement ID
+FR-LOGIN-01
+
+## Module / Test type / Technique
+Login / Functional / Equivalence Partitioning
+
+## Preconditions
+- User đã có tài khoản hợp lệ
+- User đang ở trang Login
+
+## Test data
+| Email | user01@gmail.com |
+| Password | Abc@123456 |
+
+## Test steps
+1. Mở trang Login
+2. Nhập email và password hợp lệ
+3. Bấm Login
+
+## Expected result
+Đăng nhập thành công và chuyển về Home.
+
+## Status / Related bugs
+Not Run / None
+
+Follow this template of test case and change with the test case in forgot password and move all tests cases into folder test-cases/
+```
+
+**Execution notes:**
+
+- Mode: GENERATE & RESTRUCTURE
+- Tools called: `write_to_file`, `run_command`, `list_dir`
+- Stored locations:
+  - `HW6/Test/ForgotPassword/test-cases/TC-FORGOT-001.md` ... `TC-FORGOT-040.md`
+  - `HW6/Test/ForgotPassword/coverage-matrix.md`
+  - `HW6/Test/ForgotPassword/audit-checklist.md`
+  - `HW6/Test/ForgotPassword/forgot-password-data-driven.json`
+  - `HW6/Test/ForgotPassword/ForgotPassword.postman_collection.json`
+  - `HW6/Postman/ForgotPassword.postman_collection.json`
+  - `HW6/Postman/eshop.postman_environment.json`
+
+#### (2) AI Output
+
+- Produced 40 distinct test cases covering all 4 required dimensions (25 Domain Partitions, 11 Security & OWASP cases, 2 Schema contracts, 2 State Transitions/Traceability).
+- Created automated Postman Collection v2.1 with pre-request scripts injecting `X-Student-Id: 23127148`.
+- Generated data-driven test file (`forgot-password-data-driven.json`) with 18 data vectors.
+- Created trace matrix (`coverage-matrix.md`) and AI-02 review checklist (`audit-checklist.md`).
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | INCOMPLETE |
+| **Reasoning** | While the initial generation created comprehensive test scripts and identified four real SUT vulnerabilities (CWE-200 cleartext token leak, CWE-330 weak RNG, CWE-203 user enumeration, CWE-20 missing validation), the markdown test case structure did not conform to the faculty's standard assignment layout (requiring a `Test data` table and numbered `Test steps`) and placed files at the root of `ForgotPassword/` rather than inside `test-cases/`. |
+| **Student Fix** | Supplied the course-standard markdown template (`TC-LOGIN-001`), instructed AI to relocate all 40 test cases into `HW6/Test/ForgotPassword/test-cases/`, and verified that all 40 files follow the exact format with requirement IDs, preconditions, test data tables, numbered execution steps, expected outcomes, and defect tracking fields. |
+| **Reviewed by** | Nguyen An |
+| **Review date** | 2026-08-22 |
+| **Quality rating** | Excellent (after formatting restructuring) |
+| **Issues found** | Non-standard initial markdown template; incorrect root folder placement. |
+
+---
+
+### Artifact #4 -- Skill Template Synchronization (`api-test-generator`)
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.7 Flash) |
+| **Date/Time** | 2026-08-22 20:23:00 +07:00 |
+| **Task** | Update reusable `api-test-generator` skill with the standardized course test case template |
+| **Feature / Module** | Agent Skills (`api-test-generator` SKILL.md) |
+| **Bloom-AI Level** | G9.5 Create (Self-improving agent skill configuration) |
+| **Verdict** | VALID |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Update skill @[d:\Project\Testing\hcmus-sw-testing--eshop-sut\.agents\skills\api-test-generator] with this template test case
+```
+
+**Execution notes:**
+
+- Mode: APPEND / UPDATE
+- Tools called: `view_file`, `replace_file_content`
+- Stored locations:
+  - `.agents/skills/api-test-generator/SKILL.md`
+
+#### (2) AI Output
+
+- Modified `.agents/skills/api-test-generator/SKILL.md` Section 4.1 (Individual test case files) to incorporate the standardized `Test data` table and numbered `Test steps` template.
+- Updated Section "Output file paths" to specify `test-cases/` subdirectories for each generated API module.
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | VALID |
+| **Reasoning** | Directly synchronizes the reusable agent skill with the faculty submission standard. Guarantees that subsequent test generation batches for other API endpoints will automatically output compliant markdown files in `test-cases/` without requiring manual reformatting. |
+| **Student Fix** | Accepted as-is after validating diffs against course requirements. |
+| **Reviewed by** | Nguyen An |
+| **Review date** | 2026-08-22 |
+| **Quality rating** | Excellent |
+| **Issues found** | None |
+
+---
+
 ## 4. Summary of AI Accuracy
 
 | Metric | Count | Percentage |
 | --- | ---: | ---: |
-| **Total AI-generated artifacts audited** | 2 | 100% |
-| **VALID (correct, accepted as-is)** | 1 | 50.0% |
+| **Total AI-generated artifacts audited** | 4 | 100% |
+| **VALID (correct, accepted as-is)** | 2 | 50.0% |
 | **INVALID (wrong; rejected)** | 0 | 0.0% |
-| **INCOMPLETE (acceptable after edits)** | 1 | 50.0% |
+| **INCOMPLETE (acceptable after edits)** | 2 | 50.0% |
 
 ---
 
 ## 5. Conclusion -- When should AI be used (or not)?
 
-AI assistants excel at generating structured boilerplate, formalizing algorithms into standard pseudocode, and scaffolding executable agent skills when provided with explicit specifications and clear boundary constraints. As demonstrated in this session, AI was able to draft a fully compliant pseudocode algorithm and architecture specification (Artifact #2, VALID) once the underlying engineering principles were locked down.
+AI assistants are extraordinarily effective at generating combinatorial test partitions, crafting executable Postman test collections with JSON Schema assertions, and discovering security edge cases (such as CWE-200 cleartext token exposure, CWE-330 weak RNG, and CWE-203 enumeration side-channels). As seen in Artifacts #2 and #4 (both VALID), AI efficiently formalizes algorithms and maintains skill definitions.
 
-However, when given broad or mixed context without prior filtering, AI frequently introduces scope creep—such as importing out-of-scope seminar testing methodologies (Pact) or making premature assumptions about hardcoded endpoints (Artifact #1, INCOMPLETE). AI should therefore be used as a collaborative drafting and formalization partner, but must never be trusted without active human steering, constraint enforcement, and strict review against course rubrics.
+However, AI frequently diverges in documentation structure and file placement unless given a strict template (Artifact #3, INCOMPLETE). AI should be leveraged to generate exhaustive domain test matrices and executable code, but the human engineer must actively enforce submission formatting standards, verify test validity against the real SUT implementation, and ensure academic integrity constraints.
 
 ---
 
 ## 6. Mandatory Disclosure
 
-The agent skills (`api-test-generator` and `api-test-executor`) and design specifications (`pseudocode.md` and `diagram.md`) were initially scaffolded and refined by Antigravity IDE (Claude Opus 4.6 & Gemini 3.7 Flash); I reviewed, guided the architecture, corrected the scope boundaries, specified the 5-phase generation pipeline, and enforced anti-cheat constraints. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any artifact listed in the prohibited category (such as fabricating test execution logs, forged headers, or self-drawn architecture diagrams).
+The agent skills (`api-test-generator`, `api-test-executor`), design specifications (`pseudocode.md`, `diagram.md`), and the Forgot Password test suite (`TC-FORGOT-001` to `TC-FORGOT-040`) were initially generated by Antigravity IDE (Claude Opus 4.6 & Gemini 3.7 Flash); I reviewed, guided the architecture, restructured the test case format to match course standards, moved test files into `test-cases/`, verified security vulnerabilities in the SUT, and synchronized the generator skill. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any artifact listed in the prohibited category.
 
 ---
 
@@ -187,6 +363,8 @@ The agent skills (`api-test-generator` and `api-test-executor`) and design speci
 |---|---|---|---|---|---|---|
 | 1 | Claude Opus 4.6 / Gemini 3.7 Flash | Agent Skill Design | HW06 §7 Test Generator & Executor | 2026-08-22 | G9.5 Create | INCOMPLETE |
 | 2 | Gemini 3.7 Flash | Architectural Design | Pseudocode & Diagram Specification | 2026-08-22 | G9.5 Create | VALID |
+| 3 | Gemini 3.7 Flash | Test Case Generation | POST /api/forgot-password (FR-03) Suite | 2026-08-22 | G9.5 Create | INCOMPLETE |
+| 4 | Gemini 3.7 Flash | Skill Maintenance | Template Synchronization in SKILL.md | 2026-08-22 | G9.5 Create | VALID |
 
 ### Contribution Breakdown
 
@@ -194,6 +372,8 @@ The agent skills (`api-test-generator` and `api-test-executor`) and design speci
 |---|---:|---:|---|
 | Agent Skills (`api-test-generator`, `api-test-executor`) | 60% | 40% | Architecture design, HW06 scope scoping, multi-turn refinement, anti-cheat header enforcement |
 | Design References (`pseudocode.md`, `diagram.md`) | 75% | 25% | Requirements verification, anti-cheat drawing blueprint validation |
+| Forgot Password Test Suite (40 test cases, Postman, Matrix) | 70% | 30% | Test scope prompt design, template enforcement, SUT vulnerability analysis, folder restructuring |
+| Skill Template Synchronization | 85% | 15% | Standard validation and diff verification |
 
 ### Compliance Checklist
 
@@ -204,7 +384,7 @@ The agent skills (`api-test-generator` and `api-test-executor`) and design speci
 - [x] AI output referenced with exact paths
 - [x] Verdict + ISTQB/course reasoning documented
 - [x] Student fix detailed
-- [x] Accuracy summary table computed
+- [x] Accuracy summary table computed (4 artifacts: 2 VALID, 2 INCOMPLETE, 0 INVALID)
 - [x] Conclusion (80-150 words) written
 - [x] Mandatory disclosure completed without placeholders
 - [x] Markdown submission format verified
