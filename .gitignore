@@ -23,3 +23,8 @@ package-lock.json
 # Preflight reports are local evidence; full Newman reports remain trackable.
 submission/tests/test-runs/api/reports/*_smoke_*
 submission/tests/test-runs/api/reports/*_special_verify_*
+
+# IDE workspace configurations
+.vscode/
+
+.playwright-mcp
