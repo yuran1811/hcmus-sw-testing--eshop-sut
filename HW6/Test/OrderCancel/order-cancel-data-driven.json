@@ -1,0 +1,107 @@
+[
+  {
+    "tcId": "TC-CANCEL-001",
+    "description": "Cancel order in pending status",
+    "orderId": "1",
+    "expectedStatus": 200,
+    "category": "State Transition (Valid)"
+  },
+  {
+    "tcId": "TC-CANCEL-002",
+    "description": "Cancel order in confirmed status",
+    "orderId": "2",
+    "expectedStatus": 200,
+    "category": "State Transition (Valid)"
+  },
+  {
+    "tcId": "TC-CANCEL-003",
+    "description": "Cancel order in shipping status (Forbidden)",
+    "orderId": "3",
+    "expectedStatus": 400,
+    "category": "State Transition (Negative / SUT Bug)"
+  },
+  {
+    "tcId": "TC-CANCEL-004",
+    "description": "Cancel order in delivered status (Terminal)",
+    "orderId": "4",
+    "expectedStatus": 400,
+    "category": "State Transition (Negative)"
+  },
+  {
+    "tcId": "TC-CANCEL-005",
+    "description": "Double cancel on already canceled order",
+    "orderId": "5",
+    "expectedStatus": 400,
+    "category": "State Transition (Negative)"
+  },
+  {
+    "tcId": "TC-CANCEL-023",
+    "description": "Non-existent high integer ID",
+    "orderId": "999999",
+    "expectedStatus": 404,
+    "category": "Domain Partitioning"
+  },
+  {
+    "tcId": "TC-CANCEL-024",
+    "description": "Alphabetic string ID",
+    "orderId": "abc",
+    "expectedStatus": 404,
+    "category": "Domain Partitioning"
+  },
+  {
+    "tcId": "TC-CANCEL-025",
+    "description": "Alphanumeric string ID",
+    "orderId": "order_123",
+    "expectedStatus": 404,
+    "category": "Domain Partitioning"
+  },
+  {
+    "tcId": "TC-CANCEL-026",
+    "description": "Floating-point decimal ID",
+    "orderId": "1.5",
+    "expectedStatus": 404,
+    "category": "Domain Partitioning"
+  },
+  {
+    "tcId": "TC-CANCEL-027",
+    "description": "Negative integer ID",
+    "orderId": "-1",
+    "expectedStatus": 404,
+    "category": "Boundary Value Analysis"
+  },
+  {
+    "tcId": "TC-CANCEL-028",
+    "description": "Zero integer ID",
+    "orderId": "0",
+    "expectedStatus": 404,
+    "category": "Boundary Value Analysis"
+  },
+  {
+    "tcId": "TC-CANCEL-030",
+    "description": "Special characters in ID",
+    "orderId": "!@#$%^&*()",
+    "expectedStatus": 404,
+    "category": "Domain Partitioning"
+  },
+  {
+    "tcId": "TC-CANCEL-031",
+    "description": "Maximum 64-bit integer ID",
+    "orderId": "9223372036854775807",
+    "expectedStatus": 404,
+    "category": "Boundary Value Analysis"
+  },
+  {
+    "tcId": "TC-CANCEL-015",
+    "description": "SQL Injection boolean tautology",
+    "orderId": "1' OR '1'='1",
+    "expectedStatus": 404,
+    "category": "Security (SEC-05)"
+  },
+  {
+    "tcId": "TC-CANCEL-016",
+    "description": "SQL Injection stacked query DROP",
+    "orderId": "1; DROP TABLE orders;--",
+    "expectedStatus": 404,
+    "category": "Security (SEC-05)"
+  }
+]

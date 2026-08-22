@@ -1,0 +1,1476 @@
+{
+  "info": {
+    "_postman_id": "fr10-order-cancel-suite-23127148",
+    "name": "Order Cancel API Tests (FR-10)",
+    "description": "Comprehensive 40-case API Test Suite for PUT /api/orders/:id/cancel covering State Transitions (FSM), Security (OWASP / SEC-01 to SEC-07), Domain Partitioning (EP/BVA), and JSON Schema Validation.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.request.headers.upsert({",
+          "    key: 'X-Student-Id',",
+          "    value: pm.environment.get('studentId') || '23127148'",
+          "});"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "userToken",
+      "value": ""
+    },
+    {
+      "key": "adminToken",
+      "value": ""
+    },
+    {
+      "key": "pendingOrderId",
+      "value": "1"
+    },
+    {
+      "key": "confirmedOrderId",
+      "value": "2"
+    },
+    {
+      "key": "shippingOrderId",
+      "value": "3"
+    },
+    {
+      "key": "deliveredOrderId",
+      "value": "4"
+    },
+    {
+      "key": "canceledOrderId",
+      "value": "5"
+    },
+    {
+      "key": "otherUserOrderId",
+      "value": "999"
+    }
+  ],
+  "item": [
+    {
+      "name": "00-Authentication-and-State-Setup",
+      "item": [
+        {
+          "name": "00.1 - Login User (Get userToken)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"User login status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const res = pm.response.json();",
+                  "if (res.token) {",
+                  "    pm.collectionVariables.set(\"userToken\", res.token);",
+                  "    pm.environment.set(\"userToken\", res.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"password\": \"Test1234!\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "login"]
+            }
+          }
+        },
+        {
+          "name": "00.2 - Login Admin (Get adminToken)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Admin login status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const res = pm.response.json();",
+                  "if (res.token) {",
+                  "    pm.collectionVariables.set(\"adminToken\", res.token);",
+                  "    pm.environment.set(\"adminToken\", res.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@eshop.com\",\n  \"password\": \"Admin123!\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "login"]
+            }
+          }
+        },
+        {
+          "name": "00.3 - Create Order for State Testing (Pending)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Checkout status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const res = pm.response.json();",
+                  "if (res.orderId) {",
+                  "    pm.collectionVariables.set(\"pendingOrderId\", res.orderId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json", "type": "text" },
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"total_amount\": 150000,\n  \"shipping_address\": \"123 Nguyen Trai, Q5, TP.HCM\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/checkout",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "checkout"]
+            }
+          }
+        },
+        {
+          "name": "00.4 - Create Admin Order (For IDOR BOLA test)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Admin checkout status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const res = pm.response.json();",
+                  "if (res.orderId) {",
+                  "    pm.collectionVariables.set(\"otherUserOrderId\", res.orderId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json", "type": "text" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"total_amount\": 500000,\n  \"shipping_address\": \"Admin Headquarters\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/checkout",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "checkout"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "01-State-Transitions",
+      "item": [
+        {
+          "name": "TC-CANCEL-001: Cancel Order in 'pending' status - Standard Happy Path",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response message confirms order canceled successfully\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property(\"message\");",
+                  "    pm.expect(jsonData.message).to.eql(\"Order canceled successfully\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{pendingOrderId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{pendingOrderId}}", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-002: Cancel Order in 'confirmed' status - Valid Transition",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response body contains cancellation message\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.eql(\"Order canceled successfully\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{confirmedOrderId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{confirmedOrderId}}", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-003: Cancel Order in 'shipping' status - Expect 400 (Catch SUT Line 329 Defect)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Specification: Canceling a shipping order MUST return 400 Bad Request",
+                  "// SUT Bug (server.js:329): SUT wrongly returns 200 OK due to missing 'shipping' check",
+                  "pm.test(\"Status code is 400 Bad Request (Catches SUT Bug)\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"Response error message is 'Cannot cancel this order.'\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.error).to.eql(\"Cannot cancel this order.\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{shippingOrderId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{shippingOrderId}}", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-004: Cancel Order in 'delivered' status - Terminal State",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"Error indicates delivered order cannot be canceled\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.error).to.eql(\"Cannot cancel this order.\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{deliveredOrderId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{deliveredOrderId}}", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-005: Double Cancel on 'canceled' status - Idempotency Check",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"Error indicates canceled order cannot be canceled again\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.error).to.eql(\"Cannot cancel this order.\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{canceledOrderId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{canceledOrderId}}", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-006: Verify State Persistence via GET /api/orders/:id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Order status is permanently set to canceled\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.status).to.eql(\"canceled\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{pendingOrderId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{pendingOrderId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02-Security-Auth-and-BOLA",
+      "item": [
+        {
+          "name": "TC-CANCEL-007: Missing Authorization Header - SEC-02",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 401 Unauthorized\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "pm.test(\"Response contains Unauthorized error\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.error).to.eql(\"Unauthorized\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "1", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-008: Empty Bearer Token - SEC-02",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 401 or 403\", function () {",
+                  "    pm.expect([401, 403]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer ", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "1", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-009: Malformed JWT String - SEC-02",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 403 Forbidden\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "});",
+                  "pm.test(\"Response contains Forbidden error\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.error).to.eql(\"Forbidden\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer invalid.jwt.string", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "1", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-010: Expired JWT Token - SEC-02",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 403 Forbidden\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "});",
+                  "pm.test(\"Response error is Forbidden\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.error).to.eql(\"Forbidden\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJleHAiOjF9.invalid", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "1", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-011: Tampered JWT Signature - SEC-02",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 403 Forbidden\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIifQ.tampered_signature_secret", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "1", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-012: BOLA/IDOR - User A Cancels User B's Order - SEC-04",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found (BOLA Prevention)\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "pm.test(\"Error response indicates Order not found\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.error).to.eql(\"Order not found\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{otherUserOrderId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{otherUserOrderId}}", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-013: BOLA - Standard User Cancels Admin Order - SEC-04",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{otherUserOrderId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{otherUserOrderId}}", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-014: Role Isolation - Admin Token on User Cancel Route - SEC-03",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{pendingOrderId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{pendingOrderId}}", "cancel"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "03-Security-Injection-and-Tampering",
+      "item": [
+        {
+          "name": "TC-CANCEL-015: SQL Injection - Boolean Tautology (1' OR '1'='1) - SEC-05",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found (SQLi Safely Neutralized)\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "pm.test(\"No SQL error or 500 status returned\", function () {",
+                  "    pm.expect(pm.response.code).to.not.eql(500);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1' OR '1'='1/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "1' OR '1'='1", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-016: SQL Injection - Stacked Query DROP (1; DROP TABLE orders;--) - SEC-05",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found (No Destructive SQL Execution)\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "pm.test(\"Server does not crash with 500\", function () {",
+                  "    pm.expect(pm.response.code).to.not.eql(500);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1; DROP TABLE orders;--/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "1; DROP TABLE orders;--", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-017: SQL Injection - Union Based Injection - SEC-05",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1 UNION SELECT 1,2,3,4--/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "1 UNION SELECT 1,2,3,4--", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-018: SQL Injection - Time-Based Blind Injection - SEC-05",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "pm.test(\"Response time is under 1000ms (No Sleep Delay)\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1' AND (SELECT 1 FROM (SELECT(SLEEP(2)))a)--/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "1' AND (SELECT 1 FROM (SELECT(SLEEP(2)))a)--", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-019: Mass Assignment - Status Injected in Body - SEC-07",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 OK (Body Ignored Safely)\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response indicates normal cancellation\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.eql(\"Order canceled successfully\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json", "type": "text" },
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"delivered\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{pendingOrderId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{pendingOrderId}}", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-020: Mass Assignment - Total Amount / User ID Injected - SEC-07",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json", "type": "text" },
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"total_amount\": 0,\n  \"user_id\": 99\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{pendingOrderId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{pendingOrderId}}", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-021: Method Tampering - POST to Cancel Route",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found (or 405)\", function () {",
+                  "    pm.expect([404, 405]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "1", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-022: Method Tampering - DELETE to Cancel Route",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found (or 405)\", function () {",
+                  "    pm.expect([404, 405]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "1", "cancel"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "04-Domain-Partitioning-EP",
+      "item": [
+        {
+          "name": "TC-CANCEL-023: Non-existent High Integer ID (999999) - Negative EP",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "pm.test(\"Response contains Order not found error\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.error).to.eql(\"Order not found\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/999999/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "999999", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-024: Alphabetic String ID ('abc') - Negative Type Partition",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/abc/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "abc", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-025: Alphanumeric String ID ('order_123') - Negative Type Partition",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/order_123/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "order_123", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-026: Floating-Point Decimal ID ('1.5') - Negative Type Partition",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1.5/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "1.5", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-027: Negative Integer ID ('-1') - BVA",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/-1/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "-1", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-028: Zero Integer ID ('0') - BVA",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/0/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "0", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-029: Extreme Negative Integer ID ('-999999999') - BVA",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/-999999999/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "-999999999", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-030: Special Characters and Symbols in ID - Domain Partitioning",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/!@#$%^&*()/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "!@#$%^&*()", "cancel"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "05-Boundary-Value-Analysis",
+      "item": [
+        {
+          "name": "TC-CANCEL-031: Maximum 64-bit Integer ID (9223372036854775807) - BVA",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found (64-bit Integer Overflow Handled)\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/9223372036854775807/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "9223372036854775807", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-032: Maximum 32-bit Integer ID (2147483647) - BVA",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/2147483647/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "2147483647", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-033: Oversized URL String (>1000 Chars) - Stress Boundary",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 or 414\", function () {",
+                  "    pm.expect([404, 414]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-034: Path Traversal Sequence in ID - Boundary Security",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/../../orders/1/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "..", "..", "orders", "1", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-035: Null Byte Poisoning in ID - Sanitization Boundary",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 or 400\", function () {",
+                  "    pm.expect([400, 404]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1%00cancel/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "1%00cancel", "cancel"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "06-Schema-Contract-and-Audit",
+      "item": [
+        {
+          "name": "TC-CANCEL-036: Contract - 200 OK JSON Schema Strict Validation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const successSchema = {",
+                  "    \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+                  "    \"type\": \"object\",",
+                  "    \"required\": [\"message\"],",
+                  "    \"properties\": {",
+                  "        \"message\": {",
+                  "            \"type\": \"string\",",
+                  "            \"enum\": [\"Order canceled successfully\"]",
+                  "        }",
+                  "    },",
+                  "    \"additionalProperties\": false",
+                  "};",
+                  "pm.test(\"Response conforms strictly to 200 OK JSON Schema\", function () {",
+                  "    pm.response.to.have.jsonSchema(successSchema);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{pendingOrderId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{pendingOrderId}}", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-037: Contract - 400 Bad Request JSON Schema Strict Validation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "const errorSchema = {",
+                  "    \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+                  "    \"type\": \"object\",",
+                  "    \"required\": [\"error\"],",
+                  "    \"properties\": {",
+                  "        \"error\": { \"type\": \"string\" }",
+                  "    },",
+                  "    \"additionalProperties\": false",
+                  "};",
+                  "pm.test(\"Response conforms to 400 Bad Request JSON Schema\", function () {",
+                  "    pm.response.to.have.jsonSchema(errorSchema);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{deliveredOrderId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{deliveredOrderId}}", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-038: Contract - 404 Not Found JSON Schema Strict Validation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "const notFoundSchema = {",
+                  "    \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+                  "    \"type\": \"object\",",
+                  "    \"required\": [\"error\"],",
+                  "    \"properties\": {",
+                  "        \"error\": { \"type\": \"string\" }",
+                  "    },",
+                  "    \"additionalProperties\": false",
+                  "};",
+                  "pm.test(\"Response conforms to 404 Not Found JSON Schema\", function () {",
+                  "    pm.response.to.have.jsonSchema(notFoundSchema);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/999999/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "999999", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-039: Contract - Response Header Content-Type Validation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Content-Type header is application/json; charset=utf-8\", function () {",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "1", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "TC-CANCEL-040: Audit - Mandatory X-Student-Id Header Traceability Verification",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Audit Header X-Student-Id is present and equal to 23127148\", function () {",
+                  "    const studentIdHeader = pm.request.headers.get(\"X-Student-Id\");",
+                  "    pm.expect(studentIdHeader).to.eql(\"23127148\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" },
+              { "key": "X-Student-Id", "value": "23127148", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "1", "cancel"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
