@@ -24,15 +24,18 @@
 
 ---
 
-## 2. Bảng Tự Đánh Giá (Self-Assessment Table)
+## 2. Self-Assessment Table (15. Assessment Template)
 
-| No. | Criteria (Tiêu Chí Đánh Giá) | Max Grade | Self-Assessed Grade | Bằng Chứng Hoàn Thành (Evidence) |
+### 15. Assessment Template
+
+| No. | Criteria | Grade | Self-Assessed Grade | Evidence & Notes |
 | :---: | :--- | :---: | :---: | :--- |
-| **1** | **API 1 — Full Pipeline** (`POST /api/forgot-password` - FR-03)<br>*(Generate + Audit + Extend + Execute + Bugs)* | 30 | **30** | - 45 test cases (40 AI + 5 Human Extended)<br>- Audit AI-02 đầy đủ phán quyết & Student fix<br>- 5 Lỗi SUT được báo cáo chi tiết<br>- Báo cáo HTML Newman 40 requests (93.0% pass rate) |
-| **2** | **API 2 — Full Pipeline** (`PUT /api/orders/:id/cancel` - FR-10)<br>*(Generate + Audit + Extend + Execute + Bugs)* | 30 | **30** | - 45 test cases (40 AI + 5 Human Extended)<br>- Bắt lỗi nghiêm trọng dòng 329 cho phép hủy đơn hàng `shipping`<br>- 2 Lỗi SUT được báo cáo<br>- Báo cáo HTML Newman 44 requests (77.4% pass rate) |
-| **3** | **API 3 — Full Pipeline** (`POST /api/admin/import-products` - FR-16)<br>*(Generate + Audit + Extend + Execute + Bugs)* | 30 | **30** | - 45 test cases (40 AI + 5 Human Extended)<br>- Bắt lỗ hổng BFLA Admin phân quyền dòng 199<br>- 3 Lỗi SUT được báo cáo<br>- Báo cáo HTML Newman 45 requests (100.0% pass rate) |
-| **4** | **Agent Skills (AI-Driven Test Generator & Executor)**<br>*(Bloom-AI Level G9.5 Create)* | 10 | **10** | - Agent Skill `api-test-generator` & `api-test-executor`<br>- Sơ đồ kiến trúc tự thiết kế (`diagram.md`)<br>- Đặc tả hình thức thuật toán 5 giai đoạn (`pseudocode.md`) |
-| **TỔNG** | **TỔNG ĐIỂM (TOTAL GRADE)** | **100** | **100** | **Hoàn thành toàn diện 100% yêu cầu đề bài** |
+| **1** | **API 1 — full pipeline (generate + audit + extend + execute + bugs)**<br>*(Endpoint: `POST /api/forgot-password` — FR-03)* | 30 | **30** | - 45 test cases (40 AI + 5 Human Extended)<br>- Human Audit AI-02 đầy đủ phán quyết & Student fix<br>- 5 Lỗi SUT được báo cáo chi tiết (`BUG-FORGOT-001..005`)<br>- Báo cáo HTML Newman 40 requests (93.0% pass rate) |
+| **2** | **API 2 — full pipeline (same criteria)**<br>*(Endpoint: `PUT /api/orders/:id/cancel` — FR-10)* | 30 | **30** | - 45 test cases (40 AI + 5 Human Extended)<br>- Bắt lỗi nghiêm trọng dòng 329 cho phép hủy đơn hàng `shipping`<br>- 2 Lỗi SUT được báo cáo (`BUG-CANCEL-001..002`)<br>- Báo cáo HTML Newman 44 requests (77.4% pass rate) |
+| **3** | **API 3 — full pipeline (same criteria)**<br>*(Endpoint: `POST /api/admin/import-products` — FR-16)* | 30 | **30** | - 45 test cases (40 AI + 5 Human Extended)<br>- Bắt lỗ hổng BFLA Admin phân quyền dòng 199<br>- 3 Lỗi SUT được báo cáo (`BUG-IMPORT-001..003`)<br>- Báo cáo HTML Newman 45 requests (100.0% pass rate) |
+| **4** | **Agent Skills (AI-driven test generator)**<br>*(Bloom-AI Level G9.5 Create)* | 10 | **10** | - Reusable Agent Skill `api-test-generator` & `api-test-executor`<br>- Sơ đồ kiến trúc tự thiết kế (`diagram.md`)<br>- Đặc tả hình thức thuật toán 5 giai đoạn (`pseudocode.md`) |
+| | **Total** | **100** | **100** | **Hoàn thành toàn diện 100% tất cả tiêu chí đánh giá** |
+
 
 ---
 
