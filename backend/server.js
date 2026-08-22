@@ -5,7 +5,7 @@ const db = require("./database");
 const jwt = require("jsonwebtoken");
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT || 3000);
 const SECRET_KEY = "super_secret_key_that_should_not_be_here";
 
 app.use(cors());
@@ -34,20 +34,14 @@ app.post("/api/login", (req, res) => {
 
   db.get("SELECT * FROM users WHERE email = ?", [email], (err, user) => {
     if (err) return res.status(500).json({ error: err.message });
-    if (!user)
-      return res.status(401).json({ error: "Invalid email or password" });
+    if (!user) return res.status(401).json({ error: "Invalid email or password" });
 
     if (user.locked_until && new Date() < new Date(user.locked_until)) {
-      return res
-        .status(403)
-        .json({ error: "Tài khoản đã bị khóa. Vui lòng thử lại sau." });
+      return res.status(403).json({ error: "Tài khoản đã bị khóa. Vui lòng thử lại sau." });
     }
 
     if (user.password === password) {
-      db.run(
-        "UPDATE users SET login_attempts = 0, locked_until = NULL WHERE id = ?",
-        [user.id],
-      );
+      db.run("UPDATE users SET login_attempts = 0, locked_until = NULL WHERE id = ?", [user.id]);
       const token = jwt.sign({ id: user.id, role: user.role }, SECRET_KEY);
       res.json({ message: "Login successful", token, user });
     } else {
@@ -56,10 +50,11 @@ app.post("/api/login", (req, res) => {
       if (newAttempts >= 3) {
         lockedUntil = new Date(Date.now() + 180000).toISOString();
       }
-      db.run(
-        "UPDATE users SET login_attempts = ?, locked_until = ? WHERE id = ?",
-        [newAttempts, lockedUntil, user.id],
-      );
+      db.run("UPDATE users SET login_attempts = ?, locked_until = ? WHERE id = ?", [
+        newAttempts,
+        lockedUntil,
+        user.id,
+      ]);
       res.status(401).json({ error: "Invalid email or password" });
     }
   });
@@ -70,17 +65,13 @@ app.post("/api/forgot-password", (req, res) => {
   db.get("SELECT * FROM users WHERE email = ?", [email], (err, user) => {
     if (!user) return res.status(404).json({ error: "User not found" });
     const resetToken = Math.floor(1000 + Math.random() * 9000).toString();
-    db.run(
-      "UPDATE users SET reset_token = ? WHERE id = ?",
-      [resetToken, user.id],
-      (err) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json({
-          message: "Mã đặt lại mật khẩu đã được tạo",
-          resetToken: resetToken,
-        });
-      },
-    );
+    db.run("UPDATE users SET reset_token = ? WHERE id = ?", [resetToken, user.id], (err) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json({
+        message: "Mã đặt lại mật khẩu đã được tạo",
+        resetToken: resetToken,
+      });
+    });
   });
 });
 
@@ -90,8 +81,7 @@ app.post("/api/reset-password", (req, res) => {
     "UPDATE users SET password = ?, reset_token = NULL WHERE email = ? AND reset_token = ?",
     [newPassword, email, resetToken],
     function (err) {
-      if (this.changes === 0)
-        return res.status(400).json({ error: "Invalid token or email" });
+      if (this.changes === 0) return res.status(400).json({ error: "Invalid token or email" });
       res.json({ message: "Password reset successfully" });
     },
   );
@@ -143,10 +133,7 @@ app.get("/api/products", (req, res) => {
   if (searchQuery) {
     const query = `SELECT * FROM products WHERE name LIKE '%${searchQuery}%'`;
     db.all(query, [], (err, rows) => {
-      if (err)
-        return res
-          .status(500)
-          .send(`<h1>Database Error</h1><p>${err.message}</p>`);
+      if (err) return res.status(500).send(`<h1>Database Error</h1><p>${err.message}</p>`);
       res.json(rows);
     });
   } else {
@@ -256,25 +243,17 @@ app.post("/api/categories", authenticateToken, (req, res) => {
 
 app.put("/api/categories/:id", authenticateToken, (req, res) => {
   const { name } = req.body;
-  db.run(
-    "UPDATE categories SET name = ? WHERE id = ?",
-    [name, req.params.id],
-    function (err) {
-      if (err) return res.status(500).json({ error: err.message });
-      res.json({ message: "Category updated" });
-    },
-  );
+  db.run("UPDATE categories SET name = ? WHERE id = ?", [name, req.params.id], function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ message: "Category updated" });
+  });
 });
 
 app.delete("/api/categories/:id", authenticateToken, (req, res) => {
-  db.run(
-    "DELETE FROM categories WHERE id = ?",
-    [req.params.id],
-    function (err) {
-      if (err) return res.status(500).json({ error: err.message });
-      res.json({ message: "Category deleted" });
-    },
-  );
+  db.run("DELETE FROM categories WHERE id = ?", [req.params.id], function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ message: "Category deleted" });
+  });
 });
 
 // ==========================================
@@ -363,81 +342,70 @@ app.get("/api/coupons", authenticateToken, (req, res) => {
 app.post("/api/apply-coupon", (req, res) => {
   const { code, total_amount, user_id } = req.body;
 
-  if (!code)
-    return res.status(400).json({ error: "Vui lòng nhập mã giảm giá" });
+  if (!code) return res.status(400).json({ error: "Vui lòng nhập mã giảm giá" });
 
-  db.get(
-    "SELECT * FROM coupons WHERE code = ? AND is_active = 1",
-    [code],
-    (err, coupon) => {
-      if (!coupon) {
-        return res
-          .status(404)
-          .json({ error: "Mã giảm giá không tồn tại hoặc đã bị vô hiệu hóa" });
+  db.get("SELECT * FROM coupons WHERE code = ? AND is_active = 1", [code], (err, coupon) => {
+    if (!coupon) {
+      return res.status(404).json({ error: "Mã giảm giá không tồn tại hoặc đã bị vô hiệu hóa" });
+    }
+
+    if (total_amount > coupon.min_order_amount) {
+      const now = new Date();
+      const expiry = new Date(coupon.expired_at);
+      if (expiry < now) {
+        return res.status(400).json({ error: "Mã giảm giá đã hết hạn" });
       }
 
-      if (total_amount > coupon.min_order_amount) {
-        const now = new Date();
-        const expiry = new Date(coupon.expired_at);
-        if (expiry < now) {
-          return res.status(400).json({ error: "Mã giảm giá đã hết hạn" });
-        }
-
-        if (user_id) {
-          db.get(
-            "SELECT COUNT(*) as usage_count FROM coupon_usage WHERE coupon_id = ? AND user_id = ?",
-            [coupon.id, user_id],
-            (err, result) => {
-              if (result.usage_count >= coupon.max_uses_per_user) {
-                return res.status(400).json({
-                  error: `Bạn đã sử dụng mã này ${coupon.max_uses_per_user} lần (đã đạt giới hạn)`,
-                });
-              }
-
-              let discount_amount = 0;
-              if (coupon.type === "percent") {
-                discount_amount = Math.floor(
-                  total_amount * (1 - coupon.discount_value),
-                );
-              } else {
-                discount_amount = coupon.discount_value;
-              }
-
-              const final_amount = total_amount - discount_amount;
-              return res.json({
-                success: true,
-                coupon_id: coupon.id,
-                discount_amount,
-                final_amount,
-                message: `Áp dụng thành công! Giảm ${coupon.type === "percent" ? coupon.discount_value + "%" : coupon.discount_value.toLocaleString() + " ₫"}`,
+      if (user_id) {
+        db.get(
+          "SELECT COUNT(*) as usage_count FROM coupon_usage WHERE coupon_id = ? AND user_id = ?",
+          [coupon.id, user_id],
+          (err, result) => {
+            if (result.usage_count >= coupon.max_uses_per_user) {
+              return res.status(400).json({
+                error: `Bạn đã sử dụng mã này ${coupon.max_uses_per_user} lần (đã đạt giới hạn)`,
               });
-            },
-          );
-        } else {
-          let discount_amount = 0;
-          if (coupon.type === "percent") {
-            discount_amount = Math.floor(
-              total_amount * (1 - coupon.discount_value),
-            );
-          } else {
-            discount_amount = coupon.discount_value;
-          }
-          const final_amount = total_amount - discount_amount;
-          return res.json({
-            success: true,
-            coupon_id: coupon.id,
-            discount_amount,
-            final_amount,
-            message: `Áp dụng thành công! Giảm ${coupon.type === "percent" ? coupon.discount_value + "%" : coupon.discount_value.toLocaleString() + " ₫"}`,
-          });
-        }
+            }
+
+            let discount_amount = 0;
+            if (coupon.type === "percent") {
+              discount_amount = Math.floor(total_amount * (1 - coupon.discount_value));
+            } else {
+              discount_amount = coupon.discount_value;
+            }
+
+            const final_amount = total_amount - discount_amount;
+            return res.json({
+              success: true,
+              coupon_id: coupon.id,
+              discount_amount,
+              final_amount,
+              message: `Áp dụng thành công! Giảm ${coupon.type === "percent" ? coupon.discount_value + "%" : coupon.discount_value.toLocaleString() + " ₫"}`,
+            });
+          },
+        );
       } else {
-        return res.status(400).json({
-          error: `Đơn hàng chưa đủ giá trị tối thiểu ${coupon.min_order_amount.toLocaleString()} ₫ để áp dụng mã này`,
+        let discount_amount = 0;
+        if (coupon.type === "percent") {
+          discount_amount = Math.floor(total_amount * (1 - coupon.discount_value));
+        } else {
+          discount_amount = coupon.discount_value;
+        }
+        const final_amount = total_amount - discount_amount;
+        return res.json({
+          success: true,
+          coupon_id: coupon.id,
+          discount_amount,
+          final_amount,
+          message: `Áp dụng thành công! Giảm ${coupon.type === "percent" ? coupon.discount_value + "%" : coupon.discount_value.toLocaleString() + " ₫"}`,
         });
       }
-    },
-  );
+    } else {
+      return res.status(400).json({
+        error: `Đơn hàng chưa đủ giá trị tối thiểu ${coupon.min_order_amount.toLocaleString()} ₫ để áp dụng mã này`,
+      });
+    }
+  });
 });
 
 // POST save coupon usage (called after successful checkout)
@@ -455,24 +423,10 @@ app.post("/api/coupon-usage", authenticateToken, (req, res) => {
 
 // ADMIN: CRUD Coupons
 app.post("/api/admin/coupons", authenticateToken, (req, res) => {
-  const {
-    code,
-    type,
-    discount_value,
-    min_order_amount,
-    expired_at,
-    max_uses_per_user,
-  } = req.body;
+  const { code, type, discount_value, min_order_amount, expired_at, max_uses_per_user } = req.body;
   db.run(
     "INSERT INTO coupons (code, type, discount_value, min_order_amount, expired_at, max_uses_per_user) VALUES (?, ?, ?, ?, ?, ?)",
-    [
-      code,
-      type,
-      discount_value,
-      min_order_amount,
-      expired_at,
-      max_uses_per_user || 1,
-    ],
+    [code, type, discount_value, min_order_amount, expired_at, max_uses_per_user || 1],
     function (err) {
       if (err) return res.status(500).json({ error: err.message });
       res.json({ message: "Coupon created", id: this.lastID });
@@ -525,46 +479,30 @@ app.get("/api/admin/orders", authenticateToken, (req, res) => {
 app.put("/api/admin/orders/:id/status", authenticateToken, (req, res) => {
   const { status } = req.body; // pending, confirmed, shipping, delivered, canceled
 
-  db.get(
-    "SELECT status FROM orders WHERE id = ?",
-    [req.params.id],
-    (err, order) => {
-      if (!order) return res.status(404).json({ error: "Order not found" });
+  db.get("SELECT status FROM orders WHERE id = ?", [req.params.id], (err, order) => {
+    if (!order) return res.status(404).json({ error: "Order not found" });
 
-      const currentStatus = order.status;
-      let isValidTransition = false;
+    const currentStatus = order.status;
+    let isValidTransition = false;
 
-      if (
-        currentStatus === "pending" &&
-        (status === "confirmed" || status === "canceled")
-      )
-        isValidTransition = true;
-      if (
-        currentStatus === "confirmed" &&
-        (status === "shipping" || status === "canceled")
-      )
-        isValidTransition = true;
-      if (currentStatus === "shipping" && status === "delivered")
-        isValidTransition = true;
+    if (currentStatus === "pending" && (status === "confirmed" || status === "canceled"))
+      isValidTransition = true;
+    if (currentStatus === "confirmed" && (status === "shipping" || status === "canceled"))
+      isValidTransition = true;
+    if (currentStatus === "shipping" && status === "delivered") isValidTransition = true;
 
-      if (currentStatus === "canceled" && status === "delivered")
-        isValidTransition = true;
+    if (currentStatus === "canceled" && status === "delivered") isValidTransition = true;
 
-      if (!isValidTransition) {
-        return res.status(400).json({
-          error: `Invalid state transition from ${currentStatus} to ${status}`,
-        });
-      }
+    if (!isValidTransition) {
+      return res.status(400).json({
+        error: `Invalid state transition from ${currentStatus} to ${status}`,
+      });
+    }
 
-      db.run(
-        "UPDATE orders SET status = ? WHERE id = ?",
-        [status, req.params.id],
-        function (err) {
-          res.json({ message: "Order status updated" });
-        },
-      );
-    },
-  );
+    db.run("UPDATE orders SET status = ? WHERE id = ?", [status, req.params.id], function (err) {
+      res.json({ message: "Order status updated" });
+    });
+  });
 });
 
 app.listen(PORT, () => {

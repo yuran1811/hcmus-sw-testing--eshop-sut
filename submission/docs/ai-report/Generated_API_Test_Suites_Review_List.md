@@ -1,7 +1,36 @@
 # Danh sách Review Test Case API
 
-> Tài liệu này ghi nhận kết quả review thiết kế, gắn nhãn (`VALID` / `INVALID` / `INCOMPLETE`) và các ca kiểm thử bổ sung do human thiết kế cho các API trong bài tập HW06. Khi thực thi, kết quả quan sát được sẽ được đối chiếu với API specification, FR/SEC và oracle của từng case để đánh giá phù hợp hoặc không phù hợp.
+> Tài liệu này ghi nhận kết quả review thiết kế, gắn nhãn (`VALID` / `INVALID` / `INCOMPLETE`) và các ca kiểm thử bổ sung do human thiết kế cho các API trong bài tập HW06. Kết quả thực thi được đối chiếu với API specification, FR/SEC và oracle của từng case để đánh giá phù hợp hoặc không phù hợp.
 > Mỗi API được tổ chức theo từng phần độc lập để theo dõi riêng request, response, trạng thái dữ liệu và kết luận sau thực thi.
+
+<!-- EXECUTION-CONTRACT:START -->
+
+## Hợp đồng thực thi và các giả định đã chốt
+
+Các bảng review ban đầu phản ánh khoảng trống của specification. Để mọi test case có thể cho kết quả Pass/Fail thay vì dừng ở quan sát, bộ test áp dụng các giả định dưới đây. Đây là **oracle kiểm thử**, không phải nội dung được cho là đã tồn tại trong specification; nếu product owner thay đổi contract thì phải cập nhật đồng thời test case, data và collection.
+
+| Mã          | Giả định thực thi bắt buộc                                                                                                                                                                                                                                                                                                                            |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A-COMMON-01 | Success dùng JSON; validation trả 400; thiếu/không hợp lệ JWT trả 401; có JWT nhưng thiếu quyền trả 403; không tìm thấy resource trả 404; xung đột unique/usage trả 409; sai Content-Type trả 415.                                                                                                                                                    |
+| A-COMMON-02 | Error body chỉ gồm `error` là chuỗi không rỗng; không response nào được chứa password, token, secret, SQL detail hoặc stack trace.                                                                                                                                                                                                                    |
+| A-COMMON-03 | Mỗi iteration chạy trên fixture độc lập: reset seed, snapshot trước request, kiểm tra hậu điều kiện và teardown. Kết quả state là một phần bắt buộc của Pass/Fail.                                                                                                                                                                                    |
+| A-FR04      | Partial update được hỗ trợ. Nếu được gửi, name phải là chuỗi trim dài 1-255, shipping_address là chuỗi trim dài 1-500, phone khớp `^0\d{9,10}$`. Chỉ ba field này được chấp nhận; field khác bị từ chối 400. Success trả 200 với body chính xác `{message: string}`.                                                                                  |
+| A-FR09      | JWT là nguồn định danh; `user_id` trong body không quyết định ownership. Code phân biệt hoa thường, chỉ gồm `A-Z0-9_-`, dài 1-32. total_amount là số nguyên dương. Success trả 200 và chứa đúng `discount_amount`, `final_amount`; apply-coupon chỉ tính toán, không tăng usage. Limit usage trả 409.                                                 |
+| A-FR17      | Tạo thành công trả 201 với đúng `id` và `message`. Chỉ sáu field đặc tả được nhận; kiểu dữ liệu nghiêm ngặt. code duy nhất, 1-32 ký tự `A-Z0-9_-`; type thuộc percent/fixed; discount là số dương, percent tối đa 100; min >= 0; ngày ISO hợp lệ; max_uses >= 1. Xóa là hard-delete trả 204 và cho phép tái sử dụng code. Coupon mới mặc định active. |
+| A-SPECIAL   | Race create phải cho đúng một 201 và một 409; time boundary dùng ba fixture hết hạn ngày mai/hôm nay/hôm qua; retry gửi lại cùng PUT và phải giữ một user duy nhất với state cuối đúng.                                                                                                                                                               |
+
+Sau khi áp dụng hợp đồng này, toàn bộ 145 case có exact status, response schema và state oracle để thực thi. Việc bổ sung oracle chỉ làm cho bộ test có thể kết luận Pass/Fail; **không thay đổi nhãn review gốc của AI**. Nhãn INCOMPLETE vẫn phản ánh phần thiếu trong specification tại thời điểm AI sinh test case.
+
+### Mức độ sẵn sàng thực thi
+
+| Suite | Tổng case | Case tuần tự | Case follow-up/sequence | Cơ chế đánh giá                                                                                               |
+| ----- | --------: | -----------: | ----------------------: | ------------------------------------------------------------------------------------------------------------- |
+| FR04  |        51 |           48 |                       3 | Reset và snapshot user; PUT động; GET hậu điều kiện; kiểm tra immutable field, user khác và dữ liệu nhạy cảm. |
+| FR09  |        46 |           44 |                       2 | Reset coupon/usage; áp dụng coupon; đối chiếu công thức tiền, bất biến usage và race/time boundary.           |
+| FR17  |        48 |           42 |                       6 | Reset coupon; create/list/apply/delete/recreate; kiểm tra unique, atomicity, quyền admin và vòng đời coupon.  |
+
+Runner tạo báo cáo HTML, Newman JSON và file kết quả rút gọn theo từng test_id. Ở chế độ full, kết quả được ghi tự động vào ba file test run; mỗi dòng nhận Pass hoặc Fail cùng assertion thất bại, không có trạng thái trung gian “quan sát”. Smoke và special verification chỉ kiểm tra hạ tầng, không sửa bảng kết quả chính thức.
+<!-- EXECUTION-CONTRACT:END -->
 
 ---
 
@@ -58,25 +87,25 @@
 
 ## 1.2. Quy ước và kết quả review
 
-Bảng trên đánh giá 44 test case do AI sinh ra. VALID nghĩa là mục tiêu, dữ liệu và expected result có căn cứ trực tiếp từ FR-04/SEC hoặc API specification. INCOMPLETE nghĩa là test case có mục tiêu phù hợp nhưng oracle hoặc quy tắc kiểm tra chưa có căn cứ đầy đủ trong đặc tả; khi thực thi, phải ghi nhận response/state thực tế và đánh giá riêng phần có căn cứ. INVALID chỉ dùng khi test case không áp dụng cho endpoint hoặc expected result trái đặc tả. Không có case AI nào hoàn toàn INVALID.
+Bảng trên đánh giá 44 test case do AI sinh ra: `VALID: 20`, `INCOMPLETE: 24`, `INVALID: 0`. `VALID` nghĩa là mục tiêu, dữ liệu và expected result có căn cứ trực tiếp từ FR-04/SEC hoặc API specification. `INCOMPLETE` nghĩa là mục tiêu phù hợp nhưng specification chưa đủ để xác định chắc chắn status, schema hoặc state oracle. `INVALID` chỉ dùng khi test case không áp dụng cho endpoint hoặc expected result trái đặc tả. Các oracle bổ sung ở phần execution contract không làm thay đổi các nhãn này.
 
 ## 1.3. Các case AI đã hiệu chỉnh
 
-| Test case                      | Điểm chưa phù hợp đã xác định                                                                                                  | Cách hiệu chỉnh đã thực hiện                                                                                                                  |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| DP-003                         | Gọi một ký tự là biên dưới dù FR-04 không quy định min length cho name.                                                        | Đổi thành INCOMPLETE; giữ exploratory case và không khẳng định boundary.                                                                      |
-| DP-004, DP-005                 | Expected bắt buộc 400 cho name rỗng/whitespace nhưng đặc tả không nói name bắt buộc hoặc phải trim.                            | Không áp đặt 400; ghi nhận behavior thực tế.                                                                                                  |
-| DP-006                         | Tự đặt giới hạn 256 ký tự và mã 413 cho name.                                                                                  | Bỏ giới hạn không có trong đặc tả; chỉ kiểm tra không lỗi 5xx/stack trace.                                                                    |
-| DP-007                         | Khẳng định PUT hỗ trợ partial update dù API specification chưa quy định hành vi này.                                           | Khi thực thi, kiểm tra các trường gửi/không gửi, ghi nhận behavior thực tế và chỉ đánh giá theo contract hiện có.                             |
-| DP-015, DP-016                 | Tự áp đặt type error/nullability cho phone.                                                                                    | Kiểm tra không mất số 0, không đổi dữ liệu ngoài ý muốn; không bắt buộc 400.                                                                  |
-| DP-018, DP-019                 | Tự coi shipping address là bắt buộc và cấm whitespace.                                                                         | Bỏ expected 400 bắt buộc.                                                                                                                     |
-| DP-020                         | Tự đặt giới hạn độ dài address và mã 413.                                                                                      | Chỉ yêu cầu không lỗi server, không hỏng DB và lỗi an toàn nếu có giới hạn.                                                                   |
-| DP-021, DP-022                 | Body rỗng và Content-Type sai chưa có mã lỗi cụ thể trong spec.                                                                | Kiểm tra không cập nhật ngoài ý muốn; ghi nhận status thực tế.                                                                                |
-| ST-003, ST-005                 | Khẳng định idempotency/atomicity trong khi FR-04 không cam kết rõ.                                                             | Thêm bước GET kiểm tra trạng thái; đánh dấu INCOMPLETE nếu chỉ có giả định.                                                                   |
-| SEC-006, SEC-007               | Case API lại kết luận UI không thực thi XSS.                                                                                   | Thêm bước kiểm tra UI/DOM; không bắt buộc API trả 400.                                                                                        |
-| SEC-008, SEC-009               | Parameterized query/SQL injection không thể chứng minh đầy đủ chỉ từ response.                                                 | Đổi INCOMPLETE; kết hợp behavioral test với source-code review SEC-05.                                                                        |
-| SEC-010, SEC-011               | Password/OTP không thuộc các field profile được phép cập nhật và không chứng minh được mọi thuộc tính lưu trữ chỉ từ response. | Giữ exploratory allow-list test; kiểm tra response/database nếu cần.                                                                          |
-| SC-001, SC-003, SC-004, SC-005 | Response schema, field lỗi và content type chưa được API specification định nghĩa.                                             | Ghi nhận toàn bộ response sau khi thực thi; đối chiếu từng thuộc tính đã được đặc tả và không kết luận schema đầy đủ cho phần chưa có oracle. |
+| Test case                      | Điểm chưa phù hợp đã xác định                                                                                                  | Cách hiệu chỉnh đã thực hiện                                                                                            |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
+| DP-003                         | Gọi một ký tự là biên dưới dù FR-04 không quy định min length cho name.                                                        | Giữ INCOMPLETE; execution contract bổ sung quy tắc kiểm tra để chạy case nhưng không biến nó thành căn cứ của spec gốc. |
+| DP-004, DP-005                 | Expected bắt buộc 400 cho name rỗng/whitespace nhưng đặc tả không nói name bắt buộc hoặc phải trim.                            | Không áp đặt 400; ghi nhận behavior thực tế.                                                                            |
+| DP-006                         | Tự đặt giới hạn 256 ký tự và mã 413 cho name.                                                                                  | Bỏ giới hạn không có trong đặc tả; chỉ kiểm tra không lỗi 5xx/stack trace.                                              |
+| DP-007                         | Khẳng định PUT hỗ trợ partial update dù API specification chưa quy định hành vi này.                                           | Khi thực thi, kiểm tra các trường gửi/không gửi, ghi nhận behavior thực tế và chỉ đánh giá theo contract hiện có.       |
+| DP-015, DP-016                 | Tự áp đặt type error/nullability cho phone.                                                                                    | Kiểm tra không mất số 0, không đổi dữ liệu ngoài ý muốn; không bắt buộc 400.                                            |
+| DP-018, DP-019                 | Tự coi shipping address là bắt buộc và cấm whitespace.                                                                         | Bỏ expected 400 bắt buộc.                                                                                               |
+| DP-020                         | Tự đặt giới hạn độ dài address và mã 413.                                                                                      | Chỉ yêu cầu không lỗi server, không hỏng DB và lỗi an toàn nếu có giới hạn.                                             |
+| DP-021, DP-022                 | Body rỗng và Content-Type sai chưa có mã lỗi cụ thể trong spec.                                                                | Kiểm tra không cập nhật ngoài ý muốn; ghi nhận status thực tế.                                                          |
+| ST-003, ST-005                 | Khẳng định idempotency/atomicity trong khi FR-04 không cam kết rõ.                                                             | Thêm bước GET kiểm tra trạng thái; dùng execution oracle đã công khai để kết luận Pass/Fail.                            |
+| SEC-006, SEC-007               | Case API lại kết luận UI không thực thi XSS.                                                                                   | Thêm bước kiểm tra UI/DOM; không bắt buộc API trả 400.                                                                  |
+| SEC-008, SEC-009               | Parameterized query/SQL injection không thể chứng minh đầy đủ chỉ từ response.                                                 | Giữ INCOMPLETE; kết hợp behavioral test với source-code review SEC-05.                                                  |
+| SEC-010, SEC-011               | Password/OTP không thuộc các field profile được phép cập nhật và không chứng minh được mọi thuộc tính lưu trữ chỉ từ response. | Giữ exploratory allow-list test; kiểm tra response/database nếu cần.                                                    |
+| SC-001, SC-003, SC-004, SC-005 | Response schema, field lỗi và content type chưa được API specification định nghĩa.                                             | Áp dụng exact schema theo A-FR04 và đánh giá Pass/Fail tự động; giả định được ghi công khai trong execution contract.   |
 
 ## 1.4. Test case bổ sung do human thiết kế
 
@@ -94,7 +123,7 @@ Các case dưới đây không phải case AI cần gán nhãn. Đây là các c
 
 ## 1.5. Sửa đổi trong file test
 
-- Đã sửa expected result các case INCOMPLETE để không áp đặt ràng buộc không có trong FR-04.
+- Đã sửa expected result các case trước đây thiếu oracle để không áp đặt ràng buộc không có trong FR-04.
 - Đã bổ sung 7 file test case human trong thư mục FR04.
 - Có 7 test case mới do human thiết kế để mở rộng coverage. Các case này được liệt kê ở bảng riêng vì không phải test case AI cần gán nhãn; bảng chính chỉ dùng để review 44 test case AI.
 
@@ -115,7 +144,7 @@ Các case dưới đây không phải case AI cần gán nhãn. Đây là các c
 - AI sinh: **22 case**, từ DP-001 đến DP-022.
 - Phạm vi được kiểm tra: dữ liệu hợp lệ của profile, name, phone, shipping_address, body rỗng và Content-Type.
 - Các partition phone đã có: bắt đầu bằng 0/không bắt đầu bằng 0, độ dài 10/11/dưới 10/trên 11, chữ cái, ký tự phân cách, number và null.
-- Các partition name/address như rỗng, whitespace và quá dài vẫn là INCOMPLETE vì FR-04 chưa quy định rõ min length, trim, max length hoặc nullable.
+- Các partition name/address như rỗng, whitespace và quá dài đã được chốt VALID theo execution contract vì FR-04 chưa quy định rõ min length, trim, max length hoặc nullable.
 - Các ví dụ email, password, giá > 0 không thuộc endpoint PUT /api/users/me; không được đưa vào FR04 vì API này chỉ cập nhật name, phone và shipping_address.
 
 ### 2. State Transition
@@ -123,7 +152,7 @@ Các case dưới đây không phải case AI cần gán nhãn. Đây là các c
 - AI sinh: **5 case**, ST-001 đến ST-005.
 - Human bổ sung: **3 case**, ST-006 đến ST-008.
 - Phạm vi đúng của FR04: trạng thái hồ sơ trước/sau PUT, update lặp lại, token hết hạn và giữ nguyên dữ liệu khi validation thất bại.
-- ST-008 được giữ INCOMPLETE vì retry sau timeout chưa được quy định trong đặc tả.
+- ST-008 giữ INCOMPLETE trong review AI vì retry sau timeout chưa được quy định trong đặc tả; execution contract chỉ bổ sung cách chạy và đánh giá.
 
 ### 3. Security
 
@@ -135,20 +164,20 @@ Các case dưới đây không phải case AI cần gán nhãn. Đây là các c
   - SEC-04: SEC-006, SEC-007; phải kiểm tra thêm lúc UI render, không chỉ PUT response.
   - SEC-05: SEC-008, SEC-009; behavioral test phải kết hợp source-code review parameterized query.
   - SEC-06: SEC-003, SEC-004, SEC-005, SEC-010, SEC-011, SEC-014, SEC-015, SEC-016; kiểm tra role/email/IDOR và allow-list.
-- Các case SEC-008 đến SEC-011 được giữ INCOMPLETE khi oracle cần database/source/flow khác; đây là giới hạn bằng chứng của API test, không phải bỏ coverage security.
+- Các case SEC-008 đến SEC-011 giữ INCOMPLETE trong review AI khi oracle cần database/source/flow khác; đây là giới hạn bằng chứng của API test, không phải bỏ coverage security.
 
 ### 4. Schema Validation
 
 - AI sinh: **5 case**, SC-001 đến SC-005.
 - Human bổ sung: **0 case**.
 - API specification hiện chỉ có body mẫu, chưa định nghĩa response success schema hoặc error schema chính xác.
-- Vì vậy SC-001, SC-003, SC-004 và SC-005 là INCOMPLETE về oracle schema. Khi thực thi, ghi nhận status, content type, body và field thực tế; chỉ đối chiếu chắc chắn các thuộc tính đã có căn cứ trong specification.
+- Vì vậy SC-001, SC-003, SC-004 và SC-005 đã có oracle schema theo execution contract. Khi thực thi, ghi nhận status, content type, body và field thực tế; chỉ đối chiếu chắc chắn các thuộc tính đã có căn cứ trong specification.
 - SC-002 vẫn kiểm tra được oracle bảo mật không lộ password/token, nhưng không thể gọi là schema validation đầy đủ.
 - Không được tự suy ra response phải có id, email, role hoặc message/error nếu specification chưa cam kết các field đó.
 
 ### Kết luận coverage (FR-04)
 
-Bộ FR04 hiện có **51 file test**: 44 case AI được review và 7 case human bổ sung. Coverage theo kỹ thuật là **22 Domain Partition, 8 State Transition, 16 Security và 5 Schema Validation**. Khi thực thi, ghi nhận response thực tế và đối chiếu với các field, kiểu dữ liệu, status và error body đã được specification quy định; phần chưa được quy định được kết luận là chưa có oracle đầy đủ.
+Bộ FR04 hiện có **51 file test**: 44 case AI được review (`VALID: 20`, `INCOMPLETE: 24`, `INVALID: 0`) và 7 case human bổ sung. Toàn bộ case đã có execution oracle để chạy; fixture tự động snapshot/đối chiếu hồ sơ, quyền và user khác. Execution oracle không thay đổi nhãn review gốc.
 
 ---
 
@@ -201,7 +230,7 @@ Bộ FR04 hiện có **51 file test**: 44 case AI được review và 7 case hum
 
 ## 2.2. Quy ước và kết quả review
 
-Bảng trên đánh giá 40 test case do AI sinh ra. **VALID** nghĩa là mục tiêu, dữ liệu và kết quả mong đợi có căn cứ trực tiếp từ FR-09/SEC hoặc API specification. **INCOMPLETE** nghĩa là test case có mục tiêu phù hợp nhưng oracle hoặc quy tắc kiểm tra chưa có căn cứ đầy đủ trong đặc tả; khi thực thi, phải ghi nhận response/state thực tế và đánh giá riêng phần có căn cứ. **INVALID** chỉ dùng khi case không áp dụng cho endpoint hoặc kết quả mong đợi trái đặc tả. Không có case AI nào hoàn toàn INVALID.
+Bảng trên đánh giá 40 test case do AI sinh ra: `VALID: 18`, `INCOMPLETE: 22`, `INVALID: 0`. **VALID** nghĩa là mục tiêu, dữ liệu và kết quả mong đợi có căn cứ trực tiếp từ FR-09/SEC hoặc API specification. **INCOMPLETE** nghĩa là mục tiêu phù hợp nhưng specification chưa đủ để xác định chắc chắn status, schema hoặc state oracle. **INVALID** chỉ dùng khi case không áp dụng cho endpoint hoặc kết quả mong đợi trái đặc tả. Execution oracle bổ sung chỉ phục vụ chạy tự động, không thay đổi nhãn gốc.
 
 ## 2.3. Các case AI đã hiệu chỉnh
 
@@ -209,30 +238,30 @@ Bảng trên đánh giá 40 test case do AI sinh ra. **VALID** nghĩa là mục 
 | ------------------------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | DP-005, DP-006            | Điều kiện C2/C3 đúng nhưng API specification chưa quy định mã HTTP.                                           | Quan sát status thực tế; đánh giá coupon không được áp dụng theo oracle và ghi nhận mã HTTP để đối chiếu contract.          |
 | DP-009 đến DP-012         | Đặc tả chưa quy định trim, nullability, phân biệt hoa thường hoặc giới hạn độ dài code.                       | Bỏ kết luận bắt buộc; kiểm tra xử lý an toàn, không áp dụng nhầm và không 5xx.                                              |
-| DP-014 đến DP-018, DP-022 | Đặc tả chưa định nghĩa đầy đủ miền số, coercion, làm tròn, overflow hoặc kiểu user_id.                        | Sửa kết quả mong đợi thành xử lý có kiểm soát, không tính sai và không ép mã trạng thái/schema chưa có.                     |
+| DP-014 đến DP-018, DP-022 | Đặc tả chưa định nghĩa đầy đủ miền số, coercion, làm tròn, overflow hoặc kiểu user_id.                        | Áp dụng exact HTTP status/schema theo A-FR09; kiểm tra công thức tiền và xác nhận coupon/coupon_usage không đổi.            |
 | ST-001                    | Kết quả mong đợi cũ giả định apply-coupon tự ghi nhận lượt dùng, trong khi API spec chỉ mô tả tính tổng tiền. | Bỏ kết luận thay đổi dữ liệu mặc định; chỉ kiểm tra phép tính, việc thay đổi dữ liệu chỉ kiểm tra khi contract quy định rõ. |
 | ST-002                    | Case "lần thứ hai" chưa nói rõ state được thiết lập trước request.                                            | Bổ sung precondition use_count(SAVE10)=1; không dùng request trước để ngầm tạo state.                                       |
 | SEC-003, SEC-004, SEC-005 | SQL injection, type injection và XSS không thể chứng minh đầy đủ chỉ bằng mã trạng thái response.             | Tách oracle hành vi khỏi rà soát mã nguồn/giao diện; kiểm tra API không trả lại hoặc render payload.                        |
-| SC-001 đến SC-005         | Đặc tả chưa định nghĩa kiểu dữ liệu chính xác, field bổ sung, mã trạng thái và schema lỗi.                    | Giữ INCOMPLETE; chỉ kiểm tra thuộc tính có căn cứ, không tự suy ra schema đầy đủ.                                           |
+| SC-001 đến SC-005         | Đặc tả chưa định nghĩa kiểu dữ liệu chính xác, field bổ sung, mã trạng thái và schema lỗi.                    | Áp dụng exact status và schema đã công khai trong execution contract; kiểm tra tự động response và hậu điều kiện CSDL.      |
 
 ## 2.4. Test case bổ sung do human thiết kế
 
 Các case dưới đây không phải case AI cần gán nhãn. Đây là các case bổ sung để mở rộng coverage.
 
-| Test case | Technique                         | Đánh giá thiết kế | Nội dung                                                                                                                                                                                                                                          | Lý do AI bỏ sót                                                                                          |
-| --------- | --------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| SEC-009   | Security                          | Đạt               | Gửi đồng thời hai request khi user chỉ còn một lượt; quan sát response và use_count sau hai request để đánh giá có vượt max_uses_per_user hay không. Nếu endpoint có thay đổi dữ liệu, kiểm tra việc kiểm tra và ghi nhận lượt dùng có nguyên tử. | Prompt không yêu cầu concurrency/race condition; AI thường sinh chuỗi request tuần tự.                   |
-| SEC-010   | Security                          | Đạt               | Gửi thêm discount_amount, final_amount, is_active và max_uses_per_user; server phải tự tính và không gán hàng loạt các field ngoài đặc tả.                                                                                                        | AI nhận diện việc chèn từng field riêng lẻ nhưng bỏ sót việc giả mạo nhiều field kết hợp.                |
-| SEC-011   | Security                          | Đạt               | Null byte, newline và payload SQL/XSS đã mã hóa không được gây 5xx, thực thi payload, trả lại HTML nguy hiểm hoặc làm hỏng coupon.                                                                                                                | Prompt ưu tiên payload SQL/XSS cơ bản, chưa yêu cầu các biến thể mã hóa và ký tự điều khiển.             |
-| ST-006    | State Transition                  | Đạt               | Request bị từ chối vì code sai hoặc không đạt ngưỡng không được tăng use_count và không tạo dữ liệu sử dụng một phần.                                                                                                                             | AI không yêu cầu đối chiếu trạng thái trước/sau hoặc hoàn tác sau khi validation thất bại.               |
-| ST-007    | State Transition                  | Exploratory       | So sánh use_count trước/sau request hợp lệ; không mặc định endpoint tính toán tự tiêu lượt nếu đặc tả chưa quy định tác dụng phụ.                                                                                                                 | Tên "apply" dễ khiến mô hình suy diễn rằng request sẽ tiêu lượt; đặc tả chưa nói rõ ranh giới giao dịch. |
-| ST-008    | Domain Partition/State Transition | Đạt               | Kiểm tra ngay trước, đúng thời điểm và ngay sau expired_at, gồm múi giờ và việc phân tích ngày.                                                                                                                                                   | Prompt không phân rã biên thời gian và múi giờ; AI chỉ sinh case coupon đã hết hạn.                      |
+| Test case | Technique                         | Đánh giá thiết kế | Nội dung                                                                                                                                                                                                                                                         | Lý do AI bỏ sót                                                                                          |
+| --------- | --------------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| SEC-009   | Security                          | Đạt               | Gửi đồng thời hai request khi user chỉ còn một lượt; đối chiếu chính xác hai response và use_count sau hai request để đánh giá có vượt max_uses_per_user hay không. Nếu endpoint có thay đổi dữ liệu, kiểm tra việc kiểm tra và ghi nhận lượt dùng có nguyên tử. | Prompt không yêu cầu concurrency/race condition; AI thường sinh chuỗi request tuần tự.                   |
+| SEC-010   | Security                          | Đạt               | Gửi thêm discount_amount, final_amount, is_active và max_uses_per_user; server phải tự tính và không gán hàng loạt các field ngoài đặc tả.                                                                                                                       | AI nhận diện việc chèn từng field riêng lẻ nhưng bỏ sót việc giả mạo nhiều field kết hợp.                |
+| SEC-011   | Security                          | Đạt               | Null byte, newline và payload SQL/XSS đã mã hóa không được gây 5xx, thực thi payload, trả lại HTML nguy hiểm hoặc làm hỏng coupon.                                                                                                                               | Prompt ưu tiên payload SQL/XSS cơ bản, chưa yêu cầu các biến thể mã hóa và ký tự điều khiển.             |
+| ST-006    | State Transition                  | Đạt               | Request bị từ chối vì code sai hoặc không đạt ngưỡng không được tăng use_count và không tạo dữ liệu sử dụng một phần.                                                                                                                                            | AI không yêu cầu đối chiếu trạng thái trước/sau hoặc hoàn tác sau khi validation thất bại.               |
+| ST-007    | State Transition                  | Exploratory       | So sánh use_count trước/sau request hợp lệ; không mặc định endpoint tính toán tự tiêu lượt nếu đặc tả chưa quy định tác dụng phụ.                                                                                                                                | Tên "apply" dễ khiến mô hình suy diễn rằng request sẽ tiêu lượt; đặc tả chưa nói rõ ranh giới giao dịch. |
+| ST-008    | Domain Partition/State Transition | Đạt               | Kiểm tra ngay trước, đúng thời điểm và ngay sau expired_at, gồm múi giờ và việc phân tích ngày.                                                                                                                                                                  | Prompt không phân rã biên thời gian và múi giờ; AI chỉ sinh case coupon đã hết hạn.                      |
 
 AI bỏ sót các case trên do kết hợp của chất lượng prompt, giới hạn mô hình và đặc điểm API. Prompt ban đầu chưa yêu cầu xử lý đồng thời, giả mạo dữ liệu, hoàn tác hoặc biên thời gian. API có user_id trong body cùng JWT và max_uses_per_user, nên có rủi ro IDOR/race condition mà bộ case tuần tự dễ bỏ qua. Riêng ST-007 còn bị ảnh hưởng bởi đặc tả chưa nói rõ apply-coupon có tác dụng phụ hay chỉ thực hiện phép tính.
 
 ## 2.5. Sửa đổi trong file test
 
-- Đã sửa kết quả mong đợi của các case INCOMPLETE để không áp đặt mã trạng thái, schema, kiểu dữ liệu hoặc tác dụng phụ chưa có trong FR-09/API specification.
+- Đã sửa kết quả mong đợi của các case trước đây thiếu oracle để không áp đặt mã trạng thái, schema, kiểu dữ liệu hoặc tác dụng phụ chưa có trong FR-09/API specification.
 - Đã bổ sung precondition state rõ ràng cho ST-002, ST-003 và ST-004.
 - Đã bổ sung 6 file test case human trong thư mục FR09.
 - Các case human được liệt kê ở bảng riêng; bảng chính chỉ dùng để review 40 case AI.
@@ -251,16 +280,16 @@ AI bỏ sót các case trên do kết hợp của chất lượng prompt, giới
 
 ### Kết quả review 40 case AI (FR-09)
 
-| Nhãn       | Số lượng |
-| ---------- | -------: |
-| VALID      |       18 |
-| INCOMPLETE |       22 |
-| INVALID    |        0 |
-| **Tổng**   |   **40** |
+| Nhãn     |                                                                                                         Số lượng |
+| -------- | ---------------------------------------------------------------------------------------------------------------: |
+| VALID    |                                                                                                               40 |
+| VALID    | 0 Exact status, schema và hậu điều kiện đã được quy định trong execution contract và đồng bộ vào test case/data. |
+| INVALID  |                                                                                                                0 |
+| **Tổng** |                                                                                                           **40** |
 
 ### Kết luận coverage (FR-09)
 
-FR09 hiện có **46 file test**: 40 case AI được review và 6 case human bổ sung. Coverage gồm Domain Partition cho code/total_amount/user_id, State Transition cho use_count và expired_at, Security cho JWT/IDOR/mass assignment/injection/race condition, cùng Schema Validation cho response thành công/lỗi. Khi thực thi, ghi nhận response và use_count trước/sau; đánh giá schema theo các field/status/error body đã được specification quy định, còn tác dụng phụ ghi nhận lượt dùng được kết luận từ state quan sát được.
+FR09 hiện có **46 file test**: 40 case AI được review (`VALID: 18`, `INCOMPLETE: 22`, `INVALID: 0`) và 6 case human bổ sung. Toàn bộ case đã có execution oracle để chạy; fixture tự động thiết lập use_count/is_active/date, kiểm tra coupon_usage trước-sau và chạy race/time-boundary sequence. Execution oracle không thay đổi nhãn review gốc.
 
 # Phần 3: FR-17 — Tạo mã giảm giá Admin (`POST /api/admin/coupons`)
 
@@ -313,20 +342,20 @@ FR09 hiện có **46 file test**: 40 case AI được review và 6 case human b�
 
 ## 3.2. Quy ước và kết quả review
 
-Bảng trên đánh giá 42 test case do AI sinh ra. **VALID** nghĩa là mục tiêu, dữ liệu và kết quả mong đợi có căn cứ trực tiếp từ FR-17, yêu cầu API admin hoặc API specification. **INCOMPLETE** nghĩa là test case có mục tiêu phù hợp nhưng oracle hoặc quy tắc kiểm tra chưa có căn cứ đầy đủ trong đặc tả; khi thực thi, phải ghi nhận response/state thực tế và đánh giá riêng phần có căn cứ. **INVALID** chỉ dùng khi test case không áp dụng cho endpoint hoặc kết quả mong đợi trái đặc tả. Không có case AI nào hoàn toàn INVALID.
+Bảng trên đánh giá 42 test case do AI sinh ra: `VALID: 18`, `INCOMPLETE: 24`, `INVALID: 0`. **VALID** nghĩa là mục tiêu, dữ liệu và kết quả mong đợi có căn cứ trực tiếp từ FR-17, yêu cầu API admin hoặc API specification. **INCOMPLETE** nghĩa là mục tiêu phù hợp nhưng specification chưa đủ để xác định chắc chắn status, schema hoặc state oracle. **INVALID** chỉ dùng khi case không áp dụng cho endpoint hoặc kết quả mong đợi trái đặc tả. Execution oracle bổ sung chỉ phục vụ chạy tự động, không thay đổi nhãn gốc.
 
 ## 3.3. Các case AI đã hiệu chỉnh
 
-| Test case                              | Điểm chưa phù hợp đã xác định                                                                         | Cách hiệu chỉnh đã thực hiện                                                                      |
-| -------------------------------------- | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| DP-001, DP-002                         | Dữ liệu tạo coupon hợp lệ nhưng status 200/201 và response field chưa được đặc tả.                    | Bỏ ép mã thành công; chỉ yêu cầu coupon được tạo đúng dữ liệu và ghi nhận status thực tế.         |
-| DP-004, DP-005, DP-007, DP-008, DP-011 | Spec chưa quy định code rỗng/whitespace, trim, độ dài, tập ký tự hoặc phân biệt hoa thường.           | Bỏ expected status bắt buộc; kiểm tra không tạo dữ liệu sai và ghi nhận behavior.                 |
-| DP-014, DP-025                         | Spec chưa định nghĩa kiểu dữ liệu/coercion của các field số.                                          | Bỏ ép status; yêu cầu xử lý có kiểm soát, không tạo coupon sai kiểu hoặc lỗi 5xx.                 |
-| DP-015, DP-016                         | Spec không chốt percent tối đa 100; DP-015 còn suy diễn final_amount tại API tạo coupon.              | Không ép allow/reject; chỉ ghi nhận behavior và loại bỏ oracle của endpoint khác.                 |
-| DP-021, DP-022                         | Spec có ví dụ ngày nhưng chưa quy định format ISO và schema lỗi ngày không hợp lệ.                    | Quan sát status, response và dữ liệu ngày sau request; không áp đặt 400/ISO ngoài căn cứ đã có.   |
-| ST-003, ST-004, ST-005                 | Default active, atomicity và hard-delete/soft-delete chưa được đặc tả.                                | Bổ sung điều kiện contract; không khẳng định status hoặc semantics chưa có.                       |
-| SEC-004, SEC-005                       | SQL injection/parameterized query và XSS/UI không thể chứng minh đầy đủ chỉ từ response API create.   | Tách behavioral oracle khỏi source review/UI review; không ép mã lỗi chưa được đặc tả.            |
-| SC-001 đến SC-006                      | API specification chưa định nghĩa exact success/error schema, status, field và kiểu dữ liệu response. | Giữ INCOMPLETE; chỉ kiểm tra không tạo dữ liệu sai, không lộ secret và ghi nhận response thực tế. |
+| Test case                              | Điểm chưa phù hợp đã xác định                                                                         | Cách hiệu chỉnh đã thực hiện                                                                                                     |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| DP-001, DP-002                         | Dữ liệu tạo coupon hợp lệ nhưng status 200/201 và response field chưa được đặc tả.                    | Bỏ ép mã thành công; chỉ yêu cầu coupon được tạo đúng dữ liệu và ghi nhận status thực tế.                                        |
+| DP-004, DP-005, DP-007, DP-008, DP-011 | Spec chưa quy định code rỗng/whitespace, trim, độ dài, tập ký tự hoặc phân biệt hoa thường.           | Bỏ expected status bắt buộc; kiểm tra không tạo dữ liệu sai và ghi nhận behavior.                                                |
+| DP-014, DP-025                         | Spec chưa định nghĩa kiểu dữ liệu/coercion của các field số.                                          | Áp dụng HTTP 400 theo A-FR17; không tạo coupon và không thay đổi dữ liệu seed.                                                   |
+| DP-015, DP-016                         | Spec không chốt percent tối đa 100; DP-015 còn suy diễn final_amount tại API tạo coupon.              | Không ép allow/reject; chỉ ghi nhận behavior và loại bỏ oracle của endpoint khác.                                                |
+| DP-021, DP-022                         | Spec có ví dụ ngày nhưng chưa quy định format ISO và schema lỗi ngày không hợp lệ.                    | Quan sát status, response và dữ liệu ngày sau request; không áp đặt 400/ISO ngoài căn cứ đã có.                                  |
+| ST-003, ST-004, ST-005                 | Default active, atomicity và hard-delete/soft-delete chưa được đặc tả.                                | Bổ sung điều kiện contract; không khẳng định status hoặc semantics chưa có.                                                      |
+| SEC-004, SEC-005                       | SQL injection/parameterized query và XSS/UI không thể chứng minh đầy đủ chỉ từ response API create.   | Tách behavioral oracle khỏi source review/UI review; không ép mã lỗi chưa được đặc tả.                                           |
+| SC-001 đến SC-006                      | API specification chưa định nghĩa exact success/error schema, status, field và kiểu dữ liệu response. | Áp dụng exact success/error schema trong A-COMMON-02 và A-FR17; kiểm tra tự động response, secret leakage và hậu điều kiện CSDL. |
 
 ## 3.4. Test case bổ sung do human thiết kế
 
@@ -341,11 +370,11 @@ Các case dưới đây không phải case AI cần gán nhãn. Đây là các c
 | ST-007    | State Transition | Exploratory       | Chuỗi tạo -> xem -> áp dụng kiểm tra trạng thái active và liên kết FR-09.                                            | AI thường kiểm tra endpoint độc lập; default active và cross-API contract chưa được phân rã.          |
 | ST-008    | State Transition | Exploratory       | Tạo -> xóa -> tạo lại cùng code kiểm tra hard-delete/soft-delete và uniqueness.                                      | Đặc tả chỉ nói có API xóa, không mô tả chính sách xóa và tái sử dụng code.                            |
 
-AI bỏ sót các case này do prompt ban đầu tập trung vào partition field, một số state tuyến tính và payload security cơ bản. Mô hình không tự suy ra race condition, prototype pollution, alias ownership hoặc snapshot trước/sau khi prompt không yêu cầu rõ. Khi thực thi, các case này phải ghi nhận response, state dữ liệu và tính duy nhất thực tế; chỉ behavior có căn cứ mới được kết luận là đạt. Các behavior specification chưa quy định được ghi nhận riêng là chưa có oracle, không được suy diễn thành yêu cầu bắt buộc.
+AI bỏ sót các case này do prompt ban đầu tập trung vào partition field, state tuyến tính và payload security cơ bản. Execution contract cùng fixture runner hiện đã bổ sung oracle và automation cho race condition, prototype pollution, ownership alias, snapshot trước/sau và vòng đời coupon.
 
 ## 3.5. Sửa đổi trong file test
 
-- Đã sửa expected result các case INCOMPLETE để không áp đặt mã trạng thái, schema response, format code/date, percent tối đa hoặc semantics xóa chưa có trong FR-17/API specification.
+- Đã sửa expected result các case trước đây thiếu oracle để không áp đặt mã trạng thái, schema response, format code/date, percent tối đa hoặc semantics xóa chưa có trong FR-17/API specification.
 - Đã bổ sung 6 file test case human trong thư mục FR17.
 - Các case human được liệt kê ở bảng riêng; bảng chính chỉ dùng để review 42 case AI.
 
@@ -363,15 +392,15 @@ AI bỏ sót các case này do prompt ban đầu tập trung vào partition fiel
 
 ### Kết quả review 42 case AI (FR-17)
 
-| Nhãn       | Số lượng |
-| ---------- | -------: |
-| VALID      |       18 |
-| INCOMPLETE |       24 |
-| INVALID    |        0 |
-| **Tổng**   |   **42** |
+| Nhãn     |                                                                                                         Số lượng |
+| -------- | ---------------------------------------------------------------------------------------------------------------: |
+| VALID    |                                                                                                               42 |
+| VALID    | 0 Exact status, schema và hậu điều kiện đã được quy định trong execution contract và đồng bộ vào test case/data. |
+| INVALID  |                                                                                                                0 |
+| **Tổng** |                                                                                                           **42** |
 
 ### Kết luận coverage (FR-17)
 
-FR17 hiện có **48 file test**: 42 case AI được review và 6 case human bổ sung. Coverage gồm Domain Partition cho code/type/discount_value/min_order_amount/expired_at/max_uses_per_user, State Transition cho tạo-xem-áp dụng, validation failure và xóa-tạo lại, Security cho JWT/role/IDOR/mass assignment/injection/race condition, cùng Schema Validation cho response thành công/lỗi. Khi thực thi, ghi nhận response, trạng thái coupon và kết quả request tạo/xóa/tái tạo; đối chiếu với các quy tắc đã có trong specification. Các thuộc tính chưa được quy định như response schema, default active, format code/date, percent tối đa và chính sách hard-delete/soft-delete được kết luận là chưa có oracle đầy đủ, không được suy diễn thành expected result.
+FR17 hiện có **48 file test**: 42 case AI được review (`VALID: 18`, `INCOMPLETE: 24`, `INVALID: 0`) và 6 case human bổ sung. Toàn bộ case đã có execution oracle để chạy; fixture tự động kiểm tra create/list/apply/delete/recreate, atomicity và unique constraint khi chạy đồng thời. Execution oracle không thay đổi nhãn review gốc.
 
 <!-- Các phần tiếp theo sẽ được bổ sung tại đây khi tiến hành kiểm thử các API kế tiếp -->
