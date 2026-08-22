@@ -116,7 +116,10 @@ HW6/
 │   ├── OrderCancel.postman_collection.json         # Postman Collection API 2
 │   ├── ImportProducts.postman_collection.json      # Postman Collection API 3
 │   └── eshop.postman_environment.json              # Postman Environment Variables
+├── OpenAPI/
+│   └── openapi.yaml                                # Đặc tả chuẩn OpenAPI 3.0.3 YAML cho toàn bộ 31 API SUT
 └── Test/
+
     ├── Bug_Reports/                                # 10 Báo cáo lỗi chi tiết kèm bước tái hiện
     │   ├── README.md
     │   ├── Github_Issues/                          # 4 Ảnh chụp minh chứng tạo Issues thực tế trên GitHub
