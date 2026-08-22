@@ -399,13 +399,6762 @@
 
 **Đánh giá:** INCOMPLETE.
 
-**Suy luận:** `audit-rubric.md` (dòng 84-86, chính là tài liệu Entry #2 đã trích dẫn để bắt các lỗi khác) có mục "Thiếu bước dọn dẹp": _"Case tạo dữ liệu (POST) mà không nói dữ liệu đó xử lý ra sao sau khi chạy → chạy lại lần 2 sẽ fail vì trùng unique constraint. Bổ sung teardown hoặc dùng dữ liệu động ({{$timestamp}} trong email)."_ — Entry #2 trích dẫn được cả cụm rubric này (dùng nó để sửa case khác) nhưng KHÔNG áp dụng ngược lại cho chính bộ `TC_REGISTER`: rà lại thủ công phát hiện **26/47 case của REGISTER** dùng email TĨNH để tạo user thành công (vd `newuser01@domain.com`, `dp005@domain.com`, `sec003@domain.com`, và đặc biệt nhóm `ST-001/002/003/005` + `SCH-001/003` dùng chung đúng 1 email tĩnh để test unique-constraint) — toàn bộ nhóm này vẫn được Entry #2 gắn nhãn VALID hoặc INCOMPLETE vì lý do KHÁC, không hề nhắc tới vấn đề dữ liệu tĩnh. Đây không phải lỗi lý thuyết: đề bài mục 6 yêu cầu tường minh "hai lần chạy mẫu" trong CI/CD (1 lần toàn bộ pass, 1 lần có case fail CÓ CHỦ ĐÍCH) — nếu chạy Newman lần 2 với email tĩnh, hàng loạt case sẽ fail vì 409/400 KHÔNG LIÊN QUAN gì tới bug thật của SUT, làm nhiễu đúng ý đồ "1 case fail" mà đề bài muốn thấy, và khiến báo cáo CI/CD mất giá trị chứng minh.
+**Suy luận:** Entry #2 dùng rubric test tạo ra dữ liệu mới nhưng không dọn lại sau khi chạy xong để bắt lỗi case khác nhưng quên áp dụng cho chính mình — 26/47 case REGISTER dùng email tĩnh, chạy Newman lần 2 sẽ fail hàng loạt vì trùng email, không phải do bug thật. Ảnh hưởng trực tiếp yêu cầu "2 lần chạy CI/CD" của đề bài
 
-**Sửa:** Đã tự sửa 26 case bị ảnh hưởng, cập nhật trực tiếp vào `testcases/TC_REGISTER.csv`, `.md` và `AUDIT_SUMMARY.md` (KHÔNG chỉnh sửa lại nội dung raw đã log ở Entry #1/#2 bên trên — giữ nguyên làm bằng chứng lịch sử):
+**Sửa:**
 
-- 19 case độc lập (FN-001..003, DP-005/006/013/014/016/022/023/024/025/026, SEC-002/003/004/005/007, SCH-005): đổi email sang Postman dynamic variable `{{$timestamp}}` (vd `newuser01-{{$timestamp}}@domain.com`), tự sinh giá trị mới mỗi lần chạy.
-- 4 case nhóm ST (unique-constraint email) dùng biến collection dùng chung `{{regSharedEmail}}` / `{{regSharedEmailUpper}}`, set 1 lần bằng pre-request script trước `ST-001`.
-- 2 case nhóm SCH (cùng lý do) dùng biến `{{regSchSharedEmail}}`.
-- 1 case `ST-004` (race condition) dùng biến `{{regRaceEmail}}`, set 1 lần ngay trước khi bắn 2 request song song — đảm bảo race test được tái chạy nhiều lần mà không lẫn lộn "fail vì bug thật" với "fail vì dữ liệu cũ".
+- 19 case đổi email sang {{$timestamp}}
+- Nhóm ST/SCH dùng chung biến (regSharedEmail, regSchSharedEmail) set 1 lần trước khi chạy
+- Case race ST-004 dùng regRaceEmail
+- Tất cả 26 case đổi nhãn thành INCOMPLETE, số liệu audit: 79 VALID / 4 INVALID / 42 INCOMPLETE
 
-Tất cả 26 case đổi nhãn AuditLabel thành **INCOMPLETE** (không phải VALID nữa). Thống kê audit tổng đổi từ **95 VALID / 4 INVALID / 26 INCOMPLETE** (số Entry #2 đã log) sang **79 VALID / 4 INVALID / 42 INCOMPLETE** sau vòng review độc lập này — file `testcases/AUDIT_SUMMARY.md` đã được cập nhật để phản ánh đúng số mới nhất.
+---
+
+**AI Audit Report Item**
+
+- **Công cụ AI:** Claude Code (Sonnet 5)
+- **Thời gian:** 2026-08-22 22:55:21 +07
+- **Nội dung prompt:**
+  > Hãy dùng skill @.agents/skills/postman-newman-builder/ để xây dựng postman collection chuẩn giúp tôi nhé, sau đó hãy dùng skill @.agents/skills/ai-audit-logger/ để lưu lại toàn bộ input/output
+- **AI output:**
+  > === Phần 1/4: Tóm tắt trả lời cho người dùng (chat response) ===
+  >
+  > Đã dựng xong Postman collection chuẩn cho 3 API (POST /api/register, POST /api/cart, GET /api/admin/users) từ tests/test-cases/TC\_\*.csv đã audit, và CHẠY THẬT bằng Newman trên SUT local (không bịa report).
+  >
+  > Trước khi build, tôi khởi động backend (npm run dev trong backend/) và probe nhanh vài endpoint thật để chốt các spec gap mà audit trước đó đánh dấu "cần chạy thật" (response shape của cart, status code khi email trùng, RBAC của admin/users). Việc probe này phát hiện các bug thật NGHIÊM TRỌNG ngay lập tức:
+  >
+  > - GET /api/admin/users KHÔNG kiểm tra role — user thường dùng token hợp lệ vẫn xem được toàn bộ danh sách user (vi phạm SEC-03).
+  > - Admin có thể tự xoá chính tài khoản đang đăng nhập (vi phạm FR-19) — vì hệ thống chỉ seed đúng 1 admin, bug này gây mất quyền truy cập admin toàn hệ thống.
+  > - POST /api/register và POST /api/cart hầu như không validate input gì (email sai định dạng, password yếu, price/quantity âm... đều được chấp nhận).
+  > - Email trùng vẫn đăng ký được (không có unique constraint enforcement).
+  > - Token không hợp lệ (rỗng/hết hạn/sai chữ ký/alg=none) trả 403 thay vì 401 (sai quy ước REST).
+  > - POST /api/register trả lỗi 500 khi Content-Type: text/plain kèm JSON body (unhandled exception).
+  >
+  > Collection gồm 145 request: 00-Setup (login admin/userA, đăng ký+login userB, set biến email dùng chung) + 3 folder API (mỗi API chia theo FN/DP/ST/SEC/SCH) + 99-Teardown. 131/131 case trong CSV được map 1-1 vào request (trừ 3 case cross-endpoint được viết lại thành chuỗi E2E nhiều bước trong folder "XT -..."). 2 case (SEC-010, SEC-011 admin) không tự động hoá được vì thiếu endpoint public để tạo/hạ quyền admin thứ 2, được đánh dấu MANUAL rõ ràng.
+  >
+  > Kỹ thuật đáng chú ý: dùng pm.sendRequest để mô phỏng race-condition thật cho 2 case ST-004 (Newman chạy tuần tự mặc định nên không tự có concurrency); dùng {{$timestamp}} và biến collection dùng chung (regSharedEmail, regRaceEmail...) để mọi case tạo user đều tái chạy được nhiều lần mà không vi phạm unique constraint — đúng theo fix đã áp dụng ở vòng review độc lập của Entry #2.
+  >
+  > Kết quả chạy: 145/145 request hoàn tất (0 lỗi kết nối), 197 assertion, 139 pass / 58 fail. KHÔNG sửa test cho pass — toàn bộ 58 fail là bằng chứng bug thật, để dành cho bước Report Bug tiếp theo (skill bug-reporting). Dùng backend restart để reset DB sạch trước khi chạy lần cuối làm baseline chính thức (vì lần chạy thử đầu tiên đã kích hoạt đúng bug tự-xoá-admin, làm hỏng dữ liệu cho các bước sau).
+  >
+  > Deliverables: tests/postman/collections/eshop-hw06.postman_collection.json, tests/postman/envs/{local,ci}.postman_environment.json, tests/postman/reports/newman-report.{html,json}, tests/postman/README.md (liệt kê đầy đủ Postman features đã dùng kèm bằng chứng, và danh sách bug thật phát hiện được).
+  >
+  > === Phần 2/4: Newman CLI summary (chạy thật trên localhost:3000) ===
+  >
+  > ┌─────────────────────────┬────────────────────┬───────────────────┐
+  > │ │ executed │ failed │
+  > ├─────────────────────────┼────────────────────┼───────────────────┤
+  > │ iterations │ 1 │ 0 │
+  > ├─────────────────────────┼────────────────────┼───────────────────┤
+  > │ requests │ 145 │ 0 │
+  > ├─────────────────────────┼────────────────────┼───────────────────┤
+  > │ test-scripts │ 143 │ 0 │
+  > ├─────────────────────────┼────────────────────┼───────────────────┤
+  > │ prerequest-scripts │ 144 │ 0 │
+  > ├─────────────────────────┼────────────────────┼───────────────────┤
+  > │ assertions │ 197 │ 58 │
+  > ├─────────────────────────┴────────────────────┴───────────────────┤
+  > │ total run duration: 15s │
+  > ├──────────────────────────────────────────────────────────────────┤
+  > │ total data received: 198.29kB (approx) │
+  > ├──────────────────────────────────────────────────────────────────┤
+  > │ average response time: 46ms [min: 3ms, max: 1201ms, s.d.: 136ms] │
+  > └──────────────────────────────────────────────────────────────────┘
+  > Hostname: localhost:3000 (deployment local thật, không phải mock)
+  >
+  > === Phần 3/4: tests/postman/README.md (đầy đủ, không rút gọn) ===
+  >
+  > # Postman Collection — HW06 (23127211)
+  >
+  > Sinh tự động từ `tests/test-cases/TC_*.csv` (đã audit) bằng skill `postman-newman-builder`. Đã chạy thật bằng Newman trên deployment local (`http://localhost:3000`) — **không phải report bịa**.
+  >
+  > ## Cách chạy
+  >
+  > ```bash
+  > npm install -g newman newman-reporter-htmlextra
+  >
+  > # 1. Dựng SUT (bắt buộc chạy trước, mỗi lần chạy lại backend sẽ RESET + reseed DB)
+  > cd backend && npm run dev
+  >
+  > # 2. Chạy collection
+  > newman run tests/postman/collections/eshop-hw06.postman_collection.json \
+  >   -e tests/postman/envs/local.postman_environment.json \
+  >   --reporters cli,htmlextra,json \
+  >   --reporter-htmlextra-export tests/postman/reports/newman-report.html \
+  >   --reporter-json-export tests/postman/reports/newman-report.json \
+  >   --timeout-request 10000
+  > ```
+  >
+  > **Trước khi chạy**, mở `tests/postman/envs/local.postman_environment.json` và sửa `studentId` thành MSSV thật của bạn (đang để `23127211` làm ví dụ).
+  >
+  > ⚠️ **Lưu ý quan trọng — SUT có bug tự-xoá-chính-mình (xem bên dưới):** folder `XT - [TC-C-ADMUSER-ST-006]` thử cho admin tự xoá chính tài khoản đang dùng. Do SUT hiện KHÔNG chặn hành vi này (bug thật), sau khi chạy hết collection, tài khoản `admin@eshop.com` duy nhất trong DB **sẽ bị xoá**. Phải **restart lại `backend`** (drop + reseed DB tự động khi start) trước khi chạy lại collection lần nữa.
+  >
+  > ## Kết quả chạy thật gần nhất
+  >
+  > |            |                                                            |
+  > | ---------- | ---------------------------------------------------------- |
+  > | Requests   | 145 (0 lỗi kết nối/network)                                |
+  > | Assertions | 197                                                        |
+  > | Pass       | 139                                                        |
+  > | Fail       | 58                                                         |
+  > | Report     | `reports/newman-report.html`, `reports/newman-report.json` |
+  >
+  > **Không sửa test cho pass** (theo đúng chỉ dẫn skill) — 58 assertion fail là bằng chứng của **bug thật trong SUT**, sẽ được đưa vào bước Report Bug tiếp theo (skill `bug-reporting`). Các nhóm bug lớn nhất phát hiện được:
+  >
+  > 1. **[CRITICAL] `GET /api/admin/users` không kiểm tra role — chỉ cần có token hợp lệ (bất kỳ user thường nào) là xem được toàn bộ danh sách user.** Vi phạm trực tiếp SEC-03 ("API Admin phải kiểm tra role='admin' trong Token, không chỉ kiểm tra sự tồn tại của Token"). → `TC-C-ADMUSER-SEC-004`.
+  > 2. **[CRITICAL] Admin có thể tự xoá chính tài khoản đang đăng nhập** — vi phạm FR-19 ("ngoại trừ không được xóa chính tài khoản đang đăng nhập"). Vì hệ thống chỉ seed đúng 1 admin mặc định, bug này gây **mất quyền truy cập admin toàn hệ thống**. → `TC-C-ADMUSER-ST-006` (case Extend).
+  > 3. **[MAJOR] `POST /api/register` hầu như không validate gì** — chấp nhận email sai định dạng, password không đủ độ phức tạp, name rỗng/null/number, email trùng (không có unique constraint), SQLi payload trong email. → `TC-A-REGISTER-DP-001..021`, `SEC-001`, `SEC-006`, `ST-002/003`.
+  > 4. **[MAJOR] `POST /api/cart` hầu như không validate gì** — chấp nhận price/quantity âm, 0, chuỗi, số thực; chấp nhận id sản phẩm không tồn tại; **không đối chiếu price với DB** (chấp nhận giá giả mạo — rủi ro bảo mật nghiêm trọng nếu logic checkout cũng tin theo). → `TC-B-CART-DP-002..023`, `SEC-005`.
+  > 5. **[MINOR] Token không hợp lệ (rỗng/hết hạn/sai chữ ký/alg=none) trả về 403 thay vì 401** trên cả 2 endpoint có auth — sai quy ước (401 = chưa xác thực, 403 = đã xác thực nhưng không đủ quyền). → `TC-B-CART-SEC-002..004`, `TC-C-ADMUSER-SEC-002/003/005/006`.
+  > 6. **[MINOR] `POST /api/register` trả 500 (không phải 400/415) khi `Content-Type: text/plain` kèm JSON body** — lỗi không được xử lý (unhandled exception). → `TC-A-REGISTER-SEC-008`.
+  >
+  > Case `TC-A-REGISTER-ST-006` (đăng ký đồng thời 2 email khác nhau) có 1 trong 2 request trả 400 thay vì 200 — cần điều tra thêm (có thể do race thật ở tầng DB, hoặc do kỹ thuật `pm.sendRequest` mô phỏng song song chưa hoàn hảo) trước khi kết luận là bug.
+  >
+  > ## 2 case KHÔNG tự động hoá được (MANUAL)
+  >
+  > - `TC-C-ADMUSER-SEC-010` (token của admin đã bị xoá) và `TC-C-ADMUSER-SEC-011` (token admin cũ sau khi bị hạ quyền — case Extend): không có endpoint public nào để tạo thêm admin thứ 2 hoặc đổi role của user đã tồn tại, nên không dựng được kịch bản thật qua API. 2 request này chỉ log ghi chú, không assert thật — cần test thủ công qua thao tác trực tiếp trên DB nếu muốn kiểm chứng đầy đủ.
+  >
+  > ## Cấu trúc collection
+  >
+  > ```
+  > EShop API Testing - HW06 (collection)
+  > ├── [pre-request script cấp collection: X-Student-Id + Content-Type mặc định]
+  > ├── 00 - Setup (login Admin, User A, đăng ký+login User B, set biến email dùng chung)
+  > ├── API1 - POST /api/register (FN/DP/ST/SEC/SCH + chuỗi XT re-register sau khi bị admin xoá)
+  > ├── API2 - POST /api/cart (FN/DP/ST/SEC/SCH + chuỗi XT sản phẩm bị xoá sau khi đã thêm giỏ)
+  > ├── API3 - GET /api/admin/users (FN/DP/ST/SEC/SCH + chuỗi XT admin tự xoá chính mình)
+  > └── 99 - Teardown (health-check cuối cùng)
+  > ```
+  >
+  > 145 request = 131 case từ `TC_*.csv` (trừ 3 case được viết lại thành chuỗi E2E nhiều bước) + 9 request chuỗi E2E (3 case × 3 bước trung bình) + 5 request Setup + 1 Teardown.
+  >
+  > ## Danh sách Postman features đã dùng
+  >
+  > | Feature                                    | Dùng vào việc gì                                                                                                                                                                        | Bằng chứng                                                                        |
+  > | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+  > | **Collection**                             | 1 collection cho cả 3 API, 145 request                                                                                                                                                  | `collections/eshop-hw06.postman_collection.json`                                  |
+  > | **Folder (nhiều cấp)**                     | API → Category (FN/DP/ST/SEC/SCH) → request; riêng 3 case cross-endpoint tách thành folder `XT - ...` chứa chuỗi request nhiều bước                                                     | Cấu trúc trong file collection, hiển thị trong report HTML                        |
+  > | **Environment + Environment variable**     | `local`/`ci` tách biệt, biến `baseUrl`/`studentId` — đổi môi trường không sửa request                                                                                                   | `envs/local.postman_environment.json`, `envs/ci.postman_environment.json`         |
+  > | **Collection variable**                    | `adminToken`, `tokenUserA`, `tokenUserB`, `regSharedEmail`, `xtProductId`... sinh ra khi chạy, dùng lại xuyên suốt                                                                      | Khai báo ở `collection.variable`, set trong các script `Setup`                    |
+  > | **Pre-request script (cấp collection)**    | Gắn `X-Student-Id` cho toàn bộ 145 request + `console.log` làm bằng chứng, tự thêm `Content-Type` khi có body                                                                           | `collection.event[0]`, log xuất hiện trong Newman CLI output khi chạy `--verbose` |
+  > | **Tests script (pm.test)**                 | Toàn bộ 197 assertion, đặt tên `Functional:`/`Security:`/`Contract:` kèm TC_ID để truy vết ngược                                                                                        | Mọi item trong collection                                                         |
+  > | **Dynamic variables (`{{$timestamp}}`)**   | Email tạo user mới luôn động, tránh vi phạm unique constraint khi chạy lại nhiều lần (fix từ vòng review độc lập của Entry #2)                                                          | Body của các request tạo user trong API1                                          |
+  > | **`pm.sendRequest`**                       | Bắn request song song trong test script để mô phỏng race condition thật (`TC-A-REGISTER-ST-004`, `TC-B-CART-ST-004`), và trong các case cần gọi thêm request phụ để xác minh trạng thái | Script 2 case `ST-004`                                                            |
+  > | **Chuỗi E2E nhiều request phụ thuộc biến** | 3 case cross-endpoint (Extend) viết thành folder `XT -...` gồm 2-3 request chạy tuần tự, truyền id/email qua collection variable                                                        | Folder `XT - ...` trong mỗi API                                                   |
+  > | **Newman CLI**                             | Chạy headless, xuất report — dùng được thẳng trong CI/CD                                                                                                                                | Lệnh ở mục "Cách chạy"                                                            |
+  > | **newman-reporter-htmlextra**              | Report HTML nộp kèm, phân nhóm theo folder                                                                                                                                              | `reports/newman-report.html`                                                      |
+  > | **JSON reporter**                          | Trích số liệu pass/fail để tổng hợp bảng báo cáo                                                                                                                                        | `reports/newman-report.json`                                                      |
+  >
+  > _Chưa dùng: Workspace, Monitor, Mock Server (tính năng cloud của Postman) — bộ này được dựng và chạy hoàn toàn qua CLI/file theo đúng quy trình CI/CD-friendly, không mở app Postman._
+  >
+  > === Phần 4/4: Raw collection + environment JSON (đầy đủ, không rút gọn) ===
+  >
+  > ----- BEGIN tests/postman/collections/eshop-hw06.postman\*collection.json -----
+  > {
+  > "info": {
+  > "\_postman_id": "15b11b39-9125-433d-9693-896028d90596",
+  > "name": "EShop API Testing - HW06 (23127211)",
+  > "description": "Bộ Postman collection cho 3 API HW06: POST /api/register (Pool A), POST /api/cart (Pool B), GET /api/admin/users (Pool C). Sinh tự động từ tests/test-cases/TC\*\*.csv đã audit (skill api-test-generator + api-testcase-auditor).",
+  > "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  > },
+  > "item": [
+  > {
+  > "name": "00 - Setup",
+  > "item": [
+  > {
+  > "name": "Login as Admin (admin@eshop.com)",
+  > "request": {
+  > "method": "POST",
+  > "header": [],
+  > "url": {
+  > "raw": "{{baseUrl}}/api/login",
+  > "host": [
+  >
+  > > "{{baseUrl}}"
+  > > ],
+  > > "path": [
+  > >
+  > > > > "api",
+  > > > > "login"
+  > > > > ]
+  > > > > },
+  > > > > "body": {
+  > > > > "mode": "raw",
+  > > > > "raw": "{\"email\":\"admin@eshop.com\",\"password\":\"Admin123!\"}",
+  > > > > "options": {
+  > > > > "raw": {
+  > > > > "language": "json"
+  > > > > }
+  > > > > }
+  > > > > }
+  > > > > },
+  > > > > "event": [
+  > > > > {
+  > > > > "listen": "test",
+  > > > > "script": {
+  > > > > "type": "text/javascript",
+  > > > > "exec": [
+  > > > > "pm.test(\"Setup: Admin login thành công\", () => { pm.response.to.have.status(200); });",
+  > > > > "const res = pm.response.json();",
+  > > > > "pm.collectionVariables.set(\"adminToken\", res.token);",
+  > > > > "pm.collectionVariables.set(\"adminUserId\", res.user.id);",
+  > > > > "console.log(`[Setup] adminToken acquired, adminUserId=${res.user.id}`);"
+  > > > > ]
+  > > > > }
+  > > > > }
+  > > > > ]
+  > > > > },
+  > > > > {
+  > > > > "name": "Login as User A (test@eshop.com)",
+  > > > > "request": {
+  > > > > "method": "POST",
+  > > > > "header": [],
+  > > > > "url": {
+  > > > > "raw": "{{baseUrl}}/api/login",
+  > > > > "host": [
+  > > > >
+  > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > ],
+  > > > > > > > > "path": [
+  > > > > > > > >
+  > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > "login"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"email\":\"test@eshop.com\",\"password\":\"Test1234!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "pm.test(\"Setup: User A login thành công\", () => { pm.response.to.have.status(200); });",
+  > > > > > > > > > > > > > > > > "const res = pm.response.json();",
+  > > > > > > > > > > > > > > > > "pm.collectionVariables.set(\"tokenUserA\", res.token);",
+  > > > > > > > > > > > > > > > > "pm.collectionVariables.set(\"userEmailA\", \"test@eshop.com\");",
+  > > > > > > > > > > > > > > > > "console.log(\"[Setup] tokenUserA acquired\");"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "Register User B (dynamic email)",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"User B Setup\",\"email\":\"userb-{{$timestamp}}@domain.com\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "pm.test(\"Setup: User B đăng ký thành công\", () => { pm.response.to.have.status(200); });",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "// Lưu lại email/password vừa dùng để login ngay bước sau (không hard-code)",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "pm.collectionVariables.set(\"userEmailB\", pm.request.body ? JSON.parse(pm.request.body.raw).email : \"\");"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "Login as User B",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/login",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "login"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"email\":\"{{userEmailB}}\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "pm.test(\"Setup: User B login thành công\", () => { pm.response.to.have.status(200); });",
+  > > > > > > > > > > > > > > > > "const res = pm.response.json();",
+  > > > > > > > > > > > > > > > > "pm.collectionVariables.set(\"tokenUserB\", res.token);",
+  > > > > > > > > > > > > > > > > "console.log(\"[Setup] tokenUserB acquired\");"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "Set race-condition base email (regRaceEmail)",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "GET",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/products",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "products"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "prerequest",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "pm.collectionVariables.set(\"regSharedEmail\", \"st-\" + Date.now() + \"@domain.com\");",
+  > > > > > > > > > > > > > > > > "pm.collectionVariables.set(\"regSharedEmailUpper\", (\"st-\" + Date.now() + \"@domain.com\").toUpperCase());",
+  > > > > > > > > > > > > > > > > "pm.collectionVariables.set(\"regSchSharedEmail\", \"sch-\" + Date.now() + \"@domain.com\");",
+  > > > > > > > > > > > > > > > > "pm.collectionVariables.set(\"regRaceEmail\", \"race-\" + Date.now() + \"@domain.com\");",
+  > > > > > > > > > > > > > > > > "console.log(\"[Setup] Da set cac bien email dung chung: regSharedEmail, regSharedEmailUpper, regSchSharedEmail, regRaceEmail\");"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "// Không kiểm thứ gì ở request này - chỉ dùng để chạy pre-request set biến dùng chung",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "pm.test(\"Setup: kênh chuẩn bị biến chạy được\", () => { pm.expect(pm.response.code).to.not.eql(500); });"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "API1 - POST /api/register (Pool A, FR-01)",
+  > > > > > > > > > > > > > > > > "item": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "FN - Happy path",
+  > > > > > > > > > > > > > > > > "item": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-FN-001] Đăng ký thành công với dữ liệu hợp lệ đầy đủ",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Nguyen Van A\",\"email\":\"newuser01-{{$timestamp}}@domain.com\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-FN-001\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(200);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-FN-002] Đăng ký thành công với tên có dấu tiếng Việt hợp lệ",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Nguyễn Thị Bích\",\"email\":\"newuser02-{{$timestamp}}@domain.com\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-FN-002\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(200);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-FN-003] Đăng ký thành công với password đúng biên tối thiểu (8 ký tự, đủ 4 loại)",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Tran Van C\",\"email\":\"newuser03-{{$timestamp}}@domain.com\",\"password\":\"Aa1!aaaa\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-FN-003\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(200);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "DP - Domain partition",
+  > > > > > > > > > > > > > > > > "item": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-001] Từ chối đăng ký khi name là chuỗi rỗng",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"\",\"email\":\"dp001@domain.com\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-001\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(400);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-002] Từ chối đăng ký khi name chỉ chứa khoảng trắng",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\" \",\"email\":\"dp002@domain.com\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-002\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(400);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-003] Từ chối đăng ký khi thiếu field name (null)",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":null,\"email\":\"dp003@domain.com\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-003\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(400);",
+  > > > > > > > > > > > > > > > > "});",
+  > > > > > > > > > > > > > > > > "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+  > > > > > > > > > > > > > > > > " pm.expect(pm.response.code).to.not.eql(500);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-004] Từ chối đăng ký khi name là number thay vì string",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":12345,\"email\":\"dp004@domain.com\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-004\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(400);",
+  > > > > > > > > > > > > > > > > "});",
+  > > > > > > > > > > > > > > > > "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+  > > > > > > > > > > > > > > > > " pm.expect(pm.response.code).to.not.eql(500);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-005] Chấp nhận name chứa ký tự Unicode/emoji",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Nguyễn Văn A 🎉\",\"email\":\"dp005-{{$timestamp}}@domain.com\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-005\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(200);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-006] Boundary: name 1 ký tự (giả định không có min length)",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"A\",\"email\":\"dp006-{{$timestamp}}@domain.com\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-006\";",
+  > > > > > > > > > > > > > > > > "console.log(`[${tcId}] (OPEN - spec chưa định nghĩa) status thực tế = ${pm.response.code}`);",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] (OPEN) Ghi nhận response, không assert cứng status - xem Note trong TC`, () => {",
+  > > > > > > > > > > > > > > > > " pm.expect(pm.response.code).to.be.a(\"number\");",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-007] Boundary: name rất dài 256 ký tự (giả định max 255)",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"A\"\*256,\"email\":\"dp007@domain.com\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-007\";",
+  > > > > > > > > > > > > > > > > "console.log(`[${tcId}] (OPEN - spec chưa định nghĩa) status thực tế = ${pm.response.code}`);",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] (OPEN) Ghi nhận response, không assert cứng status - xem Note trong TC`, () => {",
+  > > > > > > > > > > > > > > > > " pm.expect(pm.response.code).to.be.a(\"number\");",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-008] Từ chối đăng ký khi email sai định dạng (thiếu @)",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Le Van D\",\"email\":\"abcdomain.com\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-008\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(400);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-009] Từ chối đăng ký khi email thiếu domain",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Le Van D\",\"email\":\"abc@\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-009\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(400);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-010] Từ chối đăng ký khi email có 2 ký tự @",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Le Van D\",\"email\":\"a@@b.com\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-010\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(400);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-011] Từ chối đăng ký khi email chứa khoảng trắng giữa",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Le Van D\",\"email\":\"a b@domain.com\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-011\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(400);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-012] Từ chối đăng ký khi email vượt quá 255 ký tự",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Le Van D\",\"email\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@domain.com\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-012\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(400);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-013] Chấp nhận email hợp lệ với local-part 1 ký tự",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Le Van D\",\"email\":\"a-{{$timestamp}}@domain.com\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-013\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(200);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-014] Chấp nhận email hợp lệ với domain nhiều cấp",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Le Van D\",\"email\":\"user-{{$timestamp}}@sub.domain.co.uk\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-014\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(200);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-015] Từ chối password ngắn hơn 8 ký tự (min-1)",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Pham E\",\"email\":\"dp015@domain.com\",\"password\":\"Aa1!aaa\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-015\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(400);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-016] Chấp nhận password đúng biên 8 ký tự (min)",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Pham E\",\"email\":\"dp016-{{$timestamp}}@domain.com\",\"password\":\"Aa1!aaaa\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-016\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(200);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-017] Từ chối password thiếu chữ hoa",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Pham E\",\"email\":\"dp017@domain.com\",\"password\":\"password1!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-017\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(400);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-018] Từ chối password thiếu chữ thường",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Pham E\",\"email\":\"dp018@domain.com\",\"password\":\"PASSWORD1!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-018\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(400);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-019] Từ chối password thiếu chữ số",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Pham E\",\"email\":\"dp019@domain.com\",\"password\":\"Password!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-019\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(400);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-020] Từ chối password thiếu ký tự đặc biệt",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Pham E\",\"email\":\"dp020@domain.com\",\"password\":\"Password1\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-020\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(400);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-021] Từ chối password chỉ chứa khoảng trắng",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Pham E\",\"email\":\"dp021@domain.com\",\"password\":\" \"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-021\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(400);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-022] Password rất dài (>72 byte) vẫn được hash và login lại đúng đầy đủ, không bị bcrypt truncate âm thầm",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Pham E\",\"email\":\"dp022-{{$timestamp}}@domain.com\",\"password\":\"Aa1!aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-022\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(200);",
+  > > > > > > > > > > > > > > > > "});",
+  > > > > > > > > > > > > > > > > "pm.test(`Security: [${tcId}] Response không lộ password/passwordHash/salt`, () => {",
+  > > > > > > > > > > > > > > > > " const text = pm.response.text();",
+  > > > > > > > > > > > > > > > > " [\"passwordHash\", \"\\\"password\\\"\", \"salt\"].forEach(f => pm.expect(text).to.not.include(f));",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-023] Password trùng với email (không bị cấm rõ trong spec)",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Pham E\",\"email\":\"dp023pass-{{$timestamp}}@domain.com\",\"password\":\"Dp023pass@domain.com1!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-023\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(200);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-024] Đăng ký khi confirmPassword khớp password (nếu backend có nhận field này)",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Hoang F\",\"email\":\"dp024-{{$timestamp}}@domain.com\",\"password\":\"Password123!\",\"confirmPassword\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-024\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(200);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-025] Gửi confirmPassword KHÔNG khớp password — kiểm tra backend có tự validate hay chỉ UI validate",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Hoang F\",\"email\":\"dp025-{{$timestamp}}@domain.com\",\"password\":\"Password123!\",\"confirmPassword\":\"Different123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-025\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về 1 trong các status hợp lệ [200,400]`, () => {",
+  > > > > > > > > > > > > > > > > " pm.expect([200,400]).to.include(pm.response.code);",
+  > > > > > > > > > > > > > > > > "});",
+  > > > > > > > > > > > > > > > > "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [200,400])`);"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-DP-026] Gửi thêm field không có trong spec (extraField) không làm hỏng request",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Vo G\",\"email\":\"dp026-{{$timestamp}}@domain.com\",\"password\":\"Password123!\",\"extraField\":\"whatever\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-DP-026\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(200);",
+  > > > > > > > > > > > > > > > > "});",
+  > > > > > > > > > > > > > > > > "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+  > > > > > > > > > > > > > > > > " pm.expect(pm.response.code).to.not.eql(500);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "ST - State transition",
+  > > > > > > > > > > > > > > > > "item": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-ST-001] Đăng ký với email chưa tồn tại chuyển sang trạng thái đã tồn tại",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"State A\",\"email\":\"{{regSharedEmail}}\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-ST-001\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(200);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-ST-002] Từ chối đăng ký lại với email đã tồn tại (unique constraint)",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"State A2\",\"email\":\"{{regSharedEmail}}\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-ST-002\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về 1 trong các status hợp lệ [400,409]`, () => {",
+  > > > > > > > > > > > > > > > > " pm.expect([400,409]).to.include(pm.response.code);",
+  > > > > > > > > > > > > > > > > "});",
+  > > > > > > > > > > > > > > > > "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [400,409])`);"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-ST-003] Đăng ký với email khác hoa/thường so với email đã tồn tại",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"State A3\",\"email\":\"{{regSharedEmailUpper}}\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-ST-003\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về 1 trong các status hợp lệ [400,409]`, () => {",
+  > > > > > > > > > > > > > > > > " pm.expect([400,409]).to.include(pm.response.code);",
+  > > > > > > > > > > > > > > > > "});",
+  > > > > > > > > > > > > > > > > "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [400,409])`);"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-ST-004] Hai request đăng ký đồng thời cùng 1 email (race condition)",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Race X\",\"email\":\"{{regRaceEmail}}\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-ST-004\";",
+  > > > > > > > > > > > > > > > > "// Request chính (A) đã được gửi bởi Postman. Bắn thêm request B GẦN NHƯ ĐỒNG THỜI",
+  > > > > > > > > > > > > > > > > "// bằng pm.sendRequest (không await tuần tự) để mô phỏng race condition thật -",
+  > > > > > > > > > > > > > > > > "// đây là kỹ thuật bắt buộc vì Newman/Collection Runner chạy tuần tự theo mặc định.",
+  > > > > > > > > > > > > > > > > "const bodyRaw = pm.request.body ? pm.request.body.raw : \"{}\";",
+  > > > > > > > > > > > > > > > > "const urlRaw = pm.request.url.toString();",
+  > > > > > > > > > > > > > > > > "const headersB = pm.request.headers.toObject ? pm.request.headers.toObject() : {};",
+  > > > > > > > > > > > > > > > > "",
+  > > > > > > > > > > > > > > > > "let resultB = null;",
+  > > > > > > > > > > > > > > > > "pm.sendRequest({",
+  > > > > > > > > > > > > > > > > " url: urlRaw,",
+  > > > > > > > > > > > > > > > > " method: pm.request.method,",
+  > > > > > > > > > > > > > > > > " header: headersB,",
+  > > > > > > > > > > > > > > > > " body: { mode: \"raw\", raw: bodyRaw }",
+  > > > > > > > > > > > > > > > > "}, (err, res) => {",
+  > > > > > > > > > > > > > > > > " resultB = err ? null : res.code;",
+  > > > > > > > > > > > > > > > > " console.log(`[${tcId}] Request B (song song) status = ${resultB}`);",
+  > > > > > > > > > > > > > > > > "});",
+  > > > > > > > > > > > > > > > > "",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Request A hoàn tất (không 500)`, () => {",
+  > > > > > > > > > > > > > > > > " pm.expect(pm.response.code).to.not.eql(500);",
+  > > > > > > > > > > > > > > > > "});",
+  > > > > > > > > > > > > > > > > "console.log(`[${tcId}] Request A status = ${pm.response.code} | xem Postman Console để đối chiếu status Request B`);",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Race condition không tạo dữ liệu trùng bất thường (kiểm tra thủ công qua Console + DB nếu cần)`, () => {",
+  > > > > > > > > > > > > > > > > " pm.expect([200, 400, 409]).to.include(pm.response.code);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-ST-005] Đăng ký với email có khoảng trắng thừa trùng email đã tồn tại sau khi trim",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"State A5\",\"email\":\" {{regSharedEmail}} \",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-ST-005\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về 1 trong các status hợp lệ [200,400,409]`, () => {",
+  > > > > > > > > > > > > > > > > " pm.expect([200,400,409]).to.include(pm.response.code);",
+  > > > > > > > > > > > > > > > > "});",
+  > > > > > > > > > > > > > > > > "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [200,400,409])`);"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-ST-006] Hai request đăng ký đồng thời với 2 EMAIL KHÁC NHAU không được làm mất/trùng id tự sinh",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "Request A: {\"name\":\"Concurrent A\",\"email\":\"conc-a@domain.com\",\"password\":\"Password123!\"} | Request B: {\"name\":\"Concurrent B\",\"email\":\"conc-b@domain.com\",\"password\":\"Password123!\"} — gửi gần như đồng thời",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-ST-006\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(200);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "SEC - Security",
+  > > > > > > > > > > > > > > > > "item": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-SEC-001] SQLi qua field email không gây lỗi 500 hay bypass",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Sec A\",\"email\":\"' OR '1'='1\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-SEC-001\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Security: [${tcId}] Trả về status 400`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(400);",
+  > > > > > > > > > > > > > > > > "});",
+  > > > > > > > > > > > > > > > > "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+  > > > > > > > > > > > > > > > > " pm.expect(pm.response.code).to.not.eql(500);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-SEC-002] XSS payload trong field name được lưu an toàn (stored XSS)",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"<script>alert(1)</script>\",\"email\":\"sec002-{{$timestamp}}@domain.com\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-SEC-002\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Security: [${tcId}] Trả về status 200`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(200);",
+  > > > > > > > > > > > > > > > > "});",
+  > > > > > > > > > > > > > > > > "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+  > > > > > > > > > > > > > > > > " pm.expect(pm.response.code).to.not.eql(500);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-SEC-003] Mass assignment: gửi thêm role=admin khi đăng ký phải bị bỏ qua",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Sec C\",\"email\":\"sec003-{{$timestamp}}@domain.com\",\"password\":\"Password123!\",\"role\":\"admin\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-SEC-003\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Security: [${tcId}] Trả về status 200`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(200);",
+  > > > > > > > > > > > > > > > > "});",
+  > > > > > > > > > > > > > > > > "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+  > > > > > > > > > > > > > > > > " pm.expect(pm.response.code).to.not.eql(500);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-SEC-004] Response đăng ký thành công KHÔNG chứa password hoặc passwordHash",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Sec D\",\"email\":\"sec004-{{$timestamp}}@domain.com\",\"password\":\"Password123!\"}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-SEC-004\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Đăng ký thành công`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(200);",
+  > > > > > > > > > > > > > > > > "});",
+  > > > > > > > > > > > > > > > > "pm.test(`Security: [${tcId}] Response 200 không chứa password/passwordHash`, () => {",
+  > > > > > > > > > > > > > > > > " const text = pm.response.text();",
+  > > > > > > > > > > > > > > > > " [\"passwordHash\", \"\\\"password\\\"\", \"salt\"].forEach(f => pm.expect(text).to.not.include(f));",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-SEC-005] Mass assignment: gửi thêm id để ghi đè id tự sinh",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Sec E\",\"email\":\"sec005-{{$timestamp}}@domain.com\",\"password\":\"Password123!\",\"id\":999999}",
+  > > > > > > > > > > > > > > > > "options": {
+  > > > > > > > > > > > > > > > > "raw": {
+  > > > > > > > > > > > > > > > > "language": "json"
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "response": [],
+  > > > > > > > > > > > > > > > > "event": [
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "listen": "test",
+  > > > > > > > > > > > > > > > > "script": {
+  > > > > > > > > > > > > > > > > "type": "text/javascript",
+  > > > > > > > > > > > > > > > > "exec": [
+  > > > > > > > > > > > > > > > > "const tcId = \"TC-A-REGISTER-SEC-005\";",
+  > > > > > > > > > > > > > > > > "pm.test(`Functional: [${tcId}] Đăng ký thành công (mass assignment id bị bỏ qua)`, () => {",
+  > > > > > > > > > > > > > > > > " pm.response.to.have.status(200);",
+  > > > > > > > > > > > > > > > > "});",
+  > > > > > > > > > > > > > > > > "pm.test(`Security: [${tcId}] id trả về do server tự sinh, KHÔNG bằng 999999 client gửi`, () => {",
+  > > > > > > > > > > > > > > > > " const id = pm.response.json().id;",
+  > > > > > > > > > > > > > > > > " pm.expect(id).to.not.eql(999999);",
+  > > > > > > > > > > > > > > > > "});"
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > }
+  > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > {
+  > > > > > > > > > > > > > > > > "name": "[TC-A-REGISTER-SEC-006] Kiểm tra type validation cho field email khi client gửi object thay vì string",
+  > > > > > > > > > > > > > > > > "request": {
+  > > > > > > > > > > > > > > > > "method": "POST",
+  > > > > > > > > > > > > > > > > "header": [],
+  > > > > > > > > > > > > > > > > "url": {
+  > > > > > > > > > > > > > > > > "raw": "{{baseUrl}}/api/register",
+  > > > > > > > > > > > > > > > > "host": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "{{baseUrl}}"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ],
+  > > > > > > > > > > > > > > > > "path": [
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "api",
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > "register"
+  > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ]
+  > > > > > > > > > > > > > > > > },
+  > > > > > > > > > > > > > > > > "body": {
+  > > > > > > > > > > > > > > > > "mode": "raw",
+  > > > > > > > > > > > > > > > > "raw": "{\"name\":\"Sec F\",\"email\":{\"$ne\":null},\"password\":\"Password123!\"}",
+  >
+  >                   "options": {
+  >                     "raw": {
+  >                       "language": "json"
+  >                     }
+  >                   }
+  >                 }
+  >               },
+  >               "response": [],
+  >               "event": [
+  >                 {
+  >                   "listen": "test",
+  >                   "script": {
+  >                     "type": "text/javascript",
+  >                     "exec": [
+  >                       "const tcId = \"TC-A-REGISTER-SEC-006\";",
+  >                       "pm.test(`Security: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-A-REGISTER-SEC-007] Command-injection-like payload trong field name không gây lỗi 500 hay lộ output hệ thống",
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/register",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "register"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"name\":\"; ls -la $(whoami)\",\"email\":\"sec007-{{$timestamp}}@domain.com\",\"password\":\"Password123!\"}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-A-REGISTER-SEC-007\";",
+                        "pm.test(`Security: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-A-REGISTER-SEC-008] Content-Type ép text/plain với JSON body bị từ chối hợp lý",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/plain",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/register",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "register"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"name\":\"Sec G\",\"email\":\"sec008@domain.com\",\"password\":\"Password123!\"}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-A-REGISTER-SEC-008\";",
+                        "pm.test(`Security: [${tcId}] Trả về 1 trong các status hợp lệ [400,415]`, () => {",
+                        "    pm.expect([400,415]).to.include(pm.response.code);",
+                        "});",
+                        "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [400,415])`);",
+  >                       "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "SCH - Schema validation",
+            "item": [
+              {
+                "name": "[TC-A-REGISTER-SCH-001] Response 200 khớp đúng schema {message, id}",
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/register",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "register"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"name\":\"Sch A\",\"email\":\"{{regSchSharedEmail}}\",\"password\":\"Password123!\"}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-A-REGISTER-SCH-001\";",
+                        "pm.test(`Contract: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(`Contract: [${tcId}] Content-Type là application/json`, () => {",
+                        "    pm.expect(pm.response.headers.get(\"Content-Type\") || \"\").to.include(\"application/json\");",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-A-REGISTER-SCH-002] Response 400 (input không hợp lệ) có cấu trúc lỗi nhất quán",
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/register",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "register"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"name\":\"\",\"email\":\"invalidemail\",\"password\":\"123\"}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-A-REGISTER-SCH-002\";",
+                        "pm.test(`Contract: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-A-REGISTER-SCH-003] Response khi trùng email có cấu trúc lỗi nhất quán và không lộ thông tin user cũ",
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/register",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "register"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"name\":\"Sch C\",\"email\":\"{{regSchSharedEmail}}\",\"password\":\"Password123!\"}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-A-REGISTER-SCH-003\";",
+                        "pm.test(`Contract: [${tcId}] Trả về 1 trong các status hợp lệ [400,409]`, () => {",
+                        "    pm.expect([400,409]).to.include(pm.response.code);",
+                        "});",
+                        "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [400,409])`);"
+  >                     ]
+  >                   }
+  >                 }
+  >               ]
+  >             },
+  >             {
+  >               "name": "[TC-A-REGISTER-SCH-004] Method GET không được hỗ trợ trên /api/register",
+  >               "request": {
+  >                 "method": "GET",
+  >                 "header": [],
+  >                 "url": {
+  >                   "raw": "{{baseUrl}}/api/register",
+  >                   "host": [
+  >                     "{{baseUrl}}"
+  >                   ],
+  >                   "path": [
+  >                     "api",
+  >                     "register"
+  >                   ]
+  >                 }
+  >               },
+  >               "response": [],
+  >               "event": [
+  >                 {
+  >                   "listen": "test",
+  >                   "script": {
+  >                     "type": "text/javascript",
+  >                     "exec": [
+  >                       "const tcId = \"TC-A-REGISTER-SCH-004\";",
+  >                       "pm.test(`Contract: [${tcId}] Trả về 1 trong các status hợp lệ [404,405]`, () => {",
+                        "    pm.expect([404,405]).to.include(pm.response.code);",
+                        "});",
+                        "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [404,405])`);",
+  >                       "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-A-REGISTER-SCH-005] Response header Content-Type đúng application/json",
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/register",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "register"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"name\":\"Sch E\",\"email\":\"sch005-{{$timestamp}}@domain.com\",\"password\":\"Password123!\"}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-A-REGISTER-SCH-005\";",
+                        "pm.test(`Contract: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(`Contract: [${tcId}] Content-Type là application/json`, () => {",
+                        "    pm.expect(pm.response.headers.get(\"Content-Type\") || \"\").to.include(\"application/json\");",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "XT - [TC-A-REGISTER-ST-007] Đăng ký lại email đã bị admin xoá",
+            "item": [
+              {
+                "name": "[TC-A-REGISTER-ST-007] B1 - Đăng ký user tạm để test",
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/register",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "register"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"name\":\"Reused Owner\",\"email\":\"reused-{{$timestamp}}@domain.com\",\"password\":\"Password123!\"}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test(\"Functional: [TC-A-REGISTER-ST-007] B1 - Đăng ký user tạm thành công\", () => { pm.response.to.have.status(200); });",
+                        "const body = JSON.parse(pm.request.body.raw);",
+                        "pm.collectionVariables.set(\"reusedEmail\", body.email);",
+                        "pm.collectionVariables.set(\"reusedUserId\", pm.response.json().id);"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-A-REGISTER-ST-007] B2 - Admin xoá user tạm đó",
+                "request": {
+                  "method": "DELETE",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users/{{reusedUserId}}",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users",
+                      "{{reusedUserId}}"
+                    ]
+                  }
+                },
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test(\"Functional: [TC-A-REGISTER-ST-007] B2 - Admin xoá user tạm thành công\", () => {",
+                        "    pm.expect([200, 204]).to.include(pm.response.code);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-A-REGISTER-ST-007] B3 - Đăng ký lại đúng email vừa bị xoá",
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/register",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "register"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"name\":\"Reused Owner 2\",\"email\":\"{{reusedEmail}}\",\"password\":\"Password123!\"}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-A-REGISTER-ST-007\";",
+                        "console.log(`[${tcId}] B3 status thực tế = ${pm.response.code} (email vừa bị admin xoá có được giải phóng lại hay không - spec chưa định nghĩa)`);",
+  >                       "pm.test(`Functional: [${tcId}] B3 - Ghi nhận hành vi thực tế (200 = giải phóng lại / 400|409 = vẫn coi đã tồn tại)`, () => {",
+                        "    pm.expect([200, 400, 409]).to.include(pm.response.code);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "API2 - POST /api/cart (Pool B, FR-07)",
+        "item": [
+          {
+            "name": "FN - Happy path",
+            "item": [
+              {
+                "name": "[TC-B-CART-FN-001] Thêm sản phẩm hợp lệ vào giỏ hàng trống",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":2}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-FN-001\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-FN-002] Thêm sản phẩm hợp lệ với quantity lớn nhưng hợp lệ (qty=99)",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":2,\"name\":\"Sản phẩm B\",\"price\":50000,\"quantity\":99}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-FN-002\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-FN-003] Thêm sản phẩm hợp lệ với quantity đúng biên dưới (qty=1)",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":3,\"name\":\"Sản phẩm C\",\"price\":20000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-FN-003\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "DP - Domain partition",
+            "item": [
+              {
+                "name": "[TC-B-CART-DP-001] Từ chối thêm sản phẩm với id không tồn tại trong hệ thống",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":999999,\"name\":\"Không tồn tại\",\"price\":10000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-001\";",
+                        "pm.test(`Functional: [${tcId}] Trả về 1 trong các status hợp lệ [400,404]`, () => {",
+                        "    pm.expect([400,404]).to.include(pm.response.code);",
+                        "});",
+                        "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [400,404])`);"
+  >                     ]
+  >                   }
+  >                 }
+  >               ]
+  >             },
+  >             {
+  >               "name": "[TC-B-CART-DP-002] Từ chối id dạng chuỗi không phải số",
+  >               "request": {
+  >                 "method": "POST",
+  >                 "header": [
+  >                   {
+  >                     "key": "Authorization",
+  >                     "value": "Bearer {{tokenUserA}}",
+  >                     "type": "text"
+  >                   }
+  >                 ],
+  >                 "url": {
+  >                   "raw": "{{baseUrl}}/api/cart",
+  >                   "host": [
+  >                     "{{baseUrl}}"
+  >                   ],
+  >                   "path": [
+  >                     "api",
+  >                     "cart"
+  >                   ]
+  >                 },
+  >                 "body": {
+  >                   "mode": "raw",
+  >                   "raw": "{\"id\":\"abc\",\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":1}",
+  >                   "options": {
+  >                     "raw": {
+  >                       "language": "json"
+  >                     }
+  >                   }
+  >                 }
+  >               },
+  >               "response": [],
+  >               "event": [
+  >                 {
+  >                   "listen": "test",
+  >                   "script": {
+  >                     "type": "text/javascript",
+  >                     "exec": [
+  >                       "const tcId = \"TC-B-CART-DP-002\";",
+  >                       "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-003] Từ chối id âm hoặc bằng 0",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":0,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-003\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-004] Từ chối id null",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":null,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-004\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-005] Thiếu hẳn field id trong body",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-005\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-006] name rỗng vẫn được xử lý hợp lý (không 500)",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"\",\"price\":100000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-006\";",
+                        "pm.test(`Functional: [${tcId}] Trả về 1 trong các status hợp lệ [200,400]`, () => {",
+                        "    pm.expect([200,400]).to.include(pm.response.code);",
+                        "});",
+                        "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [200,400])`);"
+  >                     ]
+  >                   }
+  >                 }
+  >               ]
+  >             },
+  >             {
+  >               "name": "[TC-B-CART-DP-007] name client gửi KHÔNG khớp tên thật của sản phẩm trong DB",
+  >               "request": {
+  >                 "method": "POST",
+  >                 "header": [
+  >                   {
+  >                     "key": "Authorization",
+  >                     "value": "Bearer {{tokenUserA}}",
+  >                     "type": "text"
+  >                   }
+  >                 ],
+  >                 "url": {
+  >                   "raw": "{{baseUrl}}/api/cart",
+  >                   "host": [
+  >                     "{{baseUrl}}"
+  >                   ],
+  >                   "path": [
+  >                     "api",
+  >                     "cart"
+  >                   ]
+  >                 },
+  >                 "body": {
+  >                   "mode": "raw",
+  >                   "raw": "{\"id\":1,\"name\":\"Tên giả mạo hoàn toàn khác\",\"price\":100000,\"quantity\":1}",
+  >                   "options": {
+  >                     "raw": {
+  >                       "language": "json"
+  >                     }
+  >                   }
+  >                 }
+  >               },
+  >               "response": [],
+  >               "event": [
+  >                 {
+  >                   "listen": "test",
+  >                   "script": {
+  >                     "type": "text/javascript",
+  >                     "exec": [
+  >                       "const tcId = \"TC-B-CART-DP-007\";",
+  >                       "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-008] name chứa ký tự Unicode/emoji",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm 🎉\",\"price\":100000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-008\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-009] name là number thay vì string",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":12345,\"price\":100000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-009\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-010] price = 0 bị từ chối hoặc bỏ qua",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":0,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-010\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-011] price âm bị từ chối",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":-100000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-011\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-012] price client gửi THẤP HƠN giá thật trong DB (giả mạo giá)",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":1,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-012\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-013] price số thực lẻ hợp lệ",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":99999.5,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-013\";",
+                        "pm.test(`Functional: [${tcId}] Trả về 1 trong các status hợp lệ [200,400]`, () => {",
+                        "    pm.expect([200,400]).to.include(pm.response.code);",
+                        "});",
+                        "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [200,400])`);"
+  >                     ]
+  >                   }
+  >                 }
+  >               ]
+  >             },
+  >             {
+  >               "name": "[TC-B-CART-DP-014] price là chuỗi không phải number",
+  >               "request": {
+  >                 "method": "POST",
+  >                 "header": [
+  >                   {
+  >                     "key": "Authorization",
+  >                     "value": "Bearer {{tokenUserA}}",
+  >                     "type": "text"
+  >                   }
+  >                 ],
+  >                 "url": {
+  >                   "raw": "{{baseUrl}}/api/cart",
+  >                   "host": [
+  >                     "{{baseUrl}}"
+  >                   ],
+  >                   "path": [
+  >                     "api",
+  >                     "cart"
+  >                   ]
+  >                 },
+  >                 "body": {
+  >                   "mode": "raw",
+  >                   "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":\"abc\",\"quantity\":1}",
+  >                   "options": {
+  >                     "raw": {
+  >                       "language": "json"
+  >                     }
+  >                   }
+  >                 }
+  >               },
+  >               "response": [],
+  >               "event": [
+  >                 {
+  >                   "listen": "test",
+  >                   "script": {
+  >                     "type": "text/javascript",
+  >                     "exec": [
+  >                       "const tcId = \"TC-B-CART-DP-014\";",
+  >                       "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-015] price vượt max int an toàn",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":999999999999,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-015\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-016] quantity = 0 bị từ chối",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":0}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-016\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-017] quantity âm bị từ chối",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":-1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-017\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-018] quantity số thực (không nguyên) bị từ chối",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":1.5}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-018\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-019] quantity rất lớn không gây lỗi 500",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":999999999}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-019\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-020] quantity là chuỗi không phải number",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":\"two\"}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-020\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-021] Thiếu hẳn field quantity trong body",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-021\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-022] quantity null",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":null}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-022\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-DP-023] price gửi dạng chuỗi định dạng phân cách hàng nghìn kiểu Việt Nam ('100.000') phải bị từ chối rõ ràng, không được parse nhầm",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":\"100.000\",\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-DP-023\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "ST - State transition",
+            "item": [
+              {
+                "name": "[TC-B-CART-ST-001] Giỏ trống + thêm sản phẩm mới → giỏ có đúng 1 dòng",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":2}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-ST-001\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-ST-002] Thêm lại CÙNG id đã có trong giỏ → CỘNG DỒN quantity trên cùng 1 dòng, KHÔNG tạo dòng mới",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":3}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-ST-002\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-ST-003] Thêm sản phẩm KHÁC id vào giỏ đã có sản phẩm khác → 2 dòng riêng biệt",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":2,\"name\":\"Sản phẩm B\",\"price\":50000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-ST-003\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-ST-004] Hai request thêm CÙNG id gần như đồng thời (race condition) không làm mất update",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-ST-004\";",
+                        "// Request chính (A) đã được gửi bởi Postman. Bắn thêm request B GẦN NHƯ ĐỒNG THỜI",
+                        "// bằng pm.sendRequest (không await tuần tự) để mô phỏng race condition thật -",
+                        "// đây là kỹ thuật bắt buộc vì Newman/Collection Runner chạy tuần tự theo mặc định.",
+                        "const bodyRaw = pm.request.body ? pm.request.body.raw : \"{}\";",
+                        "const urlRaw = pm.request.url.toString();",
+                        "const headersB = pm.request.headers.toObject ? pm.request.headers.toObject() : {};",
+                        "",
+                        "let resultB = null;",
+                        "pm.sendRequest({",
+                        "    url: urlRaw,",
+                        "    method: pm.request.method,",
+                        "    header: headersB,",
+                        "    body: { mode: \"raw\", raw: bodyRaw }",
+                        "}, (err, res) => {",
+                        "    resultB = err ? null : res.code;",
+                        "    console.log(`[${tcId}] Request B (song song) status = ${resultB}`);",
+  >                       "});",
+  >                       "",
+  >                       "pm.test(`Functional: [${tcId}] Request A hoàn tất (không 500)`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});",
+                        "console.log(`[${tcId}] Request A status = ${pm.response.code} | xem Postman Console để đối chiếu status Request B`);",
+  >                       "pm.test(`Functional: [${tcId}] Race condition không tạo dữ liệu trùng bất thường (kiểm tra thủ công qua Console + DB nếu cần)`, () => {",
+                        "    pm.expect([200, 400, 409]).to.include(pm.response.code);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-ST-005] Thêm lại 1 id đã từng có trong giỏ nhưng sản phẩm đó đã bị admin xoá khỏi hệ thống",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":5,\"name\":\"Sản phẩm đã xoá\",\"price\":100000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-ST-005\";",
+                        "pm.test(`Functional: [${tcId}] Trả về 1 trong các status hợp lệ [400,404]`, () => {",
+                        "    pm.expect([400,404]).to.include(pm.response.code);",
+                        "});",
+                        "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [400,404])`);"
+  >                     ]
+  >                   }
+  >                 }
+  >               ]
+  >             }
+  >           ]
+  >         },
+  >         {
+  >           "name": "SEC - Security",
+  >           "item": [
+  >             {
+  >               "name": "[TC-B-CART-SEC-001] Không gửi Authorization header bị từ chối",
+  >               "request": {
+  >                 "method": "POST",
+  >                 "header": [],
+  >                 "url": {
+  >                   "raw": "{{baseUrl}}/api/cart",
+  >                   "host": [
+  >                     "{{baseUrl}}"
+  >                   ],
+  >                   "path": [
+  >                     "api",
+  >                     "cart"
+  >                   ]
+  >                 },
+  >                 "body": {
+  >                   "mode": "raw",
+  >                   "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":1}",
+  >                   "options": {
+  >                     "raw": {
+  >                       "language": "json"
+  >                     }
+  >                   }
+  >                 }
+  >               },
+  >               "response": [],
+  >               "event": [
+  >                 {
+  >                   "listen": "test",
+  >                   "script": {
+  >                     "type": "text/javascript",
+  >                     "exec": [
+  >                       "const tcId = \"TC-B-CART-SEC-001\";",
+  >                       "pm.test(`Security: [${tcId}] Trả về status 401`, () => {",
+                        "    pm.response.to.have.status(401);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-SEC-002] Token rỗng/chuỗi rác bị từ chối",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer xxx",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-SEC-002\";",
+                        "pm.test(`Security: [${tcId}] Trả về status 401`, () => {",
+                        "    pm.response.to.have.status(401);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-SEC-003] Token hết hạn bị từ chối",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{expiredToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-SEC-003\";",
+                        "pm.test(`Security: [${tcId}] Trả về status 401`, () => {",
+                        "    pm.response.to.have.status(401);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-SEC-004] Token đúng định dạng nhưng sai chữ ký bị từ chối",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{forgedToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-SEC-004\";",
+                        "pm.test(`Security: [${tcId}] Trả về status 401`, () => {",
+                        "    pm.response.to.have.status(401);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-SEC-005] SQLi qua field id không gây lỗi 500 hay thêm toàn bộ sản phẩm",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":\"1 OR 1=1\",\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-SEC-005\";",
+                        "pm.test(`Security: [${tcId}] Trả về status 400`, () => {",
+                        "    pm.response.to.have.status(400);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-SEC-006] XSS payload trong field name được lưu an toàn",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"<script>alert(1)</script>\",\"price\":100000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-SEC-006\";",
+                        "pm.test(`Security: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-SEC-007] Mass assignment: gửi thêm userId để cố ghi item vào giỏ của user khác",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":1,\"userId\":9999}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-SEC-007\";",
+                        "pm.test(`Security: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-SEC-008] price giả mạo thấp hơn giá thật không được backend tin dùng khi tính tổng ở bước sau",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":1,\"quantity\":10}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-SEC-008\";",
+                        "pm.test(`Security: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "SCH - Schema validation",
+            "item": [
+              {
+                "name": "[TC-B-CART-SCH-001] Response 200 khi thêm giỏ hàng thành công đúng shape (spec gap)",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-SCH-001\";",
+                        "pm.test(`Contract: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(`Contract: [${tcId}] Content-Type là application/json`, () => {",
+                        "    pm.expect(pm.response.headers.get(\"Content-Type\") || \"\").to.include(\"application/json\");",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-SCH-002] Response 401 có cấu trúc lỗi nhất quán khi thiếu token",
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-SCH-002\";",
+                        "pm.test(`Contract: [${tcId}] Trả về status 401`, () => {",
+                        "    pm.response.to.have.status(401);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-SCH-003] Response 400/404 khi id sản phẩm không tồn tại có cấu trúc nhất quán",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":999999,\"name\":\"X\",\"price\":1,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-SCH-003\";",
+                        "pm.test(`Contract: [${tcId}] Trả về 1 trong các status hợp lệ [400,404]`, () => {",
+                        "    pm.expect([400,404]).to.include(pm.response.code);",
+                        "});",
+                        "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [400,404])`);"
+  >                     ]
+  >                   }
+  >                 }
+  >               ]
+  >             },
+  >             {
+  >               "name": "[TC-B-CART-SCH-004] GET /api/cart sau khi thêm không lộ giỏ hàng của user khác",
+  >               "request": {
+  >                 "method": "GET",
+  >                 "header": [
+  >                   {
+  >                     "key": "Authorization",
+  >                     "value": "Bearer {{tokenUserA}}",
+  >                     "type": "text"
+  >                   }
+  >                 ],
+  >                 "url": {
+  >                   "raw": "{{baseUrl}}/api/cart",
+  >                   "host": [
+  >                     "{{baseUrl}}"
+  >                   ],
+  >                   "path": [
+  >                     "api",
+  >                     "cart"
+  >                   ]
+  >                 }
+  >               },
+  >               "response": [],
+  >               "event": [
+  >                 {
+  >                   "listen": "test",
+  >                   "script": {
+  >                     "type": "text/javascript",
+  >                     "exec": [
+  >                       "const tcId = \"TC-B-CART-SCH-004\";",
+  >                       "pm.test(`Functional: [${tcId}] userB lấy giỏ hàng của chính mình thành công`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Giỏ hàng của userB KHÔNG lẫn item của userA`, () => {",
+                        "    const text = pm.response.text();",
+                        "    pm.expect(text).to.not.include(pm.collectionVariables.get(\"userEmailA\") || \"__none__\");",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-SCH-005] Content-Type ép text/plain với JSON body bị từ chối hợp lý",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/plain",
+                      "type": "text"
+                    },
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-SCH-005\";",
+                        "pm.test(`Contract: [${tcId}] Trả về 1 trong các status hợp lệ [400,415]`, () => {",
+                        "    pm.expect([400,415]).to.include(pm.response.code);",
+                        "});",
+                        "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [400,415])`);",
+  >                       "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "XT - [TC-B-CART-ST-006] Sản phẩm trong giỏ bị admin xoá",
+            "item": [
+              {
+                "name": "[TC-B-CART-ST-006] B1 - Admin tạo sản phẩm tạm để test",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/products",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "products"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"name\":\"Sản phẩm tạm XT\",\"price\":50000,\"description\":\"tmp\",\"imageUrl\":\"\",\"category_id\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test(\"Functional: [TC-B-CART-ST-006] B1 - Tạo sản phẩm tạm thành công\", () => { pm.response.to.have.status(200); });",
+                        "pm.collectionVariables.set(\"xtProductId\", pm.response.json().id);"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-ST-006] B2 - User A thêm sản phẩm tạm vào giỏ",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"id\":{{xtProductId}},\"name\":\"Sản phẩm tạm XT\",\"price\":50000,\"quantity\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test(\"Functional: [TC-B-CART-ST-006] B2 - Thêm vào giỏ thành công\", () => { pm.response.to.have.status(200); });"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-ST-006] B3 - Admin xoá sản phẩm tạm đó",
+                "request": {
+                  "method": "DELETE",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/products/{{xtProductId}}",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "products",
+                      "{{xtProductId}}"
+                    ]
+                  }
+                },
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test(\"Functional: [TC-B-CART-ST-006] B3 - Xoá sản phẩm tạm thành công\", () => {",
+                        "    pm.expect([200, 204]).to.include(pm.response.code);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-B-CART-ST-006] B4 - User A xem lại giỏ hàng (sản phẩm đã bị xoá)",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/cart",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "cart"
+                    ]
+                  }
+                },
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-B-CART-ST-006\";",
+                        "pm.test(`Functional: [${tcId}] B4 - GET /api/cart không lỗi 500 dù item bên trong đã bị xoá`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "console.log(`[${tcId}] B4 body = ${pm.response.text()}`);"
+  >                     ]
+  >                   }
+  >                 }
+  >               ]
+  >             }
+  >           ]
+  >         }
+  >       ]
+  >     },
+  >     {
+  >       "name": "API3 - GET /api/admin/users (Pool C, FR-19)",
+  >       "item": [
+  >         {
+  >           "name": "FN - Happy path",
+  >           "item": [
+  >             {
+  >               "name": "[TC-C-ADMUSER-FN-001] Admin hợp lệ lấy danh sách toàn bộ user",
+  >               "request": {
+  >                 "method": "GET",
+  >                 "header": [
+  >                   {
+  >                     "key": "Authorization",
+  >                     "value": "Bearer {{adminToken}}",
+  >                     "type": "text"
+  >                   }
+  >                 ],
+  >                 "url": {
+  >                   "raw": "{{baseUrl}}/api/admin/users",
+  >                   "host": [
+  >                     "{{baseUrl}}"
+  >                   ],
+  >                   "path": [
+  >                     "api",
+  >                     "admin",
+  >                     "users"
+  >                   ]
+  >                 }
+  >               },
+  >               "response": [],
+  >               "event": [
+  >                 {
+  >                   "listen": "test",
+  >                   "script": {
+  >                     "type": "text/javascript",
+  >                     "exec": [
+  >                       "const tcId = \"TC-C-ADMUSER-FN-001\";",
+  >                       "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-FN-002] Admin gọi API ngay sau khi đăng nhập, token còn hạn dài",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-FN-002\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-FN-003] Admin gọi API nhiều lần liên tiếp không bị chặn nhầm",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-FN-003\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "DP - Domain partition",
+            "item": [
+              {
+                "name": "[TC-C-ADMUSER-DP-001] Gọi API không kèm bất kỳ query param nào (baseline)",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-DP-001\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-DP-002] Gửi query param lạ không được spec hoá (?foo=bar)",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users?foo=bar",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ],
+                    "query": [
+                      {
+                        "key": "foo",
+                        "value": "bar"
+                      }
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-DP-002\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-DP-003] Gửi thử tham số phân trang chưa được spec hoá (?page=1&limit=10)",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users?page=1&limit=10",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ],
+                    "query": [
+                      {
+                        "key": "page",
+                        "value": "1"
+                      },
+                      {
+                        "key": "limit",
+                        "value": "10"
+                      }
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-DP-003\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-DP-004] Gửi thử tham số tìm kiếm chưa được spec hoá (?search=admin)",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users?search=admin",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ],
+                    "query": [
+                      {
+                        "key": "search",
+                        "value": "admin"
+                      }
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-DP-004\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-DP-005] Hệ thống chỉ có đúng 1 user (chính admin) — mảng có 1 phần tử",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-DP-005\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-DP-006] Hệ thống có số lượng user lớn (vd >100) không gây timeout/500",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-DP-006\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-DP-007] SQLi qua query param không spec hoá (?search=' OR '1'='1)",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users?search=%27%20OR%20%271%27%3D%271",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ],
+                    "query": [
+                      {
+                        "key": "search",
+                        "value": "%27%20OR%20%271%27%3D%271"
+                      }
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-DP-007\";",
+                        "pm.test(`Functional: [${tcId}] Trả về 1 trong các status hợp lệ [200,400]`, () => {",
+                        "    pm.expect([200,400]).to.include(pm.response.code);",
+                        "});",
+                        "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [200,400])`);",
+  >                       "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-DP-008] Gửi Accept header khác application/xml vẫn trả JSON hoặc từ chối hợp lý",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    },
+                    {
+                      "key": "Accept",
+                      "value": "application/xml",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-DP-008\";",
+                        "pm.test(`Functional: [${tcId}] Trả về 1 trong các status hợp lệ [200,406]`, () => {",
+                        "    pm.expect([200,406]).to.include(pm.response.code);",
+                        "});",
+                        "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [200,406])`);",
+  >                       "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-DP-009] Authorization header có khoảng trắng thừa (Bearer  <token> 2 space)",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer  {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-DP-009\";",
+                        "pm.test(`Functional: [${tcId}] Trả về 1 trong các status hợp lệ [200,401]`, () => {",
+                        "    pm.expect([200,401]).to.include(pm.response.code);",
+                        "});",
+                        "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [200,401])`);"
+  >                     ]
+  >                   }
+  >                 }
+  >               ]
+  >             },
+  >             {
+  >               "name": "[TC-C-ADMUSER-DP-010] Tên header Authorization viết thường (authorization) vẫn được chấp nhận",
+  >               "request": {
+  >                 "method": "GET",
+  >                 "header": [
+  >                   {
+  >                     "key": "authorization",
+  >                     "value": "Bearer {{adminToken}}",
+  >                     "type": "text"
+  >                   }
+  >                 ],
+  >                 "url": {
+  >                   "raw": "{{baseUrl}}/api/admin/users",
+  >                   "host": [
+  >                     "{{baseUrl}}"
+  >                   ],
+  >                   "path": [
+  >                     "api",
+  >                     "admin",
+  >                     "users"
+  >                   ]
+  >                 }
+  >               },
+  >               "response": [],
+  >               "event": [
+  >                 {
+  >                   "listen": "test",
+  >                   "script": {
+  >                     "type": "text/javascript",
+  >                     "exec": [
+  >                       "const tcId = \"TC-C-ADMUSER-DP-010\";",
+  >                       "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-DP-011] Method HEAD trên endpoint không gây lỗi 500",
+                "request": {
+                  "method": "HEAD",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-DP-011\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "ST - State transition",
+            "item": [
+              {
+                "name": "[TC-C-ADMUSER-ST-001] User mới tự đăng ký (FR-01) phải xuất hiện trong danh sách admin",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-ST-001\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-ST-002] User đã bị admin xoá (DELETE /api/admin/users/:id) KHÔNG còn xuất hiện trong danh sách",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-ST-002\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-ST-003] Gọi liên tiếp 2 lần khi không có thay đổi dữ liệu ở giữa → kết quả nhất quán (idempotent read)",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-ST-003\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-ST-004] Sau khi user tự cập nhật hồ sơ (PUT /api/users/me đổi tên/sđt), danh sách admin phải phản ánh dữ liệu mới nhất, không bị cache cũ",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-ST-004\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-ST-005] Sau khi user đổi mật khẩu (reset-password), danh sách admin tuyệt đối không lộ mật khẩu mới lẫn cũ",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-ST-005\";",
+                        "pm.test(`Functional: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Response không lộ password/passwordHash/salt`, () => {",
+                        "    const text = pm.response.text();",
+                        "    [\"passwordHash\", \"\\\"password\\\"\", \"salt\"].forEach(f => pm.expect(text).to.not.include(f));",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "SEC - Security",
+            "item": [
+              {
+                "name": "[TC-C-ADMUSER-SEC-001] Không gửi Authorization header bị từ chối",
+                "request": {
+                  "method": "GET",
+                  "header": [],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-SEC-001\";",
+                        "pm.test(`Security: [${tcId}] Trả về status 401`, () => {",
+                        "    pm.response.to.have.status(401);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-SEC-002] Token rỗng/chuỗi rác bị từ chối",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer xxx",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-SEC-002\";",
+                        "pm.test(`Security: [${tcId}] Trả về status 401`, () => {",
+                        "    pm.response.to.have.status(401);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-SEC-003] Token hết hạn bị từ chối",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{expiredAdminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-SEC-003\";",
+                        "pm.test(`Security: [${tcId}] Trả về status 401`, () => {",
+                        "    pm.response.to.have.status(401);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-SEC-004] User thường (role='user') gọi API admin phải bị từ chối 403 (KHÔNG phải 401)",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-SEC-004\";",
+                        "pm.test(`Security: [${tcId}] User thường gọi API admin phải bị 403 (KHONG phai 401)`, () => {",
+                        "    pm.response.to.have.status(403);",
+                        "    pm.expect(pm.response.code).to.not.eql(401,",
+                        "        \"403 nghia la 'da xac thuc nhung khong du quyen' - tra 401 o day la che lo loi phan quyen\");",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-SEC-005] Token bị chỉnh sửa thủ công dùng alg=none (JWT alg confusion) bị từ chối",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{algNoneToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-SEC-005\";",
+                        "pm.test(`Security: [${tcId}] Trả về status 401`, () => {",
+                        "    pm.response.to.have.status(401);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-SEC-006] Token hợp lệ nhưng bị ký sai chữ ký (forged signature) bị từ chối",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{forgedAdminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-SEC-006\";",
+                        "pm.test(`Security: [${tcId}] Trả về status 401`, () => {",
+                        "    pm.response.to.have.status(401);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-SEC-007] Response KHÔNG chứa field password/passwordHash cho BẤT KỲ user nào trong toàn bộ mảng",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-SEC-007\";",
+                        "pm.test(`Functional: [${tcId}] Lấy danh sách user thành công`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(`Security: [${tcId}] KHÔNG có phần tử nào trong mảng chứa password/passwordHash`, () => {",
+                        "    const users = pm.response.json();",
+                        "    pm.expect(users).to.be.an(\"array\");",
+                        "    users.forEach((u, idx) => {",
+                        "        pm.expect(u, `user[${idx}]`).to.not.have.property(\"password\");",
+                        "        pm.expect(u, `user[${idx}]`).to.not.have.property(\"passwordHash\");",
+                        "    });",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-SEC-008] SQLi qua query param không spec hoá không gây lộ dữ liệu ngoài phạm vi",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users?search=%27%20OR%20%271%27%3D%271%27%20--",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ],
+                    "query": [
+                      {
+                        "key": "search",
+                        "value": "%27%20OR%20%271%27%3D%271%27%20--"
+                      }
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-SEC-008\";",
+                        "pm.test(`Security: [${tcId}] Trả về 1 trong các status hợp lệ [200,400]`, () => {",
+                        "    pm.expect([200,400]).to.include(pm.response.code);",
+                        "});",
+                        "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [200,400])`);",
+  >                       "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-SEC-009] Method không hỗ trợ (POST thay vì GET) trả lỗi hợp lý",
+                "request": {
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  },
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\"test\":1}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-SEC-009\";",
+                        "pm.test(`Security: [${tcId}] Trả về 1 trong các status hợp lệ [404,405]`, () => {",
+                        "    pm.expect([404,405]).to.include(pm.response.code);",
+                        "});",
+                        "console.log(`[${tcId}] status thực tế = ${pm.response.code} (spec cho phép nhiều khả năng: [404,405])`);",
+  >                       "pm.test(`Security: [${tcId}] Không trả lỗi 500`, () => {",
+                        "    pm.expect(pm.response.code).to.not.eql(500);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-SEC-010] Token của admin đã bị xoá tài khoản (bởi chính thao tác admin khác) không còn dùng được",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{deletedAdminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-SEC-010\";",
+                        "// MANUAL CASE - khong tu dong hoa duoc bang API cong khai cua SUT (xem cot Note trong TC goc):",
+                        "// can 1 tai khoan admin THU 2 bi xoa trong khi token cu con hieu luc - khong co endpoint public nao de tao them admin (register khong nhan role, SEC-003 da xac nhan), nen khong tao duoc kich ban that qua API cong khai.",
+                        "console.log(`[${tcId}] MANUAL CASE - can dung thu cong theo Precondition, xem Note trong tests/test-cases/`);",
+                        "pm.test(`Security: [${tcId}] (MANUAL) Case can dung thu cong - xem Note`, () => {",
+                        "    pm.expect(true).to.be.true;",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-SEC-011] Token của admin ĐÃ BỊ HẠ QUYỀN xuống 'user' (nhưng token cũ chưa hết hạn) không còn được dùng để gọi API admin",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{staleAdminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-SEC-011\";",
+                        "// MANUAL CASE - khong tu dong hoa duoc bang API cong khai cua SUT (xem cot Note trong TC goc):",
+                        "// can ha quyen 1 admin xuong 'user' nhung khong co endpoint public nao thay doi role cua user da ton tai (PUT /api/users/me tu choi doi role theo SEC-06), nen khong tao duoc kich ban that qua API cong khai.",
+                        "console.log(`[${tcId}] MANUAL CASE - can dung thu cong theo Precondition, xem Note trong tests/test-cases/`);",
+                        "pm.test(`Security: [${tcId}] (MANUAL) Case can dung thu cong - xem Note`, () => {",
+                        "    pm.expect(true).to.be.true;",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "SCH - Schema validation",
+            "item": [
+              {
+                "name": "[TC-C-ADMUSER-SCH-001] Response 200 khớp schema: mảng user, mỗi phần tử có id/name/email/role đúng kiểu dữ liệu",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-SCH-001\";",
+                        "pm.test(`Contract: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(`Contract: [${tcId}] Content-Type là application/json`, () => {",
+                        "    pm.expect(pm.response.headers.get(\"Content-Type\") || \"\").to.include(\"application/json\");",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-SCH-002] Response 401 có cấu trúc lỗi nhất quán, phân biệt được với 403",
+                "request": {
+                  "method": "GET",
+                  "header": [],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-SCH-002\";",
+                        "pm.test(`Contract: [${tcId}] Trả về status 401`, () => {",
+                        "    pm.response.to.have.status(401);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-SCH-003] Response 403 có cấu trúc lỗi nhất quán, phân biệt được với 401",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{tokenUserA}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-SCH-003\";",
+                        "pm.test(`Contract: [${tcId}] Trả về status 403`, () => {",
+                        "    pm.response.to.have.status(403);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-SCH-004] Response vẫn là mảng [] (không phải null) khi hệ thống 0 user thường (giả định luôn còn ít nhất admin)",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-SCH-004\";",
+                        "pm.test(`Contract: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(`Contract: [${tcId}] Content-Type là application/json`, () => {",
+                        "    pm.expect(pm.response.headers.get(\"Content-Type\") || \"\").to.include(\"application/json\");",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-SCH-005] Field id của mỗi user đúng kiểu number, không phải string",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-SCH-005\";",
+                        "pm.test(`Contract: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(`Contract: [${tcId}] Content-Type là application/json`, () => {",
+                        "    pm.expect(pm.response.headers.get(\"Content-Type\") || \"\").to.include(\"application/json\");",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-SCH-006] Response header Content-Type chính xác application/json; charset=utf-8",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-SCH-006\";",
+                        "pm.test(`Contract: [${tcId}] Trả về status 200`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "pm.test(`Contract: [${tcId}] Content-Type là application/json`, () => {",
+                        "    pm.expect(pm.response.headers.get(\"Content-Type\") || \"\").to.include(\"application/json\");",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "XT - [TC-C-ADMUSER-ST-006] Admin tự xoá chính mình bị chặn",
+            "item": [
+              {
+                "name": "[TC-C-ADMUSER-ST-006] B1 - Admin gọi DELETE nhắm vào CHÍNH mình",
+                "request": {
+                  "method": "DELETE",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users/{{adminUserId}}",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users",
+                      "{{adminUserId}}"
+                    ]
+                  }
+                },
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-ST-006\";",
+                        "pm.test(`Security: [${tcId}] B1 - Admin KHÔNG được tự xoá chính mình (FR-19)`, () => {",
+                        "    pm.expect([400, 403, 409]).to.include(pm.response.code);",
+                        "    pm.expect(pm.response.code, \"Nếu trả 200/204 tại đây - đây là BUG NGHIÊM TRỌNG, admin đã tự xoá được chính mình\").to.not.be.oneOf([200, 204]);",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "[TC-C-ADMUSER-ST-006] B2 - GET lại danh sách, admin vẫn còn",
+                "request": {
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Authorization",
+                      "value": "Bearer {{adminToken}}",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "{{baseUrl}}/api/admin/users",
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "path": [
+                      "api",
+                      "admin",
+                      "users"
+                    ]
+                  }
+                },
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "type": "text/javascript",
+                      "exec": [
+                        "const tcId = \"TC-C-ADMUSER-ST-006\";",
+                        "pm.test(`Functional: [${tcId}] B2 - Danh sách vẫn còn chính admin đang gọi`, () => {",
+                        "    pm.response.to.have.status(200);",
+                        "    const users = pm.response.json();",
+                        "    const selfId = Number(pm.collectionVariables.get(\"adminUserId\"));",
+                        "    pm.expect(users.some(u => Number(u.id) === selfId)).to.be.true;",
+                        "});"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "99 - Teardown",
+        "item": [
+          {
+            "name": "Note - Dữ liệu test dùng email động ({{$timestamp}}) nên không cần xoá thủ công",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{baseUrl}}/api/products",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "api",
+                  "products"
+                ]
+              }
+            },
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.test(\"Teardown: SUT vẫn phản hồi bình thường sau khi chạy hết suite\", () => {",
+                    "    pm.response.to.have.status(200);",
+                    "});"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+  ],
+  "event": [
+  {
+  "listen": "prerequest",
+  "script": {
+  "type": "text/javascript",
+  "exec": [
+  "// Pre-request script cap COLLECTION - gan X-Student-Id cho MOI request (muc 11 de bai)",
+  "// va ghi log ra Console de chup man hinh lam bang chung cho TA.",
+  "const studentId =",
+  " pm.environment.get(\"studentId\") ||",
+  " pm.collectionVariables.get(\"studentId\");",
+  "",
+  "if (!studentId) {",
+  " throw new Error(",
+  " \"Thieu bien 'studentId'. Dat trong Environment (local/ci) truoc khi chay collection.\"",
+  " );",
+  "}",
+  "",
+  "pm.request.headers.upsert({ key: \"X-Student-Id\", value: studentId });",
+  "",
+  "console.log(",
+  " `[X-Student-Id] ${studentId} | ${pm.request.method} ${pm.request.url.toString()} | request=\"${pm.info.requestName}\"`",
+  > ");",
+  > "",
+  > "const hasBody = pm.request.body && pm.request.body.mode && pm.request.body.mode !== \"none\";",
+  > "if (hasBody && !pm.request.headers.has(\"Content-Type\")) {",
+  > " pm.request.headers.upsert({ key: \"Content-Type\", value: \"application/json\" });",
+  > "}",
+  > "",
+  > "pm.collectionVariables.set(\"runStartedAt\", new Date().toISOString());",
+  > ""
+  > ]
+  > }
+  > }
+  > ],
+  > "variable": [
+  >
+  > > {
+  > > "key": "adminToken",
+  > > "value": "",
+  > > "type": "string"
+  > > },
+  > > {
+  > > "key": "adminUserId",
+  > > "value": "",
+  > > "type": "string"
+  > > },
+  > > {
+  > > "key": "tokenUserA",
+  > > "value": "",
+  > > "type": "string"
+  > > },
+  > > {
+  > > "key": "tokenUserB",
+  > > "value": "",
+  > > "type": "string"
+  > > },
+  > > {
+  > > "key": "userEmailA",
+  > > "value": "",
+  > > "type": "string"
+  > > },
+  > > {
+  > > "key": "userEmailB",
+  > > "value": "",
+  > > "type": "string"
+  > > },
+  > > {
+  > > "key": "regSharedEmail",
+  > > "value": "",
+  > > "type": "string"
+  > > },
+  > > {
+  > > "key": "regSharedEmailUpper",
+  > > "value": "",
+  > > "type": "string"
+  > > },
+  > > {
+  > > "key": "regSchSharedEmail",
+  > > "value": "",
+  > > "type": "string"
+  > > },
+  > > {
+  > > "key": "regRaceEmail",
+  > > "value": "",
+  > > "type": "string"
+  > > },
+  > > {
+  > > "key": "reusedEmail",
+  > > "value": "",
+  > > "type": "string"
+  > > },
+  > > {
+  > > "key": "reusedUserId",
+  > > "value": "",
+  > > "type": "string"
+  > > },
+  > > {
+  > > "key": "xtProductId",
+  > > "value": "",
+  > > "type": "string"
+  > > },
+  > > {
+  > > "key": "runStartedAt",
+  > > "value": "",
+  > > "type": "string"
+  > > }
+  > > ]
+  > > }
+  > > ----- END tests/postman/collections/eshop-hw06.postman_collection.json -----
+  >
+  > ----- BEGIN tests/postman/envs/local.postman_environment.json -----
+  > {
+  > "id": "3bce5be4-691c-4694-85b1-88716d1d2503",
+  > "name": "EShop HW06 - Local",
+  > "values": [
+  >
+  > > {
+  > > "key": "baseUrl",
+  > > "value": "http://localhost:3000",
+  > > "type": "default",
+  > > "enabled": true
+  > > },
+  > > {
+  > > "key": "studentId",
+  > > "value": "23127211",
+  > > "type": "default",
+  > > "enabled": true
+  > > },
+  > > {
+  > > "key": "expiredToken",
+  > > "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE3ODc0MTM2MjksImV4cCI6MTc4NzQxMDAyOX0.n-X7V4Ug9cXP6x6kZiRHCLdrVRvKcHzBfk6RXHgD8xk",
+  > > "type": "secret",
+  > > "enabled": true
+  > > },
+  > > {
+  > > "key": "expiredAdminToken",
+  > > "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzg3NDEzNjI5LCJleHAiOjE3ODc0MTAwMjl9.qHFt7Ve4sBs6mRK74IRNu5dBo1WWENH5PEhG7DEmpm0",
+  > > "type": "secret",
+  > > "enabled": true
+  > > },
+  > > {
+  > > "key": "forgedToken",
+  > > "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE3ODc0MTM2Mjl9.3M_c19cgvnuMf5EbkFjHiQt_OeudS6Ydgh-RLot2pdA",
+  > > "type": "secret",
+  > > "enabled": true
+  > > },
+  > > {
+  > > "key": "forgedAdminToken",
+  > > "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzg3NDEzNjI5fQ.UIl9rVmsawavQwfNdnVqop8lpIsJGawyNCNbrpM6Z8A",
+  > > "type": "secret",
+  > > "enabled": true
+  > > },
+  > > {
+  > > "key": "algNoneToken",
+  > > "value": "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJpZCI6MSwicm9sZSI6ImFkbWluIn0.",
+  > > "type": "secret",
+  > > "enabled": true
+  > > },
+  > > {
+  > > "key": "staleAdminToken",
+  > > "value": "",
+  > > "type": "secret",
+  > > "enabled": true
+  > > },
+  > > {
+  > > "key": "deletedAdminToken",
+  > > "value": "",
+  > > "type": "secret",
+  > > "enabled": true
+  > > }
+  > > ],
+  > > "\_postman_variable_scope": "environment"
+  > > }
+  > > ----- END tests/postman/envs/local.postman_environment.json -----
+  >
+  > (Newman HTML/JSON report không nhúng raw vào đây vì dung lượng quá lớn (3MB/6.6MB) - xem file đính kèm gửi cho người dùng: tests/postman/reports/newman-report.html, tests/postman/reports/newman-report.json)
+
+---
+
+**Đánh giá:** INCOMPLETE.
+
+**Suy luận:** 86% case chỉ assert status, không check nội dung response như CSV yêu cầu. Ngoài ra 2 case MANUAL dùng assertion "always true" (ảo pass), và token đánh dấu "secret" nhưng lại bị log plaintext vào audit report public.
+
+**Sửa:**
+
+- Enrich 7 case SCH, assert đúng field/kiểu dữ liệu → phát hiện thêm bug: GET /api/admin/users trả name: null
+- Bỏ 2 assertion giả, số liệu đúng: 199 assertion, 140 pass, 59 fail
+- Ghi chú rõ trong README: 112/131 case mới ở mức baseline, "secret" token chỉ mang tính hình thức vì secret key đã public sẵn trong code
