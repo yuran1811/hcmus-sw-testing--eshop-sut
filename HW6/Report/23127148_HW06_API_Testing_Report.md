@@ -181,8 +181,6 @@ Toàn bộ 3 bộ sưu tập Postman đã được thực thi tự động qua *
 | **API 3: `POST /api/admin/import-products` (FR-16)** | 45 | 67 | 67 | 0 | **100.0%** | 4.2s | [`import-products-report.html`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/Report/newman/import-products-report.html) |
 | **Tổng Cộng Toàn Bộ Hệ Thống** | **129** | **172** | **155** | **17** | **90.1%** | **11.6s** | **3 File HTML Reports** |
 
----
-
 ### 7.2 Phân Tích Chi Tiết Các Trường Hợp Thất Bại (Failure Breakdown)
 
 1. **Tại API Forgot Password (3 Failures):**
@@ -193,6 +191,23 @@ Toàn bộ 3 bộ sưu tập Postman đã được thực thi tự động qua *
    - `TC-CANCEL-019..020`: Trả về `400 Bad Request` ("Cannot cancel this order.") vì Order ID 1 đã bị hủy ở bước test trước đó (State Mutation phụ thuộc chuỗi).
 
 ---
+
+### 7.3 Bằng Chứng Thực Thi Trực Quan (Execution Evidence Screenshots)
+
+#### 1. Minh Chứng Header Anti-Cheat Trên Postman GUI (`X-Student-Id: 23127148`):
+![Postman Anti-Cheat Header Evidence](images/postman_student_id.png)
+*Hình 7.1: Giao diện Postman GUI thực thi request `TC-FORGOT-001` mang theo Header bắt buộc `X-Student-Id: 23127148` và phản hồi 200 OK*
+
+#### 2. Minh Chứng Kết Quả Chạy Trên Postman Collection Runner:
+![Postman Collection Runner Results](images/postman_runner_results.png)
+*Hình 7.2: Kết quả thực thi tự động qua Postman Collection Runner (43 tests: 40 Passed / 3 Failed)*
+
+#### 3. Minh Chứng Thực Thi Newman CLI:
+![Newman CLI Execution](images/newman_forgot_password_cli.png)
+*Hình 7.3: Bảng tổng kết kết quả thực thi tự động qua Newman CLI trên Terminal PowerShell*
+
+---
+
 
 ## 8. Giai Đoạn 5: Báo Cáo Lỗi SUT (Phase 5: Defect & Bug Reporting)
 
