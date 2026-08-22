@@ -1,0 +1,476 @@
+[
+  {
+    "test_id": "FR04-USRME-DP-001",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-001 GET profile exposes no sensitive field: expected { id: 2, name: 'Nguyễn Văn A', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-002",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-002 GET profile exposes no sensitive field: expected { id: 2, …(9) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-003",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-003 GET profile exposes no sensitive field: expected { id: 2, name: 'A', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-004",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-004 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-DP-004 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-DP-004 GET profile exposes no sensitive field: expected { id: 2, name: '', …(8) } to not have property 'password'",
+      "FR04-USRME-DP-004 GET profile state matches oracle: expected '' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"0912345678\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-005",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-005 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-DP-005 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-DP-005 GET profile exposes no sensitive field: expected { id: 2, name: ' ', …(8) } to not have property 'password'",
+      "FR04-USRME-DP-005 GET profile state matches oracle: expected ' ' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\" \\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"0912345678\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-006",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-006 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-DP-006 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-DP-006 GET profile exposes no sensitive field: expected { id: 2, …(9) } to not have property 'password'",
+      "FR04-USRME-DP-006 GET profile state matches oracle: expected 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA…' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"0912345678\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-007",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-007 GET profile exposes no sensitive field: expected { id: 2, …(9) } to not have property 'password'",
+      "FR04-USRME-DP-007 GET profile state matches oracle: expected null to equal '0912345678'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"profile matches effective request\",\"pass\":false,\"details\":\"{\\\"expected\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Chỉ cập nhật tên\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"actual\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Chỉ cập nhật tên\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":null,\\\"phone\\\":null}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-008",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-008 GET profile exposes no sensitive field: expected { id: 2, name: 'Phone 10', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-009",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-009 GET profile exposes no sensitive field: expected { id: 2, name: 'Phone 11', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-010",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-010 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-DP-010 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-DP-010 GET profile exposes no sensitive field: expected { id: 2, name: 'Sai tiền tố', …(8) } to not have property 'password'",
+      "FR04-USRME-DP-010 GET profile state matches oracle: expected 'Sai tiền tố' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Sai tiền tố\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"1912345678\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-011",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-011 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-DP-011 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-DP-011 GET profile exposes no sensitive field: expected { id: 2, name: 'Quá ngắn', …(8) } to not have property 'password'",
+      "FR04-USRME-DP-011 GET profile state matches oracle: expected 'Quá ngắn' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Quá ngắn\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"091234567\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-012",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-012 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-DP-012 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-DP-012 GET profile exposes no sensitive field: expected { id: 2, name: 'Quá dài', …(8) } to not have property 'password'",
+      "FR04-USRME-DP-012 GET profile state matches oracle: expected 'Quá dài' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Quá dài\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"091234567890\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-013",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-013 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-DP-013 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-DP-013 GET profile exposes no sensitive field: expected { id: 2, name: 'Chứa chữ', …(8) } to not have property 'password'",
+      "FR04-USRME-DP-013 GET profile state matches oracle: expected 'Chứa chữ' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Chứa chữ\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"09ABC56789\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-014",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-014 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-DP-014 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-DP-014 GET profile exposes no sensitive field: expected { id: 2, name: 'Có dấu', …(8) } to not have property 'password'",
+      "FR04-USRME-DP-014 GET profile state matches oracle: expected 'Có dấu' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Có dấu\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"0912-345-678\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-015",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-015 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-DP-015 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-DP-015 GET profile exposes no sensitive field: expected { id: 2, name: 'Number phone', …(8) } to not have property 'password'",
+      "FR04-USRME-DP-015 GET profile state matches oracle: expected 'Number phone' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Number phone\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"912345678\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-016",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-016 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-DP-016 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-DP-016 GET profile exposes no sensitive field: expected { id: 2, name: 'Null phone', …(8) } to not have property 'password'",
+      "FR04-USRME-DP-016 GET profile state matches oracle: expected 'Null phone' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Null phone\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":null}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-017",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-017 GET profile exposes no sensitive field: expected { id: 2, name: 'Địa chỉ hợp lệ', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-018",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-018 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-DP-018 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-DP-018 GET profile exposes no sensitive field: expected { id: 2, name: 'Địa chỉ rỗng', …(8) } to not have property 'password'",
+      "FR04-USRME-DP-018 GET profile state matches oracle: expected 'Địa chỉ rỗng' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Địa chỉ rỗng\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"\\\",\\\"phone\\\":\\\"0912345678\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-019",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-019 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-DP-019 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-DP-019 GET profile exposes no sensitive field: expected { id: 2, …(9) } to not have property 'password'",
+      "FR04-USRME-DP-019 GET profile state matches oracle: expected 'Địa chỉ whitespace' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Địa chỉ whitespace\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\" \\\",\\\"phone\\\":\\\"0912345678\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-020",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-020 GET profile exposes no sensitive field: expected { id: 2, name: 'Địa chỉ dài', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-021",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-021 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-DP-021 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-DP-021 GET profile exposes no sensitive field: expected { id: 2, name: null, …(8) } to not have property 'password'",
+      "FR04-USRME-DP-021 GET profile state matches oracle: expected null to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":null,\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":null,\\\"phone\\\":null}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-DP-022",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-DP-022 status is exactly 415: expected response to have status code 415 but got 500",
+      "FR04-USRME-DP-022 response Content-Type is JSON: expected 'text/html; charset=utf-8' to include 'application/json'",
+      "FR04-USRME-DP-022 response body is valid JSON: expected null to be an object",
+      "FR04-USRME-DP-022 response exposes no secret, SQL detail, or stack trace: expected '<!DOCTYPE html>\\n<html lang=\"en\">\\n<h…' not to match /(password|passwordhash|reset[_-]?token|access[_-]?token|secret|stack|sqlite|selects+|inserts+|updates+|deletes+from)/i",
+      "FR04-USRME-DP-022 GET profile exposes no sensitive field: expected { id: 2, name: 'Test User', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-ST-001",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-ST-001 GET profile exposes no sensitive field: expected { id: 2, …(9) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-ST-002",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-ST-002 GET profile exposes no sensitive field: expected { id: 2, …(9) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-ST-003",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-ST-003 GET profile exposes no sensitive field: expected { id: 2, name: 'Lần 2', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-ST-004",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-ST-004 status is exactly 401: expected response to have status code 401 but got 403",
+      "FR04-USRME-ST-004 GET profile exposes no sensitive field: expected { id: 2, name: 'Test User', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-ST-005",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-ST-005 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-ST-005 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-ST-005 GET profile exposes no sensitive field: expected { id: 2, …(9) } to not have property 'password'",
+      "FR04-USRME-ST-005 GET profile state matches oracle: expected 'Cập nhật một phần lỗi' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Cập nhật một phần lỗi\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"123 Lê Lợi\\\",\\\"phone\\\":\\\"abc\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-ST-006",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-ST-006 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-ST-006 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-ST-006 GET profile exposes no sensitive field: expected { id: 2, name: 'Tên mới', …(8) } to not have property 'password'",
+      "FR04-USRME-ST-006 GET profile state matches oracle: expected 'Tên mới' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Tên mới\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Địa chỉ mới\\\",\\\"phone\\\":\\\"09ABC\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-ST-007",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-ST-007 GET profile exposes no sensitive field: expected { id: 2, name: 'Lần hai', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-ST-008",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-ST-008 GET profile exposes no sensitive field: expected { id: 2, name: 'Retry profile', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SEC-001",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SEC-001 GET profile exposes no sensitive field: expected { id: 2, name: 'Test User', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SEC-002",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SEC-002 status is exactly 401: expected response to have status code 401 but got 403",
+      "FR04-USRME-SEC-002 GET profile exposes no sensitive field: expected { id: 2, name: 'Test User', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SEC-003",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SEC-003 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-SEC-003 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-SEC-003 GET profile returns authenticated user: expected 'admin' to equal 'user'",
+      "FR04-USRME-SEC-003 GET profile exposes no sensitive field: expected { id: 2, name: 'Không đổi role', …(8) } to not have property 'password'",
+      "FR04-USRME-SEC-003 GET profile state matches oracle: expected 'Không đổi role' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Không đổi role\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"admin\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"0912345678\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SEC-004",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SEC-004 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-SEC-004 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-SEC-004 GET profile exposes no sensitive field: expected { Object (id, name, ...) } to not have property 'password'",
+      "FR04-USRME-SEC-004 GET profile state matches oracle: expected 'Không đổi email' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Không đổi email\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"0912345678\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SEC-005",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SEC-005 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-SEC-005 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-SEC-005 GET profile exposes no sensitive field: expected { id: 2, name: 'IDOR attempt', …(8) } to not have property 'password'",
+      "FR04-USRME-SEC-005 GET profile state matches oracle: expected 'IDOR attempt' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"IDOR attempt\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"0912345678\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SEC-006",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SEC-006 GET profile exposes no sensitive field: expected { id: 2, …(9) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SEC-007",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SEC-007 GET profile exposes no sensitive field: expected { id: 2, name: 'XSS address', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SEC-008",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SEC-008 GET profile exposes no sensitive field: expected { id: 2, name: '\\' OR 1=1 --', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SEC-009",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SEC-009 GET profile exposes no sensitive field: expected { id: 2, name: 'SQL address', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SEC-010",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SEC-010 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-SEC-010 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-SEC-010 GET profile exposes no sensitive field: expected { Object (id, name, ...) } to not have property 'password'",
+      "FR04-USRME-SEC-010 GET profile state matches oracle: expected 'Ignore password' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Ignore password\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"0912345678\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SEC-011",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SEC-011 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-SEC-011 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-SEC-011 GET profile exposes no sensitive field: expected { id: 2, name: 'Ignore OTP', …(8) } to not have property 'password'",
+      "FR04-USRME-SEC-011 GET profile state matches oracle: expected 'Ignore OTP' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Ignore OTP\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"0912345678\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SEC-012",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SEC-012 status is exactly 401: expected response to have status code 401 but got 403",
+      "FR04-USRME-SEC-012 GET profile exposes no sensitive field: expected { id: 2, name: 'Test User', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SEC-013",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SEC-013 status is exactly 401: expected response to have status code 401 but got 200",
+      "FR04-USRME-SEC-013 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-SEC-013 GET profile exposes no sensitive field: expected { id: 2, …(9) } to not have property 'password'",
+      "FR04-USRME-SEC-013 GET profile state matches oracle: expected 'A security check' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"A security check\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"0912345678\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SEC-014",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SEC-014 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-SEC-014 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-SEC-014 GET profile exposes no sensitive field: expected { id: 2, name: 'A', …(8) } to not have property 'password'",
+      "FR04-USRME-SEC-014 GET profile state matches oracle: expected 'A' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"A\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"0912345678\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SEC-015",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SEC-015 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-SEC-015 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-SEC-015 GET profile exposes no sensitive field: expected { id: 2, name: 'A only', …(8) } to not have property 'password'",
+      "FR04-USRME-SEC-015 GET profile state matches oracle: expected 'A only' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"A only\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"0912345678\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SEC-016",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SEC-016 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-SEC-016 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-SEC-016 GET profile exposes no sensitive field: expected { id: 2, name: 'Allow list', …(8) } to not have property 'password'",
+      "FR04-USRME-SEC-016 GET profile state matches oracle: expected 'Allow list' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Allow list\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"0912345678\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SC-001",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SC-001 GET profile exposes no sensitive field: expected { id: 2, name: 'Schema success', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SC-002",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SC-002 GET profile exposes no sensitive field: expected { id: 2, name: 'No secret', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SC-003",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SC-003 GET profile exposes no sensitive field: expected { id: 2, name: 'Test User', …(8) } to not have property 'password'"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SC-004",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SC-004 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-SC-004 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-SC-004 error schema is exact: expected [ 'message' ] to deeply equal [ 'error' ]",
+      "FR04-USRME-SC-004 GET profile exposes no sensitive field: expected { id: 2, name: 'Schema invalid', …(8) } to not have property 'password'",
+      "FR04-USRME-SC-004 GET profile state matches oracle: expected 'Schema invalid' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Schema invalid\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"abc\\\"}}\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR04-USRME-SC-005",
+    "result": "Fail",
+    "failures": [
+      "FR04-USRME-SC-005 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR04-USRME-SC-005 error is a non-empty string: expected undefined to be a string",
+      "FR04-USRME-SC-005 error schema is exact: expected [ 'message' ] to deeply equal [ 'error' ]",
+      "FR04-USRME-SC-005 GET profile returns authenticated user: expected 'admin' to equal 'user'",
+      "FR04-USRME-SC-005 GET profile exposes no sensitive field: expected { id: 2, name: 'Schema role', …(8) } to not have property 'password'",
+      "FR04-USRME-SC-005 GET profile state matches oracle: expected 'Schema role' to equal 'Test User'",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"only two seed users remain\",\"pass\":true,\"details\":\"count=2\"},{\"name\":\"other user is unchanged\",\"pass\":true,\"details\":\"admin seed snapshot\"},{\"name\":\"rejected update is atomic\",\"pass\":false,\"details\":\"{\\\"before\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Test User\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"user\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"Seed Address\\\",\\\"phone\\\":\\\"0912345678\\\"},\\\"after\\\":{\\\"id\\\":2,\\\"name\\\":\\\"Schema role\\\",\\\"email\\\":\\\"test@eshop.com\\\",\\\"password\\\":\\\"Test1234!\\\",\\\"role\\\":\\\"admin\\\",\\\"reset_token\\\":null,\\\"shipping_address\\\":\\\"1 A\\\",\\\"phone\\\":\\\"0912345678\\\"}}\"}]}: expected false to equal true"
+    ]
+  }
+]

@@ -1,0 +1,435 @@
+[
+  {
+    "test_id": "FR17-ADMINCOUP-DP-001",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-001 status is exactly 201: expected response to have status code 201 but got 200"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-002",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-002 status is exactly 201: expected response to have status code 201 but got 200"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-003",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-003 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-003 error is a non-empty string: expected undefined to be a string"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-004",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-004 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-004 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-004 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-005",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-005 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-005 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-005 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-006",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-006 status is exactly 409: expected response to have status code 409 but got 500",
+      "FR17-ADMINCOUP-DP-006 response exposes no secret, SQL detail, or stack trace: expected '{\"error\":\"SQLITE_CONSTRAINT: UNIQUE c…' not to match /(password|passwordhash|reset[_-]?token|access[_-]?token|secret|stack|sqlite|selects+|inserts+|updates+|deletes+from)/i"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-007",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-007 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-007 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-007 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-008",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-008 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-008 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-008 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-009",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-009 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-009 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-009 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-010",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-010 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-010 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-010 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-011",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-011 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-011 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-011 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-012",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-012 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-012 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-012 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-013",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-013 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-013 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-013 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-014",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-014 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-014 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-014 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-015",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-015 status is exactly 201: expected response to have status code 201 but got 200"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-016",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-016 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-016 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-016 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-017",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-017 status is exactly 201: expected response to have status code 201 but got 200"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-018",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-018 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-018 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-018 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-019",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-019 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-019 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-019 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-020",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-020 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-020 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-020 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-021",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-021 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-021 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-021 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-022",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-022 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-022 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-022 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-023",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-023 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-023 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-023 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-024",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-024 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-024 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-024 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-DP-025",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-DP-025 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-DP-025 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-DP-025 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-SC-001",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-SC-001 status is exactly 201: expected response to have status code 201 but got 200"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-SC-002",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-SC-002 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-SC-002 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-SC-002 error schema is exact: expected [ 'id', 'message' ] to deeply equal [ 'error' ]",
+      "FR17-ADMINCOUP-SC-002 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-SC-003",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-SC-003 status is exactly 403: expected response to have status code 403 but got 200",
+      "FR17-ADMINCOUP-SC-003 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-SC-003 error schema is exact: expected [ 'id', 'message' ] to deeply equal [ 'error' ]",
+      "FR17-ADMINCOUP-SC-003 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-SC-004",
+    "result": "Pass",
+    "failures": []
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-SC-005",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-SC-005 status is exactly 409: expected response to have status code 409 but got 500",
+      "FR17-ADMINCOUP-SC-005 response exposes no secret, SQL detail, or stack trace: expected '{\"error\":\"SQLITE_CONSTRAINT: UNIQUE c…' not to match /(password|passwordhash|reset[_-]?token|access[_-]?token|secret|stack|sqlite|selects+|inserts+|updates+|deletes+from)/i"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-SC-006",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-SC-006 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-SC-006 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-SC-006 error schema is exact: expected [ 'id', 'message' ] to deeply equal [ 'error' ]",
+      "FR17-ADMINCOUP-SC-006 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-SEC-001",
+    "result": "Pass",
+    "failures": []
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-SEC-002",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-SEC-002 status is exactly 403: expected response to have status code 403 but got 200",
+      "FR17-ADMINCOUP-SEC-002 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-SEC-002 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-SEC-003",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-SEC-003 status is exactly 401: expected response to have status code 401 but got 403"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-SEC-004",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-SEC-004 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-SEC-004 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-SEC-004 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-SEC-005",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-SEC-005 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-SEC-005 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-SEC-005 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-SEC-006",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-SEC-006 status is exactly 403: expected response to have status code 403 but got 200",
+      "FR17-ADMINCOUP-SEC-006 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-SEC-006 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-SEC-007",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-SEC-007 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-SEC-007 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-SEC-007 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-SEC-008",
+    "result": "Fail",
+    "failures": [
+      "Special sequence reports pass: {\"pass\":false,\"steps\":[{\"status\":200,\"body\":{\"message\":\"Coupon created\",\"id\":5}},{\"status\":500,\"body\":{\"error\":\"SQLITE_CONSTRAINT: UNIQUE constraint failed: coupons.code\"}}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-SEC-009",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-SEC-009 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-SEC-009 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-SEC-009 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-ST-001",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-ST-001 status is exactly 201: expected response to have status code 201 but got 200"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-ST-002",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-ST-002 status is exactly 201: expected response to have status code 201 but got 200",
+      "Special sequence reports pass: {\"pass\":false,\"steps\":[{\"status\":500,\"body\":{\"error\":\"SQLITE_CONSTRAINT: UNIQUE constraint failed: coupons.code\"}}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-ST-003",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-ST-003 status is exactly 201: expected response to have status code 201 but got 200",
+      "Special sequence reports pass: {\"pass\":false,\"steps\":[{\"status\":200,\"body\":{\"success\":true,\"coupon_id\":5,\"discount_amount\":-1800000,\"final_amount\":2000000,\"message\":\"Áp dụng thành công! Giảm 10%\"}}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-ST-004",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-ST-004 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-ST-004 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-ST-004 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-ST-005",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-ST-005 status is exactly 201: expected response to have status code 201 but got 200",
+      "Special sequence reports pass: {\"pass\":false,\"steps\":[{\"status\":200,\"body\":{\"message\":\"Coupon deleted\"}},{\"status\":200,\"body\":{\"message\":\"Coupon created\",\"id\":6}}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-ST-006",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-ST-006 status is exactly 400: expected response to have status code 400 but got 200",
+      "FR17-ADMINCOUP-ST-006 error is a non-empty string: expected undefined to be a string",
+      "FR17-ADMINCOUP-ST-006 API list has expected code cardinality: expected 1 to equal +0",
+      "State verification reports pass: {\"pass\":false,\"checks\":[{\"name\":\"rejected request creates no additional coupon\",\"pass\":false,\"details\":\"before=0, after=1\"},{\"name\":\"seed coupons are unchanged\",\"pass\":true,\"details\":\"seed coupon snapshot\"},{\"name\":\"users are unchanged\",\"pass\":true,\"details\":\"users before/after\"}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-ST-007",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-ST-007 status is exactly 201: expected response to have status code 201 but got 200",
+      "Special sequence reports pass: {\"pass\":false,\"steps\":[{\"status\":200,\"body\":{\"success\":true,\"coupon_id\":5,\"discount_amount\":10000,\"final_amount\":190000,\"message\":\"Áp dụng thành công! Giảm 10,000 ₫\"}},{\"status\":200,\"body\":{\"message\":\"Usage recorded\"}},{\"status\":400,\"body\":{\"error\":\"Bạn đã sử dụng mã này 1 lần (đã đạt giới hạn)\"}}]}: expected false to equal true"
+    ]
+  },
+  {
+    "test_id": "FR17-ADMINCOUP-ST-008",
+    "result": "Fail",
+    "failures": [
+      "FR17-ADMINCOUP-ST-008 status is exactly 201: expected response to have status code 201 but got 200",
+      "Special sequence reports pass: {\"pass\":false,\"steps\":[{\"status\":200,\"body\":{\"message\":\"Coupon deleted\"}},{\"status\":200,\"body\":{\"message\":\"Coupon created\",\"id\":6}}]}: expected false to equal true"
+    ]
+  }
+]
