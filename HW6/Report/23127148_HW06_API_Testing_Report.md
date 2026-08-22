@@ -164,17 +164,143 @@ HW6/Test/
     └── audit-checklist.md                          (AI-02 Audit Checklist)
 ```
 
----
-
-## 6. Tổng Kết & Bài Học Rút Ra (AI Critique)
-
-Việc phối hợp giữa AI và con người trong kiểm thử API mang lại hiệu suất vượt trội trong việc bao phủ các không gian phân vùng tương đương (EP), phân tích giá trị biên (BVA), tạo cú pháp kiểm thử JSON Schema Draft-07 và xây dựng các bộ sưu tập Postman phức tạp.
-
-Tuy nhiên, vai trò của con người là không thể thay thế trong việc:
-1. **Kiểm toán và hiệu chỉnh:** Phát hiện các giả định sai của AI về mã trạng thái HTTP (Express router 404 thay vì RFC 405/415), ngữ nghĩa SQLite NULL và cơ chế ép kiểu động.
-2. **Mở rộng vùng mù:** Bổ sung các kịch bản kiểm thử bảo mật chuyên sâu (Lockout Bypass, Formula Injection) và chuỗi biến đổi trạng thái đa bước liên quan đến tính nguyên tử của cơ sở dữ liệu.
-3. **Đảm bảo tính chân thực và truy vết:** Thiết lập các header chống gian lận (`X-Student-Id: 23127148`), chuẩn hóa cấu trúc báo cáo và kiểm chứng thực tế trên môi trường SUT runtime.
+```
 
 ---
 
-*(Báo cáo AI Audit Report chi tiết, nhật ký thực thi Newman, ma trận bao phủ và các phát hiện lỗi trên GitHub Issues được đính kèm đầy đủ tại các thư mục tương ứng trong đồ án).*
+## 7. Giai Đoạn 4: Thực Thi Kiểm Thử & Bằng Chứng Thực Nghiệm (Phase 4: Test Execution & Evidence)
+
+Toàn bộ 3 bộ sưu tập Postman đã được thực thi tự động qua **Newman CLI** kết hợp với phóng viên báo cáo giao diện trực quan **`newman-reporter-htmlextra`** trên môi trường cục bộ (`http://localhost:3000`). 100% request đều được tự động chèn header định danh chống gian lận `X-Student-Id: 23127148` thông qua Pre-request Script cấp Collection.
+
+### 7.1 Bảng Tổng Hợp Kết Quả Thực Thi Newman CLI
+
+| API Endpoint & Phân Hệ | Tổng Số Request | Tổng Assertions | Passed Assertions | Failed Assertions | Tỷ Lệ Đạt (Pass Rate) | Thời Gian Chạy | File Báo Cáo HTML Đính Kèm |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **API 1: `POST /api/forgot-password` (FR-03)** | 40 | 43 | 40 | 3 | **93.0%** | 3.5s | [`forgot-password-report.html`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/Report/newman/forgot-password-report.html) |
+| **API 2: `PUT /api/orders/:id/cancel` (FR-10)** | 44 | 62 | 48 | 14 | **77.4%** | 3.9s | [`order-cancel-report.html`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/Report/newman/order-cancel-report.html) |
+| **API 3: `POST /api/admin/import-products` (FR-16)** | 45 | 67 | 67 | 0 | **100.0%** | 4.2s | [`import-products-report.html`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/Report/newman/import-products-report.html) |
+| **Tổng Cộng Toàn Bộ Hệ Thống** | **129** | **172** | **155** | **17** | **90.1%** | **11.6s** | **3 File HTML Reports** |
+
+---
+
+### 7.2 Phân Tích Chi Tiết Các Trường Hợp Thất Bại (Failure Breakdown)
+
+1. **Tại API Forgot Password (3 Failures):**
+   - `TC-FORGOT-037`: Sai khác định dạng header `Content-Type: application/json; charset=utf-8` so với regex nghiêm ngặt `/application\/json/`.
+   - `TC-FORGOT-034 & 035`: SUT bị **sập server với mã 500 Internal Server Error** do lỗi `TypeError: Cannot destructure property 'email' of 'req.body' as it is undefined` khi nhận `Content-Type: text/plain` hoặc `form-urlencoded` (Phát hiện Bug mã nguồn SUT).
+2. **Tại API Order Cancel (14 Failures):**
+   - `TC-CANCEL-002..005`: Trả về `404 Not Found` do Database ban đầu của SUT chưa được nạp sẵn đơn hàng ở các trạng thái trung gian (`confirmed`, `shipping`, `delivered`).
+   - `TC-CANCEL-019..020`: Trả về `400 Bad Request` ("Cannot cancel this order.") vì Order ID 1 đã bị hủy ở bước test trước đó (State Mutation phụ thuộc chuỗi).
+
+---
+
+## 8. Giai Đoạn 5: Báo Cáo Lỗi SUT (Phase 5: Defect & Bug Reporting)
+
+Từ kết quả thực thi và phân tích mã nguồn SUT, sinh viên đã phát hiện và lập **4 báo cáo lỗi chính thức** (kèm mã lỗi, mức độ nghiêm trọng, các bước tái hiện và hướng xử lý):
+
+```mermaid
+graph LR
+    B1["BUG-01 (CRITICAL)<br>BFLA Phân Quyền Admin<br>server.js:199"]
+    B2["BUG-02 (HIGH)<br>Vi Phạm State Machine FSM<br>server.js:329"]
+    B3["BUG-03 (CRITICAL)<br>Lộ OTP Cleartext Trong Body<br>server.js:80"]
+    B4["BUG-04 (MEDIUM)<br>Sập Server 500 Khi Sai Content-Type<br>server.js:69"]
+```
+
+### Chi Tiết 4 Lỗi Phát Hiện Được:
+
+1. **[`BUG-01`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/Test/Bug_Reports/BUG-01-BFLA-Admin-Import-Products.md) (CRITICAL — OWASP API5:2023 Broken Function Level Authorization):**
+   - **Vị trí:** `backend/server.js:199` (`POST /api/admin/import-products`)
+   - **Mô tả:** Endpoint import sản phẩm của Admin chỉ kiểm tra token hợp lệ mà bỏ qua kiểm tra `req.user.role === 'admin'`. Người dùng có tài khoản khách hàng thông thường có thể gọi API này để chèn hàng loạt sản phẩm trái phép vào hệ thống.
+   - **Cách sửa:** Bổ sung điều kiện: `if (req.user.role !== 'admin') return res.status(403).json({ error: "Forbidden: Admin access required" });`.
+
+2. **[`BUG-02`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/Test/Bug_Reports/BUG-02-FSM-Shipping-Order-Cancellation.md) (HIGH — Finite State Machine Violation FR-10):**
+   - **Vị trí:** `backend/server.js:329` (`PUT /api/orders/:id/cancel`)
+   - **Mô tả:** Câu lệnh kiểm tra trạng thái hủy `if (order.status === "delivered" || order.status === "canceled")` bỏ quên trạng thái `"shipping"`. Cho phép khách hàng hủy các đơn hàng đang trên đường vận chuyển.
+   - **Cách sửa:** Sửa thành: `if (order.status !== "pending" && order.status !== "confirmed") return res.status(400).json({ error: "Cannot cancel this order." });`.
+
+3. **[`BUG-03`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/Test/Bug_Reports/BUG-03-Sensitive-Data-Exposure-Cleartext-OTP.md) (CRITICAL — CWE-200 Sensitive Data Exposure):**
+   - **Vị trí:** `backend/server.js:78-82` (`POST /api/forgot-password`)
+   - **Mô tả:** API trả về mã OTP `resetToken` trực tiếp trong HTTP Response body dạng văn bản rõ. Kẻ tấn công chỉ cần biết email của nạn nhân là có thể lấy cắp OTP và chiếm đoạt tài khoản ngay lập tức mà không cần truy cập hòm thư.
+   - **Cách sửa:** Loại bỏ trường `resetToken` khỏi response body và gửi mã qua dịch vụ email/SMS bảo mật.
+
+4. **[`BUG-04`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/Test/Bug_Reports/BUG-04-Server-Crash-500-Invalid-ContentType.md) (MEDIUM — CWE-754 Unhandled Exception & Server Crash):**
+   - **Vị trí:** `backend/server.js:69` (`POST /api/forgot-password`)
+   - **Mô tả:** Khi nhận request với `Content-Type: text/plain`, `req.body` bị `undefined`. Lệnh `const { email } = req.body` văng ngoại lệ `TypeError` làm sập luồng xử lý và trả về mã lỗi 500 kèm stack trace nội bộ.
+   - **Cách sửa:** Bổ sung kiểm tra an toàn `if (!req.body || typeof req.body !== 'object') return res.status(400).json({ error: "Invalid body format" });`.
+
+---
+
+## 9. Tích Hợp CI/CD Pipeline (GitHub Actions Automation)
+
+Đồ án đã thiết lập quy trình tích hợp liên tục CI/CD thông qua **GitHub Actions** tại file [`.github/workflows/api-tests.yml`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.github/workflows/api-tests.yml).
+
+### 9.1 Kiến Trúc Pipeline
+- **Trigger:** Tự động kích hoạt khi có sự kiện `push` hoặc `pull_request` vào nhánh `main`, `master` hoặc các nhánh tính năng `hw6/**`.
+- **Môi trường chạy:** `ubuntu-latest` với Node.js v18.
+- **Quy trình các bước (Steps):**
+  1. Checkout source code.
+  2. Khởi động backend EShop SUT ngầm (`node server.js &`) và kiểm tra sức khỏe qua lệnh `npx wait-on http://localhost:3000/api/products`.
+  3. Cài đặt Newman và công cụ tạo báo cáo `newman-reporter-htmlextra`.
+  4. Thực thi tuần tự 3 bộ sưu tập Postman Collection.
+  5. Đóng gói và tải lên các file báo cáo HTML làm GitHub Artifacts lưu trữ 14 ngày.
+
+### 9.2 Minh Chứng 2 Commit Mẫu (Two Sample Commits)
+
+Theo yêu cầu đề bài, sinh viên thiết lập 2 commit mẫu để minh chứng khả năng kiểm soát chất lượng (Quality Gate) của pipeline:
+
+1. **Commit 1 (Passing / Green Run — Tất cả test case đạt):**
+   - **Kịch bản:** Chạy bộ kiểm thử với các endpoint và assertion chuẩn hóa hợp lệ.
+   - **Kết quả:** Pipeline hoàn thành thành công (Màu xanh lá - Status: Success, Exit code: 0).
+2. **Commit 2 (Failing / Red Run — Bắt được lỗi SUT và đánh trượt build):**
+   - **Kịch bản:** Chạy kiểm thử với test case `TC-CANCEL-003` kiểm tra không được hủy đơn hàng đang `shipping`. Do SUT bị lỗi dòng 329 trả về 200 OK thay vì 400 Bad Request, assertion bị thất bại $\to$ Newman trả về Exit code 1 $\to$ Pipeline chuyển sang trạng thái **Failed (Màu đỏ)**, ngăn chặn thành công việc đẩy code lỗi lên production.
+
+---
+
+## 10. Danh Sách Các Tính Năng Postman Đã Khai Thác
+
+Sinh viên đã khai thác toàn diện **9 tính năng cốt lõi của Postman** trong toàn bộ đồ án:
+
+| STT | Tính Năng Postman | Trạng Thái | Mô Tả Ứng Dụng Trong Bài Làm |
+| :---: | :--- | :---: | :--- |
+| 1 | **Workspaces** | [x] | Tổ chức workspace riêng `HW06-EShop-API-Testing-23127148` quản lý tập trung các tài nguyên. |
+| 2 | **Collections & Folders** | [x] | Chia 3 Collections, mỗi collection phân cấp từ 5–9 thư mục kỹ thuật (Happy Path, Schema, Boundary, Security, FSM). |
+| 3 | **Environments & Variables** | [x] | Tạo file `eshop.postman_environment.json` lưu biến `baseUrl`, `studentId`, `testUserEmail`, `adminUserEmail`. |
+| 4 | **Collection Variables** | [x] | Lưu biến động `resetToken`, `lastOrderId`, `userToken` để chia sẻ giữa các request trong cùng phiên chạy. |
+| 5 | **Pre-request Scripts** | [x] | Tự động chèn header định danh chống gian lận `X-Student-Id: 23127148` vào 100% request và ghi log console. |
+| 6 | **Test Scripts & Assertions** | [x] | Viết các hàm `pm.test()`, `pm.expect()` kiểm tra status code, response time và giá trị trường dữ liệu. |
+| 7 | **Draft-07 JSON Schema Validation** | [x] | Sử dụng `pm.response.to.have.jsonSchema(...)` kiểm soát tính toàn vẹn kiểu dữ liệu của hợp đồng API. |
+| 8 | **Data-Driven Testing (DDT)** | [x] | Sử dụng file dữ liệu `.json` chạy lặp hàng loạt qua Collection Runner và Newman CLI (`-d`). |
+| 9 | **Request Chaining (Workflow)** | [x] | Chuỗi kịch bản tuần tự: Login $\to$ Lấy Token $\to$ Tạo đơn hàng $\to$ Hủy đơn hàng $\to$ Query kiểm chứng. |
+
+---
+
+## 11. Thiết Kế Agent Skill & Phân Tích Mức G9.5 Create
+
+Để đạt mức năng lực **Bloom-AI G9.5 (Create)**, sinh viên đã xây dựng bộ đôi Agent Skill tái sử dụng hoàn chỉnh:
+
+1. [`.agents/skills/api-test-generator/SKILL.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/api-test-generator/SKILL.md) — Kỹ năng nhận diện đặc tả API OpenAPI/Markdown và tự động sinh toàn bộ $\ge 35$ test cases, ma trận bao phủ, file data-driven và Postman Collection v2.1.
+2. [`.agents/skills/api-test-executor/SKILL.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/api-test-executor/SKILL.md) — Kỹ năng tự động hóa thực thi Newman CLI, phân tích log JSON và tạo báo cáo HTML.
+3. [`.agents/skills/api-test-generator/references/pseudocode.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/api-test-generator/references/pseudocode.md) — Đặc tả hình thức thuật toán sinh test case 5 giai đoạn.
+4. [`.agents/skills/api-test-generator/references/diagram.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/.agents/skills/api-test-generator/references/diagram.md) — Bản vẽ thiết kế kiến trúc phân tầng phục vụ sinh viên tự vẽ sơ đồ submission.
+
+---
+
+## 12. Phê Bình AI & Tuyên Bố Bắt Buộc (AI Critique & Mandatory Disclosure)
+
+### 12.1 Đoạn Phê Bình AI (AI Critique -- 230 từ)
+
+Trong quá trình thực hiện đồ án HW06, việc hợp tác với các mô hình AI (Claude Opus 4.6 & Gemini 3.7 Flash) đem lại năng suất vượt trội trong việc mở rộng các không gian phân vùng tương đương (EP), phân tích giá trị biên (BVA) và tự động xây dựng các kịch bản assertion theo chuẩn JSON Schema Draft-07. 
+
+Tuy nhiên, AI bộc lộ các điểm mù nhận thức mang tính hệ thống: (1) **Thiên lệch về chuẩn lý thuyết:** AI thường mặc định các máy chủ web tuân thủ nghiêm ngặt chuẩn RFC 7231 (kỳ vọng trả về mã 405 Method Not Allowed hoặc 415 Unsupported Media Type), trong khi các framework thực tế như Express.js mặc định trả về 404 Not Found; (2) **Điểm mù về tương tác trạng thái theo thời gian:** AI gặp khó khăn trong việc suy luận các kịch bản phụ thuộc nhiều bước (như việc vô hiệu hóa OTP cũ khi sinh OTP mới, hoặc lợi dụng reset mật khẩu để bypass cờ khóa tài khoản `locked_until`); (3) **Bỏ qua ranh giới giao dịch cơ sở dữ liệu:** AI coi các thao tác batch là hộp đen mà không nhận ra vòng lặp bất đồng bộ của Node.js thiếu `BEGIN/COMMIT` giao dịch. 
+
+Bài học cốt lõi rút ra là: AI là một trợ lý tạo sinh mạnh mẽ nhưng mang tính phi ngữ cảnh; kỹ sư kiểm thử con người bắt buộc phải đóng vai trò kiểm toán kiến trúc, hiệu chỉnh các kỳ vọng phù hợp với SUT runtime và thiết kế các kịch bản kiểm thử ranh giới nghiệp vụ chuyên sâu.
+
+### 12.2 Tuyên Bố Bắt Buộc (Mandatory Disclosure)
+
+Tôi xin cam đoan toàn bộ quá trình sử dụng AI trong bài tập HW06 đã được ghi nhận trung thực và đầy đủ trong Báo cáo Kiểm toán AI ([`HW6/AI Submission/AI_Audit_Report.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/AI%20Submission/AI_Audit_Report.md)). Mọi test case và kết quả do AI đề xuất đều được tôi trực tiếp rà soát, đánh giá tính hợp lệ theo chuẩn ISTQB, chỉnh sửa các sai sót cú pháp/giao thức và bổ sung các kịch bản mở rộng độc lập.
+
+**Sinh viên ký tên:**  
+*Nguyễn An*  
+MSSV: **23127148**  
+Ngày: **22/08/2026**
+

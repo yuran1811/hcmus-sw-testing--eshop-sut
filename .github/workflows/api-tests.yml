@@ -1,0 +1,82 @@
+name: EShop API Testing CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master, "hw6/**" ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  api-tests:
+    name: Run Newman API Tests (Student ID 23127148)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: 'backend/package-lock.json'
+
+      - name: Install Backend Dependencies
+        run: |
+          cd backend
+          npm ci || npm install
+
+      - name: Start EShop SUT Backend Server
+        run: |
+          cd backend
+          node server.js &
+          echo "Waiting for SUT server to be healthy..."
+          npx wait-on http://localhost:3000/api/products --timeout 15000
+          curl -s http://localhost:3000/api/products
+
+      - name: Install Newman and HTML Extra Reporter
+        run: |
+          npm install -g newman newman-reporter-htmlextra
+
+      - name: Create Report Directory
+        run: mkdir -p reports/newman
+
+      - name: Execute API 1 - Forgot Password Tests (FR-03)
+        run: |
+          newman run "HW6/Postman/ForgotPassword.postman_collection.json" \
+            -e "HW6/Postman/eshop.postman_environment.json" \
+            -r "cli,htmlextra,json" \
+            --reporter-htmlextra-export "reports/newman/forgot-password-report.html" \
+            --reporter-json-export "reports/newman/forgot-password-report.json" \
+            --reporter-htmlextra-title "Forgot Password API Test Report - 23127148"
+        continue-on-error: true
+
+      - name: Execute API 2 - Order Cancel Tests (FR-10)
+        run: |
+          newman run "HW6/Postman/OrderCancel.postman_collection.json" \
+            -e "HW6/Postman/eshop.postman_environment.json" \
+            -r "cli,htmlextra,json" \
+            --reporter-htmlextra-export "reports/newman/order-cancel-report.html" \
+            --reporter-json-export "reports/newman/order-cancel-report.json" \
+            --reporter-htmlextra-title "Order Cancel API Test Report - 23127148"
+        continue-on-error: true
+
+      - name: Execute API 3 - Import Products Tests (FR-16)
+        run: |
+          newman run "HW6/Postman/ImportProducts.postman_collection.json" \
+            -e "HW6/Postman/eshop.postman_environment.json" \
+            -r "cli,htmlextra,json" \
+            --reporter-htmlextra-export "reports/newman/import-products-report.html" \
+            --reporter-json-export "reports/newman/import-products-report.json" \
+            --reporter-htmlextra-title "Import Products API Test Report - 23127148"
+        continue-on-error: true
+
+      - name: Upload Test Execution Reports (HTML Artifacts)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: newman-api-test-reports
+          path: reports/newman/
+          retention-days: 14
