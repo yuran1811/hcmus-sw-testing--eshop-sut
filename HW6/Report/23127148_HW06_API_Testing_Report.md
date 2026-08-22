@@ -6,13 +6,17 @@
 
 | Mục | Chi tiết |
 | :--- | :--- |
-| **Họ và tên sinh viên** | Nguyễn An |
+| **Họ và tên sinh viên** | Ân Tiến Nguyên An |
 | **Mã số sinh viên (MSSV)** | **23127148** |
 | **Lớp / Khóa** | 23CLC08 |
 | **Môn học** | Kiểm chứng phần mềm (Software Testing -- CS423 / CSC13003) |
 | **Giảng viên lý thuyết & thực hành** | TS. Lâm Quang Vũ / TS. Trần Duy Hoàng / ThS. Trần Thị Bích Hạnh |
 | **Mã bài tập** | HW06-AI (API Testing with Postman & AI-Driven Test Generation) |
 | **Mức Bloom-AI đạt được** | **G9.2 (Apply), G9.3 (Analyse), G9.4 (Collaborate), G9.5 (Create)** |
+| **Public GitHub Repository** | [https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw6/23127148-nguyenan](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw6/23127148-nguyenan) |
+| **Postman Collections** | [HW6/Postman/](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw6/23127148-nguyenan/HW6/Postman) |
+| **HTML Newman Reports** | [HW6/Report/newman/](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw6/23127148-nguyenan/HW6/Report/newman) |
+| **CI/CD Workflow & Runs** | [GitHub Actions Workflow Runs](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/actions) |
 | **Chính sách sử dụng AI** | Có sử dụng (Kèm báo cáo AI Audit Report AI-02 đầy đủ tại Phụ lục A) |
 | **Header bắt buộc (Anti-Cheat)** | `X-Student-Id: 23127148` (Được cấu hình tự động trong Pre-request script) |
 | **Base URL của SUT** | `http://localhost:3000` |
@@ -297,12 +301,14 @@ Theo yêu cầu mục §6.5 và §14, toàn bộ 10 lỗi phát hiện được 
 Theo yêu cầu đề bài §6.6, sinh viên thiết lập 2 commit mẫu để minh chứng khả năng kiểm soát chất lượng (Quality Gate) của pipeline:
 
 1. **Commit 1 (Passing / Green Run — Toàn bộ 135 test cases đạt 100%):**
-   - **Commit SHA:** `a2313bd` / `2bce709` (`feat(hw06): run full automated test suite with passing assertions`)
+   - **Commit SHA:** [`a2313bd`](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/commit/a2313bdaecd5589f2eb9ae85219076a6813d7d51) / [`2bce709`](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/commit/2bce7096e236adca1994fe83bcad3802e2124ec6) (`feat(hw06): run full automated test suite with passing assertions`)
+   - **Direct Link:** [Commit a2313bd on GitHub](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/commit/a2313bdaecd5589f2eb9ae85219076a6813d7d51)
    - **Kịch bản:** Chạy toàn bộ 3 bộ kiểm thử với các endpoint và assertion chuẩn hóa.
    - **Kết quả:** Pipeline hoàn thành thành công (**Status: Success ✅**), Quality Gate cho phép pass build.
 
 2. **Commit 2 (Failing / Red Run — Bắt được lỗi SUT và đánh trượt build):**
-   - **Commit SHA:** `ea37a9f` (`ci(hw06): configure github actions api testing pipeline with quality gate and htmlextra artifacts`)
+   - **Commit SHA:** [`ea37a9f`](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/commit/ea37a9f03500af09921372a2c58438b0bb026e6b) (`ci(hw06): configure github actions api testing pipeline with quality gate and htmlextra artifacts`)
+   - **Direct Link:** [Commit ea37a9f on GitHub](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/commit/ea37a9f03500af09921372a2c58438b0bb026e6b)
    - **Kịch bản:** Chạy kiểm thử tự động phát hiện lỗi nghiệp vụ trong SUT. Assertion thất bại $\to$ Newman trả về Exit code 1 $\to$ Bước **CI Quality Gate** đánh trượt pipeline sang trạng thái **Failed (Màu đỏ ❌)**, ngăn chặn việc đẩy code lỗi lên production.
 
 ![Tổng Quan Workflow Runs](../CI_CD/images/overview-runs.png)
@@ -359,7 +365,7 @@ Bài học cốt lõi rút ra là: AI là một trợ lý tạo sinh mạnh mẽ
 Tôi xin cam đoan toàn bộ quá trình sử dụng AI trong bài tập HW06 đã được ghi nhận trung thực và đầy đủ trong Báo cáo Kiểm toán AI ([`HW6/AI Submission/AI_Audit_Report.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/AI%20Submission/AI_Audit_Report.md)). Mọi test case và kết quả do AI đề xuất đều được tôi trực tiếp rà soát, đánh giá tính hợp lệ theo chuẩn ISTQB, chỉnh sửa các sai sót cú pháp/giao thức và bổ sung các kịch bản mở rộng độc lập.
 
 **Sinh viên ký tên:**  
-*Nguyễn An*  
+*Ân Tiến Nguyên An*  
 MSSV: **23127148**  
 Ngày: **22/08/2026**
 

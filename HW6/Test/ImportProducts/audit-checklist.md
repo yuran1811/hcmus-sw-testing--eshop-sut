@@ -1,7 +1,7 @@
 # AI Audit Checklist — POST /api/admin/import-products (FR-16)
 
 **Document Identifier:** AC-EShop-API-FR16  
-**Auditor / Student ID:** `23127148` (Nguyen An)  
+**Auditor / Student ID:** `23127148` (Ân Tiến Nguyên An)  
 **Endpoint Under Test:** `POST /api/admin/import-products`  
 **SUT URL:** `http://localhost:3000`  
 **Course:** Software Testing (FIT @ HCMUS) - HW06  

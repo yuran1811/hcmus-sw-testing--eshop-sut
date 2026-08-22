@@ -4,7 +4,7 @@
 
 | Field | Value |
 | --- | --- |
-| **Student name (printed)** | Nguyen An |
+| **Student name (printed)** | An Tien Nguyen An |
 | **Student ID** | 23127148 |
 | **Class / Cohort** | 23CLC08 |
 | **Assignment ID** | HW06-AI |
@@ -92,7 +92,7 @@ Oke first of all, i need to write agent skill first. I will give you this guide.
 | **Verdict** | INCOMPLETE |
 | **Reasoning** | The initial AI proposal was overly specific to particular hardcoded endpoints from the eShop sample and included Pact contract testing from the seminar materials, which falls outside the explicit scope of HW06 API testing. Under ISTQB FL and HW06 Section 7 requirements, an automated test generator must be generic (applicable to any REST API spec), structured systematically (not relying on a single vague prompt), and strictly partitioned across Domain Partitions, State Transitions, Security, and Schema validation. |
 | **Student Fix** | Directed the AI to eliminate hardcoded assumptions, remove Pact test generation, re-structure the tool into two distinct skills (`api-test-generator` and `api-test-executor`), enforce $\ge 35$ test cases per endpoint group, incorporate the mandatory `X-Student-Id` header injection, add an audit preparation step for human review, and delineate AI skill generation from the student's self-drawn architecture diagram and pseudocode. |
-| **Reviewed by** | Nguyen An |
+| **Reviewed by** | An Tien Nguyen An |
 | **Review date** | 2026-08-22 |
 | **Quality rating** | Excellent (after multi-turn student steering) |
 | **Issues found** | Initial hallucination of endpoint hardcoding; initial inclusion of out-of-scope Pact testing; confusion regarding AI generation vs human-drawn diagram constraint. |
@@ -141,7 +141,7 @@ Should we add diagram.md and pseudocode.md in agent skills and WHY
 | **Verdict** | VALID |
 | **Reasoning** | The generated pseudocode accurately captures the 5-phase algorithm without syntactic errors or missing edge cases. The architecture blueprint clearly distinguishes automated generation from human-in-the-loop audit and Newman execution, providing an exact, compliant foundation for self-drawing the required submission diagram in Excalidraw. |
 | **Student Fix** | Accepted as-is. Reviewed the algorithmic boundaries and verified that all four HW06 coverage dimensions are formalized in the pseudocode. |
-| **Reviewed by** | Nguyen An |
+| **Reviewed by** | An Tien Nguyen An |
 | **Review date** | 2026-08-22 |
 | **Quality rating** | Excellent |
 | **Issues found** | None |
@@ -270,7 +270,7 @@ Follow this template of test case and change with the test case in forgot passwo
 | **Verdict** | INCOMPLETE |
 | **Reasoning** | While the initial generation created comprehensive test scripts and identified four real SUT vulnerabilities (CWE-200 cleartext token leak, CWE-330 weak RNG, CWE-203 user enumeration, CWE-20 missing validation), the markdown test case structure did not conform to the faculty's standard assignment layout (requiring a `Test data` table and numbered `Test steps`) and placed files at the root of `ForgotPassword/` rather than inside `test-cases/`. |
 | **Student Fix** | Supplied the course-standard markdown template (`TC-LOGIN-001`), instructed AI to relocate all 40 test cases into `HW6/Test/ForgotPassword/test-cases/`, and verified that all 40 files follow the exact format with requirement IDs, preconditions, test data tables, numbered execution steps, expected outcomes, and defect tracking fields. |
-| **Reviewed by** | Nguyen An |
+| **Reviewed by** | An Tien Nguyen An |
 | **Review date** | 2026-08-22 |
 | **Quality rating** | Excellent (after formatting restructuring) |
 | **Issues found** | Non-standard initial markdown template; incorrect root folder placement. |
@@ -315,7 +315,7 @@ Update skill @[d:\Project\Testing\hcmus-sw-testing--eshop-sut\.agents\skills\api
 | **Verdict** | VALID |
 | **Reasoning** | Directly synchronizes the reusable agent skill with the faculty submission standard. Guarantees that subsequent test generation batches for other API endpoints will automatically output compliant markdown files in `test-cases/` without requiring manual reformatting. |
 | **Student Fix** | Accepted as-is after validating diffs against course requirements. |
-| **Reviewed by** | Nguyen An |
+| **Reviewed by** | An Tien Nguyen An |
 | **Review date** | 2026-08-22 |
 | **Quality rating** | Excellent |
 | **Issues found** | None |
@@ -424,7 +424,7 @@ Required Deliverables to Generate in `HW6/Test/OrderCancel/`:
 | **Verdict** | VALID |
 | **Reasoning** | The generated test suite strictly covers all 4 required dimensions under ISTQB Foundation Level and HW06 Section 6.1. It accurately models the Finite State Machine (FSM) for orders (`pending`, `confirmed`, `shipping`, `delivered`, `canceled`), catches the real SUT bug at `backend/server.js:329` (where orders in `shipping` state are erroneously allowed to cancel because the guard only checks `delivered` or `canceled`), validates BOLA/IDOR protection via scoped SQL queries (`WHERE id = ? AND user_id = ?`), handles parameter injection, and outputs all 40 test cases in full compliance with the faculty's template and `test-cases/` directory standard without requiring manual reformatting. |
 | **Student Fix** | Accepted as-is. Verified that the test generator skill properly leveraged the synchronized template from Artifact #4, confirmed all 40 test cases were placed directly in `test-cases/`, and verified that the SUT line 329 defect is accurately flagged in TC-CANCEL-003 and the audit checklist. |
-| **Reviewed by** | Nguyen An |
+| **Reviewed by** | An Tien Nguyen An |
 | **Review date** | 2026-08-22 |
 | **Quality rating** | Excellent |
 | **Issues found** | None |
@@ -552,7 +552,7 @@ Required Deliverables to Generate in `HW6/Test/ImportProducts/`:
 | **Verdict** | VALID |
 | **Reasoning** | The generated test suite strictly satisfies ISTQB Foundation Level and HW06 Section 6.1 requirements with 40 fully executable test cases across all 4 required dimensions. It uncovers a critical security vulnerability in the SUT (`backend/server.js:199` Broken Function Level Authorization where standard user tokens can invoke admin import functions), models batch partial failure atomicity, covers price boundaries, and generates 100% compliant test case markdown documentation directly into `test-cases/` following the standardized faculty template established in Artifact #4. |
 | **Student Fix** | Accepted as-is. Verified that the test generator skill generated all 40 test cases in `test-cases/`, configured `ImportProducts.postman_collection.json` with pre-request `X-Student-Id: 23127148` injection, and documented the BFLA defect in `TC-IMPORT-001` and the audit checklist. |
-| **Reviewed by** | Nguyen An |
+| **Reviewed by** | An Tien Nguyen An |
 | **Review date** | 2026-08-22 |
 | **Quality rating** | Excellent |
 | **Issues found** | None |
@@ -608,7 +608,7 @@ Do for me this requirement for 3 apis
 | **Verdict** | VALID |
 | **Reasoning** | Directly satisfies HW06 Requirement §6.2 and ISTQB Foundation Level static testing principles. AI generation frequently makes false assumptions regarding web server defaults (e.g. expecting RFC 7231 status code 405 when Express router defaults to 404), SQL null evaluation semantics (where `email = NULL` returns 404 rather than schema rejection 400), and omissions of cross-endpoint persistence verifications. The human audit corrected all 32 flawed test cases, ensuring 100% executable validity against the actual SUT architecture. |
 | **Student Fix** | Accepted as-is. Reviewed all 120 test case verdicts, confirmed the accuracy distribution (73.3% VALID, 19.2% INCOMPLETE, 7.5% INVALID), verified student fixes in individual test cases and Postman test scripts, and synchronized the master audit checklists across all three API directories. |
-| **Reviewed by** | Nguyen An |
+| **Reviewed by** | An Tien Nguyen An |
 | **Review date** | 2026-08-22 |
 | **Quality rating** | Excellent |
 | **Issues found** | None |
@@ -681,7 +681,7 @@ API)
 | **Verdict** | VALID |
 | **Reasoning** | Strictly satisfies HW06 §6.3 (Phase 3: Extend) requiring at least five human-designed test cases covering security and state transition blind spots (achieving 15 total, 5 per API). The analysis accurately decouples prompt context limitations from LLM architectural blind spots (such as stateless request generation vs temporal state progression, concurrency race conditions, side-channel timing, and database transaction atomicity). |
 | **Student Fix** | Accepted as-is. Formatted all 15 test cases into course-standard markdown files, synchronized coverage matrices, Excel summary sheets and audit checklists across all 3 modules, and added comprehensive analysis to the master report. |
-| **Reviewed by** | Nguyen An |
+| **Reviewed by** | An Tien Nguyen An |
 | **Review date** | 2026-08-22 |
 | **Quality rating** | Excellent |
 | **Issues found** | None |
@@ -770,7 +770,7 @@ BUG-MODULE-001 và được thì chia theo api
 | **Verdict** | VALID |
 | **Reasoning** | The generated bug reports strictly adhere to the course standard defect template (Title with bracket tag, Found by Test Case, Requirement, Severity/Priority, Environment, Steps to Reproduce, Expected vs Actual Result, Evidence with exact vulnerable code lines in `server.js`). All 10 reported defects represent genuine SUT architectural, security, or state machine flaws verified through Newman runtime execution and source code audit. |
 | **Student Fix** | Accepted as-is. Verified code line citations (`server.js:69`, `server.js:80`, `server.js:199`, `server.js:329`), organized files into subdirectories by API module, and committed to git repository. |
-| **Reviewed by** | Nguyen An |
+| **Reviewed by** | An Tien Nguyen An |
 | **Review date** | 2026-08-22 |
 | **Quality rating** | Excellent |
 | **Issues found** | None |
@@ -817,13 +817,13 @@ The agent skills (`api-test-generator`, `api-test-executor`), design specificati
 
 | Field | Value |
 | --- | --- |
-| **Student name** | Nguyen An |
+| **Student name** | An Tien Nguyen An |
 | **Student ID** | 23127148 |
 | **Class / Cohort** | 23CLC08 |
 | **Course** | CS423 / CSC13003 - Software Testing |
 | **Instructor** | Dr. Lam Quang Vu / Dr. Tran Duy Hoang / MSc. Tran Thi Bich Hanh |
 | **Date** | 2026-08-22 |
-| **Signature** | Nguyen An |
+| **Signature** | An Tien Nguyen An |
 
 ---
 

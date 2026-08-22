@@ -1,7 +1,7 @@
 # AI Audit Checklist — POST /api/forgot-password (FR-03)
 
 **Document Identifier:** AC-EShop-API-FR03  
-**Auditor / Student ID:** `23127148` (Nguyen An)  
+**Auditor / Student ID:** `23127148` (Ân Tiến Nguyên An)  
 **Endpoint Under Test:** `POST /api/forgot-password`  
 **SUT URL:** `http://localhost:3000`  
 **Course:** Software Testing (FIT @ HCMUS) - HW06  

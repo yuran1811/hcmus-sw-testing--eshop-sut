@@ -6,13 +6,17 @@
 
 | Mục | Chi Tiết |
 | :--- | :--- |
-| **Họ và tên sinh viên** | **Nguyễn An** |
+| **Họ và tên sinh viên** | **Ân Tiến Nguyên An** |
 | **Mã số sinh viên (MSSV)** | **23127148** |
 | **Lớp / Khóa** | 23CLC08 |
 | **Môn học** | Kiểm chứng phần mềm (Software Testing — CS423 / CSC13003) |
 | **Giảng viên lý thuyết & thực hành** | TS. Lâm Quang Vũ / TS. Trần Duy Hoàng / ThS. Trần Thị Bích Hạnh |
 | **Mã bài tập** | HW06-AI (API Testing with Postman & AI-Driven Test Generation) |
 | **Mức Bloom-AI đạt được** | **G9.2 (Apply), G9.3 (Analyse), G9.4 (Collaborate), G9.5 (Create)** |
+| **Public GitHub Repository** | [https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw6/23127148-nguyenan](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw6/23127148-nguyenan) |
+| **Postman Collections & Environment** | [HW6/Postman/](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw6/23127148-nguyenan/HW6/Postman) |
+| **Báo Cáo & HTML Reports** | [HW6/Report/](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw6/23127148-nguyenan/HW6/Report) |
+| **CI/CD Workflow & Runs** | [GitHub Actions Runs](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/actions) |
 | **Hệ thống kiểm thử (SUT)** | EShop Demo Application (`backend/server.js`) |
 | **Base URL** | `http://localhost:3000` |
 | **Header chống gian lận (Anti-Cheat)** | `X-Student-Id: 23127148` (Tự động cấu hình trong Pre-request scripts) |
@@ -87,18 +91,21 @@
 ```
 HW6/
 ├── README.md                                       # Bảng tự đánh giá & Test Summary Report
+├── github_link.txt                                 # Đường dẫn GitHub Repository & tài nguyên nộp bài
 ├── git_commit_log.txt                              # Lịch sử Git commit chi tiết từng bước
 ├── Excel/
 │   └── test_summary.xlsx                           # Sổ bảng tính Excel toàn diện 8 sheets (135 TCs, Dashboard, Matrix)
 ├── Report/
 │   ├── 23127148_HW06_API_Testing_Report.md         # Báo cáo chính Markdown
+│   ├── 23127148_HW06_API_Testing_Report.pdf        # Báo cáo chính định dạng PDF
 │   ├── images/                                     # Ảnh chụp minh chứng Newman, Pre-request script & Postman
 │   └── newman/                                     # 3 File HTML báo cáo kết quả chạy Newman
 │       ├── forgot-password-report.html
 │       ├── order-cancel-report.html
 │       └── import-products-report.html
 ├── AI Submission/
-│   └── AI_Audit_Report.md                          # Báo cáo Kiểm toán AI Audit (AI-02) chi tiết 120 TCs
+│   ├── AI_Audit_Report.md                          # Báo cáo Kiểm toán AI Audit (AI-02) chi tiết 120 TCs
+│   └── AI_Audit_Report.pdf                         # Báo cáo Kiểm toán AI Audit định dạng PDF
 ├── CI_CD/
 │   └── README.md                                   # Báo cáo cấu hình GitHub Actions & 2 sample commits
 ├── Agent_Skill/

@@ -1,7 +1,7 @@
 # Danh Sách Báo Cáo Lỗi SUT (Defect & Bug Reports -- HW06)
 
 **Học phần:** Kiểm chứng phần mềm (CS423 / CSC13003)  
-**Sinh viên thực hiện:** Nguyễn An (MSSV: **23127148**)  
+**Sinh viên thực hiện:** Ân Tiến Nguyên An (MSSV: **23127148**)  
 **Hệ thống kiểm thử (SUT):** EShop Demo Application (`backend/server.js`)  
 
 ---

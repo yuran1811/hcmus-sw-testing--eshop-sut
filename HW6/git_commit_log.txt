@@ -1,3 +1,39 @@
+commit bb4fecc49afad73de8c4cdccd1143e1a095cfa1a
+Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+Date:   Sat Aug 22 23:57:09 2026 +0700
+
+    docs(hw06): add github_link.txt, update author name Ân Tiến Nguyên An, and export PDF reports
+
+commit 61be120fc6951ffc5358cddcca5dab9b0f625aca
+Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+Date:   Sat Aug 22 23:48:24 2026 +0700
+
+    docs(hw06): embed comprehensive CI/CD workflow screenshots and report details
+
+commit 2bce7093b85d9a55b3653251596d406e68efce86
+Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+Date:   Sat Aug 22 23:43:36 2026 +0700
+
+    docs(hw06): update CI/CD report with commit SHAs and execution screenshots
+
+commit a2313bdaecd5589f2eb9ae85219076a6813d7d51
+Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+Date:   Sat Aug 22 23:43:15 2026 +0700
+
+    feat(hw06): run full automated test suite with passing assertions (100% pass rate)
+
+commit ea37a9f03500af09921372a2c58438b0bb026e6b
+Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+Date:   Sat Aug 22 23:39:01 2026 +0700
+
+    ci(hw06): configure github actions api testing pipeline with quality gate and htmlextra artifacts
+
+commit 9e1254350d37dfa2e612785947b59050e7d28ee4
+Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+Date:   Sat Aug 22 23:26:23 2026 +0700
+
+    docs(hw06): update git commit log with 135 test cases extension
+
 commit f0900f2235ca62e0981d70243cd2684fff2fd524
 Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
 Date:   Sat Aug 22 23:26:03 2026 +0700
