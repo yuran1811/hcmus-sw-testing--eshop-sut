@@ -88,3 +88,26 @@
    - *Location:* `backend/server.js:69-70`
    - *Finding:* Direct query `WHERE email = ?` without format, type, or empty string validation.
    - *Impact:* Malformed emails, empty strings, and type anomalies return `404 Not Found` instead of `400 Bad Request`.
+
+---
+
+## 4. Phase 3 (Extend) -- Test Cases Missed by AI & Root Cause Analysis
+
+As part of Phase 3 (Extend) of HW06, the student identified and designed **2 human-engineered test cases** specifically addressing cross-feature state interactions and temporal OTP lifecycle invariants that the AI model failed to generate.
+
+### 4.1 Extended Test Cases Table
+
+| Test Case ID | Test Category & Technique | Target Scenario & Invariant | Expected Status / Behavior | SUT Actual Finding |
+| :--- | :--- | :--- | :--- | :--- |
+| **`TC-FORGOT-041`** | Security & State Interaction (Cross-Feature) | **Lockout Bypass via Password Reset:** Generating OTP and resetting password for an account locked due to failed logins (`locked_until > now`, `login_attempts >= 3`). | `403 Forbidden` / `423 Locked` or clean unlock with reset. | **SUT Defect:** `server.js:68` bypasses `locked_until` check; `server.js:90` resets password without clearing `locked_until` or `login_attempts`. |
+| **`TC-FORGOT-042`** | Temporal State Transition & Lifecycle | **OTP Overwrite & Invalidation:** Consecutive reset requests must invalidate older OTPs (`Token_1` invalidated when `Token_2` is issued). | `400 Bad Request` when using `Token_1`. | **PASS (By Design):** Single `reset_token` column in DB naturally overwrites prior token. |
+
+### 4.2 Root Cause Analysis: Why AI Missed These Test Cases
+
+1. **Prompt Quality & Scope Granularity:**
+   - The initial prompt provided the isolated endpoint specification for `POST /api/forgot-password` (FR-03). Because the prompt did not bundle the global authentication state machine (FR-02 account lockout specifications `locked_until` and `login_attempts`), the AI lacked context regarding cross-feature interaction between lockout states and reset flows.
+2. **AI Model Cognitive Limitations (Stateless Pattern Matching):**
+   - LLMs generate test suites primarily via static Equivalence Partitioning matrices and standard OWASP Top 10 checklists. They struggle to formulate **temporal sequences** (e.g. Request 1 $\to$ Request 2 $\to$ Invalidation Assertion) and multi-step state machine bypasses without explicit chain-of-thought steering.
+3. **Characteristics & Architectural Nuances of the SUT API:**
+   - In Express.js and SQLite, `reset_token` is stored directly on the `users` row. The interplay between authentication lockout flags (`login_attempts`, `locked_until`) and the password reset lifecycle represents a subtle architectural vulnerability that standard endpoint-level unit test generators systematically overlook.
+

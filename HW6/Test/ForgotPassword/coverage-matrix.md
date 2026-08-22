@@ -63,16 +63,19 @@
 | `TC-FORGOT-038` | Contract - Error JSON Schema & Headers | Schema Validation | JSON Schema (Draft-07) | Contract Testing | `4xx` Schema Match |
 | `TC-FORGOT-039` | State Transition - OTP Token Lifecycle | State Transition | State Machine Testing | FR-03 -> FR-04 Lifecycle | Valid Transition |
 | `TC-FORGOT-040` | Audit - Mandatory `X-Student-Id` header | Traceability | Audit Compliance | HW06 §6.1 Requirement | `200 OK` Header Logged |
+| `TC-FORGOT-041` | Lockout Bypass via Password Reset | Security & State Interaction | FR-02 & FR-03 Coupling | OWASP ASVS V3.2 | `403` / `423` (Bug Found) |
+| `TC-FORGOT-042` | OTP Invalidation on Successive Requests | State Transition | Temporal Invariant | Single-Use OTP Lifecycle | `400` on Old Token |
 
 ---
 
 ## 3. Summary Breakdown
 
-- **Total Test Cases:** 40
+- **Total Test Cases:** 42 (40 AI Generated + 2 Human Extended)
 - **Equivalence Partitioning (EP) cases:** 16
 - **Boundary Value Analysis (BVA) cases:** 5
 - **Data-Driven Test Candidates:** 15 rows mapped in `forgot-password-data-driven.json`
-- **Security & OWASP Vulnerability checks:** 11 cases
+- **Security & OWASP Vulnerability checks:** 12 cases
 - **Contract & Schema checks:** 2 cases
-- **State Transition / Lifecycle checks:** 1 case
+- **State Transition & Lifecycle checks:** 3 cases
 - **Audit & Compliance checks:** 1 case
+

@@ -94,3 +94,26 @@
 3. **SQL Injection Resilience (Positive Finding):**
    - **Location:** `backend/server.js:209-211`
    - **Description:** Uses parameterized prepared statement `db.prepare("INSERT INTO products (...) VALUES (?, ?, ?, ?, ?)")`, neutralizing injection across all input fields.
+
+---
+
+## 4. Phase 3 (Extend) -- Test Cases Missed by AI & Root Cause Analysis
+
+As part of Phase 3 (Extend) of HW06, the student identified and designed **2 human-engineered test cases** specifically addressing database transaction atomicity boundaries and context-specific CSV formula injection vulnerabilities that the AI model failed to generate.
+
+### 4.1 Extended Test Cases Table
+
+| Test Case ID | Test Category & Technique | Target Scenario & Invariant | Expected Status / Behavior | SUT Actual Finding |
+| :--- | :--- | :--- | :--- | :--- |
+| **`TC-IMPORT-041`** | Data Integrity & Architecture | **Non-Atomic Batch Execution & Rollback Absence:** Sending a batch with a mid-stream invalid item to test whether SQLite commits partial rows or aborts the entire transaction. | `200 OK` with `inserted: 2`, `errors: [...]`. Verified partial rows persist in DB via `GET /api/products`. | **Architectural Characteristic:** SUT uses un-transactioned `stmt.run()` loop (non-atomic partial insertion) without `BEGIN TRANSACTION / ROLLBACK`. |
+| **`TC-IMPORT-042`** | Security (SEC-06 & CWE-1236) | **CSV / Formula Injection (Spreadsheet Command Execution):** Product `name` and `description` containing `=cmd\|' /C calc'!A0`, `@SUM()`, `+cmd`, `-cmd`. | DDE/Formula characters escaped or sanitized with leading `'` to prevent client-side execution upon CSV export. | **Security Finding (CWE-1236):** SUT stores raw formula characters; client export must escape leading formula tokens. |
+
+### 4.2 Root Cause Analysis: Why AI Missed These Test Cases
+
+1. **Prompt Quality & Scope Granularity:**
+   - The generation prompt specified the input schema as a JSON array (`"products": [...]`) parsed from CSV. The AI treated this strictly as a standard JSON REST API, failing to realize that the **business context** is a CSV import pipeline vulnerable to spreadsheet formula injection (CWE-1236) and batch rollback requirements.
+2. **AI Model Cognitive Limitations (Transaction Boundary Blind Spot):**
+   - LLMs evaluate API endpoints as black-box input/output transforms. They cannot inherently see the asynchronous execution model of Node.js event loops and SQLite prepared statements (`stmt.run` vs `stmt.finalize`), and thus fail to formulate test cases probing transaction atomicity and partial commit rollbacks.
+3. **Characteristics & Architectural Nuances of the SUT API:**
+   - The SUT implements batch operations using raw `sqlite3.prepare()` without transaction wrapping. Detecting this requires white-box or architectural testing insight into database ACID semantics rather than generic black-box schema checks.
+

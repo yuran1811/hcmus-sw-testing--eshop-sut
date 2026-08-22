@@ -65,6 +65,8 @@
 | `TC-IMPORT-036` | Partial Failure Atomicity | Batch with 2 valid + 2 invalid items | `200 OK` | `inserted: 2`, `errors.length: 2` |
 | `TC-IMPORT-037` | Persistence & Duplicate Handling | Import items -> `GET /api/products` | `200 OK` | Record persisted in database |
 | `TC-IMPORT-038` | HTTP Method Tampering | `GET` / `PUT` on import route | `404` / `405` | Method rejected |
+| `TC-IMPORT-041` | Transaction Atomicity & Rollback Absence | Batch with mid-stream failure, check rollback | `200 OK` | Non-atomic partial commit |
+| `TC-IMPORT-042` | CSV Formula Injection (CWE-1236) | Product fields containing `=cmd`, `@SUM`, `+cmd` | Handled / Escaped | Formula execution prevented |
 
 ---
 
@@ -81,8 +83,9 @@
 
 | Dimension | Total Cases | Target Test Case IDs | Percentage |
 | :--- | :---: | :--- | :---: |
-| Security & BFLA (SEC-02/03/05/06/07) | 15 | `TC-IMPORT-001` - `TC-IMPORT-015` | 37.5% |
-| Domain Partitioning & Boundaries | 20 | `TC-IMPORT-016` - `TC-IMPORT-035` | 50.0% |
-| Data Integrity & Protocol | 3 | `TC-IMPORT-036` - `TC-IMPORT-038` | 7.5% |
-| Contract & Traceability | 2 | `TC-IMPORT-039` - `TC-IMPORT-040` | 5.0% |
-| **Total** | **40** | `TC-IMPORT-001` - `TC-IMPORT-040` | **100%** |
+| Security & BFLA (SEC-02/03/05/06/07 & CWE-1236) | 16 | `TC-IMPORT-001` - `TC-IMPORT-015`, `TC-IMPORT-042` | 38.1% |
+| Domain Partitioning & Boundaries | 20 | `TC-IMPORT-016` - `TC-IMPORT-035` | 47.6% |
+| Data Integrity, Concurrency & Transactions | 4 | `TC-IMPORT-036` - `TC-IMPORT-038`, `TC-IMPORT-041` | 9.5% |
+| Contract & Traceability | 2 | `TC-IMPORT-039` - `TC-IMPORT-040` | 4.8% |
+| **Total** | **42** | `TC-IMPORT-001` - `TC-IMPORT-042` | **100%** |
+

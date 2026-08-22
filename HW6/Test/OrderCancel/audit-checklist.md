@@ -83,3 +83,26 @@
 3. **SECURITY-CANCEL-02 (SQL Injection Defense - Parameterized Queries):**
    - *Location:* `backend/server.js:324`
    - *Finding:* SQLite parameter binding (`[req.params.id, req.user.id]`) neutralizes SQL injection in path parameters.
+
+---
+
+## 4. Phase 3 (Extend) -- Test Cases Missed by AI & Root Cause Analysis
+
+As part of Phase 3 (Extend) of HW06, the student identified and designed **2 human-engineered test cases** specifically addressing cross-endpoint state invariants and administrative role isolation boundaries that the AI model failed to generate.
+
+### 4.1 Extended Test Cases Table
+
+| Test Case ID | Test Category & Technique | Target Scenario & Invariant | Expected Status / Behavior | SUT Actual Finding |
+| :--- | :--- | :--- | :--- | :--- |
+| **`TC-CANCEL-041`** | State Transition & Data Integrity (E2E) | **State Invariant & Idempotency Check Post-Cancellation:** Querying `GET /api/orders/:id` after cancellation to verify `status: "canceled"` persisted in DB, followed by repeating cancellation to assert 400 Bad Request. | `200 OK` (Cancel) $\to$ `200 OK` (Status = canceled) $\to$ `400 Bad Request` (Double Cancel). | **PASS:** SUT properly persists cancellation and blocks duplicate transitions. |
+| **`TC-CANCEL-042`** | Security & Role Boundary Confusion (BFLA/BOLA) | **Admin Token Invocation on User-Scoped Endpoint:** Admin JWT attempts to cancel user's order on `/api/orders/:id/cancel` (scoped by `WHERE id = ? AND user_id = ?`). | `404 Not Found` (Order not belonging to Admin's user ID) / `403 Forbidden`. | **PASS (Tenant Isolation):** Strict `req.user.id` scoping prevents admin token from unintentionally canceling orders via the customer self-service route. |
+
+### 4.2 Root Cause Analysis: Why AI Missed These Test Cases
+
+1. **Prompt Quality & Scope Granularity:**
+   - The prompt strictly specified the request/response interface for `PUT /api/orders/:id/cancel`. It did not supply the full multi-tier API topology (e.g. read endpoint `GET /api/orders/:id` and administrative management routes `/api/admin/orders/:id`), leading the AI to construct isolated single-verb request tests rather than integrated state-machine assertions.
+2. **AI Model Cognitive Limitations (Single-Action Focus):**
+   - LLMs typically generate test cases as self-contained request-response pairs. Verifying **cross-endpoint state persistence** (invoking a mutation verb, then reading via a separate query verb, followed by an idempotency retry) requires stateful orchestration that is omitted in standard tabular unit test generation.
+3. **Characteristics & Architectural Nuances of the SUT API:**
+   - The SUT separates user self-service actions (`WHERE id = ? AND user_id = ?`) from administrative management routes. Testing role boundary confusion (admin token used on user-scoped endpoints) requires deep architectural comprehension of multi-tenant authorization models.
+

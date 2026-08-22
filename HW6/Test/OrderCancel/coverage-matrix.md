@@ -64,8 +64,11 @@
 | `TC-CANCEL-038` | Contract - 404 Not Found JSON Schema | Schema Validation | JSON Schema (Draft-07) | Contract Testing | `404` Schema Match |
 | `TC-CANCEL-039` | Contract - Response Header Validation | Schema Validation | HTTP Header Conformance | RFC 7231 / MIME Types | `application/json` |
 | `TC-CANCEL-040` | Audit - Mandatory `X-Student-Id` Header | Traceability | Audit Compliance | HW06 §6.1 Requirement | Header Logged / `200 OK` |
+| `TC-CANCEL-041` | Post-Cancellation Invariant & Idempotency | State Transition | End-to-End Verification | Cross-Endpoint Persistence | `200` $\to$ `200` $\to$ `400` |
+| `TC-CANCEL-042` | Admin Token on User-Scoped Route | Security / BFLA & BOLA | Role Boundary Isolation | Tenant Scoping Integrity | `404 Not Found` |
 
 ---
+
 
 ## 3. Finite State Machine (FSM) State Transition Matrix
 
