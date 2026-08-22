@@ -12,6 +12,8 @@ Coupon API / API Testing / Security
 
 - JWT hợp lệ; SAVE10 đang active.
 
+- Fixture service đặt lại seed user/coupon/coupon_usage và thiết lập use_count, is_active hoặc mốc ngày theo test_id trước mỗi iteration.
+
 ## Test data
 
 | Field    | Value                                                                                                                                  |
@@ -22,7 +24,7 @@ Coupon API / API Testing / Security
 | Category | Security                                                                                                                               |
 | SEC Ref  | SEC-06                                                                                                                                 |
 | Priority | High                                                                                                                                   |
-| Input    | `{"code":"SAVE10","total_amount":500000,"user_id":1,"discount_amount":0,"final_amount":0,"is_active":true,"max_uses_per_user":999999}` |
+| Input    | `{"code":"SAVE10","total_amount":500000,"user_id":2,"discount_amount":0,"final_amount":0,"is_active":true,"max_uses_per_user":999999}` |
 
 ## Test steps
 
@@ -31,7 +33,7 @@ Coupon API / API Testing / Security
 
 ## Expected result
 
-Server tự tính `discount_amount = 50000` và `final_amount = 450000` từ dữ liệu server; các field thêm vào bị bỏ qua hoặc bị từ chối. Không thay đổi trạng thái coupon, quyền user hoặc giới hạn lượt dùng.
+Theo execution contract A-FR09: HTTP 400; response khớp schema error_required, không lộ secret/stack trace; coupon và coupon_usage không đổi.
 
 ## Status / Related bugs
 

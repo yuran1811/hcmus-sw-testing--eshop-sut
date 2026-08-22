@@ -12,6 +12,8 @@ User Profile API / API Testing / State Transition + Resilience
 
 - Token hợp lệ của user A; có thể mô phỏng timeout ở client sau khi request đã gửi.
 
+- Fixture service đặt lại hai seed user, lưu snapshot hồ sơ và quyền trước mỗi iteration; sau iteration sẽ đối chiếu rồi khôi phục dữ liệu.
+
 ## Test data
 
 | Field    | Value                                                 |
@@ -32,7 +34,7 @@ User Profile API / API Testing / State Transition + Resilience
 
 ## Expected result
 
-Hồ sơ cuối chỉ có một user A với dữ liệu đúng; retry không tạo bản ghi mới, không đổi role/email và không làm hỏng dữ liệu.
+Theo execution contract A-FR04: HTTP 200; response khớp schema profile_update_required; GET /api/users/me xác nhận các trường được phép khớp request, còn id, email, role và user khác không đổi. Request tiếp theo cũng trả 200 và hồ sơ cuối khớp body cuối cùng.
 
 ## Status / Related bugs
 

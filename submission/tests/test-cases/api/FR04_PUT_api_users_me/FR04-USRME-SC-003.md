@@ -14,6 +14,8 @@ User Profile API / API Testing / Schema Validation
 - Đặc tả API tham chiếu: mục 2.2 `PUT /api/users/me` trong `api_specification.md`
 - Không gửi token.
 
+- Fixture service đặt lại hai seed user, lưu snapshot hồ sơ và quyền trước mỗi iteration; sau iteration sẽ đối chiếu rồi khôi phục dữ liệu.
+
 ## Test data
 
 | Field    | Value                                                                            |
@@ -35,7 +37,7 @@ User Profile API / API Testing / Schema Validation
 
 ## Expected result
 
-status 401 phù hợp SEC-02; JSON field `message/error` và content type lỗi chưa được api_specification quy định. Vẫn phải kiểm tra không lộ stack trace/internal detail.
+Theo execution contract A-FR04: HTTP 401; response khớp schema error_exact; hồ sơ, role, email, password/reset token và user khác không thay đổi.
 
 ## Status / Related bugs
 

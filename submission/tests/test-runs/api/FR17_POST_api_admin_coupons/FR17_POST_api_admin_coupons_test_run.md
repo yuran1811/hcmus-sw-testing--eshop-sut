@@ -1,6 +1,6 @@
 # FR17 POST /api/admin/coupons Test Run
 
-- **Ngày kiểm thử (Test Date):** 2026-08-18
+- **Ngày kiểm thử (Test Date):**
 - **API:** `POST /api/admin/coupons`
 - **Requirement:** FR-17 - Quản lý mã giảm giá
 - **Tham chiếu đặc tả API:** Mục 6.4 trong `api_specification.md`

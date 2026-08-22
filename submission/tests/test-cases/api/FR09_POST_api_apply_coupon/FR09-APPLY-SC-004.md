@@ -14,6 +14,8 @@ Coupon API / API Testing / Schema Validation
 - Đặc tả API tham chiếu: mục 5.1 Áp dụng mã giảm giá trong `api_specification.md`
 - Request thiếu JWT.
 
+- Fixture service đặt lại seed user/coupon/coupon_usage và thiết lập use_count, is_active hoặc mốc ngày theo test_id trước mỗi iteration.
+
 ## Test data
 
 | Field    | Value                                                 |
@@ -24,7 +26,7 @@ Coupon API / API Testing / Schema Validation
 | Category | Schema Validation                                     |
 | SEC Ref  | N/A                                                   |
 | Priority | High                                                  |
-| Input    | `{"code":"SAVE10","total_amount":500000,"user_id":1}` |
+| Input    | `{"code":"SAVE10","total_amount":500000,"user_id":2}` |
 
 ## Test steps
 
@@ -35,7 +37,7 @@ Coupon API / API Testing / Schema Validation
 
 ## Expected result
 
-Request không có JWT hợp lệ không được trả discount; response không chứa stack trace, token nội bộ hoặc dữ liệu nhạy cảm. Status/error schema được ghi nhận theo behavior vì spec chưa định nghĩa exact schema.
+Theo execution contract A-FR09: HTTP 401; response khớp schema error_exact, không lộ secret/stack trace; coupon và coupon_usage không đổi.
 
 ## Status / Related bugs
 

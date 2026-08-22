@@ -13,6 +13,8 @@ Coupon API / API Testing / Security
 - Request dùng JWT của admin A.
 - Body cố gắng thêm `admin_id`, `created_by`, `user_id` của user B.
 
+- Fixture service đặt lại seed user/coupon, bảo đảm code thử nghiệm chưa tồn tại, lưu snapshot và xóa dữ liệu tạo trong iteration khi hoàn tất.
+
 ## Test data
 
 | Field    | Value                                                              |
@@ -32,7 +34,7 @@ Coupon API / API Testing / Security
 
 ## Expected result
 
-Authorization chỉ dựa trên JWT đã xác thực; field định danh trong body không chọn user hoặc nâng quyền. Các field ngoài spec bị bỏ qua hoặc từ chối, không làm thay đổi dữ liệu của B.
+Theo execution contract A-FR17: HTTP 400; response khớp schema error_required, không lộ secret/stack trace; không tạo coupon và không thay đổi dữ liệu seed.
 
 ## Status / Related bugs
 

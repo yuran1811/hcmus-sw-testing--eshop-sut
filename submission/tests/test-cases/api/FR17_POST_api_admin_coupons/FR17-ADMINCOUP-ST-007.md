@@ -13,6 +13,8 @@ Coupon API / API Testing / State Transition
 - Admin JWT hợp lệ.
 - Có user JWT hợp lệ và dữ liệu coupon mới tạo có `is_active` được xác định.
 
+- Fixture service đặt lại seed user/coupon, bảo đảm code thử nghiệm chưa tồn tại, lưu snapshot và xóa dữ liệu tạo trong iteration khi hoàn tất.
+
 ## Test data
 
 | Field    | Value                                                                                                                                 |
@@ -33,7 +35,7 @@ Coupon API / API Testing / State Transition
 
 ## Expected result
 
-Coupon xuất hiện đúng một lần với dữ liệu đã tạo. Khả năng áp dụng phải phù hợp với `is_active`, hạn dùng và contract liên kết FR-09; không tự giả định trạng thái mặc định nếu đặc tả chưa chốt.
+Theo execution contract A-FR17: tạo coupon trả HTTP 201, áp dụng lần đầu trả HTTP 200, ghi nhận usage thành công, lần áp dụng tiếp theo trả HTTP 409; usage không vượt max_uses_per_user.
 
 ## Status / Related bugs
 

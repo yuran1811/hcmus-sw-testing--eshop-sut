@@ -14,6 +14,8 @@ Coupon API / API Testing / Security / SEC-02
 - Đặc tả API tham chiếu: mục 5.1 Áp dụng mã giảm giá trong `api_specification.md`
 - Token hợp lệ của user A; body cố tình gửi `user_id` của user B.
 
+- Fixture service đặt lại seed user/coupon/coupon_usage và thiết lập use_count, is_active hoặc mốc ngày theo test_id trước mỗi iteration.
+
 ## Test data
 
 | Field    | Value                                                 |
@@ -24,7 +26,7 @@ Coupon API / API Testing / Security / SEC-02
 | Category | Security                                              |
 | SEC Ref  | SEC-02                                                |
 | Priority | High                                                  |
-| Input    | `{"code":"SAVE10","total_amount":500000,"user_id":2}` |
+| Input    | `{"code":"SAVE10","total_amount":500000,"user_id":1}` |
 
 ## Test steps
 
@@ -35,7 +37,7 @@ Coupon API / API Testing / Security / SEC-02
 
 ## Expected result
 
-403 Forbidden hoặc hệ thống bỏ qua body `user_id` và dùng user từ JWT. User A không được tiêu lượt coupon của user B.
+Theo execution contract A-FR09: HTTP 200; response khớp schema coupon_success_required; discount_amount = 50000 và final_amount = 450000; coupon và coupon_usage không đổi.
 
 ## Status / Related bugs
 

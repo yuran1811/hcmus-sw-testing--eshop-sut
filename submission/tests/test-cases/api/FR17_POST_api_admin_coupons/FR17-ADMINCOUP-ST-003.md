@@ -14,6 +14,8 @@ Coupon API / API Testing / State Transition
 - Đặc tả API tham chiếu: mục 6.4 Quản lý Mã Giảm Giá trong `api_specification.md`
 - Admin tạo coupon APPLYNEXT thành công.
 
+- Fixture service đặt lại seed user/coupon, bảo đảm code thử nghiệm chưa tồn tại, lưu snapshot và xóa dữ liệu tạo trong iteration khi hoàn tất.
+
 ## Test data
 
 | Field    | Value                                                                                                                                 |
@@ -35,7 +37,7 @@ Coupon API / API Testing / State Transition
 
 ## Expected result
 
-Sau khi tạo, kiểm tra coupon có trạng thái active và có thể được dùng bởi user đủ điều kiện nếu hệ thống quy định coupon mới mặc định active. Nếu default active hoặc liên kết với FR09 chưa được đặc tả, ghi nhận behavior thay vì kết luận bắt buộc.
+Theo execution contract A-FR17: tạo coupon trả HTTP 201; áp dụng coupon vừa tạo qua FR09 trả HTTP 200 với discount_amount và final_amount đúng công thức; coupon mặc định active và chỉ có một bản ghi.
 
 ## Status / Related bugs
 

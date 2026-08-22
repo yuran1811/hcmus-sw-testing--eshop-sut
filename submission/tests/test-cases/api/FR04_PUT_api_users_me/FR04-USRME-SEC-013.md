@@ -12,6 +12,8 @@ User Profile API / API Testing / Security
 
 - API đang chạy và có token hợp lệ của user A để làm đối chứng.
 
+- Fixture service đặt lại hai seed user, lưu snapshot hồ sơ và quyền trước mỗi iteration; sau iteration sẽ đối chiếu rồi khôi phục dữ liệu.
+
 ## Test data
 
 | Field    | Value                                                                                                                                                                |
@@ -31,7 +33,7 @@ User Profile API / API Testing / Security
 
 ## Expected result
 
-Mỗi request trả `401 Unauthorized`, không cập nhật hồ sơ và không lộ chi tiết xác thực nội bộ.
+Theo execution contract A-FR04: HTTP 401; response khớp schema error_required; hồ sơ, role, email, password/reset token và user khác không thay đổi.
 
 ## Status / Related bugs
 

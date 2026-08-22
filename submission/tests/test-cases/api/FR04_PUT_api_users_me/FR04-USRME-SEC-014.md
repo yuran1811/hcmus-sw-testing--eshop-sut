@@ -12,6 +12,8 @@ User Profile API / API Testing / Security
 
 - Token JWT hợp lệ của user A; lưu snapshot hồ sơ trước request.
 
+- Fixture service đặt lại hai seed user, lưu snapshot hồ sơ và quyền trước mỗi iteration; sau iteration sẽ đối chiếu rồi khôi phục dữ liệu.
+
 ## Test data
 
 | Field    | Value                                                                                                                                  |
@@ -31,7 +33,7 @@ User Profile API / API Testing / Security
 
 ## Expected result
 
-API từ chối hoặc bỏ qua các trường ngoài allow-list; `role` không đổi, không tạo thuộc tính kế thừa nguy hiểm và hồ sơ hợp lệ không bị ảnh hưởng.
+Theo execution contract A-FR04: HTTP 400; response khớp schema error_required; hồ sơ, role, email, password/reset token và user khác không thay đổi.
 
 ## Status / Related bugs
 

@@ -14,6 +14,8 @@ Coupon API / API Testing / State Transition
 - Đặc tả API tham chiếu: mục 5.1 Áp dụng mã giảm giá trong `api_specification.md`
 - Trước request, dữ liệu đã xác nhận user có `use_count(VIP100) = 1`; `max_uses_per_user = 2`.
 
+- Fixture service đặt lại seed user/coupon/coupon_usage và thiết lập use_count, is_active hoặc mốc ngày theo test_id trước mỗi iteration.
+
 ## Test data
 
 | Field    | Value                                                 |
@@ -24,7 +26,7 @@ Coupon API / API Testing / State Transition
 | Category | State Transition                                      |
 | SEC Ref  | N/A                                                   |
 | Priority | High                                                  |
-| Input    | `{"code":"VIP100","total_amount":500000,"user_id":1}` |
+| Input    | `{"code":"VIP100","total_amount":500000,"user_id":2}` |
 
 ## Test steps
 
@@ -35,7 +37,7 @@ Coupon API / API Testing / State Transition
 
 ## Expected result
 
-Response thành công với discount theo công thức fixed của VIP100 (`discount_amount = 100000`, `final_amount = 400000`), vì số lượt trước request là `1 < 2`. Không suy ra request này có tăng bộ đếm nếu spec chưa quy định.
+Theo execution contract A-FR09: HTTP 200; response khớp schema coupon_success_required; discount_amount = 100000 và final_amount = 400000; coupon và coupon_usage không đổi.
 
 ## Status / Related bugs
 

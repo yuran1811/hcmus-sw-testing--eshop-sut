@@ -14,6 +14,8 @@ User Profile API / API Testing / Domain Partition
 - Đặc tả API tham chiếu: mục 2.2 `PUT /api/users/me` trong `api_specification.md`
 - Người dùng đã đăng nhập bằng JWT hợp lệ.
 
+- Fixture service đặt lại hai seed user, lưu snapshot hồ sơ và quyền trước mỗi iteration; sau iteration sẽ đối chiếu rồi khôi phục dữ liệu.
+
 ## Test data
 
 | Field    | Value                                                                       |
@@ -35,7 +37,7 @@ User Profile API / API Testing / Domain Partition
 
 ## Expected result
 
-body mẫu chỉ minh họa `phone` dạng chuỗi, nhưng FR-04 chưa quy định schema/type error cho JSON number. Kiểm tra SUT không âm thầm biến đổi hoặc mất số 0; ghi nhận response thực tế thay vì bắt buộc 400.
+Theo execution contract A-FR04: HTTP 400; response khớp schema error_required; hồ sơ, role, email, password/reset token và user khác không thay đổi.
 
 ## Status / Related bugs
 

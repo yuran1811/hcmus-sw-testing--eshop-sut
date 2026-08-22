@@ -14,6 +14,8 @@ Coupon API / API Testing / Security / SEC-01
 - Đặc tả API tham chiếu: mục 5.1 Áp dụng mã giảm giá trong `api_specification.md`
 - Người dùng đã đăng nhập.
 
+- Fixture service đặt lại seed user/coupon/coupon_usage và thiết lập use_count, is_active hoặc mốc ngày theo test_id trước mỗi iteration.
+
 ## Test data
 
 | Field    | Value                                                 |
@@ -24,7 +26,7 @@ Coupon API / API Testing / Security / SEC-01
 | Category | Security                                              |
 | SEC Ref  | SEC-01                                                |
 | Priority | Medium                                                |
-| Input    | `{"code":"SAVE10","total_amount":500000,"user_id":1}` |
+| Input    | `{"code":"SAVE10","total_amount":500000,"user_id":2}` |
 
 ## Test steps
 
@@ -35,7 +37,7 @@ Coupon API / API Testing / Security / SEC-01
 
 ## Expected result
 
-Response không chứa password, passwordHash, JWT mới hoặc dữ liệu nhạy cảm của user/coupon.
+Theo execution contract A-FR09: HTTP 200; response khớp schema coupon_success_required; discount_amount = 50000 và final_amount = 450000; coupon và coupon_usage không đổi.
 
 ## Status / Related bugs
 

@@ -14,6 +14,8 @@ Coupon API / API Testing / Security / SEC-02
 - Đặc tả API tham chiếu: mục 6.4 Quản lý Mã Giảm Giá trong `api_specification.md`
 - Không gửi Authorization header.
 
+- Fixture service đặt lại seed user/coupon, bảo đảm code thử nghiệm chưa tồn tại, lưu snapshot và xóa dữ liệu tạo trong iteration khi hoàn tất.
+
 ## Test data
 
 | Field    | Value                                                                                                                          |
@@ -35,7 +37,7 @@ Coupon API / API Testing / Security / SEC-02
 
 ## Expected result
 
-Không có JWT hợp lệ thì không được tạo coupon. Ghi nhận mã trạng thái thực tế vì spec chưa chốt exact status.
+Theo execution contract A-FR17: HTTP 401; response khớp schema error_required, không lộ secret/stack trace; không tạo coupon và không thay đổi dữ liệu seed.
 
 ## Status / Related bugs
 

@@ -14,6 +14,8 @@ Coupon API / API Testing / State Transition
 - Đặc tả API tham chiếu: mục 6.4 Quản lý Mã Giảm Giá trong `api_specification.md`
 - Admin đã đăng nhập; code NEWFLOW chưa tồn tại.
 
+- Fixture service đặt lại seed user/coupon, bảo đảm code thử nghiệm chưa tồn tại, lưu snapshot và xóa dữ liệu tạo trong iteration khi hoàn tất.
+
 ## Test data
 
 | Field    | Value                                                                                                                           |
@@ -35,7 +37,7 @@ Coupon API / API Testing / State Transition
 
 ## Expected result
 
-Tạo coupon thành công; gọi `GET /api/coupons` bằng admin thấy coupon mới trong danh sách.
+Theo execution contract A-FR17: HTTP 201; response khớp schema coupon_created_required; CSDL có đúng một coupon khớp sáu trường cho phép, mặc định active, không thay đổi user hoặc coupon seed khác.
 
 ## Status / Related bugs
 

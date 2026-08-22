@@ -14,6 +14,8 @@ Coupon API / API Testing / Domain Partition
 - Đặc tả API tham chiếu: mục 6.4 Quản lý Mã Giảm Giá trong `api_specification.md`
 - Admin đã đăng nhập; code SAVE10 đã tồn tại.
 
+- Fixture service đặt lại seed user/coupon, bảo đảm code thử nghiệm chưa tồn tại, lưu snapshot và xóa dữ liệu tạo trong iteration khi hoàn tất.
+
 ## Test data
 
 | Field    | Value                                                                                                                              |
@@ -35,7 +37,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-409 Conflict hoặc 400 Bad Request. Hệ thống từ chối vì `code` phải duy nhất.
+Theo execution contract A-FR17: HTTP 409; response khớp schema error_required, không lộ secret/stack trace; không tạo coupon và không thay đổi dữ liệu seed.
 
 ## Status / Related bugs
 

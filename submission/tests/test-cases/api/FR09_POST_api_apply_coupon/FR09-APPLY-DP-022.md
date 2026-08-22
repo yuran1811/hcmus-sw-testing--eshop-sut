@@ -14,17 +14,19 @@ Coupon API / API Testing / Domain Partition
 - Đặc tả API tham chiếu: mục 5.1 Áp dụng mã giảm giá trong `api_specification.md`
 - Người dùng đã đăng nhập.
 
+- Fixture service đặt lại seed user/coupon/coupon_usage và thiết lập use_count, is_active hoặc mốc ngày theo test_id trước mỗi iteration.
+
 ## Test data
 
-| Field    | Value                                                     |
-| -------- | --------------------------------------------------------- |
-| API      | `POST /api/apply-coupon`                                  |
-| Method   | `POST`                                                    |
-| Endpoint | `/api/apply-coupon`                                       |
-| Category | Domain Partition                                          |
-| SEC Ref  | N/A                                                       |
-| Priority | Medium                                                    |
-| Input    | `{"code":"SAVE10","total_amount":500000,"user_id":"abc"}` |
+| Field    | Value                                                 |
+| -------- | ----------------------------------------------------- |
+| API      | `POST /api/apply-coupon`                              |
+| Method   | `POST`                                                |
+| Endpoint | `/api/apply-coupon`                                   |
+| Category | Domain Partition                                      |
+| SEC Ref  | N/A                                                   |
+| Priority | Medium                                                |
+| Input    | `{"code":"SAVE10","total_amount":500000,"user_id":2}` |
 
 ## Test steps
 
@@ -35,7 +37,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-Hệ thống không dùng giá trị sai kiểu để truy cập hoặc tiêu lượt của user khác và không phát sinh lỗi 5xx; status validation được ghi nhận theo behavior thực tế.
+Theo execution contract A-FR09: HTTP 200; response khớp schema coupon_success_required; discount_amount = 50000 và final_amount = 450000; coupon và coupon_usage không đổi.
 
 ## Status / Related bugs
 

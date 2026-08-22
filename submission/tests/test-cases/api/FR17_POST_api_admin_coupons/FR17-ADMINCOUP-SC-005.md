@@ -14,6 +14,8 @@ Coupon API / API Testing / Schema Validation
 - Đặc tả API tham chiếu: mục 6.4 Quản lý Mã Giảm Giá trong `api_specification.md`
 - Admin tạo coupon với code trùng.
 
+- Fixture service đặt lại seed user/coupon, bảo đảm code thử nghiệm chưa tồn tại, lưu snapshot và xóa dữ liệu tạo trong iteration khi hoàn tất.
+
 ## Test data
 
 | Field    | Value                                                                                                                              |
@@ -35,7 +37,7 @@ Coupon API / API Testing / Schema Validation
 
 ## Expected result
 
-Code trùng không tạo bản ghi mới và response không lộ dữ liệu nhạy cảm. Status, message và error schema được ghi nhận theo behavior vì spec chưa định nghĩa.
+Theo execution contract A-FR17: HTTP 409; response khớp schema error_exact, không lộ secret/stack trace; không tạo coupon và không thay đổi dữ liệu seed.
 
 ## Status / Related bugs
 

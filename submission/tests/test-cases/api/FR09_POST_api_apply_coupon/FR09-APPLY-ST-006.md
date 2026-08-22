@@ -13,6 +13,8 @@ Coupon API / API Testing / State Transition
 - JWT hợp lệ; user có `use_count(SAVE10) = 0`.
 - Request dùng code không tồn tại hoặc tổng tiền thấp hơn ngưỡng.
 
+- Fixture service đặt lại seed user/coupon/coupon_usage và thiết lập use_count, is_active hoặc mốc ngày theo test_id trước mỗi iteration.
+
 ## Test data
 
 | Field    | Value                                                               |
@@ -33,7 +35,7 @@ Coupon API / API Testing / State Transition
 
 ## Expected result
 
-Coupon không được áp dụng và `use_count` không tăng. Không có dữ liệu sử dụng một phần sau request bị từ chối.
+Theo execution contract A-FR09: HTTP 404; response khớp schema error_required, không lộ secret/stack trace; coupon và coupon_usage không đổi.
 
 ## Status / Related bugs
 

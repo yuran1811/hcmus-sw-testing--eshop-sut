@@ -14,6 +14,8 @@ Coupon API / API Testing / State Transition
 - Đặc tả API tham chiếu: mục 5.1 Áp dụng mã giảm giá trong `api_specification.md`
 - Trước request, dữ liệu đã xác nhận user có `use_count(SAVE10) = 1`; không dùng một request trước đó trong cùng test để tạo state.
 
+- Fixture service đặt lại seed user/coupon/coupon_usage và thiết lập use_count, is_active hoặc mốc ngày theo test_id trước mỗi iteration.
+
 ## Test data
 
 | Field    | Value                                                 |
@@ -24,7 +26,7 @@ Coupon API / API Testing / State Transition
 | Category | State Transition                                      |
 | SEC Ref  | N/A                                                   |
 | Priority | High                                                  |
-| Input    | `{"code":"SAVE10","total_amount":500000,"user_id":1}` |
+| Input    | `{"code":"SAVE10","total_amount":500000,"user_id":2}` |
 
 ## Test steps
 
@@ -35,7 +37,7 @@ Coupon API / API Testing / State Transition
 
 ## Expected result
 
-Hệ thống không áp dụng giảm giá vì tại thời điểm kiểm tra `use_count(SAVE10) = max_uses_per_user = 1`. Ghi nhận status code thực tế; không được trả kết quả giảm giá thành công.
+Theo execution contract A-FR09: HTTP 409; response khớp schema error_required, không lộ secret/stack trace; coupon và coupon_usage không đổi.
 
 ## Status / Related bugs
 

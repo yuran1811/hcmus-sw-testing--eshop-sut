@@ -13,6 +13,8 @@ Coupon API / API Testing / State Transition
 - Admin JWT hợp lệ.
 - Có quyền gọi `DELETE /api/admin/coupons/:id` và tạo coupon mới.
 
+- Fixture service đặt lại seed user/coupon, bảo đảm code thử nghiệm chưa tồn tại, lưu snapshot và xóa dữ liệu tạo trong iteration khi hoàn tất.
+
 ## Test data
 
 | Field    | Value                                               |
@@ -34,7 +36,7 @@ Coupon API / API Testing / State Transition
 
 ## Expected result
 
-Không có hai coupon active trùng code. Kết quả tạo lại phải phù hợp với chính sách hard-delete/soft-delete được đặc tả; nếu chưa có chính sách, ghi nhận behavior thay vì ép một status.
+Theo execution contract A-FR17: tạo trả HTTP 201, xóa cứng trả HTTP 204, tạo lại cùng code trả HTTP 201; trạng thái cuối có đúng một coupon khớp request.
 
 ## Status / Related bugs
 

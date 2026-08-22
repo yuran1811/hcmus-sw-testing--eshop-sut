@@ -14,6 +14,8 @@ Coupon API / API Testing / Domain Partition
 - Đặc tả API tham chiếu: mục 5.1 Áp dụng mã giảm giá trong `api_specification.md`
 - Người dùng đã đăng nhập.
 
+- Fixture service đặt lại seed user/coupon/coupon_usage và thiết lập use_count, is_active hoặc mốc ngày theo test_id trước mỗi iteration.
+
 ## Test data
 
 | Field    | Value                                                   |
@@ -24,7 +26,7 @@ Coupon API / API Testing / Domain Partition
 | Category | Domain Partition                                        |
 | SEC Ref  | N/A                                                     |
 | Priority | High                                                    |
-| Input    | `{"code":"NOTFOUND","total_amount":500000,"user_id":1}` |
+| Input    | `{"code":"NOTFOUND","total_amount":500000,"user_id":2}` |
 
 ## Test steps
 
@@ -35,7 +37,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-404 Not Found hoặc 400 Bad Request. Hệ thống từ chối vì mã không tồn tại hoặc không active.
+Theo execution contract A-FR09: HTTP 404; response khớp schema error_required, không lộ secret/stack trace; coupon và coupon_usage không đổi.
 
 ## Status / Related bugs
 

@@ -14,6 +14,8 @@ Coupon API / API Testing / Domain Partition
 - Đặc tả API tham chiếu: mục 5.1 Áp dụng mã giảm giá trong `api_specification.md`
 - Người dùng đã đăng nhập.
 
+- Fixture service đặt lại seed user/coupon/coupon_usage và thiết lập use_count, is_active hoặc mốc ngày theo test_id trước mỗi iteration.
+
 ## Test data
 
 | Field    | Value                                                          |
@@ -24,7 +26,7 @@ Coupon API / API Testing / Domain Partition
 | Category | Domain Partition                                               |
 | SEC Ref  | N/A                                                            |
 | Priority | Medium                                                         |
-| Input    | `{"code":"SAVE10","total_amount":999999999999999,"user_id":1}` |
+| Input    | `{"code":"SAVE10","total_amount":999999999999999,"user_id":2}` |
 
 ## Test steps
 
@@ -35,7 +37,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-Hệ thống không overflow, không trả `Infinity`/`NaN` và không lỗi 5xx; chấp nhận hay giới hạn giá trị phải theo behavior vì spec chưa có max `total_amount`.
+Theo execution contract A-FR09: HTTP 200; response khớp schema coupon_success_required; discount_amount = 99999999999999.9 và final_amount = 899999999999999.1; coupon và coupon_usage không đổi.
 
 ## Status / Related bugs
 

@@ -1,0 +1,373 @@
+{
+  "info": {
+    "_postman_id": "23127115-0000-4000-8000-000000000004",
+    "name": "HW06 FR04 - PUT /api/users/me",
+    "description": "Data-driven execution-ready collection for FR04_PUT_api_users_me. Includes isolated fixture setup, exact status/schema assertions, state verification and teardown.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "const studentId = pm.environment.get('studentId');",
+          "if (!studentId) { throw new Error('Environment variable studentId is required'); }",
+          "pm.request.headers.upsert({ key: 'X-Student-Id', value: String(studentId) });",
+          "console.log('[X-Student-Id] Header set = ' + studentId + ' | Request: ' + pm.info.requestName + ' | URL: ' + pm.request.url.toString());"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "00 Authentication and fixture setup",
+      "item": [
+        {
+          "name": "Login user and store authToken",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{userEmail}}\",\n  \"password\": \"{{userPassword}}\"\n}"
+            },
+            "url": "{{baseUrl}}/api/login"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Login user status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Login user response time is acceptable', () => pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get('maxResponseTimeMs') || 2000)));",
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch (error) { console.error(error); }",
+                  "pm.test('Login user returns token', () => pm.expect(json.token).to.be.a('string').and.not.empty);",
+                  "if (json.token) { pm.environment.set('authToken', json.token); }",
+                  "if (json.token) { const tail = json.token.slice(-1) === 'a' ? 'b' : 'a'; pm.environment.set('tamperedAuthToken', json.token.slice(0, -1) + tail); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Reset and prepare fixture for iteration",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const testId = pm.iterationData.get('test_id');",
+                  "if (!testId) { throw new Error('test_id is required in iteration data'); }",
+                  "pm.request.body.raw = JSON.stringify({ test_id: testId });",
+                  "console.log('[FIXTURE SETUP] ' + testId + ' | ' + pm.iterationData.get('setup'));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch (error) { console.error(error); }",
+                  "pm.test('Fixture setup status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Fixture setup reports pass', () => pm.expect(json.pass, JSON.stringify(json)).to.equal(true));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": "{{fixtureBaseUrl}}/fixture/setup"
+          }
+        }
+      ]
+    },
+    {
+      "name": "10 Main and special execution",
+      "item": [
+        {
+          "name": "Execute iteration - PUT /api/users/me",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const testId = pm.iterationData.get('test_id') || 'UNKNOWN';",
+                  "if (pm.iterationData.get('main_request_enabled') === false) { console.log('[SKIP MAIN] ' + testId); pm.execution.skipRequest(); }",
+                  "const authTemplate = pm.iterationData.get('authorization_header');",
+                  "const resolvedAuth = authTemplate ? pm.variables.replaceIn(String(authTemplate)) : '';",
+                  "if (resolvedAuth.trim()) { pm.request.headers.upsert({ key: 'Authorization', value: resolvedAuth }); } else { pm.request.headers.remove('Authorization'); }",
+                  "pm.request.headers.upsert({ key: 'Content-Type', value: String(pm.iterationData.get('content_type') || 'application/json') });",
+                  "console.log('[DATA] ' + testId + ' | oracle=' + pm.iterationData.get('oracle_basis') + ' | expected=' + pm.iterationData.get('expected_status'));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const testId = pm.iterationData.get('test_id') || 'UNKNOWN';",
+                  "const expectedStatus = Number(pm.iterationData.get('expected_status'));",
+                  "const schema = String(pm.iterationData.get('expected_response_schema'));",
+                  "pm.test(testId + ' status is exactly ' + expectedStatus, () => pm.response.to.have.status(expectedStatus));",
+                  "const maxMs = Number(pm.environment.get('maxResponseTimeMs') || 2000);",
+                  "pm.test(testId + ' response time < ' + maxMs + ' ms', () => pm.expect(pm.response.responseTime).to.be.below(maxMs));",
+                  "const contentType = String(pm.response.headers.get('Content-Type') || '');",
+                  "pm.test(testId + ' response Content-Type is JSON', () => pm.expect(contentType.toLowerCase()).to.include('application/json'));",
+                  "let json = null;",
+                  "try { json = pm.response.json(); } catch (error) { console.error('[INVALID JSON] ' + testId, error); }",
+                  "pm.test(testId + ' response body is valid JSON', () => pm.expect(json).to.be.an('object'));",
+                  "const raw = pm.response.text();",
+                  "const forbiddenPattern = /(password|passwordhash|reset[_-]?token|access[_-]?token|secret|stack|sqlite|selects+|inserts+|updates+|deletes+from)/i;",
+                  "pm.test(testId + ' response exposes no secret, SQL detail, or stack trace', () => pm.expect(raw).not.to.match(forbiddenPattern));",
+                  "if (json) {",
+                  "  const keys = Object.keys(json).sort();",
+                  "  if (schema === 'error_exact' || schema === 'error_required') {",
+                  "    pm.test(testId + ' error is a non-empty string', () => pm.expect(json.error).to.be.a('string').and.not.empty);",
+                  "    if (schema === 'error_exact') pm.test(testId + ' error schema is exact', () => pm.expect(keys).to.eql(['error']));",
+                  "  } else if (schema === 'profile_update_exact' || schema === 'profile_update_required') {",
+                  "    pm.test(testId + ' message is a non-empty string', () => pm.expect(json.message).to.be.a('string').and.not.empty);",
+                  "    if (schema === 'profile_update_exact') pm.test(testId + ' success schema is exact', () => pm.expect(keys).to.eql(['message']));",
+                  "  } else if (schema === 'coupon_success_exact' || schema === 'coupon_success_required') {",
+                  "    pm.test(testId + ' discount_amount is finite and non-negative', () => { pm.expect(json.discount_amount).to.be.a('number'); pm.expect(Number.isFinite(json.discount_amount)).to.equal(true); pm.expect(json.discount_amount).to.be.at.least(0); });",
+                  "    pm.test(testId + ' final_amount is finite and non-negative', () => { pm.expect(json.final_amount).to.be.a('number'); pm.expect(Number.isFinite(json.final_amount)).to.equal(true); pm.expect(json.final_amount).to.be.at.least(0); });",
+                  "    const expectedDiscount = pm.iterationData.get('expected_discount_amount');",
+                  "    const expectedFinal = pm.iterationData.get('expected_final_amount');",
+                  "    if (expectedDiscount !== undefined) pm.test(testId + ' discount formula is correct', () => pm.expect(json.discount_amount).to.equal(Number(expectedDiscount)));",
+                  "    if (expectedFinal !== undefined) pm.test(testId + ' final amount formula is correct', () => pm.expect(json.final_amount).to.equal(Number(expectedFinal)));",
+                  "    if (schema === 'coupon_success_exact') pm.test(testId + ' coupon success schema is exact', () => pm.expect(keys).to.eql(['discount_amount', 'final_amount']));",
+                  "  } else if (schema === 'coupon_created_exact' || schema === 'coupon_created_required') {",
+                  "    pm.test(testId + ' created id is a positive integer', () => { pm.expect(json.id).to.be.a('number'); pm.expect(Number.isInteger(json.id)).to.equal(true); pm.expect(json.id).to.be.above(0); });",
+                  "    pm.test(testId + ' created message is non-empty', () => pm.expect(json.message).to.be.a('string').and.not.empty);",
+                  "    if (schema === 'coupon_created_exact') pm.test(testId + ' coupon created schema is exact', () => pm.expect(keys).to.eql(['id', 'message']));",
+                  "  }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "{{content_type}}"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{authorization_header}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{body_json}}"
+            },
+            "url": "{{baseUrl}}/api/users/me"
+          }
+        },
+        {
+          "name": "Execute follow-up/retry PUT when required",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.iterationData.get('follow_up_body_json');",
+                  "if (!body) { pm.execution.skipRequest(); }",
+                  "pm.request.headers.upsert({ key: 'Authorization', value: 'Bearer ' + pm.environment.get('authToken') });",
+                  "pm.request.body.raw = String(body);",
+                  "console.log('[FOLLOW-UP] ' + pm.iterationData.get('test_id'));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const testId = pm.iterationData.get('test_id');",
+                  "const expected = Number(pm.iterationData.get('follow_up_expected_status'));",
+                  "pm.test(testId + ' follow-up status is ' + expected, () => pm.response.to.have.status(expected));",
+                  "pm.test(testId + ' follow-up response time is acceptable', () => pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get('maxResponseTimeMs') || 2000)));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": "{{baseUrl}}/api/users/me"
+          }
+        },
+        {
+          "name": "Read profile and verify public postcondition",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.request.headers.upsert({ key: 'Authorization', value: 'Bearer ' + pm.environment.get('authToken') });",
+                  "console.log('[GET PROFILE] ' + pm.iterationData.get('test_id'));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const testId = pm.iterationData.get('test_id');",
+                  "pm.test(testId + ' GET profile status is 200', () => pm.response.to.have.status(200));",
+                  "let json = {}; try { json = pm.response.json(); } catch (error) { console.error(error); }",
+                  "pm.test(testId + ' GET profile returns authenticated user', () => { pm.expect(json.id).to.equal(2); pm.expect(json.email).to.equal('test@eshop.com'); pm.expect(json.role).to.equal('user'); });",
+                  "const forbidden = ['password', 'passwordHash', 'reset_token', 'resetToken', 'otp', 'token'];",
+                  "pm.test(testId + ' GET profile exposes no sensitive field', () => forbidden.forEach((key) => pm.expect(json).not.to.have.property(key)));",
+                  "const expectedStatus = Number(pm.iterationData.get('expected_status'));",
+                  "const bodyText = pm.iterationData.get('follow_up_body_json') || pm.iterationData.get('body_json');",
+                  "let body = {}; try { body = JSON.parse(bodyText); } catch (error) { body = {}; }",
+                  "const expected = expectedStatus === 200 ? { name: body.name ?? 'Test User', phone: body.phone ?? '0912345678', shipping_address: body.shipping_address ?? 'Seed Address' } : { name: 'Test User', phone: '0912345678', shipping_address: 'Seed Address' };",
+                  "pm.test(testId + ' GET profile state matches oracle', () => { pm.expect(json.name).to.equal(expected.name); pm.expect(json.phone).to.equal(expected.phone); pm.expect(json.shipping_address).to.equal(expected.shipping_address); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/users/me"
+          }
+        },
+        {
+          "name": "Verify database postconditions",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.request.body.raw = JSON.stringify({",
+                  "  test_id: pm.iterationData.get('test_id'),",
+                  "  body_json: pm.iterationData.get('body_json'),",
+                  "  expected_status: pm.iterationData.get('expected_status'),",
+                  "  follow_up_body_json: pm.iterationData.get('follow_up_body_json') || null",
+                  "});",
+                  "console.log('[STATE VERIFY] ' + pm.iterationData.get('test_id') + ' | ' + pm.iterationData.get('expected_state'));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch (error) { console.error(error); }",
+                  "pm.test('State verification status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('State verification reports pass', () => pm.expect(json.pass, JSON.stringify(json)).to.equal(true));",
+                  "if (json.checks) { json.checks.filter((check) => !check.pass).forEach((check) => console.error('[STATE FAIL] ' + check.name + ' | ' + check.details)); }"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": "{{fixtureBaseUrl}}/fixture/state"
+          }
+        },
+        {
+          "name": "Teardown iteration fixture",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.request.body.raw = JSON.stringify({ test_id: pm.iterationData.get('test_id') });",
+                  "console.log('[FIXTURE TEARDOWN] ' + pm.iterationData.get('test_id'));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch (error) { console.error(error); }",
+                  "pm.test('Fixture teardown status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Fixture teardown reports pass', () => pm.expect(json.pass, JSON.stringify(json)).to.equal(true));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": "{{fixtureBaseUrl}}/fixture/teardown"
+          }
+        }
+      ]
+    }
+  ]
+}

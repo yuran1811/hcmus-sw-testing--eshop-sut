@@ -14,6 +14,8 @@ Coupon API / API Testing / State Transition
 - Đặc tả API tham chiếu: mục 5.1 Áp dụng mã giảm giá trong `api_specification.md`
 - Admin đã vô hiệu hóa mã SAVE10 hoặc mã có `is_active = 0` trong CSDL.
 
+- Fixture service đặt lại seed user/coupon/coupon_usage và thiết lập use_count, is_active hoặc mốc ngày theo test_id trước mỗi iteration.
+
 ## Test data
 
 | Field    | Value                                                 |
@@ -24,7 +26,7 @@ Coupon API / API Testing / State Transition
 | Category | State Transition                                      |
 | SEC Ref  | N/A                                                   |
 | Priority | High                                                  |
-| Input    | `{"code":"SAVE10","total_amount":500000,"user_id":1}` |
+| Input    | `{"code":"SAVE10","total_amount":500000,"user_id":2}` |
 
 ## Test steps
 
@@ -35,7 +37,7 @@ Coupon API / API Testing / State Transition
 
 ## Expected result
 
-400 Bad Request hoặc 404 Not Found. Hệ thống không áp dụng mã inactive.
+Theo execution contract A-FR09: HTTP 404; response khớp schema error_required, không lộ secret/stack trace; coupon và coupon_usage không đổi.
 
 ## Status / Related bugs
 

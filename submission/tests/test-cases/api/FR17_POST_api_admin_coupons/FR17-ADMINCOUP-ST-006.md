@@ -13,6 +13,8 @@ Coupon API / API Testing / State Transition
 - JWT admin hợp lệ.
 - Code `ATOMICBAD` chưa tồn tại.
 
+- Fixture service đặt lại seed user/coupon, bảo đảm code thử nghiệm chưa tồn tại, lưu snapshot và xóa dữ liệu tạo trong iteration khi hoàn tất.
+
 ## Test data
 
 | Field    | Value                                                       |
@@ -33,7 +35,7 @@ Coupon API / API Testing / State Transition
 
 ## Expected result
 
-Request bị từ chối và không có coupon `ATOMICBAD` hoặc bản ghi một phần. Không làm thay đổi các coupon đã tồn tại.
+Theo execution contract A-FR17: HTTP 400; response khớp schema error_required, không lộ secret/stack trace; không tạo coupon và không thay đổi dữ liệu seed.
 
 ## Status / Related bugs
 

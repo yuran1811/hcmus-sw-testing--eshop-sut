@@ -12,6 +12,8 @@ Coupon API / API Testing / Security
 
 - JWT hợp lệ.
 
+- Fixture service đặt lại seed user/coupon/coupon_usage và thiết lập use_count, is_active hoặc mốc ngày theo test_id trước mỗi iteration.
+
 ## Test data
 
 | Field    | Value                                                                  |
@@ -31,7 +33,7 @@ Coupon API / API Testing / Security
 
 ## Expected result
 
-Request được xử lý có kiểm soát, không 5xx, không thực thi payload, không trả HTML/script và không làm thay đổi dữ liệu coupon. Không được áp dụng nhầm mã hợp lệ.
+Theo execution contract A-FR09: HTTP 400; response khớp schema error_required, không lộ secret/stack trace; coupon và coupon_usage không đổi.
 
 ## Status / Related bugs
 

@@ -14,6 +14,8 @@ User Profile API / API Testing / State Transition
 - Đặc tả API tham chiếu: mục 2.2 `PUT /api/users/me` trong `api_specification.md`
 - Người dùng đã đăng nhập bằng JWT hợp lệ.
 
+- Fixture service đặt lại hai seed user, lưu snapshot hồ sơ và quyền trước mỗi iteration; sau iteration sẽ đối chiếu rồi khôi phục dữ liệu.
+
 ## Test data
 
 | Field    | Value                                                                                                                                      |
@@ -35,7 +37,7 @@ User Profile API / API Testing / State Transition
 
 ## Expected result
 
-nếu partial update được hỗ trợ, lần hai ghi đè đúng trường gửi và giữ các trường khác; nếu không, trả lỗi rõ ràng. Việc không sinh bản ghi mới là oracle bổ sung chưa được đặc tả.
+Theo execution contract A-FR04: HTTP 200; response khớp schema profile_update_required; GET /api/users/me xác nhận các trường được phép khớp request, còn id, email, role và user khác không đổi. Request tiếp theo cũng trả 200 và hồ sơ cuối khớp body cuối cùng.
 
 ## Status / Related bugs
 

@@ -14,6 +14,8 @@ User Profile API / API Testing / Security / SEC-06
 - Đặc tả API tham chiếu: mục 2.2 `PUT /api/users/me` trong `api_specification.md`
 - Người dùng thường đã đăng nhập.
 
+- Fixture service đặt lại hai seed user, lưu snapshot hồ sơ và quyền trước mỗi iteration; sau iteration sẽ đối chiếu rồi khôi phục dữ liệu.
+
 ## Test data
 
 | Field    | Value                                                                                         |
@@ -35,7 +37,7 @@ User Profile API / API Testing / Security / SEC-06
 
 ## Expected result
 
-API bỏ qua hoặc từ chối `id/user_id`; chỉ hồ sơ của user trong token caller có thể bị tác động.
+Theo execution contract A-FR04: HTTP 400; response khớp schema error_required; hồ sơ, role, email, password/reset token và user khác không thay đổi.
 
 ## Status / Related bugs
 

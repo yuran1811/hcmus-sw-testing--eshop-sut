@@ -14,6 +14,8 @@ User Profile API / API Testing / Schema Validation
 - Đặc tả API tham chiếu: mục 2.2 `PUT /api/users/me` trong `api_specification.md`
 - Người dùng đã đăng nhập.
 
+- Fixture service đặt lại hai seed user, lưu snapshot hồ sơ và quyền trước mỗi iteration; sau iteration sẽ đối chiếu rồi khôi phục dữ liệu.
+
 ## Test data
 
 | Field    | Value                                                                                        |
@@ -35,7 +37,7 @@ User Profile API / API Testing / Schema Validation
 
 ## Expected result
 
-API specification chưa định nghĩa JSON schema response nên không được yêu cầu một schema cụ thể. Nếu request thành công, `role` của user vẫn phải giữ nguyên và không thành `admin`; nếu trường `role` không có trong response thì xác minh bằng `GET /api/users/me` hoặc nguồn dữ liệu đối chứng.
+Theo execution contract A-FR04: HTTP 400; response khớp schema error_exact; hồ sơ, role, email, password/reset token và user khác không thay đổi.
 
 ## Status / Related bugs
 

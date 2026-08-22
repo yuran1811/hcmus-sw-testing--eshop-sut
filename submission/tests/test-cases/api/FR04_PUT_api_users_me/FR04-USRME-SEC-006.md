@@ -14,6 +14,8 @@ User Profile API / API Testing / Security / SEC-04
 - Đặc tả API tham chiếu: mục 2.2 `PUT /api/users/me` trong `api_specification.md`
 - Người dùng đã đăng nhập bằng JWT hợp lệ.
 
+- Fixture service đặt lại hai seed user, lưu snapshot hồ sơ và quyền trước mỗi iteration; sau iteration sẽ đối chiếu rồi khôi phục dữ liệu.
+
 ## Test data
 
 | Field    | Value                                                                                       |
@@ -35,7 +37,7 @@ User Profile API / API Testing / Security / SEC-04
 
 ## Expected result
 
-payload XSS có thể được lưu như text, nhưng SEC-04 yêu cầu kiểm tra ở lúc hiển thị UI. Case API phải thêm bước mở UI/đọc DOM và xác nhận script không chạy; không bắt buộc 400.
+Theo execution contract A-FR04: HTTP 200; response khớp schema profile_update_required; GET /api/users/me xác nhận các trường được phép khớp request, còn id, email, role và user khác không đổi.
 
 ## Status / Related bugs
 

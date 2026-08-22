@@ -14,6 +14,8 @@ Coupon API / API Testing / Domain Partition
 - Đặc tả API tham chiếu: mục 6.4 Quản lý Mã Giảm Giá trong `api_specification.md`
 - Admin đã đăng nhập.
 
+- Fixture service đặt lại seed user/coupon, bảo đảm code thử nghiệm chưa tồn tại, lưu snapshot và xóa dữ liệu tạo trong iteration khi hoàn tất.
+
 ## Test data
 
 | Field    | Value                                                                                                                        |
@@ -35,7 +37,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-Ghi nhận hệ thống cho phép hay từ chối `discount_value = 100`; nếu tạo thì coupon phải lưu đúng dữ liệu. API tạo coupon không được suy ra thêm quy tắc `final_amount` của API áp dụng coupon.
+Theo execution contract A-FR17: HTTP 201; response khớp schema coupon_created_required; CSDL có đúng một coupon khớp sáu trường cho phép, mặc định active, không thay đổi user hoặc coupon seed khác.
 
 ## Status / Related bugs
 

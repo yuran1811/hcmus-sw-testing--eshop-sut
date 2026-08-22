@@ -14,6 +14,8 @@ Coupon API / API Testing / Schema Validation
 - Đặc tả API tham chiếu: mục 5.1 Áp dụng mã giảm giá trong `api_specification.md`
 - Request có total_amount sai kiểu.
 
+- Fixture service đặt lại seed user/coupon/coupon_usage và thiết lập use_count, is_active hoặc mốc ngày theo test_id trước mỗi iteration.
+
 ## Test data
 
 | Field    | Value                                                |
@@ -24,7 +26,7 @@ Coupon API / API Testing / Schema Validation
 | Category | Schema Validation                                    |
 | SEC Ref  | N/A                                                  |
 | Priority | Medium                                               |
-| Input    | `{"code":"SAVE10","total_amount":"abc","user_id":1}` |
+| Input    | `{"code":"SAVE10","total_amount":"abc","user_id":2}` |
 
 ## Test steps
 
@@ -35,7 +37,7 @@ Coupon API / API Testing / Schema Validation
 
 ## Expected result
 
-Input invalid không được tạo kết quả thành công hoặc áp dụng coupon; response lỗi không nên chứa `discount_amount/final_amount` của một phép tính thành công. Status và error schema được ghi nhận theo behavior.
+Theo execution contract A-FR09: HTTP 400; response khớp schema error_exact, không lộ secret/stack trace; coupon và coupon_usage không đổi.
 
 ## Status / Related bugs
 

@@ -13,6 +13,8 @@ Coupon API / API Testing / State Transition
 - JWT hợp lệ; user có `use_count(SAVE10) = 0`.
 - Theo mô tả API, endpoint đang được kiểm tra như phép tính tổng tiền, chưa có bước checkout xác nhận.
 
+- Fixture service đặt lại seed user/coupon/coupon_usage và thiết lập use_count, is_active hoặc mốc ngày theo test_id trước mỗi iteration.
+
 ## Test data
 
 | Field    | Value                                                 |
@@ -23,7 +25,7 @@ Coupon API / API Testing / State Transition
 | Category | State Transition                                      |
 | SEC Ref  | N/A                                                   |
 | Priority | Medium                                                |
-| Input    | `{"code":"SAVE10","total_amount":500000,"user_id":1}` |
+| Input    | `{"code":"SAVE10","total_amount":500000,"user_id":2}` |
 
 ## Test steps
 
@@ -33,7 +35,7 @@ Coupon API / API Testing / State Transition
 
 ## Expected result
 
-Response tính đúng discount/final amount. Không kết luận endpoint tăng lượt dùng nếu API contract chưa quy định; nếu hệ thống tăng, phải có đặc tả rõ trigger và transaction boundary.
+Theo execution contract A-FR09: HTTP 200; response khớp schema coupon_success_required; discount_amount = 50000 và final_amount = 450000; coupon và coupon_usage không đổi.
 
 ## Status / Related bugs
 

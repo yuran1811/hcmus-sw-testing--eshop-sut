@@ -14,6 +14,8 @@ Coupon API / API Testing / Schema Validation
 - Đặc tả API tham chiếu: mục 5.1 Áp dụng mã giảm giá trong `api_specification.md`
 - Request hợp lệ với BIGBUY.
 
+- Fixture service đặt lại seed user/coupon/coupon_usage và thiết lập use_count, is_active hoặc mốc ngày theo test_id trước mỗi iteration.
+
 ## Test data
 
 | Field    | Value                                                 |
@@ -24,7 +26,7 @@ Coupon API / API Testing / Schema Validation
 | Category | Schema Validation                                     |
 | SEC Ref  | N/A                                                   |
 | Priority | High                                                  |
-| Input    | `{"code":"BIGBUY","total_amount":500000,"user_id":1}` |
+| Input    | `{"code":"BIGBUY","total_amount":500000,"user_id":2}` |
 
 ## Test steps
 
@@ -35,7 +37,7 @@ Coupon API / API Testing / Schema Validation
 
 ## Expected result
 
-Kiểm tra công thức được đặc tả: `final_amount = total_amount - discount_amount`; đồng thời ghi nhận kiểu dữ liệu, làm tròn và behavior khi kết quả âm vì các điểm này chưa được schema đặc tả.
+Theo execution contract A-FR09: HTTP 200; response khớp schema coupon_success_exact; discount_amount = 50000 và final_amount = 450000; coupon và coupon_usage không đổi.
 
 ## Status / Related bugs
 

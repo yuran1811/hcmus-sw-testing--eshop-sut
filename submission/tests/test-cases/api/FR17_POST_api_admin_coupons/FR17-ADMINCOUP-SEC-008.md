@@ -13,6 +13,8 @@ Coupon API / API Testing / Security
 - Hai request đồng thời dùng JWT admin hợp lệ.
 - Code `RACE2026` chưa tồn tại.
 
+- Fixture service đặt lại seed user/coupon, bảo đảm code thử nghiệm chưa tồn tại, lưu snapshot và xóa dữ liệu tạo trong iteration khi hoàn tất.
+
 ## Test data
 
 | Field    | Value                                                                                                                            |
@@ -32,7 +34,7 @@ Coupon API / API Testing / Security
 
 ## Expected result
 
-Không có hơn một coupon active với code `RACE2026`. Một request có thể thành công và request còn lại bị từ chối; unique check và insert phải được bảo vệ nguyên tử.
+Theo execution contract A-FR17: hai request tạo cùng code chạy đồng thời cho kết quả một HTTP 201 và một HTTP 409; CSDL chỉ có đúng một coupon RACE2026 và không có thay đổi ngoài phạm vi.
 
 ## Status / Related bugs
 

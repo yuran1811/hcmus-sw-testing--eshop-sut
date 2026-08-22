@@ -14,6 +14,8 @@ Coupon API / API Testing / Domain Partition
 - Đặc tả API tham chiếu: mục 6.4 Quản lý Mã Giảm Giá trong `api_specification.md`
 - Admin đã đăng nhập; code FIX50 chưa tồn tại.
 
+- Fixture service đặt lại seed user/coupon, bảo đảm code thử nghiệm chưa tồn tại, lưu snapshot và xóa dữ liệu tạo trong iteration khi hoàn tất.
+
 ## Test data
 
 | Field    | Value                                                                                                                              |
@@ -35,7 +37,7 @@ Coupon API / API Testing / Domain Partition
 
 ## Expected result
 
-Coupon fixed được tạo đúng dữ liệu và không tạo bản ghi ngoài ý muốn. Ghi nhận status code thực tế vì API specification chưa chốt mã thành công.
+Theo execution contract A-FR17: HTTP 201; response khớp schema coupon_created_required; CSDL có đúng một coupon khớp sáu trường cho phép, mặc định active, không thay đổi user hoặc coupon seed khác.
 
 ## Status / Related bugs
 

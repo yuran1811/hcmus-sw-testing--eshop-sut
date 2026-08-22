@@ -12,6 +12,8 @@ User Profile API / API Testing / State Transition
 
 - Token hợp lệ của user A; biết `id` hồ sơ trước test.
 
+- Fixture service đặt lại hai seed user, lưu snapshot hồ sơ và quyền trước mỗi iteration; sau iteration sẽ đối chiếu rồi khôi phục dữ liệu.
+
 ## Test data
 
 | Field    | Value                                                     |
@@ -31,7 +33,7 @@ User Profile API / API Testing / State Transition
 
 ## Expected result
 
-Trạng thái cuối phản ánh body 2, `id` vẫn là của A, không sinh thêm user và hồ sơ B không đổi.
+Theo execution contract A-FR04: HTTP 200; response khớp schema profile_update_required; GET /api/users/me xác nhận các trường được phép khớp request, còn id, email, role và user khác không đổi. Request tiếp theo cũng trả 200 và hồ sơ cuối khớp body cuối cùng.
 
 ## Status / Related bugs
 

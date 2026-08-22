@@ -14,6 +14,8 @@ Coupon API / API Testing / State Transition
 - Đặc tả API tham chiếu: mục 6.4 Quản lý Mã Giảm Giá trong `api_specification.md`
 - Admin đã tạo thành công code DUPFLOW.
 
+- Fixture service đặt lại seed user/coupon, bảo đảm code thử nghiệm chưa tồn tại, lưu snapshot và xóa dữ liệu tạo trong iteration khi hoàn tất.
+
 ## Test data
 
 | Field    | Value                                                                                                                           |
@@ -35,7 +37,7 @@ Coupon API / API Testing / State Transition
 
 ## Expected result
 
-Lần tạo thứ hai với cùng code bị từ chối; hệ thống không tạo bản ghi trùng.
+Theo execution contract A-FR17: request đầu trả HTTP 201, request lặp lại cùng code trả HTTP 409; danh sách chỉ có đúng một coupon DUPFLOW.
 
 ## Status / Related bugs
 

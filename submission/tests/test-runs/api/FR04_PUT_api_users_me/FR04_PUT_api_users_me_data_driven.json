@@ -11,7 +11,12 @@
     "expected_status_class": "2xx",
     "profile_check": "equals_request; email_and_role_unchanged",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-002",
@@ -25,7 +30,12 @@
     "expected_status_class": "2xx",
     "profile_check": "equals_request",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-003",
@@ -35,11 +45,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"A\",\"phone\":\"0900000000\",\"shipping_address\":\"1 A\"}",
-    "expected_status": null,
-    "expected_status_class": "observe",
+    "expected_status": 200,
+    "expected_status_class": "2xx",
     "profile_check": "observe_profile_after_request",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-004",
@@ -49,11 +64,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"\",\"phone\":\"0912345678\",\"shipping_address\":\"1 A\"}",
-    "expected_status": null,
-    "expected_status_class": "observe",
+    "expected_status": 400,
+    "expected_status_class": "4xx",
     "profile_check": "observe_profile_after_request",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-005",
@@ -63,11 +83,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"   \",\"phone\":\"0912345678\",\"shipping_address\":\"1 A\"}",
-    "expected_status": null,
-    "expected_status_class": "observe",
+    "expected_status": 400,
+    "expected_status_class": "4xx",
     "profile_check": "observe_profile_after_request",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-006",
@@ -77,11 +102,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"phone\":\"0912345678\",\"shipping_address\":\"1 A\"}",
-    "expected_status": null,
-    "expected_status_class": "observe",
+    "expected_status": 400,
+    "expected_status_class": "4xx",
     "profile_check": "observe_profile_after_request",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-007",
@@ -91,11 +121,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Chỉ cập nhật tên\"}",
-    "expected_status": null,
-    "expected_status_class": "observe",
+    "expected_status": 200,
+    "expected_status_class": "2xx",
     "profile_check": "compare_all_fields_before_after",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-008",
@@ -109,7 +144,12 @@
     "expected_status_class": "2xx",
     "profile_check": "equals_request",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-009",
@@ -123,7 +163,12 @@
     "expected_status_class": "2xx",
     "profile_check": "equals_request",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-010",
@@ -133,11 +178,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Sai tiền tố\",\"phone\":\"1912345678\",\"shipping_address\":\"1 A\"}",
-    "expected_status": null,
+    "expected_status": 400,
     "expected_status_class": "4xx",
     "profile_check": "profile_unchanged",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-011",
@@ -147,11 +197,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Quá ngắn\",\"phone\":\"091234567\",\"shipping_address\":\"1 A\"}",
-    "expected_status": null,
+    "expected_status": 400,
     "expected_status_class": "4xx",
     "profile_check": "profile_unchanged",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-012",
@@ -161,11 +216,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Quá dài\",\"phone\":\"091234567890\",\"shipping_address\":\"1 A\"}",
-    "expected_status": null,
+    "expected_status": 400,
     "expected_status_class": "4xx",
     "profile_check": "profile_unchanged",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-013",
@@ -175,11 +235,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Chứa chữ\",\"phone\":\"09ABC56789\",\"shipping_address\":\"1 A\"}",
-    "expected_status": null,
+    "expected_status": 400,
     "expected_status_class": "4xx",
     "profile_check": "profile_unchanged",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-014",
@@ -189,11 +254,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Có dấu\",\"phone\":\"0912-345-678\",\"shipping_address\":\"1 A\"}",
-    "expected_status": null,
+    "expected_status": 400,
     "expected_status_class": "4xx",
     "profile_check": "profile_unchanged",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-015",
@@ -203,11 +273,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Number phone\",\"phone\":912345678,\"shipping_address\":\"1 A\"}",
-    "expected_status": null,
-    "expected_status_class": "observe",
+    "expected_status": 400,
+    "expected_status_class": "4xx",
     "profile_check": "observe_profile_after_request",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-016",
@@ -217,11 +292,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Null phone\",\"phone\":null,\"shipping_address\":\"1 A\"}",
-    "expected_status": null,
-    "expected_status_class": "observe",
+    "expected_status": 400,
+    "expected_status_class": "4xx",
     "profile_check": "observe_profile_after_request",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-017",
@@ -235,7 +315,12 @@
     "expected_status_class": "2xx",
     "profile_check": "equals_request",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-018",
@@ -245,11 +330,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Địa chỉ rỗng\",\"phone\":\"0912345678\",\"shipping_address\":\"\"}",
-    "expected_status": null,
-    "expected_status_class": "observe",
+    "expected_status": 400,
+    "expected_status_class": "4xx",
     "profile_check": "observe_profile_after_request",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-019",
@@ -259,11 +349,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Địa chỉ whitespace\",\"phone\":\"0912345678\",\"shipping_address\":\"   \"}",
-    "expected_status": null,
-    "expected_status_class": "observe",
+    "expected_status": 400,
+    "expected_status_class": "4xx",
     "profile_check": "observe_profile_after_request",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-020",
@@ -273,11 +368,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Địa chỉ dài\",\"phone\":\"0912345678\",\"shipping_address\":\"Địa chỉ kiểm thử rất dài để quan sát giới hạn lưu trữ của hệ thống mà không tự áp đặt một giới hạn không có trong đặc tả. 012345678901234567890123456789012345678901234567890123456789\"}",
-    "expected_status": null,
-    "expected_status_class": "observe",
+    "expected_status": 200,
+    "expected_status_class": "2xx",
     "profile_check": "observe_profile_after_request",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-021",
@@ -287,11 +387,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{}",
-    "expected_status": null,
-    "expected_status_class": "observe",
+    "expected_status": 400,
+    "expected_status_class": "4xx",
     "profile_check": "compare_all_fields_before_after",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-DP-022",
@@ -301,11 +406,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "text/plain",
     "body_json": "name=PlainText&phone=0912345678&shipping_address=1+A",
-    "expected_status": null,
-    "expected_status_class": "observe",
+    "expected_status": 415,
+    "expected_status_class": "4xx",
     "profile_check": "compare_all_fields_before_after",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-ST-001",
@@ -319,7 +429,12 @@
     "expected_status_class": "2xx",
     "profile_check": "equals_request",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-ST-002",
@@ -334,7 +449,12 @@
     "profile_check": "own_profile_equals_request; other_seed_user_unchanged",
     "other_user_id": 1,
     "setup": "snapshot_both_users",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-ST-003",
@@ -345,11 +465,18 @@
     "content_type": "application/json",
     "body_json": "{\"name\":\"Lần 1\",\"phone\":\"0911111111\",\"shipping_address\":\"A\"}",
     "body_json_2": "{\"name\":\"Lần 2\",\"phone\":\"0922222222\",\"shipping_address\":\"B\"}",
-    "expected_status": null,
-    "expected_status_class": "observe",
+    "expected_status": 200,
+    "expected_status_class": "2xx",
     "profile_check": "final_profile_matches_second_or_record_rejection",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "follow_up",
+    "main_request_enabled": true,
+    "follow_up_body_json": "{\"name\":\"Lần 2\",\"phone\":\"0922222222\",\"shipping_address\":\"B\"}",
+    "follow_up_expected_status": 200
   },
   {
     "test_id": "FR04-USRME-ST-004",
@@ -359,11 +486,16 @@
     "authorization_header": "Bearer {{expiredAuthToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Token hết hạn\",\"phone\":\"0912345678\",\"shipping_address\":\"123 Lê Lợi\"}",
-    "expected_status": null,
+    "expected_status": 401,
     "expected_status_class": "4xx",
     "profile_check": "profile_unchanged",
     "setup": "snapshot_profile",
-    "teardown": "none"
+    "teardown": "none",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-ST-005",
@@ -373,11 +505,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Cập nhật một phần lỗi\",\"phone\":\"abc\",\"shipping_address\":\"123 Lê Lợi\"}",
-    "expected_status": null,
+    "expected_status": 400,
     "expected_status_class": "4xx",
     "profile_check": "observe_atomicity_with_before_after_snapshot",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-ST-006",
@@ -387,11 +524,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Tên mới\",\"phone\":\"09ABC\",\"shipping_address\":\"Địa chỉ mới\"}",
-    "expected_status": null,
+    "expected_status": 400,
     "expected_status_class": "4xx",
     "profile_check": "profile_unchanged",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-ST-007",
@@ -407,7 +549,14 @@
     "profile_check": "final_profile_matches_second; id_unchanged; other_seed_user_unchanged",
     "other_user_id": 1,
     "setup": "snapshot_both_users",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "follow_up",
+    "main_request_enabled": true,
+    "follow_up_body_json": "{\"name\":\"Lần hai\",\"phone\":\"0944444444\",\"shipping_address\":\"B\"}",
+    "follow_up_expected_status": 200
   },
   {
     "test_id": "FR04-USRME-ST-008",
@@ -422,7 +571,14 @@
     "expected_status_class": "2xx",
     "profile_check": "profile_matches_request; id_unchanged; role_email_unchanged",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "follow_up",
+    "main_request_enabled": true,
+    "follow_up_body_json": "{\"name\":\"Retry profile\",\"phone\":\"0955555555\",\"shipping_address\":\"Retry address\"}",
+    "follow_up_expected_status": 200
   },
   {
     "test_id": "FR04-USRME-SEC-001",
@@ -436,7 +592,12 @@
     "expected_status_class": "4xx",
     "profile_check": "profile_unchanged",
     "setup": "snapshot_profile",
-    "teardown": "none"
+    "teardown": "none",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SEC-002",
@@ -446,11 +607,16 @@
     "authorization_header": "Bearer invalid.jwt.token",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Token sai\",\"phone\":\"0912345678\",\"shipping_address\":\"1 A\"}",
-    "expected_status": null,
+    "expected_status": 401,
     "expected_status_class": "4xx",
     "profile_check": "profile_unchanged",
     "setup": "snapshot_profile",
-    "teardown": "none"
+    "teardown": "none",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SEC-003",
@@ -460,12 +626,17 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Không đổi role\",\"phone\":\"0912345678\",\"shipping_address\":\"1 A\",\"role\":\"admin\"}",
-    "expected_status": null,
-    "expected_status_class": "2xx_or_4xx",
+    "expected_status": 400,
+    "expected_status_class": "4xx",
     "profile_check": "role_unchanged; permitted_fields_follow_contract",
     "setup": "reset_profile_and_snapshot_role",
     "teardown": "restore_role_user_and_reset_profile",
-    "risk": "may escalate seed user; execute last or isolate database"
+    "risk": "may escalate seed user; execute last or isolate database",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SEC-004",
@@ -475,11 +646,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Không đổi email\",\"phone\":\"0912345678\",\"shipping_address\":\"1 A\",\"email\":\"attacker@example.com\"}",
-    "expected_status": 200,
-    "expected_status_class": "2xx",
+    "expected_status": 400,
+    "expected_status_class": "4xx",
     "profile_check": "email_unchanged; permitted_fields_follow_contract",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SEC-005",
@@ -489,12 +665,17 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"id\":1,\"name\":\"IDOR attempt\",\"phone\":\"0912345678\",\"shipping_address\":\"1 A\"}",
-    "expected_status": 200,
-    "expected_status_class": "2xx",
+    "expected_status": 400,
+    "expected_status_class": "4xx",
     "profile_check": "authenticated_user_only_updated; other_seed_user_unchanged",
     "other_user_id": 1,
     "setup": "snapshot_both_users",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SEC-006",
@@ -504,11 +685,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"<img src=x onerror=alert(1)>\",\"phone\":\"0912345678\",\"shipping_address\":\"1 A\"}",
-    "expected_status": null,
-    "expected_status_class": "2xx_or_4xx",
+    "expected_status": 200,
+    "expected_status_class": "2xx",
     "profile_check": "record_stored_value; verify_safe_render_in_UI_separately",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SEC-007",
@@ -518,11 +704,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"XSS address\",\"phone\":\"0912345678\",\"shipping_address\":\"<svg onload=alert(1)>\"}",
-    "expected_status": null,
-    "expected_status_class": "2xx_or_4xx",
+    "expected_status": 200,
+    "expected_status_class": "2xx",
     "profile_check": "record_stored_value; verify_safe_render_in_UI_separately",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SEC-008",
@@ -532,12 +723,17 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"' OR 1=1 --\",\"phone\":\"0912345678\",\"shipping_address\":\"1 A\"}",
-    "expected_status": null,
-    "expected_status_class": "not_5xx",
+    "expected_status": 200,
+    "expected_status_class": "2xx",
     "profile_check": "only_authenticated_user_may_change; other_seed_user_unchanged",
     "other_user_id": 1,
     "setup": "snapshot_both_users",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SEC-009",
@@ -547,12 +743,17 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"SQL address\",\"phone\":\"0912345678\",\"shipping_address\":\"1 A'; DROP TABLE users; --\"}",
-    "expected_status": null,
-    "expected_status_class": "not_5xx",
+    "expected_status": 200,
+    "expected_status_class": "2xx",
     "profile_check": "only_authenticated_user_may_change; other_seed_user_unchanged",
     "other_user_id": 1,
     "setup": "snapshot_both_users",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SEC-010",
@@ -562,11 +763,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Ignore password\",\"phone\":\"0912345678\",\"shipping_address\":\"1 A\",\"password\":\"Attacker123!\"}",
-    "expected_status": 200,
-    "expected_status_class": "2xx",
+    "expected_status": 400,
+    "expected_status_class": "4xx",
     "profile_check": "password_unchanged; permitted_fields_follow_contract",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SEC-011",
@@ -576,11 +782,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Ignore OTP\",\"phone\":\"0912345678\",\"shipping_address\":\"1 A\",\"reset_token\":\"000000\",\"otp\":\"000000\"}",
-    "expected_status": 200,
-    "expected_status_class": "2xx",
+    "expected_status": 400,
+    "expected_status_class": "4xx",
     "profile_check": "reset_token_unchanged; permitted_fields_follow_contract",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SEC-012",
@@ -590,11 +801,16 @@
     "authorization_header": "Bearer {{tamperedAuthToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"JWT sửa\",\"phone\":\"0912345678\",\"shipping_address\":\"1 A\"}",
-    "expected_status": null,
+    "expected_status": 401,
     "expected_status_class": "4xx",
     "profile_check": "profile_unchanged",
     "setup": "snapshot_profile",
-    "teardown": "none"
+    "teardown": "none",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SEC-013",
@@ -609,7 +825,12 @@
     "expected_status_class": "4xx",
     "profile_check": "profile_unchanged",
     "setup": "snapshot_profile",
-    "teardown": "none"
+    "teardown": "none",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SEC-014",
@@ -619,11 +840,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"A\",\"phone\":\"0912345678\",\"shipping_address\":\"1 A\",\"__proto__\":{\"role\":\"admin\"},\"constructor\":{\"prototype\":{\"role\":\"admin\"}}}",
-    "expected_status": null,
-    "expected_status_class": "2xx_or_4xx",
+    "expected_status": 400,
+    "expected_status_class": "4xx",
     "profile_check": "role_unchanged; no_unexpected_profile_fields",
     "setup": "reset_profile_and_snapshot_role",
-    "teardown": "restore_role_user_and_reset_profile"
+    "teardown": "restore_role_user_and_reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SEC-015",
@@ -633,12 +859,17 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"id\":1,\"userId\":1,\"user_id\":1,\"name\":\"A only\",\"phone\":\"0912345678\",\"shipping_address\":\"1 A\"}",
-    "expected_status": null,
-    "expected_status_class": "2xx_or_4xx",
+    "expected_status": 400,
+    "expected_status_class": "4xx",
     "profile_check": "other_seed_user_unchanged; authenticated_user_only_updated",
     "other_user_id": 1,
     "setup": "snapshot_both_users",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SEC-016",
@@ -648,11 +879,16 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Allow list\",\"phone\":\"0912345678\",\"shipping_address\":\"1 A\",\"is_admin\":true,\"permissions\":[\"admin\"],\"passwordHash\":\"fake\",\"resetToken\":\"fake\",\"createdAt\":\"2000-01-01\"}",
-    "expected_status": null,
-    "expected_status_class": "2xx_or_4xx",
+    "expected_status": 400,
+    "expected_status_class": "4xx",
     "profile_check": "sensitive_fields_unchanged_or_absent; permitted_fields_follow_contract",
     "setup": "reset_profile_and_snapshot_role",
-    "teardown": "restore_role_user_and_reset_profile"
+    "teardown": "restore_role_user_and_reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_required",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SC-001",
@@ -667,7 +903,12 @@
     "profile_check": "equals_request",
     "response_check": "observe_status_content_type_body_fields; specification_has_no_complete_success_schema",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_exact",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SC-002",
@@ -682,7 +923,12 @@
     "profile_check": "equals_request",
     "response_check": "body_must_not_contain_password,password_hash,reset_token,otp",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "profile_update_required",
+    "expected_state": "profile_matches_effective_request",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SC-003",
@@ -697,7 +943,12 @@
     "profile_check": "profile_unchanged",
     "response_check": "observe_error_schema",
     "setup": "snapshot_profile",
-    "teardown": "none"
+    "teardown": "none",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_exact",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SC-004",
@@ -707,12 +958,17 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Schema invalid\",\"phone\":\"abc\",\"shipping_address\":\"1 A\"}",
-    "expected_status": null,
+    "expected_status": 400,
     "expected_status_class": "4xx",
     "profile_check": "profile_unchanged",
     "response_check": "observe_validation_error_schema",
     "setup": "reset_profile",
-    "teardown": "reset_profile"
+    "teardown": "reset_profile",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_exact",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   },
   {
     "test_id": "FR04-USRME-SC-005",
@@ -722,12 +978,17 @@
     "authorization_header": "Bearer {{authToken}}",
     "content_type": "application/json",
     "body_json": "{\"name\":\"Schema role\",\"phone\":\"0912345678\",\"shipping_address\":\"1 A\",\"role\":\"admin\"}",
-    "expected_status": null,
-    "expected_status_class": "2xx_or_4xx",
+    "expected_status": 400,
+    "expected_status_class": "4xx",
     "profile_check": "role_unchanged",
     "response_check": "response_must_not_expose_unexpected_role_change",
     "setup": "reset_profile_and_snapshot_role",
     "teardown": "restore_role_user_and_reset_profile",
-    "risk": "may escalate seed user; execute last or isolate database"
+    "risk": "may escalate seed user; execute last or isolate database",
+    "oracle_basis": "execution contract A-FR04",
+    "expected_response_schema": "error_exact",
+    "expected_state": "profile_unchanged",
+    "execution_mode": "normal",
+    "main_request_enabled": true
   }
 ]

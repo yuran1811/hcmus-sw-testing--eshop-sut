@@ -14,6 +14,8 @@ Coupon API / API Testing / State Transition
 - Đặc tả API tham chiếu: mục 6.4 Quản lý Mã Giảm Giá trong `api_specification.md`
 - Admin đã tạo rồi xóa code RECREATE bằng `DELETE /api/admin/coupons/:id`.
 
+- Fixture service đặt lại seed user/coupon, bảo đảm code thử nghiệm chưa tồn tại, lưu snapshot và xóa dữ liệu tạo trong iteration khi hoàn tất.
+
 ## Test data
 
 | Field    | Value                                                                                                                            |
@@ -35,7 +37,7 @@ Coupon API / API Testing / State Transition
 
 ## Expected result
 
-Ghi nhận behavior sau khi xóa và tạo lại cùng code. Không được tạo hai bản ghi active trùng code; hard-delete/soft-delete và khả năng tái sử dụng code cần được đặc tả trước khi kết luận pass/fail cụ thể.
+Theo execution contract A-FR17: tạo trả HTTP 201, xóa cứng trả HTTP 204, tạo lại cùng code trả HTTP 201; trạng thái cuối có đúng một coupon khớp request.
 
 ## Status / Related bugs
 

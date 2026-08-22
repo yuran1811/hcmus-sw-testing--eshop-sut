@@ -13,6 +13,8 @@ Coupon API / API Testing / Domain Partition + State Transition
 - Có coupon với `expired_at` được kiểm soát đến mức timestamp/timezone.
 - JWT hợp lệ và tổng đơn đạt min_order_amount.
 
+- Fixture service đặt lại seed user/coupon/coupon_usage và thiết lập use_count, is_active hoặc mốc ngày theo test_id trước mỗi iteration.
+
 ## Test data
 
 | Field    | Value                                                                         |
@@ -33,7 +35,7 @@ Coupon API / API Testing / Domain Partition + State Transition
 
 ## Expected result
 
-Trước hạn được đánh giá theo C2; tại/sau thời điểm không còn thỏa điều kiện "current date before expired_at". Kết quả không phụ thuộc sai lệch timezone hoặc parse ngày.
+Theo execution contract A-FR09: coupon hết hạn ngày mai trả HTTP 200; coupon hết hạn đúng ngày hiện tại và ngày hôm qua trả HTTP 400. Cả ba response dùng JSON error/success đúng schema và không thay đổi coupon_usage.
 
 ## Status / Related bugs
 

@@ -13,6 +13,8 @@ Coupon API / API Testing / Security
 - JWT hợp lệ của admin.
 - Code `PROTOCHECK` chưa tồn tại.
 
+- Fixture service đặt lại seed user/coupon, bảo đảm code thử nghiệm chưa tồn tại, lưu snapshot và xóa dữ liệu tạo trong iteration khi hoàn tất.
+
 ## Test data
 
 | Field    | Value                                                                      |
@@ -32,7 +34,7 @@ Coupon API / API Testing / Security
 
 ## Expected result
 
-Server chỉ xử lý sáu field được đặc tả, bỏ qua hoặc từ chối field ngoài allow-list. Không tạo quyền admin, không thay đổi user/coupon ngoài request và không lỗi 5xx.
+Theo execution contract A-FR17: HTTP 400; response khớp schema error_required, không lộ secret/stack trace; không tạo coupon và không thay đổi dữ liệu seed.
 
 ## Status / Related bugs
 
