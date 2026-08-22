@@ -3,7 +3,7 @@
 **Document Identifier:** CM-EShop-API-FR16  
 **Target API:** `POST /api/admin/import-products`  
 **Student ID:** `23127148`  
-**Total Test Cases:** 40  
+**Total Test Cases:** 45  
 
 ---
 
@@ -28,6 +28,8 @@
 | `TC-IMPORT-013` | SSRF Probing | OWASP API7:2023 / SSRF | Product item `imageUrl` (`127.0.0.1:3000`) | `200 OK` (No SSRF) |
 | `TC-IMPORT-014` | SSRF Probing | OWASP API7:2023 / SSRF | Product item `imageUrl` (`169.254.169.254`) | `200 OK` (No SSRF) |
 | `TC-IMPORT-015` | Mass Assignment | OWASP API6:2023 / SEC-07 | Payload injection (`id`, `role`, `is_admin`) | Injected fields ignored |
+| `TC-IMPORT-042` | CSV Formula Injection (CWE-1236) | OWASP API3:2023 / SEC-06 | Product fields containing `=cmd`, `@SUM`, `+cmd` | Handled / Escaped |
+| `TC-IMPORT-045` | Stored XSS in Rich Description | OWASP API3:2023 / SEC-01 | Rich text HTML description sanitization | Sanitized / Cleaned |
 
 ---
 
@@ -55,6 +57,7 @@
 | `TC-IMPORT-033` | Foreign Key Boundary | `category_id: 99999` | Handled safely | No 500 unhandled crash |
 | `TC-IMPORT-034` | Extreme Batch Stress | Array of 50 items | `200 OK` | `inserted: 50` |
 | `TC-IMPORT-035` | Buffer Boundary | Length > 1000 chars | Handled safely | No buffer overflow |
+| `TC-IMPORT-043` | Payload Size Limit & OOM Prevention | 10,000 items (~15MB JSON) | `413` / `400` | Payload Rejected Safe |
 
 ---
 
@@ -66,7 +69,7 @@
 | `TC-IMPORT-037` | Persistence & Duplicate Handling | Import items -> `GET /api/products` | `200 OK` | Record persisted in database |
 | `TC-IMPORT-038` | HTTP Method Tampering | `GET` / `PUT` on import route | `404` / `405` | Method rejected |
 | `TC-IMPORT-041` | Transaction Atomicity & Rollback Absence | Batch with mid-stream failure, check rollback | `200 OK` | Non-atomic partial commit |
-| `TC-IMPORT-042` | CSV Formula Injection (CWE-1236) | Product fields containing `=cmd`, `@SUM`, `+cmd` | Handled / Escaped | Formula execution prevented |
+| `TC-IMPORT-044` | Duplicate SKU & Intra-batch Conflict | Batch containing duplicate SKUs & existing SKU | `422` / `200` | Row-level Conflict Report |
 
 ---
 
@@ -83,9 +86,8 @@
 
 | Dimension | Total Cases | Target Test Case IDs | Percentage |
 | :--- | :---: | :--- | :---: |
-| Security & BFLA (SEC-02/03/05/06/07 & CWE-1236) | 16 | `TC-IMPORT-001` - `TC-IMPORT-015`, `TC-IMPORT-042` | 38.1% |
-| Domain Partitioning & Boundaries | 20 | `TC-IMPORT-016` - `TC-IMPORT-035` | 47.6% |
-| Data Integrity, Concurrency & Transactions | 4 | `TC-IMPORT-036` - `TC-IMPORT-038`, `TC-IMPORT-041` | 9.5% |
-| Contract & Traceability | 2 | `TC-IMPORT-039` - `TC-IMPORT-040` | 4.8% |
-| **Total** | **42** | `TC-IMPORT-001` - `TC-IMPORT-042` | **100%** |
-
+| Security & BFLA (SEC-02/03/05/06/07, CWE-1236 & Stored XSS) | 17 | `TC-IMPORT-001` - `TC-IMPORT-015`, `TC-IMPORT-042`, `TC-IMPORT-045` | 37.8% |
+| Domain Partitioning & Boundaries | 21 | `TC-IMPORT-016` - `TC-IMPORT-035`, `TC-IMPORT-043` | 46.7% |
+| Data Integrity, Concurrency & Transactions | 5 | `TC-IMPORT-036` - `TC-IMPORT-038`, `TC-IMPORT-041`, `TC-IMPORT-044` | 11.1% |
+| Contract & Traceability | 2 | `TC-IMPORT-039` - `TC-IMPORT-040` | 4.4% |
+| **Total** | **45** | `TC-IMPORT-001` - `TC-IMPORT-045` | **100%** |

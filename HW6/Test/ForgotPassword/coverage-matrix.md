@@ -3,7 +3,7 @@
 **API Endpoint:** `POST /api/forgot-password`  
 **SUT:** EShop Backend (`http://localhost:3000`)  
 **Student ID:** `23127148`  
-**Total Test Cases:** 40  
+**Total Test Cases:** 45  
 
 ---
 
@@ -11,11 +11,11 @@
 
 | Coverage Dimension | Count | Target Ratio | Status |
 | :--- | :---: | :---: | :---: |
-| **1. Domain Partitioning (EP & BVA)** | 25 | ≥ 15 | ✅ Met (25 cases) |
-| **2. Security Testing (OWASP / SEC-01 to SEC-07)** | 11 | ≥ 10 | ✅ Met (11 cases) |
+| **1. Domain Partitioning (EP & BVA)** | 26 | ≥ 15 | ✅ Met (26 cases) |
+| **2. Security Testing (OWASP / SEC-01 to SEC-07)** | 13 | ≥ 10 | ✅ Met (13 cases) |
 | **3. Schema & Status Code Validation** | 2 | ≥ 2 | ✅ Met (2 cases) |
-| **4. State Transition & Traceability** | 2 | ≥ 2 | ✅ Met (2 cases) |
-| **Total** | **40** | **≥ 35** | **✅ 114% of Target** |
+| **4. State Transition & Traceability** | 4 | ≥ 2 | ✅ Met (4 cases) |
+| **Total** | **45** | **≥ 35** | **✅ 128.6% of Target** |
 
 ---
 
@@ -65,17 +65,19 @@
 | `TC-FORGOT-040` | Audit - Mandatory `X-Student-Id` header | Traceability | Audit Compliance | HW06 §6.1 Requirement | `200 OK` Header Logged |
 | `TC-FORGOT-041` | Lockout Bypass via Password Reset | Security & State Interaction | FR-02 & FR-03 Coupling | OWASP ASVS V3.2 | `403` / `423` (Bug Found) |
 | `TC-FORGOT-042` | OTP Invalidation on Successive Requests | State Transition | Temporal Invariant | Single-Use OTP Lifecycle | `400` on Old Token |
+| `TC-FORGOT-043` | Anti-Spam OTP Rate Limiting & Cooldown | Stress & Security | Rate Limiting / Flooding | NFR-SEC-01 / Abuse Prevention | `429 Too Many Requests` |
+| `TC-FORGOT-044` | Email Case-Insensitive & Trimming Robustness | Domain Partitioning | Data Normalization | NFR-UX-01 / Robustness | `200 OK` (Normalized) |
+| `TC-FORGOT-045` | Timing Attack Analysis on Account Lookup | Security Testing | Side-Channel Analysis | NFR-SEC-02 / CWE-208 | `200 OK` ($\Delta t < 50\text{ms}$) |
 
 ---
 
 ## 3. Summary Breakdown
 
-- **Total Test Cases:** 42 (40 AI Generated + 2 Human Extended)
-- **Equivalence Partitioning (EP) cases:** 16
+- **Total Test Cases:** 45 (40 AI Generated + 5 Human Extended)
+- **Equivalence Partitioning (EP) cases:** 17
 - **Boundary Value Analysis (BVA) cases:** 5
 - **Data-Driven Test Candidates:** 15 rows mapped in `forgot-password-data-driven.json`
-- **Security & OWASP Vulnerability checks:** 12 cases
+- **Security & OWASP Vulnerability checks:** 14 cases
 - **Contract & Schema checks:** 2 cases
-- **State Transition & Lifecycle checks:** 3 cases
+- **State Transition & Lifecycle checks:** 4 cases
 - **Audit & Compliance checks:** 1 case
-

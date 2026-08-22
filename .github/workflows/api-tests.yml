@@ -2,9 +2,9 @@ name: EShop API Testing CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, master, "hw6/**" ]
+    branches: [main, master, "hw6/**"]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
   workflow_dispatch:
 
 jobs:
@@ -20,8 +20,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'
-          cache-dependency-path: 'backend/package-lock.json'
+          cache: "npm"
+          cache-dependency-path: "backend/package-lock.json"
 
       - name: Install Backend Dependencies
         run: |

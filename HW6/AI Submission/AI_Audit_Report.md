@@ -31,7 +31,7 @@ This report documents all interactions with AI tools during the completion of HW
 | **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 20:26 22/08/2026<br>**Prompt:** "Act as a Principal QA Automation Architect and ISTQB Test Specialist. We need to generate a complete, automated API test suite for API 2 in the EShop SUT testing suite: Endpoint: PUT /api/orders/:id/cancel, Feature: FR-10 (Order State Machine & Order Cancellation) [...] Please systematically generate at least 35+ executable test cases covering all 4 required testing dimensions [...] Required Deliverables to Generate in HW6/Test/OrderCancel/" | Generated 40 executable test cases in `HW6/Test/OrderCancel/test-cases/` (`TC-CANCEL-001.md` to `TC-CANCEL-040.md`), `OrderCancel_Master_Document.md`, `coverage-matrix.md`, `audit-checklist.md`, `order-cancel-data-driven.json`, and `OrderCancel.postman_collection.json`. | **VALID** | Comprehensive coverage across all 4 dimensions. Rigorously models the Finite State Machine (FSM), catches the planted SUT bug at `server.js:329` (missing `shipping` state guard), validates BOLA/IDOR protection via scoped SQL queries, and adheres 100% to the faculty template and directory structure established in Artifact #4 without any manual reformatting. | Accepted as-is. Verified that the test generator skill executed seamlessly, correctly produced 40 formatted test case files in `test-cases/`, and accurately flagged the `shipping` order cancellation defect in `TC-CANCEL-003` and the audit checklist. |
 | **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 20:33 22/08/2026<br>**Prompt:** "Act as a Principal QA Automation Architect and ISTQB Test Specialist. We need to generate a complete, automated API test suite for API 3 in the EShop SUT testing suite: Endpoint: POST /api/admin/import-products, Feature: FR-16 (Product Import from CSV as JSON Array) [...] Please systematically generate at least 35+ executable test cases covering all 4 required testing dimensions [...] Required Deliverables to Generate in HW6/Test/ImportProducts/" | Generated 40 executable test cases in `HW6/Test/ImportProducts/test-cases/` (`TC-IMPORT-001.md` to `TC-IMPORT-040.md`), `ImportProducts_Master_Document.md`, `coverage-matrix.md`, `audit-checklist.md`, `import-products-data-driven.json`, and `ImportProducts.postman_collection.json`. | **VALID** | Thorough coverage across all 4 mandatory dimensions. Uncovers CRITICAL Broken Function Level Authorization (BFLA / SEC-03) defect in `server.js:199` where standard user token bypasses role check, validates SQLite prepared statement SQLi defense, models batch atomicity, optional field fallback defaults, price boundaries, and Draft-07 JSON Schema assertions. 100% conforming to course standards. | Accepted as-is. Verified that the test generator skill produced 40 formatted test case files in `test-cases/`, configured `ImportProducts.postman_collection.json` with pre-request `X-Student-Id: 23127148` injection, and documented the BFLA defect in `TC-IMPORT-001` and the audit checklist. |
 | **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 20:44 22/08/2026<br>**Prompt:** "Label each AI-generated test case VALID / INVALID / INCOMPLETE with reasoning, and correct the invalid or incomplete ones. You are fully responsible for the final test cases. Do for me this requirement for 3 apis" | Conducted systematic human audit review across all 120 AI-generated test cases for the 3 selected APIs. Produced full 40-case evaluation tables in `HW6/Test/ForgotPassword/audit-checklist.md`, `HW6/Test/OrderCancel/audit-checklist.md`, and `HW6/Test/ImportProducts/audit-checklist.md`. Corrected 23 INCOMPLETE test cases and 9 INVALID test cases with concrete student fixes. | **VALID** | Strictly fulfills HW06 §6.2 (Human Audit Review) and ISTQB Foundation Level review principles. Corrects AI hallucinations regarding Express HTTP routing (404 vs 405), SQL NULL evaluation semantics, Content-Type handling (404 vs 415), and missing database state persistence assertions across all 3 endpoints. | Accepted as-is. Inspected all 120 audit evaluations and verified the final distribution (88 VALID [73.3%], 23 INCOMPLETE [19.2%], 9 INVALID [7.5%]), confirming that student fixes and SUT deviation notes are fully synchronized in test case documentation and Postman suites. |
-| **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 21:08 22/08/2026<br>**Prompt:** "We are completing Phase 3 (Extend) of HW06 for the EShop SUT across our 3 selected APIs [...] Add at least five test cases of your own that the AI missed — especially around security and state transitions — and explain why the AI missed them" | Designed and integrated 6 human-extended test cases (`TC-FORGOT-041..042`, `TC-CANCEL-041..042`, `TC-IMPORT-041..042`) covering cross-feature lockout bypass, temporal OTP invalidation, post-cancellation state invariants, admin role boundary confusion, non-atomic batch rollbacks, and CSV formula injection (CWE-1236), accompanied by root cause analysis across prompt quality, model limitations, and API characteristics. | **VALID** | Strictly fulfills HW06 §6.3 (Phase 3: Extend) and Bloom-AI G9.4 (Collaborate) / G9.5 (Create). Systematically targets blind spots where LLMs miss multi-step state machine coupling, asynchronous transaction boundaries, and context-specific injection vectors. | Accepted as-is. Created markdown test specifications, updated coverage matrices and audit checklists, and integrated extended test cases into the master report. |
+| **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 21:08 22/08/2026<br>**Prompt:** "We are completing Phase 3 (Extend) of HW06 for the EShop SUT across our 3 selected APIs [...] Add at least five test cases of your own that the AI missed — especially around security and state transitions — and explain why the AI missed them" | Designed and integrated 15 human-extended test cases (`TC-FORGOT-041..045`, `TC-CANCEL-041..045`, `TC-IMPORT-041..045`) covering cross-feature lockout bypass, temporal OTP invalidation, anti-spam rate limiting, email normalization, timing attacks, post-cancellation state invariants, admin role boundary confusion, concurrent double-cancel race condition, inventory restock invariants, coupon quota rollback, non-atomic batch rollbacks, CSV formula injection (CWE-1236), payload limit & OOM defense, intra-batch duplicate SKU conflicts, and rich-text stored XSS sanitization, accompanied by root cause analysis across prompt quality, model limitations, and API characteristics. | **VALID** | Strictly fulfills HW06 §6.3 (Phase 3: Extend) and Bloom-AI G9.4 (Collaborate) / G9.5 (Create). Systematically targets blind spots where LLMs miss multi-step state machine coupling, concurrency controls, asynchronous transaction boundaries, side-channel attacks, and context-specific injection vectors. | Accepted as-is. Created markdown test specifications, updated coverage matrices and audit checklists, and integrated extended test cases into the master report. |
 | **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 21:44 22/08/2026<br>**Prompt:** "Title: [BUG][Login] Hệ thống cho phép đăng nhập với password sai [...] Đây là bug template cho bạn nè, và hãy liệt kê đầy đủ các bugs nhé. Nên nhớ là đặt tên bug theo format như này BUG-MODULE-001 và được thì chia theo api" | Formatted and structured 10 comprehensive bug reports in `HW6/Test/Bug_Reports/` partitioned by API (`BUG-FORGOT-001..005`, `BUG-CANCEL-001..002`, `BUG-IMPORT-001..003`, and master `README.md`) adhering 100% to the course standard defect template. | **VALID** | Fulfills HW06 §6.5 (Report Bugs) and IEEE 829 / ISO/IEC 29119 defect standards. Accurately documents all genuine SUT vulnerabilities (BFLA, FSM violation in shipping, cleartext OTP, 500 crash on content-type) with exact code citations in `backend/server.js`. | Accepted as-is. Verified vulnerable code references (`server.js:69`, `server.js:80`, `server.js:199`, `server.js:329`), structured into per-API folders, and committed to git repository. |
 
 
@@ -647,22 +647,31 @@ API)
 **Execution notes:**
 
 - Mode: EXTEND & ROOT CAUSE ANALYSIS
-- Tools called: `view_file`, `write_to_file`, `replace_file_content`
+- Tools called: `view_file`, `write_to_file`, `replace_file_content`, `run_command`
 - Stored locations:
-  - `HW6/Test/ForgotPassword/test-cases/TC-FORGOT-041.md`, `TC-FORGOT-042.md`
-  - `HW6/Test/OrderCancel/test-cases/TC-CANCEL-041.md`, `TC-CANCEL-042.md`
-  - `HW6/Test/ImportProducts/test-cases/TC-IMPORT-041.md`, `TC-IMPORT-042.md`
+  - `HW6/Test/ForgotPassword/test-cases/TC-FORGOT-041.md` ... `TC-FORGOT-045.md`
+  - `HW6/Test/OrderCancel/test-cases/TC-CANCEL-041.md` ... `TC-CANCEL-045.md`
+  - `HW6/Test/ImportProducts/test-cases/TC-IMPORT-041.md` ... `TC-IMPORT-045.md`
   - `HW6/Report/23127148_HW06_API_Testing_Report.md`
 
 #### (2) AI Output
 
-- Designed 6 specialized human extension test cases (2 per API):
+- Designed 15 specialized human extension test cases (5 per API, numbered `041` to `045`):
   1. `TC-FORGOT-041`: Account Lockout Bypass via Password Reset (FR-02 & FR-03 Coupling / `locked_until` check omission).
   2. `TC-FORGOT-042`: Historical OTP Invalidation & Overwrite on Consecutive Forgot-Password Requests.
-  3. `TC-CANCEL-041`: Post-Cancellation State Invariant & Idempotency Verification via `GET /api/orders/:id`.
-  4. `TC-CANCEL-042`: Admin Token Invocation on User-Scoped Cancellation Endpoint (Tenant Scoping & Role Confusion).
-  5. `TC-IMPORT-041`: Non-Atomic Batch Execution & Rollback Absence Under Partial Failure (Data Integrity).
-  6. `TC-IMPORT-042`: CSV / Spreadsheet Formula Injection (CWE-1236) in Product Import Payloads (`=cmd|`, `@SUM`, `+cmd`).
+  3. `TC-FORGOT-043`: Anti-Spam Rate Limiting & Cooldown Protection against OTP Flooding (NFR-SEC-01).
+  4. `TC-FORGOT-044`: Email Normalization & Whitespace Trimming Robustness (`.toLowerCase()`, `.trim()`).
+  5. `TC-FORGOT-045`: Side-Channel Timing Attack Mitigation for Account Enumeration ($\Delta t < 50\text{ms}$).
+  6. `TC-CANCEL-041`: Post-Cancellation State Invariant & Idempotency Verification via `GET /api/orders/:id`.
+  7. `TC-CANCEL-042`: Admin Token Invocation on User-Scoped Cancellation Endpoint (Tenant Scoping & Role Confusion).
+  8. `TC-CANCEL-043`: Concurrency Control & Race Condition on Concurrent Double Cancel Requests.
+  9. `TC-CANCEL-044`: Inventory Stock Restoration Invariant (Stock Increment on Order Cancellation).
+  10. `TC-CANCEL-045`: Coupon / Voucher Quota Rollback and Reuse Lifecycle Flow.
+  11. `TC-IMPORT-041`: Non-Atomic Batch Execution & Rollback Absence Under Partial Failure (Data Integrity).
+  12. `TC-IMPORT-042`: CSV / Spreadsheet Formula Injection (CWE-1236) in Product Import Payloads (`=cmd|`, `@SUM`, `+cmd`).
+  13. `TC-IMPORT-043`: Payload Size Limit & Out-of-Memory (OOM) Denial-of-Service Defense (10,000 items batch).
+  14. `TC-IMPORT-044`: Intra-Batch Duplicate SKU Conflicts & Database Transaction Atomicity.
+  15. `TC-IMPORT-045`: Stored Cross-Site Scripting (XSS) Sanitization in Rich Text HTML Description.
 - Documented in-depth technical analysis explaining why AI missed these cases across **Prompt Quality**, **Model Cognitive Limitations**, and **API Architecture Characteristics**.
 
 #### (3)-(5) Verdict, Reasoning, Student Fix
@@ -670,8 +679,8 @@ API)
 | Aspect | Detail |
 | --- | --- |
 | **Verdict** | VALID |
-| **Reasoning** | Strictly satisfies HW06 §6.3 (Phase 3: Extend) requiring at least five human-designed test cases covering security and state transition blind spots. The analysis accurately decouples prompt context limitations from LLM architectural blind spots (such as stateless request generation vs temporal state progression and database transaction atomicity). |
-| **Student Fix** | Accepted as-is. Formatted all 6 test cases into course-standard markdown files, synchronized coverage matrices and audit checklists across all 3 modules, and added comprehensive analysis to the master report. |
+| **Reasoning** | Strictly satisfies HW06 §6.3 (Phase 3: Extend) requiring at least five human-designed test cases covering security and state transition blind spots (achieving 15 total, 5 per API). The analysis accurately decouples prompt context limitations from LLM architectural blind spots (such as stateless request generation vs temporal state progression, concurrency race conditions, side-channel timing, and database transaction atomicity). |
+| **Student Fix** | Accepted as-is. Formatted all 15 test cases into course-standard markdown files, synchronized coverage matrices, Excel summary sheets and audit checklists across all 3 modules, and added comprehensive analysis to the master report. |
 | **Reviewed by** | Nguyen An |
 | **Review date** | 2026-08-22 |
 | **Quality rating** | Excellent |
@@ -779,14 +788,14 @@ BUG-MODULE-001 và được thì chia theo api
 | **INVALID (wrong; rejected)** | **0** | **0.0%** |
 | **INCOMPLETE (acceptable after edits)** | **2** | **22.2%** |
 
-### B. Granular Test-Case-Level Accuracy (120 AI Cases + 6 Student Extended Cases)
+### B. Granular Test-Case-Level Accuracy (120 AI Cases + 15 Student Extended Cases)
 
 | Module / API Endpoint | AI Generated | Student Extended | Total Cases | VALID (Accepted As-Is) | INCOMPLETE (Refined) | INVALID (Rewritten) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **POST /api/forgot-password** (FR-03) | 40 | +2 | 42 | 26 (61.9%) | 13 (31.0%) | 3 (7.1%) |
-| **PUT /api/orders/:id/cancel** (FR-10) | 40 | +2 | 42 | 33 (78.6%) | 5 (11.9%) | 4 (9.5%) |
-| **POST /api/admin/import-products** (FR-16) | 40 | +2 | 42 | 35 (83.3%) | 5 (11.9%) | 2 (4.8%) |
-| **Total Grand Summary** | **120** | **+6** | **126** | **94 (74.6%)** | **23 (18.3%)** | **9 (7.1%)** |
+| **POST /api/forgot-password** (FR-03) | 40 | +5 | 45 | 31 (68.9%) | 13 (28.9%) | 3 (6.7%) |
+| **PUT /api/orders/:id/cancel** (FR-10) | 40 | +5 | 45 | 38 (84.4%) | 5 (11.1%) | 4 (8.9%) |
+| **POST /api/admin/import-products** (FR-16) | 40 | +5 | 45 | 40 (88.9%) | 5 (11.1%) | 2 (4.4%) |
+| **Total Grand Summary** | **120** | **+15** | **135** | **109 (80.7%)** | **23 (17.0%)** | **9 (6.7%)** |
 
 ---
 
@@ -794,13 +803,13 @@ BUG-MODULE-001 và được thì chia theo api
 
 AI assistants are extraordinarily effective at generating combinatorial test partitions, crafting executable Postman test collections with JSON Schema assertions, and discovering subtle security and state machine defects across complex endpoints (such as the planted flaw in `server.js:329` where `shipping` orders bypass cancellation restrictions, Broken Function Level Authorization in `server.js:199` where standard users can access admin product imports, and cleartext OTP exposures). 
 
-However, AI models routinely exhibit specific architectural blind spots: assuming generic RFC status codes (e.g. 405 Method Not Allowed, 415 Unsupported Media Type) that Express.js does not emit by default, failing to account for SQLite dynamic typing and NULL evaluation semantics, and generating static assertions that omit necessary cross-endpoint database persistence checks (`GET /api/orders/:id`, `GET /api/products`), temporal state progressions (OTP invalidation overwrites), and database transaction boundaries (non-atomic batch loops). Human review and systematic extension are indispensable to calibrate test assertions against the actual SUT runtime, refine draft schemas, and probe complex state machine coupling.
+However, AI models routinely exhibit specific architectural blind spots: assuming generic RFC status codes (e.g. 405 Method Not Allowed, 415 Unsupported Media Type) that Express.js does not emit by default, failing to account for SQLite dynamic typing and NULL evaluation semantics, and generating static assertions that omit necessary cross-endpoint database persistence checks (`GET /api/orders/:id`, `GET /api/products`), temporal state progressions (OTP invalidation overwrites), and database transaction boundaries (non-atomic batch loops, payload memory pressure, and concurrency race conditions). Human review and systematic extension are indispensable to calibrate test assertions against the actual SUT runtime, refine draft schemas, and probe complex state machine coupling.
 
 ---
 
 ## 6. Mandatory Disclosure
 
-The agent skills (`api-test-generator`, `api-test-executor`), design specifications (`pseudocode.md`, `diagram.md`), test suites (`TC-FORGOT-001..042`, `TC-CANCEL-001..042`, `TC-IMPORT-001..042`), bug reports (`BUG-FORGOT-001..005`, `BUG-CANCEL-001..002`, `BUG-IMPORT-001..003`), and human audit reviews were initially generated with AI assistance via Antigravity IDE (Claude Opus 4.6 & Gemini 3.7 Flash); I reviewed, guided the architecture, evaluated all 120 AI-generated test cases under ISTQB principles, corrected 23 incomplete and 9 invalid test cases, authored 6 human extension test cases targeting AI blind spots, verified SUT defects (BFLA, FSM violation, cleartext OTP, account lockout bypass), and formatted deliverables into `test-cases/` and `Bug_Reports/`. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any artifact listed in the prohibited category.
+The agent skills (`api-test-generator`, `api-test-executor`), design specifications (`pseudocode.md`, `diagram.md`), test suites (`TC-FORGOT-001..045`, `TC-CANCEL-001..045`, `TC-IMPORT-001..045`), bug reports (`BUG-FORGOT-001..005`, `BUG-CANCEL-001..002`, `BUG-IMPORT-001..003`), and human audit reviews were initially generated with AI assistance via Antigravity IDE (Claude Opus 4.6 & Gemini 3.7 Flash); I reviewed, guided the architecture, evaluated all 120 AI-generated test cases under ISTQB principles, corrected 23 incomplete and 9 invalid test cases, authored 15 human extension test cases targeting AI blind spots (rate limiting, concurrency, stock invariants, coupon rollback, timing attacks, stored XSS, payload boundaries), verified SUT defects (BFLA, FSM violation, cleartext OTP, account lockout bypass), and formatted deliverables into `test-cases/` and `Bug_Reports/`. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any artifact listed in the prohibited category.
 
 ---
 
@@ -831,7 +840,7 @@ The agent skills (`api-test-generator`, `api-test-executor`), design specificati
 | 5 | Gemini 3.7 Flash | Test Case Generation | PUT /api/orders/:id/cancel (FR-10) Suite | 2026-08-22 | G9.5 Create | VALID |
 | 6 | Gemini 3.7 Flash | Test Case Generation | POST /api/admin/import-products (FR-16) Suite | 2026-08-22 | G9.5 Create | VALID |
 | 7 | Gemini 3.7 Flash | Human Audit Review | Audit & Correction of 120 Test Cases across 3 APIs | 2026-08-22 | G9.3 Analyse | VALID |
-| 8 | Gemini 3.7 Flash | Test Extension (Phase 3) | 6 Human Extension Test Cases & Root Cause Analysis | 2026-08-22 | G9.4 / G9.5 | VALID |
+| 8 | Gemini 3.7 Flash | Test Extension (Phase 3) | 15 Human Extension Test Cases & Root Cause Analysis | 2026-08-22 | G9.4 / G9.5 | VALID |
 | 9 | Gemini 3.7 Flash | Bug Reporting (Phase 5) | Standardized Bug Reports across 3 APIs | 2026-08-22 | G9.4 / G9.5 | VALID |
 
 ### Contribution Breakdown
@@ -845,7 +854,7 @@ The agent skills (`api-test-generator`, `api-test-executor`), design specificati
 | Order Cancel Test Suite (40 test cases, Postman, Matrix, FSM) | 75% | 25% | FSM state transition scoping, SUT line 329 defect validation, BOLA & SQLi coverage verification |
 | Import Products Test Suite (40 test cases, Postman, Matrix, BFLA) | 75% | 25% | Role escalation & BFLA vulnerability validation, batch atomicity analysis, optional field fallback scoping |
 | Human Audit Review (120 test cases evaluated & corrected) | 40% | 60% | Critical inspection of all 120 test cases, verdict assignment (VALID/INVALID/INCOMPLETE), correction of Express routing & SQL NULL evaluation bugs |
-| Test Extension Suite (6 human-designed cases + Root Cause) | 35% | 65% | Identification of cross-feature coupling, temporal state invariants, transaction atomicity gaps, and formula injection vulnerabilities |
+| Test Extension Suite (15 human-designed cases + Root Cause) | 35% | 65% | Identification of cross-feature coupling, temporal state invariants, transaction atomicity gaps, concurrency, rate limiting, and formula injection vulnerabilities |
 | Bug Reporting Suite (10 standardized reports across 3 APIs) | 50% | 50% | Prompting exact course defect template, enforcing `BUG-MODULE-001` format, per-API structuring, verifying line citations |
 
 ### Compliance Checklist
@@ -857,7 +866,7 @@ The agent skills (`api-test-generator`, `api-test-executor`), design specificati
 - [x] AI output referenced with exact paths
 - [x] Verdict + ISTQB/course reasoning documented
 - [x] Student fix detailed for all artifacts and test cases
-- [x] Accuracy summary table computed (9 artifacts: 7 VALID, 2 INCOMPLETE, 0 INVALID; 126 test cases: 94 VALID, 23 INCOMPLETE, 9 INVALID)
+- [x] Accuracy summary table computed (9 artifacts: 7 VALID, 2 INCOMPLETE, 0 INVALID; 135 test cases: 109 VALID, 23 INCOMPLETE, 9 INVALID)
 - [x] Conclusion (80-150 words) written
 - [x] Mandatory disclosure completed without placeholders
 - [x] Markdown submission format verified

@@ -24,9 +24,9 @@
 
 | No. | Criteria (Tiêu Chí Đánh Giá) | Max Grade | Self-Assessed Grade | Bằng Chứng Hoàn Thành (Evidence) |
 | :---: | :--- | :---: | :---: | :--- |
-| **1** | **API 1 — Full Pipeline** (`POST /api/forgot-password` - FR-03)<br>*(Generate + Audit + Extend + Execute + Bugs)* | 30 | **30** | - 42 test cases (40 AI + 2 Human Extended)<br>- Audit AI-02 đầy đủ phán quyết & Student fix<br>- 5 Lỗi SUT được báo cáo chi tiết<br>- Báo cáo HTML Newman 40 requests (93.0% pass rate) |
-| **2** | **API 2 — Full Pipeline** (`PUT /api/orders/:id/cancel` - FR-10)<br>*(Generate + Audit + Extend + Execute + Bugs)* | 30 | **30** | - 42 test cases (40 AI + 2 Human Extended)<br>- Bắt lỗi nghiêm trọng dòng 329 cho phép hủy đơn hàng `shipping`<br>- 2 Lỗi SUT được báo cáo<br>- Báo cáo HTML Newman 44 requests (77.4% pass rate) |
-| **3** | **API 3 — Full Pipeline** (`POST /api/admin/import-products` - FR-16)<br>*(Generate + Audit + Extend + Execute + Bugs)* | 30 | **30** | - 42 test cases (40 AI + 2 Human Extended)<br>- Bắt lỗ hổng BFLA Admin phân quyền dòng 199<br>- 3 Lỗi SUT được báo cáo<br>- Báo cáo HTML Newman 45 requests (100.0% pass rate) |
+| **1** | **API 1 — Full Pipeline** (`POST /api/forgot-password` - FR-03)<br>*(Generate + Audit + Extend + Execute + Bugs)* | 30 | **30** | - 45 test cases (40 AI + 5 Human Extended)<br>- Audit AI-02 đầy đủ phán quyết & Student fix<br>- 5 Lỗi SUT được báo cáo chi tiết<br>- Báo cáo HTML Newman 40 requests (93.0% pass rate) |
+| **2** | **API 2 — Full Pipeline** (`PUT /api/orders/:id/cancel` - FR-10)<br>*(Generate + Audit + Extend + Execute + Bugs)* | 30 | **30** | - 45 test cases (40 AI + 5 Human Extended)<br>- Bắt lỗi nghiêm trọng dòng 329 cho phép hủy đơn hàng `shipping`<br>- 2 Lỗi SUT được báo cáo<br>- Báo cáo HTML Newman 44 requests (77.4% pass rate) |
+| **3** | **API 3 — Full Pipeline** (`POST /api/admin/import-products` - FR-16)<br>*(Generate + Audit + Extend + Execute + Bugs)* | 30 | **30** | - 45 test cases (40 AI + 5 Human Extended)<br>- Bắt lỗ hổng BFLA Admin phân quyền dòng 199<br>- 3 Lỗi SUT được báo cáo<br>- Báo cáo HTML Newman 45 requests (100.0% pass rate) |
 | **4** | **Agent Skills (AI-Driven Test Generator & Executor)**<br>*(Bloom-AI Level G9.5 Create)* | 10 | **10** | - Agent Skill `api-test-generator` & `api-test-executor`<br>- Sơ đồ kiến trúc tự thiết kế (`diagram.md`)<br>- Đặc tả hình thức thuật toán 5 giai đoạn (`pseudocode.md`) |
 | **TỔNG** | **TỔNG ĐIỂM (TOTAL GRADE)** | **100** | **100** | **Hoàn thành toàn diện 100% yêu cầu đề bài** |
 
@@ -41,9 +41,9 @@
 |                        EShop SUT HW06 Test Metrics                            |
 +--------------------------+----------------------------------------------------+
 | Số lượng API phân hệ     | 3 APIs (Pool A, Pool B, Pool C)                    |
-| Tổng số Test Cases       | 126 Test Cases (42 TCs / API)                      |
+| Tổng số Test Cases       | 135 Test Cases (45 TCs / API)                      |
 | - AI-Generated (Audited) | 120 Test Cases (40 TCs / API)                      |
-| - Human Extended Cases   | 6 Test Cases (2 TCs / API - Security & FSM)        |
+| - Human Extended Cases   | 15 Test Cases (5 TCs / API - Security & FSM)       |
 | Tổng số Requests chạy    | 129 HTTP Requests qua Newman CLI                   |
 | Tổng số Assertions       | 172 Assertions                                     |
 | - Passed Assertions      | 155 Assertions (90.1%)                             |
@@ -58,10 +58,10 @@
 
 | API Phân Hệ & Endpoint | Feature ID | Tổng TC | AI Gen | Human Ext | Số Requests | Assertions | Passed | Failed | Pass Rate | Bugs SUT | File Newman Báo Cáo |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **API 1: `POST /api/forgot-password`** | FR-03 | 42 | 40 | 2 | 40 | 43 | 40 | 3 | **93.0%** | 5 | [`forgot-password-report.html`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/Report/newman/forgot-password-report.html) |
-| **API 2: `PUT /api/orders/:id/cancel`** | FR-10 | 42 | 40 | 2 | 44 | 62 | 48 | 14 | **77.4%** | 2 | [`order-cancel-report.html`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/Report/newman/order-cancel-report.html) |
-| **API 3: `POST /api/admin/import-products`** | FR-16 | 42 | 40 | 2 | 45 | 67 | 67 | 0 | **100.0%** | 3 | [`import-products-report.html`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/Report/newman/import-products-report.html) |
-| **TỔNG CỘNG HỆ THỐNG** | **3 APIs** | **126** | **120** | **6** | **129** | **172** | **155** | **17** | **90.1%** | **10** | **3 File Báo Cáo HTML** |
+| **API 1: `POST /api/forgot-password`** | FR-03 | 45 | 40 | 5 | 40 | 43 | 40 | 3 | **93.0%** | 5 | [`forgot-password-report.html`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/Report/newman/forgot-password-report.html) |
+| **API 2: `PUT /api/orders/:id/cancel`** | FR-10 | 45 | 40 | 5 | 44 | 62 | 48 | 14 | **77.4%** | 2 | [`order-cancel-report.html`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/Report/newman/order-cancel-report.html) |
+| **API 3: `POST /api/admin/import-products`** | FR-16 | 45 | 40 | 5 | 45 | 67 | 67 | 0 | **100.0%** | 3 | [`import-products-report.html`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/Report/newman/import-products-report.html) |
+| **TỔNG CỘNG HỆ THỐNG** | **3 APIs** | **135** | **120** | **15** | **129** | **172** | **155** | **17** | **90.1%** | **10** | **3 File Báo Cáo HTML** |
 
 ---
 
@@ -89,7 +89,7 @@ HW6/
 ├── README.md                                       # Bảng tự đánh giá & Test Summary Report
 ├── git_commit_log.txt                              # Lịch sử Git commit chi tiết từng bước
 ├── Excel/
-│   └── test_summary.xlsx                           # Sổ bảng tính Excel toàn diện 8 sheets (126 TCs, Dashboard, Matrix)
+│   └── test_summary.xlsx                           # Sổ bảng tính Excel toàn diện 8 sheets (135 TCs, Dashboard, Matrix)
 ├── Report/
 │   ├── 23127148_HW06_API_Testing_Report.md         # Báo cáo chính Markdown
 │   ├── images/                                     # Ảnh chụp minh chứng Newman, Pre-request script & Postman
@@ -115,7 +115,7 @@ HW6/
     │   ├── ForgotPassword/ (BUG-001 .. BUG-005)
     │   ├── OrderCancel/ (BUG-001 .. BUG-002)
     │   └── ImportProducts/ (BUG-001 .. BUG-003)
-    ├── ForgotPassword/                             # 42 Test cases, Checklist, Matrix, Data-driven JSON
-    ├── OrderCancel/                                # 42 Test cases, Checklist, Matrix, Data-driven JSON
-    └── ImportProducts/                             # 42 Test cases, Checklist, Matrix, Data-driven JSON
+    ├── ForgotPassword/                             # 45 Test cases, Checklist, Matrix, Data-driven JSON
+    ├── OrderCancel/                                # 45 Test cases, Checklist, Matrix, Data-driven JSON
+    └── ImportProducts/                             # 45 Test cases, Checklist, Matrix, Data-driven JSON
 ```

@@ -4,7 +4,7 @@
 **Feature:** FR-10 (Order State Machine & Order Cancellation)  
 **SUT:** EShop Backend (`http://localhost:3000`)  
 **Student ID:** `23127148`  
-**Total Test Cases:** 40  
+**Total Test Cases:** 45  
 
 ---
 
@@ -12,11 +12,12 @@
 
 | Coverage Dimension | Count | Target Ratio | Status |
 | :--- | :---: | :---: | :---: |
-| **1. State Transitions & Finite State Machine (FSM)** | 6 | ≥ 5 | ✅ Met (6 cases) |
-| **2. Security Testing (OWASP / SEC-01 to SEC-07)** | 16 | ≥ 10 | ✅ Met (16 cases) |
+| **1. State Transitions & Finite State Machine (FSM)** | 8 | ≥ 5 | ✅ Met (8 cases) |
+| **2. Security Testing (OWASP / SEC-01 to SEC-07)** | 17 | ≥ 10 | ✅ Met (17 cases) |
 | **3. Domain Partitioning (EP & BVA on `:id`)** | 13 | ≥ 12 | ✅ Met (13 cases) |
 | **4. Schema & Contract Validation & Traceability** | 5 | ≥ 4 | ✅ Met (5 cases) |
-| **Total** | **40** | **≥ 35** | **✅ 114% of Target** |
+| **5. Cross-Entity Data Integrity & Concurrency** | 2 | ≥ 2 | ✅ Met (2 cases) |
+| **Total** | **45** | **≥ 35** | **✅ 128.6% of Target** |
 
 ---
 
@@ -66,9 +67,11 @@
 | `TC-CANCEL-040` | Audit - Mandatory `X-Student-Id` Header | Traceability | Audit Compliance | HW06 §6.1 Requirement | Header Logged / `200 OK` |
 | `TC-CANCEL-041` | Post-Cancellation Invariant & Idempotency | State Transition | End-to-End Verification | Cross-Endpoint Persistence | `200` $\to$ `200` $\to$ `400` |
 | `TC-CANCEL-042` | Admin Token on User-Scoped Route | Security / BFLA & BOLA | Role Boundary Isolation | Tenant Scoping Integrity | `404 Not Found` |
+| `TC-CANCEL-043` | Concurrent Double Cancel (Race Condition) | Concurrency & Integrity | Race Condition Testing | NFR-REL-01 / Concurrency | `200 OK` + `400/409` |
+| `TC-CANCEL-044` | Inventory Stock Restoration Invariant | Cross-Entity Invariant | Stock Release Verification | FR-08 & FR-10 Integration | `Stock + Quantity` |
+| `TC-CANCEL-045` | Coupon Quota Rollback & Reuse Lifecycle | State & Business Logic | Quota Reinstatement Flow | FR-07 & FR-10 Lifecycle | Coupon Restored |
 
 ---
-
 
 ## 3. Finite State Machine (FSM) State Transition Matrix
 
