@@ -32,6 +32,8 @@ This report documents all interactions with AI tools during the completion of HW
 | **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 20:33 22/08/2026<br>**Prompt:** "Act as a Principal QA Automation Architect and ISTQB Test Specialist. We need to generate a complete, automated API test suite for API 3 in the EShop SUT testing suite: Endpoint: POST /api/admin/import-products, Feature: FR-16 (Product Import from CSV as JSON Array) [...] Please systematically generate at least 35+ executable test cases covering all 4 required testing dimensions [...] Required Deliverables to Generate in HW6/Test/ImportProducts/" | Generated 40 executable test cases in `HW6/Test/ImportProducts/test-cases/` (`TC-IMPORT-001.md` to `TC-IMPORT-040.md`), `ImportProducts_Master_Document.md`, `coverage-matrix.md`, `audit-checklist.md`, `import-products-data-driven.json`, and `ImportProducts.postman_collection.json`. | **VALID** | Thorough coverage across all 4 mandatory dimensions. Uncovers CRITICAL Broken Function Level Authorization (BFLA / SEC-03) defect in `server.js:199` where standard user token bypasses role check, validates SQLite prepared statement SQLi defense, models batch atomicity, optional field fallback defaults, price boundaries, and Draft-07 JSON Schema assertions. 100% conforming to course standards. | Accepted as-is. Verified that the test generator skill produced 40 formatted test case files in `test-cases/`, configured `ImportProducts.postman_collection.json` with pre-request `X-Student-Id: 23127148` injection, and documented the BFLA defect in `TC-IMPORT-001` and the audit checklist. |
 | **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 20:44 22/08/2026<br>**Prompt:** "Label each AI-generated test case VALID / INVALID / INCOMPLETE with reasoning, and correct the invalid or incomplete ones. You are fully responsible for the final test cases. Do for me this requirement for 3 apis" | Conducted systematic human audit review across all 120 AI-generated test cases for the 3 selected APIs. Produced full 40-case evaluation tables in `HW6/Test/ForgotPassword/audit-checklist.md`, `HW6/Test/OrderCancel/audit-checklist.md`, and `HW6/Test/ImportProducts/audit-checklist.md`. Corrected 23 INCOMPLETE test cases and 9 INVALID test cases with concrete student fixes. | **VALID** | Strictly fulfills HW06 §6.2 (Human Audit Review) and ISTQB Foundation Level review principles. Corrects AI hallucinations regarding Express HTTP routing (404 vs 405), SQL NULL evaluation semantics, Content-Type handling (404 vs 415), and missing database state persistence assertions across all 3 endpoints. | Accepted as-is. Inspected all 120 audit evaluations and verified the final distribution (88 VALID [73.3%], 23 INCOMPLETE [19.2%], 9 INVALID [7.5%]), confirming that student fixes and SUT deviation notes are fully synchronized in test case documentation and Postman suites. |
 | **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 21:08 22/08/2026<br>**Prompt:** "We are completing Phase 3 (Extend) of HW06 for the EShop SUT across our 3 selected APIs [...] Add at least five test cases of your own that the AI missed — especially around security and state transitions — and explain why the AI missed them" | Designed and integrated 6 human-extended test cases (`TC-FORGOT-041..042`, `TC-CANCEL-041..042`, `TC-IMPORT-041..042`) covering cross-feature lockout bypass, temporal OTP invalidation, post-cancellation state invariants, admin role boundary confusion, non-atomic batch rollbacks, and CSV formula injection (CWE-1236), accompanied by root cause analysis across prompt quality, model limitations, and API characteristics. | **VALID** | Strictly fulfills HW06 §6.3 (Phase 3: Extend) and Bloom-AI G9.4 (Collaborate) / G9.5 (Create). Systematically targets blind spots where LLMs miss multi-step state machine coupling, asynchronous transaction boundaries, and context-specific injection vectors. | Accepted as-is. Created markdown test specifications, updated coverage matrices and audit checklists, and integrated extended test cases into the master report. |
+| **Tool:** Antigravity IDE (Gemini 3.7 Flash)<br>**Time:** 21:44 22/08/2026<br>**Prompt:** "Title: [BUG][Login] Hệ thống cho phép đăng nhập với password sai [...] Đây là bug template cho bạn nè, và hãy liệt kê đầy đủ các bugs nhé. Nên nhớ là đặt tên bug theo format như này BUG-MODULE-001 và được thì chia theo api" | Formatted and structured 10 comprehensive bug reports in `HW6/Test/Bug_Reports/` partitioned by API (`BUG-FORGOT-001..005`, `BUG-CANCEL-001..002`, `BUG-IMPORT-001..003`, and master `README.md`) adhering 100% to the course standard defect template. | **VALID** | Fulfills HW06 §6.5 (Report Bugs) and IEEE 829 / ISO/IEC 29119 defect standards. Accurately documents all genuine SUT vulnerabilities (BFLA, FSM violation in shipping, cleartext OTP, 500 crash on content-type) with exact code citations in `backend/server.js`. | Accepted as-is. Verified vulnerable code references (`server.js:69`, `server.js:80`, `server.js:199`, `server.js:329`), structured into per-API folders, and committed to git repository. |
+
 
 ---
 
@@ -677,16 +679,105 @@ API)
 
 ---
 
+### Artifact #9 -- SUT Defect & Bug Reporting Formatting & Classification (Phase 5 / §6.5)
+
+| Field | Value |
+| --- | --- |
+| **AI Tool** | Antigravity IDE (Gemini 3.7 Flash) |
+| **Date/Time** | 2026-08-22 21:44:16 +07:00 |
+| **Task** | Format and generate standardized bug reports for genuine SUT defects across all 3 APIs according to course bug template |
+| **Feature / Module** | Defect & Bug Reporting (§6.5 / FR-03, FR-10, FR-16) |
+| **Bloom-AI Level** | G9.4 Evaluate / G9.5 Create (Formal IEEE 829 / ISO/IEC 29119 Defect Documentation) |
+| **Verdict** | VALID |
+
+#### (1) Prompt + Tool
+
+**Prompt (verbatim):**
+
+```text
+Title: [BUG][Login] Hệ thống cho phép đăng nhập với password sai
+
+## Found by Test Case
+TC-LOGIN-003
+
+## Requirement liên quan
+FR-LOGIN-02
+
+## Severity / Priority
+Major / P1
+
+## Environment
+Browser, OS, URL, build/commit
+
+## Steps to reproduce
+1. Mở trang Login
+2. Nhập email hợp lệ
+3. Nhập password sai
+4. Bấm Login
+
+## Expected result
+Không cho đăng nhập và hiển thị lỗi.
+
+## Actual result
+Hệ thống vẫn đăng nhập thành công.
+
+## Evidence
+Screenshot / video / console log
+
+
+Đây là bug template cho bạn nè, và hãy liệt kê đầy đủ các bugs nhé. Nên nhớ là đặt tên bug theo format như này
+BUG-MODULE-001 và được thì chia theo api
+```
+
+**Execution notes:**
+
+- Mode: GENERATE & STRUCTURE
+- Tools called: `write_to_file`, `run_command`, `replace_file_content`
+- Stored locations:
+  - `HW6/Test/Bug_Reports/README.md`
+  - `HW6/Test/Bug_Reports/ForgotPassword/BUG-FORGOT-001.md` ... `BUG-FORGOT-005.md`
+  - `HW6/Test/Bug_Reports/OrderCancel/BUG-CANCEL-001.md` ... `BUG-CANCEL-002.md`
+  - `HW6/Test/Bug_Reports/ImportProducts/BUG-IMPORT-001.md` ... `BUG-IMPORT-003.md`
+
+#### (2) AI Output
+
+- Authored 10 comprehensive, standardized bug reports mapped to exact test cases across all 3 APIs:
+  1. `BUG-FORGOT-001`: Sensitive Data Exposure - Cleartext `resetToken` in HTTP response body (CWE-200 / Critical P1).
+  2. `BUG-FORGOT-002`: Weak PRNG & Low OTP Entropy (4-digit numeric space, `Math.random` / Major P2).
+  3. `BUG-FORGOT-003`: User Enumeration Side-Channel via status code differential (200 vs 404 / Medium P2).
+  4. `BUG-FORGOT-004`: Unhandled TypeError & 500 Crash on non-JSON Content-Type (CWE-754 / Major P2).
+  5. `BUG-FORGOT-005`: Account Lockout Bypass via Password Reset omitting `locked_until` cleanup (Major P2).
+  6. `BUG-CANCEL-001`: Order State Machine (FSM) Violation allowing cancellation in `shipping` status (Critical P1).
+  7. `BUG-CANCEL-002`: Missing User Ownership Check in SQL UPDATE State Mutation (Major P2).
+  8. `BUG-IMPORT-001`: Broken Function Level Authorization (BFLA) permitting standard users to import products (Critical P1).
+  9. `BUG-IMPORT-002`: Missing Price Domain Validation permitting negative product prices (Major P2).
+  10. `BUG-IMPORT-003`: Non-Atomic Batch Execution lacking Transaction Rollback on partial failure (Medium P3).
+- Organized reports cleanly into per-API folders and compiled a master `README.md` catalog.
+
+#### (3)-(5) Verdict, Reasoning, Student Fix
+
+| Aspect | Detail |
+| --- | --- |
+| **Verdict** | VALID |
+| **Reasoning** | The generated bug reports strictly adhere to the course standard defect template (Title with bracket tag, Found by Test Case, Requirement, Severity/Priority, Environment, Steps to Reproduce, Expected vs Actual Result, Evidence with exact vulnerable code lines in `server.js`). All 10 reported defects represent genuine SUT architectural, security, or state machine flaws verified through Newman runtime execution and source code audit. |
+| **Student Fix** | Accepted as-is. Verified code line citations (`server.js:69`, `server.js:80`, `server.js:199`, `server.js:329`), organized files into subdirectories by API module, and committed to git repository. |
+| **Reviewed by** | Nguyen An |
+| **Review date** | 2026-08-22 |
+| **Quality rating** | Excellent |
+| **Issues found** | None |
+
+---
+
 ## 4. Summary of AI Accuracy
 
 ### A. Artifact-Level Accuracy (Prompt Batches)
 
 | Metric | Count | Percentage |
 | :--- | ---: | ---: |
-| **Total AI-generated artifacts audited** | **8** | **100.0%** |
-| **VALID (correct, accepted as-is)** | **6** | **75.0%** |
+| **Total AI-generated artifacts audited** | **9** | **100.0%** |
+| **VALID (correct, accepted as-is)** | **7** | **77.8%** |
 | **INVALID (wrong; rejected)** | **0** | **0.0%** |
-| **INCOMPLETE (acceptable after edits)** | **2** | **25.0%** |
+| **INCOMPLETE (acceptable after edits)** | **2** | **22.2%** |
 
 ### B. Granular Test-Case-Level Accuracy (120 AI Cases + 6 Student Extended Cases)
 
@@ -709,7 +800,7 @@ However, AI models routinely exhibit specific architectural blind spots: assumin
 
 ## 6. Mandatory Disclosure
 
-The agent skills (`api-test-generator`, `api-test-executor`), design specifications (`pseudocode.md`, `diagram.md`), test suites (`TC-FORGOT-001..042`, `TC-CANCEL-001..042`, `TC-IMPORT-001..042`), and human audit reviews were initially generated with AI assistance via Antigravity IDE (Claude Opus 4.6 & Gemini 3.7 Flash); I reviewed, guided the architecture, evaluated all 120 AI-generated test cases under ISTQB principles, corrected 23 incomplete and 9 invalid test cases, authored 6 human extension test cases targeting AI blind spots, verified SUT defects (BFLA, FSM violation, cleartext OTP, account lockout bypass), and formatted deliverables into `test-cases/`. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any artifact listed in the prohibited category.
+The agent skills (`api-test-generator`, `api-test-executor`), design specifications (`pseudocode.md`, `diagram.md`), test suites (`TC-FORGOT-001..042`, `TC-CANCEL-001..042`, `TC-IMPORT-001..042`), bug reports (`BUG-FORGOT-001..005`, `BUG-CANCEL-001..002`, `BUG-IMPORT-001..003`), and human audit reviews were initially generated with AI assistance via Antigravity IDE (Claude Opus 4.6 & Gemini 3.7 Flash); I reviewed, guided the architecture, evaluated all 120 AI-generated test cases under ISTQB principles, corrected 23 incomplete and 9 invalid test cases, authored 6 human extension test cases targeting AI blind spots, verified SUT defects (BFLA, FSM violation, cleartext OTP, account lockout bypass), and formatted deliverables into `test-cases/` and `Bug_Reports/`. The detailed AI Audit Report is attached as Appendix A. I confirm I did not use AI to generate any artifact listed in the prohibited category.
 
 ---
 
@@ -741,6 +832,7 @@ The agent skills (`api-test-generator`, `api-test-executor`), design specificati
 | 6 | Gemini 3.7 Flash | Test Case Generation | POST /api/admin/import-products (FR-16) Suite | 2026-08-22 | G9.5 Create | VALID |
 | 7 | Gemini 3.7 Flash | Human Audit Review | Audit & Correction of 120 Test Cases across 3 APIs | 2026-08-22 | G9.3 Analyse | VALID |
 | 8 | Gemini 3.7 Flash | Test Extension (Phase 3) | 6 Human Extension Test Cases & Root Cause Analysis | 2026-08-22 | G9.4 / G9.5 | VALID |
+| 9 | Gemini 3.7 Flash | Bug Reporting (Phase 5) | Standardized Bug Reports across 3 APIs | 2026-08-22 | G9.4 / G9.5 | VALID |
 
 ### Contribution Breakdown
 
@@ -754,6 +846,7 @@ The agent skills (`api-test-generator`, `api-test-executor`), design specificati
 | Import Products Test Suite (40 test cases, Postman, Matrix, BFLA) | 75% | 25% | Role escalation & BFLA vulnerability validation, batch atomicity analysis, optional field fallback scoping |
 | Human Audit Review (120 test cases evaluated & corrected) | 40% | 60% | Critical inspection of all 120 test cases, verdict assignment (VALID/INVALID/INCOMPLETE), correction of Express routing & SQL NULL evaluation bugs |
 | Test Extension Suite (6 human-designed cases + Root Cause) | 35% | 65% | Identification of cross-feature coupling, temporal state invariants, transaction atomicity gaps, and formula injection vulnerabilities |
+| Bug Reporting Suite (10 standardized reports across 3 APIs) | 50% | 50% | Prompting exact course defect template, enforcing `BUG-MODULE-001` format, per-API structuring, verifying line citations |
 
 ### Compliance Checklist
 
@@ -764,10 +857,11 @@ The agent skills (`api-test-generator`, `api-test-executor`), design specificati
 - [x] AI output referenced with exact paths
 - [x] Verdict + ISTQB/course reasoning documented
 - [x] Student fix detailed for all artifacts and test cases
-- [x] Accuracy summary table computed (8 artifacts: 6 VALID, 2 INCOMPLETE, 0 INVALID; 126 test cases: 94 VALID, 23 INCOMPLETE, 9 INVALID)
+- [x] Accuracy summary table computed (9 artifacts: 7 VALID, 2 INCOMPLETE, 0 INVALID; 126 test cases: 94 VALID, 23 INCOMPLETE, 9 INVALID)
 - [x] Conclusion (80-150 words) written
 - [x] Mandatory disclosure completed without placeholders
 - [x] Markdown submission format verified
+
 
 
 
