@@ -61,4 +61,4 @@ Tổng tiền thanh toán bị tính sai nghiêm trọng, có thể gây thiệt
 
 ## GitHub Issue
 
-Chưa tạo — cần đăng issue thật và bổ sung URL.
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/336

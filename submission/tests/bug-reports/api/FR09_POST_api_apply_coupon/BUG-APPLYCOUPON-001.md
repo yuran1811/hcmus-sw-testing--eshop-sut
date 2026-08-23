@@ -56,4 +56,4 @@ Bắt buộc middleware JWT và lấy user id từ token; bỏ tin cậy `user_i
 
 ## GitHub Issue
 
-Chưa tạo — cần đăng issue thật và bổ sung URL.
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/335

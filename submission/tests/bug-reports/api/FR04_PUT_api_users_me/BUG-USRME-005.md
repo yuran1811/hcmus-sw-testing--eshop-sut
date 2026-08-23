@@ -61,4 +61,4 @@ Xây dựng câu UPDATE động theo allow-list hoặc dùng giá trị hiện t
 
 ## GitHub Issue
 
-Chưa tạo — cần đăng issue thật và bổ sung URL.
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/334

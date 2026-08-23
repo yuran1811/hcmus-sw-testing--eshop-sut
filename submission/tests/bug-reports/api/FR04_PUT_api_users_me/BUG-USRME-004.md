@@ -61,4 +61,4 @@ Chặn Content-Type không được hỗ trợ trước handler, kiểm tra `req
 
 ## GitHub Issue
 
-Chưa tạo — cần đăng issue thật và bổ sung URL.
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/333

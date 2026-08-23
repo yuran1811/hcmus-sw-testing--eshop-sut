@@ -73,4 +73,4 @@ Băm mật khẩu bằng thuật toán phù hợp; không bao giờ SELECT/seria
 
 ## GitHub Issue
 
-Chưa tạo — cần đăng issue thật và bổ sung URL.
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/330

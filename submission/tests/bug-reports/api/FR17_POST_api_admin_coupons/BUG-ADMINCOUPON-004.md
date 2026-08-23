@@ -61,4 +61,4 @@ Bắt mã lỗi unique constraint và ánh xạ sang 409 với thông báo trung
 
 ## GitHub Issue
 
-Chưa tạo — cần đăng issue thật và bổ sung URL.
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/343

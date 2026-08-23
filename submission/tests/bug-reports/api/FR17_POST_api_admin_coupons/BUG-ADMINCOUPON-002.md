@@ -61,4 +61,4 @@ Validate schema/enum/range/required fields trước INSERT và trả error schem
 
 ## GitHub Issue
 
-Chưa tạo — cần đăng issue thật và bổ sung URL.
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/341

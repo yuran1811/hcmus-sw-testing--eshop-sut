@@ -65,4 +65,4 @@ Dùng allow-list cố định chỉ gồm `name`, `phone`, `shipping_address`; k
 
 ## GitHub Issue
 
-Chưa tạo — cần đăng issue thật và bổ sung URL.
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/331

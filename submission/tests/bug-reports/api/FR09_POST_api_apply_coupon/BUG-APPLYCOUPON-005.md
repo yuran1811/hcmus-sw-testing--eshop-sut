@@ -61,4 +61,4 @@ Chỉ từ chối khi `total_amount < min_order_amount`; bổ sung unit/integrat
 
 ## GitHub Issue
 
-Chưa tạo — cần đăng issue thật và bổ sung URL.
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/339

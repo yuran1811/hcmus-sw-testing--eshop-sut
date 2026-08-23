@@ -61,4 +61,4 @@ Kiểm tra `total_amount` là số nguyên hữu hạn, không âm và đúng đ
 
 ## GitHub Issue
 
-Chưa tạo — cần đăng issue thật và bổ sung URL.
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/337

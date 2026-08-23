@@ -61,4 +61,4 @@ Middleware xác thực trả 401 cho token thiếu, sai chữ ký, hết hạn h
 
 ## GitHub Issue
 
-Chưa tạo — cần đăng issue thật và bổ sung URL.
+https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/344
