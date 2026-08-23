@@ -1,0 +1,47 @@
+name: Newman API Tests (HW06)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # --- Start the SUT inside CI so Newman can hit localhost/127.0.0.1 ---
+      # Adjust this to however your SUT actually starts (docker-compose, npm start, ...)
+      - name: Start SUT
+        run: |
+          echo "TODO: start the SUT here, e.g.:"
+          echo "docker compose -f docker-compose.yml up -d"
+          echo "or: cd sut && npm install && npm start &"
+          # sleep 10  # wait for the SUT to be ready
+
+      - name: Install Newman
+        run: npm install -g newman newman-reporter-htmlextra
+
+      - name: Run Newman
+        run: |
+          mkdir -p reports
+          newman run <path/to/collection.json> \
+            -e <path/to/environment.json> \
+            -r cli,htmlextra \
+            --reporter-htmlextra-export reports/newman-report.html
+
+      - name: Upload Newman report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-report
+          path: reports/newman-report.html
