@@ -25,7 +25,7 @@
 | 4 | Agent Skills (AI-driven test generator) | 10 | 9 |
 | | **Total** | **100** | **96** |
 
-**Rationale (ngắn):** Ba pipeline đủ artifact (40+6 TC × 3, Excel, Newman, 6 Issues #300–#305). Trừ nhẹ vì một số screenshot/anti-cheat phụ thuộc thao tác GUI thủ công; Agent Skill có diagram + pseudocode + repo skills, chưa có video demo (optional).
+**Rationale:** Ba pipeline đủ artifact (40+6 TC × 3, Excel, Newman, 6 Issues #300–#305). Trừ nhẹ vì một số screenshot/anti-cheat phụ thuộc thao tác GUI thủ công; Agent Skill có diagram + pseudocode + repo skills, chưa có video demo (optional).
 
 **Zip name:** `23127152_HW06_AI_API_096.zip`
 
