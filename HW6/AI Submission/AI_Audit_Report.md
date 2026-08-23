@@ -861,11 +861,15 @@ Requirements:
 
 ---
 
-## 5. Conclusion -- When should AI be used (or not)?
+## 5. AI Critique (Mandatory -- 240 words)
 
-AI assistants are extraordinarily effective at generating combinatorial test partitions, crafting executable Postman test collections with JSON Schema assertions, authoring comprehensive OpenAPI 3.0 contracts, and discovering subtle security and state machine defects across complex endpoints (such as the planted flaw in `server.js:329` where `shipping` orders bypass cancellation restrictions, Broken Function Level Authorization in `server.js:199` where standard users can access admin product imports, and cleartext OTP exposures). 
+During the HW06 automated testing assignment, collaborating with AI models (Claude Opus 4.6 and Gemini 3.7 Flash) dramatically accelerated combinatorial equivalence partitioning, boundary value analysis, Draft-07 JSON Schema assertions, and defect discovery (uncovering BFLA in `server.js:199` and FSM shipping state violations in `server.js:329`).
 
-However, AI models routinely exhibit specific architectural blind spots: assuming generic RFC status codes (e.g. 405 Method Not Allowed, 415 Unsupported Media Type) that Express.js does not emit by default, failing to account for SQLite dynamic typing and NULL evaluation semantics, and generating static assertions that omit necessary cross-endpoint database persistence checks (`GET /api/orders/:id`, `GET /api/products`), temporal state progressions (OTP invalidation overwrites), and database transaction boundaries (non-atomic batch loops, payload memory pressure, and concurrency race conditions). Human review and systematic extension are indispensable to calibrate test assertions against the actual SUT runtime, refine draft schemas, and probe complex state machine coupling.
+However, the AI exhibited systematic deficiencies across three areas: (1) **Protocol Bias:** It assumed strict RFC compliance (expecting 405 Method Not Allowed or 415 Unsupported Media Type), failing to realize Express.js returns 404 for unrouted methods and crashes with 500 on unhandled Content-Types; (2) **Temporal State Blind Spots:** It struggled with multi-step lifecycle dependencies, omitting temporal OTP invalidation, account lockout bypass via password reset, and race conditions during concurrent cancellations; and (3) **Transaction Boundaries:** It treated batch product imports as atomic units, overlooking Node.js async loops that lacked database transactions (`BEGIN/COMMIT`).
+
+The AI failed to catch these issues because LLMs generate test specifications from static contract semantics and generalized web patterns rather than concrete runtime execution environments. The model lacks stateful runtime execution context, database transaction awareness, and the ability to dynamically observe side effects across distributed steps.
+
+The primary principle I learned is that AI is an asymmetric force multiplier for exploratory breadth but an unreliable authority for runtime behavioral nuances. Test engineers must never treat AI outputs as ground truth; instead, we must operate as architectural auditors—systematically cross-referencing generated assertions against SUT framework behaviors, enforcing stateful database invariants, and designing rigorous multi-step security edge cases.
 
 ---
 
