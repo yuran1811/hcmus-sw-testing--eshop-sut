@@ -1,4 +1,4 @@
-name: HW06 Newman API CI - 23127115
+name: HW06 API Testing - Newman CI (23127115)
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   ci-smoke:
-    name: CI smoke contract
+    name: API Smoke Tests - FR04, FR09, FR17
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -65,7 +65,7 @@ jobs:
           if-no-files-found: warn
 
   full-regression:
-    name: Full regression - 145 cases
+    name: Full API Regression - 145 Test Cases
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
