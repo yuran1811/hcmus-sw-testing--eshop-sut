@@ -32,3 +32,5 @@ Pipeline gồm hai job:
 ## Nhận xét
 
 Hai run minh họa khả năng pipeline phát hiện regression ở mức assertion. Sau run minh họa, oracle FR17 được phục hồi về `200` để nhánh tiếp tục xanh. Job full regression vẫn phản ánh trung thực các defect thật và cung cấp report Newman làm artifact; smoke job không thay thế bộ 145 test case.
+
+Run xác nhận sau khi phục hồi: [run #3 — Success](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/actions/runs/32650026802), ảnh `images/github_actions_ci_final_green.png`.
