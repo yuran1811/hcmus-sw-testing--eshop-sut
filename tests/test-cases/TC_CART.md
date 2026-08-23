@@ -50,16 +50,18 @@
 | TC-B-CART-ST-006  | ST       | P2       | Sản phẩm đã có sẵn trong giỏ hàng bị admin XOÁ khỏi hệ thống SAU KHI đã thêm — giỏ hàng cũ không được lỗi 500                | user đã POST /api/cart thêm sản phẩm id=7 thành công trước đó; sau đó admin gọi DELETE /api/products/7 | GET    | /api/cart | X-Student-Id: {StudentID} \| Content-Type: application/json \| Authorization: Bearer {{userToken}}    | -                                                                        | 200            | response KHÔNG lỗi 500; sản phẩm mồ côi hoặc bị tự động loại khỏi giỏ, hoặc vẫn hiển thị với dữ liệu đã lưu (snapshot) — spec chưa định nghĩa hướng nào, nhưng tuyệt đối KHÔNG được crash | FR-07                     |            |                                                                                                                                                                                                                                                                                                                                                                                                 | HUMAN  |                                                                                                                                           |
 | TC-B-CART-DP-023  | DP       | P2       | price gửi dạng chuỗi định dạng phân cách hàng nghìn kiểu Việt Nam ('100.000') phải bị từ chối rõ ràng, không được parse nhầm | -                                                                                                      | POST   | /api/cart | X-Student-Id: {StudentID} \| Content-Type: application/json \| Authorization: Bearer {{userToken}}    | {"id":1,"name":"Sản phẩm A","price":"100.000","quantity":1}              | 400            | 400 (price phải là number, không phải string) — KHÔNG được parse ngầm thành 100 (nếu dùng parseFloat cắt tại dấu chấm đầu tiên) hay NaN gây lỗi 500                                       | FR-07                     |            |                                                                                                                                                                                                                                                                                                                                                                                                 | HUMAN  |                                                                                                                                           |
 
+| TC-B-CART-SEC-009 | SEC | P2 | Response không lộ header X-Powered-By và không mở CORS wildcard | - | GET | /api/cart | X-Student-Id: {StudentID} \| Content-Type: application/json \| Authorization: Bearer {{tokenUserA}} | - | 200 | Response header KHÔNG có "X-Powered-By"; "Access-Control-Allow-Origin" không nên là "*" cho endpoint đọc dữ liệu người dùng | SEC checklist nhóm H (Transport & header) | VALID | Case tự thêm qua code review (white-box), request cụ thể, expected assert được, có SpecRef truy vết. | HUMAN | Phát hiện qua đọc code, tương tự TC-A-REGISTER-SEC-009. |
+| TC-B-CART-FN-004 | FN | P2 | Có API để xoá 1 sản phẩm khỏi giỏ hàng (DELETE /api/cart/:id) | giỏ hàng có sẵn sản phẩm id=1 | DELETE | /api/cart/1 | X-Student-Id: {StudentID} \| Content-Type: application/json \| Authorization: Bearer {{tokenUserA}} | - | 200 | sản phẩm bị xoá khỏi giỏ, gọi lại GET /api/cart không còn thấy item đó | FR-07 (nút Xóa sản phẩm) | VALID | Case tự thêm qua code review (white-box), request cụ thể, expected assert được, có SpecRef truy vết. | HUMAN | Phát hiện qua đọc code: server.js chỉ có GET và POST /api/cart, không có route DELETE/PUT nào — cần audit chạy thật để xác nhận route có tồn tại không. |
 ### Coverage summary — POST /api/cart
 
 | Category | Số case | Ghi chú                   |
 | -------- | ------- | ------------------------- |
-| FN       | 3       |                           |
+| FN       | 4       |                           |
 | DP       | 23      |                           |
 | ST       | 6       |                           |
-| SEC      | 8       |                           |
+| SEC      | 9       |                           |
 | SCH      | 5       |                           |
-| **Tổng** | **45**  | (gồm 2 case Source=HUMAN) |
+| **Tổng** | **47**  | (gồm 2 case Source=HUMAN) |
 
 ### Audit result summary
 
