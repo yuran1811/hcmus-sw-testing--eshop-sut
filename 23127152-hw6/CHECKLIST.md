@@ -44,7 +44,7 @@
 ### 1.4 Execute (Postman + Newman)
 - [x] Implement requests trong Postman collection (20 requests)
 - [x] Pre-request script: `X-Student-Id: 23127152` trên mọi request
-- [x] Evidence pre-request / header: `postman/screenshots/newman-api1-fr05-cli.txt`
+- [x] Evidence pre-request / header: `postman/screenshots/postman-prerequest.png` · `postman-console-x-student-id.png`
 - [x] Chạy Newman → `postman/reports/newman-api1-fr05.html` (26 assert, 4 fail)
 - [x] **Git commit:** `hw06/api1-execute-postman-newman` (`b57b7d7`)
 
@@ -103,35 +103,40 @@
 ## Phase 6 — Agent Skill (G9.5 Create) (~1h)
 
 - [x] Thiết kế AI-driven API test generator
-- [x] Vẽ diagram **tự thiết kế** (Mermaid/SVG → PNG) → `agent-skill/diagram.png`
+- [x] Vẽ diagram **tự thiết kế** (Excalidraw → PNG) → `agent-skill/diagram.png` (Human Review gate)
 - [x] Viết pseudocode → `agent-skill/pseudocode.md`
-- [ ] (Optional) Implement Agent Skill + video YouTube demo
-- [ ] **Git commit:** `hw06/agent-skill-design`
+- [x] Mermaid reference → `agent-skill/diagram.mmd`
+- [ ] (Optional) Implement Agent Skill + video YouTube demo — **N/A**
+- [x] **Git commit:** `hw06/provide diagram` (`1ec0b5d`) — *cần commit bổ sung pseudocode/mmd sau khi restore*
 
 ---
 
 ## Phase 7 — Documentation & Submission (~1.5h)
 
 ### Reports
-- [x] Main report → `report/23127152_HW06_Report.md` (+ PDF nếu export được)
+- [x] Main report → `report/23127152_HW06_Report.md`
+- [ ] Main report **PDF** — file có (`23127152_HW06_Report.pdf`) nhưng **cũ (19/08)**, chưa re-export sau cập nhật §8 Human Review
 - [x] AI Audit Report → `ai-audit/AI_Audit_Report.md` (+ PDF)
-- [x] AI Critique 200–300 words → `ai-audit/AI_Critique.md` (271 words)
+- [x] AI Critique 200–300 words → `ai-audit/AI_Critique.md` (265 words)
 
 ### Git & README
-- [x] Export git commit log → `git-commit-log.txt`
+- [ ] Export git commit log → `git-commit-log.txt` — **thiếu** commits mới (`66802fc`, `3c01345`, `1ec0b5d`)
 - [x] Cập nhật Test Execution Summary trong `README.md`
 - [x] Cập nhật Self-Assessment Table (96/100)
 
 ### Zip submission
-- [x] Main report (MD + PDF)
-- [x] Link GitHub repo public
+- [ ] **Đóng gói** — chưa tạo file zip
+- [x] Nội dung sẵn sàng: main report (MD)
+- [ ] Main report PDF (re-export)
+- [x] Link GitHub repo public (branch `hw6/23127152`)
+- [ ] **Push** branch — local ahead origin **1 commit** (`1ec0b5d`)
 - [x] Postman collection (.json) + Newman report (HTML)
 - [x] CI/CD report + screenshots
 - [x] Excel test cases (×3) + test summary
-- [x] Agent Skill diagram + pseudocode
-- [x] Bug reports + GitHub Issues screenshots
+- [x] Agent Skill diagram + pseudocode + diagram.mmd
+- [x] Bug reports + GitHub Issues screenshots (#300–#305)
 - [x] AI Critique + AI Audit Report (MD + PDF)
-- [x] Git commit log (text)
+- [ ] Git commit log (refresh)
 - [x] README.md (self-assessment + summary)
 - [ ] Đặt tên: `23127152_HW06_AI_API_096.zip`
 - [ ] Nộp Moodle
@@ -165,3 +170,23 @@ Mỗi API phải có TC cover:
 | Manual extension | ≥ 5 TC AI missed + explanation | ☑ 6 | ☑ 6 | ☑ 6 |
 
 \* API1/API2: compensating idempotent / visibility cases (no FR-10 machine on these endpoints).
+
+---
+
+## Submission Readiness (rà soát 23/08/2026)
+
+| Hạng mục | Trạng thái | Ghi chú |
+|----------|-----------|---------|
+| Phase 0–5 pipeline | ✅ Ready | 120 AI + 18 extended TC, 6 bugs #300–#305, CI pass/fail |
+| Phase 6 G9.5 | ⚠️ Almost | `diagram.png` OK; đã restore `pseudocode.md` + `diagram.mmd` — cần commit |
+| Phase 7 reports MD | ✅ Ready | Main + CI/CD + AI Audit + Critique |
+| Phase 7 PDFs | ⚠️ Stale | PDF export 19/08 — re-export main report nếu §8 đã đổi |
+| Git | ⚠️ | 1 commit chưa push; `git-commit-log.txt` chưa refresh |
+| Zip Moodle | ❌ Blocked | Chưa tạo `23127152_HW06_AI_API_096.zip` |
+
+**Trước khi nộp (TODO ngắn):**
+1. Commit restore `pseudocode.md`, `diagram.mmd`, `README.md`, `CHECKLIST.md`
+2. Refresh `git-commit-log.txt`
+3. Re-export `23127152_HW06_Report.pdf` (optional nhưng nên làm)
+4. `git push origin hw6/23127152`
+5. Tạo zip theo README → nộp Moodle

@@ -1,0 +1,30 @@
+%% HW06 Agent Skills Pipeline — high-level + Human Review gate
+%% Excalidraw export: diagram.png
+
+flowchart TD
+    ORCH[hw06-api-testing<br/>Orchestrator]
+
+    subgraph LOOP["Per API ×3 (FR-05 · FR-11 · FR-15)"]
+        GEN[Generate<br/>api-test-generate]
+        HR[Human Review gate<br/>api-test-audit<br/>VALID · INVALID · INCOMPLETE]
+        EXT[Extend<br/>api-test-extend]
+        EXE[Execute<br/>api-test-execute]
+        BUG[Bug Report<br/>bug-report]
+    end
+
+    subgraph AFTER["After all 3 APIs"]
+        CICD[CI/CD<br/>api-test-cicd]
+        MAIN[Main Report<br/>hw06-main-report]
+        G95[Generator Design G9.5<br/>api-test-generator-design]
+    end
+
+    ORCH --> GEN
+    GEN --> HR
+    HR --> EXT
+    HR -.->|fix INVALID| GEN
+    EXT --> EXE
+    EXE --> BUG
+    BUG -.->|next API| GEN
+    BUG --> CICD
+    CICD --> MAIN
+    MAIN --> G95
