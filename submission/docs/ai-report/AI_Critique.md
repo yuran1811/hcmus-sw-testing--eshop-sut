@@ -1,0 +1,5 @@
+## AI Critique
+
+Trong bài tập homework 6, về kiểm thử API, việc sử dụng AI giúp em rất nhiều trong việc xây dựng khung sườn để có thể sử dụng về phục vụ cho việc kiểm thử. Với việc sinh ra test cases cho mỗi API em chọn, AI thực hiện rất tốt trong việc đưa ra được số lượng test cases khá đầy đủ, nhưng các test cases đa số sẽ mắc phải vấn đề là tự sinh ra các test oracle, cái chưa được định nghĩa đầy đủ ở trong các tài liệu như đặc tả API hay tài liệu yêu cầu của eshop. Em phải xem xét và cập nhật lại các API sinh ra để phù hợp trong việc sử dụng để xây dựng các bước sau.
+
+AI được em tiếp tục sử dụng để xây dựng các script để thực hiện với Newman, AI thực hiện khá tốt, không cần chỉnh sửa quá nhiều. AI trong bài tập này được em sử dụng là một model của codex tốt hơn khả nhiều so với các model trước đây em sử dụng là gemini, nên chất lượng cũng tốt hơn so với trước, những model này sẽ bị khuyết điểm là tốc độ thực hiện các câu lệnh khá lâu, đôi khi prompt 1 lần đợi lâu xong kết quả không như mong muốn, phải prompt lại nhiều lần và mất thời gian khá nhiều. Nên em cần phải viết prompt chi tiết hơn, đầy đủ hơn để AI có thể làm đúng theo ý muốn.
