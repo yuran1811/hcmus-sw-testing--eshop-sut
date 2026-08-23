@@ -261,7 +261,7 @@ const main = async () => {
       console.log(`    ${result.reportBase}.html`);
       console.log(`    ${result.reportBase}.json`);
       console.log(`    ${result.reportBase}_results.json`);
-      if (!smokeMode && !specialVerificationMode) {
+      if (!smokeMode && !specialVerificationMode && !process.env.CI) {
         updateTestRun(result.suite, result.iterationResults);
       }
     }

@@ -1,0 +1,104 @@
+name: HW06 Newman API CI - 23127115
+
+on:
+  push:
+    branches:
+      - hw6/23127115-mqtan
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ci-smoke:
+    name: CI smoke contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm ci --prefix backend
+
+      - name: Start SUT on localhost
+        run: |
+          cd backend
+          nohup node server.js > ../sut-ci.log 2>&1 &
+          for attempt in {1..30}; do
+            if curl --silent --fail --request POST http://127.0.0.1:3000/api/login \
+              --header 'Content-Type: application/json' \
+              --header 'X-Student-Id: 23127115' \
+              --data '{"email":"test@eshop.com","password":"Test1234!"}' > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat ../sut-ci.log
+          exit 1
+
+      - name: Run Newman CI smoke
+        run: |
+          mkdir -p submission/tests/test-runs/api/ci-reports
+          npx newman run submission/tests/test-runs/api/ci/HW06_CI_smoke.postman_collection.json \
+            -e submission/tests/test-runs/api/local.postman_environment.json \
+            -r cli,json,htmlextra \
+            --reporter-json-export submission/tests/test-runs/api/ci-reports/ci-smoke.json \
+            --reporter-htmlextra-export submission/tests/test-runs/api/ci-reports/ci-smoke.html
+
+      - name: Upload smoke report and SUT log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hw06-ci-smoke-${{ github.run_number }}
+          path: |
+            submission/tests/test-runs/api/ci-reports/
+            sut-ci.log
+          if-no-files-found: warn
+
+  full-regression:
+    name: Full regression - 145 cases
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm ci --prefix backend
+
+      - name: Run all three Newman collections
+        id: regression
+        continue-on-error: true
+        run: npm run test:api
+
+      - name: Record regression outcome
+        if: always()
+        run: |
+          echo "### Full API regression" >> "$GITHUB_STEP_SUMMARY"
+          echo "Executed FR04 + FR09 + FR17 (145 data-driven cases) against 127.0.0.1." >> "$GITHUB_STEP_SUMMARY"
+          echo "Newman outcome: ${{ steps.regression.outcome }}. Known SUT defects are documented as GitHub Issues #330-#344." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload full Newman reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hw06-full-regression-${{ github.run_number }}
+          path: submission/tests/test-runs/api/reports/
+          if-no-files-found: error
