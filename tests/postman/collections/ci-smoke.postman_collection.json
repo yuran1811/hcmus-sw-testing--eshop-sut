@@ -1,0 +1,339 @@
+{
+  "info": {
+    "_postman_id": "947671d8-90bb-4c5d-8936-867daca843e8",
+    "name": "EShop CI Smoke Tests - HW06 (23127211)",
+    "description": "Bo test nho, on dinh, dung rieng cho GitHub Actions CI demo (khac voi collection audit day du eshop-hw06.postman_collection.json - vi collection day du co 69 assertion fail do bug that trong SUT, khong the dung lam bang chung 'all passing').",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Login as Admin",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\":\"admin@eshop.com\",\"password\":\"Admin123!\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Smoke: Admin login tra 200 + token\", () => {",
+              "    pm.response.to.have.status(200);",
+              "    const res = pm.response.json();",
+              "    pm.expect(res.token).to.be.a(\"string\").and.not.empty;",
+              "    pm.collectionVariables.set(\"adminToken\", res.token);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Login as User A",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\":\"test@eshop.com\",\"password\":\"Test1234!\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Smoke: User A login tra 200 + token\", () => {",
+              "    pm.response.to.have.status(200);",
+              "    const res = pm.response.json();",
+              "    pm.expect(res.token).to.be.a(\"string\").and.not.empty;",
+              "    pm.collectionVariables.set(\"tokenUserA\", res.token);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/products - danh sach san pham cong khai",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/products",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "products"
+          ]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Smoke: GET /api/products tra 200 + mang\", () => {",
+              "    pm.response.to.have.status(200);",
+              "    pm.expect(pm.response.json()).to.be.an(\"array\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST /api/register - dang ky user moi (email dong)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/register",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "register"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\":\"CI Smoke User\",\"email\":\"ci-smoke-{{$timestamp}}@domain.com\",\"password\":\"Password123!\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Smoke: Register thanh cong, tra id\", () => {",
+              "    pm.response.to.have.status(200);",
+              "    pm.expect(pm.response.json().id).to.be.a(\"number\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST /api/cart - them san pham hop le",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{tokenUserA}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/cart",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cart"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"id\":1,\"name\":\"Sản phẩm A\",\"price\":100000,\"quantity\":1}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Smoke: Them vao gio hang tra 200\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/cart - xem gio hang cua chinh minh",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{tokenUserA}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/cart",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cart"
+          ]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Smoke: GET /api/cart tra 200 + mang\", () => {",
+              "    pm.response.to.have.status(200);",
+              "    pm.expect(pm.response.json()).to.be.an(\"array\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/admin/users - admin xem danh sach user",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{adminToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/admin/users",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "admin",
+            "users"
+          ]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Smoke: Admin GET /api/admin/users tra 200 + mang\", () => {",
+              "    pm.response.to.have.status(200);",
+              "    pm.expect(pm.response.json()).to.be.an(\"array\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Pre-request script cap COLLECTION - gan X-Student-Id cho MOI request (muc 11 de bai)",
+          "// va ghi log ra Console de chup man hinh lam bang chung cho TA.",
+          "const studentId =",
+          "    pm.environment.get(\"studentId\") ||",
+          "    pm.collectionVariables.get(\"studentId\");",
+          "",
+          "if (!studentId) {",
+          "    throw new Error(",
+          "        \"Thieu bien 'studentId'. Dat trong Environment (local/ci) truoc khi chay collection.\"",
+          "    );",
+          "}",
+          "",
+          "pm.request.headers.upsert({ key: \"X-Student-Id\", value: studentId });",
+          "",
+          "console.log(",
+          "    `[X-Student-Id] ${studentId} | ${pm.request.method} ${pm.request.url.toString()} | request=\"${pm.info.requestName}\"`",
+          ");",
+          "",
+          "const hasBody = pm.request.body && pm.request.body.mode && pm.request.body.mode !== \"none\";",
+          "if (hasBody && !pm.request.headers.has(\"Content-Type\")) {",
+          "    pm.request.headers.upsert({ key: \"Content-Type\", value: \"application/json\" });",
+          "}",
+          "",
+          "pm.collectionVariables.set(\"runStartedAt\", new Date().toISOString());",
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "tokenUserA",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

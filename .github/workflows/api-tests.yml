@@ -1,0 +1,113 @@
+# HW06 - API Testing: chay Postman collection bang Newman trong GitHub Actions.
+#
+# Nguyen tac thiet ke: dung SUT NGAY TRONG JOB roi moi chay Newman - neu tro
+# Newman toi mot server ben ngoai, run se fail vi loi ket noi chu khong phai
+# fail nghiep vu, lam mat gia tri bang chung "one failing test".
+#
+# Dung collection "ci-smoke" (tests/postman/collections/ci-smoke.postman_collection.json)
+# thay vi collection audit day du (eshop-hw06.postman_collection.json) - vi
+# collection day du co ~69 assertion fail THAT do bug that trong SUT (xem
+# tests/bug-reports/), khong dung lam bang chung "toan bo pass" duoc. Smoke
+# collection la tap con nho, on dinh, dai dien cho cac luong chinh.
+
+name: API Tests (Newman)
+
+on:
+  push:
+    branches: ["**"]
+  workflow_dispatch:
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      BASE_URL: http://localhost:3000
+      STUDENT_ID: "23127211"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # ---------------------------------------------------------------
+      # Dung SUT (backend/ - Node.js + Express + SQLite)
+      # ---------------------------------------------------------------
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm install
+
+      - name: Start backend in background
+        working-directory: backend
+        run: |
+          nohup node server.js > server.log 2>&1 &
+          echo $! > server.pid
+
+      - name: Wait for backend to be healthy
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf "$BASE_URL/api/products" > /dev/null 2>&1; then
+              echo "Backend san sang sau ${i}s"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Backend khong khoi dong duoc trong 30s"
+          cat backend/server.log || true
+          exit 1
+
+      # ---------------------------------------------------------------
+      # Chay Newman - CI smoke suite
+      # ---------------------------------------------------------------
+      - name: Install Newman
+        run: npm install -g newman newman-reporter-htmlextra
+
+      - name: Create reports directory
+        run: mkdir -p tests/postman/reports
+
+      - name: Run Newman - CI smoke suite
+        run: |
+          newman run tests/postman/collections/ci-smoke.postman_collection.json \
+            -e tests/postman/envs/ci.postman_environment.json \
+            --env-var "baseUrl=$BASE_URL" \
+            --env-var "studentId=$STUDENT_ID" \
+            --reporters cli,htmlextra,json \
+            --reporter-htmlextra-export tests/postman/reports/ci-smoke-report.html \
+            --reporter-htmlextra-title "HW06 - EShop CI Smoke Tests" \
+            --reporter-json-export tests/postman/reports/ci-smoke-report.json \
+            --timeout-request 10000 \
+            --verbose
+
+      # ---------------------------------------------------------------
+      # Bang chung
+      # ---------------------------------------------------------------
+      - name: Upload Newman reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-ci-report-${{ github.run_number }}
+          path: tests/postman/reports/
+          retention-days: 30
+
+      - name: Write summary to GitHub Step Summary
+        if: always()
+        run: |
+          echo "## Newman CI Smoke Test Summary" >> $GITHUB_STEP_SUMMARY
+          if [ -f tests/postman/reports/ci-smoke-report.json ]; then
+            node -e "
+              const r = require('./tests/postman/reports/ci-smoke-report.json').run.stats;
+              const line = (k) => '| ' + k + ' | ' + r[k].total + ' | ' + r[k].failed + ' |';
+              console.log('| Metric | Total | Failed |');
+              console.log('|---|---|---|');
+              ['requests','assertions','testScripts'].forEach(k => console.log(line(k)));
+            " >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Stop backend
+        if: always()
+        run: kill $(cat backend/server.pid) || true
