@@ -8,7 +8,7 @@
   "variable": [
     {
       "key": "ciExpectedCreateStatus",
-      "value": "200",
+      "value": "201",
       "type": "string"
     }
   ],
