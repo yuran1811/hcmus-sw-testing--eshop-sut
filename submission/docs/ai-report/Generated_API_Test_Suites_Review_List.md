@@ -280,12 +280,12 @@ AI bỏ sót các case trên do kết hợp của chất lượng prompt, giới
 
 ### Kết quả review 40 case AI (FR-09)
 
-| Nhãn     |                                                                                                         Số lượng |
-| -------- | ---------------------------------------------------------------------------------------------------------------: |
-| VALID    |                                                                                                               40 |
-| VALID    | 0 Exact status, schema và hậu điều kiện đã được quy định trong execution contract và đồng bộ vào test case/data. |
-| INVALID  |                                                                                                                0 |
-| **Tổng** |                                                                                                           **40** |
+| Nhãn       | Số lượng |
+| ---------- | -------: |
+| VALID      |       18 |
+| INCOMPLETE |       22 |
+| INVALID    |        0 |
+| **Tổng**   |   **40** |
 
 ### Kết luận coverage (FR-09)
 
@@ -392,12 +392,12 @@ AI bỏ sót các case này do prompt ban đầu tập trung vào partition fiel
 
 ### Kết quả review 42 case AI (FR-17)
 
-| Nhãn     |                                                                                                         Số lượng |
-| -------- | ---------------------------------------------------------------------------------------------------------------: |
-| VALID    |                                                                                                               42 |
-| VALID    | 0 Exact status, schema và hậu điều kiện đã được quy định trong execution contract và đồng bộ vào test case/data. |
-| INVALID  |                                                                                                                0 |
-| **Tổng** |                                                                                                           **42** |
+| Nhãn       | Số lượng |
+| ---------- | -------: |
+| VALID      |       18 |
+| INCOMPLETE |       24 |
+| INVALID    |        0 |
+| **Tổng**   |   **42** |
 
 ### Kết luận coverage (FR-17)
 
