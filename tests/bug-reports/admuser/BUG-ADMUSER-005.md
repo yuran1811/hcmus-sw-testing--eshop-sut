@@ -1,4 +1,4 @@
-# BUG-AUTH-001: Token không hợp lệ trả về 403 thay vì 401
+# BUG-ADMUSER-005: Token không hợp lệ trả về 403 thay vì 401
 
 ## Found by Test Case
 
