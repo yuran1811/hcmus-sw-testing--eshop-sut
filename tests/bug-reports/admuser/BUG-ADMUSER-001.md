@@ -55,6 +55,9 @@ STATUS:200
 - `tests/postman/reports/newman-report.json` — request `[TC-C-ADMUSER-SEC-004]`, assertion `Security: [TC-C-ADMUSER-SEC-004] User thường gọi API admin phải bị 403 (KHONG phai 401)` FAIL với message `expected response to have status code 403 but got 200`.
 - `tests/postman/reports/newman-report.html` — mục "API3 - GET /api/admin/users / SEC - Security".
 
+
+![BUG-ADMUSER-001 screenshot](../../postman/screenshots/BUG-ADMUSER-001.png)
+
 ## Notes
 
 Endpoint chỉ kiểm tra token có hợp lệ hay không (trả 401 khi thiếu/token rác — xem `TC-C-ADMUSER-SEC-001/002`), nhưng **không đọc field `role` trong payload JWT** để chặn user thường. Đây là lỗ hổng bảo mật nghiêm trọng nhất tìm được trong đợt test: bất kỳ user nào đăng ký tài khoản (miễn phí, công khai qua `POST /api/register`) đều có thể xem toàn bộ danh sách người dùng của hệ thống, bao gồm email của tất cả user khác.

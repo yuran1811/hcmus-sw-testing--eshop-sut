@@ -38,6 +38,9 @@ Assertion `Functional: [TC-C-ADMUSER-ST-007] B2 - DELETE id không tồn tại p
 
 `tests/postman/reports/newman-report.json` — item `[TC-C-ADMUSER-ST-007] B2 - DELETE user id KHÔNG TỒN TẠI (999999)`, message: `expected response to have status code 404 but got 200`.
 
+
+![BUG-ADMUSER-004 screenshot](../../postman/screenshots/BUG-ADMUSER-004.png)
+
 ## Notes
 
 Nguyên nhân gốc (`backend/server.js` dòng 504-508):

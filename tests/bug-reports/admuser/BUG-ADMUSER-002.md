@@ -50,6 +50,9 @@ Bước 2 trả `200 OK`, tài khoản admin bị xoá thật khỏi DB. Sau đ�
 - `tests/postman/reports/newman-report.json` — item `[TC-C-ADMUSER-ST-006] B1 - Admin gọi DELETE nhắm vào CHÍNH mình`: status thực tế = 200, url = `/api/admin/users/1`.
 - Log console khi restart backend sau sự cố: `Database initialized and seeded (Phase 2).` (bằng chứng phải reseed DB mới đăng nhập lại được).
 
+
+![BUG-ADMUSER-002 screenshot](../../postman/screenshots/BUG-ADMUSER-002.png)
+
 ## Notes
 
 Đây là bug **AI (skill sinh test case) bỏ sót ở vòng generate ban đầu** — chỉ được phát hiện ở bước Extend (skill `api-testcase-auditor`, phần "Ràng buộc xuyên endpoint") vì nó đòi hỏi hiểu quan hệ giữa `GET /api/admin/users` (endpoint được chọn test) và `DELETE /api/admin/users/:id` (endpoint chị em), điều mà AI không tự suy ra khi chỉ được giao 1 endpoint trong prompt.

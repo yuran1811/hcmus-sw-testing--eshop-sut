@@ -35,6 +35,9 @@ Assertion `Security: [TC-A-REGISTER-SEC-008] Response lỗi KHÔNG lộ stack tr
 `tests/postman/reports/newman-report.json` — item `[TC-A-REGISTER-SEC-008]`, message assertion:
 `Response chứa dấu hiệu lộ stack trace: "at Layer.": expected '<!DOCTYPE html>...` (nội dung đầy đủ có chứa `TypeError: Cannot destructure property 'name' of 'req.body' as it is undefined` kèm đường dẫn file server).
 
+
+![BUG-REGISTER-004 screenshot](../../postman/screenshots/BUG-REGISTER-004.png)
+
 ## Notes
 
 Cùng nguyên nhân gốc với việc trả 500 thay vì 400/415 (status code đã fail trong cùng TC này) — Express dùng error handler mặc định khi route không có try/catch, error handler mặc định của Express (ở môi trường không set `NODE_ENV=production`) in nguyên văn `err.stack` ra response. Sửa cùng lúc với status code: thêm middleware xử lý lỗi tường minh, không dùng error handler mặc định của Express khi triển khai thật.

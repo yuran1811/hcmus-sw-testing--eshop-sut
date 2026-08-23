@@ -36,6 +36,9 @@ Cả 3 case đều FAIL cả 2 assertion:
 
 `tests/postman/reports/newman-report.json` — 6 assertion FAIL (2 assertion × 3 test case), cùng dạng `expected 'Express' to be null` và `expected '*' to not deeply equal '*'`.
 
+
+![BUG-REGISTER-005 screenshot](../../postman/screenshots/BUG-REGISTER-005.png)
+
 ## Notes
 
 Nguyên nhân gốc (`backend/server.js` dòng 11): `app.use(cors())` không truyền option nào → mặc định cho phép **mọi origin**. `X-Powered-By: Express` là header mặc định của Express, không bị tắt (`app.disable('x-powered-by')`).

@@ -46,6 +46,9 @@ Assertion `Functional: [TC-B-CART-ST-002] Giỏ hàng chỉ có ĐÚNG 1 dòng c
 `Số dòng id=1 hiện tại trong giỏ: [{"id":1,...,"quantity":2},{"id":1,...,"quantity":3},...]`
 (nhiều dòng thay vì 1 dòng `quantity:5`). Xem thêm `tests/postman/reports/newman-report.html`.
 
+
+![BUG-CART-002 screenshot](../../postman/screenshots/BUG-CART-002.png)
+
 ## Notes
 
 Nguyên nhân gốc (`backend/server.js` dòng 290-295): `POST /api/cart` chỉ làm `userCarts[userId].push(req.body)` — luôn thêm phần tử mới vào mảng, không hề kiểm tra `id` đã tồn tại trong giỏ hay chưa. Đây là lỗi nghiệp vụ cốt lõi của tính năng giỏ hàng.

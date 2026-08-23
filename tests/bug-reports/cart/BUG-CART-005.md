@@ -34,6 +34,9 @@ Assertion `Functional: [TC-B-CART-FN-004] Trả về status 200` FAIL — reques
 
 `tests/postman/reports/newman-report.json` — item `[TC-B-CART-FN-004]`, message: `expected response to have status code 200 but got 404`.
 
+
+![BUG-CART-005 screenshot](../../postman/screenshots/BUG-CART-005.png)
+
 ## Notes
 
 Đây là lỗi **thiếu tính năng** (feature gap) hơn là lỗi logic sai — nhưng khiến 2 yêu cầu tường minh của FR-07 (nút +/- và nút xoá) **không thể triển khai được ở frontend** vì backend không có API hỗ trợ. Kết hợp với BUG-CART-002 (không cộng dồn số lượng), người dùng hiện tại **không có cách nào sửa số lượng sản phẩm đã có trong giỏ** — mỗi lần "cộng thêm" chỉ tạo thêm 1 dòng rác mới, và không có cách xoá dòng nào cả.

@@ -38,6 +38,9 @@ Trả về `500 Internal Server Error` — exception không được xử lý (u
 
 `tests/postman/reports/newman-report.json` — request `[TC-A-REGISTER-SEC-008]`, assertion `Security: [TC-A-REGISTER-SEC-008] Trả về 1 trong các status hợp lệ [400,415]` FAIL với message `expected [ 400, 415 ] to include 500`.
 
+
+![BUG-REGISTER-003 screenshot](../../postman/screenshots/BUG-REGISTER-003.png)
+
 ## Notes
 
 Lỗi 500 là dấu hiệu code không có try/catch hoặc validation middleware bảo vệ route — ngoài vấn đề trải nghiệm xấu, response 500 mặc định của Express có thể vô tình lộ stack trace (cần kiểm tra thêm nội dung body của response 500 này khi viết bug fix để xác nhận có lộ thông tin nhạy cảm không).

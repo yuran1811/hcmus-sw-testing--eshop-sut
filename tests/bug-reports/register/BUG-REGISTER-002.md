@@ -60,6 +60,9 @@ Response trả về nguyên văn mật khẩu dưới dạng **plaintext** trong
 
 Console output ở trên (chạy trực tiếp trên deployment local, không bịa).
 
+
+![BUG-REGISTER-002 screenshot](../../postman/screenshots/BUG-REGISTER-002.png)
+
 ## Notes
 
 Đọc `backend/server.js` xác nhận nguyên nhân gốc, cả ở `POST /api/register` (dòng ~21-24: `INSERT INTO users (name, email, password) VALUES (?, ?, ?)` — insert thẳng password gốc, không gọi `bcrypt.hash`) và `POST /api/login` (dòng ~46: so sánh `user.password === password` — so sánh plaintext trực tiếp, không dùng `bcrypt.compare`). Đây là 2 vi phạm SEC-01 riêng biệt nhưng cùng gốc:

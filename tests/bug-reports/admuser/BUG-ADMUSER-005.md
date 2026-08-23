@@ -42,6 +42,9 @@ Toàn bộ các trường hợp trên trả về `403 Forbidden` thay vì `401`.
 
 `tests/postman/reports/newman-report.json` — 7 assertion FAIL, ví dụ `[TC-C-ADMUSER-SEC-002]`: message `expected response to have status code 401 but got 403`. Tương tự cho `TC-B-CART-SEC-002/003/004` và `TC-C-ADMUSER-SEC-003/005/006`.
 
+
+![BUG-ADMUSER-005 screenshot](../../postman/screenshots/BUG-ADMUSER-005.png)
+
 ## Notes
 
 Mức độ ảnh hưởng thấp hơn 2 bug RBAC/self-delete (chỉ sai quy ước status code, không làm lộ dữ liệu hay bỏ qua xác thực — request vẫn bị chặn đúng), nhưng vẫn nên sửa vì client (frontend) thường phân biệt 2 mã này để điều hướng khác nhau (401 → chuyển về trang login, 403 → hiển thị "không đủ quyền"). Nếu middleware xác thực JWT hiện dùng chung 1 khối catch trả 403 cho mọi lỗi `jwt.verify`, cần tách rõ: lỗi verify (token sai/hết hạn) → 401; lỗi kiểm tra role sau khi verify thành công → 403 (áp dụng cùng lúc sẽ sửa luôn BUG-ADMUSER-001).

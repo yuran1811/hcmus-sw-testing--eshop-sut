@@ -57,6 +57,9 @@ curl -s -w "\nSTATUS:%{http_code}\n" -X POST http://localhost:3000/api/cart \
 - `tests/postman/reports/newman-report.json` — 17 assertion FAIL trong folder `API2 - POST /api/cart / DP - Domain partition`, cùng dạng `expected response to have status code 400 but got 200`.
 - Console output kịch bản A ở trên (chạy trực tiếp, không bịa): `GET /api/cart` trả `[{"id":1,"name":"Sản phẩm A","price":1,"quantity":2}]` sau khi POST với `price:1`.
 
+
+![BUG-CART-001 screenshot](../../postman/screenshots/BUG-CART-001.png)
+
 ## Notes
 
 **Rủi ro nghiêm trọng nhất** không nằm ở việc thiếu validate kiểu dữ liệu, mà ở việc **server tin hoàn toàn vào `price` do client gửi** thay vì tra cứu giá thật theo `id` sản phẩm. Nếu bước checkout (`POST /api/checkout`, FR-08, không thuộc phạm vi 3 API được chọn của HW06 này) tính tổng tiền dựa trên dữ liệu đã lưu trong giỏ thay vì tính lại từ DB sản phẩm tại thời điểm thanh toán, đây sẽ là lỗ hổng cho phép mua hàng với giá tuỳ ý — **cần audit riêng `POST /api/checkout` để xác nhận có bị ảnh hưởng dây chuyền hay không**.

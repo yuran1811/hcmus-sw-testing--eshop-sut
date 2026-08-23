@@ -45,6 +45,9 @@ Phần tử tương ứng trong mảng trả về có `"name": null` nguyên vă
 
 `tests/postman/reports/newman-report.json` — request `[TC-C-ADMUSER-SCH-001]`, assertion `Contract: [TC-C-ADMUSER-SCH-001] Response là mảng, mỗi phần tử có id(number)/name(string)/email(string)/role(string)` FAIL với message `user[8].name: expected null to be a string`.
 
+
+![BUG-ADMUSER-003 screenshot](../../postman/screenshots/BUG-ADMUSER-003.png)
+
 ## Notes
 
 Đây là bug **dây chuyền** (chained defect): nguyên nhân gốc là BUG-REGISTER-001 (không validate `name` khi đăng ký), nhưng triệu chứng lộ ra ở một endpoint hoàn toàn khác (`GET /api/admin/users`). Bug này CHỈ bị phát hiện sau khi bộ script Postman được viết assertion đủ chặt (kiểm tra kiểu dữ liệu từng field thay vì chỉ status code) — minh chứng cho việc script chỉ assert status (baseline ban đầu) sẽ bỏ sót các lỗi kiểu này. Sửa BUG-REGISTER-001 (validate `name` không được null/rỗng khi đăng ký) sẽ ngăn được cả bug này ở nguồn.

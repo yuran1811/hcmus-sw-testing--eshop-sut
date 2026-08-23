@@ -72,6 +72,9 @@ Toàn bộ 15+ test case domain-partition tương ứng (name rỗng/null/number
 - `tests/postman/reports/newman-report.json` — 18 assertion FAIL trong folder `API1 - POST /api/register / DP - Domain partition` và `SEC - Security`, cùng message dạng `expected response to have status code 400 but got 200`.
 - Console output ở trên (chạy trực tiếp, không bịa).
 
+
+![BUG-REGISTER-001 screenshot](../../postman/screenshots/BUG-REGISTER-001.png)
+
 ## Notes
 
 Đọc `backend/server.js` (dòng ~21-24) xác nhận nguyên nhân gốc: `INSERT INTO users (name, email, password) VALUES (?, ?, ?)` chạy thẳng với dữ liệu client gửi, không có bước kiểm tra định dạng/độ dài/độ phức tạp nào trước đó, và không có ràng buộc `UNIQUE` trên cột `email` ở schema (`backend/database.js`).

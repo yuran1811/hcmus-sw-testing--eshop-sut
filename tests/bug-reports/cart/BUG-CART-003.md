@@ -38,6 +38,9 @@ Assertion `Security: [TC-B-CART-DP-012] Server KHÔNG được lưu giá giả m
 `tests/postman/reports/newman-report.json` — item `[TC-B-CART-DP-012]`, message assertion:
 `Tìm thấy item với price=1 do client gửi, server không đối chiếu DB: expected { id: 1, name: 'Sản phẩm A', ... } to be undefined`.
 
+
+![BUG-CART-003 screenshot](../../postman/screenshots/BUG-CART-003.png)
+
 ## Notes
 
 Nguyên nhân gốc: `POST /api/cart` (`backend/server.js` dòng 290-295) làm `userCarts[userId].push(req.body)` — lưu THẲNG object client gửi, không hề `SELECT` bảng `products` để tra giá thật. Đây là **lỗ hổng nghiêm trọng nhất tìm được ở API giỏ hàng**: kết hợp với việc `POST /api/checkout` (`backend/server.js` dòng 297-309) cũng nhận thẳng `total_amount` từ client mà KHÔNG hề đọc `userCarts` hay bảng `products` để tính lại — toàn bộ luồng mua hàng của hệ thống này **không có bất kỳ điểm nào server tự tính giá**, cho phép đặt hàng với giá tuỳ ý nếu client tự soạn request. `POST /api/checkout` không thuộc phạm vi 3 API được chọn cho HW06 này nhưng cần audit riêng vì mức độ nghiêm trọng.
