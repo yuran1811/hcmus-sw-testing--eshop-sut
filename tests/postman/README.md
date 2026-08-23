@@ -23,27 +23,36 @@ newman run tests/postman/collections/eshop-hw06.postman_collection.json \
 
 ## Kết quả chạy thật gần nhất
 
-_Bản v2, sau vòng review độc lập trên chính Entry #3 (xem `ai-audit-report.md`): đã enrich 7 case SCH bằng assertion cụ thể dựa trên response shape thật, và bỏ 2 assertion "always true" giả ở case MANUAL để số liệu pass/fail phản ánh đúng thực tế._
+_Bản v3, sau vòng đọc lại code (`backend/server.js`) để tìm thêm bug — 5 TC mới + enrich 3 TC cũ (ST-002, DP-012, SEC-008), tất cả phát hiện qua chạy chính collection này bằng Newman, không dùng curl rời để kết luận bug._
 
 |            |                                                            |
 | ---------- | ---------------------------------------------------------- |
-| Requests   | 145 (0 lỗi kết nối/network)                                |
-| Assertions | 199                                                        |
-| Pass       | 140                                                        |
-| Fail       | 59                                                         |
+| Requests   | 155 (0 lỗi kết nối/network)                                |
+| Assertions | 215                                                        |
+| Pass       | 146                                                        |
+| Fail       | 69                                                         |
 | Report     | `reports/newman-report.html`, `reports/newman-report.json` |
 
-**Không sửa test cho pass** (theo đúng chỉ dẫn skill) — 59 assertion fail là bằng chứng của **bug thật trong SUT**, sẽ được đưa vào bước Report Bug tiếp theo (skill `bug-reporting`). Các nhóm bug lớn nhất phát hiện được:
+**Không sửa test cho pass** — 69 assertion fail là bằng chứng của **bug thật trong SUT**. Danh sách đầy đủ có bug report riêng trong `tests/bug-reports/<module>/`:
 
-1. **[CRITICAL] `GET /api/admin/users` không kiểm tra role — chỉ cần có token hợp lệ (bất kỳ user thường nào) là xem được toàn bộ danh sách user.** Vi phạm trực tiếp SEC-03 ("API Admin phải kiểm tra role='admin' trong Token, không chỉ kiểm tra sự tồn tại của Token"). → `TC-C-ADMUSER-SEC-004`.
-2. **[CRITICAL] Admin có thể tự xoá chính tài khoản đang đăng nhập** — vi phạm FR-19 ("ngoại trừ không được xóa chính tài khoản đang đăng nhập"). Vì hệ thống chỉ seed đúng 1 admin mặc định, bug này gây **mất quyền truy cập admin toàn hệ thống**. → `TC-C-ADMUSER-ST-006` (case Extend).
-3. **[MAJOR] `POST /api/register` hầu như không validate gì** — chấp nhận email sai định dạng, password không đủ độ phức tạp, name rỗng/null/number, email trùng (không có unique constraint), SQLi payload trong email. → `TC-A-REGISTER-DP-001..021`, `SEC-001`, `SEC-006`, `ST-002/003`.
-4. **[MAJOR] `POST /api/cart` hầu như không validate gì** — chấp nhận price/quantity âm, 0, chuỗi, số thực; chấp nhận id sản phẩm không tồn tại; **không đối chiếu price với DB** (chấp nhận giá giả mạo — rủi ro bảo mật nghiêm trọng nếu logic checkout cũng tin theo). → `TC-B-CART-DP-002..023`, `SEC-005`.
-5. **[MAJOR — mới phát hiện nhờ enrich SCH] Dữ liệu `name: null` (do bug #3 chấp nhận) bị trả thẳng ra `GET /api/admin/users` mà không lọc/validate lại** — hệ quả dây chuyền của bug #3, chỉ lộ ra sau khi case `TC-C-ADMUSER-SCH-001` được viết assertion đủ chặt (kiểm tra kiểu dữ liệu từng field thay vì chỉ status). → `TC-C-ADMUSER-SCH-001`.
-6. **[MINOR] Token không hợp lệ (rỗng/hết hạn/sai chữ ký/alg=none) trả về 403 thay vì 401** trên cả 2 endpoint có auth — sai quy ước (401 = chưa xác thực, 403 = đã xác thực nhưng không đủ quyền). → `TC-B-CART-SEC-002..004`, `TC-C-ADMUSER-SEC-002/003/005/006`.
-7. **[MINOR] `POST /api/register` trả 500 (không phải 400/415) khi `Content-Type: text/plain` kèm JSON body** — lỗi không được xử lý (unhandled exception). → `TC-A-REGISTER-SEC-008`.
+| Bug                                                                               | Mức độ   | TC bắt được                                                  |
+| --------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------ |
+| BUG-ADMUSER-001 — RBAC bypass, user thường xem được `/api/admin/users`            | Critical | `TC-C-ADMUSER-SEC-004`                                       |
+| BUG-ADMUSER-002 — Admin tự xoá được chính mình                                    | Critical | `TC-C-ADMUSER-ST-006`                                        |
+| BUG-REGISTER-001 — Register gần như không validate gì                             | Major    | `TC-A-REGISTER-DP-001..021`, `SEC-001/006`, `ST-002/003`     |
+| BUG-CART-001 — Cart gần như không validate gì                                     | Major    | `TC-B-CART-DP-002..023`, `SEC-005`                           |
+| BUG-CART-002 — Thêm cùng sản phẩm KHÔNG cộng dồn số lượng (vi phạm FR-07)         | Major    | `TC-B-CART-ST-002`                                           |
+| BUG-CART-003 — Giá không đối chiếu DB, tin giá client gửi                         | Major    | `TC-B-CART-DP-012`                                           |
+| BUG-CART-005 — Không có API xoá sản phẩm khỏi giỏ                                 | Major    | `TC-B-CART-FN-004` (mới)                                     |
+| BUG-ADMUSER-004 — DELETE id không tồn tại vẫn báo "xoá thành công"                | Major    | `TC-C-ADMUSER-ST-007` (mới)                                  |
+| BUG-ADMUSER-003 — `name: null` lộ ra danh sách user                               | Major    | `TC-C-ADMUSER-SCH-001`                                       |
+| BUG-REGISTER-004 — Response 500 lộ stack trace + đường dẫn server                 | Minor    | `TC-A-REGISTER-SEC-008`                                      |
+| BUG-REGISTER-005 — Lộ `X-Powered-By`, CORS wildcard `*` trên mọi endpoint kể cả admin | Minor | `SEC-009`/`SEC-009`/`SEC-012` (mới, cả 3 API)                |
+| BUG-ADMUSER-005 — Token lỗi trả 403 thay vì 401                                   | Minor    | `TC-B-CART-SEC-002..004`, `TC-C-ADMUSER-SEC-002/003/005/006` |
 
-Case `TC-A-REGISTER-ST-006` (đăng ký đồng thời 2 email khác nhau) có 1 trong 2 request trả 400 thay vì 200 — cần điều tra thêm (có thể do race thật ở tầng DB, hoặc do kỹ thuật `pm.sendRequest` mô phỏng song song chưa hoàn hảo) trước khi kết luận là bug.
+BUG-CART-004 (giỏ hàng in-memory, mất khi restart) được ghi nhận qua đọc code nhưng KHÔNG tính vào danh sách trên vì không xác nhận được qua 1 lần chạy Newman tự động (cần restart backend giữa chừng) — xem ghi chú trong chính file bug report.
+
+Case `TC-A-REGISTER-ST-006` (đăng ký đồng thời 2 email khác nhau) có 1 trong 2 request trả 400 thay vì 200 — cần điều tra thêm trước khi kết luận là bug.
 
 ### Giới hạn đã biết của bộ script (tự phát hiện qua review độc lập)
 
