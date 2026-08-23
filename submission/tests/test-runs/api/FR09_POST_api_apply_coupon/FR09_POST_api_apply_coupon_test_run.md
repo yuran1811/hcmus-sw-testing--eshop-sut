@@ -19,7 +19,7 @@
 | FR09-APPLY-DP-006  | Pass   | —                   | Mã giảm giá đã hết hạn — Đạt status, schema và hậu trạng thái mong đợi.                                       |
 | FR09-APPLY-DP-007  | Pass   | —                   | Mã giảm giá không tồn tại — Đạt status, schema và hậu trạng thái mong đợi.                                    |
 | FR09-APPLY-DP-008  | Pass   | —                   | Code rỗng — Đạt status, schema và hậu trạng thái mong đợi.                                                    |
-| FR09-APPLY-DP-009  | Fail   | —                   | Code chỉ có khoảng trắng — API chấp nhận hoặc phân loại sai dữ liệu không hợp lệ.                             |
+| FR09-APPLY-DP-009  | Fail   | BUG-APPLYCOUPON-006 | Code chỉ có khoảng trắng — Dữ liệu sai định dạng bị phân loại thành mã không tồn tại và trả 404 thay vì 400.  |
 | FR09-APPLY-DP-010  | Pass   | —                   | Code null — Đạt status, schema và hậu trạng thái mong đợi.                                                    |
 | FR09-APPLY-DP-011  | Pass   | —                   | Code sai chữ hoa/thường — Đạt status, schema và hậu trạng thái mong đợi.                                      |
 | FR09-APPLY-DP-012  | Pass   | —                   | Code quá dài — Đạt status, schema và hậu trạng thái mong đợi.                                                 |
@@ -42,13 +42,13 @@
 | FR09-APPLY-SEC-002 | Fail   | BUG-APPLYCOUPON-001 | JWT không hợp lệ — Token không hợp lệ trả sai status xác thực.                                                |
 | FR09-APPLY-SEC-003 | Pass   | —                   | SQL injection trong code — Đạt status, schema và hậu trạng thái mong đợi.                                     |
 | FR09-APPLY-SEC-004 | Pass   | —                   | Injection qua total_amount — Đạt status, schema và hậu trạng thái mong đợi.                                   |
-| FR09-APPLY-SEC-005 | Fail   | —                   | XSS payload trong code — API chấp nhận hoặc phân loại sai dữ liệu không hợp lệ.                               |
+| FR09-APPLY-SEC-005 | Fail   | BUG-APPLYCOUPON-006 | XSS payload trong code — Dữ liệu sai định dạng bị phân loại thành mã không tồn tại và trả 404 thay vì 400.    |
 | FR09-APPLY-SEC-006 | Fail   | BUG-APPLYCOUPON-002 | IDOR qua user_id trong body — Công thức discount/final amount sai.                                            |
-| FR09-APPLY-SEC-007 | Fail   | —                   | Mass assignment field ngoài spec — API chấp nhận hoặc phân loại sai dữ liệu không hợp lệ.                     |
+| FR09-APPLY-SEC-007 | Fail   | BUG-APPLYCOUPON-007 | Mass assignment field ngoài spec — API chấp nhận field ngoài allow-list và trả 200.                           |
 | FR09-APPLY-SEC-008 | Fail   | BUG-APPLYCOUPON-002 | Không lộ dữ liệu nhạy cảm — Công thức discount/final amount sai.                                              |
-| FR09-APPLY-SEC-009 | Fail   | —                   | Race condition tại giới hạn lượt dùng — Chuỗi state/concurrency không đạt oracle.                             |
-| FR09-APPLY-SEC-010 | Fail   | —                   | Tampering discount và trạng thái coupon trong body — API chấp nhận hoặc phân loại sai dữ liệu không hợp lệ.   |
-| FR09-APPLY-SEC-011 | Fail   | —                   | Ký tự điều khiển và payload mã hóa trong code — API chấp nhận hoặc phân loại sai dữ liệu không hợp lệ.        |
+| FR09-APPLY-SEC-009 | Fail   | BUG-APPLYCOUPON-008 | Race condition tại giới hạn lượt dùng — Hai request đồng thời đều trả 200.                                    |
+| FR09-APPLY-SEC-010 | Fail   | BUG-APPLYCOUPON-007 | Tampering discount và trạng thái coupon trong body — API chấp nhận field ngoài allow-list và trả 200.         |
+| FR09-APPLY-SEC-011 | Fail   | BUG-APPLYCOUPON-006 | Ký tự điều khiển/payload mã hóa bị phân loại thành mã không tồn tại và trả 404 thay vì 400.                   |
 | FR09-APPLY-ST-001  | Fail   | BUG-APPLYCOUPON-002 | Chuyển trạng thái từ chưa dùng sang đã dùng một lần — Công thức discount/final amount sai.                    |
 | FR09-APPLY-ST-002  | Fail   | BUG-APPLYCOUPON-004 | Không cho dùng SAVE10 lần thứ hai — Xung đột trạng thái trả sai status.                                       |
 | FR09-APPLY-ST-003  | Pass   | —                   | VIP100 cho phép dùng lần thứ hai — Đạt status, schema và hậu trạng thái mong đợi.                             |

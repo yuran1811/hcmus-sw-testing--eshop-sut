@@ -7,12 +7,19 @@ Thư mục này chứa toàn bộ artifact để thực thi và báo cáo 145 te
 ```text
 api/
 |-- local.postman_environment.json
+|-- execution-summary.md
+|-- postman-features-used.md
+|-- monitor-run-evidence.md
+|-- ci-cd-report.md
+|-- ci/
+|   `-- HW06_CI_smoke.postman_collection.json
 |-- FR04_PUT_api_users_me/
 |   |-- FR04_PUT_api_users_me.postman_collection.json
 |   |-- FR04_PUT_api_users_me_data_driven.json
 |   `-- FR04_PUT_api_users_me_test_run.md
 |-- FR09_POST_api_apply_coupon/
 |-- FR17_POST_api_admin_coupons/
+|-- images/
 |-- reports/
 `-- support/
     |-- build-postman-collections.cjs
@@ -28,7 +35,7 @@ Mỗi FR có ba file cùng tiền tố:
 - `*_data_driven.json`: mảng iteration data; mỗi phần tử tương ứng đúng một `test_id` trong test case Markdown và test-run Markdown.
 - `*_test_run.md`: bảng ghi kết quả thực thi chính thức, ban đầu là `Not Run` và được runner cập nhật khi chạy full.
 
-`local.postman_environment.json` chứa `baseUrl`, `fixtureBaseUrl`, `studentId`, token và các biến dùng chung. `reports/` nhận báo cáo Newman HTML/JSON và file `_results.json`; các báo cáo smoke/special chỉ là bằng chứng kiểm tra hạ tầng, còn báo cáo full là kết quả chính thức.
+`local.postman_environment.json` chứa `baseUrl`, `fixtureBaseUrl`, `studentId`, token và các biến dùng chung. `reports/` chứa báo cáo Newman HTML/JSON chính thức và file `_results.json`; `images/` chứa bằng chứng Postman, Newman, GitHub Issues và CI/CD. Các file Markdown ở cấp `api/` tổng hợp kết quả thực thi, tính năng Postman, monitor và hai run CI mẫu.
 
 ## Vì sao dùng `.cjs`
 
@@ -138,8 +145,10 @@ Các lỗi như SUT trả `200` thay vì expected `201`, lộ `password`, hoặc
 Nộp các thành phần sau:
 
 - Ba thư mục FR có collection, data-driven JSON và test-run Markdown.
-- `local.postman_environment.json`, `README.md` và `support/`.
-- Báo cáo Newman HTML/JSON của lần chạy full nếu đã thực thi.
+- `local.postman_environment.json`, `README.md`, `execution-summary.md` và `support/`.
+- Báo cáo Newman HTML của ba lần chạy full; JSON và `_results.json` được giữ để truy vết assertion/test ID.
+- `postman-features-used.md`, `monitor-run-evidence.md` và các ảnh Postman tương ứng.
+- `ci-cd-report.md`, collection smoke CI và hai ảnh Actions Pass/Fail.
 - `package.json` và `package-lock.json` để tái tạo lệnh chạy.
 
 Không nộp `node_modules/`. Trước khi đóng gói, chạy `npm run format:json`, `npm run validate:api-tests` và kiểm tra các file report chính thức.

@@ -19,7 +19,7 @@ Mọi request trong collection đều chạy qua collection-level pre-request sc
 
 ## Phân tích failure
 
-385 assertion failure được gom thành 7 bug theo nguyên nhân gốc tại `bug-reports/`. Một test case Fail khi có ít nhất một assertion sai; vì vậy assertion fail không được dùng làm số lượng bug.
+385 assertion failure được phân tích và gom theo nguyên nhân gốc thành 18 bug report: 5 bug FR04, 8 bug FR09 và 5 bug FR17 tại `submission/tests/bug-reports/api/`. Cả 18 bug đã có GitHub Issues #330–#347. Một test case Fail khi có ít nhất một assertion sai; vì vậy assertion fail không được dùng làm số lượng bug.
 
 ## Postman MCP
 
@@ -32,6 +32,9 @@ Mọi request trong collection đều chạy qua collection-level pre-request sc
 - Monitor đã tạo và bật lịch: `HW06 Mock API Monitor - 23127115` — `57640965-1f19e4bc-32df-41e0-9c5a-fc4f81cec9eb`, cron `0 8 * * *`, múi giờ `Asia/Ho_Chi_Minh`.
 - Lần chạy monitor thành công mới nhất: job `1f19e511-2326-4c30-b076-d25299cfd14a`, HTTP 200, 1 request, 1 assertion, 0 failure, thời gian phản hồi 209 ms. Monitor dùng Mock Server công khai vì Postman Cloud không thể phân giải `127.0.0.1` của máy local.
 
-## Bằng chứng cần người dùng tự thực hiện
+## Bằng chứng chống gian lận đã hoàn thành
 
-Theo ràng buộc chống gian lận của đề và skill, sinh viên phải tự mở Postman Console, chạy collection và chụp dòng log `X-Student-Id: 23127115`. Ảnh Playwright/Newman không thay thế bằng chứng cá nhân này. GitHub Issue cũng chỉ được đánh dấu hoàn thành sau khi issue thật được đăng và chụp trên repository của sinh viên.
+- `images/postman_console_student_id.png`: Postman Console của lần chạy thật, có dòng `[X-Student-Id] Header set = 23127115` và request gọi SUT local.
+- `images/github_api_bug_issues_01.png`, `images/github_api_bug_issues_02.png`: các GitHub Issues thật trên repository, bao phủ Issues #330–#347.
+
+Ảnh Postman Console là bằng chứng header bắt buộc; ảnh Newman/Playwright chỉ bổ sung bằng chứng kết quả thực thi và không thay thế ảnh console này.
