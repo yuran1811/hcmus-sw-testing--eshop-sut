@@ -6,7 +6,7 @@
 | FR-04 / Schema Validation | `FR04-USRME-SC-001` đến `FR04-USRME-SC-005`           | 0 Pass / 5 Fail   | BUG-USRME-001, 002, 003                            | Executed |
 | FR-09 / Domain Partition  | `FR09-APPLY-DP-001` đến `FR09-APPLY-DP-022`           | 12 Pass / 10 Fail | BUG-APPLYCOUPON-002, 003, 005, 006                 | Executed |
 | FR-09 / State Transition  | `FR09-APPLY-ST-001` đến `FR09-APPLY-ST-008`           | 4 Pass / 4 Fail   | BUG-APPLYCOUPON-002, 004                           | Executed |
-| FR-09 / Security          | `FR09-APPLY-SEC-001` đến `FR09-APPLY-SEC-011`         | 2 Pass / 9 Fail   | BUG-APPLYCOUPON-001, 002, 006, 007, 008            | Executed |
+| FR-09 / Security          | `FR09-APPLY-SEC-001` đến `FR09-APPLY-SEC-011`         | 2 Pass / 9 Fail   | BUG-APPLYCOUPON-001, 002, 006, 007                 | Executed |
 | FR-09 / Schema Validation | `FR09-APPLY-SC-001` đến `FR09-APPLY-SC-005`           | 2 Pass / 3 Fail   | BUG-APPLYCOUPON-001, 002, 005                      | Executed |
 | FR-17 / Domain Partition  | `FR17-ADMINCOUP-DP-001` đến `FR17-ADMINCOUP-DP-025`   | 0 Pass / 25 Fail  | BUG-ADMINCOUPON-002, 003, 004                      | Executed |
 | FR-17 / State Transition  | `FR17-ADMINCOUP-ST-001` đến `FR17-ADMINCOUP-ST-008`   | 0 Pass / 8 Fail   | BUG-ADMINCOUPON-002, 003, 004; BUG-APPLYCOUPON-002 | Executed |

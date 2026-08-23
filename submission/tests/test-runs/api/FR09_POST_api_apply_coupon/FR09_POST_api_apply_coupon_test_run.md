@@ -46,7 +46,7 @@
 | FR09-APPLY-SEC-006 | Fail   | BUG-APPLYCOUPON-002 | IDOR qua user_id trong body — Công thức discount/final amount sai.                                            |
 | FR09-APPLY-SEC-007 | Fail   | BUG-APPLYCOUPON-007 | Mass assignment field ngoài spec — API chấp nhận field ngoài allow-list và trả 200.                           |
 | FR09-APPLY-SEC-008 | Fail   | BUG-APPLYCOUPON-002 | Không lộ dữ liệu nhạy cảm — Công thức discount/final amount sai.                                              |
-| FR09-APPLY-SEC-009 | Fail   | BUG-APPLYCOUPON-008 | Race condition tại giới hạn lượt dùng — Hai request đồng thời đều trả 200.                                    |
+| FR09-APPLY-SEC-009 | Fail   | BUG-APPLYCOUPON-002 | Race condition / tính toán đồng thời — Cả hai request trả 200 nhưng discount/final amount tính sai.           |
 | FR09-APPLY-SEC-010 | Fail   | BUG-APPLYCOUPON-007 | Tampering discount và trạng thái coupon trong body — API chấp nhận field ngoài allow-list và trả 200.         |
 | FR09-APPLY-SEC-011 | Fail   | BUG-APPLYCOUPON-006 | Ký tự điều khiển/payload mã hóa bị phân loại thành mã không tồn tại và trả 404 thay vì 400.                   |
 | FR09-APPLY-ST-001  | Fail   | BUG-APPLYCOUPON-002 | Chuyển trạng thái từ chưa dùng sang đã dùng một lần — Công thức discount/final amount sai.                    |

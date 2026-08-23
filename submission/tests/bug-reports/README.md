@@ -14,11 +14,10 @@
 | BUG-APPLYCOUPON-005 | POST `/api/apply-coupon`  | Major    | Tổng tiền bằng min_order_amount bị từ chối         | FR09-APPLY-DP-002      | https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/339 |
 | BUG-APPLYCOUPON-006 | POST `/api/apply-coupon`  | Minor    | Code sai định dạng trả 404 thay vì 400             | FR09-APPLY-DP-009      | https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/345 |
 | BUG-APPLYCOUPON-007 | POST `/api/apply-coupon`  | Major    | Chấp nhận field ngoài đặc tả và tampering          | FR09-APPLY-SEC-007     | https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/346 |
-| BUG-APPLYCOUPON-008 | POST `/api/apply-coupon`  | Critical | Race condition vượt giới hạn lượt dùng             | FR09-APPLY-SEC-009     | https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/347 |
 | BUG-ADMINCOUPON-001 | POST `/api/admin/coupons` | Critical | User thường gọi được API admin                     | FR17-ADMINCOUP-SEC-002 | https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/340 |
 | BUG-ADMINCOUPON-002 | POST `/api/admin/coupons` | Major    | Thiếu validation dữ liệu coupon                    | FR17-ADMINCOUP-DP-004  | https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/341 |
 | BUG-ADMINCOUPON-003 | POST `/api/admin/coupons` | Minor    | Tạo thành công trả 200 thay vì 201                 | FR17-ADMINCOUP-DP-001  | https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/342 |
 | BUG-ADMINCOUPON-004 | POST `/api/admin/coupons` | Major    | Code trùng gây 500 và lộ lỗi SQLite                | FR17-ADMINCOUP-DP-006  | https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/343 |
 | BUG-ADMINCOUPON-005 | POST `/api/admin/coupons` | Minor    | JWT bị chỉnh sửa trả 403 thay vì 401               | FR17-ADMINCOUP-SEC-003 | https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/344 |
 
-18 bug được gom theo nguyên nhân gốc từ 385 assertion failure. Không xem mỗi assertion fail là một bug độc lập. Các URL đã được đối chiếu với 18 issue mở thật (`#330`–`#347`) trong repository.
+17 bug được gom theo nguyên nhân gốc từ 385 assertion failure (5 FR04, 7 FR09, 5 FR17). Không xem mỗi assertion fail là một bug độc lập. Các URL đã được đối chiếu với 17 issue thật (`#330`–`#346`) trong repository; Issue `#347` đã được đóng do false positive (đặc tả `POST /api/apply-coupon` chỉ là phép tính, không thay đổi DB).

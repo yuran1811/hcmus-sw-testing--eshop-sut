@@ -94,7 +94,9 @@
           "listen": "test",
           "script": {
             "type": "text/javascript",
-            "exec": ["pm.test('FR04 endpoint responds 200', () => pm.response.to.have.status(200));"]
+            "exec": [
+              "pm.test('FR04 endpoint responds 200', () => pm.response.to.have.status(200));"
+            ]
           }
         }
       ]
@@ -118,7 +120,9 @@
           "listen": "test",
           "script": {
             "type": "text/javascript",
-            "exec": ["pm.test('FR09 endpoint responds 200', () => pm.response.to.have.status(200));"]
+            "exec": [
+              "pm.test('FR09 endpoint responds 200', () => pm.response.to.have.status(200));"
+            ]
           }
         }
       ]

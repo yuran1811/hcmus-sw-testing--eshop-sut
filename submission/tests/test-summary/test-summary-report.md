@@ -18,19 +18,19 @@
 | Pass                           |       22 |  15,2% |
 | Fail                           |      123 |  84,8% |
 | Assertion failure              |      385 |      - |
-| Bug report API                 |       18 |      - |
+| Bug report API                 |       17 |      - |
 | GitHub Issue đã tạo            |       18 |      - |
 
-Một test case được tính Fail khi có ít nhất một assertion sai. 385 assertion failure đã được phân tích và gom theo nguyên nhân gốc thành 18 bug, không xem mỗi assertion failure là một bug độc lập.
+Một test case được tính Fail khi có ít nhất một assertion sai. 385 assertion failure đã được phân tích và gom theo nguyên nhân gốc thành 17 bug hợp lệ (5 FR04, 7 FR09, 5 FR17), không xem mỗi assertion failure là một bug độc lập. Issue #347 đã được đóng sau khi xác nhận lại đặc tả `POST /api/apply-coupon` là endpoint tính toán.
 
 ## 3. Kết quả theo API
 
 | Requirement | Endpoint                  | Test case |   Pass |    Fail | Assertion fail |    Bug |
 | ----------- | ------------------------- | --------: | -----: | ------: | -------------: | -----: |
 | FR-04       | `PUT /api/users/me`       |        51 |      0 |      51 |            168 |      5 |
-| FR-09       | `POST /api/apply-coupon`  |        46 |     20 |      26 |             70 |      8 |
+| FR-09       | `POST /api/apply-coupon`  |        46 |     20 |      26 |             70 |      7 |
 | FR-17       | `POST /api/admin/coupons` |        48 |      2 |      46 |            147 |      5 |
-| **Tổng**    |                           |   **145** | **22** | **123** |        **385** | **18** |
+| **Tổng**    |                           |   **145** | **22** | **123** |        **385** | **17** |
 
 ## 4. Phạm vi kỹ thuật kiểm thử
 
@@ -45,12 +45,12 @@ Postman collection sử dụng environment/collection variables, data-driven exe
 
 ## 5. Bug report và GitHub Issue
 
-| Module               | Bug report | GitHub Issue                                                                                                                                                                                                                                                                                                             |
-| -------------------- | ---------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| FR04 - User profile  |          5 | [#330](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/330) đến [#334](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/334)                                                                                                                                                              |
-| FR09 - Apply coupon  |          8 | [#335](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/335) đến [#339](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/339), [#345](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/345) đến [#347](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/347) |
-| FR17 - Admin coupons |          5 | [#340](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/340) đến [#344](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/344)                                                                                                                                                              |
-| **Tổng**             |     **18** | **#330–#347**                                                                                                                                                                                                                                                                                                            |
+| Module               | Bug report | GitHub Issue                                                                                                                                                                                                                                                                                                          |
+| -------------------- | ---------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| FR04 - User profile  |          5 | [#330](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/330) đến [#334](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/334)                                                                                                                                                           |
+| FR09 - Apply coupon  |          7 | [#335](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/335) đến [#339](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/339), [#345](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/345), [#346](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/346) |
+| FR17 - Admin coupons |          5 | [#340](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/340) đến [#344](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/issues/344)                                                                                                                                                           |
+| **Tổng**             |     **17** | **17 bug (#330–#346)** _(Issue #347 đã đóng do false positive)_                                                                                                                                                                                                                                                       |
 
 ## 6. Bằng chứng thực thi
 

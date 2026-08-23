@@ -272,7 +272,7 @@ AI bỏ sót các case trên do kết hợp của chất lượng prompt, giới
 
 | Nhóm                  | AI sinh | Human bổ sung |   Tổng |
 | --------------------- | ------: | ------------: | -----: |
-| Domain Partition      |      22 |             1 |     23 |
+| Domain Partition      |      22 |             0 |     22 |
 | State Transition      |       5 |             3 |      8 |
 | Security              |       8 |             3 |     11 |
 | Schema Validation     |       5 |             0 |      5 |
