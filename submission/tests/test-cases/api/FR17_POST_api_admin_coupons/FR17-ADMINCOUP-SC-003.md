@@ -41,4 +41,4 @@ Theo execution contract A-FR17: HTTP 403; response khớp schema error_exact, kh
 
 ## Status / Related bugs
 
-Not Run / None
+Executed on 2026-08-22 — see [official test run](../../../test-runs/api/FR17_POST_api_admin_coupons/FR17_POST_api_admin_coupons_test_run.md) for Pass/Fail result and related bugs.

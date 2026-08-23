@@ -39,4 +39,4 @@ Theo execution contract A-FR09: HTTP 200; response khớp schema coupon_success_
 
 ## Status / Related bugs
 
-Not Run / None
+Executed on 2026-08-22 — see [official test run](../../../test-runs/api/FR09_POST_api_apply_coupon/FR09_POST_api_apply_coupon_test_run.md) for Pass/Fail result and related bugs.

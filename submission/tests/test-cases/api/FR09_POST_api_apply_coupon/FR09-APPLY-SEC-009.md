@@ -38,4 +38,4 @@ Theo execution contract A-FR09: hai request đồng thời đều trả HTTP 200
 
 ## Status / Related bugs
 
-Not Run / None
+Executed on 2026-08-22 — see [official test run](../../../test-runs/api/FR09_POST_api_apply_coupon/FR09_POST_api_apply_coupon_test_run.md) for Pass/Fail result and related bugs.

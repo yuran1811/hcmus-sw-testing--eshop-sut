@@ -41,4 +41,4 @@ Theo execution contract A-FR04: HTTP 200; response khớp schema profile_update_
 
 ## Status / Related bugs
 
-Not Run / None
+Executed on 2026-08-22 — see [official test run](../../../test-runs/api/FR04_PUT_api_users_me/FR04_PUT_api_users_me_test_run.md) for Pass/Fail result and related bugs.
