@@ -2,6 +2,18 @@
 
 Thư mục này chứa toàn bộ artifact để thực thi và báo cáo 145 test case API của FR04, FR09 và FR17. Test case Markdown và review nằm ở `submission/tests/test-cases/api` và `submission/docs/ai-report`; thư mục này chứa dữ liệu chạy, Postman collection, environment, fixture và runner.
 
+## Mục lục
+
+- [Cấu trúc](#cấu-trúc)
+- [Artifact chính thức](#artifact-chính-thức)
+- [Các script hỗ trợ](#các-script-hỗ-trợ)
+- [Chuẩn bị artifact](#chuẩn-bị-artifact)
+- [Chạy toàn bộ](#chạy-toàn-bộ)
+- [Chạy thủ công trong Postman](#chạy-thủ-công-trong-postman)
+- [Cách đọc kết quả](#cách-đọc-kết-quả)
+- [Chuẩn bị nộp bài](#chuẩn-bị-nộp-bài)
+- [Xử lý lỗi thường gặp](#xử-lý-lỗi-thường-gặp)
+
 ## Cấu trúc
 
 ```text
@@ -37,7 +49,19 @@ Mỗi FR có ba file cùng tiền tố:
 
 `local.postman_environment.json` chứa `baseUrl`, `fixtureBaseUrl`, `studentId`, token và các biến dùng chung. `reports/` chứa báo cáo Newman HTML/JSON chính thức và file `_results.json`; `images/` chứa bằng chứng Postman, Newman, GitHub Issues và CI/CD. Các file Markdown ở cấp `api/` tổng hợp kết quả thực thi, tính năng Postman, monitor và hai run CI mẫu.
 
-## Vì sao dùng `.cjs`
+## Artifact chính thức
+
+| Suite | Collection                                                                                        | Data                                                                                    | Test run                                                                                    | Excel                                                                                                      | Full Newman HTML                                                                |
+| ----- | ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| FR-04 | [`collection`](./FR04_PUT_api_users_me/FR04_PUT_api_users_me.postman_collection.json)             | [`51 rows`](./FR04_PUT_api_users_me/FR04_PUT_api_users_me_data_driven.json)             | [`0 Pass / 51 Fail`](./FR04_PUT_api_users_me/FR04_PUT_api_users_me_test_run.md)             | [`51 cases`](../../test-cases/api/FR04_PUT_api_users_me/FR04_PUT_api_users_me_test_cases.xlsx)             | [`report`](./reports/FR04_PUT_api_users_me_2026-08-22T16-07-51-183Z.html)       |
+| FR-09 | [`collection`](./FR09_POST_api_apply_coupon/FR09_POST_api_apply_coupon.postman_collection.json)   | [`46 rows`](./FR09_POST_api_apply_coupon/FR09_POST_api_apply_coupon_data_driven.json)   | [`20 Pass / 26 Fail`](./FR09_POST_api_apply_coupon/FR09_POST_api_apply_coupon_test_run.md)  | [`46 cases`](../../test-cases/api/FR09_POST_api_apply_coupon/FR09_POST_api_apply_coupon_test_cases.xlsx)   | [`report`](./reports/FR09_POST_api_apply_coupon_2026-08-22T16-08-24-818Z.html)  |
+| FR-17 | [`collection`](./FR17_POST_api_admin_coupons/FR17_POST_api_admin_coupons.postman_collection.json) | [`48 rows`](./FR17_POST_api_admin_coupons/FR17_POST_api_admin_coupons_data_driven.json) | [`2 Pass / 46 Fail`](./FR17_POST_api_admin_coupons/FR17_POST_api_admin_coupons_test_run.md) | [`48 cases`](../../test-cases/api/FR17_POST_api_admin_coupons/FR17_POST_api_admin_coupons_test_cases.xlsx) | [`report`](./reports/FR17_POST_api_admin_coupons_2026-08-22T16-08-46-471Z.html) |
+
+Ba report trên là nguồn chính thức cho thống kê **22 Pass / 123 Fail / 385 assertion failure**. Các report có hậu tố `_smoke_` hoặc `_special_verify_` chỉ là bằng chứng hỗ trợ kiểm tra hạ tầng và sequence đặc biệt, không được cộng vào tổng 145 case.
+
+## Các script hỗ trợ
+
+### Vì sao dùng `.cjs`
 
 Các file trong `support/` là script Node.js, không phải test case. Đuôi `.cjs` buộc Node chạy theo CommonJS, tương thích trực tiếp với `require("newman")`, `require("node:sqlite")` và cách gọi hiện tại của project mà không cần đặt toàn bộ project sang ES module (`"type": "module"`). Có thể chạy trực tiếp bằng `node path/to/file.cjs`; không cần build hoặc transpile.
 
@@ -48,6 +72,8 @@ Vai trò của từng script:
 - `validate-api-artifacts.cjs`: kiểm tra 145 ID, số lượng row, file Markdown, expected result, collection, environment và cú pháp Postman script trước khi chạy.
 - `fixture-server.cjs`: service nội bộ tại `127.0.0.1:3001`, reset/snapshot/verify/teardown dữ liệu users, coupons và coupon_usage. Đây không phải endpoint của SUT.
 - `run-api-tests.cjs`: khởi động hoặc xác minh SUT, khởi động fixture, chạy Newman tuần tự cho ba suite, xuất báo cáo và cập nhật bảng test run ở chế độ full.
+
+Đây là toàn bộ năm script cần thiết để tái lập pipeline. Các tiện ích debug một lần đã được loại khỏi submission để tránh nhầm với thành phần bắt buộc.
 
 Không nên xóa `support/` nếu muốn chạy lại đầy đủ với setup fixture, state transition, sequence đặc biệt và báo cáo tự động. Nếu chỉ import collection để gửi request thủ công, các file sinh artifact và validator có thể không được gọi, nhưng `fixture-server.cjs` vẫn cần vì collection dùng các request fixture.
 
@@ -145,13 +171,16 @@ Các lỗi như SUT trả `200` thay vì expected `201`, lộ `password`, hoặc
 Nộp các thành phần sau:
 
 - Ba thư mục FR có collection, data-driven JSON và test-run Markdown.
+- Ba workbook Excel tương ứng tại `submission/tests/test-cases/api`.
 - `local.postman_environment.json`, `README.md`, `execution-summary.md` và `support/`.
 - Báo cáo Newman HTML của ba lần chạy full; JSON và `_results.json` được giữ để truy vết assertion/test ID.
 - `postman-features-used.md`, `monitor-run-evidence.md` và các ảnh Postman tương ứng.
 - `ci-cd-report.md`, collection smoke CI và hai ảnh Actions Pass/Fail.
-- `package.json` và `package-lock.json` để tái tạo lệnh chạy.
+- `package.json` và `package-lock.json` nằm tại repository root để tái tạo lệnh chạy; không cần sao chép trùng vào `submission`.
 
 Không nộp `node_modules/`. Trước khi đóng gói, chạy `npm run format:json`, `npm run validate:api-tests` và kiểm tra các file report chính thức.
+
+Không chạy `npm run prepare:api-tests` hoặc `npm run test:api` chỉ để đóng gói nếu không có thay đổi oracle/code, vì hai lệnh này có thể sinh lại collection hoặc report. Bản nộp hiện dùng full run chính thức ngày 22/08/2026.
 
 Fixture service chỉ lắng nghe `127.0.0.1:3001` và chỉ thao tác ba nhóm dữ liệu liên quan trực tiếp: users, coupons và coupon_usage. Không thêm test endpoint vào SUT.
 
