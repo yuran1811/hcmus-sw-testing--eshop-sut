@@ -14,6 +14,7 @@
 | **Mã bài tập** | HW06-AI (API Testing with Postman & AI-Driven Test Generation) |
 | **Mức Bloom-AI đạt được** | **G9.2 (Apply), G9.3 (Analyse), G9.4 (Collaborate), G9.5 (Create)** |
 | **Public GitHub Repository** | [https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw6/23127148-nguyenan](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw6/23127148-nguyenan) |
+| **Demonstration Video (YouTube)** | [https://youtu.be/i6ClUolKJ8w](https://youtu.be/i6ClUolKJ8w) |
 | **Postman Collections & Environment** | [HW6/Postman/](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw6/23127148-nguyenan/HW6/Postman) |
 | **Báo Cáo & HTML Reports** | [HW6/Report/](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/tree/hw6/23127148-nguyenan/HW6/Report) |
 | **CI/CD Workflow & Runs** | [GitHub Actions Runs](https://github.com/yuran1811/hcmus-sw-testing--eshop-sut/actions) |
@@ -33,7 +34,7 @@
 | **1** | **API 1 — full pipeline (generate + audit + extend + execute + bugs)**<br>*(Endpoint: `POST /api/forgot-password` — FR-03)* | 30 | **30** | - 45 test cases (40 AI + 5 Human Extended)<br>- Human Audit AI-02 đầy đủ phán quyết & Student fix<br>- 5 Lỗi SUT được báo cáo chi tiết (`BUG-FORGOT-001..005`)<br>- Báo cáo HTML Newman 40 requests (93.0% pass rate) |
 | **2** | **API 2 — full pipeline (same criteria)**<br>*(Endpoint: `PUT /api/orders/:id/cancel` — FR-10)* | 30 | **30** | - 45 test cases (40 AI + 5 Human Extended)<br>- Bắt lỗi nghiêm trọng dòng 329 cho phép hủy đơn hàng `shipping`<br>- 2 Lỗi SUT được báo cáo (`BUG-CANCEL-001..002`)<br>- Báo cáo HTML Newman 44 requests (77.4% pass rate) |
 | **3** | **API 3 — full pipeline (same criteria)**<br>*(Endpoint: `POST /api/admin/import-products` — FR-16)* | 30 | **30** | - 45 test cases (40 AI + 5 Human Extended)<br>- Bắt lỗ hổng BFLA Admin phân quyền dòng 199<br>- 3 Lỗi SUT được báo cáo (`BUG-IMPORT-001..003`)<br>- Báo cáo HTML Newman 45 requests (100.0% pass rate) |
-| **4** | **Agent Skills (AI-driven test generator)**<br>*(Bloom-AI Level G9.5 Create)* | 10 | **10** | - Reusable Agent Skill `api-test-generator` & `api-test-executor`<br>- Sơ đồ kiến trúc tự thiết kế (`diagram.md`)<br>- Đặc tả hình thức thuật toán 5 giai đoạn (`pseudocode.md`) |
+| **4** | **Agent Skills (AI-driven test generator)**<br>*(Bloom-AI Level G9.5 Create)* | 10 | **10** | - Reusable Agent Skill `api-test-generator` & `api-test-executor`<br>- Video YouTube minh họa: [https://youtu.be/i6ClUolKJ8w](https://youtu.be/i6ClUolKJ8w)<br>- Sơ đồ kiến trúc tự thiết kế (`diagram.md`)<br>- Đặc tả hình thức thuật toán 5 giai đoạn (`pseudocode.md`) |
 | | **Total** | **100** | **100** | **Hoàn thành toàn diện 100% tất cả tiêu chí đánh giá** |
 
 
@@ -94,13 +95,14 @@
 ```
 HW6/
 ├── README.md                                       # Bảng tự đánh giá & Test Summary Report
+├── video_youtube.txt                               # Đường dẫn YouTube video demonstration Agent Skill
 ├── github_link.txt                                 # Đường dẫn GitHub Repository & tài nguyên nộp bài
 ├── git_commit_log.txt                              # Lịch sử Git commit chi tiết từng bước
 ├── Excel/
 │   └── test_summary.xlsx                           # Sổ bảng tính Excel toàn diện 8 sheets (135 TCs, Dashboard, Matrix)
 ├── Report/
-│   ├── 23127148_HW06_API_Testing_Report.md         # Báo cáo chính Markdown
-│   ├── 23127148_HW06_API_Testing_Report.pdf        # Báo cáo chính định dạng PDF
+│   ├── Main_Report.md                              # Báo cáo chính Markdown
+│   ├── Main_Report.pdf                             # Báo cáo chính định dạng PDF
 │   ├── images/                                     # Ảnh chụp minh chứng Newman, Pre-request script & Postman
 │   └── newman/                                     # 3 File HTML báo cáo kết quả chạy Newman
 │       ├── forgot-password-report.html

@@ -529,7 +529,7 @@ _Hình 12.3: Hộp thuật toán hình thức chuẩn hóa của động cơ sin
 - **Sơ đồ thiết kế gốc (Draw.io):** [`HW6/Agent_Skill/api-test-generator/references/ai-api-test-generator-diagram.drawio.png`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/Agent_Skill/api-test-generator/references/ai-api-test-generator-diagram.drawio.png)
 - **Đặc tả mã giả:** [`HW6/Agent_Skill/api-test-generator/references/pseudocode.md`](file:///d:/Project/Testing/hcmus-sw-testing--eshop-sut/HW6/Agent_Skill/api-test-generator/references/pseudocode.md)
 - **Video trình diễn tự động hóa sinh kiểm thử (YouTube Demonstration):**
-  - **Link video:** [https://www.youtube.com/watch?v=hw06-demo-23127148](https://www.youtube.com/watch?v=hw06-demo-23127148)
+  - **Link video:** [https://youtu.be/i6ClUolKJ8w](https://youtu.be/i6ClUolKJ8w)
   - **Nội dung video:** Trình diễn trực quan toàn bộ quá trình Agent Skill nhận tài liệu đặc tả của API `POST /api/forgot-password`, tự động sinh 40 test cases, đóng gói file Postman Collection v2.1 có injection header `X-Student-Id: 23127148`, và thực thi kiểm thử tự động qua Newman CLI.
 
 ---
