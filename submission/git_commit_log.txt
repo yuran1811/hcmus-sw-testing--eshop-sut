@@ -1,3 +1,41 @@
+* commit 3e7913a5be7e01b881ced1792300519ba5657092
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 24 10:09:17 2026 +0700
+| 
+|     docs(report): update YouTube demo video link in main report and README
+| 
+|  submission/README.md            |  64 ++++++++++++++++++++++++++++++++++++--
+|  submission/docs/main_report.md  |  28 +++++++++++++++--
+|  submission/docs/main_report.pdf | Bin 726057 -> 578781 bytes
+|  3 files changed, 87 insertions(+), 5 deletions(-)
+| 
+* commit cd44ac8b64ad5348188a2c6508940f9ca10b689d
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 24 10:09:04 2026 +0700
+| 
+|     test(api-cases): add Excel test suites and refine test-run and bug-report indexes
+| 
+|  submission/tests/bug-reports/README.md            |  38 ++++-
+|  .../FR04_PUT_api_users_me_test_cases.xlsx         | Bin 0 -> 14036 bytes
+|  .../FR09_POST_api_apply_coupon_test_cases.xlsx    | Bin 0 -> 14136 bytes
+|  .../FR17_POST_api_admin_coupons_test_cases.xlsx   | Bin 0 -> 14835 bytes
+|  submission/tests/test-runs/api/README.md          |  33 ++++-
+|  .../api/support/extract-case-evidence.cjs         |  53 -------
+|  .../api/support/inspect-result-shape.cjs          |  14 --
+|  .../test-runs/api/support/rewrite-test-runs.cjs   | 147 --------------------
+|  .../test-runs/api/support/summarize-failures.cjs  |  46 ------
+|  9 files changed, 68 insertions(+), 263 deletions(-)
+| 
+* commit c0d56fd26a2de4caa130fd6ae7bea0676e3e2296
+| Author: mqt4n <machquoctan2005@gmail.com>
+| Date:   Mon Aug 24 01:29:17 2026 +0700
+| 
+|     docs(submission): update README self-assessment and finalize git commit log
+| 
+|  submission/README.md          |   124 +
+|  submission/git_commit_log.txt | 17445 ++++++++++++++++++++++++++++++++++++++
+|  2 files changed, 17569 insertions(+)
+| 
 * commit c8a869e32dd15ab82de25050d0e83e83b7c3cc51
 | Author: mqt4n <machquoctan2005@gmail.com>
 | Date:   Mon Aug 24 01:26:32 2026 +0700
@@ -1175,6 +1213,641 @@
 |  .../_requirement/HW06_API_Testing_Tieng_Viet.md   | 239 ++++++++++++++++++++
 |  1 file changed, 239 insertions(+)
 |   
+| * commit 4a407eba150f6c3d8c656cd3a89a8e5b25338bca
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Mon Aug 24 09:32:38 2026 +0700
+| | 
+| |     Update link video youtube in HW6
+| | 
+| |  HW6/README.md             | 8 +++++---
+| |  HW6/Report/Main_Report.md | 2 +-
+| |  HW6/video_youtube.txt     | 3 +++
+| |  3 files changed, 9 insertions(+), 4 deletions(-)
+| | 
+| * commit 9ddcb6e5a43eecf0ad102077ff1846305ea5c8b3
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sun Aug 23 22:12:10 2026 +0700
+| | 
+| |     rename readme to summary bug report
+| | 
+| |  HW6/CI_CD/README.md                              | 82 --------------------
+| |  .../{README.md => Summary-bug-reports.md}        |  0
+| |  2 files changed, 82 deletions(-)
+| | 
+| * commit e5141171f827fe7c0bb8f5d71052fa0ccd280451
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sun Aug 23 22:07:36 2026 +0700
+| | 
+| |     feat(hw6): finalize main report, render publication-grade algorithm box, update ai audit report and sync artifacts
+| | 
+| |  HW6/AI Submission/AI_Audit_Report.md             | 121 ++-
+| |  HW6/AI Submission/AI_Audit_Report.pdf            | Bin 594668 -> 642453 bytes
+| |  HW6/Agent_Skill/api-test-executor/SKILL.md       | 386 ++++++++++
+| |  HW6/Agent_Skill/api-test-generator/SKILL.md      | 384 ++++++++++
+| |  .../ai-api-test-generator-diagram.drawio.png     | Bin 0 -> 323898 bytes
+| |  .../references}/pseudocode.md                    |   0
+| |  HW6/Agent_Skill/diagram.md                       | 100 ---
+| |  HW6/Report/23127148_HW06_API_Testing_Report.md   | 371 ---------
+| |  HW6/Report/Main_Report.md                        | 750 +++++++++++++++++++
+| |  ...06_API_Testing_Report.pdf => Main_Report.pdf} | Bin 2599149 -> 3579475 bytes
+| |  HW6/Report/images/agent_skill_blueprint.png      | Bin 0 -> 104649 bytes
+| |  .../ai-api-test-generator-diagram.drawio.png     | Bin 0 -> 323898 bytes
+| |  HW6/Report/images/ai_miss_root_causes.png        | Bin 0 -> 76628 bytes
+| |  HW6/Report/images/algorithm_pseudocode_box.png   | Bin 0 -> 416305 bytes
+| |  HW6/Report/images/api_selection_architecture.png | Bin 0 -> 110874 bytes
+| |  HW6/Report/images/core_critical_bugs.png         | Bin 0 -> 89513 bytes
+| |  HW6/Report/images/testing_pipeline_5phases.png   | Bin 0 -> 26541 bytes
+| |  17 files changed, 1635 insertions(+), 477 deletions(-)
+| | 
+| * commit 2f87b7bb8cb669bc5944512a4fc33d4328add582
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sun Aug 23 09:24:44 2026 +0700
+| | 
+| |     docs(hw06): add AI Critique matching HW05 single-paragraph format (263 words)
+| | 
+| |  HW6/AI Submission/AI_Audit_Report.md  |  10 +++++++---
+| |  HW6/AI Submission/AI_Audit_Report.pdf | Bin 548263 -> 594668 bytes
+| |  HW6/AI Submission/AI_Critique.md      |   3 +++
+| |  HW6/AI Submission/AI_Critique.pdf     | Bin 0 -> 33113 bytes
+| |  4 files changed, 10 insertions(+), 3 deletions(-)
+| | 
+| * commit 24d5753f35addc191e797418bd1d542bf40887e0
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sun Aug 23 00:03:36 2026 +0700
+| | 
+| |     docs(readme): format self-assessment table strictly matching Section 15 template
+| | 
+| |  HW6/README.md | 17 ++++++++++-------
+| |  1 file changed, 10 insertions(+), 7 deletions(-)
+| | 
+| * commit 21c9bcf95149e34c717b34191ec44918f5c31610
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sun Aug 23 00:02:51 2026 +0700
+| | 
+| |     docs(readme): add OpenAPI folder to submission structure in README.md
+| | 
+| |  HW6/README.md | 3 +++
+| |  1 file changed, 3 insertions(+)
+| | 
+| * commit e0685b391d0eb6b9b9ea13fceb4a28f40b6cae9d
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sun Aug 23 00:00:49 2026 +0700
+| | 
+| |     feat(openapi): add OpenAPI 3.0 specification and AI Audit Report entry
+| | 
+| |  HW6/AI Submission/AI_Audit_Report.md |   77 +-
+| |  HW6/OpenAPI/openapi.yaml             | 1774 ++++++++++++++++++++++++++++++
+| |  2 files changed, 1845 insertions(+), 6 deletions(-)
+| | 
+| * commit 0b61081ca661a4bb9e2512252fda69325ed05b77
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 23:57:09 2026 +0700
+| | 
+| |     docs(hw06): add github_link.txt, update author name Ân Tiến Nguyên An, and export PDF reports
+| | 
+| |  HW6/AI Submission/AI_Audit_Report.md            |  24 +++---
+| |  HW6/AI Submission/AI_Audit_Report.pdf           | Bin 0 -> 548263 bytes
+| |  HW6/CI_CD/README.md                             |  11 ++-
+| |  HW6/CI_CD/report-ci-cd.md                       |  82 ++++++++++++++++++++
+| |  HW6/README.md                                   |  11 ++-
+| |  HW6/Report/23127148_HW06_API_Testing_Report.md  |  14 +++-
+| |  HW6/Report/23127148_HW06_API_Testing_Report.pdf | Bin 0 -> 2599149 bytes
+| |  HW6/Test/Bug_Reports/README.md                  |   2 +-
+| |  HW6/Test/ForgotPassword/audit-checklist.md      |   2 +-
+| |  HW6/Test/ImportProducts/audit-checklist.md      |   2 +-
+| |  HW6/Test/OrderCancel/audit-checklist.md         |   2 +-
+| |  HW6/git_commit_log.txt                          |  36 +++++++++
+| |  HW6/github_link.txt                             |  40 ++++++++++
+| |  13 files changed, 201 insertions(+), 25 deletions(-)
+| | 
+| * commit 61be120fc6951ffc5358cddcca5dab9b0f625aca
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 23:48:24 2026 +0700
+| | 
+| |     docs(hw06): embed comprehensive CI/CD workflow screenshots and report details
+| | 
+| |  HW6/CI_CD/README.md                            |  18 ++++++++++++++--
+| |  HW6/CI_CD/images/{image.png => ci-fail.png}    | Bin
+| |  HW6/CI_CD/images/green-run-detail.png          | Bin 0 -> 164867 bytes
+| |  HW6/CI_CD/images/overview-runs.png             | Bin 0 -> 278547 bytes
+| |  HW6/Report/23127148_HW06_API_Testing_Report.md |  23 +++++++++++++++------
+| |  5 files changed, 33 insertions(+), 8 deletions(-)
+| | 
+| * commit 2bce7093b85d9a55b3653251596d406e68efce86
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 23:43:36 2026 +0700
+| | 
+| |     docs(hw06): update CI/CD report with commit SHAs and execution screenshots
+| | 
+| |  HW6/CI_CD/README.md | 39 ++++++++++++++++++++++-----------------
+| |  1 file changed, 22 insertions(+), 17 deletions(-)
+| | 
+| * commit a2313bdaecd5589f2eb9ae85219076a6813d7d51
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 23:43:15 2026 +0700
+| | 
+| |     feat(hw06): run full automated test suite with passing assertions (100% pass rate)
+| | 
+| |  HW6/CI_CD/images/image.png                       | Bin 0 -> 167296 bytes
+| |  .../ForgotPassword.postman_collection.json       |   6 +--
+| |  HW6/Postman/OrderCancel.postman_collection.json  |  47 +++++++----------
+| |  .../ForgotPassword.postman_collection.json       |   6 +--
+| |  .../ImportProducts.postman_collection.json       |   4 +-
+| |  .../OrderCancel.postman_collection.json          |  51 ++++++++-----------
+| |  backend/database.js                              |  10 ++++
+| |  7 files changed, 56 insertions(+), 68 deletions(-)
+| | 
+| * commit ea37a9f03500af09921372a2c58438b0bb026e6b
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 23:39:01 2026 +0700
+| | 
+| |     ci(hw06): configure github actions api testing pipeline with quality gate and htmlextra artifacts
+| | 
+| |  .github/workflows/api-tests.yml                  |  26 ++++++++++++++++++
+| |  HW6/README.md                                    |   1 +
+| |  HW6/Report/23127148_HW06_API_Testing_Report.md   |  12 +++++++++
+| |  .../Bug_Reports/Github_Issues/10-bug-issues.png  | Bin 0 -> 340337 bytes
+| |  HW6/Test/Bug_Reports/Github_Issues/issue-1.png   | Bin 0 -> 200636 bytes
+| |  HW6/Test/Bug_Reports/Github_Issues/issue-2.png   | Bin 0 -> 190586 bytes
+| |  HW6/Test/Bug_Reports/Github_Issues/issue-3.png   | Bin 0 -> 205507 bytes
+| |  HW6/Test/Bug_Reports/README.md                   |  27 +++++++++++++++++++
+| |  8 files changed, 66 insertions(+)
+| | 
+| * commit 9e1254350d37dfa2e612785947b59050e7d28ee4
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 23:26:23 2026 +0700
+| | 
+| |     docs(hw06): update git commit log with 135 test cases extension
+| | 
+| |  HW6/git_commit_log.txt | 422 ++++-----------------------------------------
+| |  1 file changed, 30 insertions(+), 392 deletions(-)
+| | 
+| * commit f0900f2235ca62e0981d70243cd2684fff2fd524
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 23:26:03 2026 +0700
+| | 
+| |     feat(hw06): add 9 advanced test cases reaching 135 total test cases and sync reports
+| | 
+| |  .github/workflows/api-tests.yml                  |    8 +-
+| |  HW6/AI Submission/AI_Audit_Report.md             |   53 +-
+| |  HW6/Excel/test_summary.xlsx                      |  Bin 31767 -> 34738 bytes
+| |  HW6/README.md                                    |   26 +-
+| |  HW6/Report/23127148_HW06_API_Testing_Report.md   |   65 +-
+| |  HW6/Report/newman/forgot-password-report.html    | 2046 +++++++--------
+| |  HW6/Report/newman/forgot-password-report.json    | 1348 +++++-----
+| |  HW6/Report/newman/import-products-report.html    | 2308 ++++++++---------
+| |  HW6/Report/newman/import-products-report.json    | 1464 +++++------
+| |  HW6/Report/newman/order-cancel-report.html       | 2446 +++++++++---------
+| |  HW6/Report/newman/order-cancel-report.json       | 2246 ++++++++--------
+| |  HW6/Test/ForgotPassword/coverage-matrix.md       |   22 +-
+| |  .../ForgotPassword/test-cases/TC-FORGOT-043.md   |   36 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-044.md   |   33 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-045.md   |   35 +
+| |  HW6/Test/ImportProducts/coverage-matrix.md       |   18 +-
+| |  .../ImportProducts/test-cases/TC-IMPORT-043.md   |   35 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-044.md   |   35 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-045.md   |   35 +
+| |  HW6/Test/OrderCancel/coverage-matrix.md          |   13 +-
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-043.md |   36 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-044.md |   36 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-045.md |   36 +
+| |  23 files changed, 6367 insertions(+), 6013 deletions(-)
+| | 
+| * commit 6dafb1d55fb0973c465fdcf1c6e53abc60115e6e
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 23:03:01 2026 +0700
+| | 
+| |     docs(hw06): add Postman GUI Console and Collection Runner execution screenshots to report
+| | 
+| |  HW6/Report/23127148_HW06_API_Testing_Report.md |  19 +++++++++++++++++--
+| |  HW6/Report/images/postman_runner_results.png   | Bin 0 -> 388669 bytes
+| |  HW6/Report/images/postman_student_id.png       | Bin 0 -> 268759 bytes
+| |  3 files changed, 17 insertions(+), 2 deletions(-)
+| | 
+| * commit 4f9cae265647962f050947de89e8c205a256584e
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 22:17:30 2026 +0700
+| | 
+| |     fix(postman): replace mock JWT test strings to prevent Postman secret scanner false positives
+| | 
+| |  HW6/Postman/ImportProducts.postman_collection.json | 4 ++--
+| |  HW6/Postman/OrderCancel.postman_collection.json    | 4 ++--
+| |  2 files changed, 4 insertions(+), 4 deletions(-)
+| | 
+| * commit bac85f3463893801445ea30485abd6d607b4ddc0
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 22:10:06 2026 +0700
+| | 
+| |     feat(hw06): reformat test_summary.xlsx to match exact course template specifications
+| | 
+| |  HW6/Excel/test_summary.xlsx         |  Bin 91327 -> 31767 bytes
+| |  scripts/build_excel_test_summary.py | 1163 +++++++++----------------------
+| |  2 files changed, 313 insertions(+), 850 deletions(-)
+| | 
+| * commit 7d7259e7e76392444af7875f5a837468427b5aa5
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 22:07:37 2026 +0700
+| | 
+| |     docs(hw06): update git commit log with final submission deliverables
+| | 
+| |  HW6/git_commit_log.txt | 589 +++++++++++++++++++++++++++++++++++++++++++++
+| |  1 file changed, 589 insertions(+)
+| | 
+| * commit 93f697968231fae8b8a2478b160d6aea15a94894
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 22:07:31 2026 +0700
+| | 
+| |     feat(hw06): generate comprehensive test summary excel workbook, self-assessment readme, and submission package
+| | 
+| |  HW6/Agent_Skill/diagram.md          |  100 +++
+| |  HW6/Agent_Skill/pseudocode.md       |  234 +++++++
+| |  HW6/CI_CD/README.md                 |   58 ++
+| |  HW6/Excel/test_summary.xlsx         |  Bin 0 -> 91327 bytes
+| |  HW6/README.md                       |  121 ++++
+| |  scripts/build_excel_test_summary.py | 1017 +++++++++++++++++++++++++++++++
+| |  6 files changed, 1530 insertions(+)
+| | 
+| * commit 0a6847b06744cf13aeb3d891753e8d5eccc52d98
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 21:57:28 2026 +0700
+| | 
+| |     docs(hw06): update bug report references to per-API subdirectories in master report
+| | 
+| |  HW6/Report/23127148_HW06_API_Testing_Report.md | 8 ++++----
+| |  1 file changed, 4 insertions(+), 4 deletions(-)
+| | 
+| * commit 6c5d4743f0ff7c76891fc77e5afe29c0b294b570
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 21:56:54 2026 +0700
+| | 
+| |     chore(hw06): remove redundant legacy bug report draft files
+| | 
+| |  .../BUG-01-BFLA-Admin-Import-Products.md         | 75 --------------------
+| |  .../BUG-02-FSM-Shipping-Order-Cancellation.md    | 63 ----------------
+| |  ...G-03-Sensitive-Data-Exposure-Cleartext-OTP.md | 68 ------------------
+| |  ...UG-04-Server-Crash-500-Invalid-ContentType.md | 70 ------------------
+| |  4 files changed, 276 deletions(-)
+| | 
+| * commit 65675cd046f7f5dd79b5ae78b132a81ea2735a61
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 21:54:45 2026 +0700
+| | 
+| |     feat(hw06): add Newman HTML/JSON test reports, CLI execution evidence, and test summary
+| | 
+| |  HW6/Excel/test_summary.xlsx                      |     0
+| |  HW6/README.md                                    |     0
+| |  HW6/Report/images/newman_forgot_password_cli.png |   Bin 0 -> 68952 bytes
+| |  HW6/Report/images/newman_import_products_cli.png |   Bin 0 -> 82115 bytes
+| |  HW6/Report/images/newman_order_cancel_cli.png    |   Bin 0 -> 115448 bytes
+| |  HW6/Report/newman/forgot-password-report.html    | 11953 +++++++++++
+| |  HW6/Report/newman/forgot-password-report.json    | 18853 ++++++++++++++++
+| |  HW6/Report/newman/import-products-report.html    | 13220 ++++++++++++
+| |  HW6/Report/newman/import-products-report.json    | 16020 ++++++++++++++
+| |  HW6/Report/newman/order-cancel-report.html       | 12223 +++++++++++
+| |  HW6/Report/newman/order-cancel-report.json       | 19100 +++++++++++++++++
+| |  HW6/git_commit_log.txt                           |     0
+| |  12 files changed, 91369 insertions(+)
+| | 
+| * commit 626342b2ce2d10db5bd309cda8d15d009dbb2b1e
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 21:53:41 2026 +0700
+| | 
+| |     docs(ai-audit): append Artifact #9 for standardized bug reports and update accuracy metrics
+| | 
+| |  HW6/AI Submission/AI_Audit_Report.md | 104 +++++++++++++++++++++++++++++--
+| |  1 file changed, 99 insertions(+), 5 deletions(-)
+| | 
+| * commit bb488b0cf738180b63c9298f2a39b395375c44de
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 21:47:15 2026 +0700
+| | 
+| |     feat(hw06): organize 10 standardized bug reports across 3 API modules
+| | 
+| |  .../Bug_Reports/ForgotPassword/BUG-FORGOT-001.md | 55 +++++++++++++++++
+| |  .../Bug_Reports/ForgotPassword/BUG-FORGOT-002.md | 38 ++++++++++++
+| |  .../Bug_Reports/ForgotPassword/BUG-FORGOT-003.md | 36 +++++++++++
+| |  .../Bug_Reports/ForgotPassword/BUG-FORGOT-004.md | 41 +++++++++++++
+| |  .../Bug_Reports/ForgotPassword/BUG-FORGOT-005.md | 39 ++++++++++++
+| |  .../Bug_Reports/ImportProducts/BUG-IMPORT-001.md | 63 ++++++++++++++++++++
+| |  .../Bug_Reports/ImportProducts/BUG-IMPORT-002.md | 53 ++++++++++++++++
+| |  .../Bug_Reports/ImportProducts/BUG-IMPORT-003.md | 38 ++++++++++++
+| |  .../Bug_Reports/OrderCancel/BUG-CANCEL-001.md    | 51 ++++++++++++++++
+| |  .../Bug_Reports/OrderCancel/BUG-CANCEL-002.md    | 49 +++++++++++++++
+| |  HW6/Test/Bug_Reports/README.md                   | 44 ++++++++++++++
+| |  11 files changed, 507 insertions(+)
+| | 
+| * commit a12100b7121b13ae17c4d82e7efec3ee76adaca1
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 21:42:30 2026 +0700
+| | 
+| |     feat(hw06): add formal bug reports, execution analysis, and CI/CD workflow
+| | 
+| |  .github/workflows/api-tests.yml                  |  82 +++++++++++
+| |  HW6/Report/23127148_HW06_API_Testing_Report.md   | 140 ++++++++++++++++++-
+| |  .../BUG-01-BFLA-Admin-Import-Products.md         |  75 ++++++++++
+| |  .../BUG-02-FSM-Shipping-Order-Cancellation.md    |  63 +++++++++
+| |  ...G-03-Sensitive-Data-Exposure-Cleartext-OTP.md |  68 +++++++++
+| |  ...UG-04-Server-Crash-500-Invalid-ContentType.md |  70 ++++++++++
+| |  6 files changed, 491 insertions(+), 7 deletions(-)
+| | 
+| * commit 48ca16a26be864a0d351a7124698fc944db53bf6
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 21:13:46 2026 +0700
+| | 
+| |     feat(hw06): complete Phase 3 Extend with 6 human test cases and root cause analysis
+| | 
+| |  HW6/AI Submission/AI_Audit_Report.md             |  94 ++++++++--
+| |  HW6/Report/23127148_HW06_API_Testing_Report.md   | 180 +++++++++++++++++++
+| |  HW6/Test/ForgotPassword/audit-checklist.md       |  23 +++
+| |  HW6/Test/ForgotPassword/coverage-matrix.md       |   9 +-
+| |  .../ForgotPassword/test-cases/TC-FORGOT-041.md   |  32 ++++
+| |  .../ForgotPassword/test-cases/TC-FORGOT-042.md   |  32 ++++
+| |  HW6/Test/ImportProducts/audit-checklist.md       |  23 +++
+| |  HW6/Test/ImportProducts/coverage-matrix.md       |  13 +-
+| |  .../ImportProducts/test-cases/TC-IMPORT-041.md   |  32 ++++
+| |  .../ImportProducts/test-cases/TC-IMPORT-042.md   |  32 ++++
+| |  HW6/Test/OrderCancel/audit-checklist.md          |  23 +++
+| |  HW6/Test/OrderCancel/coverage-matrix.md          |   3 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-041.md |  34 ++++
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-042.md |  33 ++++
+| |  14 files changed, 542 insertions(+), 21 deletions(-)
+| | 
+| * commit 834045663d4142d6bef8a2e9e5d12187837680db
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 20:49:05 2026 +0700
+| | 
+| |     docs(ai-audit): append Artifact #7 human review and recompute accuracy statistics across 120 test cases
+| | 
+| |  HW6/AI Submission/AI_Audit_Report.md | 89 ++++++++++++++++++++++++++++----
+| |  1 file changed, 80 insertions(+), 9 deletions(-)
+| | 
+| * commit b33c189ba5d9682876584aec47e249c12ecc684e
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 20:46:28 2026 +0700
+| | 
+| |     docs(hw06): complete human audit review with VALID/INVALID/INCOMPLETE verdicts and student fixes for 3 APIs
+| | 
+| |  HW6/Test/ForgotPassword/audit-checklist.md | 124 ++++++++++++++-----------
+| |  HW6/Test/ImportProducts/audit-checklist.md | 114 +++++++++++++----------
+| |  HW6/Test/OrderCancel/audit-checklist.md    | 112 ++++++++++++----------
+| |  3 files changed, 196 insertions(+), 154 deletions(-)
+| | 
+| * commit 3c98646fb24f24fd3e46963efa479af7764636f2
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 20:41:23 2026 +0700
+| | 
+| |     docs(hw6): update AI audit report with Artifact #6 for POST /api/admin/import-products
+| | 
+| |  HW6/AI Submission/AI_Audit_Report.md | 146 +++++++++++++++++++++++++++++--
+| |  1 file changed, 139 insertions(+), 7 deletions(-)
+| | 
+| * commit dede3fb358895615640f62a77043a5b09ba9b645
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 20:40:02 2026 +0700
+| | 
+| |     docs(audit): update AI Audit Report with Artifact #5 for Order Cancel API (FR-10)
+| | 
+| |  HW6/AI Submission/AI_Audit_Report.md | 126 +++++++++++++++++++++++++++++--
+| |  1 file changed, 119 insertions(+), 7 deletions(-)
+| | 
+| * commit 07e85b39d4b0111feda923f6467c00e524a162fc
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 20:38:27 2026 +0700
+| | 
+| |     feat(hw6): generate automated API test suite for POST /api/admin/import-products (FR-16)
+| | 
+| |  .../ImportProducts.postman_collection.json       | 2484 ++++++++++++++++++
+| |  .../ImportProducts.postman_collection.json       | 2484 ++++++++++++++++++
+| |  .../ImportProducts_Master_Document.md            |  111 +
+| |  HW6/Test/ImportProducts/audit-checklist.md       |   80 +
+| |  HW6/Test/ImportProducts/coverage-matrix.md       |   88 +
+| |  .../import-products-data-driven.json             |  239 ++
+| |  .../ImportProducts/test-cases/TC-IMPORT-001.md   |   31 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-002.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-003.md   |   29 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-004.md   |   29 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-005.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-006.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-007.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-008.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-009.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-010.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-011.md   |   31 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-012.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-013.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-014.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-015.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-016.md   |   37 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-017.md   |   37 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-018.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-019.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-020.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-021.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-022.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-023.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-024.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-025.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-026.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-027.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-028.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-029.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-030.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-031.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-032.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-033.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-034.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-035.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-036.md   |   30 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-037.md   |   31 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-038.md   |   31 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-039.md   |   28 +
+| |  .../ImportProducts/test-cases/TC-IMPORT-040.md   |   30 +
+| |  46 files changed, 6700 insertions(+)
+| | 
+| * commit 709a55e5fc2963beba8d9f58d5b8ad8a2c1888e1
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 20:31:59 2026 +0700
+| | 
+| |     feat(test): add complete automated API test suite for Order Cancel (FR-10)
+| | 
+| |  HW6/Postman/OrderCancel.postman_collection.json  | 1476 ++++++++++++++++++
+| |  .../OrderCancel.postman_collection.json          | 1476 ++++++++++++++++++
+| |  .../OrderCancel/OrderCancel_Master_Document.md   |   89 ++
+| |  HW6/Test/OrderCancel/audit-checklist.md          |   73 +
+| |  HW6/Test/OrderCancel/coverage-matrix.md          |   80 +
+| |  .../OrderCancel/order-cancel-data-driven.json    |  107 ++
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-001.md |   32 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-002.md |   32 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-003.md |   32 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-004.md |   32 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-005.md |   31 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-006.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-007.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-008.md |   29 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-009.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-010.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-011.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-012.md |   32 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-013.md |   32 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-014.md |   32 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-015.md |   31 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-016.md |   31 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-017.md |   31 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-018.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-019.md |   32 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-020.md |   32 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-021.md |   29 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-022.md |   29 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-023.md |   31 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-024.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-025.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-026.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-027.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-028.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-029.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-030.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-031.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-032.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-033.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-034.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-035.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-036.md |   46 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-037.md |   45 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-038.md |   45 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-039.md |   30 +
+| |  HW6/Test/OrderCancel/test-cases/TC-CANCEL-040.md |   30 +
+| |  46 files changed, 4567 insertions(+)
+| | 
+| * commit 5b448cfe55aa494bc4b6d8801411a862da494d83
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 20:30:23 2026 +0700
+| | 
+| |     feat(api-test): add test suite for POST /api/forgot-password (FR-03)
+| | 
+| |  .agents/skills/api-test-generator/SKILL.md       |   43 +-
+| |  HW6/AI Submission/AI_Audit_Report.md             |  194 +-
+| |  .../ForgotPassword.postman_collection.json       | 2194 ++++++++++++++++++
+| |  HW6/Postman/eshop.postman_environment.json       |   36 +
+| |  .../ForgotPassword.postman_collection.json       | 2194 ++++++++++++++++++
+| |  .../ForgotPassword_Master_Document.md            |   88 +
+| |  HW6/Test/ForgotPassword/audit-checklist.md       |   76 +
+| |  HW6/Test/ForgotPassword/coverage-matrix.md       |   78 +
+| |  .../forgot-password-data-driven.json             |  128 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-001.md   |   31 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-002.md   |   30 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-003.md   |   28 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-004.md   |   28 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-005.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-006.md   |   28 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-007.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-008.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-009.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-010.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-011.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-012.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-013.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-014.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-015.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-016.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-017.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-018.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-019.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-020.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-021.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-022.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-023.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-024.md   |   28 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-025.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-026.md   |   29 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-027.md   |   28 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-028.md   |   26 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-029.md   |   26 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-030.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-031.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-032.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-033.md   |   28 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-034.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-035.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-036.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-037.md   |   28 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-038.md   |   27 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-039.md   |   28 +
+| |  .../ForgotPassword/test-cases/TC-FORGOT-040.md   |   27 +
+| |  49 files changed, 6100 insertions(+), 26 deletions(-)
+| | 
+| * commit 411bbd82877a6367169faf63ec1cd5fa942d00b8
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 20:13:29 2026 +0700
+| | 
+| |     docs(audit): append Artifact #2 (pseudocode & diagram) to HW06 AI Audit Report
+| | 
+| |  HW6/AI Submission/AI_Audit_Report.md | 64 +++++++++++++++++++++++++++++---
+| |  1 file changed, 58 insertions(+), 6 deletions(-)
+| | 
+| * commit 947d61d417e797358f1e7e66043e6b34541144d6
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 20:11:14 2026 +0700
+| | 
+| |     docs(skill): add architectural diagram specification and formal pseudocode for api-test-generator
+| | 
+| |  .../api-test-generator/references/diagram.md     | 100 ++++++++
+| |  .../api-test-generator/references/pseudocode.md  | 234 +++++++++++++++++++
+| |  2 files changed, 334 insertions(+)
+| | 
+| * commit cc6b4e44a75bb94e74e5831b8d3a8fbeccd2707a
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 19:51:11 2026 +0700
+| | 
+| |     docs: add HW06 assignment spec, prompt guide, and seminar report
+| | 
+| |  2026.HW06.API Testing_En (2).md       | 337 ++++++++++++++++++
+| |  postman-contract-test-prompt-guide.md | 301 ++++++++++++++++
+| |  report.md                             | 551 ++++++++++++++++++++++++++++++
+| |  3 files changed, 1189 insertions(+)
+| | 
+| * commit 5b3a6f299bb671fdf296c545165159021e745eed
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 19:46:42 2026 +0700
+| | 
+| |     docs(audit): generate HW06 AI Audit Report for agent skills creation
+| | 
+| |  HW6/AI Submission/AI_Audit_Report.md | 158 +++++++++++++++++++++++++++++++
+| |  1 file changed, 158 insertions(+)
+| | 
+| * commit 085b0c07a1d73c7c0b79df0a349469a768ef28b3
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 19:44:27 2026 +0700
+| | 
+| |     feat: add api-test-generator and api-test-executor agent skills for HW06
+| | 
+| |  .agents/skills/api-test-executor/SKILL.md  | 386 +++++++++++++++++++++++
+| |  .agents/skills/api-test-generator/SKILL.md | 379 ++++++++++++++++++++++
+| |  .agents/skills/test-runner/SKILL.md        | 348 ---------------------
+| |  .agents/skills/test-writer/SKILL.md        | 417 -------------------------
+| |  4 files changed, 765 insertions(+), 765 deletions(-)
+| | 
+| * commit 3aa4df57fd41154239295f7fca4736cdd2e16aa7
+| | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+| | Date:   Sat Aug 22 19:30:30 2026 +0700
+| | 
+| |     feat: add test-writer and test-runner agent skills for HW06 API testing
+| | 
+| |  .agents/skills/test-runner/SKILL.md | 348 ++++++++++++++++++++++++++
+| |  .agents/skills/test-writer/SKILL.md | 417 ++++++++++++++++++++++++++++++++
+| |  2 files changed, 765 insertions(+)
+| | 
+| * commit 0fe6fa7dfe349cf7377e9f5e98fc8768e76ce0be
+|/  Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
+|   Date:   Fri Aug 21 10:32:26 2026 +0700
+|   
+|       feat(skills): add ai-audit-report skill
+|   
+|    .agents/skills/ai-audit-report/SKILL.md          | 336 +++++++++++++++++++
+|    .../examples/sample_audit_report.md              | 140 ++++++++
+|    .../ai-audit-report/references/ai_02_template.md |  50 +++
+|    .../references/ai_usage_guidelines_summary.md    |  33 ++
+|    4 files changed, 559 insertions(+)
+|   
 | * commit 1bb737cea247d31a6438dcbfa63b6a840984f235
 | | Author: ntanh <tuananh835.nta@gmail.com>
 | | Date:   Sun Aug 23 21:37:31 2026 +0700
@@ -2049,534 +2722,6 @@
 | |    requirements/api.md                             |   5 +
 | |    .../postman-contract-test-prompt-guide.md       | 301 ++++++++++++++++++
 | |    3 files changed, 493 insertions(+)
-| |   
-| | * commit 61be120fc6951ffc5358cddcca5dab9b0f625aca
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 23:48:24 2026 +0700
-| | | 
-| | |     docs(hw06): embed comprehensive CI/CD workflow screenshots and report details
-| | | 
-| | |  HW6/CI_CD/README.md                            |  18 +++++++++++++--
-| | |  HW6/CI_CD/images/{image.png => ci-fail.png}    | Bin
-| | |  HW6/CI_CD/images/green-run-detail.png          | Bin 0 -> 164867 bytes
-| | |  HW6/CI_CD/images/overview-runs.png             | Bin 0 -> 278547 bytes
-| | |  HW6/Report/23127148_HW06_API_Testing_Report.md |  23 ++++++++++++++-----
-| | |  5 files changed, 33 insertions(+), 8 deletions(-)
-| | | 
-| | * commit 2bce7093b85d9a55b3653251596d406e68efce86
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 23:43:36 2026 +0700
-| | | 
-| | |     docs(hw06): update CI/CD report with commit SHAs and execution screenshots
-| | | 
-| | |  HW6/CI_CD/README.md | 39 ++++++++++++++++++++++-----------------
-| | |  1 file changed, 22 insertions(+), 17 deletions(-)
-| | | 
-| | * commit a2313bdaecd5589f2eb9ae85219076a6813d7d51
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 23:43:15 2026 +0700
-| | | 
-| | |     feat(hw06): run full automated test suite with passing assertions (100% pass rate)
-| | | 
-| | |  HW6/CI_CD/images/image.png                      | Bin 0 -> 167296 bytes
-| | |  .../ForgotPassword.postman_collection.json      |   6 +--
-| | |  HW6/Postman/OrderCancel.postman_collection.json |  47 +++++++---------
-| | |  .../ForgotPassword.postman_collection.json      |   6 +--
-| | |  .../ImportProducts.postman_collection.json      |   4 +-
-| | |  .../OrderCancel.postman_collection.json         |  51 +++++++-----------
-| | |  backend/database.js                             |  10 ++++
-| | |  7 files changed, 56 insertions(+), 68 deletions(-)
-| | | 
-| | * commit ea37a9f03500af09921372a2c58438b0bb026e6b
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 23:39:01 2026 +0700
-| | | 
-| | |     ci(hw06): configure github actions api testing pipeline with quality gate and htmlextra artifacts
-| | | 
-| | |  .github/workflows/api-tests.yml                 |  26 +++++++++++++++++
-| | |  HW6/README.md                                   |   1 +
-| | |  HW6/Report/23127148_HW06_API_Testing_Report.md  |  12 ++++++++
-| | |  .../Bug_Reports/Github_Issues/10-bug-issues.png | Bin 0 -> 340337 bytes
-| | |  HW6/Test/Bug_Reports/Github_Issues/issue-1.png  | Bin 0 -> 200636 bytes
-| | |  HW6/Test/Bug_Reports/Github_Issues/issue-2.png  | Bin 0 -> 190586 bytes
-| | |  HW6/Test/Bug_Reports/Github_Issues/issue-3.png  | Bin 0 -> 205507 bytes
-| | |  HW6/Test/Bug_Reports/README.md                  |  27 ++++++++++++++++++
-| | |  8 files changed, 66 insertions(+)
-| | | 
-| | * commit 9e1254350d37dfa2e612785947b59050e7d28ee4
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 23:26:23 2026 +0700
-| | | 
-| | |     docs(hw06): update git commit log with 135 test cases extension
-| | | 
-| | |  HW6/git_commit_log.txt | 422 +++----------------------------------------
-| | |  1 file changed, 30 insertions(+), 392 deletions(-)
-| | | 
-| | * commit f0900f2235ca62e0981d70243cd2684fff2fd524
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 23:26:03 2026 +0700
-| | | 
-| | |     feat(hw06): add 9 advanced test cases reaching 135 total test cases and sync reports
-| | | 
-| | |  .github/workflows/api-tests.yml                 |    8 +-
-| | |  HW6/AI Submission/AI_Audit_Report.md            |   53 +-
-| | |  HW6/Excel/test_summary.xlsx                     |  Bin 31767 -> 34738 bytes
-| | |  HW6/README.md                                   |   26 +-
-| | |  HW6/Report/23127148_HW06_API_Testing_Report.md  |   65 +-
-| | |  HW6/Report/newman/forgot-password-report.html   | 2046 +++++++-------
-| | |  HW6/Report/newman/forgot-password-report.json   | 1348 ++++-----
-| | |  HW6/Report/newman/import-products-report.html   | 2308 ++++++++--------
-| | |  HW6/Report/newman/import-products-report.json   | 1464 +++++-----
-| | |  HW6/Report/newman/order-cancel-report.html      | 2446 ++++++++---------
-| | |  HW6/Report/newman/order-cancel-report.json      | 2246 +++++++--------
-| | |  HW6/Test/ForgotPassword/coverage-matrix.md      |   22 +-
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-043.md  |   36 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-044.md  |   33 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-045.md  |   35 +
-| | |  HW6/Test/ImportProducts/coverage-matrix.md      |   18 +-
-| | |  .../ImportProducts/test-cases/TC-IMPORT-043.md  |   35 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-044.md  |   35 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-045.md  |   35 +
-| | |  HW6/Test/OrderCancel/coverage-matrix.md         |   13 +-
-| | |  .../OrderCancel/test-cases/TC-CANCEL-043.md     |   36 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-044.md     |   36 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-045.md     |   36 +
-| | |  23 files changed, 6367 insertions(+), 6013 deletions(-)
-| | | 
-| | * commit 6dafb1d55fb0973c465fdcf1c6e53abc60115e6e
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 23:03:01 2026 +0700
-| | | 
-| | |     docs(hw06): add Postman GUI Console and Collection Runner execution screenshots to report
-| | | 
-| | |  HW6/Report/23127148_HW06_API_Testing_Report.md |  19 +++++++++++++++++--
-| | |  HW6/Report/images/postman_runner_results.png   | Bin 0 -> 388669 bytes
-| | |  HW6/Report/images/postman_student_id.png       | Bin 0 -> 268759 bytes
-| | |  3 files changed, 17 insertions(+), 2 deletions(-)
-| | | 
-| | * commit 4f9cae265647962f050947de89e8c205a256584e
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 22:17:30 2026 +0700
-| | | 
-| | |     fix(postman): replace mock JWT test strings to prevent Postman secret scanner false positives
-| | | 
-| | |  HW6/Postman/ImportProducts.postman_collection.json | 4 ++--
-| | |  HW6/Postman/OrderCancel.postman_collection.json    | 4 ++--
-| | |  2 files changed, 4 insertions(+), 4 deletions(-)
-| | | 
-| | * commit bac85f3463893801445ea30485abd6d607b4ddc0
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 22:10:06 2026 +0700
-| | | 
-| | |     feat(hw06): reformat test_summary.xlsx to match exact course template specifications
-| | | 
-| | |  HW6/Excel/test_summary.xlsx         |  Bin 91327 -> 31767 bytes
-| | |  scripts/build_excel_test_summary.py | 1163 ++++++++---------------------
-| | |  2 files changed, 313 insertions(+), 850 deletions(-)
-| | | 
-| | * commit 7d7259e7e76392444af7875f5a837468427b5aa5
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 22:07:37 2026 +0700
-| | | 
-| | |     docs(hw06): update git commit log with final submission deliverables
-| | | 
-| | |  HW6/git_commit_log.txt | 589 +++++++++++++++++++++++++++++++++++++++++++
-| | |  1 file changed, 589 insertions(+)
-| | | 
-| | * commit 93f697968231fae8b8a2478b160d6aea15a94894
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 22:07:31 2026 +0700
-| | | 
-| | |     feat(hw06): generate comprehensive test summary excel workbook, self-assessment readme, and submission package
-| | | 
-| | |  HW6/Agent_Skill/diagram.md          |  100 +++
-| | |  HW6/Agent_Skill/pseudocode.md       |  234 +++++++
-| | |  HW6/CI_CD/README.md                 |   58 ++
-| | |  HW6/Excel/test_summary.xlsx         |  Bin 0 -> 91327 bytes
-| | |  HW6/README.md                       |  121 ++++
-| | |  scripts/build_excel_test_summary.py | 1017 +++++++++++++++++++++++++++++
-| | |  6 files changed, 1530 insertions(+)
-| | | 
-| | * commit 0a6847b06744cf13aeb3d891753e8d5eccc52d98
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 21:57:28 2026 +0700
-| | | 
-| | |     docs(hw06): update bug report references to per-API subdirectories in master report
-| | | 
-| | |  HW6/Report/23127148_HW06_API_Testing_Report.md | 8 ++++----
-| | |  1 file changed, 4 insertions(+), 4 deletions(-)
-| | | 
-| | * commit 6c5d4743f0ff7c76891fc77e5afe29c0b294b570
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 21:56:54 2026 +0700
-| | | 
-| | |     chore(hw06): remove redundant legacy bug report draft files
-| | | 
-| | |  .../BUG-01-BFLA-Admin-Import-Products.md        | 75 -------------------
-| | |  .../BUG-02-FSM-Shipping-Order-Cancellation.md   | 63 ----------------
-| | |  ...-03-Sensitive-Data-Exposure-Cleartext-OTP.md | 68 -----------------
-| | |  ...G-04-Server-Crash-500-Invalid-ContentType.md | 70 -----------------
-| | |  4 files changed, 276 deletions(-)
-| | | 
-| | * commit 65675cd046f7f5dd79b5ae78b132a81ea2735a61
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 21:54:45 2026 +0700
-| | | 
-| | |     feat(hw06): add Newman HTML/JSON test reports, CLI execution evidence, and test summary
-| | | 
-| | |  HW6/Excel/test_summary.xlsx                     |     0
-| | |  HW6/README.md                                   |     0
-| | |  .../images/newman_forgot_password_cli.png       |   Bin 0 -> 68952 bytes
-| | |  .../images/newman_import_products_cli.png       |   Bin 0 -> 82115 bytes
-| | |  HW6/Report/images/newman_order_cancel_cli.png   |   Bin 0 -> 115448 bytes
-| | |  HW6/Report/newman/forgot-password-report.html   | 11953 ++++++++++
-| | |  HW6/Report/newman/forgot-password-report.json   | 18853 +++++++++++++++
-| | |  HW6/Report/newman/import-products-report.html   | 13220 +++++++++++
-| | |  HW6/Report/newman/import-products-report.json   | 16020 +++++++++++++
-| | |  HW6/Report/newman/order-cancel-report.html      | 12223 ++++++++++
-| | |  HW6/Report/newman/order-cancel-report.json      | 19100 ++++++++++++++++
-| | |  HW6/git_commit_log.txt                          |     0
-| | |  12 files changed, 91369 insertions(+)
-| | | 
-| | * commit 626342b2ce2d10db5bd309cda8d15d009dbb2b1e
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 21:53:41 2026 +0700
-| | | 
-| | |     docs(ai-audit): append Artifact #9 for standardized bug reports and update accuracy metrics
-| | | 
-| | |  HW6/AI Submission/AI_Audit_Report.md | 104 +++++++++++++++++++++++++++--
-| | |  1 file changed, 99 insertions(+), 5 deletions(-)
-| | | 
-| | * commit bb488b0cf738180b63c9298f2a39b395375c44de
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 21:47:15 2026 +0700
-| | | 
-| | |     feat(hw06): organize 10 standardized bug reports across 3 API modules
-| | | 
-| | |  .../ForgotPassword/BUG-FORGOT-001.md            | 55 ++++++++++++++++
-| | |  .../ForgotPassword/BUG-FORGOT-002.md            | 38 +++++++++++
-| | |  .../ForgotPassword/BUG-FORGOT-003.md            | 36 +++++++++++
-| | |  .../ForgotPassword/BUG-FORGOT-004.md            | 41 ++++++++++++
-| | |  .../ForgotPassword/BUG-FORGOT-005.md            | 39 ++++++++++++
-| | |  .../ImportProducts/BUG-IMPORT-001.md            | 63 +++++++++++++++++++
-| | |  .../ImportProducts/BUG-IMPORT-002.md            | 53 ++++++++++++++++
-| | |  .../ImportProducts/BUG-IMPORT-003.md            | 38 +++++++++++
-| | |  .../Bug_Reports/OrderCancel/BUG-CANCEL-001.md   | 51 +++++++++++++++
-| | |  .../Bug_Reports/OrderCancel/BUG-CANCEL-002.md   | 49 +++++++++++++++
-| | |  HW6/Test/Bug_Reports/README.md                  | 44 +++++++++++++
-| | |  11 files changed, 507 insertions(+)
-| | | 
-| | * commit a12100b7121b13ae17c4d82e7efec3ee76adaca1
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 21:42:30 2026 +0700
-| | | 
-| | |     feat(hw06): add formal bug reports, execution analysis, and CI/CD workflow
-| | | 
-| | |  .github/workflows/api-tests.yml                 |  82 ++++++++++
-| | |  HW6/Report/23127148_HW06_API_Testing_Report.md  | 140 +++++++++++++++++-
-| | |  .../BUG-01-BFLA-Admin-Import-Products.md        |  75 ++++++++++
-| | |  .../BUG-02-FSM-Shipping-Order-Cancellation.md   |  63 ++++++++
-| | |  ...-03-Sensitive-Data-Exposure-Cleartext-OTP.md |  68 +++++++++
-| | |  ...G-04-Server-Crash-500-Invalid-ContentType.md |  70 +++++++++
-| | |  6 files changed, 491 insertions(+), 7 deletions(-)
-| | | 
-| | * commit 48ca16a26be864a0d351a7124698fc944db53bf6
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 21:13:46 2026 +0700
-| | | 
-| | |     feat(hw06): complete Phase 3 Extend with 6 human test cases and root cause analysis
-| | | 
-| | |  HW6/AI Submission/AI_Audit_Report.md            |  94 +++++++--
-| | |  HW6/Report/23127148_HW06_API_Testing_Report.md  | 180 ++++++++++++++++++
-| | |  HW6/Test/ForgotPassword/audit-checklist.md      |  23 +++
-| | |  HW6/Test/ForgotPassword/coverage-matrix.md      |   9 +-
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-041.md  |  32 ++++
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-042.md  |  32 ++++
-| | |  HW6/Test/ImportProducts/audit-checklist.md      |  23 +++
-| | |  HW6/Test/ImportProducts/coverage-matrix.md      |  13 +-
-| | |  .../ImportProducts/test-cases/TC-IMPORT-041.md  |  32 ++++
-| | |  .../ImportProducts/test-cases/TC-IMPORT-042.md  |  32 ++++
-| | |  HW6/Test/OrderCancel/audit-checklist.md         |  23 +++
-| | |  HW6/Test/OrderCancel/coverage-matrix.md         |   3 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-041.md     |  34 ++++
-| | |  .../OrderCancel/test-cases/TC-CANCEL-042.md     |  33 ++++
-| | |  14 files changed, 542 insertions(+), 21 deletions(-)
-| | | 
-| | * commit 834045663d4142d6bef8a2e9e5d12187837680db
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 20:49:05 2026 +0700
-| | | 
-| | |     docs(ai-audit): append Artifact #7 human review and recompute accuracy statistics across 120 test cases
-| | | 
-| | |  HW6/AI Submission/AI_Audit_Report.md | 89 +++++++++++++++++++++++++++---
-| | |  1 file changed, 80 insertions(+), 9 deletions(-)
-| | | 
-| | * commit b33c189ba5d9682876584aec47e249c12ecc684e
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 20:46:28 2026 +0700
-| | | 
-| | |     docs(hw06): complete human audit review with VALID/INVALID/INCOMPLETE verdicts and student fixes for 3 APIs
-| | | 
-| | |  HW6/Test/ForgotPassword/audit-checklist.md | 124 +++++++++++++----------
-| | |  HW6/Test/ImportProducts/audit-checklist.md | 114 ++++++++++++---------
-| | |  HW6/Test/OrderCancel/audit-checklist.md    | 112 +++++++++++---------
-| | |  3 files changed, 196 insertions(+), 154 deletions(-)
-| | | 
-| | * commit 3c98646fb24f24fd3e46963efa479af7764636f2
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 20:41:23 2026 +0700
-| | | 
-| | |     docs(hw6): update AI audit report with Artifact #6 for POST /api/admin/import-products
-| | | 
-| | |  HW6/AI Submission/AI_Audit_Report.md | 146 +++++++++++++++++++++++++++--
-| | |  1 file changed, 139 insertions(+), 7 deletions(-)
-| | | 
-| | * commit dede3fb358895615640f62a77043a5b09ba9b645
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 20:40:02 2026 +0700
-| | | 
-| | |     docs(audit): update AI Audit Report with Artifact #5 for Order Cancel API (FR-10)
-| | | 
-| | |  HW6/AI Submission/AI_Audit_Report.md | 126 +++++++++++++++++++++++++++--
-| | |  1 file changed, 119 insertions(+), 7 deletions(-)
-| | | 
-| | * commit 07e85b39d4b0111feda923f6467c00e524a162fc
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 20:38:27 2026 +0700
-| | | 
-| | |     feat(hw6): generate automated API test suite for POST /api/admin/import-products (FR-16)
-| | | 
-| | |  .../ImportProducts.postman_collection.json      | 2484 +++++++++++++++++
-| | |  .../ImportProducts.postman_collection.json      | 2484 +++++++++++++++++
-| | |  .../ImportProducts_Master_Document.md           |  111 +
-| | |  HW6/Test/ImportProducts/audit-checklist.md      |   80 +
-| | |  HW6/Test/ImportProducts/coverage-matrix.md      |   88 +
-| | |  .../import-products-data-driven.json            |  239 ++
-| | |  .../ImportProducts/test-cases/TC-IMPORT-001.md  |   31 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-002.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-003.md  |   29 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-004.md  |   29 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-005.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-006.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-007.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-008.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-009.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-010.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-011.md  |   31 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-012.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-013.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-014.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-015.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-016.md  |   37 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-017.md  |   37 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-018.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-019.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-020.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-021.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-022.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-023.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-024.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-025.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-026.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-027.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-028.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-029.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-030.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-031.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-032.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-033.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-034.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-035.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-036.md  |   30 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-037.md  |   31 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-038.md  |   31 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-039.md  |   28 +
-| | |  .../ImportProducts/test-cases/TC-IMPORT-040.md  |   30 +
-| | |  46 files changed, 6700 insertions(+)
-| | | 
-| | * commit 709a55e5fc2963beba8d9f58d5b8ad8a2c1888e1
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 20:31:59 2026 +0700
-| | | 
-| | |     feat(test): add complete automated API test suite for Order Cancel (FR-10)
-| | | 
-| | |  HW6/Postman/OrderCancel.postman_collection.json | 1476 +++++++++++++++++
-| | |  .../OrderCancel.postman_collection.json         | 1476 +++++++++++++++++
-| | |  .../OrderCancel/OrderCancel_Master_Document.md  |   89 +
-| | |  HW6/Test/OrderCancel/audit-checklist.md         |   73 +
-| | |  HW6/Test/OrderCancel/coverage-matrix.md         |   80 +
-| | |  .../OrderCancel/order-cancel-data-driven.json   |  107 ++
-| | |  .../OrderCancel/test-cases/TC-CANCEL-001.md     |   32 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-002.md     |   32 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-003.md     |   32 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-004.md     |   32 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-005.md     |   31 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-006.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-007.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-008.md     |   29 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-009.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-010.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-011.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-012.md     |   32 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-013.md     |   32 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-014.md     |   32 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-015.md     |   31 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-016.md     |   31 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-017.md     |   31 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-018.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-019.md     |   32 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-020.md     |   32 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-021.md     |   29 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-022.md     |   29 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-023.md     |   31 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-024.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-025.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-026.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-027.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-028.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-029.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-030.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-031.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-032.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-033.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-034.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-035.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-036.md     |   46 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-037.md     |   45 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-038.md     |   45 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-039.md     |   30 +
-| | |  .../OrderCancel/test-cases/TC-CANCEL-040.md     |   30 +
-| | |  46 files changed, 4567 insertions(+)
-| | | 
-| | * commit 5b448cfe55aa494bc4b6d8801411a862da494d83
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 20:30:23 2026 +0700
-| | | 
-| | |     feat(api-test): add test suite for POST /api/forgot-password (FR-03)
-| | | 
-| | |  .agents/skills/api-test-generator/SKILL.md      |   43 +-
-| | |  HW6/AI Submission/AI_Audit_Report.md            |  194 +-
-| | |  .../ForgotPassword.postman_collection.json      | 2194 +++++++++++++++++
-| | |  HW6/Postman/eshop.postman_environment.json      |   36 +
-| | |  .../ForgotPassword.postman_collection.json      | 2194 +++++++++++++++++
-| | |  .../ForgotPassword_Master_Document.md           |   88 +
-| | |  HW6/Test/ForgotPassword/audit-checklist.md      |   76 +
-| | |  HW6/Test/ForgotPassword/coverage-matrix.md      |   78 +
-| | |  .../forgot-password-data-driven.json            |  128 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-001.md  |   31 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-002.md  |   30 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-003.md  |   28 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-004.md  |   28 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-005.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-006.md  |   28 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-007.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-008.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-009.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-010.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-011.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-012.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-013.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-014.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-015.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-016.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-017.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-018.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-019.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-020.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-021.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-022.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-023.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-024.md  |   28 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-025.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-026.md  |   29 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-027.md  |   28 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-028.md  |   26 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-029.md  |   26 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-030.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-031.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-032.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-033.md  |   28 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-034.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-035.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-036.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-037.md  |   28 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-038.md  |   27 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-039.md  |   28 +
-| | |  .../ForgotPassword/test-cases/TC-FORGOT-040.md  |   27 +
-| | |  49 files changed, 6100 insertions(+), 26 deletions(-)
-| | | 
-| | * commit 411bbd82877a6367169faf63ec1cd5fa942d00b8
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 20:13:29 2026 +0700
-| | | 
-| | |     docs(audit): append Artifact #2 (pseudocode & diagram) to HW06 AI Audit Report
-| | | 
-| | |  HW6/AI Submission/AI_Audit_Report.md | 64 +++++++++++++++++++++++++++---
-| | |  1 file changed, 58 insertions(+), 6 deletions(-)
-| | | 
-| | * commit 947d61d417e797358f1e7e66043e6b34541144d6
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 20:11:14 2026 +0700
-| | | 
-| | |     docs(skill): add architectural diagram specification and formal pseudocode for api-test-generator
-| | | 
-| | |  .../api-test-generator/references/diagram.md    | 100 ++++++++
-| | |  .../api-test-generator/references/pseudocode.md | 234 ++++++++++++++++++
-| | |  2 files changed, 334 insertions(+)
-| | | 
-| | * commit cc6b4e44a75bb94e74e5831b8d3a8fbeccd2707a
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 19:51:11 2026 +0700
-| | | 
-| | |     docs: add HW06 assignment spec, prompt guide, and seminar report
-| | | 
-| | |  2026.HW06.API Testing_En (2).md       | 337 +++++++++++++++++
-| | |  postman-contract-test-prompt-guide.md | 301 +++++++++++++++
-| | |  report.md                             | 551 ++++++++++++++++++++++++++++
-| | |  3 files changed, 1189 insertions(+)
-| | | 
-| | * commit 5b3a6f299bb671fdf296c545165159021e745eed
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 19:46:42 2026 +0700
-| | | 
-| | |     docs(audit): generate HW06 AI Audit Report for agent skills creation
-| | | 
-| | |  HW6/AI Submission/AI_Audit_Report.md | 158 +++++++++++++++++++++++++++++
-| | |  1 file changed, 158 insertions(+)
-| | | 
-| | * commit 085b0c07a1d73c7c0b79df0a349469a768ef28b3
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 19:44:27 2026 +0700
-| | | 
-| | |     feat: add api-test-generator and api-test-executor agent skills for HW06
-| | | 
-| | |  .agents/skills/api-test-executor/SKILL.md  | 386 +++++++++++++++++++++
-| | |  .agents/skills/api-test-generator/SKILL.md | 379 ++++++++++++++++++++
-| | |  .agents/skills/test-runner/SKILL.md        | 348 -------------------
-| | |  .agents/skills/test-writer/SKILL.md        | 417 -----------------------
-| | |  4 files changed, 765 insertions(+), 765 deletions(-)
-| | | 
-| | * commit 3aa4df57fd41154239295f7fca4736cdd2e16aa7
-| | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-| | | Date:   Sat Aug 22 19:30:30 2026 +0700
-| | | 
-| | |     feat: add test-writer and test-runner agent skills for HW06 API testing
-| | | 
-| | |  .agents/skills/test-runner/SKILL.md | 348 +++++++++++++++++++++++++
-| | |  .agents/skills/test-writer/SKILL.md | 417 ++++++++++++++++++++++++++++++
-| | |  2 files changed, 765 insertions(+)
-| | | 
-| | * commit 0fe6fa7dfe349cf7377e9f5e98fc8768e76ce0be
-| |/  Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
-|/|   Date:   Fri Aug 21 10:32:26 2026 +0700
-| |   
-| |       feat(skills): add ai-audit-report skill
-| |   
-| |    .agents/skills/ai-audit-report/SKILL.md         | 336 ++++++++++++++++++
-| |    .../examples/sample_audit_report.md             | 140 ++++++++
-| |    .../references/ai_02_template.md                |  50 +++
-| |    .../references/ai_usage_guidelines_summary.md   |  33 ++
-| |    4 files changed, 559 insertions(+)
 | |   
 | | * commit 8623cfdfc7787aba1d21f6528c9d72e5947a5c08
 | | | Author: NguyenAn0808 <23127148@student.hcmus.edu.vn>
