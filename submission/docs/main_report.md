@@ -1,5 +1,23 @@
 # Báo cáo chính — HW06 Kiểm thử API
 
+## Mục lục
+
+- [Thông tin sinh viên](#thông-tin-sinh-viên)
+- [1. Giới thiệu và phạm vi](#1-giới-thiệu-và-phạm-vi)
+- [2. Phương pháp và oracle](#2-phương-pháp-và-oracle)
+- [3. API 1 — FR-04](#3-api-1--fr-04-put-apiusersme)
+- [4. API 2 — FR-09](#4-api-2--fr-09-post-apiapply-coupon)
+- [5. API 3 — FR-17](#5-api-3--fr-17-post-apiadmincoupons)
+- [6. Tổng hợp kết quả](#6-tổng-hợp-kết-quả)
+- [7. Tính năng Postman](#7-tính-năng-postman-đã-sử-dụng)
+- [8. CI/CD](#8-cicd)
+- [9. AI-driven API test generator](#9-thiết-kế-ai-driven-api-test-generator)
+- [10. Bằng chứng thực thi](#10-bằng-chứng-thực-thi-và-chống-gian-lận)
+- [11. AI Critique](#11-nhận-xét-phê-bình-ai--200300-từ)
+- [12. Hạn chế](#12-hạn-chế-và-quyết-định-chất-lượng)
+- [13. Kết luận](#13-kết-luận)
+- [Phụ lục và liên kết](#phụ-lục-và-liên-kết)
+
 ## Thông tin sinh viên
 
 | Mục                 | Nội dung                                                                                          |
@@ -108,6 +126,7 @@ Cả 51 iteration bị đánh dấu Fail vì GET hậu kiểm luôn lộ `passwo
 
 - [Test run](../tests/test-runs/api/FR04_PUT_api_users_me/FR04_PUT_api_users_me_test_run.md)
 - [Newman HTML](../tests/test-runs/api/reports/FR04_PUT_api_users_me_2026-08-22T16-07-51-183Z.html)
+- [Test case Excel](../tests/test-cases/api/FR04_PUT_api_users_me/FR04_PUT_api_users_me_test_cases.xlsx)
 
 ### 3.5 Report bugs
 
@@ -166,6 +185,7 @@ AI bỏ sót vì thường kiểm tra endpoint đơn lẻ, ít kết hợp paylo
 
 - [Test run](../tests/test-runs/api/FR09_POST_api_apply_coupon/FR09_POST_api_apply_coupon_test_run.md)
 - [Newman HTML](../tests/test-runs/api/reports/FR09_POST_api_apply_coupon_2026-08-22T16-08-24-818Z.html)
+- [Test case Excel](../tests/test-cases/api/FR09_POST_api_apply_coupon/FR09_POST_api_apply_coupon_test_cases.xlsx)
 
 ### 4.5 Report bugs
 
@@ -226,6 +246,7 @@ AI bỏ sót vì prompt ban đầu chủ yếu kiểm tra field độc lập và
 
 - [Test run](../tests/test-runs/api/FR17_POST_api_admin_coupons/FR17_POST_api_admin_coupons_test_run.md)
 - [Newman HTML](../tests/test-runs/api/reports/FR17_POST_api_admin_coupons_2026-08-22T16-08-46-471Z.html)
+- [Test case Excel](../tests/test-cases/api/FR17_POST_api_admin_coupons/FR17_POST_api_admin_coupons_test_cases.xlsx)
 
 ### 5.5 Report bugs
 
@@ -343,7 +364,7 @@ Sơ đồ được sinh viên tự thiết kế và vẽ bằng Draw.io. Bản P
 
 ### 9.5 Video demo Agent Skill
 
-Video minh họa Agent Skill và luồng sinh test API: [YouTube — HW06 AI Test Generator Demo](https://youtu.be/MjByvUU5z4k).
+Video minh họa Agent Skill và luồng sinh test API: [YouTube — HW06 AI Test Generator Demo](https://youtu.be/mCW0X0skeoo).
 
 ## 10. Bằng chứng thực thi và chống gian lận
 
@@ -383,9 +404,12 @@ Ba API đã hoàn tất pipeline thiết kế, review, mở rộng, thực thi v
 - [AI Critique](./ai-report/AI_Critique.md)
 - [AI Critique PDF](./ai-report/AI_Critique.pdf)
 - [Sơ đồ AI Test Generator](../.agents/skills/HW6_AI_Test_Generator.png)
-- [Video demo Agent Skill](https://youtu.be/MjByvUU5z4k)
+- [Video demo Agent Skill](https://youtu.be/mCW0X0skeoo)
 - [Git Commit Log](../git_commit_log.txt)
 - [Human Review List](./ai-report/Generated_API_Test_Suites_Review_List.md)
+- [Test case Excel FR-04](../tests/test-cases/api/FR04_PUT_api_users_me/FR04_PUT_api_users_me_test_cases.xlsx)
+- [Test case Excel FR-09](../tests/test-cases/api/FR09_POST_api_apply_coupon/FR09_POST_api_apply_coupon_test_cases.xlsx)
+- [Test case Excel FR-17](../tests/test-cases/api/FR17_POST_api_admin_coupons/FR17_POST_api_admin_coupons_test_cases.xlsx)
 - [Test Summary](../tests/test-summary/test-summary-report.md)
 - [Traceability Matrix](../tests/test-summary/traceability-matrix.md)
 - [Execution Summary](../tests/test-runs/api/execution-summary.md)
